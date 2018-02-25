@@ -1,16 +1,7 @@
 package com.chesire.malime.models
 
 import org.simpleframework.xml.Element
-import org.simpleframework.xml.ElementList
 import org.simpleframework.xml.Root
-
-// If there is an issue parsing these then try to use `val entries: List<Entry>? = null`
-@Root(name = "anime")
-data class Anime(
-        @field:ElementList(inline = true, entry = "entry")
-        @param:ElementList(inline = true, entry = "entry")
-        val entries: List<Entry>
-)
 
 @Root(name = "entry")
 data class Entry(

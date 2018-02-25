@@ -1,7 +1,5 @@
 package com.chesire.malime.mal
 
-import com.chesire.malime.models.Anime
-import com.chesire.malime.models.Entry
 import okhttp3.Credentials
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -32,7 +30,7 @@ class MalApi(
         malService = retrofit.create(MalService::class.java)
     }
 
-    fun searchForAnime(name: String): Call<Anime> {
+    fun searchForAnime(name: String): Call<MalService.SearchForAnimeResponse> {
         return malService.searchForAnime(name)
     }
 
