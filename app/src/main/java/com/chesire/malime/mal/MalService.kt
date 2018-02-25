@@ -15,5 +15,6 @@ interface MalService {
     data class SearchForAnimeResponse(
             @field:ElementList(inline = true, entry = "entry")
             @param:ElementList(inline = true, entry = "entry")
-            val entries: List<Entry>)
+            val entries: List<Entry>
+    )
 }

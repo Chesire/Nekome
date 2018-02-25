@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
-                        { model ->
+                        { entries ->
                             Timber.i("Success")
                         },
                         { error ->
