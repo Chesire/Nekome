@@ -8,6 +8,20 @@ class MalManager(
         password: String,
         private val api: MalApi = MalApi(username, password)
 ) {
+    fun loginToAccount(): Observable<Any> {
+        return Observable.create { subscriber ->
+            val callResponse = api.loginToAccount()
+i            val response = callResponse.execute()
+
+            if (response.isSuccessful) {
+                subscriber.onNext(Any())
+                subscriber.onComplete()
+            } else {
+                subscriber.onError(Throwable(response.message()))
+            }
+        }
+    }
+
     fun searchForAnime(name: String): Observable<List<Entry>> {
         return Observable.create { subscriber ->
             val callResponse = api.searchForAnime(name)

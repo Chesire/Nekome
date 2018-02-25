@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Malime</string>
+    <string name="login_username">Username</string>
+    <string name="login_password">Password</string>
 </resources>

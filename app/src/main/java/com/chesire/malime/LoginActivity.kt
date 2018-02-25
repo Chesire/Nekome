@@ -2,22 +2,24 @@ package com.chesire.malime
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.widget.Button
+import android.widget.EditText
 import com.chesire.malime.mal.MalManager
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 
-class MainActivity : AppCompatActivity() {
+class LoginActivity : AppCompatActivity() {
 
     // Some dump account details created to test this
-    private val malManager by lazy { MalManager() }
     private var disposables = CompositeDisposable()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        executeTestMethod()
+
+        findViewById<Button>(R.id.login_button).setOnClickListener { executeLoginMethod() }
     }
 
     override fun onResume() {
@@ -30,7 +32,23 @@ class MainActivity : AppCompatActivity() {
         disposables.clear()
     }
 
-    fun executeTestMethod() {
+    fun executeLoginMethod() {
+        val malManager = MalManager(
+                findViewById<EditText>(R.id.login_username_edit_text).text.toString(),
+                findViewById<EditText>(R.id.login_password_edit_text).text.toString()
+        )
+        disposables.add(malManager.loginToAccount()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        { _ ->
+                            Timber.i("Success")
+                        },
+                        { _ ->
+                            Timber.e("Error")
+                        }
+                ))
+        /*
         disposables.add(malManager.searchForAnime("Naruto")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -42,5 +60,6 @@ class MainActivity : AppCompatActivity() {
                             Timber.e("Error")
                         }
                 ))
+                */
     }
 }
