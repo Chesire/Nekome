@@ -2,6 +2,7 @@ package com.chesire.malime.mal
 
 import com.chesire.malime.models.Entry
 import io.reactivex.Observable
+import timber.log.Timber
 
 class MalManager(
         username: String,
@@ -11,12 +12,14 @@ class MalManager(
     fun loginToAccount(): Observable<Any> {
         return Observable.create { subscriber ->
             val callResponse = api.loginToAccount()
-i            val response = callResponse.execute()
+            val response = callResponse.execute()
 
             if (response.isSuccessful) {
+                Timber.i("Login method successful")
                 subscriber.onNext(Any())
                 subscriber.onComplete()
             } else {
+                Timber.e(Throwable(response.message()), "Error with the login method - %s", response.errorBody())
                 subscriber.onError(Throwable(response.message()))
             }
         }
