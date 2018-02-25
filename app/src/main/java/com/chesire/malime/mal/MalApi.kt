@@ -1,25 +1,54 @@
 package com.chesire.malime.mal
 
+import com.chesire.malime.models.Anime
+import com.chesire.malime.models.Entry
+import okhttp3.Credentials
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
+import okhttp3.Response
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.simplexml.SimpleXmlConverterFactory
 
-class MalApi {
-    private val SERVICE_ENDPOINT = "https://myanimelist.net/api"
-    private val mMalService: MalService
+class MalApi(
+        username: String,
+        password: String
+) {
+    private val SERVICE_ENDPOINT = "https://myanimelist.net/api/"
+    private val malService: MalService
 
     init {
+        val httpClient = OkHttpClient()
+                .newBuilder()
+                .addInterceptor(BasicAuthInterceptor(username, password))
+                .build()
+
         val retrofit = Retrofit.Builder()
                 .baseUrl(SERVICE_ENDPOINT)
-                .client(OkHttpClient())
+                .client(httpClient)
                 .addConverterFactory(SimpleXmlConverterFactory.create())
                 .build()
 
-        mMalService = retrofit.create(MalService::class.java)
+        malService = retrofit.create(MalService::class.java)
     }
 
-    fun searchForAnime(name: String): Call<Any> {
-        return mMalService.searchForAnime(name)
+    fun searchForAnime(name: String): Call<Anime> {
+        return malService.searchForAnime(name)
+    }
+
+    class BasicAuthInterceptor(
+            username: String,
+            password: String,
+            private val credentials: String = Credentials.basic(username, password)
+    ) : Interceptor {
+
+        override fun intercept(chain: Interceptor.Chain): Response {
+            val request = chain.request()
+            val authenticatedRequest = request.newBuilder()
+                    .header("Authorization", credentials)
+                    .build()
+
+            return chain.proceed(authenticatedRequest)
+        }
     }
 }

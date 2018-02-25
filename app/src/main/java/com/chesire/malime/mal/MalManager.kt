@@ -3,9 +3,10 @@ package com.chesire.malime.mal
 import io.reactivex.Observable
 import timber.log.Timber
 
-
 class MalManager(
-        private val api: MalApi = MalApi()
+        username: String,
+        password: String,
+        private val api: MalApi = MalApi(username, password)
 ) {
     fun searchForAnime(name: String): Observable<Any> {
         return Observable.create { subscriber ->
@@ -13,7 +14,7 @@ class MalManager(
             val response = callResponse.execute()
 
             if (response.isSuccessful) {
-                Timber.d("Success")
+                Timber.e("Success")
                 subscriber.onComplete()
             } else {
                 Timber.e("Error")
