@@ -30,6 +30,10 @@ class MalApi(
         malService = retrofit.create(MalService::class.java)
     }
 
+    fun loginToAccount(): Call<MalService.LoginToAccountResponse> {
+        return malService.loginToAccount()
+    }
+
     fun searchForAnime(name: String): Call<MalService.SearchForAnimeResponse> {
         return malService.searchForAnime(name)
     }

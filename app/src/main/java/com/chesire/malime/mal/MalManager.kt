@@ -2,12 +2,29 @@ package com.chesire.malime.mal
 
 import com.chesire.malime.models.Entry
 import io.reactivex.Observable
+import timber.log.Timber
 
 class MalManager(
         username: String,
         password: String,
         private val api: MalApi = MalApi(username, password)
 ) {
+    fun loginToAccount(): Observable<Any> {
+        return Observable.create { subscriber ->
+            val callResponse = api.loginToAccount()
+            val response = callResponse.execute()
+
+            if (response.isSuccessful) {
+                Timber.i("Login method successful")
+                subscriber.onNext(Any())
+                subscriber.onComplete()
+            } else {
+                Timber.e(Throwable(response.message()), "Error with the login method - %s", response.errorBody())
+                subscriber.onError(Throwable(response.message()))
+            }
+        }
+    }
+
     fun searchForAnime(name: String): Observable<List<Entry>> {
         return Observable.create { subscriber ->
             val callResponse = api.searchForAnime(name)
