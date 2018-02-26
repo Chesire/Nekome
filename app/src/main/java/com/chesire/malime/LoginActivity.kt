@@ -13,7 +13,6 @@ import io.reactivex.schedulers.Schedulers
 
 class LoginActivity : AppCompatActivity() {
 
-    // Some dump account details created to test this
     private var disposables = CompositeDisposable()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,11 +33,17 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun executeLoginMethod() {
-        val malManager = MalManager(
-                findViewById<EditText>(R.id.login_username_edit_text).text.toString(),
-                findViewById<EditText>(R.id.login_password_edit_text).text.toString()
-        )
+        val username = findViewById<EditText>(R.id.login_username_edit_text).text.toString()
+        val password = findViewById<EditText>(R.id.login_password_edit_text).text.toString()
 
+        if (username.isBlank() || password.isBlank()) {
+            return
+        }
+
+        val loginButton = findViewById<Button>(R.id.login_button)
+        loginButton.isEnabled = false
+
+        val malManager = MalManager(username, password)
         disposables.add(malManager.loginToAccount()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -51,6 +56,7 @@ class LoginActivity : AppCompatActivity() {
                         { _ ->
                             Snackbar.make(findViewById(R.id.login_layout), R.string.login_failure, Snackbar.LENGTH_LONG)
                                     .show()
+                            loginButton.isEnabled = true
                         }
                 ))
     }
