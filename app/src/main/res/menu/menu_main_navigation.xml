@@ -3,9 +3,13 @@
     <item
         android:id="@+id/menu_main_navigation_anime"
         android:icon="@drawable/ic_video_library_black"
-        android:title="Anime" />
+        android:title="@string/main_nav_anime" />
     <item
         android:id="@+id/menu_main_navigation_manga"
         android:icon="@drawable/ic_collections_bookmark_black"
-        android:title="Manga" />
+        android:title="@string/main_nav_manga" />
+    <item
+        android:id="@+id/menu_main_navigation_search"
+        android:icon="@drawable/ic_search_black"
+        android:title="@string/main_nav_search" />
 </menu>
