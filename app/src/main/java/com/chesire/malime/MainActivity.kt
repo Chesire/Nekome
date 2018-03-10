@@ -15,7 +15,8 @@ class MainActivity : AppCompatActivity() {
         bottomNavigationView.setOnNavigationItemSelectedListener { item: MenuItem ->
             val selectedFragment = when (item.itemId) {
                 R.id.menu_main_navigation_anime -> AnimeFragment.newInstance()
-                else -> MangaFragment.newInstance()
+                R.id.menu_main_navigation_manga -> MangaFragment.newInstance()
+                else -> SearchFragment.newInstance()
             }
 
             supportFragmentManager.beginTransaction()
