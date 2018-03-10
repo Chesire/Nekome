@@ -4,4 +4,7 @@
     <string name="login_password">Password</string>
     <string name="login_button">Login</string>
     <string name="login_failure">Failure to login, please check credentials</string>
+    <string name="main_nav_anime">Anime</string>
+    <string name="main_nav_manga">Manga</string>
+    <string name="main_nav_search">Search</string>
 </resources>
