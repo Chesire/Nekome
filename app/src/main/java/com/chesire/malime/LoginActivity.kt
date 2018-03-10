@@ -51,7 +51,8 @@ class LoginActivity : AppCompatActivity() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         { _ ->
-                            // we need to also store the credentials used
+                            val sharedPref = SharedPref(this)
+                            sharedPref.putUsername(username).putAuth(b64)
                             startActivity(Intent(this, MainActivity::class.java))
                             finish()
                         },
