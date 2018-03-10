@@ -5,9 +5,8 @@ import io.reactivex.Observable
 import timber.log.Timber
 
 class MalManager(
-        username: String,
-        password: String,
-        private val api: MalApi = MalApi(username, password)
+        auth: String,
+        private val api: MalApi = MalApi(auth)
 ) {
     fun loginToAccount(): Observable<Any> {
         return Observable.create { subscriber ->
