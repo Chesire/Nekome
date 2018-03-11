@@ -2,6 +2,7 @@ package com.chesire.malime.mal
 
 import com.chesire.malime.models.Anime
 import com.chesire.malime.models.Entry
+import com.chesire.malime.models.Manga
 import com.chesire.malime.models.MyInfo
 import org.simpleframework.xml.Element
 import org.simpleframework.xml.ElementList
@@ -15,7 +16,7 @@ interface MalService {
     fun getAllAnime(@Query("u") user: String): Call<GetAllAnimeResponse>
 
     @GET("malappinfo.php?&status=all&type=manga")
-    fun getAllManga(@Query("u") user: String): Any
+    fun getAllManga(@Query("u") user: String): Call<GetAllMangaResponse>
 
     @GET("api/account/verify_credentials.xml")
     fun loginToAccount(): Call<LoginToAccountResponse>
@@ -32,6 +33,17 @@ interface MalService {
             @field:ElementList(inline = true, entry = "anime")
             @param:ElementList(inline = true, entry = "anime")
             val animeList: List<Anime>
+    )
+
+    @Root(name = "myanimelist")
+    data class GetAllMangaResponse(
+            @field:Element(name = "myinfo", required = false)
+            @param:Element(name = "myinfo", required = false)
+            val myInfo: MyInfo? = null,
+
+            @field:ElementList(inline = true, entry = "manga")
+            @param:ElementList(inline = true, entry = "manga")
+            val mangaList: List<Manga>
     )
 
     @Root(name = "user")

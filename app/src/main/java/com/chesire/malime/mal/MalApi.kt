@@ -32,6 +32,10 @@ class MalApi(
         return malService.getAllAnime(username)
     }
 
+    fun getAllManga(username: String): Call<MalService.GetAllMangaResponse> {
+        return malService.getAllManga(username)
+    }
+
     fun loginToAccount(): Call<MalService.LoginToAccountResponse> {
         return malService.loginToAccount()
     }
