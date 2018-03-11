@@ -13,6 +13,10 @@ data class MyInfo(
         @param:Element(name = "user_name", required = false)
         val userName: String? = null,
 
+        @field:Element(name = "user_reading", required = false)
+        @param:Element(name = "user_reading", required = false)
+        val userReading: Int? = null,
+
         @field:Element(name = "user_watching", required = false)
         @param:Element(name = "user_watching", required = false)
         val userWatching: Int? = null,
@@ -28,6 +32,10 @@ data class MyInfo(
         @field:Element(name = "user_dropped", required = false)
         @param:Element(name = "user_dropped", required = false)
         val userDropped: Int? = null,
+
+        @field:Element(name = "user_plantoread", required = false)
+        @param:Element(name = "user_plantoread", required = false)
+        val userPlanToRead: Int? = null,
 
         @field:Element(name = "user_plantowatch", required = false)
         @param:Element(name = "user_plantowatch", required = false)
