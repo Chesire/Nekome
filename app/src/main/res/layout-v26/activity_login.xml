@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/login_layout"
     android:layout_width="match_parent"
@@ -38,7 +39,8 @@
             android:hint="@string/login_password"
             android:imeOptions="actionDone"
             android:inputType="textPassword"
-            android:lines="1" />
+            android:lines="1"
+            app:passwordToggleEnabled="true" />
     </android.support.design.widget.TextInputLayout>
 
     <Button
