@@ -15,6 +15,12 @@ interface MalService {
     @GET("api/anime/search.xml")
     fun searchForAnime(@Query("q") name: String): Call<SearchForAnimeResponse>
 
+    @GET("malappinfo.php?&status=all&type=anime")
+    fun getAllAnime(@Query("u") user: String): Any
+
+    @GET("malappinfo.php?&status=all&type=manga")
+    fun getAllManga(@Query("u") user: String): Any
+
     @Root(name = "user")
     data class LoginToAccountResponse(
             @field:Element(name = "id", required = false)
