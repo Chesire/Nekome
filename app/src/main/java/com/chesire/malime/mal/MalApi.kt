@@ -10,7 +10,7 @@ import retrofit2.converter.simplexml.SimpleXmlConverterFactory
 class MalApi(
         auth: String
 ) {
-    private val SERVICE_ENDPOINT = "https://myanimelist.net/api/"
+    private val SERVICE_ENDPOINT = "https://myanimelist.net/"
     private val malService: MalService
 
     init {

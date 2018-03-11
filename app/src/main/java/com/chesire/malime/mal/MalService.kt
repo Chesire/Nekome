@@ -9,10 +9,10 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface MalService {
-    @GET("account/verify_credentials.xml")
+    @GET("api/account/verify_credentials.xml")
     fun loginToAccount(): Call<LoginToAccountResponse>
 
-    @GET("anime/search.xml")
+    @GET("api/anime/search.xml")
     fun searchForAnime(@Query("q") name: String): Call<SearchForAnimeResponse>
 
     @Root(name = "user")
