@@ -5,6 +5,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.support.customtabs.CustomTabsIntent
 import android.support.design.widget.BottomNavigationView
+import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
@@ -49,9 +50,17 @@ class MainActivity : AppCompatActivity() {
                     .launchUrl(this, Uri.parse("https://myanimelist.net/profile/${sharedPref.getUsername()}"))
             return true
         } else if (item?.itemId == R.id.menu_options_log_out) {
-            sharedPref.clearLoginDetails()
-            startActivity(Intent(this, LoginActivity::class.java))
-            finish()
+            AlertDialog.Builder(this)
+                    .setTitle(R.string.options_log_out)
+                    .setMessage(R.string.log_out_confirmation)
+                    .setNegativeButton(android.R.string.no, null)
+                    .setPositiveButton(android.R.string.yes, { _, _ ->
+                        sharedPref.clearLoginDetails()
+                        startActivity(Intent(this, LoginActivity::class.java))
+                        finish()
+                    })
+                    .show()
+
             return true
         }
 

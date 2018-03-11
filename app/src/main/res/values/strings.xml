@@ -9,4 +9,5 @@
     <string name="main_nav_search">Search</string>
     <string name="options_view_profile">View Profile</string>
     <string name="options_log_out">Log Out</string>
+    <string name="log_out_confirmation">Are you sure you wish to log out?</string>
 </resources>
