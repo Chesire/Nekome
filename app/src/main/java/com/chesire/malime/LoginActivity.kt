@@ -44,6 +44,7 @@ class LoginActivity : AppCompatActivity() {
         val username = findViewById<EditText>(R.id.login_username_edit_text).text.toString()
         val password = findViewById<EditText>(R.id.login_password_edit_text).text.toString()
 
+        // Username must be 2-16 chars long, we can add validation to this later
         if (username.isBlank() || password.isBlank()) {
             return
         }
