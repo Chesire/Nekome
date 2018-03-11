@@ -11,9 +11,8 @@ class AnimeViewAdapter(
         private val items: ArrayList<Anime>
 ) : RecyclerView.Adapter<AnimeViewAdapter.ViewHolder>() {
     fun addAll(newItems: List<Anime>) {
-        // We may need to implement update logic here, as the isEquals in the Anime class may not
-        // account for items which have been updated (I.E, a new episode has been watched)
-        items.addAll(newItems.filter { item -> !items.contains(item) })
+        items.clear()
+        items.addAll(newItems)
         notifyDataSetChanged()
     }
 
