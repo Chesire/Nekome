@@ -4,12 +4,12 @@
     android:layout_height="match_parent">
 
     <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/anime_swipe_refresh"
+        android:id="@+id/maldisplay_swipe_refresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/anime_recycler_view"
+            android:id="@+id/maldisplay_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 

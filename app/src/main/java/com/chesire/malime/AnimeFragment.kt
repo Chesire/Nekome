@@ -37,12 +37,12 @@ class AnimeFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_maldisplay, container, false)
 
-        swipeRefreshLayout = view.findViewById(R.id.anime_swipe_refresh)
+        swipeRefreshLayout = view.findViewById(R.id.maldisplay_swipe_refresh)
         swipeRefreshLayout.setOnRefreshListener {
             executeLoadAnime()
         }
 
-        recyclerView = view.findViewById<RecyclerView>(R.id.anime_recycler_view).apply {
+        recyclerView = view.findViewById<RecyclerView>(R.id.maldisplay_recycler_view).apply {
             setHasFixedSize(true)
             layoutManager = viewManager
             adapter = viewAdapter
