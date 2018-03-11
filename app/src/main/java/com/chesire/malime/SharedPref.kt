@@ -45,4 +45,11 @@ class SharedPref(
 
         return this
     }
+
+    fun clearLoginDetails() {
+        sharedPreferences.edit()
+                .remove(preferenceAuth)
+                .remove(preferenceUsername)
+                .apply()
+    }
 }

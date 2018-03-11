@@ -8,4 +8,5 @@
     <string name="main_nav_manga">Manga</string>
     <string name="main_nav_search">Search</string>
     <string name="options_view_profile">View Profile</string>
+    <string name="options_log_out">Log Out</string>
 </resources>

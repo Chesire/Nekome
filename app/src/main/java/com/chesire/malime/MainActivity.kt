@@ -1,5 +1,6 @@
 package com.chesire.malime
 
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.support.customtabs.CustomTabsIntent
@@ -9,6 +10,8 @@ import android.view.Menu
 import android.view.MenuItem
 
 class MainActivity : AppCompatActivity() {
+
+    private val sharedPref: SharedPref by lazy { SharedPref(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,10 +46,12 @@ class MainActivity : AppCompatActivity() {
         if (item?.itemId == R.id.menu_options_view_profile) {
             CustomTabsIntent.Builder()
                     .build()
-                    .launchUrl(this, Uri.parse("https://myanimelist.net/"))
-            // This should go to the users profile
-            // https://myanimelist.net/profile/$NAME
-            // But need to store the credentials/username first
+                    .launchUrl(this, Uri.parse("https://myanimelist.net/profile/${sharedPref.getUsername()}"))
+            return true
+        } else if (item?.itemId == R.id.menu_options_log_out) {
+            sharedPref.clearLoginDetails()
+            startActivity(Intent(this, LoginActivity::class.java))
+            finish()
             return true
         }
 
