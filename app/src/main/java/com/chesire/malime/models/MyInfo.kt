@@ -7,33 +7,33 @@ import org.simpleframework.xml.Root
 data class MyInfo(
         @field:Element(name = "user_id", required = false)
         @param:Element(name = "user_id", required = false)
-        val user_id: Int? = null,
+        val userId: Int? = null,
 
         @field:Element(name = "user_name", required = false)
         @param:Element(name = "user_name", required = false)
-        val user_name: String? = null,
+        val userName: String? = null,
 
-        @field:Element(name = "user_reading", required = false)
-        @param:Element(name = "user_reading", required = false)
-        val user_reading: Int? = null,
+        @field:Element(name = "user_watching", required = false)
+        @param:Element(name = "user_watching", required = false)
+        val userWatching: Int? = null,
 
         @field:Element(name = "user_completed", required = false)
         @param:Element(name = "user_completed", required = false)
-        val user_completed: Int? = null,
+        val userCompleted: Int? = null,
 
         @field:Element(name = "user_onhold", required = false)
         @param:Element(name = "user_onhold", required = false)
-        val user_onhold: Int? = null,
+        val userOnHold: Int? = null,
 
         @field:Element(name = "user_dropped", required = false)
         @param:Element(name = "user_dropped", required = false)
-        val user_dropped: Int? = null,
+        val userDropped: Int? = null,
 
-        @field:Element(name = "user_plantoread", required = false)
-        @param:Element(name = "user_plantoread", required = false)
-        val user_plantoread: Int? = null,
+        @field:Element(name = "user_plantowatch", required = false)
+        @param:Element(name = "user_plantowatch", required = false)
+        val userPlanToWatch: Int? = null,
 
         @field:Element(name = "user_days_spent_watching", required = false)
         @param:Element(name = "user_days_spent_watching", required = false)
-        val user_days_spent_watching: Float? = null
+        val userDaysSpentWatching: Float? = null
 )

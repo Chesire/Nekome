@@ -7,77 +7,77 @@ import org.simpleframework.xml.Root
 data class Anime(
         @field:Element(name = "series_animedb_id", required = false)
         @param:Element(name = "series_animedb_id", required = false)
-        val series_animedb_id: Int? = null,
+        val seriesAnimeDbId: Int? = null,
 
         @field:Element(name = "series_title", required = false)
         @param:Element(name = "series_title", required = false)
-        val series_title: String? = null,
+        val seriesTitle: String? = null,
 
         @field:Element(name = "series_synonyms", required = false)
         @param:Element(name = "series_synonyms", required = false)
-        val series_synonyms: String? = null,
+        val seriesSynonyms: String? = null,
 
         @field:Element(name = "series_type", required = false)
         @param:Element(name = "series_type", required = false)
-        val series_type: Int? = null,
+        val seriesType: Int? = null,
 
         @field:Element(name = "series_episodes", required = false)
         @param:Element(name = "series_episodes", required = false)
-        val series_episodes: Int? = null,
+        val seriesEpisodes: Int? = null,
 
         @field:Element(name = "series_status", required = false)
         @param:Element(name = "series_status", required = false)
-        val series_status: Int? = null,
+        val seriesStatus: Int? = null,
 
         @field:Element(name = "series_start", required = false)
         @param:Element(name = "series_start", required = false)
-        val series_start: String? = null,
+        val seriesStart: String? = null,
 
         @field:Element(name = "series_end", required = false)
         @param:Element(name = "series_end", required = false)
-        val series_end: String? = null,
+        val seriesEnd: String? = null,
 
         @field:Element(name = "series_image", required = false)
         @param:Element(name = "series_image", required = false)
-        val series_image: String? = null,
+        val seriesImage: String? = null,
 
         @field:Element(name = "my_id", required = false)
         @param:Element(name = "my_id", required = false)
-        val my_id: Int? = null,
+        val myId: Int? = null,
 
         @field:Element(name = "my_watched_episodes", required = false)
         @param:Element(name = "my_watched_episodes", required = false)
-        val my_watched_episodes: Int? = null,
+        val myWatchedEpisodes: Int? = null,
 
         @field:Element(name = "my_start_date", required = false)
         @param:Element(name = "my_start_date", required = false)
-        val my_start_date: String? = null,
+        val myStartDate: String? = null,
 
         @field:Element(name = "my_finish_date", required = false)
         @param:Element(name = "my_finish_date", required = false)
-        val my_finish_date: String? = null,
+        val myFinishDate: String? = null,
 
         @field:Element(name = "my_score", required = false)
         @param:Element(name = "my_score", required = false)
-        val my_score: Int? = null,
+        val myScore: Int? = null,
 
         @field:Element(name = "my_status", required = false)
         @param:Element(name = "my_status", required = false)
-        val my_status: Int? = null,
+        val myStatus: Int? = null,
 
         @field:Element(name = "my_rewatching", required = false)
         @param:Element(name = "my_rewatching", required = false)
-        val my_rewatching: Int? = null,
+        val myRewatching: Int? = null,
 
         @field:Element(name = "my_rewatching_ep", required = false)
         @param:Element(name = "my_rewatching_ep", required = false)
-        val my_rewatching_ep: Int? = null,
+        val myRewatchingEp: Int? = null,
 
         @field:Element(name = "my_last_updated", required = false)
         @param:Element(name = "my_last_updated", required = false)
-        val my_last_updated: Int? = null,
+        val myLastUpdated: Int? = null,
 
         @field:Element(name = "my_tags", required = false)
         @param:Element(name = "my_tags", required = false)
-        val my_tags: String? = null
+        val myTags: String? = null
 )
