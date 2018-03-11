@@ -23,7 +23,7 @@ class SharedPref(
     }
 
     fun getAuth(): String {
-        return sharedPreferences.getString(preferenceAuth, null)
+        return sharedPreferences.getString(preferenceAuth, "")
     }
 
     fun putAuth(auth: String): SharedPref {
@@ -35,7 +35,7 @@ class SharedPref(
     }
 
     fun getUsername(): String {
-        return sharedPreferences.getString(preferenceUsername, null)
+        return sharedPreferences.getString(preferenceUsername, "")
     }
 
     fun putUsername(username: String): SharedPref {
