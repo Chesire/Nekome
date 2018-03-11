@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.util.Base64
+import android.view.inputmethod.EditorInfo
 import android.widget.Button
 import android.widget.EditText
 import com.chesire.malime.mal.MalManager
@@ -21,6 +22,12 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.activity_login)
 
         findViewById<Button>(R.id.login_button).setOnClickListener { executeLoginMethod() }
+        findViewById<EditText>(R.id.login_password_edit_text).setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                executeLoginMethod()
+            }
+            false
+        }
     }
 
     override fun onResume() {
@@ -37,6 +44,7 @@ class LoginActivity : AppCompatActivity() {
         val username = findViewById<EditText>(R.id.login_username_edit_text).text.toString()
         val password = findViewById<EditText>(R.id.login_password_edit_text).text.toString()
 
+        // Username must be 2-16 chars long, we can add validation to this later
         if (username.isBlank() || password.isBlank()) {
             return
         }
