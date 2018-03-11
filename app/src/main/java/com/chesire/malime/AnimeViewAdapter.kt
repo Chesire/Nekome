@@ -1,6 +1,8 @@
 package com.chesire.malime
 
 import android.support.v7.widget.RecyclerView
+import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.chesire.malime.models.Anime
@@ -19,16 +21,23 @@ class AnimeViewAdapter(
     }
 
     override fun getItemCount(): Int {
-        TODO("not implemented")
+        return items.count()
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        TODO("not implemented")
+        holder.bindModel(items[position])
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        TODO("not implemented")
+        return ViewHolder(LayoutInflater.from(parent.context)
+                .inflate(R.layout.item_malmodel, parent, false))
     }
 
-    class ViewHolder(val textView: TextView) : RecyclerView.ViewHolder(textView)
+    class ViewHolder(
+            private val animeView: View
+    ) : RecyclerView.ViewHolder(animeView) {
+        fun bindModel(animeModel: Anime) {
+            animeView.findViewById<TextView>(R.id.item_malmodel_title).text = animeModel.seriesTitle
+        }
+    }
 }

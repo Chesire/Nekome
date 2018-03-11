@@ -20,7 +20,7 @@ class AnimeFragment : Fragment() {
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
 
     private lateinit var recyclerView: RecyclerView
-    private lateinit var viewAdapter: RecyclerView.Adapter<*>
+    private lateinit var viewAdapter: AnimeViewAdapter
     private lateinit var viewManager: RecyclerView.LayoutManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,7 +35,7 @@ class AnimeFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_anime, container, false)
+        val view = inflater.inflate(R.layout.fragment_maldisplay, container, false)
 
         swipeRefreshLayout = view.findViewById(R.id.anime_swipe_refresh)
         swipeRefreshLayout.setOnRefreshListener {
@@ -47,6 +47,8 @@ class AnimeFragment : Fragment() {
             layoutManager = viewManager
             adapter = viewAdapter
         }
+
+        executeLoadAnime()
 
         return view
     }
@@ -66,7 +68,8 @@ class AnimeFragment : Fragment() {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
-                        { _ ->
+                        { result ->
+                            viewAdapter.addAll(result.second)
                             swipeRefreshLayout.isRefreshing = false
                         },
                         { _ ->
