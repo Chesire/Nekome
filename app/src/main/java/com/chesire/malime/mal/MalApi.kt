@@ -28,6 +28,10 @@ class MalApi(
         malService = retrofit.create(MalService::class.java)
     }
 
+    fun getAllAnime(username: String): Call<MalService.GetAllAnimeResponse> {
+        return malService.getAllAnime(username)
+    }
+
     fun loginToAccount(): Call<MalService.LoginToAccountResponse> {
         return malService.loginToAccount()
     }
