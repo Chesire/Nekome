@@ -3,4 +3,7 @@
     <item
         android:id="@+id/menu_options_view_profile"
         android:title="@string/options_view_profile" />
+    <item
+        android:id="@+id/menu_options_log_out"
+        android:title="@string/options_log_out" />
 </menu>
