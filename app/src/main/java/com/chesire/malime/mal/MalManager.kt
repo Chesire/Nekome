@@ -1,6 +1,9 @@
 package com.chesire.malime.mal
 
+import com.chesire.malime.models.Anime
 import com.chesire.malime.models.Entry
+import com.chesire.malime.models.Manga
+import com.chesire.malime.models.MyInfo
 import io.reactivex.Observable
 import timber.log.Timber
 
@@ -8,6 +11,48 @@ class MalManager(
         auth: String,
         private val api: MalApi = MalApi(auth)
 ) {
+    fun getAllAnime(username: String): Observable<Pair<MyInfo, List<Anime>>> {
+        return Observable.create { subscriber ->
+            val callResponse = api.getAllAnime(username)
+            val response = callResponse.execute()
+
+            if (response.isSuccessful) {
+                Timber.i("Get all anime successful")
+                val responseBody = response.body()
+                if (responseBody?.myInfo == null) {
+                    subscriber.onError(Throwable(response.message()))
+                } else {
+                    subscriber.onNext(Pair(responseBody.myInfo, responseBody.animeList))
+                    subscriber.onComplete()
+                }
+            } else {
+                Timber.e(Throwable(response.message()))
+                subscriber.onError(Throwable(response.message()))
+            }
+        }
+    }
+
+    fun getAllManga(username: String): Observable<Pair<MyInfo, List<Manga>>> {
+        return Observable.create { subscriber ->
+            val callResponse = api.getAllManga(username)
+            val response = callResponse.execute()
+
+            if (response.isSuccessful) {
+                Timber.i("Get all manga successful")
+                val responseBody = response.body()
+                if (responseBody?.myInfo == null) {
+                    subscriber.onError(Throwable(response.message()))
+                } else {
+                    subscriber.onNext(Pair(responseBody.myInfo, responseBody.mangaList))
+                    subscriber.onComplete()
+                }
+            } else {
+                Timber.e(Throwable(response.message()))
+                subscriber.onError(Throwable(response.message()))
+            }
+        }
+    }
+
     fun loginToAccount(): Observable<Any> {
         return Observable.create { subscriber ->
             val callResponse = api.loginToAccount()
@@ -34,10 +79,7 @@ class MalManager(
                 if (responseBody == null) {
                     subscriber.onError(Throwable(response.message()))
                 } else {
-                    val entries = responseBody.entries.map {
-                        Entry(it.id, it.title, it.english, it.synonyms, it.episodes, it.score, it.type, it.status, it.start_date, it.end_date, it.synopsis, it.image)
-                    }
-                    subscriber.onNext(entries)
+                    subscriber.onNext(responseBody.entries)
                     subscriber.onComplete()
                 }
             } else {
