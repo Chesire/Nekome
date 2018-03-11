@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
+import android.util.Base64
 import android.widget.Button
 import android.widget.EditText
 import com.chesire.malime.mal.MalManager
@@ -43,13 +44,15 @@ class LoginActivity : AppCompatActivity() {
         val loginButton = findViewById<Button>(R.id.login_button)
         loginButton.isEnabled = false
 
-        val malManager = MalManager(username, password)
+        val b64: String = Base64.encodeToString("$username:$password".toByteArray(Charsets.UTF_8), Base64.NO_WRAP)
+        val malManager = MalManager(b64)
         disposables.add(malManager.loginToAccount()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         { _ ->
-                            // we need to also store the credentials used
+                            val sharedPref = SharedPref(this)
+                            sharedPref.putUsername(username).putAuth(b64)
                             startActivity(Intent(this, MainActivity::class.java))
                             finish()
                         },

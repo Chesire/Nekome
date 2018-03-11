@@ -1,6 +1,5 @@
 package com.chesire.malime.mal
 
-import okhttp3.Credentials
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Response
@@ -9,8 +8,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.simplexml.SimpleXmlConverterFactory
 
 class MalApi(
-        username: String,
-        password: String
+        auth: String
 ) {
     private val SERVICE_ENDPOINT = "https://myanimelist.net/api/"
     private val malService: MalService
@@ -18,7 +16,7 @@ class MalApi(
     init {
         val httpClient = OkHttpClient()
                 .newBuilder()
-                .addInterceptor(BasicAuthInterceptor(username, password))
+                .addInterceptor(BasicAuthInterceptor(auth))
                 .build()
 
         val retrofit = Retrofit.Builder()
@@ -39,15 +37,13 @@ class MalApi(
     }
 
     class BasicAuthInterceptor(
-            username: String,
-            password: String,
-            private val credentials: String = Credentials.basic(username, password)
+            private val auth: String
     ) : Interceptor {
 
         override fun intercept(chain: Interceptor.Chain): Response {
             val request = chain.request()
             val authenticatedRequest = request.newBuilder()
-                    .header("Authorization", credentials)
+                    .header("Authorization", "Basic $auth")
                     .build()
 
             return chain.proceed(authenticatedRequest)
