@@ -62,8 +62,33 @@ class MainActivity : AppCompatActivity() {
                     .show()
 
             return true
+        } else if (item?.itemId == R.id.menu_options_filter) {
+            spawnFilterDialog()
+            return true
         }
 
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun spawnFilterDialog() {
+        // load this from sharedprefs
+        val checkedStates = booleanArrayOf(
+                false,
+                false,
+                false,
+                false,
+                false
+        )
+
+        AlertDialog.Builder(this)
+                .setTitle(R.string.filter_dialog_title)
+                .setMultiChoiceItems(R.array.anime_states, checkedStates, { _, which, isChecked ->
+                    checkedStates[which] = isChecked
+                })
+                .setPositiveButton(android.R.string.ok, { _, _ ->
+                    // set into shared prefs
+                })
+                .setNegativeButton(android.R.string.cancel, null)
+                .show()
     }
 }

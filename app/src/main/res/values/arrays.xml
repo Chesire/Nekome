@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="anime_states">
+        <item>@string/filter_state_watching</item>
+        <item>@string/filter_state_completed</item>
+        <item>@string/filter_state_on_hold</item>
+        <item>@string/filter_state_dropped</item>
+        <item>@string/filter_state_plan_to_watch</item>
+    </string-array>
+</resources>
