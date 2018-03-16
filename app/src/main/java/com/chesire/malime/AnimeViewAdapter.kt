@@ -1,9 +1,12 @@
 package com.chesire.malime
 
+import android.net.Uri
+import android.support.customtabs.CustomTabsIntent
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import com.chesire.malime.models.Anime
 
@@ -33,18 +36,21 @@ class AnimeViewAdapter(
             private val animeView: View
     ) : RecyclerView.ViewHolder(animeView) {
         fun bindModel(animeModel: Anime) {
-            val totalEpisodes = if (animeModel.seriesEpisodes == 0) {
-                "??"
-            } else {
-                animeModel.seriesEpisodes.toString()
-            }
+            val context = animeView.context
+            val image = animeView.findViewById<ImageView>(R.id.item_malmodel_image)
+
             GlideApp.with(animeView)
                     .load(animeModel.seriesImage)
-                    .into(animeView.findViewById(R.id.item_malmodel_image))
+                    .into(image)
+            image.setOnClickListener({
+                CustomTabsIntent.Builder()
+                        .build()
+                        .launchUrl(context, Uri.parse(animeModel.malUrl))
+            })
             animeView.findViewById<TextView>(R.id.item_malmodel_title).text = animeModel.seriesTitle
             animeView.findViewById<TextView>(R.id.item_malmodel_progress).text =
-                    String.format(animeView.context.getString(R.string.malitem_progress_text),
-                            animeModel.myWatchedEpisodes, totalEpisodes)
+                    String.format(context.getString(R.string.malitem_progress_text),
+                            animeModel.myWatchedEpisodes, animeModel.totalEpisodes)
         }
     }
 }

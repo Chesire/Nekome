@@ -80,4 +80,13 @@ data class Anime(
         @field:Element(name = "my_tags", required = false)
         @param:Element(name = "my_tags", required = false)
         val myTags: String? = null
-)
+) {
+    private val baseUrl: String = "https://myanimelist.net/anime/"
+
+    val malUrl: String = baseUrl + seriesAnimeDbId
+    val totalEpisodes: String = if (seriesEpisodes == 0) {
+        "??"
+    } else {
+        seriesEpisodes.toString()
+    }
+}
