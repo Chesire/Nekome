@@ -11,7 +11,6 @@ import android.view.Menu
 import android.view.MenuItem
 
 class MainActivity : AppCompatActivity() {
-
     private val sharedPref: SharedPref by lazy { SharedPref(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -75,22 +74,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun spawnFilterDialog() {
-        // load this from sharedprefs
-        val checkedStates = booleanArrayOf(
-                false,
-                false,
-                false,
-                false,
-                false
-        )
-
+        val states = sharedPref.getAnimeFilter()
         AlertDialog.Builder(this)
                 .setTitle(R.string.filter_dialog_title)
-                .setMultiChoiceItems(R.array.anime_states, checkedStates, { _, which, isChecked ->
-                    checkedStates[which] = isChecked
+                .setMultiChoiceItems(R.array.anime_states, states, { _, which, isChecked ->
+                    states[which] = isChecked
                 })
                 .setPositiveButton(android.R.string.ok, { _, _ ->
-                    // set into shared prefs
+                    sharedPref.setAnimeFilter(states)
                 })
                 .setNegativeButton(android.R.string.cancel, null)
                 .show()

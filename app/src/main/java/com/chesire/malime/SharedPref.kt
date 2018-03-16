@@ -15,6 +15,8 @@ class SharedPref(
     private val sharedPrefFile: String = "private_auth"
     private val preferenceAuth: String = "auth"
     private val preferenceUsername: String = "username"
+    private val preferenceAnimeFilter: String = "animeFilter"
+    private val preferenceAnimeFilterLength: String = "animeFilterLength"
 
     private val sharedPreferences: SharedPreferences
 
@@ -46,10 +48,37 @@ class SharedPref(
         return this
     }
 
+    fun getAnimeFilter(): BooleanArray {
+        val filterLength = sharedPreferences.getInt(preferenceAnimeFilterLength, 0)
+        if (filterLength == 0) {
+            return getDefaultFilter()
+        }
+
+        val returnArray = BooleanArray(filterLength)
+        for (i in 0 until filterLength) {
+            returnArray[i] = sharedPreferences.getBoolean(preferenceAnimeFilter + i, false)
+        }
+
+        return returnArray
+    }
+
+    fun setAnimeFilter(input: BooleanArray) {
+        val editor = sharedPreferences.edit()
+        editor.putInt(preferenceAnimeFilterLength, input.count())
+        for (i in input.indices) {
+            editor.putBoolean(preferenceAnimeFilter + i, input[i])
+        }
+        editor.apply()
+    }
+
     fun clearLoginDetails() {
         sharedPreferences.edit()
                 .remove(preferenceAuth)
                 .remove(preferenceUsername)
                 .apply()
+    }
+
+    private fun getDefaultFilter(): BooleanArray {
+        return booleanArrayOf(true, false, false, false, false)
     }
 }
