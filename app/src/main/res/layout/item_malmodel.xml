@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/item_malmodel_card_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_margin="4dp"
+    card_view:cardCornerRadius="2dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/item_malmodel_image"
+            style="@style/malitem_image_style" />
+
+        <TextView
+            android:id="@+id/item_malmodel_title"
+            style="@style/malitem_heading_text_style"
+            android:layout_toEndOf="@id/item_malmodel_image" />
+
+        <TextView
+            android:id="@+id/item_malmodel_progress"
+            style="@style/malitem_progress_text_style"
+            android:layout_below="@id/item_malmodel_title"
+            android:layout_toEndOf="@id/item_malmodel_image" />
+
+    </RelativeLayout>
+</android.support.v7.widget.CardView>
