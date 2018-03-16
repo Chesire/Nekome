@@ -31,7 +31,7 @@ class AnimeFragment : Fragment() {
         malManager = MalManager(sharedPref.getAuth())
 
         viewManager = LinearLayoutManager(context!!)
-        viewAdapter = AnimeViewAdapter(ArrayList())
+        viewAdapter = AnimeViewAdapter(ArrayList(), ArrayList(), sharedPref)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
