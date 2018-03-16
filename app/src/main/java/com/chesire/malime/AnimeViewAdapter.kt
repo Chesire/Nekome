@@ -33,10 +33,18 @@ class AnimeViewAdapter(
             private val animeView: View
     ) : RecyclerView.ViewHolder(animeView) {
         fun bindModel(animeModel: Anime) {
-            animeView.findViewById<TextView>(R.id.item_malmodel_title).text = animeModel.seriesTitle
+            val totalEpisodes = if (animeModel.seriesEpisodes == 0) {
+                "??"
+            } else {
+                animeModel.seriesEpisodes.toString()
+            }
             GlideApp.with(animeView)
                     .load(animeModel.seriesImage)
                     .into(animeView.findViewById(R.id.item_malmodel_image))
+            animeView.findViewById<TextView>(R.id.item_malmodel_title).text = animeModel.seriesTitle
+            animeView.findViewById<TextView>(R.id.item_malmodel_progress).text =
+                    String.format(animeView.context.getString(R.string.malitem_progress_text),
+                            animeModel.myWatchedEpisodes, totalEpisodes)
         }
     }
 }
