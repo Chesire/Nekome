@@ -16,7 +16,7 @@
         <item name="android:layout_centerVertical">true</item>
     </style>
 
-    <style name="malitem_heading_text_style">
+    <style name="malitem_heading_text_style" parent="TextAppearance.AppCompat.Subhead">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_alignParentTop">true</item>
