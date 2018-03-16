@@ -34,6 +34,9 @@ class AnimeViewAdapter(
     ) : RecyclerView.ViewHolder(animeView) {
         fun bindModel(animeModel: Anime) {
             animeView.findViewById<TextView>(R.id.item_malmodel_title).text = animeModel.seriesTitle
+            GlideApp.with(animeView)
+                    .load(animeModel.seriesImage)
+                    .into(animeView.findViewById(R.id.item_malmodel_image))
         }
     }
 }
