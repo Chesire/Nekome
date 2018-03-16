@@ -9,8 +9,8 @@
     </style>
 
     <style name="malitem_image_style">
-        <item name="android:layout_width">60dp</item>
-        <item name="android:layout_height">80dp</item>
+        <item name="android:layout_width">80dp</item>
+        <item name="android:layout_height">120dp</item>
         <item name="android:layout_alignParentStart">true</item>
         <item name="android:layout_margin">4dp</item>
         <item name="android:layout_centerVertical">true</item>
@@ -20,6 +20,7 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_alignParentTop">true</item>
+        <item name="android:layout_margin">4dp</item>
         <item name="android:gravity">center_horizontal</item>
     </style>
 
