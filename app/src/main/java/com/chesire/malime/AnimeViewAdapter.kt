@@ -2,11 +2,11 @@ package com.chesire.malime
 
 import android.net.Uri
 import android.support.customtabs.CustomTabsIntent
+import android.support.v7.widget.CardView
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import com.chesire.malime.models.Anime
 
@@ -37,12 +37,10 @@ class AnimeViewAdapter(
     ) : RecyclerView.ViewHolder(animeView) {
         fun bindModel(animeModel: Anime) {
             val context = animeView.context
-            val image = animeView.findViewById<ImageView>(R.id.item_malmodel_image)
-
             GlideApp.with(animeView)
                     .load(animeModel.seriesImage)
-                    .into(image)
-            image.setOnClickListener({
+                    .into(animeView.findViewById(R.id.item_malmodel_image))
+            animeView.findViewById<CardView>(R.id.item_malmodel_card_view).setOnClickListener({
                 CustomTabsIntent.Builder()
                         .build()
                         .launchUrl(context, Uri.parse(animeModel.malUrl))
