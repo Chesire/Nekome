@@ -44,30 +44,34 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        if (item?.itemId == R.id.menu_options_view_profile) {
-            CustomTabsIntent.Builder()
-                    .build()
-                    .launchUrl(this, Uri.parse("https://myanimelist.net/profile/${sharedPref.getUsername()}"))
-            return true
-        } else if (item?.itemId == R.id.menu_options_log_out) {
-            AlertDialog.Builder(this)
-                    .setTitle(R.string.options_log_out)
-                    .setMessage(R.string.log_out_confirmation)
-                    .setNegativeButton(android.R.string.no, null)
-                    .setPositiveButton(android.R.string.yes, { _, _ ->
-                        sharedPref.clearLoginDetails()
-                        startActivity(Intent(this, LoginActivity::class.java))
-                        finish()
-                    })
-                    .show()
+        when {
+            item?.itemId == R.id.menu_options_view_profile -> {
+                CustomTabsIntent.Builder()
+                        .build()
+                        .launchUrl(this, Uri.parse("https://myanimelist.net/profile/${sharedPref.getUsername()}"))
+                return true
+            }
+            item?.itemId == R.id.menu_options_log_out -> {
+                AlertDialog.Builder(this)
+                        .setTitle(R.string.options_log_out)
+                        .setMessage(R.string.log_out_confirmation)
+                        .setNegativeButton(android.R.string.no, null)
+                        .setPositiveButton(android.R.string.yes, { _, _ ->
+                            sharedPref.clearLoginDetails()
+                            startActivity(Intent(this, LoginActivity::class.java))
+                            finish()
+                        })
+                        .show()
 
-            return true
-        } else if (item?.itemId == R.id.menu_options_filter) {
-            spawnFilterDialog()
-            return true
+                return true
+            }
+            item?.itemId == R.id.menu_options_filter -> {
+                spawnFilterDialog()
+                return true
+            }
+            else -> return super.onOptionsItemSelected(item)
         }
 
-        return super.onOptionsItemSelected(item)
     }
 
     private fun spawnFilterDialog() {
