@@ -63,17 +63,16 @@ class AnimeViewAdapter(
     }
 
     private inner class AnimeFilter : Filter() {
-        private val results = FilterResults()
-
         override fun publishResults(p0: CharSequence?, p1: FilterResults?) {
             filteredItems.clear()
-            if (results.values is ArrayList<*>) {
-                filteredItems.addAll(results.values as ArrayList<Anime>)
+            if (p1?.values is ArrayList<*>) {
+                filteredItems.addAll(p1.values as ArrayList<Anime>)
             }
             notifyDataSetChanged()
         }
 
         override fun performFiltering(p0: CharSequence?): FilterResults {
+            val results = FilterResults()
             val myFilter = sharedPref.getAnimeFilter()
             val tempList = items.filter {
                 // Move the compare value down to 5, so we can more easily work with it
