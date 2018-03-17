@@ -75,7 +75,6 @@ class AnimeViewAdapter(
 
         override fun performFiltering(p0: CharSequence?): FilterResults {
             val myFilter = sharedPref.getAnimeFilter()
-
             val tempList = items.filter {
                 // Move the compare value down to 5, so we can more easily work with it
                 val compareVal = if (it.myStatus == 6) {

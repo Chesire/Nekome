@@ -15,7 +15,7 @@ class SharedPref(
     private val sharedPrefFile: String = "private_auth"
     private val preferenceAuth: String = "auth"
     private val preferenceUsername: String = "username"
-    private val preferenceAnimeFilter: String = "animeFilter"
+    val preferenceAnimeFilter: String = "animeFilter"
     private val preferenceAnimeFilterLength: String = "animeFilterLength"
 
     private val sharedPreferences: SharedPreferences
@@ -76,6 +76,14 @@ class SharedPref(
                 .remove(preferenceAuth)
                 .remove(preferenceUsername)
                 .apply()
+    }
+
+    fun registerOnChangeListener(listener: SharedPreferences.OnSharedPreferenceChangeListener) {
+        sharedPreferences.registerOnSharedPreferenceChangeListener(listener)
+    }
+
+    fun unregisterOnChangeListener(listener: SharedPreferences.OnSharedPreferenceChangeListener) {
+        sharedPreferences.unregisterOnSharedPreferenceChangeListener(listener)
     }
 
     private fun getDefaultFilter(): BooleanArray {
