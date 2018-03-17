@@ -15,6 +15,8 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
 class AnimeFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListener {
+    private val animeItemsBundleId = "animeItems"
+
     private var disposables = CompositeDisposable()
     private lateinit var sharedPref: SharedPref
     private lateinit var username: String
@@ -52,7 +54,11 @@ class AnimeFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeList
             adapter = viewAdapter
         }
 
-        executeLoadAnime()
+        if (savedInstanceState == null) {
+            executeLoadAnime()
+        } else {
+            viewAdapter.addAll(savedInstanceState.getParcelableArrayList(animeItemsBundleId))
+        }
 
         return view
     }
@@ -65,6 +71,11 @@ class AnimeFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeList
     override fun onPause() {
         super.onPause()
         disposables.clear()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putParcelableArrayList(animeItemsBundleId, viewAdapter.getAll())
+        super.onSaveInstanceState(outState)
     }
 
     private fun executeLoadAnime() {
@@ -94,6 +105,7 @@ class AnimeFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeList
     }
 
     companion object {
+        const val tag = "AnimeFragment"
         fun newInstance(): AnimeFragment {
             val animeFragment = AnimeFragment()
             val args = Bundle()

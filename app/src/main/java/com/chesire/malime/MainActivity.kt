@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.support.customtabs.CustomTabsIntent
 import android.support.design.widget.BottomNavigationView
 import android.support.design.widget.Snackbar
+import android.support.v4.app.Fragment
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
@@ -14,6 +15,8 @@ import timber.log.Timber
 
 class MainActivity : AppCompatActivity() {
     private val sharedPref: SharedPref by lazy { SharedPref(this) }
+    private var currentDisplayedFragmentTagBundleId = "currentFragment"
+    private var currentDisplayedFragmentTag = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,22 +24,39 @@ class MainActivity : AppCompatActivity() {
 
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.activity_main_navigation)
         bottomNavigationView.setOnNavigationItemSelectedListener { item: MenuItem ->
-            val selectedFragment = when (item.itemId) {
-                R.id.menu_main_navigation_anime -> AnimeFragment.newInstance()
-                R.id.menu_main_navigation_manga -> MangaFragment.newInstance()
-                else -> SearchFragment.newInstance()
+            val fragment: Fragment
+            val tag: String
+
+            when (item.itemId) {
+                R.id.menu_main_navigation_anime -> {
+                    tag = AnimeFragment.tag
+                    fragment = supportFragmentManager.findFragmentByTag(tag) ?: AnimeFragment.newInstance()
+                }
+                R.id.menu_main_navigation_manga -> {
+                    tag = MangaFragment.tag
+                    fragment = supportFragmentManager.findFragmentByTag(tag) ?: MangaFragment.newInstance()
+                }
+                else -> {
+                    tag = SearchFragment.tag
+                    fragment = supportFragmentManager.findFragmentByTag(tag) ?: SearchFragment.newInstance()
+                }
             }
 
-            supportFragmentManager.beginTransaction()
-                    .replace(R.id.activity_main_frame, selectedFragment)
-                    .commit()
-
+            setFragment(fragment, tag)
             true
         }
 
-        supportFragmentManager.beginTransaction()
-                .replace(R.id.activity_main_frame, AnimeFragment.newInstance())
-                .commit()
+        if (savedInstanceState == null) {
+            setFragment(AnimeFragment.newInstance(), AnimeFragment.tag)
+        } else {
+            currentDisplayedFragmentTag = savedInstanceState.getString(currentDisplayedFragmentTagBundleId)
+            setFragment(supportFragmentManager.findFragmentByTag(currentDisplayedFragmentTag), currentDisplayedFragmentTag)
+        }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle?) {
+        outState?.putString(currentDisplayedFragmentTagBundleId, currentDisplayedFragmentTag)
+        super.onSaveInstanceState(outState)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -93,5 +113,12 @@ class MainActivity : AppCompatActivity() {
                 })
                 .setNegativeButton(android.R.string.cancel, null)
                 .show()
+    }
+
+    private fun setFragment(fragment: Fragment, fragmentTag: String) {
+        currentDisplayedFragmentTag = fragmentTag
+        supportFragmentManager.beginTransaction()
+                .replace(R.id.activity_main_frame, fragment, fragmentTag)
+                .commit()
     }
 }
