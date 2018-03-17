@@ -5,10 +5,12 @@ import android.net.Uri
 import android.os.Bundle
 import android.support.customtabs.CustomTabsIntent
 import android.support.design.widget.BottomNavigationView
+import android.support.design.widget.Snackbar
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import timber.log.Timber
 
 class MainActivity : AppCompatActivity() {
     private val sharedPref: SharedPref by lazy { SharedPref(this) }
@@ -81,7 +83,13 @@ class MainActivity : AppCompatActivity() {
                     states[which] = isChecked
                 })
                 .setPositiveButton(android.R.string.ok, { _, _ ->
-                    sharedPref.setAnimeFilter(states)
+                    if (states.all { !it }) {
+                        Timber.w("User tried to set all filter states to false")
+                        Snackbar.make(findViewById(R.id.activity_main_layout), R.string.filter_must_select, Snackbar.LENGTH_LONG)
+                                .show()
+                    } else {
+                        sharedPref.setAnimeFilter(states)
+                    }
                 })
                 .setNegativeButton(android.R.string.cancel, null)
                 .show()

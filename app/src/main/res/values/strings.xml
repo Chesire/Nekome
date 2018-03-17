@@ -20,4 +20,5 @@
     <string name="filter_state_dropped">Dropped</string>
     <string name="filter_state_plan_to_watch">Plan to Watch</string>
     <string name="filter_state_plan_to_read">Plan to Read</string>
+    <string name="filter_must_select">At least one filter must be selected</string>
 </resources>
