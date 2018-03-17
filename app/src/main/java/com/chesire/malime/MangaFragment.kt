@@ -12,6 +12,7 @@ class MangaFragment : Fragment() {
     }
 
     companion object {
+        const val tag = "MangaFragment"
         fun newInstance(): MangaFragment {
             val mangaFragment = MangaFragment()
             val args = Bundle()

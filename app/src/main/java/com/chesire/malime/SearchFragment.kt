@@ -12,6 +12,7 @@ class SearchFragment : Fragment() {
     }
 
     companion object {
+        const val tag = "SearchFragment"
         fun newInstance(): SearchFragment {
             val searchFragment = SearchFragment()
             val args = Bundle()

@@ -25,6 +25,10 @@ class AnimeViewAdapter(
         filter.filter("")
     }
 
+    fun getAll(): ArrayList<Anime> {
+        return items
+    }
+
     override fun getItemCount(): Int {
         return filteredItems.count()
     }
