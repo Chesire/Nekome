@@ -5,13 +5,14 @@ import android.net.Uri
 import android.os.Bundle
 import android.support.customtabs.CustomTabsIntent
 import android.support.design.widget.BottomNavigationView
+import android.support.design.widget.Snackbar
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import timber.log.Timber
 
 class MainActivity : AppCompatActivity() {
-
     private val sharedPref: SharedPref by lazy { SharedPref(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,26 +45,53 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        if (item?.itemId == R.id.menu_options_view_profile) {
-            CustomTabsIntent.Builder()
-                    .build()
-                    .launchUrl(this, Uri.parse("https://myanimelist.net/profile/${sharedPref.getUsername()}"))
-            return true
-        } else if (item?.itemId == R.id.menu_options_log_out) {
-            AlertDialog.Builder(this)
-                    .setTitle(R.string.options_log_out)
-                    .setMessage(R.string.log_out_confirmation)
-                    .setNegativeButton(android.R.string.no, null)
-                    .setPositiveButton(android.R.string.yes, { _, _ ->
-                        sharedPref.clearLoginDetails()
-                        startActivity(Intent(this, LoginActivity::class.java))
-                        finish()
-                    })
-                    .show()
+        when {
+            item?.itemId == R.id.menu_options_view_profile -> {
+                CustomTabsIntent.Builder()
+                        .build()
+                        .launchUrl(this, Uri.parse("https://myanimelist.net/profile/${sharedPref.getUsername()}"))
+                return true
+            }
+            item?.itemId == R.id.menu_options_log_out -> {
+                AlertDialog.Builder(this)
+                        .setTitle(R.string.options_log_out)
+                        .setMessage(R.string.log_out_confirmation)
+                        .setNegativeButton(android.R.string.no, null)
+                        .setPositiveButton(android.R.string.yes, { _, _ ->
+                            sharedPref.clearLoginDetails()
+                            startActivity(Intent(this, LoginActivity::class.java))
+                            finish()
+                        })
+                        .show()
 
-            return true
+                return true
+            }
+            item?.itemId == R.id.menu_options_filter -> {
+                spawnFilterDialog()
+                return true
+            }
+            else -> return super.onOptionsItemSelected(item)
         }
 
-        return super.onOptionsItemSelected(item)
+    }
+
+    private fun spawnFilterDialog() {
+        val states = sharedPref.getAnimeFilter()
+        AlertDialog.Builder(this)
+                .setTitle(R.string.filter_dialog_title)
+                .setMultiChoiceItems(R.array.anime_states, states, { _, which, isChecked ->
+                    states[which] = isChecked
+                })
+                .setPositiveButton(android.R.string.ok, { _, _ ->
+                    if (states.all { !it }) {
+                        Timber.w("User tried to set all filter states to false")
+                        Snackbar.make(findViewById(R.id.activity_main_layout), R.string.filter_must_select, Snackbar.LENGTH_LONG)
+                                .show()
+                    } else {
+                        sharedPref.setAnimeFilter(states)
+                    }
+                })
+                .setNegativeButton(android.R.string.cancel, null)
+                .show()
     }
 }

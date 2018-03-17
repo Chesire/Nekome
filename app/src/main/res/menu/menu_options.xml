@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/menu_options_filter"
+        android:icon="@drawable/ic_filter_list_black"
+        android:title="@string/options_filter"
+        app:showAsAction="always" />
     <item
         android:id="@+id/menu_options_view_profile"
         android:title="@string/options_view_profile" />

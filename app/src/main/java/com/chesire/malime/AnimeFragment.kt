@@ -1,5 +1,6 @@
 package com.chesire.malime
 
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.widget.SwipeRefreshLayout
@@ -13,8 +14,9 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
-class AnimeFragment : Fragment() {
+class AnimeFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListener {
     private var disposables = CompositeDisposable()
+    private lateinit var sharedPref: SharedPref
     private lateinit var username: String
     private lateinit var malManager: MalManager
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
@@ -26,12 +28,14 @@ class AnimeFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val sharedPref = SharedPref(context!!)
+        sharedPref = SharedPref(context!!)
         username = sharedPref.getUsername()
         malManager = MalManager(sharedPref.getAuth())
 
         viewManager = LinearLayoutManager(context!!)
-        viewAdapter = AnimeViewAdapter(ArrayList())
+        viewAdapter = AnimeViewAdapter(ArrayList(), ArrayList(), sharedPref)
+
+        sharedPref.registerOnChangeListener(this)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -76,6 +80,17 @@ class AnimeFragment : Fragment() {
                             swipeRefreshLayout.isRefreshing = false
                         }
                 ))
+    }
+
+    override fun onDestroy() {
+        sharedPref.unregisterOnChangeListener(this)
+        super.onDestroy()
+    }
+
+    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, id: String?) {
+        if (id != null && id.contains(sharedPref.preferenceAnimeFilter)) {
+            viewAdapter.filter.filter("")
+        }
     }
 
     companion object {
