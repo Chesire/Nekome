@@ -1,5 +1,7 @@
 package com.chesire.malime.models
 
+import android.os.Parcel
+import android.os.Parcelable
 import org.simpleframework.xml.Element
 import org.simpleframework.xml.Root
 
@@ -80,7 +82,7 @@ data class Anime(
         @field:Element(name = "my_tags", required = false)
         @param:Element(name = "my_tags", required = false)
         val myTags: String? = null
-) {
+) : Parcelable {
     private val baseUrl: String = "https://myanimelist.net/anime/"
 
     val malUrl: String = baseUrl + seriesAnimeDbId
@@ -88,5 +90,63 @@ data class Anime(
         "??"
     } else {
         seriesEpisodes.toString()
+    }
+
+    constructor(parcel: Parcel) : this(
+            parcel.readValue(Int::class.java.classLoader) as? Int,
+            parcel.readString(),
+            parcel.readString(),
+            parcel.readValue(Int::class.java.classLoader) as? Int,
+            parcel.readValue(Int::class.java.classLoader) as? Int,
+            parcel.readValue(Int::class.java.classLoader) as? Int,
+            parcel.readString(),
+            parcel.readString(),
+            parcel.readString(),
+            parcel.readValue(Int::class.java.classLoader) as? Int,
+            parcel.readValue(Int::class.java.classLoader) as? Int,
+            parcel.readString(),
+            parcel.readString(),
+            parcel.readValue(Int::class.java.classLoader) as? Int,
+            parcel.readValue(Int::class.java.classLoader) as? Int,
+            parcel.readValue(Int::class.java.classLoader) as? Int,
+            parcel.readValue(Int::class.java.classLoader) as? Int,
+            parcel.readValue(Int::class.java.classLoader) as? Int,
+            parcel.readString()) {
+    }
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeValue(seriesAnimeDbId)
+        parcel.writeString(seriesTitle)
+        parcel.writeString(seriesSynonyms)
+        parcel.writeValue(seriesType)
+        parcel.writeValue(seriesEpisodes)
+        parcel.writeValue(seriesStatus)
+        parcel.writeString(seriesStart)
+        parcel.writeString(seriesEnd)
+        parcel.writeString(seriesImage)
+        parcel.writeValue(myId)
+        parcel.writeValue(myWatchedEpisodes)
+        parcel.writeString(myStartDate)
+        parcel.writeString(myFinishDate)
+        parcel.writeValue(myScore)
+        parcel.writeValue(myStatus)
+        parcel.writeValue(myRewatching)
+        parcel.writeValue(myRewatchingEp)
+        parcel.writeValue(myLastUpdated)
+        parcel.writeString(myTags)
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    companion object CREATOR : Parcelable.Creator<Anime> {
+        override fun createFromParcel(parcel: Parcel): Anime {
+            return Anime(parcel)
+        }
+
+        override fun newArray(size: Int): Array<Anime?> {
+            return arrayOfNulls(size)
+        }
     }
 }
