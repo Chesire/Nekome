@@ -85,9 +85,9 @@ class MalManager(
         }
     }
 
-    fun updateAnime(id: Int, anime: UpdateAnime): Observable<Any> {
+    fun updateAnime(anime: UpdateAnime): Observable<Any> {
         return Observable.create { subscriber ->
-            val callResponse = api.updateAnime(id, anime.getXml())
+            val callResponse = api.updateAnime(anime.id, anime.getXml())
             val response = callResponse.execute()
 
             if (response.isSuccessful) {

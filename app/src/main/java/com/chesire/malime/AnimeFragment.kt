@@ -13,6 +13,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.chesire.malime.mal.MalManager
 import com.chesire.malime.models.Anime
+import com.chesire.malime.models.UpdateAnime
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -92,6 +93,24 @@ class AnimeFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeList
         }
     }
 
+    override fun onImageClicked(model: Anime) {
+        CustomTabsIntent.Builder()
+                .build()
+                .launchUrl(context, Uri.parse(model.malUrl))
+    }
+
+    override fun onPlusOneClicked(model: Anime) {
+        val updateModel = UpdateAnime(model)
+        updateModel.episode++
+        executeUpdateAnime(updateModel)
+    }
+
+    override fun onNegativeOneClicked(model: Anime) {
+        val updateModel = UpdateAnime(model)
+        updateModel.episode--
+        executeUpdateAnime(updateModel)
+    }
+
     private fun executeLoadAnime() {
         disposables.add(malManager.getAllAnime(username)
                 .subscribeOn(Schedulers.io())
@@ -107,18 +126,19 @@ class AnimeFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeList
                 ))
     }
 
-    override fun onImageClicked(model: Anime) {
-        CustomTabsIntent.Builder()
-                .build()
-                .launchUrl(context, Uri.parse(model.malUrl))
-    }
-
-    override fun onPlusOneClicked(model: Anime) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun onNegativeOneClicked(model: Anime) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    private fun executeUpdateAnime(model: UpdateAnime) {
+        // need to disable UI temporarily
+        disposables.add(malManager.updateAnime(model)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        { _ ->
+                            // update current model
+                        },
+                        { _ ->
+                            // display error
+                        }
+                ))
     }
 
     companion object {

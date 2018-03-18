@@ -1,12 +1,15 @@
 package com.chesire.malime.models
 
 data class UpdateAnime(
+        val id: Int,
         val title: String,
         var episode: Int,
         val status: Int,
         val score: Int
 ) {
     constructor(animeModel: Anime) : this(
+            // This should never result in being 0
+            id = animeModel.seriesAnimeDbId ?: 0,
             title = animeModel.seriesTitle ?: "Unknown",
             episode = animeModel.myWatchedEpisodes ?: 0,
             status = animeModel.myStatus ?: 0,
