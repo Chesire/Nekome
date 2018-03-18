@@ -1,10 +1,14 @@
 package com.chesire.malime.models
 
+import java.text.SimpleDateFormat
+import java.util.*
+
 data class UpdateAnime(
         val id: Int,
         val title: String,
         var episode: Int,
         val totalEpisodes: Int,
+        var dateFinish: String,
         var status: Int,
         val score: Int
 ) {
@@ -14,9 +18,17 @@ data class UpdateAnime(
             title = animeModel.seriesTitle ?: "Unknown",
             episode = animeModel.myWatchedEpisodes ?: 0,
             totalEpisodes = animeModel.seriesEpisodes ?: 0,
+            dateFinish = "",
             status = animeModel.myStatus ?: 0,
             score = animeModel.myScore ?: 0
     )
+
+    fun setToCompleteState() {
+        status = 2
+        val calendar = Calendar.getInstance()
+        val dateFormatter = SimpleDateFormat("MM/dd/yyyy", Locale.getDefault())
+        dateFinish = dateFormatter.format(calendar.time)
+    }
 
     fun getXml(): String {
         return "<entry>" +
@@ -28,7 +40,7 @@ data class UpdateAnime(
                 "<times_rewatched></times_rewatched>" +
                 "<rewatch_value></rewatch_value>" +
                 "<date_start></date_start>" +
-                "<date_finish></date_finish>" +
+                "<date_finish>$dateFinish</date_finish>" +
                 "<priority></priority>" +
                 "<enable_discussion></enable_discussion>" +
                 "<enable_rewatching></enable_rewatching>" +

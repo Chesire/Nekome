@@ -117,8 +117,7 @@ class AnimeFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeList
                     }
                     .setNegativeButton(android.R.string.no, null)
                     .setPositiveButton(android.R.string.yes, { _, _ ->
-                        // TODO: this should be changed to use a constant/enum
-                        updateModel.status = 2
+                        updateModel.setToCompleteState()
                     })
                     .show()
         } else {
