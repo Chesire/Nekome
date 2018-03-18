@@ -78,6 +78,17 @@ class AnimeFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeList
         super.onSaveInstanceState(outState)
     }
 
+    override fun onDestroy() {
+        sharedPref.unregisterOnChangeListener(this)
+        super.onDestroy()
+    }
+
+    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, id: String?) {
+        if (id != null && id.contains(sharedPref.preferenceAnimeFilter)) {
+            viewAdapter.filter.filter("")
+        }
+    }
+
     private fun executeLoadAnime() {
         disposables.add(malManager.getAllAnime(username)
                 .subscribeOn(Schedulers.io())
@@ -91,17 +102,6 @@ class AnimeFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeList
                             swipeRefreshLayout.isRefreshing = false
                         }
                 ))
-    }
-
-    override fun onDestroy() {
-        sharedPref.unregisterOnChangeListener(this)
-        super.onDestroy()
-    }
-
-    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, id: String?) {
-        if (id != null && id.contains(sharedPref.preferenceAnimeFilter)) {
-            viewAdapter.filter.filter("")
-        }
     }
 
     companion object {
