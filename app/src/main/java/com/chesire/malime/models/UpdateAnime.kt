@@ -1,5 +1,6 @@
 package com.chesire.malime.models
 
+import com.chesire.malime.AnimeStates
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -24,10 +25,15 @@ data class UpdateAnime(
     )
 
     fun setToCompleteState() {
-        status = 2
+        status = AnimeStates.COMPLETED.id
         val calendar = Calendar.getInstance()
         val dateFormatter = SimpleDateFormat("MM/dd/yyyy", Locale.getDefault())
         dateFinish = dateFormatter.format(calendar.time)
+    }
+
+    fun setToWatchingState() {
+        status = AnimeStates.WATCHING.id
+        dateFinish = ""
     }
 
     fun getXml(): String {

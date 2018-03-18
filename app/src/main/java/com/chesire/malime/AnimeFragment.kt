@@ -108,17 +108,17 @@ class AnimeFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeList
         updateModel.episode++
 
         // TODO: should have a preference to never ask
-        if (updateModel.episode == updateModel.totalEpisodes) {
+        if (updateModel.episode == updateModel.totalEpisodes && updateModel.status != AnimeStates.COMPLETED.id) {
             AlertDialog.Builder(context!!)
                     .setTitle(R.string.malitem_update_series_complete_title)
                     .setMessage(R.string.malitem_update_series_complete_body)
-                    .setOnDismissListener {
-                        executeUpdateAnime(updateModel, callback)
-                    }
                     .setNegativeButton(android.R.string.no, null)
                     .setPositiveButton(android.R.string.yes, { _, _ ->
                         updateModel.setToCompleteState()
                     })
+                    .setOnDismissListener {
+                        executeUpdateAnime(updateModel, callback)
+                    }
                     .show()
         } else {
             executeUpdateAnime(updateModel, callback)
@@ -128,7 +128,23 @@ class AnimeFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeList
     override fun onNegativeOneClicked(model: Anime, callback: () -> Unit) {
         val updateModel = UpdateAnime(model)
         updateModel.episode--
-        executeUpdateAnime(updateModel, callback)
+
+        // TODO: should have a preference to never ask
+        if (updateModel.episode < updateModel.totalEpisodes && updateModel.status == AnimeStates.COMPLETED.id) {
+            AlertDialog.Builder(context!!)
+                    .setTitle(R.string.malitem_update_series_reverted_title)
+                    .setMessage(R.string.malitem_update_series_reverted_body)
+                    .setNegativeButton(android.R.string.no, null)
+                    .setPositiveButton(android.R.string.yes, { _, _ ->
+                        updateModel.setToWatchingState()
+                    })
+                    .setOnDismissListener {
+                        executeUpdateAnime(updateModel, callback)
+                    }
+                    .show()
+        } else {
+            executeUpdateAnime(updateModel, callback)
+        }
     }
 
     private fun executeLoadAnime() {
