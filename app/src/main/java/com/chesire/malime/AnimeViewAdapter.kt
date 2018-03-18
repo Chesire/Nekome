@@ -61,7 +61,7 @@ class AnimeViewAdapter(
             private val animeView: View
     ) : RecyclerView.ViewHolder(animeView) {
         private val loadingLayout = animeView.findViewById<View>(R.id.item_malmodel_loading_layout)
-        private val contentLayout = animeView.findViewById<View>(R.id.item_malmodel_content_layout)
+        private val contentLayout = animeView.findViewById<ViewGroup>(R.id.item_malmodel_content_layout)
 
         fun bindModel(animeModel: Anime) {
             val image = animeView.findViewById<ImageView>(R.id.item_malmodel_image)
@@ -107,13 +107,16 @@ class AnimeViewAdapter(
             }
         }
 
-        private fun showLoadingLayout(state: Boolean) {
-            if (state) {
-                loadingLayout.visibility = View.VISIBLE
-                contentLayout.isClickable = false
+        private fun showLoadingLayout(displayLoader: Boolean) {
+            loadingLayout.visibility = if (displayLoader) {
+                View.VISIBLE
             } else {
-                loadingLayout.visibility = View.GONE
-                contentLayout.isClickable = true
+                View.GONE
+            }
+
+            contentLayout.isEnabled = !displayLoader
+            for (i in 0 until contentLayout.childCount) {
+                contentLayout.getChildAt(i).isEnabled = !displayLoader
             }
         }
     }
