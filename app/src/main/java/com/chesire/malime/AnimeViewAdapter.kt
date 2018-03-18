@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import com.chesire.malime.models.Anime
-import com.chesire.malime.models.UpdateAnime
 
 class AnimeViewAdapter(
         private val items: ArrayList<Anime>,
@@ -49,6 +48,8 @@ class AnimeViewAdapter(
         fun bindModel(animeModel: Anime) {
             val context = animeView.context
             val image = animeView.findViewById<ImageView>(R.id.item_malmodel_image)
+            val plusOneButton = animeView.findViewById<ImageButton>(R.id.item_malmodel_plus_one)
+
             GlideApp.with(animeView)
                     .load(animeModel.seriesImage)
                     .into(image)
@@ -59,9 +60,14 @@ class AnimeViewAdapter(
             animeView.findViewById<TextView>(R.id.item_malmodel_progress).text =
                     String.format(context.getString(R.string.malitem_progress_text),
                             animeModel.myWatchedEpisodes, animeModel.totalEpisodes)
-            animeView.findViewById<ImageButton>(R.id.item_malmodel_plus_one).setOnClickListener {
-                val updatedAnime = UpdateAnime(animeModel)
-                updatedAnime.episode++
+
+            if (animeModel.seriesEpisodes == 0 || animeModel.myWatchedEpisodes != animeModel.seriesEpisodes) {
+                plusOneButton.visibility = View.VISIBLE
+                plusOneButton.setOnClickListener {
+                    interactionListener.onPlusOneClicked(animeModel)
+                }
+            } else {
+                plusOneButton.visibility = View.GONE
             }
         }
     }
