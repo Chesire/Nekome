@@ -45,29 +45,35 @@ class AnimeViewAdapter(
     inner class ViewHolder(
             private val animeView: View
     ) : RecyclerView.ViewHolder(animeView) {
+        private val loadingLayout = animeView.findViewById<View>(R.id.item_malmodel_loading_layout)
+        private val contentLayout = animeView.findViewById<View>(R.id.item_malmodel_content_layout)
+
         fun bindModel(animeModel: Anime) {
-            val context = animeView.context
-            val loading = animeView.findViewById<RelativeLayout>(R.id.item_malmodel_loading_layout)
             val image = animeView.findViewById<ImageView>(R.id.item_malmodel_image)
             val negOneButton = animeView.findViewById<ImageButton>(R.id.item_malmodel_neg_one)
             val plusOneButton = animeView.findViewById<ImageButton>(R.id.item_malmodel_plus_one)
 
+            // Setup the image
             GlideApp.with(animeView)
                     .load(animeModel.seriesImage)
                     .into(image)
             image.setOnClickListener({
                 interactionListener.onImageClicked(animeModel)
             })
+
+            // Setup the text
             animeView.findViewById<TextView>(R.id.item_malmodel_title).text = animeModel.seriesTitle
             animeView.findViewById<TextView>(R.id.item_malmodel_progress).text =
-                    String.format(context.getString(R.string.malitem_progress_text),
-                            animeModel.myWatchedEpisodes, animeModel.totalEpisodes)
+                    String.format(animeView.context.getString(R.string.malitem_progress_text), animeModel.myWatchedEpisodes, animeModel.totalEpisodes)
 
+            // Setup the buttons
             if (animeModel.seriesEpisodes == 0 || animeModel.myWatchedEpisodes != animeModel.seriesEpisodes) {
                 plusOneButton.visibility = View.VISIBLE
                 plusOneButton.setOnClickListener {
-                    loading.visibility = View.VISIBLE
-                    interactionListener.onPlusOneClicked(animeModel)
+                    showLoadingLayout(true)
+                    interactionListener.onPlusOneClicked(animeModel, {
+                        showLoadingLayout(false)
+                    })
                 }
             } else {
                 plusOneButton.visibility = View.GONE
@@ -78,9 +84,21 @@ class AnimeViewAdapter(
             } else {
                 negOneButton.visibility = View.VISIBLE
                 negOneButton.setOnClickListener {
-                    loading.visibility = View.VISIBLE
-                    interactionListener.onNegativeOneClicked(animeModel)
+                    showLoadingLayout(true)
+                    interactionListener.onNegativeOneClicked(animeModel, {
+                        showLoadingLayout(false)
+                    })
                 }
+            }
+        }
+
+        private fun showLoadingLayout(state: Boolean) {
+            if (state) {
+                loadingLayout.visibility = View.VISIBLE
+                contentLayout.isClickable = false
+            } else {
+                loadingLayout.visibility = View.GONE
+                contentLayout.isClickable = true
             }
         }
     }

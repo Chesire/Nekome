@@ -99,16 +99,16 @@ class AnimeFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeList
                 .launchUrl(context, Uri.parse(model.malUrl))
     }
 
-    override fun onPlusOneClicked(model: Anime) {
+    override fun onPlusOneClicked(model: Anime, callback: () -> Unit) {
         val updateModel = UpdateAnime(model)
         updateModel.episode++
-        executeUpdateAnime(updateModel)
+        executeUpdateAnime(updateModel, callback)
     }
 
-    override fun onNegativeOneClicked(model: Anime) {
+    override fun onNegativeOneClicked(model: Anime, callback: () -> Unit) {
         val updateModel = UpdateAnime(model)
         updateModel.episode--
-        executeUpdateAnime(updateModel)
+        executeUpdateAnime(updateModel, callback)
     }
 
     private fun executeLoadAnime() {
@@ -126,15 +126,17 @@ class AnimeFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeList
                 ))
     }
 
-    private fun executeUpdateAnime(model: UpdateAnime) {
+    private fun executeUpdateAnime(model: UpdateAnime, callback: () -> Unit) {
         disposables.add(malManager.updateAnime(model)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         { _ ->
+                            callback()
                             // update current model
                         },
                         { _ ->
+                            callback()
                             // display error
                         }
                 ))
