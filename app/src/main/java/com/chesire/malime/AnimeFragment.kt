@@ -7,6 +7,7 @@ import android.support.customtabs.CustomTabsIntent
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v4.widget.SwipeRefreshLayout
+import android.support.v7.app.AlertDialog
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -103,7 +104,24 @@ class AnimeFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeList
     override fun onPlusOneClicked(model: Anime, callback: () -> Unit) {
         val updateModel = UpdateAnime(model)
         updateModel.episode++
-        executeUpdateAnime(updateModel, callback)
+
+        // TODO: should have a preference to never ask
+        if (updateModel.episode == updateModel.totalEpisodes) {
+            AlertDialog.Builder(context!!)
+                    .setTitle(R.string.malitem_update_series_complete_title)
+                    .setMessage(R.string.malitem_update_series_complete_body)
+                    .setOnDismissListener {
+                        executeUpdateAnime(updateModel, callback)
+                    }
+                    .setNegativeButton(android.R.string.no, null)
+                    .setPositiveButton(android.R.string.yes, { _, _ ->
+                        // TODO: this should be changed to use a constant/enum
+                        updateModel.status = 2
+                    })
+                    .show()
+        } else {
+            executeUpdateAnime(updateModel, callback)
+        }
     }
 
     override fun onNegativeOneClicked(model: Anime, callback: () -> Unit) {

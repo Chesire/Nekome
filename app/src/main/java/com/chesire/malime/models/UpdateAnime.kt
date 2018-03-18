@@ -4,7 +4,8 @@ data class UpdateAnime(
         val id: Int,
         val title: String,
         var episode: Int,
-        val status: Int,
+        val totalEpisodes: Int,
+        var status: Int,
         val score: Int
 ) {
     constructor(animeModel: Anime) : this(
@@ -12,6 +13,7 @@ data class UpdateAnime(
             id = animeModel.seriesAnimeDbId ?: 0,
             title = animeModel.seriesTitle ?: "Unknown",
             episode = animeModel.myWatchedEpisodes ?: 0,
+            totalEpisodes = animeModel.seriesEpisodes ?: 0,
             status = animeModel.myStatus ?: 0,
             score = animeModel.myScore ?: 0
     )
