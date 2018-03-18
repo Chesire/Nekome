@@ -16,23 +16,21 @@ class MalApi(
     private val malService: MalService
 
     init {
-        // This should be stripped out on release
-        val interceptor: HttpLoggingInterceptor = HttpLoggingInterceptor().apply {
-            this.level = if (BuildConfig.DEBUG) {
-                HttpLoggingInterceptor.Level.BODY
-            } else {
-                HttpLoggingInterceptor.Level.NONE
-            }
-        }
         val httpClient = OkHttpClient()
                 .newBuilder()
                 .addInterceptor(BasicAuthInterceptor(auth))
-                .addInterceptor(interceptor)
-                .build()
+
+        if (BuildConfig.DEBUG) {
+            val interceptor: HttpLoggingInterceptor = HttpLoggingInterceptor().apply {
+                this.level = HttpLoggingInterceptor.Level.BODY
+            }
+
+            httpClient.addInterceptor(interceptor)
+        }
 
         val retrofit = Retrofit.Builder()
                 .baseUrl(SERVICE_ENDPOINT)
-                .client(httpClient)
+                .client(httpClient.build())
                 .addConverterFactory(SimpleXmlConverterFactory.create())
                 .build()
 
