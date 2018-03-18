@@ -1,7 +1,9 @@
 package com.chesire.malime
 
 import android.content.SharedPreferences
+import android.net.Uri
 import android.os.Bundle
+import android.support.customtabs.CustomTabsIntent
 import android.support.v4.app.Fragment
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
@@ -10,11 +12,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.chesire.malime.mal.MalManager
+import com.chesire.malime.models.Anime
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
-class AnimeFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListener {
+class AnimeFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListener, MalModelInteractionListener<Anime> {
     private val animeItemsBundleId = "animeItems"
 
     private var disposables = CompositeDisposable()
@@ -35,7 +38,7 @@ class AnimeFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeList
         malManager = MalManager(sharedPref.getAuth())
 
         viewManager = LinearLayoutManager(context!!)
-        viewAdapter = AnimeViewAdapter(ArrayList(), ArrayList(), sharedPref)
+        viewAdapter = AnimeViewAdapter(ArrayList(), ArrayList(), sharedPref, this)
 
         sharedPref.registerOnChangeListener(this)
     }
@@ -102,6 +105,20 @@ class AnimeFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeList
                             swipeRefreshLayout.isRefreshing = false
                         }
                 ))
+    }
+
+    override fun onImageClicked(model: Anime) {
+        CustomTabsIntent.Builder()
+                .build()
+                .launchUrl(context, Uri.parse(model.malUrl))
+    }
+
+    override fun onPlusOneClicked(model: Anime) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onMinusOneClicked(model: Anime) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     companion object {
