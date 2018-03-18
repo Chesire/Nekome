@@ -117,7 +117,7 @@ class AnimeFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeList
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun onMinusOneClicked(model: Anime) {
+    override fun onNegativeOneClicked(model: Anime) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 

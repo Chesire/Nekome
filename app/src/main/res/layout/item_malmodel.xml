@@ -28,13 +28,16 @@
             android:layout_toEndOf="@id/item_malmodel_image" />
 
         <ImageButton
+            android:id="@+id/item_malmodel_neg_one"
+            style="@style/malitem_image_button_style"
+            android:layout_toEndOf="@id/item_malmodel_image"
+            android:src="@drawable/ic_exposure_neg_1_black" />
+
+        <ImageButton
             android:id="@+id/item_malmodel_plus_one"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
+            style="@style/malitem_image_button_style"
             android:layout_alignParentEnd="true"
-            android:layout_margin="4dp"
-            android:src="@drawable/ic_plus_one_black" />
+            android:src="@drawable/ic_exposure_plus_1_black" />
 
     </RelativeLayout>
 </android.support.v7.widget.CardView>

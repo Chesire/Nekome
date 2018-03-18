@@ -48,6 +48,7 @@ class AnimeViewAdapter(
         fun bindModel(animeModel: Anime) {
             val context = animeView.context
             val image = animeView.findViewById<ImageView>(R.id.item_malmodel_image)
+            val negOneButton = animeView.findViewById<ImageButton>(R.id.item_malmodel_neg_one)
             val plusOneButton = animeView.findViewById<ImageButton>(R.id.item_malmodel_plus_one)
 
             GlideApp.with(animeView)
@@ -68,6 +69,15 @@ class AnimeViewAdapter(
                 }
             } else {
                 plusOneButton.visibility = View.GONE
+            }
+
+            if (animeModel.myWatchedEpisodes == 0) {
+                negOneButton.visibility = View.GONE
+            } else {
+                negOneButton.visibility = View.VISIBLE
+                negOneButton.setOnClickListener {
+                    interactionListener.onNegativeOneClicked(animeModel)
+                }
             }
         }
     }
