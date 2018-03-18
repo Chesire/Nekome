@@ -49,7 +49,7 @@ data class Anime(
 
         @field:Element(name = "my_watched_episodes", required = false)
         @param:Element(name = "my_watched_episodes", required = false)
-        val myWatchedEpisodes: Int? = null,
+        var myWatchedEpisodes: Int? = null,
 
         @field:Element(name = "my_start_date", required = false)
         @param:Element(name = "my_start_date", required = false)

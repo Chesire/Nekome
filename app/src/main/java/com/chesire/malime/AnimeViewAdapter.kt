@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import com.chesire.malime.models.Anime
+import com.chesire.malime.models.UpdateAnime
 
 class AnimeViewAdapter(
         private val items: ArrayList<Anime>,
@@ -23,6 +24,14 @@ class AnimeViewAdapter(
 
     fun getAll(): ArrayList<Anime> {
         return items
+    }
+
+    fun updateItem(updatedModel: UpdateAnime) {
+        val foundModelIndex = filteredItems.indexOfFirst { it.seriesAnimeDbId == updatedModel.id }
+        val foundModel = filteredItems[foundModelIndex]
+        foundModel.myWatchedEpisodes = updatedModel.episode
+
+        notifyItemChanged(foundModelIndex)
     }
 
     override fun getItemCount(): Int {

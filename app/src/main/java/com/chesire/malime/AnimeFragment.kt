@@ -133,7 +133,7 @@ class AnimeFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeList
                 .subscribe(
                         { _ ->
                             callback()
-                            // update current model
+                            viewAdapter.updateItem(model)
                         },
                         { _ ->
                             callback()
