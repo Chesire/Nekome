@@ -12,8 +12,7 @@
     <string name="options_log_out">Log Out</string>
     <string name="log_out_confirmation">Are you sure you wish to log out?</string>
     <string name="malitem_progress_text">%1$s / %2$s</string>
-    <string name="malitem_updating_title">Updating Series</string>
-    <string name="malitem_updating_body">Please wait…</string>
+    <string name="malitem_update_series_failure">Update to series %s failed, please try again</string>
 
     <string name="filter_dialog_title">Filter By:</string>
     <string name="filter_state_watching">Watching</string>
