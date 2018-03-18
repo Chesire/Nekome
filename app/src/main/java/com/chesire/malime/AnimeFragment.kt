@@ -1,5 +1,6 @@
 package com.chesire.malime
 
+import android.app.ProgressDialog
 import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
@@ -128,15 +129,22 @@ class AnimeFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeList
 
     private fun executeUpdateAnime(model: UpdateAnime) {
         // need to disable UI temporarily
+        val progressDialog = ProgressDialog(this.context)
+        progressDialog.setTitle(R.string.malitem_updating_title)
+        progressDialog.setMessage(getString(R.string.malitem_updating_body))
+        progressDialog.setCancelable(false)
+        progressDialog.show()
         disposables.add(malManager.updateAnime(model)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         { _ ->
                             // update current model
+                            progressDialog.dismiss()
                         },
                         { _ ->
                             // display error
+                            progressDialog.dismiss()
                         }
                 ))
     }
