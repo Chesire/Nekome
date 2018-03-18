@@ -1,9 +1,6 @@
 package com.chesire.malime.mal
 
-import com.chesire.malime.models.Anime
-import com.chesire.malime.models.Entry
-import com.chesire.malime.models.Manga
-import com.chesire.malime.models.MyInfo
+import com.chesire.malime.models.*
 import io.reactivex.Observable
 import timber.log.Timber
 
@@ -83,6 +80,22 @@ class MalManager(
                     subscriber.onComplete()
                 }
             } else {
+                subscriber.onError(Throwable(response.message()))
+            }
+        }
+    }
+
+    fun updateAnime(id: Int, anime: UpdateAnime): Observable<Any> {
+        return Observable.create { subscriber ->
+            val callResponse = api.updateAnime(id, anime.getXml())
+            val response = callResponse.execute()
+
+            if (response.isSuccessful) {
+                Timber.i("Anime [%s] has updated to episode [%d]", anime.title, anime.episode)
+                subscriber.onNext(Any())
+                subscriber.onComplete()
+            } else {
+                Timber.e(Throwable(response.message()), "Error Updating anime [%s] - %s", anime.title, response.errorBody())
                 subscriber.onError(Throwable(response.message()))
             }
         }

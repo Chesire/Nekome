@@ -8,8 +8,7 @@ import org.simpleframework.xml.Element
 import org.simpleframework.xml.ElementList
 import org.simpleframework.xml.Root
 import retrofit2.Call
-import retrofit2.http.GET
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface MalService {
     @GET("malappinfo.php?&status=all&type=anime")
@@ -23,6 +22,11 @@ interface MalService {
 
     @GET("api/anime/search.xml")
     fun searchForAnime(@Query("q") name: String): Call<SearchForAnimeResponse>
+
+    @FormUrlEncoded
+    @POST("api/animelist/update/{id}.xml")
+    fun updateAnime(@Path("id") id: Int,
+                    @Field("data") data: String): Call<Void>
 
     @Root(name = "myanimelist")
     data class GetAllAnimeResponse(
