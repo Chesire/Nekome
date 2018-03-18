@@ -47,6 +47,7 @@ class AnimeViewAdapter(
     ) : RecyclerView.ViewHolder(animeView) {
         fun bindModel(animeModel: Anime) {
             val context = animeView.context
+            val loading = animeView.findViewById<RelativeLayout>(R.id.item_malmodel_loading_layout)
             val image = animeView.findViewById<ImageView>(R.id.item_malmodel_image)
             val negOneButton = animeView.findViewById<ImageButton>(R.id.item_malmodel_neg_one)
             val plusOneButton = animeView.findViewById<ImageButton>(R.id.item_malmodel_plus_one)
@@ -65,6 +66,7 @@ class AnimeViewAdapter(
             if (animeModel.seriesEpisodes == 0 || animeModel.myWatchedEpisodes != animeModel.seriesEpisodes) {
                 plusOneButton.visibility = View.VISIBLE
                 plusOneButton.setOnClickListener {
+                    loading.visibility = View.VISIBLE
                     interactionListener.onPlusOneClicked(animeModel)
                 }
             } else {
@@ -76,6 +78,7 @@ class AnimeViewAdapter(
             } else {
                 negOneButton.visibility = View.VISIBLE
                 negOneButton.setOnClickListener {
+                    loading.visibility = View.VISIBLE
                     interactionListener.onNegativeOneClicked(animeModel)
                 }
             }
