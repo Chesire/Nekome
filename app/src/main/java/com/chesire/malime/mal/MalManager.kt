@@ -17,14 +17,14 @@ class MalManager(
                 Timber.i("Get all anime successful")
                 val responseBody = response.body()
                 if (responseBody?.myInfo == null) {
-                    subscriber.onError(Throwable(response.message()))
+                    subscriber.tryOnError(Throwable(response.message()))
                 } else {
                     subscriber.onNext(Pair(responseBody.myInfo, responseBody.animeList))
                     subscriber.onComplete()
                 }
             } else {
                 Timber.e(Throwable(response.message()))
-                subscriber.onError(Throwable(response.message()))
+                subscriber.tryOnError(Throwable(response.message()))
             }
         }
     }
@@ -38,14 +38,14 @@ class MalManager(
                 Timber.i("Get all manga successful")
                 val responseBody = response.body()
                 if (responseBody?.myInfo == null) {
-                    subscriber.onError(Throwable(response.message()))
+                    subscriber.tryOnError(Throwable(response.message()))
                 } else {
                     subscriber.onNext(Pair(responseBody.myInfo, responseBody.mangaList))
                     subscriber.onComplete()
                 }
             } else {
                 Timber.e(Throwable(response.message()))
-                subscriber.onError(Throwable(response.message()))
+                subscriber.tryOnError(Throwable(response.message()))
             }
         }
     }
@@ -61,7 +61,7 @@ class MalManager(
                 subscriber.onComplete()
             } else {
                 Timber.e(Throwable(response.message()), "Error with the login method - %s", response.errorBody())
-                subscriber.onError(Throwable(response.message()))
+                subscriber.tryOnError(Throwable(response.message()))
             }
         }
     }
@@ -74,13 +74,13 @@ class MalManager(
             if (response.isSuccessful) {
                 val responseBody = response.body()
                 if (responseBody == null) {
-                    subscriber.onError(Throwable(response.message()))
+                    subscriber.tryOnError(Throwable(response.message()))
                 } else {
                     subscriber.onNext(responseBody.entries)
                     subscriber.onComplete()
                 }
             } else {
-                subscriber.onError(Throwable(response.message()))
+                subscriber.tryOnError(Throwable(response.message()))
             }
         }
     }
@@ -96,7 +96,7 @@ class MalManager(
                 subscriber.onComplete()
             } else {
                 Timber.e(Throwable(response.message()), "Error Updating anime [%s] - %s", anime.title, response.errorBody())
-                subscriber.onError(Throwable(response.message()))
+                subscriber.tryOnError(Throwable(response.message()))
             }
         }
     }
