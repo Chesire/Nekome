@@ -10,6 +10,7 @@ import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.app.AlertDialog
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.SimpleItemAnimator
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -58,6 +59,7 @@ class AnimeFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeList
             setHasFixedSize(true)
             layoutManager = viewManager
             adapter = viewAdapter
+            (itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
         }
 
         if (savedInstanceState == null) {

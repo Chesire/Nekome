@@ -31,7 +31,13 @@ class AnimeViewAdapter(
         val foundModel = filteredItems[foundModelIndex]
         foundModel.myWatchedEpisodes = updatedModel.episode
 
-        notifyItemChanged(foundModelIndex)
+        // If the state hasn't changed, just notify an item has changed, if not run the whole filter
+        if (foundModel.myStatus == updatedModel.status) {
+            notifyItemChanged(foundModelIndex)
+        } else {
+            foundModel.myStatus = updatedModel.status
+            filter.filter("")
+        }
     }
 
     override fun getItemCount(): Int {
