@@ -9,10 +9,10 @@ import com.chesire.malime.models.Anime
 import com.chesire.malime.models.UpdateAnime
 
 class AnimeViewAdapter(
-        private val items: ArrayList<Anime>,
-        private val filteredItems: ArrayList<Anime>,
-        private val sharedPref: SharedPref,
-        private val interactionListener: MalModelInteractionListener<Anime>
+    private val items: ArrayList<Anime>,
+    private val filteredItems: ArrayList<Anime>,
+    private val sharedPref: SharedPref,
+    private val interactionListener: MalModelInteractionListener<Anime>
 ) : RecyclerView.Adapter<AnimeViewAdapter.ViewHolder>(), Filterable {
     private val filter: AnimeFilter = AnimeFilter()
 
@@ -49,8 +49,10 @@ class AnimeViewAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(LayoutInflater.from(parent.context)
-                .inflate(R.layout.item_malmodel, parent, false))
+        return ViewHolder(
+            LayoutInflater.from(parent.context)
+                .inflate(R.layout.item_malmodel, parent, false)
+        )
     }
 
     override fun getFilter(): Filter {
@@ -58,10 +60,11 @@ class AnimeViewAdapter(
     }
 
     inner class ViewHolder(
-            private val animeView: View
+        private val animeView: View
     ) : RecyclerView.ViewHolder(animeView) {
         private val loadingLayout = animeView.findViewById<View>(R.id.item_malmodel_loading_layout)
-        private val contentLayout = animeView.findViewById<ViewGroup>(R.id.item_malmodel_content_layout)
+        private val contentLayout =
+            animeView.findViewById<ViewGroup>(R.id.item_malmodel_content_layout)
 
         fun bindModel(animeModel: Anime) {
             val image = animeView.findViewById<ImageView>(R.id.item_malmodel_image)
@@ -70,8 +73,8 @@ class AnimeViewAdapter(
 
             // Setup the image
             GlideApp.with(animeView)
-                    .load(animeModel.seriesImage)
-                    .into(image)
+                .load(animeModel.seriesImage)
+                .into(image)
             image.setOnClickListener({
                 interactionListener.onImageClicked(animeModel)
             })
@@ -79,7 +82,11 @@ class AnimeViewAdapter(
             // Setup the text
             animeView.findViewById<TextView>(R.id.item_malmodel_title).text = animeModel.seriesTitle
             animeView.findViewById<TextView>(R.id.item_malmodel_progress).text =
-                    String.format(animeView.context.getString(R.string.malitem_progress_text), animeModel.myWatchedEpisodes, animeModel.totalEpisodes)
+                    String.format(
+                        animeView.context.getString(R.string.malitem_progress_text),
+                        animeModel.myWatchedEpisodes,
+                        animeModel.totalEpisodes
+                    )
 
             // Setup the buttons
             if (animeModel.seriesEpisodes == 0 || animeModel.myWatchedEpisodes != animeModel.seriesEpisodes) {

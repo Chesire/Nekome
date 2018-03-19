@@ -25,46 +25,48 @@ interface MalService {
 
     @FormUrlEncoded
     @POST("api/animelist/update/{id}.xml")
-    fun updateAnime(@Path("id") id: Int,
-                    @Field("data") data: String): Call<Void>
+    fun updateAnime(
+        @Path("id") id: Int,
+        @Field("data") data: String
+    ): Call<Void>
 
     @Root(name = "myanimelist")
     data class GetAllAnimeResponse(
-            @field:Element(name = "myinfo", required = false)
-            @param:Element(name = "myinfo", required = false)
-            val myInfo: MyInfo? = null,
+        @field:Element(name = "myinfo", required = false)
+        @param:Element(name = "myinfo", required = false)
+        val myInfo: MyInfo? = null,
 
-            @field:ElementList(inline = true, entry = "anime")
-            @param:ElementList(inline = true, entry = "anime")
-            val animeList: List<Anime>
+        @field:ElementList(inline = true, entry = "anime")
+        @param:ElementList(inline = true, entry = "anime")
+        val animeList: List<Anime>
     )
 
     @Root(name = "myanimelist")
     data class GetAllMangaResponse(
-            @field:Element(name = "myinfo", required = false)
-            @param:Element(name = "myinfo", required = false)
-            val myInfo: MyInfo? = null,
+        @field:Element(name = "myinfo", required = false)
+        @param:Element(name = "myinfo", required = false)
+        val myInfo: MyInfo? = null,
 
-            @field:ElementList(inline = true, entry = "manga")
-            @param:ElementList(inline = true, entry = "manga")
-            val mangaList: List<Manga>
+        @field:ElementList(inline = true, entry = "manga")
+        @param:ElementList(inline = true, entry = "manga")
+        val mangaList: List<Manga>
     )
 
     @Root(name = "user")
     data class LoginToAccountResponse(
-            @field:Element(name = "id", required = false)
-            @param:Element(name = "id", required = false)
-            val id: Int? = null,
+        @field:Element(name = "id", required = false)
+        @param:Element(name = "id", required = false)
+        val id: Int? = null,
 
-            @field:Element(name = "username", required = false)
-            @param:Element(name = "username", required = false)
-            val username: String? = null
+        @field:Element(name = "username", required = false)
+        @param:Element(name = "username", required = false)
+        val username: String? = null
     )
 
     @Root(name = "anime")
     data class SearchForAnimeResponse(
-            @field:ElementList(inline = true, entry = "entry")
-            @param:ElementList(inline = true, entry = "entry")
-            val entries: List<Entry>
+        @field:ElementList(inline = true, entry = "entry")
+        @param:ElementList(inline = true, entry = "entry")
+        val entries: List<Entry>
     )
 }

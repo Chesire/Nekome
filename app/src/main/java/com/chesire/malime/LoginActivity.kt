@@ -52,23 +52,28 @@ class LoginActivity : AppCompatActivity() {
         val loginButton = findViewById<Button>(R.id.login_button)
         loginButton.isEnabled = false
 
-        val b64: String = Base64.encodeToString("$username:$password".toByteArray(Charsets.UTF_8), Base64.NO_WRAP)
+        val b64: String =
+            Base64.encodeToString("$username:$password".toByteArray(Charsets.UTF_8), Base64.NO_WRAP)
         val malManager = MalManager(b64)
         disposables.add(malManager.loginToAccount()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                        { _ ->
-                            val sharedPref = SharedPref(this)
-                            sharedPref.putUsername(username).putAuth(b64)
-                            startActivity(Intent(this, MainActivity::class.java))
-                            finish()
-                        },
-                        { _ ->
-                            Snackbar.make(findViewById(R.id.login_layout), R.string.login_failure, Snackbar.LENGTH_LONG)
-                                    .show()
-                            loginButton.isEnabled = true
-                        }
-                ))
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                { _ ->
+                    val sharedPref = SharedPref(this)
+                    sharedPref.putUsername(username).putAuth(b64)
+                    startActivity(Intent(this, MainActivity::class.java))
+                    finish()
+                },
+                { _ ->
+                    Snackbar.make(
+                        findViewById(R.id.login_layout),
+                        R.string.login_failure,
+                        Snackbar.LENGTH_LONG
+                    )
+                        .show()
+                    loginButton.isEnabled = true
+                }
+            ))
     }
 }

@@ -10,15 +10,15 @@ import retrofit2.Retrofit
 import retrofit2.converter.simplexml.SimpleXmlConverterFactory
 
 class MalApi(
-        auth: String
+    auth: String
 ) {
     private val SERVICE_ENDPOINT = "https://myanimelist.net/"
     private val malService: MalService
 
     init {
         val httpClient = OkHttpClient()
-                .newBuilder()
-                .addInterceptor(BasicAuthInterceptor(auth))
+            .newBuilder()
+            .addInterceptor(BasicAuthInterceptor(auth))
 
         if (BuildConfig.DEBUG) {
             val interceptor: HttpLoggingInterceptor = HttpLoggingInterceptor().apply {
@@ -29,10 +29,10 @@ class MalApi(
         }
 
         val retrofit = Retrofit.Builder()
-                .baseUrl(SERVICE_ENDPOINT)
-                .client(httpClient.build())
-                .addConverterFactory(SimpleXmlConverterFactory.create())
-                .build()
+            .baseUrl(SERVICE_ENDPOINT)
+            .client(httpClient.build())
+            .addConverterFactory(SimpleXmlConverterFactory.create())
+            .build()
 
         malService = retrofit.create(MalService::class.java)
     }
@@ -58,14 +58,14 @@ class MalApi(
     }
 
     class BasicAuthInterceptor(
-            private val auth: String
+        private val auth: String
     ) : Interceptor {
 
         override fun intercept(chain: Interceptor.Chain): Response {
             val request = chain.request()
             val authenticatedRequest = request.newBuilder()
-                    .header("Authorization", "Basic $auth")
-                    .build()
+                .header("Authorization", "Basic $auth")
+                .build()
 
             return chain.proceed(authenticatedRequest)
         }

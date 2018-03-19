@@ -30,15 +30,18 @@ class MainActivity : AppCompatActivity() {
             when (item.itemId) {
                 R.id.menu_main_navigation_anime -> {
                     tag = AnimeFragment.tag
-                    fragment = supportFragmentManager.findFragmentByTag(tag) ?: AnimeFragment.newInstance()
+                    fragment = supportFragmentManager.findFragmentByTag(tag)
+                            ?: AnimeFragment.newInstance()
                 }
                 R.id.menu_main_navigation_manga -> {
                     tag = MangaFragment.tag
-                    fragment = supportFragmentManager.findFragmentByTag(tag) ?: MangaFragment.newInstance()
+                    fragment = supportFragmentManager.findFragmentByTag(tag)
+                            ?: MangaFragment.newInstance()
                 }
                 else -> {
                     tag = SearchFragment.tag
-                    fragment = supportFragmentManager.findFragmentByTag(tag) ?: SearchFragment.newInstance()
+                    fragment = supportFragmentManager.findFragmentByTag(tag)
+                            ?: SearchFragment.newInstance()
                 }
             }
 
@@ -49,8 +52,12 @@ class MainActivity : AppCompatActivity() {
         if (savedInstanceState == null) {
             setFragment(AnimeFragment.newInstance(), AnimeFragment.tag)
         } else {
-            currentDisplayedFragmentTag = savedInstanceState.getString(currentDisplayedFragmentTagBundleId)
-            setFragment(supportFragmentManager.findFragmentByTag(currentDisplayedFragmentTag), currentDisplayedFragmentTag)
+            currentDisplayedFragmentTag =
+                    savedInstanceState.getString(currentDisplayedFragmentTagBundleId)
+            setFragment(
+                supportFragmentManager.findFragmentByTag(currentDisplayedFragmentTag),
+                currentDisplayedFragmentTag
+            )
         }
     }
 
@@ -68,21 +75,24 @@ class MainActivity : AppCompatActivity() {
         when {
             item?.itemId == R.id.menu_options_view_profile -> {
                 CustomTabsIntent.Builder()
-                        .build()
-                        .launchUrl(this, Uri.parse("https://myanimelist.net/profile/${sharedPref.getUsername()}"))
+                    .build()
+                    .launchUrl(
+                        this,
+                        Uri.parse("https://myanimelist.net/profile/${sharedPref.getUsername()}")
+                    )
                 return true
             }
             item?.itemId == R.id.menu_options_log_out -> {
                 AlertDialog.Builder(this)
-                        .setTitle(R.string.options_log_out)
-                        .setMessage(R.string.log_out_confirmation)
-                        .setNegativeButton(android.R.string.no, null)
-                        .setPositiveButton(android.R.string.yes, { _, _ ->
-                            sharedPref.clearLoginDetails()
-                            startActivity(Intent(this, LoginActivity::class.java))
-                            finish()
-                        })
-                        .show()
+                    .setTitle(R.string.options_log_out)
+                    .setMessage(R.string.log_out_confirmation)
+                    .setNegativeButton(android.R.string.no, null)
+                    .setPositiveButton(android.R.string.yes, { _, _ ->
+                        sharedPref.clearLoginDetails()
+                        startActivity(Intent(this, LoginActivity::class.java))
+                        finish()
+                    })
+                    .show()
 
                 return true
             }
@@ -92,33 +102,36 @@ class MainActivity : AppCompatActivity() {
             }
             else -> return super.onOptionsItemSelected(item)
         }
-
     }
 
     private fun spawnFilterDialog() {
         val states = sharedPref.getAnimeFilter()
         AlertDialog.Builder(this)
-                .setTitle(R.string.filter_dialog_title)
-                .setMultiChoiceItems(R.array.anime_states, states, { _, which, isChecked ->
-                    states[which] = isChecked
-                })
-                .setPositiveButton(android.R.string.ok, { _, _ ->
-                    if (states.all { !it }) {
-                        Timber.w("User tried to set all filter states to false")
-                        Snackbar.make(findViewById(R.id.activity_main_layout), R.string.filter_must_select, Snackbar.LENGTH_LONG)
-                                .show()
-                    } else {
-                        sharedPref.setAnimeFilter(states)
-                    }
-                })
-                .setNegativeButton(android.R.string.cancel, null)
-                .show()
+            .setTitle(R.string.filter_dialog_title)
+            .setMultiChoiceItems(R.array.anime_states, states, { _, which, isChecked ->
+                states[which] = isChecked
+            })
+            .setPositiveButton(android.R.string.ok, { _, _ ->
+                if (states.all { !it }) {
+                    Timber.w("User tried to set all filter states to false")
+                    Snackbar.make(
+                        findViewById(R.id.activity_main_layout),
+                        R.string.filter_must_select,
+                        Snackbar.LENGTH_LONG
+                    )
+                        .show()
+                } else {
+                    sharedPref.setAnimeFilter(states)
+                }
+            })
+            .setNegativeButton(android.R.string.cancel, null)
+            .show()
     }
 
     private fun setFragment(fragment: Fragment, fragmentTag: String) {
         currentDisplayedFragmentTag = fragmentTag
         supportFragmentManager.beginTransaction()
-                .replace(R.id.activity_main_frame, fragment, fragmentTag)
-                .commit()
+            .replace(R.id.activity_main_frame, fragment, fragmentTag)
+            .commit()
     }
 }
