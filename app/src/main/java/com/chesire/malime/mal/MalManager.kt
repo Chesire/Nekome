@@ -1,12 +1,16 @@
 package com.chesire.malime.mal
 
-import com.chesire.malime.models.*
+import com.chesire.malime.models.Anime
+import com.chesire.malime.models.Entry
+import com.chesire.malime.models.Manga
+import com.chesire.malime.models.MyInfo
+import com.chesire.malime.models.UpdateAnime
 import io.reactivex.Observable
 import timber.log.Timber
 
 class MalManager(
-        auth: String,
-        private val api: MalApi = MalApi(auth)
+    auth: String,
+    private val api: MalApi = MalApi(auth)
 ) {
     fun getAllAnime(username: String): Observable<Pair<MyInfo, List<Anime>>> {
         return Observable.create { subscriber ->
@@ -60,7 +64,11 @@ class MalManager(
                 subscriber.onNext(Any())
                 subscriber.onComplete()
             } else {
-                Timber.e(Throwable(response.message()), "Error with the login method - %s", response.errorBody())
+                Timber.e(
+                    Throwable(response.message()),
+                    "Error with the login method - %s",
+                    response.errorBody()
+                )
                 subscriber.tryOnError(Throwable(response.message()))
             }
         }
@@ -95,7 +103,12 @@ class MalManager(
                 subscriber.onNext(Any())
                 subscriber.onComplete()
             } else {
-                Timber.e(Throwable(response.message()), "Error Updating anime [%s] - %s", anime.title, response.errorBody())
+                Timber.e(
+                    Throwable(response.message()),
+                    "Error Updating anime [%s] - %s",
+                    anime.title,
+                    response.errorBody()
+                )
                 subscriber.tryOnError(Throwable(response.message()))
             }
         }

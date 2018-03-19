@@ -2,26 +2,27 @@ package com.chesire.malime.models
 
 import com.chesire.malime.AnimeStates
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Calendar
+import java.util.Locale
 
 data class UpdateAnime(
-        val id: Int,
-        val title: String,
-        var episode: Int,
-        val totalEpisodes: Int,
-        var dateFinish: String,
-        var status: Int,
-        val score: Int
+    val id: Int,
+    val title: String,
+    var episode: Int,
+    val totalEpisodes: Int,
+    var dateFinish: String,
+    var status: Int,
+    val score: Int
 ) {
     constructor(animeModel: Anime) : this(
-            // This should never result in being 0
-            id = animeModel.seriesAnimeDbId ?: 0,
-            title = animeModel.seriesTitle ?: "Unknown",
-            episode = animeModel.myWatchedEpisodes ?: 0,
-            totalEpisodes = animeModel.seriesEpisodes ?: 0,
-            dateFinish = "",
-            status = animeModel.myStatus ?: 0,
-            score = animeModel.myScore ?: 0
+        // This should never result in being 0
+        id = animeModel.seriesAnimeDbId ?: 0,
+        title = animeModel.seriesTitle ?: "Unknown",
+        episode = animeModel.myWatchedEpisodes ?: 0,
+        totalEpisodes = animeModel.seriesEpisodes ?: 0,
+        dateFinish = "",
+        status = animeModel.myStatus ?: 0,
+        score = animeModel.myScore ?: 0
     )
 
     fun setToCompleteState() {

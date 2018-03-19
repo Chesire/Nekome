@@ -10,7 +10,7 @@ import android.content.SharedPreferences
  * Note: This should later be modified to encrypt the auth before storing
  */
 class SharedPref(
-        context: Context
+    context: Context
 ) {
     private val sharedPrefFile: String = "private_auth"
     private val preferenceAuth: String = "auth"
@@ -30,8 +30,8 @@ class SharedPref(
 
     fun putAuth(auth: String): SharedPref {
         sharedPreferences.edit()
-                .putString(preferenceAuth, auth)
-                .apply()
+            .putString(preferenceAuth, auth)
+            .apply()
 
         return this
     }
@@ -42,8 +42,8 @@ class SharedPref(
 
     fun putUsername(username: String): SharedPref {
         sharedPreferences.edit()
-                .putString(preferenceUsername, username)
-                .apply()
+            .putString(preferenceUsername, username)
+            .apply()
 
         return this
     }
@@ -73,9 +73,9 @@ class SharedPref(
 
     fun clearLoginDetails() {
         sharedPreferences.edit()
-                .remove(preferenceAuth)
-                .remove(preferenceUsername)
-                .apply()
+            .remove(preferenceAuth)
+            .remove(preferenceUsername)
+            .apply()
     }
 
     fun registerOnChangeListener(listener: SharedPreferences.OnSharedPreferenceChangeListener) {

@@ -21,7 +21,10 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
-class AnimeFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListener, MalModelInteractionListener<Anime> {
+class AnimeFragment : Fragment(),
+    SharedPreferences.OnSharedPreferenceChangeListener,
+    MalModelInteractionListener<Anime> {
+
     private val animeItemsBundleId = "animeItems"
 
     private var disposables = CompositeDisposable()
@@ -47,7 +50,11 @@ class AnimeFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeList
         sharedPref.registerOnChangeListener(this)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         val view = inflater.inflate(R.layout.fragment_maldisplay, container, false)
 
         swipeRefreshLayout = view.findViewById(R.id.maldisplay_swipe_refresh)
@@ -99,8 +106,8 @@ class AnimeFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeList
 
     override fun onImageClicked(model: Anime) {
         CustomTabsIntent.Builder()
-                .build()
-                .launchUrl(context, Uri.parse(model.malUrl))
+            .build()
+            .launchUrl(context, Uri.parse(model.malUrl))
     }
 
     override fun onPlusOneClicked(model: Anime, callback: () -> Unit) {
@@ -110,16 +117,16 @@ class AnimeFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeList
         // TODO: should have a preference to never ask
         if (updateModel.episode == updateModel.totalEpisodes && updateModel.status != AnimeStates.COMPLETED.id) {
             AlertDialog.Builder(context!!)
-                    .setTitle(R.string.malitem_update_series_complete_title)
-                    .setMessage(R.string.malitem_update_series_complete_body)
-                    .setNegativeButton(android.R.string.no, null)
-                    .setPositiveButton(android.R.string.yes, { _, _ ->
-                        updateModel.setToCompleteState()
-                    })
-                    .setOnDismissListener {
-                        executeUpdateAnime(updateModel, callback)
-                    }
-                    .show()
+                .setTitle(R.string.malitem_update_series_complete_title)
+                .setMessage(R.string.malitem_update_series_complete_body)
+                .setNegativeButton(android.R.string.no, null)
+                .setPositiveButton(android.R.string.yes, { _, _ ->
+                    updateModel.setToCompleteState()
+                })
+                .setOnDismissListener {
+                    executeUpdateAnime(updateModel, callback)
+                }
+                .show()
         } else {
             executeUpdateAnime(updateModel, callback)
         }
@@ -132,16 +139,16 @@ class AnimeFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeList
         // TODO: should have a preference to never ask
         if (updateModel.episode < updateModel.totalEpisodes && updateModel.status == AnimeStates.COMPLETED.id) {
             AlertDialog.Builder(context!!)
-                    .setTitle(R.string.malitem_update_series_reverted_title)
-                    .setMessage(R.string.malitem_update_series_reverted_body)
-                    .setNegativeButton(android.R.string.no, null)
-                    .setPositiveButton(android.R.string.yes, { _, _ ->
-                        updateModel.setToWatchingState()
-                    })
-                    .setOnDismissListener {
-                        executeUpdateAnime(updateModel, callback)
-                    }
-                    .show()
+                .setTitle(R.string.malitem_update_series_reverted_title)
+                .setMessage(R.string.malitem_update_series_reverted_body)
+                .setNegativeButton(android.R.string.no, null)
+                .setPositiveButton(android.R.string.yes, { _, _ ->
+                    updateModel.setToWatchingState()
+                })
+                .setOnDismissListener {
+                    executeUpdateAnime(updateModel, callback)
+                }
+                .show()
         } else {
             executeUpdateAnime(updateModel, callback)
         }
@@ -149,36 +156,39 @@ class AnimeFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeList
 
     private fun executeLoadAnime() {
         disposables.add(malManager.getAllAnime(username)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                        { result ->
-                            viewAdapter.addAll(result.second)
-                            swipeRefreshLayout.isRefreshing = false
-                        },
-                        { _ ->
-                            swipeRefreshLayout.isRefreshing = false
-                        }
-                ))
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                { result ->
+                    viewAdapter.addAll(result.second)
+                    swipeRefreshLayout.isRefreshing = false
+                },
+                { _ ->
+                    swipeRefreshLayout.isRefreshing = false
+                }
+            ))
     }
 
     private fun executeUpdateAnime(model: UpdateAnime, callback: () -> Unit) {
         disposables.add(malManager.updateAnime(model)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                        { _ ->
-                            callback()
-                            viewAdapter.updateItem(model)
-                        },
-                        { _ ->
-                            callback()
-                            Snackbar.make(recyclerView,
-                                    String.format(getString(R.string.malitem_update_series_failure), model.title),
-                                    Snackbar.LENGTH_LONG)
-                                    .show()
-                        }
-                ))
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                { _ ->
+                    callback()
+                    viewAdapter.updateItem(model)
+                },
+                { _ ->
+                    callback()
+                    Snackbar.make(
+                        recyclerView,
+                        String.format(
+                            getString(R.string.malitem_update_series_failure),
+                            model.title
+                        ), Snackbar.LENGTH_LONG
+                    ).show()
+                }
+            ))
     }
 
     companion object {

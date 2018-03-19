@@ -10,11 +10,12 @@ class LaunchActivity : Activity() {
         super.onCreate(savedInstanceState)
 
         val sharedPref = SharedPref(this)
-        val loadIntent = if (sharedPref.getAuth().isNotEmpty() && sharedPref.getUsername().isNotEmpty()) {
-            Intent(this, MainActivity::class.java)
-        } else {
-            Intent(this, LoginActivity::class.java)
-        }
+        val loadIntent =
+            if (sharedPref.getAuth().isNotEmpty() && sharedPref.getUsername().isNotEmpty()) {
+                Intent(this, MainActivity::class.java)
+            } else {
+                Intent(this, LoginActivity::class.java)
+            }
 
         startActivity(loadIntent)
         finish()
