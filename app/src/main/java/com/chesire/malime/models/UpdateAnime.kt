@@ -2,7 +2,8 @@ package com.chesire.malime.models
 
 import com.chesire.malime.AnimeStates
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Calendar
+import java.util.Locale
 
 data class UpdateAnime(
     val id: Int,
