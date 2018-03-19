@@ -31,4 +31,12 @@
         <item name="android:gravity">center_horizontal</item>
     </style>
 
+    <style name="malitem_image_button_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_alignParentBottom">true</item>
+        <item name="android:padding">4dp</item>
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
 </resources>

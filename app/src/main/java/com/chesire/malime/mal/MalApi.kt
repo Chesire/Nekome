@@ -1,8 +1,10 @@
 package com.chesire.malime.mal
 
+import com.chesire.malime.BuildConfig
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Response
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.simplexml.SimpleXmlConverterFactory
@@ -17,11 +19,18 @@ class MalApi(
         val httpClient = OkHttpClient()
                 .newBuilder()
                 .addInterceptor(BasicAuthInterceptor(auth))
-                .build()
+
+        if (BuildConfig.DEBUG) {
+            val interceptor: HttpLoggingInterceptor = HttpLoggingInterceptor().apply {
+                this.level = HttpLoggingInterceptor.Level.BODY
+            }
+
+            httpClient.addInterceptor(interceptor)
+        }
 
         val retrofit = Retrofit.Builder()
                 .baseUrl(SERVICE_ENDPOINT)
-                .client(httpClient)
+                .client(httpClient.build())
                 .addConverterFactory(SimpleXmlConverterFactory.create())
                 .build()
 
@@ -42,6 +51,10 @@ class MalApi(
 
     fun searchForAnime(name: String): Call<MalService.SearchForAnimeResponse> {
         return malService.searchForAnime(name)
+    }
+
+    fun updateAnime(id: Int, updateAnimeXml: String): Call<Void> {
+        return malService.updateAnime(id, updateAnimeXml)
     }
 
     class BasicAuthInterceptor(
