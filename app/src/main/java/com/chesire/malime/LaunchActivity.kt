@@ -3,6 +3,9 @@ package com.chesire.malime
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import com.chesire.malime.util.SharedPref
+import com.chesire.malime.view.login.LoginActivity
+import com.chesire.malime.view.MainActivity
 
 class LaunchActivity : Activity() {
 

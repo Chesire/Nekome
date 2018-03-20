@@ -5,7 +5,7 @@
     android:id="@+id/activity_main_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.chesire.malime.MainActivity">
+    tools:context="com.chesire.malime.view.MainActivity">
 
     <FrameLayout
         android:id="@+id/activity_main_frame"

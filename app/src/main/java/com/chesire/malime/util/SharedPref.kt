@@ -1,4 +1,4 @@
-package com.chesire.malime
+package com.chesire.malime.util
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -15,8 +15,8 @@ class SharedPref(
     private val sharedPrefFile: String = "private_auth"
     private val preferenceAuth: String = "auth"
     private val preferenceUsername: String = "username"
-    val preferenceAnimeFilter: String = "animeFilter"
     private val preferenceAnimeFilterLength: String = "animeFilterLength"
+    val preferenceAnimeFilter: String = "animeFilter"
 
     private val sharedPreferences: SharedPreferences
 

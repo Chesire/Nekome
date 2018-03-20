@@ -1,10 +1,11 @@
-package com.chesire.malime
+package com.chesire.malime.view.search
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.chesire.malime.R
 
 class SearchFragment : Fragment() {
     override fun onCreateView(
