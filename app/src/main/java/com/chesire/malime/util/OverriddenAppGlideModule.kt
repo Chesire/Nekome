@@ -1,4 +1,4 @@
-package com.chesire.malime
+package com.chesire.malime.util
 
 import com.bumptech.glide.annotation.GlideModule
 import com.bumptech.glide.module.AppGlideModule

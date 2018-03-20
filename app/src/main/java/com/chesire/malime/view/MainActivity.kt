@@ -1,4 +1,4 @@
-package com.chesire.malime
+package com.chesire.malime.view
 
 import android.content.Intent
 import android.net.Uri
@@ -11,10 +11,20 @@ import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import com.chesire.malime.R
+import com.chesire.malime.util.SharedPref
+import com.chesire.malime.view.anime.AnimeFragment
+import com.chesire.malime.view.login.LoginActivity
+import com.chesire.malime.view.manga.MangaFragment
+import com.chesire.malime.view.search.SearchFragment
 import timber.log.Timber
 
 class MainActivity : AppCompatActivity() {
-    private val sharedPref: SharedPref by lazy { SharedPref(this) }
+    private val sharedPref: SharedPref by lazy {
+        SharedPref(
+            this
+        )
+    }
     private var currentDisplayedFragmentTagBundleId = "currentFragment"
     private var currentDisplayedFragmentTag = ""
 
@@ -50,7 +60,10 @@ class MainActivity : AppCompatActivity() {
         }
 
         if (savedInstanceState == null) {
-            setFragment(AnimeFragment.newInstance(), AnimeFragment.tag)
+            setFragment(
+                AnimeFragment.newInstance(),
+                AnimeFragment.tag
+            )
         } else {
             currentDisplayedFragmentTag =
                     savedInstanceState.getString(currentDisplayedFragmentTagBundleId)

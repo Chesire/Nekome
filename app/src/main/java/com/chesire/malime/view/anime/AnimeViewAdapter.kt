@@ -1,4 +1,4 @@
-package com.chesire.malime
+package com.chesire.malime.view.anime
 
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -9,8 +9,12 @@ import android.widget.Filterable
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import com.chesire.malime.GlideApp
+import com.chesire.malime.view.MalModelInteractionListener
+import com.chesire.malime.R
 import com.chesire.malime.models.Anime
 import com.chesire.malime.models.UpdateAnime
+import com.chesire.malime.util.SharedPref
 
 class AnimeViewAdapter(
     private val items: ArrayList<Anime>,

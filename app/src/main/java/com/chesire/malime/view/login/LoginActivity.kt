@@ -1,4 +1,4 @@
-package com.chesire.malime
+package com.chesire.malime.view.login
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,7 +8,10 @@ import android.util.Base64
 import android.view.inputmethod.EditorInfo
 import android.widget.Button
 import android.widget.EditText
+import com.chesire.malime.R
 import com.chesire.malime.mal.MalManager
+import com.chesire.malime.util.SharedPref
+import com.chesire.malime.view.MainActivity
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers

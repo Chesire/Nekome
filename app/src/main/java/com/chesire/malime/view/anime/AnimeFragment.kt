@@ -1,4 +1,4 @@
-package com.chesire.malime
+package com.chesire.malime.view.anime
 
 import android.content.SharedPreferences
 import android.net.Uri
@@ -14,9 +14,13 @@ import android.support.v7.widget.SimpleItemAnimator
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.chesire.malime.AnimeStates
+import com.chesire.malime.view.MalModelInteractionListener
+import com.chesire.malime.R
 import com.chesire.malime.mal.MalManager
 import com.chesire.malime.models.Anime
 import com.chesire.malime.models.UpdateAnime
+import com.chesire.malime.util.SharedPref
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -45,7 +49,13 @@ class AnimeFragment : Fragment(),
         malManager = MalManager(sharedPref.getAuth())
 
         viewManager = LinearLayoutManager(context!!)
-        viewAdapter = AnimeViewAdapter(ArrayList(), ArrayList(), sharedPref, this)
+        viewAdapter =
+                AnimeViewAdapter(
+                    ArrayList(),
+                    ArrayList(),
+                    sharedPref,
+                    this
+                )
 
         sharedPref.registerOnChangeListener(this)
     }

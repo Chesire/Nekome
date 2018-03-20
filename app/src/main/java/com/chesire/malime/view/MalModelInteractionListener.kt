@@ -1,4 +1,4 @@
-package com.chesire.malime
+package com.chesire.malime.view
 
 interface MalModelInteractionListener<in T> {
     fun onImageClicked(model: T)
