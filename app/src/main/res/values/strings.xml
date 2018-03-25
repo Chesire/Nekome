@@ -31,4 +31,6 @@
     <string name="filter_must_select">At least one filter must be selected</string>
 
     <string name="sort_dialog_title">Sort By:</string>
+    <string name="sort_choice_title">Title</string>
+    <string name="sort_choice_start_date">Start Date</string>
 </resources>

@@ -17,6 +17,7 @@ class SharedPref(
     private val preferenceUsername: String = "username"
     private val preferenceAnimeFilterLength: String = "animeFilterLength"
     val preferenceAnimeFilter: String = "animeFilter"
+    val preferenceAnimeSortOption: String = "animeSortOption"
 
     private val sharedPreferences: SharedPreferences
 
@@ -62,13 +63,28 @@ class SharedPref(
         return returnArray
     }
 
-    fun setAnimeFilter(input: BooleanArray) {
+    fun setAnimeFilter(input: BooleanArray): SharedPref {
         val editor = sharedPreferences.edit()
         editor.putInt(preferenceAnimeFilterLength, input.count())
         for (i in input.indices) {
             editor.putBoolean(preferenceAnimeFilter + i, input[i])
         }
         editor.apply()
+
+        return this
+    }
+
+    fun getAnimeSortOption(): Int {
+        // Return the default which will be "Title"
+        return sharedPreferences.getInt(preferenceAnimeSortOption, 0)
+    }
+
+    fun setAnimeSortOption(sortOption: Int): SharedPref {
+        sharedPreferences.edit()
+            .putInt(preferenceAnimeSortOption, sortOption)
+            .apply()
+
+        return this
     }
 
     fun clearLoginDetails() {

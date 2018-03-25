@@ -21,9 +21,7 @@ import timber.log.Timber
 
 class MainActivity : AppCompatActivity() {
     private val sharedPref: SharedPref by lazy {
-        SharedPref(
-            this
-        )
+        SharedPref(this)
     }
     private var currentDisplayedFragmentTagBundleId = "currentFragment"
     private var currentDisplayedFragmentTag = ""
@@ -113,6 +111,10 @@ class MainActivity : AppCompatActivity() {
                 spawnFilterDialog()
                 return true
             }
+            item?.itemId == R.id.menu_options_sort -> {
+                spawnSortDialog()
+                return true
+            }
             else -> return super.onOptionsItemSelected(item)
         }
     }
@@ -131,11 +133,25 @@ class MainActivity : AppCompatActivity() {
                         findViewById(R.id.activity_main_layout),
                         R.string.filter_must_select,
                         Snackbar.LENGTH_LONG
-                    )
-                        .show()
+                    ).show()
                 } else {
                     sharedPref.setAnimeFilter(states)
                 }
+            })
+            .setNegativeButton(android.R.string.cancel, null)
+            .show()
+    }
+
+    private fun spawnSortDialog() {
+        var sortOption = sharedPref.getAnimeSortOption()
+
+        AlertDialog.Builder(this)
+            .setTitle(R.string.sort_dialog_title)
+            .setSingleChoiceItems(R.array.anime_sort_options, sortOption, { _, which ->
+                sortOption = which
+            })
+            .setPositiveButton(android.R.string.ok, { _, _ ->
+                sharedPref.setAnimeSortOption(sortOption)
             })
             .setNegativeButton(android.R.string.cancel, null)
             .show()
