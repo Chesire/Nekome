@@ -3,7 +3,6 @@ package com.chesire.malime.view.anime
 import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
-import android.os.Handler
 import android.support.customtabs.CustomTabsIntent
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
@@ -22,12 +21,13 @@ import com.chesire.malime.models.Anime
 import com.chesire.malime.models.UpdateAnime
 import com.chesire.malime.room.AnimeDao
 import com.chesire.malime.room.MalimeDatabase
-import com.chesire.malime.room.MalimeDatabaseThread
 import com.chesire.malime.util.SharedPref
 import com.chesire.malime.view.MalModelInteractionListener
+import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import timber.log.Timber
 
 class AnimeFragment : Fragment(),
     SharedPreferences.OnSharedPreferenceChangeListener,
@@ -46,9 +46,6 @@ class AnimeFragment : Fragment(),
     private lateinit var viewAdapter: AnimeViewAdapter
     private lateinit var viewManager: RecyclerView.LayoutManager
 
-    private lateinit var dbThread: MalimeDatabaseThread
-    private val uiHandler = Handler()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -56,8 +53,6 @@ class AnimeFragment : Fragment(),
         username = sharedPref.getUsername()
         malManager = MalManager(sharedPref.getAuth())
         animeDao = MalimeDatabase.getInstance(context!!).animeDao()
-        dbThread = MalimeDatabaseThread("animeDatabaseThread")
-        dbThread.start()
 
         viewManager = LinearLayoutManager(context!!)
         viewAdapter =
@@ -79,7 +74,7 @@ class AnimeFragment : Fragment(),
 
         swipeRefreshLayout = view.findViewById(R.id.maldisplay_swipe_refresh)
         swipeRefreshLayout.setOnRefreshListener {
-            executeLoadAnime()
+            executeGetLatestAnime()
         }
 
         recyclerView = view.findViewById<RecyclerView>(R.id.maldisplay_recycler_view).apply {
@@ -90,12 +85,7 @@ class AnimeFragment : Fragment(),
         }
 
         if (savedInstanceState == null) {
-            dbThread.postTask(Runnable {
-                val storedAnime = animeDao.getAll()
-                uiHandler.post({
-                    viewAdapter.addAll(storedAnime)
-                })
-            })
+            executeGetLocalAnime()
         } else {
             viewAdapter.addAll(savedInstanceState.getParcelableArrayList(animeItemsBundleId))
         }
@@ -120,7 +110,6 @@ class AnimeFragment : Fragment(),
 
     override fun onDestroy() {
         sharedPref.unregisterOnChangeListener(this)
-        dbThread.quit()
         super.onDestroy()
     }
 
@@ -152,11 +141,11 @@ class AnimeFragment : Fragment(),
                     updateModel.setToCompleteState()
                 })
                 .setOnDismissListener {
-                    executeUpdateAnime(updateModel, callback)
+                    executeUpdateMal(model, updateModel, callback)
                 }
                 .show()
         } else {
-            executeUpdateAnime(updateModel, callback)
+            executeUpdateMal(model, updateModel, callback)
         }
     }
 
@@ -174,44 +163,63 @@ class AnimeFragment : Fragment(),
                     updateModel.setToWatchingState()
                 })
                 .setOnDismissListener {
-                    executeUpdateAnime(updateModel, callback)
+                    executeUpdateMal(model, updateModel, callback)
                 }
                 .show()
         } else {
-            executeUpdateAnime(updateModel, callback)
+            executeUpdateMal(model, updateModel, callback)
         }
     }
 
-    private fun executeLoadAnime() {
+    private fun executeGetLocalAnime() {
+        Timber.d("Getting local anime")
+        disposables.add(
+            animeDao.getAll()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    Timber.d("Successfully got local anime, loading into adapter")
+                    viewAdapter.addAll(it)
+                })
+        )
+    }
+
+    private fun executeGetLatestAnime() {
+        Timber.d("Getting latest anime from MAL")
         disposables.add(malManager.getAllAnime(username)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 { result ->
-                    dbThread.postTask(Runnable {
-                        animeDao.insertAll(result.second)
-                        uiHandler.post({
-                            viewAdapter.addAll(result.second)
-                            swipeRefreshLayout.isRefreshing = false
-                        })
-                    })
+                    Timber.d("Successfully got latest anime from MAL")
+                    executeSaveToLocalDb(result.second)
+                    viewAdapter.addAll(result.second)
+                    swipeRefreshLayout.isRefreshing = false
                 },
                 { _ ->
+                    Timber.e("Failed to get latest anime from MAL")
                     swipeRefreshLayout.isRefreshing = false
                 }
             ))
     }
 
-    private fun executeUpdateAnime(model: UpdateAnime, callback: () -> Unit) {
+    private fun executeUpdateMal(originalModel: Anime, model: UpdateAnime, callback: () -> Unit) {
+        Timber.d("Sending update to MAL for anime - [%s]", originalModel)
+
         disposables.add(malManager.updateAnime(model)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 { _ ->
+                    Timber.d("Successfully updated anime on MAL")
+
                     callback()
+                    executeUpdateInLocalDb(originalModel)
                     viewAdapter.updateItem(model)
                 },
                 { _ ->
+                    Timber.e("Error trying to update anime on MAL")
+
                     callback()
                     Snackbar.make(
                         recyclerView,
@@ -222,6 +230,24 @@ class AnimeFragment : Fragment(),
                     ).show()
                 }
             ))
+    }
+
+    private fun executeUpdateInLocalDb(anime: Anime) {
+        Timber.d("Updating local DB for anime - [%s]", anime)
+
+        // Looks like this doesn't have to be disposed off
+        Completable.fromAction({
+            animeDao.update(anime)
+        }).subscribeOn(Schedulers.io())
+    }
+
+    private fun executeSaveToLocalDb(animes: List<Anime>) {
+        Timber.d("Updating local DB for all anime")
+
+        // Looks like this doesn't have to be disposed off
+        Completable.fromAction({
+            animeDao.insertAll(animes)
+        }).subscribeOn(Schedulers.io())
     }
 
     companion object {
