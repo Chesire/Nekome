@@ -7,10 +7,13 @@
     <string name="main_nav_anime">Anime</string>
     <string name="main_nav_manga">Manga</string>
     <string name="main_nav_search">Search</string>
+
     <string name="options_filter">Filter</string>
+    <string name="options_sort">Sort</string>
     <string name="options_view_profile">View Profile</string>
     <string name="options_log_out">Log Out</string>
     <string name="log_out_confirmation">Are you sure you wish to log out?</string>
+
     <string name="malitem_progress_text">%1$s / %2$s</string>
     <string name="malitem_update_series_complete_title">Series Complete</string>
     <string name="malitem_update_series_complete_body">Update series state to completed?</string>
@@ -26,4 +29,6 @@
     <string name="filter_state_plan_to_watch">Plan to Watch</string>
     <string name="filter_state_plan_to_read">Plan to Read</string>
     <string name="filter_must_select">At least one filter must be selected</string>
+
+    <string name="sort_dialog_title">Sort By:</string>
 </resources>
