@@ -12,7 +12,7 @@ interface AnimeDao {
     fun getAll(): List<Anime>
 
     @Insert
-    fun insertAll(vararg animes: Anime)
+    fun insertAll(animes: List<Anime>)
 
     @Delete
     fun delete(anime: Anime)

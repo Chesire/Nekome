@@ -11,15 +11,16 @@ abstract class MalimeDatabase : RoomDatabase() {
     abstract fun animeDao(): AnimeDao
 
     companion object {
+        private const val dbName: String = "malime.db"
         private var INSTANCE: MalimeDatabase? = null
 
         fun getInstance(context: Context): MalimeDatabase? {
             synchronized(MalimeDatabase::class) {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(
-                        context.getApplicationContext(),
+                        context.applicationContext,
                         MalimeDatabase::class.java,
-                        "malime.db"
+                        dbName
                     ).build()
                 }
             }
