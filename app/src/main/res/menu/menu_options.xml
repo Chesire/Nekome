@@ -5,7 +5,12 @@
         android:id="@+id/menu_options_filter"
         android:icon="@drawable/ic_filter_list_black"
         android:title="@string/options_filter"
-        app:showAsAction="always" />
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/menu_options_sort"
+        android:icon="@drawable/ic_sort_black"
+        android:title="@string/options_sort"
+        app:showAsAction="ifRoom" />
     <item
         android:id="@+id/menu_options_view_profile"
         android:title="@string/options_view_profile" />

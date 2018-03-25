@@ -15,12 +15,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.chesire.malime.AnimeStates
-import com.chesire.malime.view.MalModelInteractionListener
 import com.chesire.malime.R
 import com.chesire.malime.mal.MalManager
 import com.chesire.malime.models.Anime
 import com.chesire.malime.models.UpdateAnime
 import com.chesire.malime.util.SharedPref
+import com.chesire.malime.view.MalModelInteractionListener
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -109,7 +109,9 @@ class AnimeFragment : Fragment(),
     }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, id: String?) {
-        if (id != null && id.contains(sharedPref.preferenceAnimeFilter)) {
+        if (id != null &&
+            (id.contains(sharedPref.preferenceAnimeFilter) || id.contains(sharedPref.preferenceAnimeSortOption))
+        ) {
             viewAdapter.filter.filter("")
         }
     }
