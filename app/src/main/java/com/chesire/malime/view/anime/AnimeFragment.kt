@@ -3,6 +3,7 @@ package com.chesire.malime.view.anime
 import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
 import android.support.customtabs.CustomTabsIntent
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
@@ -19,6 +20,9 @@ import com.chesire.malime.R
 import com.chesire.malime.mal.MalManager
 import com.chesire.malime.models.Anime
 import com.chesire.malime.models.UpdateAnime
+import com.chesire.malime.room.AnimeDao
+import com.chesire.malime.room.MalimeDatabase
+import com.chesire.malime.room.MalimeDatabaseThread
 import com.chesire.malime.util.SharedPref
 import com.chesire.malime.view.MalModelInteractionListener
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -35,11 +39,15 @@ class AnimeFragment : Fragment(),
     private lateinit var sharedPref: SharedPref
     private lateinit var username: String
     private lateinit var malManager: MalManager
-    private lateinit var swipeRefreshLayout: SwipeRefreshLayout
+    private lateinit var animeDao: AnimeDao
 
+    private lateinit var swipeRefreshLayout: SwipeRefreshLayout
     private lateinit var recyclerView: RecyclerView
     private lateinit var viewAdapter: AnimeViewAdapter
     private lateinit var viewManager: RecyclerView.LayoutManager
+
+    private lateinit var dbThread: MalimeDatabaseThread
+    private val uiHandler = Handler()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,6 +55,9 @@ class AnimeFragment : Fragment(),
         sharedPref = SharedPref(context!!)
         username = sharedPref.getUsername()
         malManager = MalManager(sharedPref.getAuth())
+        animeDao = MalimeDatabase.getInstance(context!!).animeDao()
+        dbThread = MalimeDatabaseThread("animeDatabaseThread")
+        dbThread.start()
 
         viewManager = LinearLayoutManager(context!!)
         viewAdapter =
@@ -56,7 +67,6 @@ class AnimeFragment : Fragment(),
                     sharedPref,
                     this
                 )
-
         sharedPref.registerOnChangeListener(this)
     }
 
@@ -80,7 +90,12 @@ class AnimeFragment : Fragment(),
         }
 
         if (savedInstanceState == null) {
-            executeLoadAnime()
+            dbThread.postTask(Runnable {
+                val storedAnime = animeDao.getAll()
+                uiHandler.post({
+                    viewAdapter.addAll(storedAnime)
+                })
+            })
         } else {
             viewAdapter.addAll(savedInstanceState.getParcelableArrayList(animeItemsBundleId))
         }
@@ -105,6 +120,7 @@ class AnimeFragment : Fragment(),
 
     override fun onDestroy() {
         sharedPref.unregisterOnChangeListener(this)
+        dbThread.quit()
         super.onDestroy()
     }
 
@@ -119,7 +135,7 @@ class AnimeFragment : Fragment(),
     override fun onImageClicked(model: Anime) {
         CustomTabsIntent.Builder()
             .build()
-            .launchUrl(context, Uri.parse(model.malUrl))
+            .launchUrl(context, Uri.parse(model.getMalUrl()))
     }
 
     override fun onPlusOneClicked(model: Anime, callback: () -> Unit) {
@@ -172,8 +188,13 @@ class AnimeFragment : Fragment(),
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 { result ->
-                    viewAdapter.addAll(result.second)
-                    swipeRefreshLayout.isRefreshing = false
+                    dbThread.postTask(Runnable {
+                        animeDao.insertAll(result.second)
+                        uiHandler.post({
+                            viewAdapter.addAll(result.second)
+                            swipeRefreshLayout.isRefreshing = false
+                        })
+                    })
                 },
                 { _ ->
                     swipeRefreshLayout.isRefreshing = false

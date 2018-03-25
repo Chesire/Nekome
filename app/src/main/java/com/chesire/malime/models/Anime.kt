@@ -96,29 +96,26 @@ data class Anime(
     @Ignore
     private val baseUrl: String = "https://myanimelist.net/anime/"
 
-    @Ignore
-    val malUrl: String = baseUrl + seriesAnimeDbId
+    fun getMalUrl(): String = baseUrl + seriesAnimeDbId
 
-    @Ignore
-    val totalEpisodes: String = if (seriesEpisodes == 0) {
-        "??"
-    } else {
-        seriesEpisodes.toString()
-    }
-
-    @Ignore
-    val seriesStartDate: Date = SimpleDateFormat("yyyy-MM-dd", Locale.ROOT).parse(seriesStart)
-
-    val seriesEndDate: Date
-        get() {
-            val dateToUse: String = if (seriesEnd == "0000-00-00") {
-                "9999-99-99"
-            } else {
-                seriesEnd!!
-            }
-
-            return SimpleDateFormat("yyyy-MM-dd", Locale.ROOT).parse(dateToUse)
+    fun getTotalEpisodes(): String =
+        if (seriesEpisodes == 0) {
+            "??"
+        } else {
+            seriesEpisodes.toString()
         }
+
+    fun getSeriesStartDate(): Date = SimpleDateFormat("yyyy-MM-dd", Locale.ROOT).parse(seriesStart)
+
+    fun getSeriesEndDate(): Date {
+        val dateToUse: String = if (seriesEnd == "0000-00-00") {
+            "9999-99-99"
+        } else {
+            seriesEnd!!
+        }
+
+        return SimpleDateFormat("yyyy-MM-dd", Locale.ROOT).parse(dateToUse)
+    }
 
     constructor(parcel: Parcel) : this(
         parcel.readValue(Int::class.java.classLoader) as? Int,
