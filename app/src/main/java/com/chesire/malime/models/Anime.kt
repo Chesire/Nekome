@@ -1,6 +1,7 @@
 package com.chesire.malime.models
 
 import android.arch.persistence.room.Entity
+import android.arch.persistence.room.Ignore
 import android.arch.persistence.room.PrimaryKey
 import android.os.Parcel
 import android.os.Parcelable
@@ -16,43 +17,45 @@ data class Anime(
     @PrimaryKey
     @field:Element(name = "series_animedb_id", required = false)
     @param:Element(name = "series_animedb_id", required = false)
-    val seriesAnimeDbId: Int? = null,
+    var seriesAnimeDbId: Int? = null,
 
     @field:Element(name = "series_title", required = false)
     @param:Element(name = "series_title", required = false)
-    val seriesTitle: String? = null,
+    var seriesTitle: String? = null,
 
     @field:Element(name = "series_synonyms", required = false)
     @param:Element(name = "series_synonyms", required = false)
-    val seriesSynonyms: String? = null,
+    var seriesSynonyms: String? = null,
 
     @field:Element(name = "series_type", required = false)
     @param:Element(name = "series_type", required = false)
-    val seriesType: Int? = null,
+    var seriesType: Int? = null,
 
     @field:Element(name = "series_episodes", required = false)
     @param:Element(name = "series_episodes", required = false)
-    val seriesEpisodes: Int? = null,
+    var seriesEpisodes: Int? = null,
 
     @field:Element(name = "series_status", required = false)
     @param:Element(name = "series_status", required = false)
-    val seriesStatus: Int? = null,
+    var seriesStatus: Int? = null,
 
+    @Deprecated("Use seriesStartDate instead")
     @field:Element(name = "series_start", required = false)
     @param:Element(name = "series_start", required = false)
-    private val seriesStart: String? = null,
+    var seriesStart: String? = null,
 
+    @Deprecated("Use seriesEndDate instead")
     @field:Element(name = "series_end", required = false)
     @param:Element(name = "series_end", required = false)
-    private val seriesEnd: String? = null,
+    var seriesEnd: String? = null,
 
     @field:Element(name = "series_image", required = false)
     @param:Element(name = "series_image", required = false)
-    val seriesImage: String? = null,
+    var seriesImage: String? = null,
 
     @field:Element(name = "my_id", required = false)
     @param:Element(name = "my_id", required = false)
-    val myId: Int? = null,
+    var myId: Int? = null,
 
     @field:Element(name = "my_watched_episodes", required = false)
     @param:Element(name = "my_watched_episodes", required = false)
@@ -60,15 +63,15 @@ data class Anime(
 
     @field:Element(name = "my_start_date", required = false)
     @param:Element(name = "my_start_date", required = false)
-    val myStartDate: String? = null,
+    var myStartDate: String? = null,
 
     @field:Element(name = "my_finish_date", required = false)
     @param:Element(name = "my_finish_date", required = false)
-    val myFinishDate: String? = null,
+    var myFinishDate: String? = null,
 
     @field:Element(name = "my_score", required = false)
     @param:Element(name = "my_score", required = false)
-    val myScore: Int? = null,
+    var myScore: Int? = null,
 
     @field:Element(name = "my_status", required = false)
     @param:Element(name = "my_status", required = false)
@@ -76,30 +79,36 @@ data class Anime(
 
     @field:Element(name = "my_rewatching", required = false)
     @param:Element(name = "my_rewatching", required = false)
-    val myRewatching: Int? = null,
+    var myRewatching: Int? = null,
 
     @field:Element(name = "my_rewatching_ep", required = false)
     @param:Element(name = "my_rewatching_ep", required = false)
-    val myRewatchingEp: Int? = null,
+    var myRewatchingEp: Int? = null,
 
     @field:Element(name = "my_last_updated", required = false)
     @param:Element(name = "my_last_updated", required = false)
-    val myLastUpdated: Int? = null,
+    var myLastUpdated: Int? = null,
 
     @field:Element(name = "my_tags", required = false)
     @param:Element(name = "my_tags", required = false)
-    val myTags: String? = null
+    var myTags: String? = null
 ) : Parcelable {
+    @Ignore
     private val baseUrl: String = "https://myanimelist.net/anime/"
 
+    @Ignore
     val malUrl: String = baseUrl + seriesAnimeDbId
+
+    @Ignore
     val totalEpisodes: String = if (seriesEpisodes == 0) {
         "??"
     } else {
         seriesEpisodes.toString()
     }
 
+    @Ignore
     val seriesStartDate: Date = SimpleDateFormat("yyyy-MM-dd", Locale.ROOT).parse(seriesStart)
+
     val seriesEndDate: Date
         get() {
             val dateToUse: String = if (seriesEnd == "0000-00-00") {
