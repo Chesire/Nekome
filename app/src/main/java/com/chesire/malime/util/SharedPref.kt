@@ -75,8 +75,8 @@ class SharedPref(
     }
 
     fun getAnimeSortOption(): Int {
-        // Return the default which will be "Title"
-        return sharedPreferences.getInt(preferenceAnimeSortOption, 0)
+        // If doesn't exist, return "Title"
+        return sharedPreferences.getInt(preferenceAnimeSortOption, 1)
     }
 
     fun setAnimeSortOption(sortOption: Int): SharedPref {

@@ -159,13 +159,15 @@ class AnimeViewAdapter(
                 myFilter[compareVal!! - 1]
             }
 
-            results.values = tempList.sortedBy {
-                if (mySortOption == 0) {
-                    it.seriesTitle
-                } else {
-                    it.seriesStart
+            results.values = tempList.sortedWith(
+                when (mySortOption) {
+                    1 -> compareBy { it.seriesTitle }
+                    2 -> compareBy { it.seriesStart }
+                    3 -> compareBy { it.seriesEnd }
+                    else -> compareBy { it.myId }
                 }
-            }
+            )
+
             results.count = tempList.count()
 
             return results
