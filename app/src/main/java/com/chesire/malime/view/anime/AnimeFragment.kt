@@ -232,22 +232,28 @@ class AnimeFragment : Fragment(),
             ))
     }
 
-    private fun executeUpdateInLocalDb(anime: Anime) {
-        Timber.d("Updating local DB for anime - [%s]", anime)
-
-        // Looks like this doesn't have to be disposed off
-        Completable.fromAction({
-            animeDao.update(anime)
-        }).subscribeOn(Schedulers.io())
-    }
-
     private fun executeSaveToLocalDb(animes: List<Anime>) {
         Timber.d("Updating local DB for all anime")
 
         // Looks like this doesn't have to be disposed off
-        Completable.fromAction({
-            animeDao.insertAll(animes)
-        }).subscribeOn(Schedulers.io())
+        Completable
+            .fromAction({
+                animeDao.insertAll(animes)
+            })
+            .subscribeOn(Schedulers.io())
+            .subscribe()
+    }
+
+    private fun executeUpdateInLocalDb(anime: Anime) {
+        Timber.d("Updating local DB for anime - [%s]", anime)
+
+        // Looks like this doesn't have to be disposed off
+        Completable
+            .fromAction({
+                animeDao.update(anime)
+            })
+            .subscribeOn(Schedulers.io())
+            .subscribe()
     }
 
     companion object {
