@@ -93,7 +93,7 @@ class AnimeViewAdapter(
                     String.format(
                         animeView.context.getString(R.string.malitem_progress_text),
                         animeModel.myWatchedEpisodes,
-                        animeModel.totalEpisodes
+                        animeModel.getTotalEpisodes()
                     )
 
             // Setup the buttons
@@ -162,8 +162,8 @@ class AnimeViewAdapter(
             results.values = tempList.sortedWith(
                 when (mySortOption) {
                     1 -> compareBy { it.seriesTitle }
-                    2 -> compareBy { it.seriesStartDate }
-                    3 -> compareBy { it.seriesEndDate }
+                    2 -> compareBy { it.getSeriesStartDate() }
+                    3 -> compareBy { it.getSeriesEndDate() }
                     else -> compareBy { it.myId }
                 }
             )
