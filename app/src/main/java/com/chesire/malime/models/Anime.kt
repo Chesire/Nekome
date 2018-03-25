@@ -1,5 +1,7 @@
 package com.chesire.malime.models
 
+import android.arch.persistence.room.Entity
+import android.arch.persistence.room.PrimaryKey
 import android.os.Parcel
 import android.os.Parcelable
 import org.simpleframework.xml.Element
@@ -8,8 +10,10 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
+@Entity
 @Root(name = "anime")
 data class Anime(
+    @PrimaryKey
     @field:Element(name = "series_animedb_id", required = false)
     @param:Element(name = "series_animedb_id", required = false)
     val seriesAnimeDbId: Int? = null,
