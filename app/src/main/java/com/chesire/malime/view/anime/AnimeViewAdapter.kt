@@ -139,8 +139,8 @@ class AnimeViewAdapter(
     private inner class AnimeFilter : Filter() {
         override fun publishResults(p0: CharSequence?, p1: FilterResults?) {
             filteredItems.clear()
-            if (p1?.values is ArrayList<*>) {
-                filteredItems.addAll(p1.values as ArrayList<Anime>)
+            if (p1?.values is List<*>) {
+                filteredItems.addAll(p1.values as List<Anime>)
             }
             notifyDataSetChanged()
         }
@@ -148,6 +148,7 @@ class AnimeViewAdapter(
         override fun performFiltering(p0: CharSequence?): FilterResults {
             val results = FilterResults()
             val myFilter = sharedPref.getAnimeFilter()
+            val mySortOption = sharedPref.getAnimeSortOption()
             val tempList = items.filter {
                 // Move the compare value down to 5, so we can more easily work with it
                 val compareVal = if (it.myStatus == 6) {
@@ -157,7 +158,14 @@ class AnimeViewAdapter(
                 }
                 myFilter[compareVal!! - 1]
             }
-            results.values = tempList
+
+            results.values = tempList.sortedBy {
+                if (mySortOption == 0) {
+                    it.seriesTitle
+                } else {
+                    it.seriesStart
+                }
+            }
             results.count = tempList.count()
 
             return results
