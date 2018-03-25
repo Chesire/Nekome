@@ -4,6 +4,9 @@ import android.os.Parcel
 import android.os.Parcelable
 import org.simpleframework.xml.Element
 import org.simpleframework.xml.Root
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 @Root(name = "anime")
 data class Anime(
@@ -92,6 +95,22 @@ data class Anime(
         seriesEpisodes.toString()
     }
 
+    val seriesStartDate: Date
+        get() {
+            return SimpleDateFormat("yyyy-MM-dd", Locale.ROOT).parse(seriesStart)
+        }
+
+    val seriesEndDate: Date
+        get() {
+            val dateToUse: String = if (seriesEnd == "0000-00-00") {
+                "9999-99-99"
+            } else {
+                seriesEnd!!
+            }
+
+            return SimpleDateFormat("yyyy-MM-dd", Locale.ROOT).parse(dateToUse)
+        }
+
     constructor(parcel: Parcel) : this(
         parcel.readValue(Int::class.java.classLoader) as? Int,
         parcel.readString(),
@@ -112,8 +131,7 @@ data class Anime(
         parcel.readValue(Int::class.java.classLoader) as? Int,
         parcel.readValue(Int::class.java.classLoader) as? Int,
         parcel.readString()
-    ) {
-    }
+    )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeValue(seriesAnimeDbId)
