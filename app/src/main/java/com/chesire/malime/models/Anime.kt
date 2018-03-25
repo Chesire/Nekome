@@ -36,11 +36,11 @@ data class Anime(
 
     @field:Element(name = "series_start", required = false)
     @param:Element(name = "series_start", required = false)
-    val seriesStart: String? = null,
+    private val seriesStart: String? = null,
 
     @field:Element(name = "series_end", required = false)
     @param:Element(name = "series_end", required = false)
-    val seriesEnd: String? = null,
+    private val seriesEnd: String? = null,
 
     @field:Element(name = "series_image", required = false)
     @param:Element(name = "series_image", required = false)
@@ -95,11 +95,7 @@ data class Anime(
         seriesEpisodes.toString()
     }
 
-    val seriesStartDate: Date
-        get() {
-            return SimpleDateFormat("yyyy-MM-dd", Locale.ROOT).parse(seriesStart)
-        }
-
+    val seriesStartDate: Date = SimpleDateFormat("yyyy-MM-dd", Locale.ROOT).parse(seriesStart)
     val seriesEndDate: Date
         get() {
             val dateToUse: String = if (seriesEnd == "0000-00-00") {
