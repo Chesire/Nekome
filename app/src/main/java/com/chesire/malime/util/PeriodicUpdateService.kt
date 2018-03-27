@@ -1,11 +1,7 @@
 package com.chesire.malime.util
 
-import android.app.NotificationManager
 import android.app.job.JobParameters
 import android.app.job.JobService
-import android.content.Context
-import android.support.v4.app.NotificationCompat
-import com.chesire.malime.R
 import com.chesire.malime.mal.MalManager
 import com.chesire.malime.models.Anime
 import com.chesire.malime.room.MalimeDatabase
@@ -13,7 +9,6 @@ import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
-import java.util.Calendar
 
 class PeriodicUpdateService : JobService() {
     override fun onStopJob(params: JobParameters?): Boolean {
@@ -52,15 +47,6 @@ class PeriodicUpdateService : JobService() {
             .fromAction({
                 MalimeDatabase.getInstance(applicationContext).animeDao().insertAll(animes)
                 jobFinished(params, false)
-
-                val b = NotificationCompat.Builder(applicationContext, "MALIMETEST")
-                b.setContentTitle("Pulled Data")
-                b.setContentText("New MALIME Data at ${Calendar.getInstance().time}")
-                b.setSmallIcon(R.drawable.ic_filter_list_black)
-
-                val man =
-                    applicationContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-                man.notify(1, b.build())
             })
             .subscribeOn(Schedulers.io())
             .subscribe()
