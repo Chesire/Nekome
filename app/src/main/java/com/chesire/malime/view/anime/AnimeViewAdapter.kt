@@ -20,7 +20,7 @@ class AnimeViewAdapter(
     private val items: ArrayList<Anime>,
     private val filteredItems: ArrayList<Anime>,
     private val sharedPref: SharedPref,
-    private val interactionListener: MalModelInteractionListener<Anime>
+    private val interactionListener: MalModelInteractionListener<Anime, UpdateAnime>
 ) : RecyclerView.Adapter<AnimeViewAdapter.ViewHolder>(), Filterable {
     private val filter: AnimeFilter = AnimeFilter()
 
@@ -101,7 +101,10 @@ class AnimeViewAdapter(
                 plusOneButton.visibility = View.VISIBLE
                 plusOneButton.setOnClickListener {
                     showLoadingLayout(true)
-                    interactionListener.onPlusOneClicked(animeModel, {
+
+                    val updateModel = UpdateAnime(animeModel)
+                    updateModel.episode++
+                    interactionListener.onSeriesUpdate(animeModel, updateModel, {
                         showLoadingLayout(false)
                     })
                 }
@@ -115,7 +118,10 @@ class AnimeViewAdapter(
                 negOneButton.visibility = View.VISIBLE
                 negOneButton.setOnClickListener {
                     showLoadingLayout(true)
-                    interactionListener.onNegativeOneClicked(animeModel, {
+
+                    val updateModel = UpdateAnime(animeModel)
+                    updateModel.episode--
+                    interactionListener.onSeriesUpdate(animeModel, updateModel, {
                         showLoadingLayout(false)
                     })
                 }
