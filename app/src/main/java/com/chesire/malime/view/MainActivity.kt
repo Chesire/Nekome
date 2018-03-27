@@ -18,7 +18,6 @@ import com.chesire.malime.view.anime.AnimeFragment
 import com.chesire.malime.view.login.LoginActivity
 import com.chesire.malime.view.manga.MangaFragment
 import com.chesire.malime.view.preferences.PrefActivity
-import com.chesire.malime.view.preferences.PrefFragment
 import com.chesire.malime.view.search.SearchFragment
 import timber.log.Timber
 
