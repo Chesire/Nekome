@@ -126,19 +126,25 @@ class AnimeFragment : Fragment(),
         val updateModel = UpdateAnime(model)
         updateModel.episode++
 
-        // TODO: should have a preference to never ask
-        if (updateModel.episode == updateModel.totalEpisodes && updateModel.status != AnimeStates.COMPLETED.id) {
-            AlertDialog.Builder(context!!)
-                .setTitle(R.string.malitem_update_series_complete_title)
-                .setMessage(R.string.malitem_update_series_complete_body)
-                .setNegativeButton(android.R.string.no, null)
-                .setPositiveButton(android.R.string.yes, { _, _ ->
-                    updateModel.setToCompleteState()
-                })
-                .setOnDismissListener {
-                    executeUpdateMal(model, updateModel, callback)
-                }
-                .show()
+        if (updateModel.episode == updateModel.totalEpisodes
+            && updateModel.status != AnimeStates.COMPLETED.id
+        ) {
+            if (sharedPref.getAutoUpdateSeriesState()) {
+                updateModel.setToCompleteState()
+                executeUpdateMal(model, updateModel, callback)
+            } else {
+                AlertDialog.Builder(context!!)
+                    .setTitle(R.string.malitem_update_series_complete_title)
+                    .setMessage(R.string.malitem_update_series_complete_body)
+                    .setNegativeButton(android.R.string.no, null)
+                    .setPositiveButton(android.R.string.yes, { _, _ ->
+                        updateModel.setToCompleteState()
+                    })
+                    .setOnDismissListener {
+                        executeUpdateMal(model, updateModel, callback)
+                    }
+                    .show()
+            }
         } else {
             executeUpdateMal(model, updateModel, callback)
         }
@@ -148,19 +154,25 @@ class AnimeFragment : Fragment(),
         val updateModel = UpdateAnime(model)
         updateModel.episode--
 
-        // TODO: should have a preference to never ask
-        if (updateModel.episode < updateModel.totalEpisodes && updateModel.status == AnimeStates.COMPLETED.id) {
-            AlertDialog.Builder(context!!)
-                .setTitle(R.string.malitem_update_series_reverted_title)
-                .setMessage(R.string.malitem_update_series_reverted_body)
-                .setNegativeButton(android.R.string.no, null)
-                .setPositiveButton(android.R.string.yes, { _, _ ->
-                    updateModel.setToWatchingState()
-                })
-                .setOnDismissListener {
-                    executeUpdateMal(model, updateModel, callback)
-                }
-                .show()
+        if (updateModel.episode < updateModel.totalEpisodes
+            && updateModel.status == AnimeStates.COMPLETED.id
+        ) {
+            if (sharedPref.getAutoUpdateSeriesState()) {
+                updateModel.setToWatchingState()
+                executeUpdateMal(model, updateModel, callback)
+            } else {
+                AlertDialog.Builder(context!!)
+                    .setTitle(R.string.malitem_update_series_reverted_title)
+                    .setMessage(R.string.malitem_update_series_reverted_body)
+                    .setNegativeButton(android.R.string.no, null)
+                    .setPositiveButton(android.R.string.yes, { _, _ ->
+                        updateModel.setToWatchingState()
+                    })
+                    .setOnDismissListener {
+                        executeUpdateMal(model, updateModel, callback)
+                    }
+                    .show()
+            }
         } else {
             executeUpdateMal(model, updateModel, callback)
         }

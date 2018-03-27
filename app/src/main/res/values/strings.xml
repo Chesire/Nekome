@@ -4,8 +4,8 @@
 
     <string name="preference_category_anime">Anime</string>
     <string name="preference_category_manga">Manga</string>
-    <string name="preference_title_autocomplete">Automatically Set To Finished</string>
-    <string name="preference_summary_autocomplete">When a series is complete, automatically set state to finished?</string>
+    <string name="preference_title_autocomplete">Automatically Change Series State</string>
+    <string name="preference_summary_autocomplete">Allow Malime to automatically change a series state based on chapter/episode change?</string>
 
     <string name="login_username">Username</string>
     <string name="login_password">Password</string>

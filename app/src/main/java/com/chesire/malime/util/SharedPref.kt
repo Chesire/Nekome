@@ -16,6 +16,7 @@ class SharedPref(
     private val preferenceAuth: String = "auth"
     private val preferenceUsername: String = "username"
     private val preferenceAnimeFilterLength: String = "animeFilterLength"
+    private val autoUpdateState: String = "autoUpdateState"
     val preferenceAnimeFilter: String = "animeFilter"
     val preferenceAnimeSortOption: String = "animeSortOption"
 
@@ -85,6 +86,10 @@ class SharedPref(
             .apply()
 
         return this
+    }
+
+    fun getAutoUpdateSeriesState(): Boolean {
+        return sharedPreferences.getBoolean(autoUpdateState, false)
     }
 
     fun clearLoginDetails() {
