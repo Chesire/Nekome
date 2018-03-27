@@ -23,6 +23,7 @@
         </activity>
         <activity android:name=".view.login.LoginActivity" />
         <activity android:name=".view.MainActivity" />
+        <activity android:name=".view.preferences.PrefActivity" />
 
         <service
             android:name=".util.PeriodicUpdateService"

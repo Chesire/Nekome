@@ -2,6 +2,9 @@
     <string name="app_name">Malime</string>
     <string name="update_service_name">Periodic Update Service</string>
 
+    <string name="preference_category_anime">Anime</string>
+    <string name="preference_category_manga">Manga</string>
+
     <string name="login_username">Username</string>
     <string name="login_password">Password</string>
     <string name="login_button">Login</string>
@@ -14,6 +17,7 @@
     <string name="options_filter">Filter</string>
     <string name="options_sort">Sort</string>
     <string name="options_view_profile">View Profile</string>
+    <string name="options_settings">Settings</string>
     <string name="options_log_out">Log Out</string>
     <string name="log_out_confirmation">Are you sure you wish to log out?</string>
 

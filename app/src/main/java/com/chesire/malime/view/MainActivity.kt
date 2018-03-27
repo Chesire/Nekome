@@ -17,6 +17,8 @@ import com.chesire.malime.util.SharedPref
 import com.chesire.malime.view.anime.AnimeFragment
 import com.chesire.malime.view.login.LoginActivity
 import com.chesire.malime.view.manga.MangaFragment
+import com.chesire.malime.view.preferences.PrefActivity
+import com.chesire.malime.view.preferences.PrefFragment
 import com.chesire.malime.view.search.SearchFragment
 import timber.log.Timber
 
@@ -92,6 +94,10 @@ class MainActivity : AppCompatActivity() {
                         this,
                         Uri.parse("https://myanimelist.net/profile/${sharedPref.getUsername()}")
                     )
+                return true
+            }
+            item?.itemId == R.id.menu_options_settings -> {
+                startActivity(Intent(this, PrefActivity::class.java))
                 return true
             }
             item?.itemId == R.id.menu_options_log_out -> {
