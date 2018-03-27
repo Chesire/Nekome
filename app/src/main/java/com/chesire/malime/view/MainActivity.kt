@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import com.chesire.malime.R
+import com.chesire.malime.util.PeriodicUpdateHelper
 import com.chesire.malime.util.SharedPref
 import com.chesire.malime.view.anime.AnimeFragment
 import com.chesire.malime.view.login.LoginActivity
@@ -100,6 +101,7 @@ class MainActivity : AppCompatActivity() {
                     .setNegativeButton(android.R.string.no, null)
                     .setPositiveButton(android.R.string.yes, { _, _ ->
                         sharedPref.clearLoginDetails()
+                        PeriodicUpdateHelper().cancel(this)
                         startActivity(Intent(this, LoginActivity::class.java))
                         finish()
                     })

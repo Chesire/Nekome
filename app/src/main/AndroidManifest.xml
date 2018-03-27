@@ -23,6 +23,17 @@
         </activity>
         <activity android:name=".view.login.LoginActivity" />
         <activity android:name=".view.MainActivity" />
+
+        <service
+            android:name=".util.PeriodicUpdateService"
+            android:label="@string/update_service_name"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
+
+        <receiver android:name=".util.PeriodicUpdateReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

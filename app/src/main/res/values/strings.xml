@@ -1,9 +1,12 @@
 <resources>
     <string name="app_name">Malime</string>
+    <string name="update_service_name">Periodic Update Service</string>
+
     <string name="login_username">Username</string>
     <string name="login_password">Password</string>
     <string name="login_button">Login</string>
     <string name="login_failure">Failure to login, please check credentials</string>
+
     <string name="main_nav_anime">Anime</string>
     <string name="main_nav_manga">Manga</string>
     <string name="main_nav_search">Search</string>

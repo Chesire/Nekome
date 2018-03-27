@@ -21,6 +21,7 @@ import com.chesire.malime.models.Anime
 import com.chesire.malime.models.UpdateAnime
 import com.chesire.malime.room.AnimeDao
 import com.chesire.malime.room.MalimeDatabase
+import com.chesire.malime.util.PeriodicUpdateHelper
 import com.chesire.malime.util.SharedPref
 import com.chesire.malime.view.MalModelInteractionListener
 import io.reactivex.Completable
@@ -57,6 +58,8 @@ class AnimeFragment : Fragment(),
         viewManager = LinearLayoutManager(context!!)
         viewAdapter = AnimeViewAdapter(ArrayList(), ArrayList(), sharedPref, this)
         sharedPref.registerOnChangeListener(this)
+
+        PeriodicUpdateHelper().schedule(context!!)
     }
 
     override fun onCreateView(
