@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <android.support.v7.preference.CheckBoxPreference
+        android:defaultValue="false"
+        android:key="autoUpdateState"
+        android:summary="@string/preference_summary_autocomplete"
+        android:title="@string/preference_title_autocomplete" />
+
+</android.support.v7.preference.PreferenceScreen>

@@ -1,7 +1,6 @@
 package com.chesire.malime.view
 
-interface MalModelInteractionListener<in T> {
+interface MalModelInteractionListener<in T, in U> {
     fun onImageClicked(model: T)
-    fun onPlusOneClicked(model: T, callback: () -> Unit)
-    fun onNegativeOneClicked(model: T, callback: () -> Unit)
+    fun onSeriesUpdate(originalModel: T, updateModel: U, callback: () -> Unit)
 }

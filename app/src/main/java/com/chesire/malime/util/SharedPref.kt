@@ -12,25 +12,32 @@ import android.content.SharedPreferences
 class SharedPref(
     context: Context
 ) {
-    private val sharedPrefFile: String = "private_auth"
+    private val authSharedPrefFile: String = "private_auth"
+    val sharedPrefFile: String = "malime_shared_pref"
+
     private val preferenceAuth: String = "auth"
     private val preferenceUsername: String = "username"
     private val preferenceAnimeFilterLength: String = "animeFilterLength"
+    private val autoUpdateState: String = "autoUpdateState"
     val preferenceAnimeFilter: String = "animeFilter"
     val preferenceAnimeSortOption: String = "animeSortOption"
 
+    private val authSharedPreferences: SharedPreferences
     private val sharedPreferences: SharedPreferences
 
     init {
-        sharedPreferences = context.getSharedPreferences(sharedPrefFile, Context.MODE_PRIVATE)
+        authSharedPreferences =
+                context.getSharedPreferences(authSharedPrefFile, Context.MODE_PRIVATE)
+        sharedPreferences =
+                context.getSharedPreferences(sharedPrefFile, Context.MODE_PRIVATE)
     }
 
     fun getAuth(): String {
-        return sharedPreferences.getString(preferenceAuth, "")
+        return authSharedPreferences.getString(preferenceAuth, "")
     }
 
     fun putAuth(auth: String): SharedPref {
-        sharedPreferences.edit()
+        authSharedPreferences.edit()
             .putString(preferenceAuth, auth)
             .apply()
 
@@ -38,11 +45,11 @@ class SharedPref(
     }
 
     fun getUsername(): String {
-        return sharedPreferences.getString(preferenceUsername, "")
+        return authSharedPreferences.getString(preferenceUsername, "")
     }
 
     fun putUsername(username: String): SharedPref {
-        sharedPreferences.edit()
+        authSharedPreferences.edit()
             .putString(preferenceUsername, username)
             .apply()
 
@@ -85,6 +92,10 @@ class SharedPref(
             .apply()
 
         return this
+    }
+
+    fun getAutoUpdateSeriesState(): Boolean {
+        return sharedPreferences.getBoolean(autoUpdateState, false)
     }
 
     fun clearLoginDetails() {

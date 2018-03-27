@@ -29,6 +29,8 @@ dependencies {
     implementation "com.android.support:cardview-v7:$support_lib_version"
     implementation "com.android.support:customtabs:$support_lib_version"
     implementation "com.android.support:design:$support_lib_version"
+    implementation "com.android.support:preference-v7:$support_lib_version"
+    implementation "com.android.support:preference-v14:$support_lib_version"
     implementation "com.android.support:support-v4:$support_lib_version"
     implementation "com.android.support.constraint:constraint-layout:1.0.2"
     implementation 'android.arch.persistence.room:runtime:1.0.0'

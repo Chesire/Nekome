@@ -32,7 +32,7 @@ import timber.log.Timber
 
 class AnimeFragment : Fragment(),
     SharedPreferences.OnSharedPreferenceChangeListener,
-    MalModelInteractionListener<Anime> {
+    MalModelInteractionListener<Anime, UpdateAnime> {
 
     private val animeItemsBundleId = "animeItems"
 
@@ -122,47 +122,52 @@ class AnimeFragment : Fragment(),
             .launchUrl(context, Uri.parse(model.getMalUrl()))
     }
 
-    override fun onPlusOneClicked(model: Anime, callback: () -> Unit) {
-        val updateModel = UpdateAnime(model)
-        updateModel.episode++
+    override fun onSeriesUpdate(
+        originalModel: Anime,
+        updateModel: UpdateAnime,
+        callback: () -> Unit
+    ) {
+        var showDialog = false
+        val alertBuilder = AlertDialog.Builder(context!!)
+            .setNegativeButton(android.R.string.no, null)
+            .setOnDismissListener {
+                executeUpdateMal(originalModel, updateModel, callback)
+            }
 
-        // TODO: should have a preference to never ask
-        if (updateModel.episode == updateModel.totalEpisodes && updateModel.status != AnimeStates.COMPLETED.id) {
-            AlertDialog.Builder(context!!)
-                .setTitle(R.string.malitem_update_series_complete_title)
-                .setMessage(R.string.malitem_update_series_complete_body)
-                .setNegativeButton(android.R.string.no, null)
-                .setPositiveButton(android.R.string.yes, { _, _ ->
-                    updateModel.setToCompleteState()
-                })
-                .setOnDismissListener {
-                    executeUpdateMal(model, updateModel, callback)
-                }
-                .show()
-        } else {
-            executeUpdateMal(model, updateModel, callback)
+        if (updateModel.episode < updateModel.totalEpisodes
+            && updateModel.status == AnimeStates.COMPLETED.id
+        ) {
+            if (sharedPref.getAutoUpdateSeriesState()) {
+                updateModel.setToWatchingState()
+            } else {
+                showDialog = true
+                alertBuilder
+                    .setTitle(R.string.malitem_update_series_reverted_title)
+                    .setMessage(R.string.malitem_update_series_reverted_body)
+                    .setPositiveButton(android.R.string.yes, { _, _ ->
+                        updateModel.setToWatchingState()
+                    })
+            }
+        } else if (updateModel.episode == updateModel.totalEpisodes
+            && updateModel.status != AnimeStates.COMPLETED.id
+        ) {
+            if (sharedPref.getAutoUpdateSeriesState()) {
+                updateModel.setToCompleteState()
+            } else {
+                showDialog = true
+                alertBuilder
+                    .setTitle(R.string.malitem_update_series_complete_title)
+                    .setMessage(R.string.malitem_update_series_complete_body)
+                    .setPositiveButton(android.R.string.yes, { _, _ ->
+                        updateModel.setToCompleteState()
+                    })
+            }
         }
-    }
 
-    override fun onNegativeOneClicked(model: Anime, callback: () -> Unit) {
-        val updateModel = UpdateAnime(model)
-        updateModel.episode--
-
-        // TODO: should have a preference to never ask
-        if (updateModel.episode < updateModel.totalEpisodes && updateModel.status == AnimeStates.COMPLETED.id) {
-            AlertDialog.Builder(context!!)
-                .setTitle(R.string.malitem_update_series_reverted_title)
-                .setMessage(R.string.malitem_update_series_reverted_body)
-                .setNegativeButton(android.R.string.no, null)
-                .setPositiveButton(android.R.string.yes, { _, _ ->
-                    updateModel.setToWatchingState()
-                })
-                .setOnDismissListener {
-                    executeUpdateMal(model, updateModel, callback)
-                }
-                .show()
+        if (showDialog) {
+            alertBuilder.show()
         } else {
-            executeUpdateMal(model, updateModel, callback)
+            executeUpdateMal(originalModel, updateModel, callback)
         }
     }
 
