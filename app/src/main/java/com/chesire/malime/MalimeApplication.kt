@@ -1,6 +1,7 @@
 package com.chesire.malime
 
 import android.app.Application
+import com.chesire.malime.util.SharedPref
 import com.crashlytics.android.Crashlytics
 import io.fabric.sdk.android.Fabric
 import io.reactivex.plugins.RxJavaPlugins
@@ -19,8 +20,9 @@ class MalimeApplication : Application() {
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
         } else {
-            // Enable Crashlytics
-            Fabric.with(this, Crashlytics())
+            if (SharedPref(applicationContext).getAllowCrashReporting()) {
+                Fabric.with(this, Crashlytics())
+            }
         }
     }
 }
