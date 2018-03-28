@@ -225,3 +225,7 @@ $RECYCLE.BIN/
 
 
 # End of https://www.gitignore.io/api/macos,kotlin,windows,android,androidstudio
+
+# Start of custom
+google-services.json
+# End of custom
