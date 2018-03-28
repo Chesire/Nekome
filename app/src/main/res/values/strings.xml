@@ -4,6 +4,8 @@
 
     <string name="preference_title_autocomplete">Automatically Change Series State</string>
     <string name="preference_summary_autocomplete">Allow Malime to automatically change a series state based on chapter/episode change?</string>
+    <string name="preference_title_crash_reporting">Crash Reporting</string>
+    <string name="preference_summary_crash_reporting">Allow anonymous crash reporting?</string>
 
     <string name="login_username">Username</string>
     <string name="login_password">Password</string>

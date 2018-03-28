@@ -17,8 +17,9 @@ class SharedPref(
 
     private val preferenceAuth: String = "auth"
     private val preferenceUsername: String = "username"
+    private val preferenceAllowCrashReporting: String = "allowCrashReporting"
     private val preferenceAnimeFilterLength: String = "animeFilterLength"
-    private val autoUpdateState: String = "autoUpdateState"
+    private val preferenceAutoUpdateState: String = "preferenceAutoUpdateState"
     val preferenceAnimeFilter: String = "animeFilter"
     val preferenceAnimeSortOption: String = "animeSortOption"
 
@@ -54,6 +55,10 @@ class SharedPref(
             .apply()
 
         return this
+    }
+
+    fun getAllowCrashReporting(): Boolean {
+        return sharedPreferences.getBoolean(preferenceAllowCrashReporting, true)
     }
 
     fun getAnimeFilter(): BooleanArray {
@@ -95,7 +100,7 @@ class SharedPref(
     }
 
     fun getAutoUpdateSeriesState(): Boolean {
-        return sharedPreferences.getBoolean(autoUpdateState, false)
+        return sharedPreferences.getBoolean(preferenceAutoUpdateState, false)
     }
 
     fun clearLoginDetails() {

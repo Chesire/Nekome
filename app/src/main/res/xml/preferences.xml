@@ -6,4 +6,10 @@
         android:summary="@string/preference_summary_autocomplete"
         android:title="@string/preference_title_autocomplete" />
 
+    <android.support.v7.preference.CheckBoxPreference
+        android:defaultValue="true"
+        android:key="allowCrashReporting"
+        android:summary="@string/preference_summary_crash_reporting"
+        android:title="@string/preference_title_crash_reporting" />
+
 </android.support.v7.preference.PreferenceScreen>
