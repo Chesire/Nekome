@@ -12,15 +12,26 @@ android {
         minSdkVersion 21
         targetSdkVersion 27
         versionCode 1
-        versionName "1.0"
+        versionName "0.0.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    signingConfigs {
+        release
     }
     buildTypes {
         release {
+            signingConfig signingConfigs.release
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+}
+
+if (project.hasProperty('malime.storeFile')) {
+    android.signingConfigs.release.storeFile = malime.storeFile
+    android.signingConfigs.release.storePassword = malime.storePassword
+    android.signingConfigs.release.keyAlias = malime.keyAlias
+    android.signingConfigs.release.keyPassword = malime.keyPassword
 }
 
 dependencies {
