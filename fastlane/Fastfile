@@ -20,7 +20,6 @@ platform :android do
     )
     upload_to_play_store(
       track: 'alpha',
-      validate_only: 'true'
       #mapping: '' - Will add this later
     )
   end
