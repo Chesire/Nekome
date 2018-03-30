@@ -11,5 +11,6 @@ The purpose of this is just as a playground to interact with the MyAnimeList API
 
 #### 3rd Party Tools:
 
+[Dokka](https://github.com/Kotlin/dokka) - Javadoc tool for Kotlin.
 [Ktlint](https://ktlint.github.io/) - Enforces offical code styling, should be run on every file and kept up to date.  
 [FastLane](https://fastlane.tools/) - Gives a way to build the app for the play store easier, and to update the metadata.
