@@ -122,6 +122,10 @@ class AnimeFragment : Fragment(),
             .launchUrl(context, Uri.parse(model.getMalUrl()))
     }
 
+    override fun onLongClick(model: Anime) {
+        // Display a dialog for what state to change to
+    }
+
     override fun onSeriesUpdate(
         originalModel: Anime,
         updateModel: UpdateAnime,
