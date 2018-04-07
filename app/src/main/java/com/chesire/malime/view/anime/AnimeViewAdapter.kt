@@ -83,9 +83,9 @@ class AnimeViewAdapter(
             GlideApp.with(animeView)
                 .load(animeModel.seriesImage)
                 .into(image)
-            image.setOnClickListener({
+            image.setOnClickListener {
                 interactionListener.onImageClicked(animeModel)
-            })
+            }
 
             // Setup the text
             animeView.findViewById<TextView>(R.id.item_malmodel_title).text = animeModel.seriesTitle
@@ -95,6 +95,14 @@ class AnimeViewAdapter(
                         animeModel.myWatchedEpisodes,
                         animeModel.getTotalEpisodes()
                     )
+
+            animeView.setOnLongClickListener {
+                showLoadingLayout(true)
+                interactionListener.onLongClick(animeModel, UpdateAnime(animeModel), {
+                    showLoadingLayout(false)
+                })
+                true
+            }
 
             // Setup the buttons
             if (animeModel.seriesEpisodes == 0 || animeModel.myWatchedEpisodes != animeModel.seriesEpisodes) {

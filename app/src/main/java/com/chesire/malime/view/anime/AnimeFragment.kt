@@ -122,6 +122,33 @@ class AnimeFragment : Fragment(),
             .launchUrl(context, Uri.parse(model.getMalUrl()))
     }
 
+    override fun onLongClick(
+        originalModel: Anime,
+        updateModel: UpdateAnime,
+        callback: () -> Unit
+    ) {
+        var state = AnimeStates.getAnimeStateForId(originalModel.myStatus!!)!!.surfaceId
+        var executing = false
+        AlertDialog.Builder(context!!)
+            .setTitle(R.string.malitem_update_series_state_dialog_title)
+            .setSingleChoiceItems(R.array.anime_states, state, { _, which ->
+                state = which
+            })
+            .setPositiveButton(android.R.string.ok, { _, _ ->
+                executing = true
+                updateModel.setSeriesStatus(state)
+                executeUpdateMal(originalModel, updateModel, callback)
+            })
+            .setNegativeButton(android.R.string.cancel, null)
+            .setOnDismissListener {
+                Timber.d("Dismissing")
+                if (!executing) {
+                    callback()
+                }
+            }
+            .show()
+    }
+
     override fun onSeriesUpdate(
         originalModel: Anime,
         updateModel: UpdateAnime,
