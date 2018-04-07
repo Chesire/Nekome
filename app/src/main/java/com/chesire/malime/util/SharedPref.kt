@@ -19,7 +19,7 @@ class SharedPref(
     private val preferenceUsername: String = "username"
     private val preferenceAllowCrashReporting: String = "allowCrashReporting"
     private val preferenceAnimeFilterLength: String = "animeFilterLength"
-    private val preferenceAutoUpdateState: String = "preferenceAutoUpdateState"
+    private val preferenceAutoUpdateState: String = "autoUpdateState"
     val preferenceAnimeFilter: String = "animeFilter"
     val preferenceAnimeSortOption: String = "animeSortOption"
 
