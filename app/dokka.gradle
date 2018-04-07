@@ -1,0 +1,21 @@
+apply plugin: 'org.jetbrains.dokka-android'
+
+dokka {
+    outputFormat = 'html'
+    outputDirectory = "$buildDir/dokka/html"
+}
+
+/*
+// Can't get these working, get error
+// "Could not get unknown property 'org' for project ':app' of type org.gradle.api.Project."
+
+task dokkaJavadoc(type: org.jetbrains.dokka.gradle.DokkaTask) {
+    outputFormat = 'javadoc'
+    outputDirectory = "$buildDir/dokka/javadoc"
+}
+
+task dokkaMarkdown(type: org.jetbrains.dokka.gradle.DokkaTask) {
+    outputFormat = 'markdown'
+    outputDirectory = "$buildDir/dokka/markdown"
+}
+*/

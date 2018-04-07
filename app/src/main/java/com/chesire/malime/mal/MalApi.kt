@@ -9,6 +9,12 @@ import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.simplexml.SimpleXmlConverterFactory
 
+/**
+ * Provides the layer between the [MalService] and the [MalManager].
+ * <p>
+ * This generates the Retrofit instance to use with [MalService] and gives simple methods to execute
+ * on it.
+ */
 class MalApi(
     auth: String
 ) {
@@ -37,26 +43,44 @@ class MalApi(
         malService = retrofit.create(MalService::class.java)
     }
 
+    /**
+     * Wraps the [MalService.getAllAnime] method.
+     */
     fun getAllAnime(username: String): Call<MalService.GetAllAnimeResponse> {
         return malService.getAllAnime(username)
     }
 
+    /**
+     * Wraps the [MalService.getAllManga] method.
+     */
     fun getAllManga(username: String): Call<MalService.GetAllMangaResponse> {
         return malService.getAllManga(username)
     }
 
+    /**
+     * Wraps the [MalService.loginToAccount] method.
+     */
     fun loginToAccount(): Call<MalService.LoginToAccountResponse> {
         return malService.loginToAccount()
     }
 
+    /**
+     * Wraps the [MalService.searchForAnime] method.
+     */
     fun searchForAnime(name: String): Call<MalService.SearchForAnimeResponse> {
         return malService.searchForAnime(name)
     }
 
+    /**
+     * Wraps the [MalService.updateAnime] method.
+     */
     fun updateAnime(id: Int, updateAnimeXml: String): Call<Void> {
         return malService.updateAnime(id, updateAnimeXml)
     }
 
+    /**
+     * Provides an interceptor that handles the basic auth.
+     */
     class BasicAuthInterceptor(
         private val auth: String
     ) : Interceptor {

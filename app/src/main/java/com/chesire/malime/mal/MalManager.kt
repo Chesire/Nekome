@@ -8,10 +8,19 @@ import com.chesire.malime.models.UpdateAnime
 import io.reactivex.Observable
 import timber.log.Timber
 
+/**
+ * Provides a manager to interact with the MyAnimeList API.
+ */
 class MalManager(
     auth: String,
     private val api: MalApi = MalApi(auth)
 ) {
+    /**
+     * Request all anime for a user.
+     *
+     * @param username of the user to get the anime for
+     * @return [Observable] instance containing a [Pair] of a [MyInfo] and all found anime
+     */
     fun getAllAnime(username: String): Observable<Pair<MyInfo, List<Anime>>> {
         return Observable.create { subscriber ->
             val callResponse = api.getAllAnime(username)
@@ -33,6 +42,12 @@ class MalManager(
         }
     }
 
+    /**
+     * Request all manga for a user.
+     *
+     * @param username of the user to get the manga for
+     * @return [Observable] instance containing a [Pair] of a [MyInfo] and all found manga
+     */
     fun getAllManga(username: String): Observable<Pair<MyInfo, List<Manga>>> {
         return Observable.create { subscriber ->
             val callResponse = api.getAllManga(username)
@@ -54,6 +69,14 @@ class MalManager(
         }
     }
 
+    /**
+     * Verifies a users credentials.
+     * <p>
+     * Since there is no "login" or auth token to store, this just verifies that the credentials
+     * entered are correct.
+     *
+     * @return [Observable] with the success and failure states
+     */
     fun loginToAccount(): Observable<Any> {
         return Observable.create { subscriber ->
             val callResponse = api.loginToAccount()
@@ -74,6 +97,12 @@ class MalManager(
         }
     }
 
+    /**
+     * Executes a search for the anime [name].
+     *
+     * @param name of the anime to find
+     * @return [Observable] instance containing a list of all found anime
+     */
     fun searchForAnime(name: String): Observable<List<Entry>> {
         return Observable.create { subscriber ->
             val callResponse = api.searchForAnime(name)
@@ -93,6 +122,12 @@ class MalManager(
         }
     }
 
+    /**
+     * Updates a specific anime series with all data in [anime].
+     *
+     * @param anime model containing all updates to the specified series
+     * @return [Observable] instance that has success and error states
+     */
     fun updateAnime(anime: UpdateAnime): Observable<Any> {
         return Observable.create { subscriber ->
             val callResponse = api.updateAnime(anime.id, anime.getXml())
