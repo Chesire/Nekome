@@ -1,6 +1,7 @@
 package com.chesire.malime.models
 
 import com.chesire.malime.AnimeStates
+import timber.log.Timber
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -24,6 +25,20 @@ data class UpdateAnime(
         status = animeModel.myStatus ?: 0,
         score = animeModel.myScore ?: 0
     )
+
+    /**
+     * Sets the status of the series.
+     *
+     * @param state this should match a value in [AnimeStates.surfaceId]
+     */
+    fun setSeriesStatus(state: Int) {
+        val newState = AnimeStates.getAnimeStateForSurfaceId(state)
+        if (newState == null) {
+            Timber.e("The AnimeState is null, looked for state [%d]", state)
+        } else {
+            status = newState.id
+        }
+    }
 
     fun setToCompleteState() {
         status = AnimeStates.COMPLETED.id

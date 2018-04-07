@@ -29,6 +29,7 @@
     <string name="malitem_update_series_reverted_title">Series No Longer Complete</string>
     <string name="malitem_update_series_reverted_body">Update series state to watching?</string>
     <string name="malitem_update_series_failure">Update to series %s failed, please try again</string>
+    <string name="malitem_update_series_state_dialog_title">Change Series State To:</string>
 
     <string name="filter_dialog_title">Filter By:</string>
     <string name="filter_state_watching">Watching</string>

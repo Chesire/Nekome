@@ -97,7 +97,11 @@ class AnimeViewAdapter(
                     )
 
             animeView.setOnLongClickListener {
-                interactionListener.onLongClick(animeModel)
+                showLoadingLayout(true)
+                interactionListener.onLongClick(animeModel, UpdateAnime(animeModel), {
+                    showLoadingLayout(false)
+                })
+                true
             }
 
             // Setup the buttons
