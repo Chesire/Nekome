@@ -26,6 +26,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/search_search_term_layout"
+        android:checkedButton="@+id/search_option_anime_choice"
         android:orientation="horizontal">
 
         <RadioButton
@@ -33,7 +34,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:checked="true"
             android:text="@string/main_nav_anime" />
 
         <RadioButton
@@ -53,8 +53,15 @@
         android:text="@string/search_nsfw_allowed" />
 
     <View
+        android:id="@+id/search_divider"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_below="@+id/search_option_nsfw_allowed"
         android:background="@android:color/darker_gray" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/search_all_items"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/search_divider" />
 </RelativeLayout>
