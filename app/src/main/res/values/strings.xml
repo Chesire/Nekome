@@ -45,4 +45,7 @@
     <string name="sort_choice_title">Title</string>
     <string name="sort_choice_start_date">Start Date</string>
     <string name="sort_choice_end_date">End Date</string>
+
+    <string name="search_text_hint">Enter search term</string>
+    <string name="search_nsfw_allowed">Show NSFW</string>
 </resources>
