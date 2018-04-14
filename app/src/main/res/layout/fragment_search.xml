@@ -44,13 +44,15 @@
             android:text="@string/main_nav_manga" />
     </RadioGroup>
 
+    <!-- Need to find some way for this item to work -->
     <CheckBox
         android:id="@+id/search_option_nsfw_allowed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/search_option_choices"
         android:layout_margin="8dp"
-        android:text="@string/search_nsfw_allowed" />
+        android:text="@string/search_nsfw_allowed"
+        android:visibility="gone" />
 
     <View
         android:id="@+id/search_divider"
