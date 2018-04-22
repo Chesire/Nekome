@@ -134,7 +134,7 @@ class SearchFragment : Fragment() {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 {
-                    Timber.i(it.toString())
+                    Timber.i("Found ${it.count()} items")
                     viewAdapter.update(it)
                     progressBar.hide()
                 },
