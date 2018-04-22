@@ -20,6 +20,12 @@ data class Entry(
     @field:Element(name = "episodes", required = false)
     @param:Element(name = "episodes", required = false)
     val episodes: Int? = null,
+    @field:Element(name = "chapters", required = false)
+    @param:Element(name = "chapters", required = false)
+    val chapters: Int? = null,
+    @field:Element(name = "volumes", required = false)
+    @param:Element(name = "volumes", required = false)
+    val volumes: Int? = null,
     @field:Element(name = "score", required = false)
     @param:Element(name = "score", required = false)
     val score: Double? = null,
