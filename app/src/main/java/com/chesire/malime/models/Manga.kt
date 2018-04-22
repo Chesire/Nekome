@@ -1,5 +1,7 @@
 package com.chesire.malime.models
 
+import android.os.Parcel
+import android.os.Parcelable
 import org.simpleframework.xml.Element
 import org.simpleframework.xml.Root
 
@@ -88,4 +90,62 @@ data class Manga(
     @field:Element(name = "my_tags", required = false)
     @param:Element(name = "my_tags", required = false)
     val myTags: String? = null
-)
+) : Parcelable {
+    constructor(source: Parcel) : this(
+        source.readValue(Int::class.java.classLoader) as Int?,
+        source.readString(),
+        source.readString(),
+        source.readValue(Int::class.java.classLoader) as Int?,
+        source.readValue(Int::class.java.classLoader) as Int?,
+        source.readValue(Int::class.java.classLoader) as Int?,
+        source.readValue(Int::class.java.classLoader) as Int?,
+        source.readString(),
+        source.readString(),
+        source.readString(),
+        source.readValue(Int::class.java.classLoader) as Int?,
+        source.readValue(Int::class.java.classLoader) as Int?,
+        source.readValue(Int::class.java.classLoader) as Int?,
+        source.readString(),
+        source.readString(),
+        source.readValue(Int::class.java.classLoader) as Int?,
+        source.readValue(Int::class.java.classLoader) as Int?,
+        source.readValue(Int::class.java.classLoader) as Int?,
+        source.readValue(Int::class.java.classLoader) as Int?,
+        source.readValue(Int::class.java.classLoader) as Int?,
+        source.readString()
+    )
+
+    override fun describeContents() = 0
+
+    override fun writeToParcel(dest: Parcel, flags: Int) = with(dest) {
+        writeValue(seriesMangaDbId)
+        writeString(seriesTitle)
+        writeString(seriesSynonyms)
+        writeValue(seriesType)
+        writeValue(seriesChapters)
+        writeValue(seriesVolumes)
+        writeValue(seriesStatus)
+        writeString(seriesStart)
+        writeString(seriesEnd)
+        writeString(seriesImage)
+        writeValue(myId)
+        writeValue(myReadChapters)
+        writeValue(myReadVolumes)
+        writeString(myStartDate)
+        writeString(myFinishDate)
+        writeValue(myScore)
+        writeValue(myStatus)
+        writeValue(myRereading)
+        writeValue(myRewatchingChap)
+        writeValue(myLastUpdated)
+        writeString(myTags)
+    }
+
+    companion object {
+        @JvmField
+        val CREATOR: Parcelable.Creator<Manga> = object : Parcelable.Creator<Manga> {
+            override fun createFromParcel(source: Parcel): Manga = Manga(source)
+            override fun newArray(size: Int): Array<Manga?> = arrayOfNulls(size)
+        }
+    }
+}
