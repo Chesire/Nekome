@@ -15,6 +15,8 @@ import android.widget.RadioGroup
 import com.chesire.malime.R
 import com.chesire.malime.mal.MalManager
 import com.chesire.malime.models.Entry
+import com.chesire.malime.room.AnimeDao
+import com.chesire.malime.room.MalimeDatabase
 import com.chesire.malime.util.SharedPref
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -25,6 +27,8 @@ private const val nsfwAllowedKey = "nsfwAllowed"
 private const val checkedOptionKey = "checkedOption"
 private const val searchTextKey = "searchText"
 private const val searchItemsBundleId = "searchItems"
+private const val currentAnimeKey = "currentAnime"
+private const val currentMangaKey = "currentManga"
 
 class SearchFragment : Fragment(), SearchInteractionListener {
 
@@ -33,6 +37,8 @@ class SearchFragment : Fragment(), SearchInteractionListener {
     private var checkedOption = 0
 
     private lateinit var malManager: MalManager
+    private lateinit var animeDao: AnimeDao
+
     private lateinit var searchText: TextInputEditText
     private lateinit var progressBar: ContentLoadingProgressBar
     private lateinit var recyclerView: RecyclerView
@@ -43,9 +49,10 @@ class SearchFragment : Fragment(), SearchInteractionListener {
         super.onCreate(savedInstanceState)
         val sharedPref = SharedPref(context!!)
         malManager = MalManager(sharedPref.getAuth())
+        animeDao = MalimeDatabase.getInstance(context!!).animeDao()
 
         viewManager = LinearLayoutManager(context!!)
-        viewAdapter = SearchViewAdapter(ArrayList(), this)
+        viewAdapter = SearchViewAdapter(this)
     }
 
     override fun onCreateView(
@@ -85,11 +92,15 @@ class SearchFragment : Fragment(), SearchInteractionListener {
         if (savedInstanceState == null) {
             checkedOption = searchRadioGroup.checkedRadioButtonId
             nsfwAllowed = nsfwCheckbox.isChecked
+            executeGetLocalAnime()
+            // executeGetLocalManga()
         } else {
             checkedOption = savedInstanceState.getInt(checkedOptionKey)
             nsfwAllowed = savedInstanceState.getBoolean(nsfwAllowedKey)
             searchText.setText(savedInstanceState.getString(searchTextKey))
             viewAdapter.update(savedInstanceState.getParcelableArrayList(searchItemsBundleId))
+            viewAdapter.setCurrentAnime(savedInstanceState.getParcelableArrayList(currentAnimeKey))
+            viewAdapter.setCurrentManga(savedInstanceState.getParcelableArrayList(currentMangaKey))
         }
 
         return view
@@ -110,6 +121,8 @@ class SearchFragment : Fragment(), SearchInteractionListener {
         outState.putInt(checkedOptionKey, checkedOption)
         outState.putString(searchTextKey, searchText.text.toString())
         outState.putParcelableArrayList(searchItemsBundleId, viewAdapter.getAll())
+        outState.putParcelableArrayList(currentAnimeKey, viewAdapter.getCurrentAnime())
+        outState.putParcelableArrayList(currentMangaKey, viewAdapter.getCurrentManga())
 
         super.onSaveInstanceState(outState)
     }
@@ -144,6 +157,19 @@ class SearchFragment : Fragment(), SearchInteractionListener {
                     progressBar.hide()
                 }
             ))
+    }
+
+    private fun executeGetLocalAnime() {
+        Timber.d("Getting local anime")
+        disposables.add(
+            animeDao.getAll()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    Timber.d("Successfully got local anime, loading into adapter")
+                    viewAdapter.setCurrentAnime(it)
+                })
+        )
     }
 
     override fun onAddPressed(selectedEntry: Entry) {

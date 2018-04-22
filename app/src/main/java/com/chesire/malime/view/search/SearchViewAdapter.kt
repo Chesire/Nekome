@@ -8,26 +8,60 @@ import android.text.SpannedString
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Filter
+import android.widget.Filterable
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import com.chesire.malime.R
+import com.chesire.malime.models.Anime
 import com.chesire.malime.models.Entry
+import com.chesire.malime.models.Manga
 import com.chesire.malime.util.GlideApp
 
 class SearchViewAdapter(
-    private val items: ArrayList<Entry>,
     private val interactionListener: SearchInteractionListener
-) : RecyclerView.Adapter<SearchViewAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<SearchViewAdapter.ViewHolder>(), Filterable {
+    private val items = ArrayList<Entry>()
+    private val filteredItems = ArrayList<Entry>()
+    private val currentAnime: ArrayList<Anime> = ArrayList()
+    private var currentAnimeIds: Set<Int?> = HashSet()
+    private val currentManga: ArrayList<Manga> = ArrayList()
+    private var currentMangaIds: Set<Int?> = HashSet()
+    private val filter: SearchFilter = SearchFilter()
+
+    fun getAll(): ArrayList<Entry> {
+        return items
+    }
+
+    fun getCurrentAnime(): ArrayList<Anime> {
+        return currentAnime
+    }
+
+    fun getCurrentManga(): ArrayList<Manga> {
+        return currentManga
+    }
+
+    fun setCurrentAnime(animeList: List<Anime>) {
+        currentAnime.clear()
+        currentAnime.addAll(animeList)
+        currentAnimeIds = currentAnime.map { it.seriesAnimeDbId }.toSet()
+    }
+
+    fun setCurrentManga(mangaList: List<Manga>) {
+        currentManga.clear()
+        currentManga.addAll(mangaList)
+        currentMangaIds = currentManga.map { it.seriesMangaDbId }.toSet()
+    }
 
     fun update(newItems: List<Entry>) {
         items.clear()
         items.addAll(newItems)
-        notifyDataSetChanged()
+        filter.filter("")
     }
 
-    fun getAll(): ArrayList<Entry> {
-        return items
+    override fun getFilter(): Filter {
+        return filter
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -37,11 +71,11 @@ class SearchViewAdapter(
     }
 
     override fun getItemCount(): Int {
-        return items.count()
+        return filteredItems.count()
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bindModel(items[position])
+        holder.bindModel(filteredItems[position])
     }
 
     inner class ViewHolder(
@@ -79,5 +113,31 @@ class SearchViewAdapter(
                 else -> Html.fromHtml(input)
             }
         }
+    }
+
+    private inner class SearchFilter : Filter() {
+        override fun performFiltering(constraint: CharSequence?): FilterResults {
+            val results = FilterResults()
+            val knownIds = if (items.first().chapters == null) {
+                currentAnimeIds
+            } else {
+                currentMangaIds
+            }
+
+            val tempList = items.filterNot { it.id in knownIds }
+            results.values = tempList
+            results.count = tempList.count()
+
+            return results
+        }
+
+        override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+            filteredItems.clear()
+            if (results?.values is List<*>) {
+                filteredItems.addAll(results.values as List<Entry>)
+            }
+            notifyDataSetChanged()
+        }
+
     }
 }
