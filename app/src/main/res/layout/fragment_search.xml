@@ -61,6 +61,13 @@
         android:layout_below="@+id/search_option_nsfw_allowed"
         android:background="@android:color/darker_gray" />
 
+    <android.support.v4.widget.ContentLoadingProgressBar
+        android:id="@+id/search_loading_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:indeterminate="true" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/search_all_items"
         android:layout_width="match_parent"

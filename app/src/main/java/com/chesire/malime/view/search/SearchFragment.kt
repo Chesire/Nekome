@@ -3,6 +3,10 @@ package com.chesire.malime.view.search
 import android.os.Bundle
 import android.support.design.widget.TextInputEditText
 import android.support.v4.app.Fragment
+import android.support.v4.widget.ContentLoadingProgressBar
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.SimpleItemAnimator
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,6 +23,7 @@ import timber.log.Timber
 private const val nsfwAllowedKey = "nsfwAllowed"
 private const val checkedOptionKey = "checkedOption"
 private const val searchTextKey = "searchText"
+private const val searchItemsBundleId = "searchItems"
 
 class SearchFragment : Fragment() {
 
@@ -28,11 +33,18 @@ class SearchFragment : Fragment() {
 
     private lateinit var malManager: MalManager
     private lateinit var searchText: TextInputEditText
+    private lateinit var progressBar: ContentLoadingProgressBar
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var viewAdapter: SearchViewAdapter
+    private lateinit var viewManager: RecyclerView.LayoutManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val sharedPref = SharedPref(context!!)
         malManager = MalManager(sharedPref.getAuth())
+
+        viewManager = LinearLayoutManager(context!!)
+        viewAdapter = SearchViewAdapter(ArrayList())
     }
 
     override fun onCreateView(
@@ -60,6 +72,15 @@ class SearchFragment : Fragment() {
             true
         }
 
+        progressBar = view.findViewById(R.id.search_loading_indicator)
+
+        recyclerView = view.findViewById<RecyclerView>(R.id.search_all_items).apply {
+            setHasFixedSize(true)
+            layoutManager = viewManager
+            adapter = viewAdapter
+            (itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
+        }
+
         if (savedInstanceState == null) {
             checkedOption = searchRadioGroup.checkedRadioButtonId
             nsfwAllowed = nsfwCheckbox.isChecked
@@ -67,6 +88,7 @@ class SearchFragment : Fragment() {
             checkedOption = savedInstanceState.getInt(checkedOptionKey)
             nsfwAllowed = savedInstanceState.getBoolean(nsfwAllowedKey)
             searchText.setText(savedInstanceState.getString(searchTextKey))
+            viewAdapter.update(savedInstanceState.getParcelableArrayList(searchItemsBundleId))
         }
 
         return view
@@ -86,6 +108,8 @@ class SearchFragment : Fragment() {
         outState.putBoolean(nsfwAllowedKey, nsfwAllowed)
         outState.putInt(checkedOptionKey, checkedOption)
         outState.putString(searchTextKey, searchText.text.toString())
+        outState.putParcelableArrayList(searchItemsBundleId, viewAdapter.getAll())
+
         super.onSaveInstanceState(outState)
     }
 
@@ -104,16 +128,19 @@ class SearchFragment : Fragment() {
             }
         }
 
+        progressBar.show()
         disposables.add(searchMethod
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 {
                     Timber.i(it.toString())
-                    // Add to the view adapter
+                    viewAdapter.update(it)
+                    progressBar.hide()
                 },
                 {
                     Timber.e(it, "Error performing the search")
+                    progressBar.hide()
                 }
             ))
     }
