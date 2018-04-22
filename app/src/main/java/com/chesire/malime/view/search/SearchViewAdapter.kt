@@ -24,11 +24,11 @@ class SearchViewAdapter(
 ) : RecyclerView.Adapter<SearchViewAdapter.ViewHolder>(), Filterable {
     private val items = ArrayList<Entry>()
     private val filteredItems = ArrayList<Entry>()
-    private val currentAnime: ArrayList<Anime> = ArrayList()
+    private val filter = SearchFilter()
+    private val currentAnime = ArrayList<Anime>()
+    private val currentManga = ArrayList<Manga>()
     private var currentAnimeIds: Set<Int?> = HashSet()
-    private val currentManga: ArrayList<Manga> = ArrayList()
     private var currentMangaIds: Set<Int?> = HashSet()
-    private val filter: SearchFilter = SearchFilter()
 
     fun getAll(): ArrayList<Entry> {
         return items
