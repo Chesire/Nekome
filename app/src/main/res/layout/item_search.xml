@@ -28,15 +28,13 @@
             style="@style/search_body_text_style"
             android:layout_below="@id/item_search_title"
             android:layout_toEndOf="@id/item_search_image"
-            android:layout_toStartOf="@id/search_image_add_button_style"
+            android:layout_toStartOf="@id/search_image_add_button"
             android:maxLines="8" />
 
         <ImageButton
-            android:id="@+id/search_image_add_button_style"
-            style="@style/malitem_image_button_style"
+            android:id="@+id/search_image_add_button"
+            style="@style/search_image_add_button_style"
             android:layout_alignParentEnd="true"
-            android:layout_centerInParent="true"
-            android:layout_centerVertical="true"
             android:src="@drawable/ic_exposure_plus_1_black" />
 
     </RelativeLayout>

@@ -14,6 +14,7 @@ import android.widget.CheckBox
 import android.widget.RadioGroup
 import com.chesire.malime.R
 import com.chesire.malime.mal.MalManager
+import com.chesire.malime.models.Entry
 import com.chesire.malime.util.SharedPref
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -25,7 +26,7 @@ private const val checkedOptionKey = "checkedOption"
 private const val searchTextKey = "searchText"
 private const val searchItemsBundleId = "searchItems"
 
-class SearchFragment : Fragment() {
+class SearchFragment : Fragment(), SearchInteractionListener {
 
     private var disposables = CompositeDisposable()
     private var nsfwAllowed = false
@@ -44,7 +45,7 @@ class SearchFragment : Fragment() {
         malManager = MalManager(sharedPref.getAuth())
 
         viewManager = LinearLayoutManager(context!!)
-        viewAdapter = SearchViewAdapter(ArrayList())
+        viewAdapter = SearchViewAdapter(ArrayList(), this)
     }
 
     override fun onCreateView(
@@ -143,6 +144,14 @@ class SearchFragment : Fragment() {
                     progressBar.hide()
                 }
             ))
+    }
+
+    override fun onAddPressed(selectedEntry: Entry) {
+        if (selectedEntry.chapters == null) {
+            Timber.d("Anime - [${selectedEntry.title}] selected")
+        } else {
+            Timber.d("Manga - [${selectedEntry.title}] selected")
+        }
     }
 
     companion object {
