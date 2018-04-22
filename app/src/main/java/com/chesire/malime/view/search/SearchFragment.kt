@@ -16,10 +16,11 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 
+private const val nsfwAllowedKey = "nsfwAllowed"
+private const val checkedOptionKey = "checkedOption"
+private const val searchTextKey = "searchText"
+
 class SearchFragment : Fragment() {
-    private val nsfwAllowedKey = "nsfwAllowed"
-    private val checkedOptionKey = "checkedOption"
-    private val searchTextKey = "searchText"
 
     private var disposables = CompositeDisposable()
     private var nsfwAllowed = false
