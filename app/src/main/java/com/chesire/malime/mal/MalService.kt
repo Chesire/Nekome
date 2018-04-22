@@ -57,6 +57,15 @@ interface MalService {
     fun searchForAnime(@Query("q") name: String): Call<SearchForAnimeResponse>
 
     /**
+     * Executes a GET to search for the specified manga.
+     *
+     * @param name Name of the manga to find
+     * @return Call to execute for the GET method
+     */
+    @GET("api/manga/search.xml")
+    fun searchForManga(@Query("q") name: String): Call<SearchForMangaResponse>
+
+    /**
      * Executes a POST to update the data for an anime.
      *
      * The [data] param must be a string representation of XML.
@@ -119,6 +128,16 @@ interface MalService {
      */
     @Root(name = "anime")
     data class SearchForAnimeResponse(
+        @field:ElementList(inline = true, entry = "entry")
+        @param:ElementList(inline = true, entry = "entry")
+        val entries: List<Entry>
+    )
+
+    /**
+     * Response object to handle calls to [searchForManga].
+     */
+    @Root(name = "manga")
+    data class SearchForMangaResponse(
         @field:ElementList(inline = true, entry = "entry")
         @param:ElementList(inline = true, entry = "entry")
         val entries: List<Entry>

@@ -123,6 +123,31 @@ class MalManager(
     }
 
     /**
+     * Executes a search for the manga [name].
+     *
+     * @param name of the manga to find
+     * @return [Observable] instance containing a list of all found manga
+     */
+    fun searchForManga(name: String): Observable<List<Entry>> {
+        return Observable.create { subscriber ->
+            val callResponse = api.searchForManga(name)
+            val response = callResponse.execute()
+
+            if (response.isSuccessful) {
+                val responseBody = response.body()
+                if (responseBody == null) {
+                    subscriber.tryOnError(Throwable(response.message()))
+                } else {
+                    subscriber.onNext(responseBody.entries)
+                    subscriber.onComplete()
+                }
+            } else {
+                subscriber.tryOnError(Throwable(response.message()))
+            }
+        }
+    }
+
+    /**
      * Updates a specific anime series with all data in [anime].
      *
      * @param anime model containing all updates to the specified series

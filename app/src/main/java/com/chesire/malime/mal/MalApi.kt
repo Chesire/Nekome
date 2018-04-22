@@ -72,6 +72,13 @@ class MalApi(
     }
 
     /**
+     * Wraps the [MalService.searchForManga] method.
+     */
+    fun searchForManga(name: String): Call<MalService.SearchForMangaResponse> {
+        return malService.searchForManga(name)
+    }
+
+    /**
      * Wraps the [MalService.updateAnime] method.
      */
     fun updateAnime(id: Int, updateAnimeXml: String): Call<Void> {
