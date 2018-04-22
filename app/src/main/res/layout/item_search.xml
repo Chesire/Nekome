@@ -4,7 +4,7 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:id="@+id/item_search_card_view"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="120dp"
     android:layout_gravity="center"
     android:layout_margin="4dp"
     card_view:cardCornerRadius="2dp">
@@ -25,14 +25,18 @@
 
         <TextView
             android:id="@+id/item_search_progress"
-            style="@style/malitem_progress_text_style"
+            style="@style/search_body_text_style"
             android:layout_below="@id/item_search_title"
-            android:layout_toEndOf="@id/item_search_image" />
+            android:layout_toEndOf="@id/item_search_image"
+            android:layout_toStartOf="@id/search_image_add_button_style"
+            android:maxLines="8" />
 
         <ImageButton
-            android:id="@+id/item_search_plus_one"
+            android:id="@+id/search_image_add_button_style"
             style="@style/malitem_image_button_style"
             android:layout_alignParentEnd="true"
+            android:layout_centerInParent="true"
+            android:layout_centerVertical="true"
             android:src="@drawable/ic_exposure_plus_1_black" />
 
     </RelativeLayout>

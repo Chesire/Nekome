@@ -1,6 +1,9 @@
 package com.chesire.malime.view.search
 
+import android.os.Build
 import android.support.v7.widget.RecyclerView
+import android.text.Html
+import android.text.Spanned
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -55,7 +58,16 @@ class SearchViewAdapter(
 
             // Setup the text
             searchView.findViewById<TextView>(R.id.item_search_title).text = entryModel.title
-            searchView.findViewById<TextView>(R.id.item_search_progress).text = entryModel.synopsis
+            searchView.findViewById<TextView>(R.id.item_search_progress).text =
+                    fromHtml(entryModel.synopsis!!)
+        }
+
+        private fun fromHtml(input: String): Spanned {
+            return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                Html.fromHtml(input, Html.FROM_HTML_MODE_LEGACY)
+            } else {
+                Html.fromHtml(input)
+            }
         }
     }
 }
