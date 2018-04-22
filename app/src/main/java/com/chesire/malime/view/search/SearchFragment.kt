@@ -54,6 +54,10 @@ class SearchFragment : Fragment() {
         }
 
         searchText = view.findViewById(R.id.search_search_term_edit_text)
+        searchText.setOnEditorActionListener { _, _, _ ->
+            executeSearch()
+            true
+        }
 
         if (savedInstanceState == null) {
             checkedOption = searchRadioGroup.checkedRadioButtonId
@@ -92,7 +96,7 @@ class SearchFragment : Fragment() {
 
         val searchMethod = when (checkedOption) {
             R.id.search_option_anime_choice -> malManager.searchForAnime(searchText.text.toString())
-            R.id.search_option_manga_choice -> malManager.searchForAnime(searchText.text.toString())
+            R.id.search_option_manga_choice -> malManager.searchForManga(searchText.text.toString())
             else -> {
                 Timber.e("Unknown search method selected")
                 return
@@ -104,10 +108,11 @@ class SearchFragment : Fragment() {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 {
-
+                    Timber.i(it.toString())
+                    // Add to the view adapter
                 },
                 {
-
+                    Timber.e(it, "Error performing the search")
                 }
             ))
     }
