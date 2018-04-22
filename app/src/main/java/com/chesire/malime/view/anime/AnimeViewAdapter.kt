@@ -17,11 +17,11 @@ import com.chesire.malime.util.SharedPref
 import com.chesire.malime.view.MalModelInteractionListener
 
 class AnimeViewAdapter(
-    private val items: ArrayList<Anime>,
-    private val filteredItems: ArrayList<Anime>,
     private val sharedPref: SharedPref,
     private val interactionListener: MalModelInteractionListener<Anime, UpdateAnime>
 ) : RecyclerView.Adapter<AnimeViewAdapter.ViewHolder>(), Filterable {
+    private val items = ArrayList<Anime>()
+    private val filteredItems = ArrayList<Anime>()
     private val filter: AnimeFilter = AnimeFilter()
 
     fun addAll(newItems: List<Anime>) {
