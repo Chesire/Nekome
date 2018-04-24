@@ -174,15 +174,15 @@ class SearchFragment : Fragment(), SearchInteractionListener {
         )
     }
 
-    override fun onAddPressed(selectedEntry: Entry) {
+    override fun onAddPressed(selectedEntry: Entry, callback: (Boolean) -> Unit) {
         if (selectedEntry.chapters == null) {
-            addNewAnime(selectedEntry)
+            addNewAnime(selectedEntry, callback)
         } else {
-            addNewManga(selectedEntry)
+            addNewManga(selectedEntry, callback)
         }
     }
 
-    private fun addNewAnime(selectedEntry: Entry) {
+    private fun addNewAnime(selectedEntry: Entry, callback: (Boolean) -> Unit) {
         Timber.d("Anime - [${selectedEntry.title}] selected")
 
         disposables.add(
@@ -192,16 +192,18 @@ class SearchFragment : Fragment(), SearchInteractionListener {
                 .subscribe(
                     {
                         Timber.i("Successfully added anime - [%s]", selectedEntry.title)
+                        callback(true)
                         // need to add it to room... maybe force a fresh scan on leaving view?
                     },
                     {
                         Timber.e(it, "Failure to add anime - [%s]", selectedEntry.title)
+                        callback(false)
                     }
                 )
         )
     }
 
-    private fun addNewManga(selectedEntry: Entry) {
+    private fun addNewManga(selectedEntry: Entry, callback: (Boolean) -> Unit) {
         Timber.d("Manga - [${selectedEntry.title}] selected")
 
         disposables.add(
@@ -211,10 +213,12 @@ class SearchFragment : Fragment(), SearchInteractionListener {
                 .subscribe(
                     {
                         Timber.i("Successfully added manga - [%s]", selectedEntry.title)
+                        callback(true)
                         // need to add it to room... maybe force a fresh scan on leaving view?
                     },
                     {
                         Timber.e(it, "Failure to add manga - [%s]", selectedEntry.title)
+                        callback(false)
                     }
                 )
         )

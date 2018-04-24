@@ -27,8 +27,8 @@ class SearchViewAdapter(
     private val filter = SearchFilter()
     private val currentAnime = ArrayList<Anime>()
     private val currentManga = ArrayList<Manga>()
-    private var currentAnimeIds: Set<Int?> = HashSet()
-    private var currentMangaIds: Set<Int?> = HashSet()
+    private var currentAnimeIds: List<Int?> = ArrayList()
+    private var currentMangaIds: List<Int?> = ArrayList()
 
     fun getAll(): ArrayList<Entry> {
         return items
@@ -45,13 +45,13 @@ class SearchViewAdapter(
     fun setCurrentAnime(animeList: List<Anime>) {
         currentAnime.clear()
         currentAnime.addAll(animeList)
-        currentAnimeIds = currentAnime.map { it.seriesAnimeDbId }.toSet()
+        currentAnimeIds = currentAnime.map { it.seriesAnimeDbId }.toList()
     }
 
     fun setCurrentManga(mangaList: List<Manga>) {
         currentManga.clear()
         currentManga.addAll(mangaList)
-        currentMangaIds = currentManga.map { it.seriesMangaDbId }.toSet()
+        currentMangaIds = currentManga.map { it.seriesMangaDbId }.toList()
     }
 
     fun update(newItems: List<Entry>) {
@@ -98,8 +98,22 @@ class SearchViewAdapter(
             searchView.findViewById<TextView>(R.id.item_search_progress).text =
                     fromHtml(entryModel.synopsis)
 
-            searchView.findViewById<ImageButton>(R.id.search_image_add_button).setOnClickListener {
-                interactionListener.onAddPressed(entryModel)
+            val addButton = searchView.findViewById<ImageButton>(R.id.search_image_add_button)
+            addButton.setOnClickListener {
+                showLoadingLayout(true)
+                interactionListener.onAddPressed(entryModel, { success ->
+                    showLoadingLayout(false)
+
+                    if (success) {
+                        addButton.visibility = View.INVISIBLE
+
+                        if (entryModel.chapters == null) {
+                            (currentAnimeIds as ArrayList).add(entryModel.id)
+                        } else {
+                            (currentMangaIds as ArrayList).add(entryModel.id)
+                        }
+                    }
+                })
             }
         }
 
@@ -111,6 +125,19 @@ class SearchViewAdapter(
                     Html.FROM_HTML_MODE_LEGACY
                 )
                 else -> Html.fromHtml(input)
+            }
+        }
+
+        private fun showLoadingLayout(displayLoader: Boolean) {
+            loadingLayout.visibility = if (displayLoader) {
+                View.VISIBLE
+            } else {
+                View.GONE
+            }
+
+            contentLayout.isEnabled = !displayLoader
+            for (i in 0 until contentLayout.childCount) {
+                contentLayout.getChildAt(i).isEnabled = !displayLoader
             }
         }
     }
