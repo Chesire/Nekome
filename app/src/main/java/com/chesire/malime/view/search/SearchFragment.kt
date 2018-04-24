@@ -16,6 +16,7 @@ import com.chesire.malime.R
 import com.chesire.malime.mal.MalManager
 import com.chesire.malime.models.Entry
 import com.chesire.malime.models.UpdateAnime
+import com.chesire.malime.models.UpdateManga
 import com.chesire.malime.room.AnimeDao
 import com.chesire.malime.room.MalimeDatabase
 import com.chesire.malime.util.SharedPref
@@ -175,23 +176,48 @@ class SearchFragment : Fragment(), SearchInteractionListener {
 
     override fun onAddPressed(selectedEntry: Entry) {
         if (selectedEntry.chapters == null) {
-            Timber.d("Anime - [${selectedEntry.title}] selected")
-            disposables.add(
-                malManager.addAnime(UpdateAnime(selectedEntry))
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(
-                        {
-                            Timber.i("Successfully added anime - [%s]", selectedEntry.title)
-                        },
-                        {
-                            Timber.e(it, "Failure to add anime - [%s]", selectedEntry.title)
-                        }
-                    )
-            )
+            addNewAnime(selectedEntry)
         } else {
-            Timber.d("Manga - [${selectedEntry.title}] selected")
+            addNewManga(selectedEntry)
         }
+    }
+
+    private fun addNewAnime(selectedEntry: Entry) {
+        Timber.d("Anime - [${selectedEntry.title}] selected")
+
+        disposables.add(
+            malManager.addAnime(UpdateAnime(selectedEntry))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    {
+                        Timber.i("Successfully added anime - [%s]", selectedEntry.title)
+                        // need to add it to room... maybe force a fresh scan on leaving view?
+                    },
+                    {
+                        Timber.e(it, "Failure to add anime - [%s]", selectedEntry.title)
+                    }
+                )
+        )
+    }
+
+    private fun addNewManga(selectedEntry: Entry) {
+        Timber.d("Manga - [${selectedEntry.title}] selected")
+
+        disposables.add(
+            malManager.addManga(UpdateManga(selectedEntry))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    {
+                        Timber.i("Successfully added manga - [%s]", selectedEntry.title)
+                        // need to add it to room... maybe force a fresh scan on leaving view?
+                    },
+                    {
+                        Timber.e(it, "Failure to add manga - [%s]", selectedEntry.title)
+                    }
+                )
+        )
     }
 
     companion object {
