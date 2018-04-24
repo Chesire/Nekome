@@ -5,6 +5,7 @@ import com.chesire.malime.models.Entry
 import com.chesire.malime.models.Manga
 import com.chesire.malime.models.MyInfo
 import com.chesire.malime.models.UpdateAnime
+import com.chesire.malime.models.UpdateManga
 import io.reactivex.Observable
 import timber.log.Timber
 
@@ -35,6 +36,33 @@ class MalManager(
                     Throwable(response.message()),
                     "Error adding anime [%s] - %s",
                     anime.title,
+                    response.errorBody()
+                )
+                subscriber.tryOnError(Throwable(response.message()))
+            }
+        }
+    }
+
+    /**
+     * Adds a specific manga series with all data in [manga].
+     *
+     * @param manga model containing data about the specified series
+     * @return [Observable] instance that has success and error states
+     */
+    fun addManga(manga: UpdateManga): Observable<Any> {
+        return Observable.create { subscriber ->
+            val callResponse = api.addManga(manga.id, manga.getXml())
+            val response = callResponse.execute()
+
+            if (response.isSuccessful) {
+                Timber.i("Manga [%s] has added", manga.title)
+                subscriber.onNext(Any())
+                subscriber.onComplete()
+            } else {
+                Timber.e(
+                    Throwable(response.message()),
+                    "Error adding manga [%s] - %s",
+                    manga.title,
                     response.errorBody()
                 )
                 subscriber.tryOnError(Throwable(response.message()))

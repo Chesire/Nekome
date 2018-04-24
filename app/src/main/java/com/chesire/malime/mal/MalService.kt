@@ -34,6 +34,20 @@ interface MalService {
     ): Call<Void>
 
     /**
+     * Executes a GET method to add a manga for the user.
+     *
+     * @param id The id of the manga to add, this will be the [Manga.seriesMangaDbId]
+     * @param data String representation of the manga model
+     * @return Call to execute for the POST method
+     */
+    @FormUrlEncoded
+    @POST("api/mangalist/add/{id}.xml")
+    fun addManga(
+        @Path("id") id: Int,
+        @Field("data") data: String
+    ): Call<Void>
+
+    /**
      * Executes a GET to find all the anime for [user].
      *
      * @param user Username for the person to get the anime for

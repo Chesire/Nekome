@@ -51,6 +51,13 @@ class MalApi(
     }
 
     /**
+     * Wraps [MalService.addManga] method.
+     */
+    fun addManga(id: Int, addMangaXml: String): Call<Void> {
+        return malService.addManga(id, addMangaXml)
+    }
+
+    /**
      * Wraps the [MalService.getAllAnime] method.
      */
     fun getAllAnime(username: String): Call<MalService.GetAllAnimeResponse> {
