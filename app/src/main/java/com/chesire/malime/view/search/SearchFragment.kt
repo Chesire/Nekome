@@ -15,6 +15,7 @@ import android.widget.RadioGroup
 import com.chesire.malime.R
 import com.chesire.malime.mal.MalManager
 import com.chesire.malime.models.Entry
+import com.chesire.malime.models.UpdateAnime
 import com.chesire.malime.room.AnimeDao
 import com.chesire.malime.room.MalimeDatabase
 import com.chesire.malime.util.SharedPref
@@ -175,6 +176,19 @@ class SearchFragment : Fragment(), SearchInteractionListener {
     override fun onAddPressed(selectedEntry: Entry) {
         if (selectedEntry.chapters == null) {
             Timber.d("Anime - [${selectedEntry.title}] selected")
+            disposables.add(
+                malManager.addAnime(UpdateAnime(selectedEntry))
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(
+                        {
+                            Timber.i("Successfully added anime - [%s]", selectedEntry.title)
+                        },
+                        {
+                            Timber.e(it, "Failure to add anime - [%s]", selectedEntry.title)
+                        }
+                    )
+            )
         } else {
             Timber.d("Manga - [${selectedEntry.title}] selected")
         }
