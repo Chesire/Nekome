@@ -26,6 +26,16 @@ data class UpdateAnime(
         score = animeModel.myScore ?: 0
     )
 
+    constructor(entry: Entry) : this(
+        id = entry.id!!,
+        title = entry.title ?: "Unknown",
+        episode = 0,
+        totalEpisodes = entry.episodes ?: 0,
+        dateFinish = "",
+        status = 0,
+        score = 0
+    )
+
     /**
      * Sets the status of the series.
      *

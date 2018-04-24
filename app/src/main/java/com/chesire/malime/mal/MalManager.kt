@@ -16,6 +16,33 @@ class MalManager(
     private val api: MalApi = MalApi(auth)
 ) {
     /**
+     * Adds a specific anime series with all data in [anime].
+     *
+     * @param anime model containing data about the specified series
+     * @return [Observable] instance that has success and error states
+     */
+    fun addAnime(anime: UpdateAnime): Observable<Any> {
+        return Observable.create { subscriber ->
+            val callResponse = api.addAnime(anime.id, anime.getXml())
+            val response = callResponse.execute()
+
+            if (response.isSuccessful) {
+                Timber.i("Anime [%s] has added", anime.title)
+                subscriber.onNext(Any())
+                subscriber.onComplete()
+            } else {
+                Timber.e(
+                    Throwable(response.message()),
+                    "Error adding anime [%s] - %s",
+                    anime.title,
+                    response.errorBody()
+                )
+                subscriber.tryOnError(Throwable(response.message()))
+            }
+        }
+    }
+
+    /**
      * Request all anime for a user.
      *
      * @param username of the user to get the anime for

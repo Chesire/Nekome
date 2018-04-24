@@ -20,6 +20,20 @@ import retrofit2.http.Query
  */
 interface MalService {
     /**
+     * Executes a GET method to add an anime for the user.
+     *
+     * @param id The id of the anime to add, this will be the [Anime.seriesAnimeDbId]
+     * @param data String representation of the anime model
+     * @return Call to execute for the POST method
+     */
+    @FormUrlEncoded
+    @POST("api/animelist/add/{id}.xml")
+    fun addAnime(
+        @Path("id") id: Int,
+        @Field("data") data: String
+    ): Call<Void>
+
+    /**
      * Executes a GET to find all the anime for [user].
      *
      * @param user Username for the person to get the anime for
