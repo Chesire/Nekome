@@ -3,7 +3,6 @@ package com.chesire.malime.view.search
 import android.os.Bundle
 import android.support.design.widget.TextInputEditText
 import android.support.v4.app.Fragment
-import android.support.v4.widget.ContentLoadingProgressBar
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.SimpleItemAnimator
@@ -11,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
+import android.widget.ProgressBar
 import android.widget.RadioGroup
 import com.chesire.malime.R
 import com.chesire.malime.mal.MalManager
@@ -40,7 +40,7 @@ class SearchFragment : Fragment(), SearchInteractionListener {
     private lateinit var animeDao: AnimeDao
 
     private lateinit var searchText: TextInputEditText
-    private lateinit var progressBar: ContentLoadingProgressBar
+    private lateinit var progressBar: ProgressBar
     private lateinit var recyclerView: RecyclerView
     private lateinit var viewAdapter: SearchViewAdapter
     private lateinit var viewManager: RecyclerView.LayoutManager
@@ -142,7 +142,7 @@ class SearchFragment : Fragment(), SearchInteractionListener {
             }
         }
 
-        progressBar.show()
+        progressBar.visibility = View.VISIBLE
         disposables.add(searchMethod
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -150,11 +150,11 @@ class SearchFragment : Fragment(), SearchInteractionListener {
                 {
                     Timber.i("Found ${it.count()} items")
                     viewAdapter.update(it)
-                    progressBar.hide()
+                    progressBar.visibility = View.INVISIBLE
                 },
                 {
                     Timber.e(it, "Error performing the search")
-                    progressBar.hide()
+                    progressBar.visibility = View.INVISIBLE
                 }
             ))
     }
