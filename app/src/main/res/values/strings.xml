@@ -48,4 +48,6 @@
 
     <string name="search_text_hint">Enter search term</string>
     <string name="search_nsfw_allowed">Show NSFW</string>
+    <string name="search_add_anime_failed">Failed to add Anime %s, please try again</string>
+    <string name="search_add_manga_failed">Failed to add Manga %s, please try again</string>
 </resources>

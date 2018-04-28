@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.ProgressBar
 import android.widget.RadioGroup
+import android.widget.Toast
 import com.chesire.malime.R
 import com.chesire.malime.mal.MalManager
 import com.chesire.malime.models.Entry
@@ -24,6 +25,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
+import java.util.Locale
 
 private const val nsfwAllowedKey = "nsfwAllowed"
 private const val checkedOptionKey = "checkedOption"
@@ -193,11 +195,22 @@ class SearchFragment : Fragment(), SearchInteractionListener {
                     {
                         Timber.i("Successfully added anime - [%s]", selectedEntry.title)
                         callback(true)
+
                         // need to add it to room... maybe force a fresh scan on leaving view?
                     },
                     {
                         Timber.e(it, "Failure to add anime - [%s]", selectedEntry.title)
                         callback(false)
+
+                        Toast.makeText(
+                            context!!,
+                            String.format(
+                                Locale.getDefault(),
+                                getString(R.string.search_add_anime_failed),
+                                selectedEntry.title
+                            ),
+                            Toast.LENGTH_LONG
+                        ).show()
                     }
                 )
         )
@@ -219,6 +232,16 @@ class SearchFragment : Fragment(), SearchInteractionListener {
                     {
                         Timber.e(it, "Failure to add manga - [%s]", selectedEntry.title)
                         callback(false)
+
+                        Toast.makeText(
+                            context!!,
+                            String.format(
+                                Locale.getDefault(),
+                                getString(R.string.search_add_manga_failed),
+                                selectedEntry.title
+                            ),
+                            Toast.LENGTH_LONG
+                        ).show()
                     }
                 )
         )
