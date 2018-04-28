@@ -117,6 +117,17 @@ data class Anime(
         return SimpleDateFormat("yyyy-MM-dd", Locale.ROOT).parse(dateToUse)
     }
 
+    /**
+     * Creates a new [Anime] object to temporarily store in room.
+     */
+    constructor(searchItem: Entry) : this(
+        seriesAnimeDbId = searchItem.id,
+        seriesTitle = searchItem.title,
+        seriesSynonyms = searchItem.synonyms,
+        seriesEpisodes = searchItem.episodes,
+        seriesImage = searchItem.image
+    )
+
     constructor(parcel: Parcel) : this(
         parcel.readValue(Int::class.java.classLoader) as? Int,
         parcel.readString(),
