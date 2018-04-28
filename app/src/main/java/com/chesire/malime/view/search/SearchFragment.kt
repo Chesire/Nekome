@@ -15,12 +15,14 @@ import android.widget.RadioGroup
 import android.widget.Toast
 import com.chesire.malime.R
 import com.chesire.malime.mal.MalManager
+import com.chesire.malime.models.Anime
 import com.chesire.malime.models.Entry
 import com.chesire.malime.models.UpdateAnime
 import com.chesire.malime.models.UpdateManga
 import com.chesire.malime.room.AnimeDao
 import com.chesire.malime.room.MalimeDatabase
 import com.chesire.malime.util.SharedPref
+import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -195,8 +197,7 @@ class SearchFragment : Fragment(), SearchInteractionListener {
                     {
                         Timber.i("Successfully added anime - [%s]", selectedEntry.title)
                         callback(true)
-
-                        // need to add it to room... maybe force a fresh scan on leaving view?
+                        saveNewAnimeIntoRoom(Anime(selectedEntry))
                     },
                     {
                         Timber.e(it, "Failure to add anime - [%s]", selectedEntry.title)
@@ -246,6 +247,32 @@ class SearchFragment : Fragment(), SearchInteractionListener {
                 )
         )
     }
+
+    private fun saveNewAnimeIntoRoom(newAnime: Anime) {
+        Timber.d("Saving [${newAnime.seriesTitle}] to Room")
+
+        // Looks like this doesn't have to be disposed off
+        Completable
+            .fromAction({
+                animeDao.insert(newAnime)
+            })
+            .subscribeOn(Schedulers.io())
+            .subscribe()
+    }
+
+    /*
+    private fun saveNewMangaIntoRoom(newManga: Manga) {
+        Timber.d("Saving [${newManga.seriesTitle}] to Room")
+
+        // Looks like this doesn't have to be disposed off
+        Completable
+            .fromAction({
+                mangaDao.insert(newManga)
+            })
+            .subscribeOn(Schedulers.io())
+            .subscribe()
+    }
+     */
 
     companion object {
         const val tag = "SearchFragment"
