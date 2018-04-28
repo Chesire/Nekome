@@ -56,7 +56,7 @@ class AnimeFragment : Fragment(),
         animeDao = MalimeDatabase.getInstance(context!!).animeDao()
 
         viewManager = LinearLayoutManager(context!!)
-        viewAdapter = AnimeViewAdapter(ArrayList(), ArrayList(), sharedPref, this)
+        viewAdapter = AnimeViewAdapter(sharedPref, this)
         sharedPref.registerOnChangeListener(this)
 
         PeriodicUpdateHelper().schedule(context!!)

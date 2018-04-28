@@ -44,6 +44,20 @@ class MalApi(
     }
 
     /**
+     * Wraps [MalService.addAnime] method.
+     */
+    fun addAnime(id: Int, addAnimeXml: String): Call<Void> {
+        return malService.addAnime(id, addAnimeXml)
+    }
+
+    /**
+     * Wraps [MalService.addManga] method.
+     */
+    fun addManga(id: Int, addMangaXml: String): Call<Void> {
+        return malService.addManga(id, addMangaXml)
+    }
+
+    /**
      * Wraps the [MalService.getAllAnime] method.
      */
     fun getAllAnime(username: String): Call<MalService.GetAllAnimeResponse> {
@@ -69,6 +83,13 @@ class MalApi(
      */
     fun searchForAnime(name: String): Call<MalService.SearchForAnimeResponse> {
         return malService.searchForAnime(name)
+    }
+
+    /**
+     * Wraps the [MalService.searchForManga] method.
+     */
+    fun searchForManga(name: String): Call<MalService.SearchForMangaResponse> {
+        return malService.searchForManga(name)
     }
 
     /**

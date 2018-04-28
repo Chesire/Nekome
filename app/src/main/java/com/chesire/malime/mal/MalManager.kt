@@ -5,6 +5,7 @@ import com.chesire.malime.models.Entry
 import com.chesire.malime.models.Manga
 import com.chesire.malime.models.MyInfo
 import com.chesire.malime.models.UpdateAnime
+import com.chesire.malime.models.UpdateManga
 import io.reactivex.Observable
 import timber.log.Timber
 
@@ -15,6 +16,60 @@ class MalManager(
     auth: String,
     private val api: MalApi = MalApi(auth)
 ) {
+    /**
+     * Adds a specific anime series with all data in [anime].
+     *
+     * @param anime model containing data about the specified series
+     * @return [Observable] instance that has success and error states
+     */
+    fun addAnime(anime: UpdateAnime): Observable<Any> {
+        return Observable.create { subscriber ->
+            val callResponse = api.addAnime(anime.id, anime.getXml())
+            val response = callResponse.execute()
+
+            if (response.isSuccessful) {
+                Timber.i("Anime [%s] has added", anime.title)
+                subscriber.onNext(Any())
+                subscriber.onComplete()
+            } else {
+                Timber.e(
+                    Throwable(response.message()),
+                    "Error adding anime [%s] - %s",
+                    anime.title,
+                    response.errorBody()
+                )
+                subscriber.tryOnError(Throwable(response.message()))
+            }
+        }
+    }
+
+    /**
+     * Adds a specific manga series with all data in [manga].
+     *
+     * @param manga model containing data about the specified series
+     * @return [Observable] instance that has success and error states
+     */
+    fun addManga(manga: UpdateManga): Observable<Any> {
+        return Observable.create { subscriber ->
+            val callResponse = api.addManga(manga.id, manga.getXml())
+            val response = callResponse.execute()
+
+            if (response.isSuccessful) {
+                Timber.i("Manga [%s] has added", manga.title)
+                subscriber.onNext(Any())
+                subscriber.onComplete()
+            } else {
+                Timber.e(
+                    Throwable(response.message()),
+                    "Error adding manga [%s] - %s",
+                    manga.title,
+                    response.errorBody()
+                )
+                subscriber.tryOnError(Throwable(response.message()))
+            }
+        }
+    }
+
     /**
      * Request all anime for a user.
      *
@@ -106,6 +161,31 @@ class MalManager(
     fun searchForAnime(name: String): Observable<List<Entry>> {
         return Observable.create { subscriber ->
             val callResponse = api.searchForAnime(name)
+            val response = callResponse.execute()
+
+            if (response.isSuccessful) {
+                val responseBody = response.body()
+                if (responseBody == null) {
+                    subscriber.tryOnError(Throwable(response.message()))
+                } else {
+                    subscriber.onNext(responseBody.entries)
+                    subscriber.onComplete()
+                }
+            } else {
+                subscriber.tryOnError(Throwable(response.message()))
+            }
+        }
+    }
+
+    /**
+     * Executes a search for the manga [name].
+     *
+     * @param name of the manga to find
+     * @return [Observable] instance containing a list of all found manga
+     */
+    fun searchForManga(name: String): Observable<List<Entry>> {
+        return Observable.create { subscriber ->
+            val callResponse = api.searchForManga(name)
             val response = callResponse.execute()
 
             if (response.isSuccessful) {

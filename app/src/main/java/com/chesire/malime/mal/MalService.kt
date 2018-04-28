@@ -20,6 +20,34 @@ import retrofit2.http.Query
  */
 interface MalService {
     /**
+     * Executes a GET method to add an anime for the user.
+     *
+     * @param id The id of the anime to add, this will be the [Anime.seriesAnimeDbId]
+     * @param data String representation of the anime model
+     * @return Call to execute for the POST method
+     */
+    @FormUrlEncoded
+    @POST("api/animelist/add/{id}.xml")
+    fun addAnime(
+        @Path("id") id: Int,
+        @Field("data") data: String
+    ): Call<Void>
+
+    /**
+     * Executes a GET method to add a manga for the user.
+     *
+     * @param id The id of the manga to add, this will be the [Manga.seriesMangaDbId]
+     * @param data String representation of the manga model
+     * @return Call to execute for the POST method
+     */
+    @FormUrlEncoded
+    @POST("api/mangalist/add/{id}.xml")
+    fun addManga(
+        @Path("id") id: Int,
+        @Field("data") data: String
+    ): Call<Void>
+
+    /**
      * Executes a GET to find all the anime for [user].
      *
      * @param user Username for the person to get the anime for
@@ -55,6 +83,15 @@ interface MalService {
      */
     @GET("api/anime/search.xml")
     fun searchForAnime(@Query("q") name: String): Call<SearchForAnimeResponse>
+
+    /**
+     * Executes a GET to search for the specified manga.
+     *
+     * @param name Name of the manga to find
+     * @return Call to execute for the GET method
+     */
+    @GET("api/manga/search.xml")
+    fun searchForManga(@Query("q") name: String): Call<SearchForMangaResponse>
 
     /**
      * Executes a POST to update the data for an anime.
@@ -119,6 +156,16 @@ interface MalService {
      */
     @Root(name = "anime")
     data class SearchForAnimeResponse(
+        @field:ElementList(inline = true, entry = "entry")
+        @param:ElementList(inline = true, entry = "entry")
+        val entries: List<Entry>
+    )
+
+    /**
+     * Response object to handle calls to [searchForManga].
+     */
+    @Root(name = "manga")
+    data class SearchForMangaResponse(
         @field:ElementList(inline = true, entry = "entry")
         @param:ElementList(inline = true, entry = "entry")
         val entries: List<Entry>

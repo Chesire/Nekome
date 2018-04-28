@@ -1,11 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/search_search_term_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_margin="8dp">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/search_search_term_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/search_text_hint"
+            android:imeOptions="actionSearch"
+            android:inputType="textNoSuggestions"
+            android:maxLines="1" />
+    </android.support.design.widget.TextInputLayout>
+
+    <RadioGroup
+        android:id="@+id/search_option_choices"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Search" />
+        android:layout_below="@+id/search_search_term_layout"
+        android:checkedButton="@+id/search_option_anime_choice"
+        android:orientation="horizontal">
 
-</android.support.constraint.ConstraintLayout>
+        <RadioButton
+            android:id="@+id/search_option_anime_choice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:text="@string/main_nav_anime" />
+
+        <RadioButton
+            android:id="@+id/search_option_manga_choice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:text="@string/main_nav_manga" />
+    </RadioGroup>
+
+    <!-- Need to find some way for this item to work -->
+    <CheckBox
+        android:id="@+id/search_option_nsfw_allowed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/search_option_choices"
+        android:layout_margin="8dp"
+        android:text="@string/search_nsfw_allowed"
+        android:visibility="gone" />
+
+    <View
+        android:id="@+id/search_divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/search_option_nsfw_allowed"
+        android:background="@android:color/darker_gray" />
+
+    <ProgressBar
+        android:id="@+id/search_loading_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:indeterminate="true"
+        android:visibility="invisible" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/search_all_items"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/search_divider" />
+</RelativeLayout>

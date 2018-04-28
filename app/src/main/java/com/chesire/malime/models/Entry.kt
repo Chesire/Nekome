@@ -1,5 +1,7 @@
 package com.chesire.malime.models
 
+import android.os.Parcel
+import android.os.Parcelable
 import org.simpleframework.xml.Element
 import org.simpleframework.xml.Root
 
@@ -20,6 +22,12 @@ data class Entry(
     @field:Element(name = "episodes", required = false)
     @param:Element(name = "episodes", required = false)
     val episodes: Int? = null,
+    @field:Element(name = "chapters", required = false)
+    @param:Element(name = "chapters", required = false)
+    val chapters: Int? = null,
+    @field:Element(name = "volumes", required = false)
+    @param:Element(name = "volumes", required = false)
+    val volumes: Int? = null,
     @field:Element(name = "score", required = false)
     @param:Element(name = "score", required = false)
     val score: Double? = null,
@@ -41,4 +49,48 @@ data class Entry(
     @field:Element(name = "image", required = false)
     @param:Element(name = "image", required = false)
     val image: String? = null
-)
+) : Parcelable {
+    constructor(source: Parcel) : this(
+        source.readValue(Int::class.java.classLoader) as Int?,
+        source.readString(),
+        source.readString(),
+        source.readString(),
+        source.readValue(Int::class.java.classLoader) as Int?,
+        source.readValue(Int::class.java.classLoader) as Int?,
+        source.readValue(Int::class.java.classLoader) as Int?,
+        source.readValue(Double::class.java.classLoader) as Double?,
+        source.readString(),
+        source.readString(),
+        source.readString(),
+        source.readString(),
+        source.readString(),
+        source.readString()
+    )
+
+    override fun describeContents() = 0
+
+    override fun writeToParcel(dest: Parcel, flags: Int) = with(dest) {
+        writeValue(id)
+        writeString(title)
+        writeString(english)
+        writeString(synonyms)
+        writeValue(episodes)
+        writeValue(chapters)
+        writeValue(volumes)
+        writeValue(score)
+        writeString(type)
+        writeString(status)
+        writeString(start_date)
+        writeString(end_date)
+        writeString(synopsis)
+        writeString(image)
+    }
+
+    companion object {
+        @JvmField
+        val CREATOR: Parcelable.Creator<Entry> = object : Parcelable.Creator<Entry> {
+            override fun createFromParcel(source: Parcel): Entry = Entry(source)
+            override fun newArray(size: Int): Array<Entry?> = arrayOfNulls(size)
+        }
+    }
+}
