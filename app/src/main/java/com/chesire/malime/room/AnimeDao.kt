@@ -15,6 +15,9 @@ interface AnimeDao {
     fun getAll(): Flowable<List<Anime>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insert(anime: Anime)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(animes: List<Anime>)
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
