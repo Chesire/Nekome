@@ -10,17 +10,17 @@ private const val transformation = "AES/GCM/NoPadding"
 private const val androidKeyStore = "AndroidKeyStore"
 
 class Decryptor {
-    private val keyStore: KeyStore = KeyStore.getInstance(androidKeyStore)
+    private val keyStore = KeyStore.getInstance(androidKeyStore)
 
     init {
         keyStore.load(null)
     }
 
     fun decryptData(alias: String, encryptedData: ByteArray, encryptionIv: ByteArray): String {
-        val cipher = Cipher.getInstance(transformation)
-
         val spec = GCMParameterSpec(128, encryptionIv)
-        cipher.init(Cipher.DECRYPT_MODE, getSecretKey(alias), spec)
+        val cipher = Cipher.getInstance(transformation).apply {
+            init(Cipher.DECRYPT_MODE, getSecretKey(alias), spec)
+        }
 
         return String(cipher.doFinal(encryptedData), Charset.forName("UTF-8"))
     }

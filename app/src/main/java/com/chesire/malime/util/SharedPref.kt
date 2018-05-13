@@ -33,12 +33,11 @@ class SharedPref(
         val iv = authSharedPreferences.getString(preferenceAuthIv, "")
 
         return if (text.isNotBlank() && iv.isNotBlank()) {
-            val res = decryptor.decryptData(
+            decryptor.decryptData(
                 authSharedPrefFile,
                 Base64.decode(text, Base64.DEFAULT),
                 Base64.decode(iv, Base64.DEFAULT)
             )
-            res
         } else {
             ""
         }
@@ -47,11 +46,9 @@ class SharedPref(
     fun putAuth(auth: String): SharedPref {
         val encrypt = encryptor.encryptText(authSharedPrefFile, auth)
 
-        val txt = Base64.encodeToString(encrypt.first, Base64.DEFAULT)
-        val iv = Base64.encodeToString(encrypt.second, Base64.DEFAULT)
         authSharedPreferences.edit()
-            .putString(preferenceAuth, txt)
-            .putString(preferenceAuthIv, iv)
+            .putString(preferenceAuth, Base64.encodeToString(encrypt.first, Base64.DEFAULT))
+            .putString(preferenceAuthIv, Base64.encodeToString(encrypt.second, Base64.DEFAULT))
             .apply()
 
         return this

@@ -20,8 +20,9 @@ class Encryptor {
      * @return a pair with [Pair.first] as the encrypted text byte array, and [Pair.second] as the iv
      */
     fun encryptText(alias: String, text: String): Pair<ByteArray, ByteArray> {
-        val cipher = Cipher.getInstance(transformation)
-        cipher.init(Cipher.ENCRYPT_MODE, getSecretKey(alias))
+        val cipher = Cipher.getInstance(transformation).apply {
+            init(Cipher.ENCRYPT_MODE, getSecretKey(alias))
+        }
 
         return Pair(
             cipher.doFinal(
@@ -46,8 +47,9 @@ class Encryptor {
                     .build()
             )
         } else {
-            keyGenerator = KeyGenerator.getInstance(androidKeyStore)
-            keyGenerator.init(SecureRandom())
+            keyGenerator = KeyGenerator.getInstance(androidKeyStore).apply {
+                init(SecureRandom())
+            }
         }
 
         return keyGenerator.generateKey()
