@@ -102,7 +102,7 @@ data class Manga(
     var myTags: String? = null
 ) : Parcelable {
     @Ignore
-    private val baseUrl: String = "https://myanimelist.net/anime/"
+    private val baseUrl: String = "https://myanimelist.net/manga/"
 
     fun getMalUrl(): String = baseUrl + seriesMangaDbId
 
