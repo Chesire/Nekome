@@ -72,6 +72,8 @@ class MainActivity : AppCompatActivity() {
                 currentDisplayedFragmentTag
             )
         }
+
+        PeriodicUpdateHelper().schedule(this)
     }
 
     override fun onSaveInstanceState(outState: Bundle?) {

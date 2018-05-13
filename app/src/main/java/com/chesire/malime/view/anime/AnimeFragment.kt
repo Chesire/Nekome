@@ -58,8 +58,6 @@ class AnimeFragment : Fragment(),
         viewManager = LinearLayoutManager(context!!)
         viewAdapter = AnimeViewAdapter(sharedPref, this)
         sharedPref.registerOnChangeListener(this)
-
-        PeriodicUpdateHelper().schedule(context!!)
     }
 
     override fun onCreateView(
