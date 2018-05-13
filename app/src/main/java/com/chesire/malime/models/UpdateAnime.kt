@@ -44,7 +44,7 @@ data class UpdateAnime(
     fun setSeriesStatus(state: Int) {
         val newState = MalStates.getMalStateForSurfaceId(state)
         if (newState == null) {
-            Timber.e("The AnimeState is null, looked for state [%d]", state)
+            Timber.e("The MalState is null, looked for state [%d]", state)
         } else {
             status = newState.id
         }

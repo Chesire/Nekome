@@ -1,5 +1,11 @@
 package com.chesire.malime.models
 
+import com.chesire.malime.MalStates
+import timber.log.Timber
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
+
 data class UpdateManga(
     val id: Int,
     val title: String,
@@ -35,6 +41,32 @@ data class UpdateManga(
         status = 0,
         score = 0
     )
+
+    /**
+     * Sets the status of the series.
+     *
+     * @param state this should match a value in [MalStates.surfaceId]
+     */
+    fun setSeriesStatus(state: Int) {
+        val newState = MalStates.getMalStateForSurfaceId(state)
+        if (newState == null) {
+            Timber.e("The MalState is null, looked for state [%d]", state)
+        } else {
+            status = newState.id
+        }
+    }
+
+    fun setToCompleteState() {
+        status = MalStates.COMPLETED.id
+        val calendar = Calendar.getInstance()
+        val dateFormatter = SimpleDateFormat("MM/dd/yyyy", Locale.getDefault())
+        dateFinish = dateFormatter.format(calendar.time)
+    }
+
+    fun setToReadingState() {
+        status = MalStates.READING.id
+        dateFinish = ""
+    }
 
     fun getXml(): String {
         return "<entry>" +
