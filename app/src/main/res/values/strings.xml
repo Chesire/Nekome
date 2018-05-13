@@ -33,6 +33,7 @@
 
     <string name="filter_dialog_title">Filter By:</string>
     <string name="filter_state_watching">Watching</string>
+    <string name="filter_state_reading">Reading</string>
     <string name="filter_state_completed">Completed</string>
     <string name="filter_state_on_hold">On-Hold</string>
     <string name="filter_state_dropped">Dropped</string>

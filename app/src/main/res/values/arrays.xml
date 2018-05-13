@@ -7,6 +7,13 @@
         <item>@string/filter_state_dropped</item>
         <item>@string/filter_state_plan_to_watch</item>
     </string-array>
+    <string-array name="manga_states">
+        <item>@string/filter_state_reading</item>
+        <item>@string/filter_state_completed</item>
+        <item>@string/filter_state_on_hold</item>
+        <item>@string/filter_state_dropped</item>
+        <item>@string/filter_state_plan_to_read</item>
+    </string-array>
 
     <string-array name="anime_sort_options">
         <item>@string/sort_choice_default</item>
