@@ -7,12 +7,14 @@ import android.support.customtabs.CustomTabsIntent
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v4.widget.SwipeRefreshLayout
+import android.support.v7.app.AlertDialog
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.SimpleItemAnimator
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.chesire.malime.MalStates
 import com.chesire.malime.R
 import com.chesire.malime.mal.MalManager
 import com.chesire.malime.models.Manga
@@ -120,7 +122,26 @@ class MangaFragment : Fragment(),
     }
 
     override fun onLongClick(originalModel: Manga, updateModel: UpdateManga, callback: () -> Unit) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        var state = MalStates.getMalStateForId(originalModel.myStatus!!)!!.surfaceId
+        var executing = false
+        AlertDialog.Builder(context!!)
+            .setTitle(R.string.malitem_update_series_state_dialog_title)
+            .setSingleChoiceItems(R.array.anime_states, state, { _, which ->
+                state = which
+            })
+            .setPositiveButton(android.R.string.ok, { _, _ ->
+                executing = true
+                updateModel.setSeriesStatus(state)
+                executeUpdateMal(originalModel, updateModel, callback)
+            })
+            .setNegativeButton(android.R.string.cancel, null)
+            .setOnDismissListener {
+                Timber.d("Dismissing")
+                if (!executing) {
+                    callback()
+                }
+            }
+            .show()
     }
 
     override fun onSeriesUpdate(
@@ -128,7 +149,48 @@ class MangaFragment : Fragment(),
         updateModel: UpdateManga,
         callback: () -> Unit
     ) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        var showDialog = false
+        val alertBuilder = AlertDialog.Builder(context!!)
+            .setNegativeButton(android.R.string.no, null)
+            .setOnDismissListener {
+                executeUpdateMal(originalModel, updateModel, callback)
+            }
+
+        if (updateModel.chapter < updateModel.totalChapters
+            && updateModel.status == MalStates.COMPLETED.id
+        ) {
+            if (sharedPref.getAutoUpdateSeriesState()) {
+                updateModel.setToReadingState()
+            } else {
+                showDialog = true
+                alertBuilder
+                    .setTitle(R.string.malitem_update_series_reverted_title)
+                    .setMessage(R.string.malitem_update_series_reverted_body)
+                    .setPositiveButton(android.R.string.yes, { _, _ ->
+                        updateModel.setToReadingState()
+                    })
+            }
+        } else if (updateModel.chapter == updateModel.totalChapters
+            && updateModel.status != MalStates.COMPLETED.id
+        ) {
+            if (sharedPref.getAutoUpdateSeriesState()) {
+                updateModel.setToCompleteState()
+            } else {
+                showDialog = true
+                alertBuilder
+                    .setTitle(R.string.malitem_update_series_complete_title)
+                    .setMessage(R.string.malitem_update_series_complete_body)
+                    .setPositiveButton(android.R.string.yes, { _, _ ->
+                        updateModel.setToCompleteState()
+                    })
+            }
+        }
+
+        if (showDialog) {
+            alertBuilder.show()
+        } else {
+            executeUpdateMal(originalModel, updateModel, callback)
+        }
     }
 
     private fun executeGetLocalManga() {
