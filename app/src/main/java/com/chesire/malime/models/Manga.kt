@@ -1,5 +1,6 @@
 package com.chesire.malime.models
 
+import android.arch.persistence.room.Ignore
 import android.os.Parcel
 import android.os.Parcelable
 import org.simpleframework.xml.Element
@@ -91,6 +92,11 @@ data class Manga(
     @param:Element(name = "my_tags", required = false)
     val myTags: String? = null
 ) : Parcelable {
+    @Ignore
+    private val baseUrl: String = "https://myanimelist.net/anime/"
+
+    fun getMalUrl(): String = baseUrl + seriesMangaDbId
+
     constructor(source: Parcel) : this(
         source.readValue(Int::class.java.classLoader) as Int?,
         source.readString(),
