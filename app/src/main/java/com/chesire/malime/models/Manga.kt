@@ -5,6 +5,9 @@ import android.os.Parcel
 import android.os.Parcelable
 import org.simpleframework.xml.Element
 import org.simpleframework.xml.Root
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 @Root(name = "manga")
 data class Manga(
@@ -36,10 +39,12 @@ data class Manga(
     @param:Element(name = "series_status", required = false)
     val seriesStatus: Int? = null,
 
+    @Deprecated("Use seriesStartDate instead")
     @field:Element(name = "series_start", required = false)
     @param:Element(name = "series_start", required = false)
     val seriesStart: String? = null,
 
+    @Deprecated("Use seriesEndDate instead")
     @field:Element(name = "series_end", required = false)
     @param:Element(name = "series_end", required = false)
     val seriesEnd: String? = null,
@@ -54,11 +59,11 @@ data class Manga(
 
     @field:Element(name = "my_read_chapters", required = false)
     @param:Element(name = "my_read_chapters", required = false)
-    val myReadChapters: Int? = null,
+    var myReadChapters: Int? = null,
 
     @field:Element(name = "my_read_volumes", required = false)
     @param:Element(name = "my_read_volumes", required = false)
-    val myReadVolumes: Int? = null,
+    var myReadVolumes: Int? = null,
 
     @field:Element(name = "my_start_date", required = false)
     @param:Element(name = "my_start_date", required = false)
@@ -74,7 +79,7 @@ data class Manga(
 
     @field:Element(name = "my_status", required = false)
     @param:Element(name = "my_status", required = false)
-    val myStatus: Int? = null,
+    var myStatus: Int? = null,
 
     @field:Element(name = "my_rereadingg", required = false)
     @param:Element(name = "my_rereadingg", required = false)
@@ -96,6 +101,25 @@ data class Manga(
     private val baseUrl: String = "https://myanimelist.net/anime/"
 
     fun getMalUrl(): String = baseUrl + seriesMangaDbId
+
+    fun getTotalChapters(): String =
+        if (seriesChapters == 0) {
+            "??"
+        } else {
+            seriesChapters.toString()
+        }
+
+    fun getSeriesStartDate(): Date = SimpleDateFormat("yyyy-MM-dd", Locale.ROOT).parse(seriesStart)
+
+    fun getSeriesEndDate(): Date {
+        val dateToUse: String = if (seriesEnd == "0000-00-00") {
+            "9999-99-99"
+        } else {
+            seriesEnd!!
+        }
+
+        return SimpleDateFormat("yyyy-MM-dd", Locale.ROOT).parse(dateToUse)
+    }
 
     constructor(source: Parcel) : this(
         source.readValue(Int::class.java.classLoader) as Int?,
