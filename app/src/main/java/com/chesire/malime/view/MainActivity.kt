@@ -132,6 +132,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setFragment(fragment: Fragment, fragmentTag: String) {
+        title = when (fragmentTag) {
+            AnimeFragment.tag -> getString(R.string.main_nav_anime)
+            MangaFragment.tag -> getString(R.string.main_nav_manga)
+            SearchFragment.tag -> getString(R.string.main_nav_search)
+            else -> getString(R.string.app_name)
+        }
+
         currentDisplayedFragmentTag = fragmentTag
         supportFragmentManager.beginTransaction()
             .replace(R.id.activity_main_frame, fragment, fragmentTag)
