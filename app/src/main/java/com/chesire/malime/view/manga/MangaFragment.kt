@@ -7,6 +7,7 @@ import android.support.customtabs.CustomTabsIntent
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v4.widget.SwipeRefreshLayout
+import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.SimpleItemAnimator
 import android.view.LayoutInflater
@@ -50,6 +51,10 @@ class MangaFragment : Fragment(),
         username = sharedPref.getUsername()
         malManager = MalManager(sharedPref.getAuth())
         mangaDao = MalimeDatabase.getInstance(context!!).mangaDao()
+
+        viewManager = LinearLayoutManager(context!!)
+        viewAdapter = MangaViewAdapter(sharedPref, this)
+        sharedPref.registerOnChangeListener(this)
     }
 
     override fun onCreateView(
@@ -101,7 +106,11 @@ class MangaFragment : Fragment(),
     }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        if (key != null &&
+            (key.contains(sharedPref.preferenceAnimeFilter) || key.contains(sharedPref.preferenceAnimeSortOption))
+        ) {
+            viewAdapter.filter.filter("")
+        }
     }
 
     override fun onImageClicked(model: Manga) {

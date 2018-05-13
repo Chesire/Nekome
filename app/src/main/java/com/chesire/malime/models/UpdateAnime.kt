@@ -1,6 +1,6 @@
 package com.chesire.malime.models
 
-import com.chesire.malime.AnimeStates
+import com.chesire.malime.MalStates
 import timber.log.Timber
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -39,10 +39,10 @@ data class UpdateAnime(
     /**
      * Sets the status of the series.
      *
-     * @param state this should match a value in [AnimeStates.surfaceId]
+     * @param state this should match a value in [MalStates.surfaceId]
      */
     fun setSeriesStatus(state: Int) {
-        val newState = AnimeStates.getAnimeStateForSurfaceId(state)
+        val newState = MalStates.getMalStateForSurfaceId(state)
         if (newState == null) {
             Timber.e("The AnimeState is null, looked for state [%d]", state)
         } else {
@@ -51,14 +51,14 @@ data class UpdateAnime(
     }
 
     fun setToCompleteState() {
-        status = AnimeStates.COMPLETED.id
+        status = MalStates.COMPLETED.id
         val calendar = Calendar.getInstance()
         val dateFormatter = SimpleDateFormat("MM/dd/yyyy", Locale.getDefault())
         dateFinish = dateFormatter.format(calendar.time)
     }
 
     fun setToWatchingState() {
-        status = AnimeStates.WATCHING.id
+        status = MalStates.WATCHING.id
         dateFinish = ""
     }
 
