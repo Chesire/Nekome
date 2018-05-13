@@ -70,7 +70,7 @@ data class UpdateManga(
 
     fun getXml(): String {
         return "<entry>" +
-                "<chapter>$chapter</episode>" +
+                "<chapter>$chapter</chapter>" +
                 "<volume>$volume</volume>" +
                 "<status>$status</status>" +
                 "<score>$score</score>" +
