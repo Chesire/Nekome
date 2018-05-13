@@ -79,7 +79,7 @@ class MangaFragment : Fragment(),
         }
 
         if (savedInstanceState == null) {
-            executeGetLatestManga()
+            executeGetLocalManga()
         } else {
             viewAdapter.addAll(savedInstanceState.getParcelableArrayList(mangaItemsBundleId))
         }
