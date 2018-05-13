@@ -7,6 +7,8 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.SimpleItemAnimator
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
@@ -53,6 +55,8 @@ class SearchFragment : Fragment(), SearchInteractionListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+
         val sharedPref = SharedPref(context!!)
         malManager = MalManager(sharedPref.getAuth())
         animeDao = MalimeDatabase.getInstance(context!!).animeDao()
@@ -110,6 +114,11 @@ class SearchFragment : Fragment(), SearchInteractionListener {
         }
 
         return view
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        inflater!!.inflate(R.menu.menu_search, menu)
+        super.onCreateOptionsMenu(menu, inflater)
     }
 
     override fun onResume() {

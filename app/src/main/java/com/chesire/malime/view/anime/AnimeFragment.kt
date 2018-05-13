@@ -12,6 +12,9 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.SimpleItemAnimator
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import com.chesire.malime.MalStates
@@ -48,6 +51,7 @@ class AnimeFragment : Fragment(),
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
 
         sharedPref = SharedPref(context!!)
         username = sharedPref.getUsername()
@@ -87,6 +91,11 @@ class AnimeFragment : Fragment(),
         return view
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        inflater!!.inflate(R.menu.menu_options, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
     override fun onResume() {
         super.onResume()
         disposables = CompositeDisposable()
@@ -105,6 +114,38 @@ class AnimeFragment : Fragment(),
     override fun onDestroy() {
         sharedPref.unregisterOnChangeListener(this)
         super.onDestroy()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        return if (item?.itemId == R.id.menu_options_filter) {
+            spawnFilterDialog()
+            true
+        } else {
+            super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun spawnFilterDialog() {
+        val states = sharedPref.getAnimeFilter()
+        AlertDialog.Builder(requireContext())
+            .setTitle(R.string.filter_dialog_title)
+            .setMultiChoiceItems(R.array.anime_states, states, { _, which, isChecked ->
+                states[which] = isChecked
+            })
+            .setPositiveButton(android.R.string.ok, { _, _ ->
+                if (states.all { !it }) {
+                    Timber.w("User tried to set all filter states to false")
+                    Snackbar.make(
+                        view!!.findViewById(R.id.maldisplay_layout),
+                        R.string.filter_must_select,
+                        Snackbar.LENGTH_LONG
+                    ).show()
+                } else {
+                    sharedPref.setAnimeFilter(states)
+                }
+            })
+            .setNegativeButton(android.R.string.cancel, null)
+            .show()
     }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, id: String?) {
