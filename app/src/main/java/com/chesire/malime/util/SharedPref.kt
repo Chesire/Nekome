@@ -2,44 +2,56 @@ package com.chesire.malime.util
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.util.Base64
+import com.chesire.malime.util.sec.Decryptor
+import com.chesire.malime.util.sec.Encryptor
 
-/**
- * Creates a wrapper around the shared preferences.
- * <p>
- * This allows the auth token and username to be written in and retrieved.
- * Note: This should later be modified to encrypt the auth before storing
- */
+private const val authSharedPrefFile: String = "private_auth"
+private const val preferenceAuth: String = "auth"
+private const val preferenceAuthIv: String = "authIv"
+private const val preferenceUsername: String = "username"
+private const val preferenceAllowCrashReporting: String = "allowCrashReporting"
+private const val preferenceAnimeFilterLength: String = "animeFilterLength"
+private const val preferenceAutoUpdateState: String = "autoUpdateState"
+
 class SharedPref(
     context: Context
 ) {
-    private val authSharedPrefFile: String = "private_auth"
-    val sharedPrefFile: String = "malime_shared_pref"
-
-    private val preferenceAuth: String = "auth"
-    private val preferenceUsername: String = "username"
-    private val preferenceAllowCrashReporting: String = "allowCrashReporting"
-    private val preferenceAnimeFilterLength: String = "animeFilterLength"
-    private val preferenceAutoUpdateState: String = "autoUpdateState"
     val preferenceAnimeFilter: String = "animeFilter"
     val preferenceAnimeSortOption: String = "animeSortOption"
+    val sharedPrefFile: String = "malime_shared_pref"
 
-    private val authSharedPreferences: SharedPreferences
-    private val sharedPreferences: SharedPreferences
-
-    init {
-        authSharedPreferences =
-                context.getSharedPreferences(authSharedPrefFile, Context.MODE_PRIVATE)
-        sharedPreferences =
-                context.getSharedPreferences(sharedPrefFile, Context.MODE_PRIVATE)
-    }
+    private val authSharedPreferences =
+        context.getSharedPreferences(authSharedPrefFile, Context.MODE_PRIVATE)
+    private val sharedPreferences =
+        context.getSharedPreferences(sharedPrefFile, Context.MODE_PRIVATE)
+    private val encryptor = Encryptor()
+    private val decryptor = Decryptor()
 
     fun getAuth(): String {
-        return authSharedPreferences.getString(preferenceAuth, "")
+        val text = authSharedPreferences.getString(preferenceAuth, "")
+        val iv = authSharedPreferences.getString(preferenceAuthIv, "")
+
+        return if (text.isNotBlank() && iv.isNotBlank()) {
+            val res = decryptor.decryptData(
+                authSharedPrefFile,
+                Base64.decode(text, Base64.DEFAULT),
+                Base64.decode(iv, Base64.DEFAULT)
+            )
+            res
+        } else {
+            ""
+        }
     }
 
     fun putAuth(auth: String): SharedPref {
+        val encrypt = encryptor.encryptText(authSharedPrefFile, auth)
+
+        val txt = Base64.encodeToString(encrypt.first, Base64.DEFAULT)
+        val iv = Base64.encodeToString(encrypt.second, Base64.DEFAULT)
         authSharedPreferences.edit()
-            .putString(preferenceAuth, auth)
+            .putString(preferenceAuth, txt)
+            .putString(preferenceAuthIv, iv)
             .apply()
 
         return this

@@ -13,19 +13,21 @@ private const val transformation = "AES/GCM/NoPadding"
 private const val androidKeyStore = "AndroidKeyStore"
 
 class Encryptor {
-    var encryption: ByteArray? = null
-    var iv: ByteArray? = null
-
-    fun encryptText(alias: String, text: String): ByteArray? {
+    /**
+     * Encrypts the [text].
+     *
+     * @return a pair with [Pair.first] as the encrypted text byte array, and [Pair.second] as the iv
+     */
+    fun encryptText(alias: String, text: String): Pair<ByteArray, ByteArray> {
         val cipher = Cipher.getInstance(transformation)
-        cipher.init(Cipher.ENCRYPT_MODE, getSecretKey(alias));
+        cipher.init(Cipher.ENCRYPT_MODE, getSecretKey(alias))
 
-        iv = cipher.iv
-        encryption = cipher.doFinal(
-            text.toByteArray(Charset.forName("UTF-8"))
+        return Pair(
+            cipher.doFinal(
+                text.toByteArray(Charset.forName("UTF-8"))
+            ),
+            cipher.iv
         )
-
-        return encryption
     }
 
     private fun getSecretKey(alias: String): SecretKey {
