@@ -6,6 +6,7 @@ import javax.crypto.Cipher
 import javax.crypto.SecretKey
 import javax.crypto.spec.GCMParameterSpec
 
+// this cipher should work, will need to test < API23
 private const val transformation = "AES/GCM/NoPadding"
 private const val androidKeyStore = "AndroidKeyStore"
 

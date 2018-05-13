@@ -9,7 +9,7 @@ import javax.crypto.Cipher
 import javax.crypto.KeyGenerator
 import javax.crypto.SecretKey
 
-// this cipher should work, will need to test < API21
+// this cipher should work, will need to test < API23
 private const val transformation = "AES/GCM/NoPadding"
 private const val androidKeyStore = "AndroidKeyStore"
 
