@@ -109,6 +109,13 @@ interface MalService {
         @Field("data") data: String
     ): Call<Void>
 
+    @FormUrlEncoded
+    @POST("api/mangalist/update/{id}.xml")
+    fun updateManga(
+        @Path("id") id: Int,
+        @Field("data") data: String
+    ): Call<Void>
+
     /**
      * Response object to handle calls to [getAllAnime].
      */
