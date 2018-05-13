@@ -9,10 +9,10 @@ import javax.crypto.Cipher
 import javax.crypto.KeyGenerator
 import javax.crypto.SecretKey
 
-class Encryptor {
-    private val transformation = "AES/GCM/NoPadding"
-    private val ANDROID_KEY_STORE = "AndroidKeyStore"
+private const val transformation = "AES/GCM/NoPadding"
+private const val androidKeyStore = "AndroidKeyStore"
 
+class Encryptor {
     var encryption: ByteArray? = null
     var iv: ByteArray? = null
 
@@ -32,7 +32,7 @@ class Encryptor {
         val keyGenerator: KeyGenerator
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             keyGenerator =
-                    KeyGenerator.getInstance(KeyProperties.KEY_ALGORITHM_AES, ANDROID_KEY_STORE)
+                    KeyGenerator.getInstance(KeyProperties.KEY_ALGORITHM_AES, androidKeyStore)
             keyGenerator.init(
                 KeyGenParameterSpec.Builder(
                     alias,
@@ -43,7 +43,7 @@ class Encryptor {
                     .build()
             )
         } else {
-            keyGenerator = KeyGenerator.getInstance(ANDROID_KEY_STORE)
+            keyGenerator = KeyGenerator.getInstance(androidKeyStore)
             keyGenerator.init(SecureRandom())
         }
 
