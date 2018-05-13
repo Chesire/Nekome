@@ -229,4 +229,5 @@ $RECYCLE.BIN/
 # Start of custom
 google-services.json
 Fastlane/report.xml
+.idea/caches/
 # End of custom

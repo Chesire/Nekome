@@ -14,14 +14,13 @@ import android.support.v7.widget.SimpleItemAnimator
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.chesire.malime.AnimeStates
+import com.chesire.malime.MalStates
 import com.chesire.malime.R
 import com.chesire.malime.mal.MalManager
 import com.chesire.malime.models.Anime
 import com.chesire.malime.models.UpdateAnime
 import com.chesire.malime.room.AnimeDao
 import com.chesire.malime.room.MalimeDatabase
-import com.chesire.malime.util.PeriodicUpdateHelper
 import com.chesire.malime.util.SharedPref
 import com.chesire.malime.view.MalModelInteractionListener
 import io.reactivex.Completable
@@ -58,8 +57,6 @@ class AnimeFragment : Fragment(),
         viewManager = LinearLayoutManager(context!!)
         viewAdapter = AnimeViewAdapter(sharedPref, this)
         sharedPref.registerOnChangeListener(this)
-
-        PeriodicUpdateHelper().schedule(context!!)
     }
 
     override fun onCreateView(
@@ -129,7 +126,7 @@ class AnimeFragment : Fragment(),
         updateModel: UpdateAnime,
         callback: () -> Unit
     ) {
-        var state = AnimeStates.getAnimeStateForId(originalModel.myStatus!!)!!.surfaceId
+        var state = MalStates.getMalStateForId(originalModel.myStatus!!)!!.surfaceId
         var executing = false
         AlertDialog.Builder(context!!)
             .setTitle(R.string.malitem_update_series_state_dialog_title)
@@ -164,7 +161,7 @@ class AnimeFragment : Fragment(),
             }
 
         if (updateModel.episode < updateModel.totalEpisodes
-            && updateModel.status == AnimeStates.COMPLETED.id
+            && updateModel.status == MalStates.COMPLETED.id
         ) {
             if (sharedPref.getAutoUpdateSeriesState()) {
                 updateModel.setToWatchingState()
@@ -178,7 +175,7 @@ class AnimeFragment : Fragment(),
                     })
             }
         } else if (updateModel.episode == updateModel.totalEpisodes
-            && updateModel.status != AnimeStates.COMPLETED.id
+            && updateModel.status != MalStates.COMPLETED.id
         ) {
             if (sharedPref.getAutoUpdateSeriesState()) {
                 updateModel.setToCompleteState()

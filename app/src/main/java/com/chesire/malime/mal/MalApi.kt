@@ -100,6 +100,13 @@ class MalApi(
     }
 
     /**
+     * Wraps the [MalService.updateManga] method.
+     */
+    fun updateManga(id: Int, updateMangaXml: String): Call<Void> {
+        return malService.updateManga(id, updateMangaXml)
+    }
+
+    /**
      * Provides an interceptor that handles the basic auth.
      */
     class BasicAuthInterceptor(

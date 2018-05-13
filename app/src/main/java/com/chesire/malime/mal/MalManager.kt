@@ -228,4 +228,31 @@ class MalManager(
             }
         }
     }
+
+    /**
+     * Updates a specific manga series with all data in [manga].
+     *
+     * @param manga model containing all updates to the specified series
+     * @return [Observable] instance that has success and error states
+     */
+    fun updateManga(manga: UpdateManga): Observable<Any> {
+        return Observable.create { subscriber ->
+            val callResponse = api.updateManga(manga.id, manga.getXml())
+            val response = callResponse.execute()
+
+            if (response.isSuccessful) {
+                Timber.i("Manga [%s] has updated to episode [%d]", manga.title, manga.chapter)
+                subscriber.onNext(Any())
+                subscriber.onComplete()
+            } else {
+                Timber.e(
+                    Throwable(response.message()),
+                    "Error Updating manga [%s] - %s",
+                    manga.title,
+                    response.errorBody()
+                )
+                subscriber.tryOnError(Throwable(response.message()))
+            }
+        }
+    }
 }
