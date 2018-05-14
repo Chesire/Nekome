@@ -25,18 +25,16 @@ class SharedPref(
         context.getSharedPreferences(authSharedPrefFile, Context.MODE_PRIVATE)
     private val sharedPreferences =
         context.getSharedPreferences(sharedPrefFile, Context.MODE_PRIVATE)
-    private val encryptor = Encryptor()
+    private val encryptor = Encryptor(context.applicationContext)
     private val decryptor = Decryptor()
 
     fun getAuth(): String {
         val text = authSharedPreferences.getString(preferenceAuth, "")
-        val iv = authSharedPreferences.getString(preferenceAuthIv, "")
 
-        return if (text.isNotBlank() && iv.isNotBlank()) {
+        return if (text.isNotBlank()) {
             decryptor.decryptData(
                 authSharedPrefFile,
-                Base64.decode(text, Base64.DEFAULT),
-                Base64.decode(iv, Base64.DEFAULT)
+                Base64.decode(text, Base64.DEFAULT)
             )
         } else {
             ""
@@ -48,7 +46,6 @@ class SharedPref(
 
         authSharedPreferences.edit()
             .putString(preferenceAuth, Base64.encodeToString(encrypt.first, Base64.DEFAULT))
-            .putString(preferenceAuthIv, Base64.encodeToString(encrypt.second, Base64.DEFAULT))
             .apply()
 
         return this
