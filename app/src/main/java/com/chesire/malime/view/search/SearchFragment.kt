@@ -19,10 +19,12 @@ import com.chesire.malime.R
 import com.chesire.malime.mal.MalManager
 import com.chesire.malime.models.Anime
 import com.chesire.malime.models.Entry
+import com.chesire.malime.models.Manga
 import com.chesire.malime.models.UpdateAnime
 import com.chesire.malime.models.UpdateManga
 import com.chesire.malime.room.AnimeDao
 import com.chesire.malime.room.MalimeDatabase
+import com.chesire.malime.room.MangaDao
 import com.chesire.malime.util.SharedPref
 import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -46,6 +48,7 @@ class SearchFragment : Fragment(), SearchInteractionListener {
 
     private lateinit var malManager: MalManager
     private lateinit var animeDao: AnimeDao
+    private lateinit var mangaDao: MangaDao
 
     private lateinit var searchText: TextInputEditText
     private lateinit var progressBar: ProgressBar
@@ -57,11 +60,13 @@ class SearchFragment : Fragment(), SearchInteractionListener {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
 
-        val sharedPref = SharedPref(context!!)
+        val sharedPref = SharedPref(requireContext())
         malManager = MalManager(sharedPref.getAuth())
-        animeDao = MalimeDatabase.getInstance(context!!).animeDao()
-
-        viewManager = LinearLayoutManager(context!!)
+        MalimeDatabase.getInstance(requireContext()).also {
+            animeDao = it.animeDao()
+            mangaDao = it.mangaDao()
+        }
+        viewManager = LinearLayoutManager(requireContext())
         viewAdapter = SearchViewAdapter(this)
     }
 
@@ -103,7 +108,7 @@ class SearchFragment : Fragment(), SearchInteractionListener {
             checkedOption = searchRadioGroup.checkedRadioButtonId
             nsfwAllowed = nsfwCheckbox.isChecked
             executeGetLocalAnime()
-            // executeGetLocalManga()
+            executeGetLocalManga()
         } else {
             checkedOption = savedInstanceState.getInt(checkedOptionKey)
             nsfwAllowed = savedInstanceState.getBoolean(nsfwAllowedKey)
@@ -117,7 +122,7 @@ class SearchFragment : Fragment(), SearchInteractionListener {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
-        inflater!!.inflate(R.menu.menu_search, menu)
+        inflater?.inflate(R.menu.menu_search, menu)
         super.onCreateOptionsMenu(menu, inflater)
     }
 
@@ -176,6 +181,7 @@ class SearchFragment : Fragment(), SearchInteractionListener {
 
     private fun executeGetLocalAnime() {
         Timber.d("Getting local anime")
+
         disposables.add(
             animeDao.getAll()
                 .subscribeOn(Schedulers.io())
@@ -183,6 +189,20 @@ class SearchFragment : Fragment(), SearchInteractionListener {
                 .subscribe({
                     Timber.d("Successfully got local anime, loading into adapter")
                     viewAdapter.setCurrentAnime(it)
+                })
+        )
+    }
+
+    private fun executeGetLocalManga() {
+        Timber.d("Getting local manga")
+
+        disposables.add(
+            mangaDao.getAll()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    Timber.d("Successfully got local manga, loading into adapter")
+                    viewAdapter.setCurrentManga(it)
                 })
         )
     }
@@ -237,7 +257,7 @@ class SearchFragment : Fragment(), SearchInteractionListener {
                     {
                         Timber.i("Successfully added manga - [%s]", selectedEntry.title)
                         callback(true)
-                        // need to add it to room... maybe force a fresh scan on leaving view?
+                        saveNewMangaIntoRoom(Manga(selectedEntry))
                     },
                     {
                         Timber.e(it, "Failure to add manga - [%s]", selectedEntry.title)
@@ -269,7 +289,6 @@ class SearchFragment : Fragment(), SearchInteractionListener {
             .subscribe()
     }
 
-    /*
     private fun saveNewMangaIntoRoom(newManga: Manga) {
         Timber.d("Saving [${newManga.seriesTitle}] to Room")
 
@@ -281,7 +300,6 @@ class SearchFragment : Fragment(), SearchInteractionListener {
             .subscribeOn(Schedulers.io())
             .subscribe()
     }
-     */
 
     companion object {
         const val tag = "SearchFragment"
