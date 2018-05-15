@@ -125,9 +125,22 @@ data class Anime(
         seriesAnimeDbId = searchItem.id,
         seriesTitle = searchItem.title,
         seriesSynonyms = searchItem.synonyms,
+        //seriesType = searchItem.type,
         seriesEpisodes = searchItem.episodes,
+        //seriesStatus = searchItem.status,
+        seriesStart = searchItem.start_date,
+        seriesEnd = searchItem.end_date,
         seriesImage = searchItem.image,
-        myStatus = MalStates.WATCHING.id
+        myId = 0,
+        myWatchedEpisodes = 0,
+        myStartDate = "",
+        myFinishDate = "",
+        myScore = 0,
+        myStatus = MalStates.WATCHING.id,
+        myRewatching = 0,
+        myRewatchingEp = 0,
+        myLastUpdated = 0,
+        myTags = ""
     )
 
     constructor(parcel: Parcel) : this(

@@ -92,7 +92,7 @@ data class Manga(
 
     @field:Element(name = "my_rereading_chap", required = false)
     @param:Element(name = "my_rereading_chap", required = false)
-    var myRewatchingChap: Int? = null,
+    var myRereadingChap: Int? = null,
 
     @field:Element(name = "my_last_updated", required = false)
     @param:Element(name = "my_last_updated", required = false)
@@ -133,9 +133,24 @@ data class Manga(
         seriesMangaDbId = searchItem.id,
         seriesTitle = searchItem.title,
         seriesSynonyms = searchItem.synonyms,
-        seriesChapters = searchItem.episodes,
+        //seriesType = searchItem.type,
+        seriesChapters = searchItem.chapters,
+        seriesVolumes = searchItem.volumes,
+        //seriesStatus = searchItem.status,
+        seriesStart = searchItem.start_date,
+        seriesEnd = searchItem.end_date,
         seriesImage = searchItem.image,
-        myStatus = MalStates.READING.id
+        myId = 0,
+        myReadChapters = 0,
+        myReadVolumes = 0,
+        myStartDate = "",
+        myFinishDate = "",
+        myScore = 0,
+        myStatus = MalStates.READING.id,
+        myRereading = 0,
+        myRereadingChap = 0,
+        myLastUpdated = 0,
+        myTags = ""
     )
 
     constructor(source: Parcel) : this(
@@ -183,7 +198,7 @@ data class Manga(
         writeValue(myScore)
         writeValue(myStatus)
         writeValue(myRereading)
-        writeValue(myRewatchingChap)
+        writeValue(myRereadingChap)
         writeValue(myLastUpdated)
         writeString(myTags)
     }
