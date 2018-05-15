@@ -11,6 +11,9 @@
     <string name="login_password">Password</string>
     <string name="login_button">Login</string>
     <string name="login_failure">Failure to login, please check credentials</string>
+    <string name="login_failure_username">Username cannot be empty</string>
+    <string name="login_failure_password">Password cannot be empty</string>
+    <string name="login_authenticating">Authenticating…</string>
 
     <string name="main_nav_anime">Anime</string>
     <string name="main_nav_manga">Manga</string>

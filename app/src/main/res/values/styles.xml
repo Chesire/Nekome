@@ -9,6 +9,28 @@
         <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
     </style>
 
+    <style name="AppTheme.Dark" parent="Theme.AppCompat.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimaryAlt</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkAlt</item>
+        <item name="colorAccent">@color/colorAccentAlt</item>
+
+        <item name="android:windowBackground">@color/colorPrimaryAlt</item>
+
+        <item name="colorControlNormal">@color/iron</item>
+        <item name="colorControlActivated">@color/white</item>
+        <item name="colorControlHighlight">@color/white</item>
+        <item name="android:textColorHint">@color/iron</item>
+
+        <item name="colorButtonNormal">@color/colorPrimaryDarkerAlt</item>
+        <item name="android:colorButtonNormal">@color/colorPrimaryDarkerAlt</item>
+    </style>
+
+    <style name="AppTheme.Dark.Dialog" parent="Theme.AppCompat.Dialog">
+        <item name="colorAccent">@color/white</item>
+        <item name="android:textColorPrimary">@color/iron</item>
+        <item name="android:background">@color/colorPrimaryAlt</item>
+    </style>
+
     <style name="malitem_image_style">
         <item name="android:layout_width">80dp</item>
         <item name="android:layout_height">120dp</item>

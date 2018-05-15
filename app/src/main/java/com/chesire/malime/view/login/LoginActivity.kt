@@ -1,13 +1,14 @@
 package com.chesire.malime.view.login
 
+import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.util.Base64
 import android.view.inputmethod.EditorInfo
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import com.chesire.malime.R
 import com.chesire.malime.mal.MalManager
 import com.chesire.malime.util.SharedPref
@@ -19,13 +20,22 @@ import io.reactivex.schedulers.Schedulers
 class LoginActivity : AppCompatActivity() {
 
     private var disposables = CompositeDisposable()
+    private lateinit var loginButton: Button
+    private lateinit var usernameText: EditText
+    private lateinit var passwordText: EditText
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+        supportActionBar?.hide()
+        actionBar?.hide()
 
-        findViewById<Button>(R.id.login_button).setOnClickListener { executeLoginMethod() }
-        findViewById<EditText>(R.id.login_password_edit_text).setOnEditorActionListener { _, actionId, _ ->
+        loginButton = findViewById(R.id.login_button)
+        usernameText = findViewById(R.id.login_username_edit_text)
+        passwordText = findViewById(R.id.login_password_edit_text)
+
+        loginButton.setOnClickListener { executeLoginMethod() }
+        passwordText.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 executeLoginMethod()
             }
@@ -44,16 +54,22 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun executeLoginMethod() {
-        val username = findViewById<EditText>(R.id.login_username_edit_text).text.toString()
-        val password = findViewById<EditText>(R.id.login_password_edit_text).text.toString()
+        val username = usernameText.text.toString()
+        val password = passwordText.text.toString()
 
-        // Username must be 2-16 chars long, we can add validation to this later
-        if (username.isBlank() || password.isBlank()) {
+        if (!isValid(username, password)) {
             return
         }
 
-        val loginButton = findViewById<Button>(R.id.login_button)
         loginButton.isEnabled = false
+
+        // We use the progress dialog here, because the user doesn't have anything else to do on login anyway
+        @Suppress("DEPRECATION")
+        val progressDialog = ProgressDialog(this, R.style.AppTheme_Dark_Dialog).apply {
+            isIndeterminate = true
+            setMessage(getString(R.string.login_authenticating))
+        }
+        progressDialog.show()
 
         val b64: String =
             Base64.encodeToString("$username:$password".toByteArray(Charsets.UTF_8), Base64.NO_WRAP)
@@ -69,14 +85,28 @@ class LoginActivity : AppCompatActivity() {
                     finish()
                 },
                 { _ ->
-                    Snackbar.make(
-                        findViewById(R.id.login_layout),
-                        R.string.login_failure,
-                        Snackbar.LENGTH_LONG
-                    )
-                        .show()
-                    loginButton.isEnabled = true
+                    loginFailure(getString(R.string.login_failure))
+                    progressDialog.dismiss()
                 }
             ))
+    }
+
+    private fun isValid(username: String, password: String): Boolean {
+        return when {
+            username.isBlank() -> {
+                loginFailure(getString(R.string.login_failure_username))
+                false
+            }
+            password.isBlank() -> {
+                loginFailure(getString(R.string.login_failure_password))
+                false
+            }
+            else -> true
+        }
+    }
+
+    private fun loginFailure(reason: String) {
+        Toast.makeText(this, reason, Toast.LENGTH_LONG).show()
+        loginButton.isEnabled = true
     }
 }
