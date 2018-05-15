@@ -24,7 +24,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.login.LoginActivity" />
+        <activity
+            android:name=".view.login.LoginActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".view.MainActivity" />
         <activity android:name=".view.preferences.PrefActivity" />
 
