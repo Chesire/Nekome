@@ -32,11 +32,11 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 
+private const val animeItemsBundleId = "animeItems"
+
 class AnimeFragment : Fragment(),
     SharedPreferences.OnSharedPreferenceChangeListener,
     MalModelInteractionListener<Anime, UpdateAnime> {
-
-    private val animeItemsBundleId = "animeItems"
 
     private var disposables = CompositeDisposable()
     private lateinit var sharedPref: SharedPref
@@ -53,12 +53,14 @@ class AnimeFragment : Fragment(),
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
 
-        sharedPref = SharedPref(context!!)
+        val requiredContext = requireContext()
+
+        sharedPref = SharedPref(requiredContext)
         username = sharedPref.getUsername()
         malManager = MalManager(sharedPref.getAuth())
-        animeDao = MalimeDatabase.getInstance(context!!).animeDao()
+        animeDao = MalimeDatabase.getInstance(requiredContext).animeDao()
 
-        viewManager = LinearLayoutManager(context!!)
+        viewManager = LinearLayoutManager(requiredContext)
         viewAdapter = AnimeViewAdapter(sharedPref, this)
         sharedPref.registerOnChangeListener(this)
     }
@@ -92,7 +94,7 @@ class AnimeFragment : Fragment(),
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
-        inflater!!.inflate(R.menu.menu_options, menu)
+        inflater?.inflate(R.menu.menu_options, menu)
         super.onCreateOptionsMenu(menu, inflater)
     }
 
@@ -169,7 +171,7 @@ class AnimeFragment : Fragment(),
     ) {
         var state = MalStates.getMalStateForId(originalModel.myStatus!!)!!.surfaceId
         var executing = false
-        AlertDialog.Builder(context!!)
+        AlertDialog.Builder(requireContext())
             .setTitle(R.string.malitem_update_series_state_dialog_title)
             .setSingleChoiceItems(R.array.anime_states, state, { _, which ->
                 state = which
@@ -195,7 +197,7 @@ class AnimeFragment : Fragment(),
         callback: () -> Unit
     ) {
         var showDialog = false
-        val alertBuilder = AlertDialog.Builder(context!!)
+        val alertBuilder = AlertDialog.Builder(requireContext())
             .setNegativeButton(android.R.string.no, null)
             .setOnDismissListener {
                 executeUpdateMal(originalModel, updateModel, callback)
@@ -240,6 +242,7 @@ class AnimeFragment : Fragment(),
 
     private fun executeGetLocalAnime() {
         Timber.d("Getting local anime")
+
         disposables.add(
             animeDao.getAll()
                 .subscribeOn(Schedulers.io())
@@ -257,6 +260,7 @@ class AnimeFragment : Fragment(),
 
     private fun executeGetLatestAnime() {
         Timber.d("Getting latest anime from MAL")
+
         disposables.add(malManager.getAllAnime(username)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())

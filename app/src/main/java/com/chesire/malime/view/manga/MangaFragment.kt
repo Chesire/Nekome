@@ -32,11 +32,11 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 
+private const val mangaItemsBundleId = "mangaItems"
+
 class MangaFragment : Fragment(),
     SharedPreferences.OnSharedPreferenceChangeListener,
     MalModelInteractionListener<Manga, UpdateManga> {
-
-    private val mangaItemsBundleId = "mangaItems"
 
     private var disposables = CompositeDisposable()
     private lateinit var sharedPref: SharedPref
@@ -53,12 +53,14 @@ class MangaFragment : Fragment(),
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
 
-        sharedPref = SharedPref(context!!)
+        val requiredContext = requireContext()
+
+        sharedPref = SharedPref(requiredContext)
         username = sharedPref.getUsername()
         malManager = MalManager(sharedPref.getAuth())
-        mangaDao = MalimeDatabase.getInstance(context!!).mangaDao()
+        mangaDao = MalimeDatabase.getInstance(requiredContext).mangaDao()
 
-        viewManager = LinearLayoutManager(context!!)
+        viewManager = LinearLayoutManager(requiredContext)
         viewAdapter = MangaViewAdapter(sharedPref, this)
         sharedPref.registerOnChangeListener(this)
     }
@@ -92,7 +94,7 @@ class MangaFragment : Fragment(),
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
-        inflater!!.inflate(R.menu.menu_options, menu)
+        inflater?.inflate(R.menu.menu_options, menu)
         super.onCreateOptionsMenu(menu, inflater)
     }
 
@@ -165,7 +167,7 @@ class MangaFragment : Fragment(),
     override fun onLongClick(originalModel: Manga, updateModel: UpdateManga, callback: () -> Unit) {
         var state = MalStates.getMalStateForId(originalModel.myStatus!!)!!.surfaceId
         var executing = false
-        AlertDialog.Builder(context!!)
+        AlertDialog.Builder(requireContext())
             .setTitle(R.string.malitem_update_series_state_dialog_title)
             .setSingleChoiceItems(R.array.anime_states, state, { _, which ->
                 state = which
@@ -191,7 +193,7 @@ class MangaFragment : Fragment(),
         callback: () -> Unit
     ) {
         var showDialog = false
-        val alertBuilder = AlertDialog.Builder(context!!)
+        val alertBuilder = AlertDialog.Builder(requireContext())
             .setNegativeButton(android.R.string.no, null)
             .setOnDismissListener {
                 executeUpdateMal(originalModel, updateModel, callback)

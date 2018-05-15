@@ -94,12 +94,13 @@ class LoginActivity : AppCompatActivity() {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 { _ ->
-                    progressDialog.dismiss()
-
                     val sharedPref = SharedPref(this)
                     sharedPref.putUsername(username).putAuth(b64)
+
                     startActivity(Intent(this, MainActivity::class.java))
                     finish()
+
+                    progressDialog.dismiss()
                 },
                 { _ ->
                     progressDialog.dismiss()
