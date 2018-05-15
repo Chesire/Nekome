@@ -10,6 +10,7 @@
     <string name="login_username">Username</string>
     <string name="login_password">Password</string>
     <string name="login_button">Login</string>
+    <string name="login_helper_text">Please login to your MyAnimeList account</string>
     <string name="login_create_account">No MyAnimeList account? Create one</string>
     <string name="login_failure">Failure to login, please check credentials</string>
     <string name="login_failure_username">Username cannot be empty</string>
