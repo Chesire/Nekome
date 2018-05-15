@@ -1,1 +1,1 @@
-To be filled in
+Keep track of your anime and manga, through the use of the MyAnimeList API.

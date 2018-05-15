@@ -1,1 +1,10 @@
-To be filled in
+App to interface with MyAnimeList to keep your current anime and manga series progress up to date.
+
+The app will let you: 
+* Add a new anime/manga series to track 
+* Update current series episode/chapter number 
+* Change series status 
+
+This app does NOT allow you to read or watch anything, this merely allows you to track your current progress. 
+
+Note: A free account with MyAnimeList is required to use this application.
