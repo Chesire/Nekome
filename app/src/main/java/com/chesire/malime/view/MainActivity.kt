@@ -3,6 +3,8 @@ package com.chesire.malime.view
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
+import android.os.HandlerThread
 import android.support.customtabs.CustomTabsIntent
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
@@ -10,6 +12,7 @@ import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import com.chesire.malime.R
+import com.chesire.malime.room.MalimeDatabase
 import com.chesire.malime.util.PeriodicUpdateHelper
 import com.chesire.malime.util.SharedPref
 import com.chesire.malime.view.anime.AnimeFragment
@@ -17,6 +20,7 @@ import com.chesire.malime.view.login.LoginActivity
 import com.chesire.malime.view.manga.MangaFragment
 import com.chesire.malime.view.preferences.PrefActivity
 import com.chesire.malime.view.search.SearchFragment
+import timber.log.Timber
 
 class MainActivity : AppCompatActivity() {
     private val sharedPref: SharedPref by lazy {
@@ -99,10 +103,7 @@ class MainActivity : AppCompatActivity() {
                     .setMessage(R.string.log_out_confirmation)
                     .setNegativeButton(android.R.string.no, null)
                     .setPositiveButton(android.R.string.yes, { _, _ ->
-                        sharedPref.clearLoginDetails()
-                        PeriodicUpdateHelper().cancel(this)
-                        startActivity(Intent(this, LoginActivity::class.java))
-                        finish()
+                        logout()
                     })
                     .show()
 
@@ -114,6 +115,28 @@ class MainActivity : AppCompatActivity() {
             }
             else -> return super.onOptionsItemSelected(item)
         }
+    }
+
+    private fun logout() {
+        val handlerThread = HandlerThread("ClearRoomDBThread")
+        handlerThread.start()
+        Handler(handlerThread.looper).post({
+            Timber.d("Clearing the internal Room DB")
+            MalimeDatabase.getInstance(this).clearAllTables()
+
+            Timber.d("Clearing internal login details")
+            sharedPref.clearLoginDetails()
+
+            Timber.d("Clearing the update helper")
+            PeriodicUpdateHelper().cancel(this)
+
+            Timber.d("Navigating to LoginActivity")
+            startActivity(Intent(this, LoginActivity::class.java))
+            finish()
+
+            Timber.d("Closing the handler thread")
+            handlerThread.quitSafely()
+        })
     }
 
     private fun spawnSortDialog() {
