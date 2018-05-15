@@ -164,11 +164,13 @@ class AnimeViewAdapter(
             val myFilter = sharedPref.getAnimeFilter()
             val mySortOption = sharedPref.getAnimeSortOption()
             val tempList = items.filter {
+                val compareVal = when {
                 // Move the compare value down to 5, so we can more easily work with it
-                val compareVal = if (it.myStatus == 6) {
-                    5
-                } else {
-                    it.myStatus
+                    it.myStatus == 6 -> 5
+                // If the value is 0, bump to 1
+                    it.myStatus == 0 -> 1
+                // Else use the default value we have
+                    else -> it.myStatus
                 }
                 myFilter[compareVal!! - 1]
             }

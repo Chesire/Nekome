@@ -32,7 +32,7 @@ data class UpdateAnime(
         episode = 0,
         totalEpisodes = entry.episodes ?: 0,
         dateFinish = "",
-        status = 0,
+        status = MalStates.WATCHING.id,
         score = 0
     )
 

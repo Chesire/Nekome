@@ -38,7 +38,7 @@ data class UpdateManga(
         volume = 0,
         totalVolumes = entry.chapters ?: 0,
         dateFinish = "",
-        status = 0,
+        status = MalStates.READING.id,
         score = 0
     )
 

@@ -5,6 +5,7 @@ import android.arch.persistence.room.Ignore
 import android.arch.persistence.room.PrimaryKey
 import android.os.Parcel
 import android.os.Parcelable
+import com.chesire.malime.MalStates
 import org.simpleframework.xml.Element
 import org.simpleframework.xml.Root
 import java.text.SimpleDateFormat
@@ -124,8 +125,22 @@ data class Anime(
         seriesAnimeDbId = searchItem.id,
         seriesTitle = searchItem.title,
         seriesSynonyms = searchItem.synonyms,
+        //seriesType = searchItem.type,
         seriesEpisodes = searchItem.episodes,
-        seriesImage = searchItem.image
+        //seriesStatus = searchItem.status,
+        seriesStart = searchItem.start_date,
+        seriesEnd = searchItem.end_date,
+        seriesImage = searchItem.image,
+        myId = 0,
+        myWatchedEpisodes = 0,
+        myStartDate = "",
+        myFinishDate = "",
+        myScore = 0,
+        myStatus = MalStates.WATCHING.id,
+        myRewatching = 0,
+        myRewatchingEp = 0,
+        myLastUpdated = 0,
+        myTags = ""
     )
 
     constructor(parcel: Parcel) : this(
