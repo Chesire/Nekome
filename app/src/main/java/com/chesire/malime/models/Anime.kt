@@ -5,6 +5,7 @@ import android.arch.persistence.room.Ignore
 import android.arch.persistence.room.PrimaryKey
 import android.os.Parcel
 import android.os.Parcelable
+import com.chesire.malime.MalStates
 import org.simpleframework.xml.Element
 import org.simpleframework.xml.Root
 import java.text.SimpleDateFormat
@@ -125,7 +126,8 @@ data class Anime(
         seriesTitle = searchItem.title,
         seriesSynonyms = searchItem.synonyms,
         seriesEpisodes = searchItem.episodes,
-        seriesImage = searchItem.image
+        seriesImage = searchItem.image,
+        myStatus = MalStates.WATCHING.id
     )
 
     constructor(parcel: Parcel) : this(
