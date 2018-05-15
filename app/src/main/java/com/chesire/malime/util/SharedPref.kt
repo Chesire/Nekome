@@ -6,7 +6,7 @@ import android.util.Base64
 import com.chesire.malime.util.sec.Decryptor
 import com.chesire.malime.util.sec.Encryptor
 
-private const val authSharedPrefFile: String = "private_auth"
+private const val authAlias: String = "private_auth"
 private const val preferenceAuth: String = "auth"
 private const val preferenceUsername: String = "username"
 private const val preferenceAllowCrashReporting: String = "allowCrashReporting"
@@ -20,19 +20,17 @@ class SharedPref(
     val preferenceAnimeSortOption: String = "animeSortOption"
     val sharedPrefFile: String = "malime_shared_pref"
 
-    private val authSharedPreferences =
-        context.getSharedPreferences(authSharedPrefFile, Context.MODE_PRIVATE)
     private val sharedPreferences =
         context.getSharedPreferences(sharedPrefFile, Context.MODE_PRIVATE)
     private val encryptor = Encryptor(context.applicationContext)
     private val decryptor = Decryptor()
 
     fun getAuth(): String {
-        val text = authSharedPreferences.getString(preferenceAuth, "")
+        val text = sharedPreferences.getString(preferenceAuth, "")
 
         return if (text.isNotBlank()) {
             decryptor.decryptData(
-                authSharedPrefFile,
+                authAlias,
                 Base64.decode(text, Base64.DEFAULT)
             )
         } else {
@@ -41,9 +39,9 @@ class SharedPref(
     }
 
     fun putAuth(auth: String): SharedPref {
-        val encrypted = encryptor.encryptText(authSharedPrefFile, auth)
+        val encrypted = encryptor.encryptText(authAlias, auth)
 
-        authSharedPreferences.edit()
+        sharedPreferences.edit()
             .putString(preferenceAuth, Base64.encodeToString(encrypted, Base64.DEFAULT))
             .apply()
 
@@ -51,11 +49,11 @@ class SharedPref(
     }
 
     fun getUsername(): String {
-        return authSharedPreferences.getString(preferenceUsername, "")
+        return sharedPreferences.getString(preferenceUsername, "")
     }
 
     fun putUsername(username: String): SharedPref {
-        authSharedPreferences.edit()
+        sharedPreferences.edit()
             .putString(preferenceUsername, username)
             .apply()
 

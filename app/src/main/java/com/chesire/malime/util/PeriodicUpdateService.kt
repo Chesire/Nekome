@@ -20,6 +20,7 @@ class PeriodicUpdateService : JobService() {
         val sharedPref = SharedPref(applicationContext)
         val malManager = MalManager(sharedPref.getAuth())
 
+        Timber.d("UpdateService primed, updating anime and manga")
         getLatestAnime(params, sharedPref, malManager)
         getLatestManga(params, sharedPref, malManager)
         return true

@@ -1,13 +1,19 @@
 package com.chesire.malime.view.login
 
+import android.app.ProgressDialog
+import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
-import android.support.design.widget.Snackbar
+import android.support.customtabs.CustomTabsIntent
 import android.support.v7.app.AppCompatActivity
 import android.util.Base64
 import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
+import android.widget.Toast
 import com.chesire.malime.R
 import com.chesire.malime.mal.MalManager
 import com.chesire.malime.util.SharedPref
@@ -16,16 +22,32 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
+private const val malSignupUrl = "https://myanimelist.net/register.php"
+
 class LoginActivity : AppCompatActivity() {
 
     private var disposables = CompositeDisposable()
+    private lateinit var loginButton: Button
+    private lateinit var usernameText: EditText
+    private lateinit var passwordText: EditText
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+        supportActionBar?.hide()
+        actionBar?.hide()
 
-        findViewById<Button>(R.id.login_button).setOnClickListener { executeLoginMethod() }
-        findViewById<EditText>(R.id.login_password_edit_text).setOnEditorActionListener { _, actionId, _ ->
+        loginButton = findViewById(R.id.login_button)
+        usernameText = findViewById(R.id.login_username_edit_text)
+        passwordText = findViewById(R.id.login_password_edit_text)
+        findViewById<TextView>(R.id.login_create_account).setOnClickListener {
+            CustomTabsIntent.Builder()
+                .build()
+                .launchUrl(this, Uri.parse(malSignupUrl))
+        }
+
+        loginButton.setOnClickListener { executeLoginMethod() }
+        passwordText.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 executeLoginMethod()
             }
@@ -44,39 +66,71 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun executeLoginMethod() {
-        val username = findViewById<EditText>(R.id.login_username_edit_text).text.toString()
-        val password = findViewById<EditText>(R.id.login_password_edit_text).text.toString()
+        hideSystemKeyboard()
 
-        // Username must be 2-16 chars long, we can add validation to this later
-        if (username.isBlank() || password.isBlank()) {
+        val username = usernameText.text.toString()
+        val password = passwordText.text.toString()
+
+        if (!isValid(username, password)) {
             return
         }
 
-        val loginButton = findViewById<Button>(R.id.login_button)
         loginButton.isEnabled = false
 
-        val b64: String =
+        // We use the progress dialog here, because the user doesn't have anything else to do on login anyway
+        @Suppress("DEPRECATION")
+        val progressDialog = ProgressDialog(this, R.style.AppTheme_Dark_Dialog).apply {
+            isIndeterminate = true
+            setMessage(getString(R.string.login_authenticating))
+            show()
+        }
+
+        val b64 =
             Base64.encodeToString("$username:$password".toByteArray(Charsets.UTF_8), Base64.NO_WRAP)
         val malManager = MalManager(b64)
+
         disposables.add(malManager.loginToAccount()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 { _ ->
+                    progressDialog.dismiss()
+
                     val sharedPref = SharedPref(this)
                     sharedPref.putUsername(username).putAuth(b64)
                     startActivity(Intent(this, MainActivity::class.java))
                     finish()
                 },
                 { _ ->
-                    Snackbar.make(
-                        findViewById(R.id.login_layout),
-                        R.string.login_failure,
-                        Snackbar.LENGTH_LONG
-                    )
-                        .show()
-                    loginButton.isEnabled = true
+                    progressDialog.dismiss()
+                    loginFailure(getString(R.string.login_failure))
                 }
             ))
+    }
+
+    private fun hideSystemKeyboard() {
+        currentFocus?.let {
+            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(it.windowToken, 0)
+        }
+    }
+
+    private fun isValid(username: String, password: String): Boolean {
+        return when {
+            username.isBlank() -> {
+                loginFailure(getString(R.string.login_failure_username))
+                false
+            }
+            password.isBlank() -> {
+                loginFailure(getString(R.string.login_failure_password))
+                false
+            }
+            else -> true
+        }
+    }
+
+    private fun loginFailure(reason: String) {
+        Toast.makeText(this, reason, Toast.LENGTH_LONG).show()
+        loginButton.isEnabled = true
     }
 }
