@@ -8,7 +8,6 @@ import com.chesire.malime.util.sec.Encryptor
 
 private const val authSharedPrefFile: String = "private_auth"
 private const val preferenceAuth: String = "auth"
-private const val preferenceAuthIv: String = "authIv"
 private const val preferenceUsername: String = "username"
 private const val preferenceAllowCrashReporting: String = "allowCrashReporting"
 private const val preferenceAnimeFilterLength: String = "animeFilterLength"
@@ -42,10 +41,10 @@ class SharedPref(
     }
 
     fun putAuth(auth: String): SharedPref {
-        val encrypt = encryptor.encryptText(authSharedPrefFile, auth)
+        val encrypted = encryptor.encryptText(authSharedPrefFile, auth)
 
         authSharedPreferences.edit()
-            .putString(preferenceAuth, Base64.encodeToString(encrypt.first, Base64.DEFAULT))
+            .putString(preferenceAuth, Base64.encodeToString(encrypted, Base64.DEFAULT))
             .apply()
 
         return this

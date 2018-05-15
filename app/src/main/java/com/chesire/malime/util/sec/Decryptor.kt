@@ -1,6 +1,6 @@
 package com.chesire.malime.util.sec
 
-import java.nio.charset.Charset
+import java.nio.charset.StandardCharsets
 import java.security.KeyStore
 import java.security.PrivateKey
 import javax.crypto.Cipher
@@ -16,11 +16,12 @@ class Decryptor {
     }
 
     fun decryptData(alias: String, encryptedData: ByteArray): String {
+        val secretKey = getSecretKey(alias) ?: return ""
         val cipher = Cipher.getInstance(transformation).apply {
-            init(Cipher.DECRYPT_MODE, getSecretKey(alias))
+            init(Cipher.DECRYPT_MODE, secretKey)
         }
 
-        return String(cipher.doFinal(encryptedData), Charset.forName("UTF-8"))
+        return String(cipher.doFinal(encryptedData), StandardCharsets.UTF_8)
     }
 
     private fun getSecretKey(alias: String): PrivateKey? {

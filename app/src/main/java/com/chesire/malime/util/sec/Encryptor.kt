@@ -7,7 +7,7 @@ import android.security.KeyPairGeneratorSpec
 import android.security.keystore.KeyGenParameterSpec
 import android.security.keystore.KeyProperties
 import java.math.BigInteger
-import java.nio.charset.Charset
+import java.nio.charset.StandardCharsets
 import java.security.KeyPair
 import java.security.KeyPairGenerator
 import java.security.KeyStore
@@ -16,6 +16,7 @@ import javax.crypto.Cipher
 import javax.security.auth.x500.X500Principal
 
 private const val transformation = "RSA/ECB/PKCS1Padding"
+private const val algorithm = "RSA"
 private const val androidKeyStore = "AndroidKeyStore"
 
 class Encryptor(private val context: Context) {
@@ -30,23 +31,17 @@ class Encryptor(private val context: Context) {
      *
      * @return a pair with [Pair.first] as the encrypted text byte array, and [Pair.second] as the iv
      */
-    fun encryptText(alias: String, text: String): Pair<ByteArray, ByteArray> {
+    fun encryptText(alias: String, text: String): ByteArray {
         val keyPair = createAndroidKeyStoreAsymmetricKey(alias)
-
         val cipher = Cipher.getInstance(transformation).apply {
             init(Cipher.ENCRYPT_MODE, keyPair.public)
         }
 
-        return Pair(
-            cipher.doFinal(
-                text.toByteArray(Charset.forName("UTF-8"))
-            ),
-            cipher.iv
-        )
+        return cipher.doFinal(text.toByteArray(StandardCharsets.UTF_8))
     }
 
     private fun createAndroidKeyStoreAsymmetricKey(alias: String): KeyPair {
-        val generator = KeyPairGenerator.getInstance("RSA", "AndroidKeyStore")
+        val generator = KeyPairGenerator.getInstance(algorithm, androidKeyStore)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             initGeneratorWithKeyGenParameterSpec(generator, alias)
@@ -66,6 +61,7 @@ class Encryptor(private val context: Context) {
         )
             .setBlockModes(KeyProperties.BLOCK_MODE_ECB)
             .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_RSA_PKCS1)
+
         generator.initialize(builder.build())
     }
 
