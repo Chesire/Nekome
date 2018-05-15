@@ -242,6 +242,7 @@ class AnimeFragment : Fragment(),
 
     private fun executeGetLocalAnime() {
         Timber.d("Getting local anime")
+
         disposables.add(
             animeDao.getAll()
                 .subscribeOn(Schedulers.io())
@@ -259,6 +260,7 @@ class AnimeFragment : Fragment(),
 
     private fun executeGetLatestAnime() {
         Timber.d("Getting latest anime from MAL")
+
         disposables.add(malManager.getAllAnime(username)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
