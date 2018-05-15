@@ -68,7 +68,7 @@ class PeriodicUpdateService : JobService() {
 
         Completable
             .fromAction({
-                MalimeDatabase.getInstance(applicationContext).animeDao().insertAll(animes)
+                MalimeDatabase.getInstance(applicationContext).animeDao().freshInsert(animes)
                 jobFinished(params, false)
             })
             .subscribeOn(Schedulers.io())
@@ -80,7 +80,7 @@ class PeriodicUpdateService : JobService() {
 
         Completable
             .fromAction({
-                MalimeDatabase.getInstance(applicationContext).mangaDao().insertAll(mangas)
+                MalimeDatabase.getInstance(applicationContext).mangaDao().freshInsert(mangas)
                 jobFinished(params, false)
             })
             .subscribeOn(Schedulers.io())
