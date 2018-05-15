@@ -241,8 +241,12 @@ class MangaFragment : Fragment(),
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    Timber.d("Successfully got local manga, loading into adapter")
-                    viewAdapter.addAll(it)
+                    if (it.isEmpty()) {
+                        Timber.w("Local manga list was empty")
+                    } else {
+                        Timber.d("Successfully got local manga, loading into adapter")
+                        viewAdapter.addAll(it)
+                    }
                 })
         )
     }

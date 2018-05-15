@@ -245,8 +245,12 @@ class AnimeFragment : Fragment(),
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    Timber.d("Successfully got local anime, loading into adapter")
-                    viewAdapter.addAll(it)
+                    if (it.isEmpty()) {
+                        Timber.w("Local anime list was empty")
+                    } else {
+                        Timber.d("Successfully got local anime, loading into adapter")
+                        viewAdapter.addAll(it)
+                    }
                 })
         )
     }
