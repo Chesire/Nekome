@@ -238,6 +238,7 @@ class MangaFragment : Fragment(),
 
     private fun executeGetLocalManga() {
         Timber.d("Getting local manga")
+
         disposables.add(
             mangaDao.getAll()
                 .subscribeOn(Schedulers.io())
@@ -255,6 +256,7 @@ class MangaFragment : Fragment(),
 
     private fun executeGetLatestManga() {
         Timber.d("Getting latest manga from MAL")
+
         disposables.add(malManager.getAllManga(username)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
