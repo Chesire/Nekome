@@ -1,7 +1,9 @@
 package com.chesire.malime.view.search
 
 import android.content.Context
+import android.net.Uri
 import android.os.Bundle
+import android.support.customtabs.CustomTabsIntent
 import android.support.design.widget.TextInputEditText
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
@@ -208,6 +210,21 @@ class SearchFragment : Fragment(), SearchInteractionListener {
                     viewAdapter.setCurrentManga(it)
                 })
         )
+    }
+
+    override fun onImageClicked(entry: Entry) {
+        val type = when (checkedOption) {
+            R.id.search_option_anime_choice -> "anime"
+            R.id.search_option_manga_choice -> "manga"
+            else -> {
+                Timber.e("Unknown search method selected")
+                return
+            }
+        }
+
+        CustomTabsIntent.Builder()
+            .build()
+            .launchUrl(context, Uri.parse(entry.getMalUrl(type)))
     }
 
     override fun onAddPressed(selectedEntry: Entry, callback: (Boolean) -> Unit) {
