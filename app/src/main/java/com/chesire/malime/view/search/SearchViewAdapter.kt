@@ -92,6 +92,9 @@ class SearchViewAdapter(
             GlideApp.with(searchView)
                 .load(entryModel.image)
                 .into(image)
+            image.setOnClickListener {
+                interactionListener.onImageClicked(entryModel)
+            }
 
             // Setup the text
             searchView.findViewById<TextView>(R.id.item_search_title).text = entryModel.title

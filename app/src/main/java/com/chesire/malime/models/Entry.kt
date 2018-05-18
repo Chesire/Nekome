@@ -1,5 +1,6 @@
 package com.chesire.malime.models
 
+import android.arch.persistence.room.Ignore
 import android.os.Parcel
 import android.os.Parcelable
 import org.simpleframework.xml.Element
@@ -50,6 +51,12 @@ data class Entry(
     @param:Element(name = "image", required = false)
     val image: String? = null
 ) : Parcelable {
+
+    @Ignore
+    private val baseUrl: String = "https://myanimelist.net"
+
+    fun getMalUrl(type: String): String = "$baseUrl/$type/$id"
+
     constructor(source: Parcel) : this(
         source.readValue(Int::class.java.classLoader) as Int?,
         source.readString(),
