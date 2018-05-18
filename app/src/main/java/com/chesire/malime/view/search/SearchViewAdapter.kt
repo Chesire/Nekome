@@ -8,8 +8,6 @@ import android.text.SpannedString
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Filter
-import android.widget.Filterable
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
@@ -21,10 +19,8 @@ import com.chesire.malime.util.GlideApp
 
 class SearchViewAdapter(
     private val interactionListener: SearchInteractionListener
-) : RecyclerView.Adapter<SearchViewAdapter.ViewHolder>(), Filterable {
+) : RecyclerView.Adapter<SearchViewAdapter.ViewHolder>() {
     private val items = ArrayList<Entry>()
-    private val filteredItems = ArrayList<Entry>()
-    private val filter = SearchFilter()
     private val currentAnime = ArrayList<Anime>()
     private val currentManga = ArrayList<Manga>()
     private var currentAnimeIds: List<Int?> = ArrayList()
@@ -57,11 +53,7 @@ class SearchViewAdapter(
     fun update(newItems: List<Entry>) {
         items.clear()
         items.addAll(newItems)
-        filter.filter("")
-    }
-
-    override fun getFilter(): Filter {
-        return filter
+        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -71,11 +63,11 @@ class SearchViewAdapter(
     }
 
     override fun getItemCount(): Int {
-        return filteredItems.count()
+        return items.count()
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bindModel(filteredItems[position])
+        holder.bindModel(items[position])
     }
 
     inner class ViewHolder(
@@ -102,21 +94,31 @@ class SearchViewAdapter(
                     fromHtml(entryModel.synopsis)
 
             val addButton = searchView.findViewById<ImageButton>(R.id.search_image_add_button)
-            addButton.setOnClickListener {
-                showLoadingLayout(true)
-                interactionListener.onAddPressed(entryModel, { success ->
-                    showLoadingLayout(false)
+            val knownIds = if (items.first().chapters == null) {
+                currentAnimeIds
+            } else {
+                currentMangaIds
+            }
 
-                    if (success) {
-                        addButton.visibility = View.INVISIBLE
+            if (knownIds.contains(entryModel.id)) {
+                addButton.visibility = View.INVISIBLE
+            } else {
+                addButton.setOnClickListener {
+                    showLoadingLayout(true)
+                    interactionListener.onAddPressed(entryModel, { success ->
+                        showLoadingLayout(false)
 
-                        if (entryModel.chapters == null) {
-                            (currentAnimeIds as ArrayList).add(entryModel.id)
-                        } else {
-                            (currentMangaIds as ArrayList).add(entryModel.id)
+                        if (success) {
+                            addButton.visibility = View.INVISIBLE
+
+                            if (entryModel.chapters == null) {
+                                (currentAnimeIds as ArrayList).add(entryModel.id)
+                            } else {
+                                (currentMangaIds as ArrayList).add(entryModel.id)
+                            }
                         }
-                    }
-                })
+                    })
+                }
             }
         }
 
@@ -145,29 +147,4 @@ class SearchViewAdapter(
         }
     }
 
-    private inner class SearchFilter : Filter() {
-        override fun performFiltering(constraint: CharSequence?): FilterResults {
-            val results = FilterResults()
-            val knownIds = if (items.first().chapters == null) {
-                currentAnimeIds
-            } else {
-                currentMangaIds
-            }
-
-            val tempList = items.filterNot { it.id in knownIds }
-            results.values = tempList
-            results.count = tempList.count()
-
-            return results
-        }
-
-        override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
-            filteredItems.clear()
-            if (results?.values is List<*>) {
-                filteredItems.addAll(results.values as List<Entry>)
-            }
-            notifyDataSetChanged()
-        }
-
-    }
 }
