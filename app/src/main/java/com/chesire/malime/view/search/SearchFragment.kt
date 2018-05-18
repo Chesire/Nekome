@@ -1,5 +1,6 @@
 package com.chesire.malime.view.search
 
+import android.content.Context
 import android.os.Bundle
 import android.support.design.widget.TextInputEditText
 import android.support.v4.app.Fragment
@@ -11,6 +12,7 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.CheckBox
 import android.widget.ProgressBar
 import android.widget.RadioGroup
@@ -91,6 +93,7 @@ class SearchFragment : Fragment(), SearchInteractionListener {
 
         searchText = view.findViewById(R.id.search_search_term_edit_text)
         searchText.setOnEditorActionListener { _, _, _ ->
+            hideSystemKeyboard()
             executeSearch()
             true
         }
@@ -299,6 +302,14 @@ class SearchFragment : Fragment(), SearchInteractionListener {
             })
             .subscribeOn(Schedulers.io())
             .subscribe()
+    }
+
+    private fun hideSystemKeyboard() {
+        requireActivity().currentFocus?.let {
+            val imm =
+                requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(it.windowToken, 0)
+        }
     }
 
     companion object {
