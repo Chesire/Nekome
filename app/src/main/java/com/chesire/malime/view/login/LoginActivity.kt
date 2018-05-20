@@ -1,20 +1,20 @@
 package com.chesire.malime.view.login
 
 import android.app.ProgressDialog
+import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
+import android.databinding.DataBindingUtil
 import android.os.Bundle
-import android.support.customtabs.CustomTabsIntent
 import android.support.v7.app.AppCompatActivity
 import android.util.Base64
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
-import android.widget.TextView
 import android.widget.Toast
 import com.chesire.malime.R
+import com.chesire.malime.databinding.ActivityLoginBinding
 import com.chesire.malime.mal.MalManager
 import com.chesire.malime.util.SharedPref
 import com.chesire.malime.view.MainActivity
@@ -22,7 +22,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
-private const val malSignupUrl = "https://myanimelist.net/register.php"
 
 class LoginActivity : AppCompatActivity() {
 
@@ -33,18 +32,20 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
+        val binding =
+            DataBindingUtil.setContentView<ActivityLoginBinding>(this, R.layout.activity_login)
+        val model = ViewModelProviders
+            .of(this, LoginViewModelFactory(application))
+            .get(LoginViewModel::class.java)
+
+        binding.vm = model
+
         supportActionBar?.hide()
         actionBar?.hide()
 
         loginButton = findViewById(R.id.login_button)
         usernameText = findViewById(R.id.login_username_edit_text)
         passwordText = findViewById(R.id.login_password_edit_text)
-        findViewById<TextView>(R.id.login_create_account).setOnClickListener {
-            CustomTabsIntent.Builder()
-                .build()
-                .launchUrl(this, Uri.parse(malSignupUrl))
-        }
 
         loginButton.setOnClickListener { executeLoginMethod() }
         passwordText.setOnEditorActionListener { _, actionId, _ ->

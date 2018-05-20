@@ -1,88 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:fitsSystemWindows="true">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <LinearLayout
-        android:id="@+id/login_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingLeft="24dp"
-        android:paddingRight="24dp"
-        android:paddingTop="56dp"
-        tools:context="com.chesire.malime.view.login.LoginActivity">
+    <data>
 
-        <ImageView
-            android:layout_width="72dp"
-            android:layout_height="72dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="24dp"
-            android:src="@mipmap/ic_launcher_round"
-            tools:ignore="ContentDescription" />
+        <variable
+            name="vm"
+            type="com.chesire.malime.view.login.LoginViewModel" />
+    </data>
 
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
-            android:gravity="center"
-            android:text="@string/login_helper_text"
-            android:textSize="16sp" />
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:fitsSystemWindows="true">
 
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/login_username_layout"
+        <LinearLayout
+            android:id="@+id/login_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginTop="8dp">
+            android:orientation="vertical"
+            android:paddingLeft="24dp"
+            android:paddingRight="24dp"
+            android:paddingTop="56dp"
+            tools:context="com.chesire.malime.view.login.LoginActivity">
 
-            <android.support.design.widget.TextInputEditText
-                android:id="@+id/login_username_edit_text"
+            <ImageView
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="24dp"
+                android:src="@mipmap/ic_launcher_round"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                android:gravity="center"
+                android:text="@string/login_helper_text"
+                android:textSize="16sp" />
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/login_username_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/login_username"
-                android:imeOptions="actionNext"
-                android:inputType="textNoSuggestions"
-                android:maxLines="1" />
-        </android.support.design.widget.TextInputLayout>
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp">
 
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/login_password_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginTop="8dp"
-            app:passwordToggleEnabled="true">
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/login_username_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/login_username"
+                    android:imeOptions="actionNext"
+                    android:inputType="textNoSuggestions"
+                    android:maxLines="1" />
+            </android.support.design.widget.TextInputLayout>
 
-            <android.support.design.widget.TextInputEditText
-                android:id="@+id/login_password_edit_text"
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/login_password_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/login_password"
-                android:imeOptions="actionDone"
-                android:inputType="textPassword"
-                android:lines="1" />
-        </android.support.design.widget.TextInputLayout>
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
+                app:passwordToggleEnabled="true">
 
-        <android.support.v7.widget.AppCompatButton
-            android:id="@+id/login_button"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
-            android:layout_marginTop="24dp"
-            android:padding="12dp"
-            android:text="@string/login_button" />
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/login_password_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/login_password"
+                    android:imeOptions="actionDone"
+                    android:inputType="textPassword"
+                    android:lines="1" />
+            </android.support.design.widget.TextInputLayout>
 
-        <TextView
-            android:id="@+id/login_create_account"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
-            android:gravity="center"
-            android:text="@string/login_create_account"
-            android:textSize="16sp" />
-    </LinearLayout>
-</ScrollView>
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/login_button"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                android:layout_marginTop="24dp"
+                android:padding="12dp"
+                android:text="@string/login_button" />
+
+            <TextView
+                android:id="@+id/login_create_account"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                android:gravity="center"
+                android:onClick="@{() -> vm.createMalAccount()}"
+                android:text="@string/login_create_account"
+                android:textSize="16sp" />
+        </LinearLayout>
+    </ScrollView>
+</layout>
