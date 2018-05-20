@@ -23,8 +23,8 @@ class SearchViewAdapter(
     private val items = ArrayList<Entry>()
     private val currentAnime = ArrayList<Anime>()
     private val currentManga = ArrayList<Manga>()
-    private var currentAnimeIds: List<Int?> = ArrayList()
-    private var currentMangaIds: List<Int?> = ArrayList()
+    private var currentAnimeIds: MutableList<Int?> = ArrayList()
+    private var currentMangaIds: MutableList<Int?> = ArrayList()
 
     fun getAll(): ArrayList<Entry> {
         return items
@@ -41,13 +41,13 @@ class SearchViewAdapter(
     fun setCurrentAnime(animeList: List<Anime>) {
         currentAnime.clear()
         currentAnime.addAll(animeList)
-        currentAnimeIds = currentAnime.map { it.seriesAnimeDbId }.toList()
+        currentAnimeIds = currentAnime.map { it.seriesAnimeDbId }.toMutableList()
     }
 
     fun setCurrentManga(mangaList: List<Manga>) {
         currentManga.clear()
         currentManga.addAll(mangaList)
-        currentMangaIds = currentManga.map { it.seriesMangaDbId }.toList()
+        currentMangaIds = currentManga.map { it.seriesMangaDbId }.toMutableList()
     }
 
     fun update(newItems: List<Entry>) {
@@ -110,15 +110,18 @@ class SearchViewAdapter(
 
                         if (success) {
                             addButton.visibility = View.INVISIBLE
-
-                            if (entryModel.chapters == null) {
-                                (currentAnimeIds as ArrayList).add(entryModel.id)
-                            } else {
-                                (currentMangaIds as ArrayList).add(entryModel.id)
-                            }
+                            addEntryToKnownIds(entryModel)
                         }
                     })
                 }
+            }
+        }
+
+        private fun addEntryToKnownIds(entryModel: Entry) {
+            if (entryModel.chapters == null) {
+                currentAnimeIds.add(entryModel.id)
+            } else {
+                currentMangaIds.add(entryModel.id)
             }
         }
 
