@@ -30,6 +30,11 @@ class MangaViewAdapter(
         filter.filter("")
     }
 
+    fun clearAll() {
+        items.clear()
+        filter.filter("")
+    }
+
     fun getAll(): ArrayList<Manga> {
         return items
     }
