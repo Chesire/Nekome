@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.os.Bundle
+import android.support.annotation.StringRes
 import android.support.v7.app.AppCompatActivity
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
@@ -33,14 +34,20 @@ class LoginActivity : AppCompatActivity() {
             .of(this, LoginViewModelFactory(application, SharedPref(applicationContext)))
             .get(LoginViewModel::class.java)
 
+        binding.vm = viewModel
+
         viewModel.loginResponse.observe(
             this,
             Observer {
                 processLoginResponse(it)
             }
         )
-
-        binding.vm = viewModel
+        viewModel.errorResponse.observe(
+            this,
+            Observer {
+                processErrorResponse(it)
+            }
+        )
 
         supportActionBar?.hide()
         actionBar?.hide()
@@ -64,43 +71,21 @@ class LoginActivity : AppCompatActivity() {
 
     private fun executeLoginMethod() {
         hideSystemKeyboard()
+        viewModel.executeLogin()
+    }
 
-        if (isValid(viewModel.loginModel.userName, viewModel.loginModel.password)) {
-            viewModel.executeLogin()
+    private fun processErrorResponse(@StringRes stringId: Int?) {
+        if (stringId != null) {
+            Toast.makeText(this, getString(stringId), Toast.LENGTH_LONG).show()
         }
     }
 
-    private fun hideSystemKeyboard() {
-        currentFocus?.let {
-            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            imm.hideSoftInputFromWindow(it.windowToken, 0)
-        }
-    }
-
-    private fun isValid(username: String, password: String): Boolean {
-        return when {
-            username.isBlank() -> {
-                loginFailure(getString(R.string.login_failure_username))
-                false
-            }
-            password.isBlank() -> {
-                loginFailure(getString(R.string.login_failure_password))
-                false
-            }
-            else -> true
-        }
-    }
-
-    private fun loginFailure(reason: String) {
-        Toast.makeText(this, reason, Toast.LENGTH_LONG).show()
-    }
-
-    private fun processLoginResponse(successState: LoginStatus?) {
-        if (successState == null) {
+    private fun processLoginResponse(loginStatus: LoginStatus?) {
+        if (loginStatus == null) {
             return
         }
 
-        when (successState) {
+        when (loginStatus) {
             LoginStatus.PROCESSING -> {
                 loginButton.isEnabled = false
                 progressDialog.show()
@@ -114,8 +99,14 @@ class LoginActivity : AppCompatActivity() {
             }
             else -> {
                 loginButton.isEnabled = true
-                loginFailure(getString(R.string.login_failure))
             }
+        }
+    }
+
+    private fun hideSystemKeyboard() {
+        currentFocus?.let {
+            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(it.windowToken, 0)
         }
     }
 }

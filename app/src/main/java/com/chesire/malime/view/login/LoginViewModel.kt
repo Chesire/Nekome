@@ -6,6 +6,7 @@ import android.arch.lifecycle.MutableLiveData
 import android.net.Uri
 import android.support.customtabs.CustomTabsIntent
 import android.util.Base64
+import com.chesire.malime.R
 import com.chesire.malime.mal.MalManager
 import com.chesire.malime.util.SharedPref
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -20,6 +21,7 @@ class LoginViewModel(
 ) : AndroidViewModel(context) {
     private val disposables = CompositeDisposable()
     val loginResponse = MutableLiveData<LoginStatus>()
+    val errorResponse = MutableLiveData<Int>()
     val loginModel = LoginModel()
 
     fun createMalAccount() {
@@ -29,6 +31,10 @@ class LoginViewModel(
     }
 
     fun executeLogin() {
+        if (!isValid(loginModel.userName, loginModel.password)) {
+            return
+        }
+
         val b64 = Base64.encodeToString(
             "${loginModel.userName}:${loginModel.password}".toByteArray(Charsets.UTF_8),
             Base64.NO_WRAP
@@ -52,13 +58,29 @@ class LoginViewModel(
                     loginResponse.value = LoginStatus.SUCCESS
                 },
                 { _ ->
+                    errorResponse.value = R.string.login_failure
                     loginResponse.value = LoginStatus.ERROR
                 }
             )
         )
     }
 
+    private fun isValid(username: String, password: String): Boolean {
+        return when {
+            username.isBlank() -> {
+                errorResponse.value = R.string.login_failure_username
+                false
+            }
+            password.isBlank() -> {
+                errorResponse.value = R.string.login_failure_password
+                false
+            }
+            else -> true
+        }
+    }
+
     override fun onCleared() {
         disposables.clear()
+        super.onCleared()
     }
 }
