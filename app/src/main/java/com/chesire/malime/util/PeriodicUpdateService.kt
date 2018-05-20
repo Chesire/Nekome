@@ -35,7 +35,12 @@ class PeriodicUpdateService : JobService() {
             .subscribe(
                 { result ->
                     Timber.d("Successfully got latest anime from MAL")
-                    executeSaveAnimeToLocalDb(params, result.second)
+
+                    if (result.second == null) {
+                        executeClearAnimeInLocalDb(params)
+                    } else {
+                        executeSaveAnimeToLocalDb(params, result.second as List<Anime>)
+                    }
                 },
                 { _ ->
                     Timber.e("Failed to get latest anime from MAL")
@@ -54,7 +59,12 @@ class PeriodicUpdateService : JobService() {
             .subscribe(
                 { result ->
                     Timber.d("Successfully got latest manga from MAL")
-                    executeSaveMangaToLocalDb(params, result.second)
+
+                    if (result.second == null) {
+                        executeClearMangaInLocalDb(params)
+                    } else {
+                        executeSaveMangaToLocalDb(params, result.second as List<Manga>)
+                    }
                 },
                 { _ ->
                     Timber.e("Failed to get latest manga from MAL")
@@ -69,6 +79,30 @@ class PeriodicUpdateService : JobService() {
         Completable
             .fromAction({
                 MalimeDatabase.getInstance(applicationContext).animeDao().freshInsert(animes)
+                jobFinished(params, false)
+            })
+            .subscribeOn(Schedulers.io())
+            .subscribe()
+    }
+
+    private fun executeClearAnimeInLocalDb(params: JobParameters?) {
+        Timber.d("Clearing local DB for all anime")
+
+        Completable
+            .fromAction({
+                MalimeDatabase.getInstance(applicationContext).animeDao().clear()
+                jobFinished(params, false)
+            })
+            .subscribeOn(Schedulers.io())
+            .subscribe()
+    }
+
+    private fun executeClearMangaInLocalDb(params: JobParameters?) {
+        Timber.d("Clearing local DB for all manga")
+
+        Completable
+            .fromAction({
+                MalimeDatabase.getInstance(applicationContext).mangaDao().clear()
                 jobFinished(params, false)
             })
             .subscribeOn(Schedulers.io())
