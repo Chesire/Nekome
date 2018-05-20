@@ -103,6 +103,7 @@ class SearchViewAdapter(
             if (knownIds.contains(entryModel.id)) {
                 addButton.visibility = View.INVISIBLE
             } else {
+                addButton.visibility = View.VISIBLE
                 addButton.setOnClickListener {
                     showLoadingLayout(true)
                     interactionListener.onAddPressed(entryModel, { success ->
