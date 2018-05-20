@@ -17,7 +17,7 @@ private const val malSignupUrl = "https://myanimelist.net/register.php"
 class LoginViewModel(private val context: Application) : AndroidViewModel(context) {
     private val disposables = CompositeDisposable()
     private val sharedPref = SharedPref(context)
-    private val loginResponse = MutableLiveData<Boolean>()
+    private val loginResponse = MutableLiveData<LoginStatus>()
     val loginModel = LoginModel()
 
     fun createMalAccount() {
@@ -26,7 +26,7 @@ class LoginViewModel(private val context: Application) : AndroidViewModel(contex
             .launchUrl(context, Uri.parse(malSignupUrl))
     }
 
-    fun loginResponse(): MutableLiveData<Boolean> {
+    fun loginResponse(): MutableLiveData<LoginStatus> {
         return loginResponse
     }
 
@@ -39,18 +39,24 @@ class LoginViewModel(private val context: Application) : AndroidViewModel(contex
             )
 
         val malManager = MalManager(b64)
-
         disposables.add(malManager.loginToAccount()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            //.doOnSubscribe({ __ -> loginResponse.setValue(Response.loading()) })
+            .doOnSubscribe({ _ ->
+                loginResponse.value = LoginStatus.PROCESSING
+            })
+            .doFinally {
+                loginResponse.value = LoginStatus.FINISHED
+            }
             .subscribe(
                 { _ ->
-                    sharedPref.putUsername(loginModel.userName.get()!!).putAuth(b64)
-                    loginResponse.value = true
+                    sharedPref
+                        .putUsername(loginModel.userName.get()!!)
+                        .putAuth(b64)
+                    loginResponse.value = LoginStatus.SUCCESS
                 },
                 { _ ->
-                    loginResponse.value = false
+                    loginResponse.value = LoginStatus.ERROR
                 }
             )
         )

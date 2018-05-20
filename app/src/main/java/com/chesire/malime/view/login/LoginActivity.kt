@@ -15,7 +15,6 @@ import android.widget.Toast
 import com.chesire.malime.R
 import com.chesire.malime.databinding.ActivityLoginBinding
 import com.chesire.malime.view.MainActivity
-import timber.log.Timber
 
 class LoginActivity : AppCompatActivity() {
 
@@ -52,7 +51,9 @@ class LoginActivity : AppCompatActivity() {
         }
 
         loginButton = binding.loginButton
-        loginButton.setOnClickListener { executeLoginMethod() }
+        loginButton.setOnClickListener {
+            executeLoginMethod()
+        }
         binding.loginPasswordEditText.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 executeLoginMethod()
@@ -64,27 +65,12 @@ class LoginActivity : AppCompatActivity() {
     private fun executeLoginMethod() {
         hideSystemKeyboard()
 
-        val userName = viewModel.loginModel.userName.get() ?: ""
-        val password = viewModel.loginModel.password.get() ?: ""
-        if (!isValid(userName, password)) {
-            return
-        }
-
-        loginButton.isEnabled = false
-        progressDialog.show()
-        viewModel.executeLogin()
-    }
-
-    private fun processLoginResponse(successState: Boolean?) {
-        Timber.i("$successState")
-
-        progressDialog.dismiss()
-
-        if (successState == null || !successState) {
-            loginFailure(getString(R.string.login_failure))
-        } else {
-            startActivity(Intent(this, MainActivity::class.java))
-            finish()
+        if (isValid(
+                viewModel.loginModel.userName.get() ?: "",
+                viewModel.loginModel.password.get() ?: ""
+            )
+        ) {
+            viewModel.executeLogin()
         }
     }
 
@@ -111,6 +97,29 @@ class LoginActivity : AppCompatActivity() {
 
     private fun loginFailure(reason: String) {
         Toast.makeText(this, reason, Toast.LENGTH_LONG).show()
-        loginButton.isEnabled = true
+    }
+
+    private fun processLoginResponse(successState: LoginStatus?) {
+        if (successState == null) {
+            return
+        }
+
+        when (successState) {
+            LoginStatus.PROCESSING -> {
+                loginButton.isEnabled = false
+                progressDialog.show()
+            }
+            LoginStatus.SUCCESS -> {
+                startActivity(Intent(this, MainActivity::class.java))
+                finish()
+            }
+            LoginStatus.FINISHED -> {
+                progressDialog.dismiss()
+            }
+            else -> {
+                loginButton.isEnabled = true
+                loginFailure(getString(R.string.login_failure))
+            }
+        }
     }
 }
