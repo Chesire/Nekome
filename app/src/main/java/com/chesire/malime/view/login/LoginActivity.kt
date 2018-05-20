@@ -11,7 +11,6 @@ import android.util.Base64
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
-import android.widget.EditText
 import android.widget.Toast
 import com.chesire.malime.R
 import com.chesire.malime.databinding.ActivityLoginBinding
@@ -30,6 +29,7 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         val binding =
             DataBindingUtil.setContentView<ActivityLoginBinding>(this, R.layout.activity_login)
         viewModel = ViewModelProviders
@@ -41,9 +41,9 @@ class LoginActivity : AppCompatActivity() {
         supportActionBar?.hide()
         actionBar?.hide()
 
-        loginButton = findViewById(R.id.login_button)
+        loginButton = binding.loginButton
         loginButton.setOnClickListener { executeLoginMethod() }
-        findViewById<EditText>(R.id.login_password_edit_text).setOnEditorActionListener { _, actionId, _ ->
+        binding.loginPasswordEditText.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 executeLoginMethod()
             }
