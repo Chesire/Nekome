@@ -150,5 +150,4 @@ class SearchViewAdapter(
             }
         }
     }
-
 }
