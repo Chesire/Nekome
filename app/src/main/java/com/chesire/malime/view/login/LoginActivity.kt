@@ -14,6 +14,7 @@ import android.widget.Button
 import android.widget.Toast
 import com.chesire.malime.R
 import com.chesire.malime.databinding.ActivityLoginBinding
+import com.chesire.malime.util.SharedPref
 import com.chesire.malime.view.MainActivity
 
 class LoginActivity : AppCompatActivity() {
@@ -30,7 +31,7 @@ class LoginActivity : AppCompatActivity() {
         val binding =
             DataBindingUtil.setContentView<ActivityLoginBinding>(this, R.layout.activity_login)
         viewModel = ViewModelProviders
-            .of(this, LoginViewModelFactory(application))
+            .of(this, LoginViewModelFactory(application, SharedPref(applicationContext)))
             .get(LoginViewModel::class.java)
 
         viewModel.loginResponse().observe(

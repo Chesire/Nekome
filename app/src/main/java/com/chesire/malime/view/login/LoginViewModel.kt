@@ -14,9 +14,11 @@ import io.reactivex.schedulers.Schedulers
 
 private const val malSignupUrl = "https://myanimelist.net/register.php"
 
-class LoginViewModel(private val context: Application) : AndroidViewModel(context) {
+class LoginViewModel(
+    private val context: Application,
+    private val sharedPref: SharedPref
+) : AndroidViewModel(context) {
     private val disposables = CompositeDisposable()
-    private val sharedPref = SharedPref(context)
     private val loginResponse = MutableLiveData<LoginStatus>()
     val loginModel = LoginModel()
 
