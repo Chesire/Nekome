@@ -17,12 +17,11 @@ import com.chesire.malime.databinding.ActivityLoginBinding
 import com.chesire.malime.util.SharedPref
 import com.chesire.malime.view.MainActivity
 
+@Suppress("DEPRECATION")
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var loginButton: Button
     private lateinit var viewModel: LoginViewModel
-    // We use the progress dialog here, because the user doesn't have anything else to do on login anyway
-    @Suppress("DEPRECATION")
     private lateinit var progressDialog: ProgressDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,7 +33,7 @@ class LoginActivity : AppCompatActivity() {
             .of(this, LoginViewModelFactory(application, SharedPref(applicationContext)))
             .get(LoginViewModel::class.java)
 
-        viewModel.loginResponse().observe(
+        viewModel.loginResponse.observe(
             this,
             Observer {
                 processLoginResponse(it)
@@ -66,11 +65,7 @@ class LoginActivity : AppCompatActivity() {
     private fun executeLoginMethod() {
         hideSystemKeyboard()
 
-        if (isValid(
-                viewModel.loginModel.userName.get() ?: "",
-                viewModel.loginModel.password.get() ?: ""
-            )
-        ) {
+        if (isValid(viewModel.loginModel.userName, viewModel.loginModel.password)) {
             viewModel.executeLogin()
         }
     }

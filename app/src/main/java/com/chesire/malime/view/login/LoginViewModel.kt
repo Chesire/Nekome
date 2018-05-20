@@ -19,7 +19,7 @@ class LoginViewModel(
     private val sharedPref: SharedPref
 ) : AndroidViewModel(context) {
     private val disposables = CompositeDisposable()
-    private val loginResponse = MutableLiveData<LoginStatus>()
+    val loginResponse = MutableLiveData<LoginStatus>()
     val loginModel = LoginModel()
 
     fun createMalAccount() {
@@ -28,17 +28,11 @@ class LoginViewModel(
             .launchUrl(context, Uri.parse(malSignupUrl))
     }
 
-    fun loginResponse(): MutableLiveData<LoginStatus> {
-        return loginResponse
-    }
-
     fun executeLogin() {
-        val b64 =
-            Base64.encodeToString(
-                "${loginModel.userName.get()!!}:${loginModel.password.get()!!}".toByteArray(
-                    Charsets.UTF_8
-                ), Base64.NO_WRAP
-            )
+        val b64 = Base64.encodeToString(
+            "${loginModel.userName}:${loginModel.password}".toByteArray(Charsets.UTF_8),
+            Base64.NO_WRAP
+        )
 
         val malManager = MalManager(b64)
         disposables.add(malManager.loginToAccount()
@@ -53,7 +47,7 @@ class LoginViewModel(
             .subscribe(
                 { _ ->
                     sharedPref
-                        .putUsername(loginModel.userName.get()!!)
+                        .putUsername(loginModel.userName)
                         .putAuth(b64)
                     loginResponse.value = LoginStatus.SUCCESS
                 },
