@@ -125,9 +125,9 @@ interface MalService {
         @param:Element(name = "myinfo", required = false)
         val myInfo: MyInfo? = null,
 
-        @field:ElementList(inline = true, entry = "anime")
-        @param:ElementList(inline = true, entry = "anime")
-        val animeList: List<Anime>
+        @field:ElementList(inline = true, entry = "anime", required = false)
+        @param:ElementList(inline = true, entry = "anime", required = false)
+        val animeList: List<Anime>? = null
     )
 
     /**
@@ -139,9 +139,9 @@ interface MalService {
         @param:Element(name = "myinfo", required = false)
         val myInfo: MyInfo? = null,
 
-        @field:ElementList(inline = true, entry = "manga")
-        @param:ElementList(inline = true, entry = "manga")
-        val mangaList: List<Manga>
+        @field:ElementList(inline = true, entry = "manga", required = false)
+        @param:ElementList(inline = true, entry = "manga", required = false)
+        val mangaList: List<Manga>? = null
     )
 
     /**
