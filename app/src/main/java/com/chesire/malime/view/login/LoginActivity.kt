@@ -1,31 +1,29 @@
 package com.chesire.malime.view.login
 
 import android.app.ProgressDialog
+import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.util.Base64
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.Toast
 import com.chesire.malime.R
 import com.chesire.malime.databinding.ActivityLoginBinding
-import com.chesire.malime.mal.MalManager
-import com.chesire.malime.util.SharedPref
 import com.chesire.malime.view.MainActivity
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
+import timber.log.Timber
 
 class LoginActivity : AppCompatActivity() {
 
-    private var disposables = CompositeDisposable()
     private lateinit var loginButton: Button
     private lateinit var viewModel: LoginViewModel
+    // We use the progress dialog here, because the user doesn't have anything else to do on login anyway
+    @Suppress("DEPRECATION")
+    private lateinit var progressDialog: ProgressDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,10 +34,22 @@ class LoginActivity : AppCompatActivity() {
             .of(this, LoginViewModelFactory(application))
             .get(LoginViewModel::class.java)
 
+        viewModel.loginResponse().observe(
+            this,
+            Observer {
+                processLoginResponse(it)
+            }
+        )
+
         binding.vm = viewModel
 
         supportActionBar?.hide()
         actionBar?.hide()
+
+        progressDialog = ProgressDialog(this, R.style.AppTheme_Dark_Dialog).apply {
+            isIndeterminate = true
+            setMessage(getString(R.string.login_authenticating))
+        }
 
         loginButton = binding.loginButton
         loginButton.setOnClickListener { executeLoginMethod() }
@@ -49,16 +59,6 @@ class LoginActivity : AppCompatActivity() {
             }
             false
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        disposables = CompositeDisposable()
-    }
-
-    override fun onPause() {
-        super.onPause()
-        disposables.clear()
     }
 
     private fun executeLoginMethod() {
@@ -71,37 +71,21 @@ class LoginActivity : AppCompatActivity() {
         }
 
         loginButton.isEnabled = false
+        progressDialog.show()
+        viewModel.executeLogin()
+    }
 
-        // We use the progress dialog here, because the user doesn't have anything else to do on login anyway
-        @Suppress("DEPRECATION")
-        val progressDialog = ProgressDialog(this, R.style.AppTheme_Dark_Dialog).apply {
-            isIndeterminate = true
-            setMessage(getString(R.string.login_authenticating))
-            show()
+    private fun processLoginResponse(successState: Boolean?) {
+        Timber.i("$successState")
+
+        progressDialog.dismiss()
+
+        if (successState == null || !successState) {
+            loginFailure(getString(R.string.login_failure))
+        } else {
+            startActivity(Intent(this, MainActivity::class.java))
+            finish()
         }
-
-        val b64 =
-            Base64.encodeToString("$userName:$password".toByteArray(Charsets.UTF_8), Base64.NO_WRAP)
-        val malManager = MalManager(b64)
-
-        disposables.add(malManager.loginToAccount()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                { _ ->
-                    val sharedPref = SharedPref(this)
-                    sharedPref.putUsername(userName).putAuth(b64)
-
-                    startActivity(Intent(this, MainActivity::class.java))
-                    finish()
-
-                    progressDialog.dismiss()
-                },
-                { _ ->
-                    progressDialog.dismiss()
-                    loginFailure(getString(R.string.login_failure))
-                }
-            ))
     }
 
     private fun hideSystemKeyboard() {
