@@ -55,7 +55,8 @@
                     android:hint="@string/login_username"
                     android:imeOptions="actionNext"
                     android:inputType="textNoSuggestions"
-                    android:maxLines="1" />
+                    android:maxLines="1"
+                    android:text="@={vm.loginModel.userName}" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -73,7 +74,8 @@
                     android:hint="@string/login_password"
                     android:imeOptions="actionDone"
                     android:inputType="textPassword"
-                    android:lines="1" />
+                    android:lines="1"
+                    android:text="@={vm.loginModel.password}" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.v7.widget.AppCompatButton

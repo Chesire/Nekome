@@ -22,33 +22,28 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
-
 class LoginActivity : AppCompatActivity() {
 
     private var disposables = CompositeDisposable()
     private lateinit var loginButton: Button
-    private lateinit var usernameText: EditText
-    private lateinit var passwordText: EditText
+    private lateinit var viewModel: LoginViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding =
             DataBindingUtil.setContentView<ActivityLoginBinding>(this, R.layout.activity_login)
-        val model = ViewModelProviders
+        viewModel = ViewModelProviders
             .of(this, LoginViewModelFactory(application))
             .get(LoginViewModel::class.java)
 
-        binding.vm = model
+        binding.vm = viewModel
 
         supportActionBar?.hide()
         actionBar?.hide()
 
         loginButton = findViewById(R.id.login_button)
-        usernameText = findViewById(R.id.login_username_edit_text)
-        passwordText = findViewById(R.id.login_password_edit_text)
-
         loginButton.setOnClickListener { executeLoginMethod() }
-        passwordText.setOnEditorActionListener { _, actionId, _ ->
+        findViewById<EditText>(R.id.login_password_edit_text).setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 executeLoginMethod()
             }
@@ -69,10 +64,9 @@ class LoginActivity : AppCompatActivity() {
     private fun executeLoginMethod() {
         hideSystemKeyboard()
 
-        val username = usernameText.text.toString()
-        val password = passwordText.text.toString()
-
-        if (!isValid(username, password)) {
+        val userName = viewModel.loginModel.userName.get() ?: ""
+        val password = viewModel.loginModel.password.get() ?: ""
+        if (!isValid(userName, password)) {
             return
         }
 
@@ -87,7 +81,7 @@ class LoginActivity : AppCompatActivity() {
         }
 
         val b64 =
-            Base64.encodeToString("$username:$password".toByteArray(Charsets.UTF_8), Base64.NO_WRAP)
+            Base64.encodeToString("$userName:$password".toByteArray(Charsets.UTF_8), Base64.NO_WRAP)
         val malManager = MalManager(b64)
 
         disposables.add(malManager.loginToAccount()
@@ -96,7 +90,7 @@ class LoginActivity : AppCompatActivity() {
             .subscribe(
                 { _ ->
                     val sharedPref = SharedPref(this)
-                    sharedPref.putUsername(username).putAuth(b64)
+                    sharedPref.putUsername(userName).putAuth(b64)
 
                     startActivity(Intent(this, MainActivity::class.java))
                     finish()
