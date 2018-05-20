@@ -33,7 +33,7 @@ class LoginViewModel(private val context: Application) : AndroidViewModel(contex
     fun executeLogin() {
         val b64 =
             Base64.encodeToString(
-                "${loginModel.userName}:${loginModel.password}".toByteArray(
+                "${loginModel.userName.get()!!}:${loginModel.password.get()!!}".toByteArray(
                     Charsets.UTF_8
                 ), Base64.NO_WRAP
             )
