@@ -267,8 +267,22 @@ class AnimeFragment : Fragment(),
             .subscribe(
                 { result ->
                     Timber.d("Successfully got latest anime from MAL")
-                    executeSaveToLocalDb(result.second)
-                    viewAdapter.addAll(result.second)
+
+                    if (result.second == null) {
+                        Timber.w("Found 0 series from MAL")
+
+                        // We got a response, but was missing data, likely there are no series
+                        executeClearLocalDb()
+                        viewAdapter.clearAll()
+                    } else {
+                        val animes = result.second as List<Anime>
+                        Timber.d("Found ${animes.count()} series from MAL")
+
+                        // Got everything ok, save it
+                        executeSaveToLocalDb(animes)
+                        viewAdapter.addAll(animes)
+                    }
+
                     swipeRefreshLayout.isRefreshing = false
                 },
                 { _ ->
@@ -305,6 +319,18 @@ class AnimeFragment : Fragment(),
                     ).show()
                 }
             ))
+    }
+
+    private fun executeClearLocalDb() {
+        Timber.d("Clearing local DB for all anime")
+
+        // Looks like this doesn't have to be disposed off
+        Completable
+            .fromAction({
+                animeDao.clear()
+            })
+            .subscribeOn(Schedulers.io())
+            .subscribe()
     }
 
     private fun executeSaveToLocalDb(animes: List<Anime>) {
