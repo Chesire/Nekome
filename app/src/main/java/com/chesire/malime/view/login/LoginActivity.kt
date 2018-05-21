@@ -80,7 +80,8 @@ class LoginActivity : AppCompatActivity() {
 
     private fun executeLoginMethod() {
         hideSystemKeyboard()
-        // We have to convert to base64 here, or the unit tests won't work as its an Android class
+
+        // We have to convert to base64 here, or the unit tests won't work as Base64 is an Android class
         viewModel.executeLogin(
             Base64.encodeToString(
                 "${viewModel.loginModel.userName}:${viewModel.loginModel.password}".toByteArray(
