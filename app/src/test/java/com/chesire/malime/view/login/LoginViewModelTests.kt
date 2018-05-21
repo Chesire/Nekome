@@ -44,8 +44,11 @@ class LoginViewModelTests {
         )
         testObject.errorResponse.observeForever(errorObserver)
         testObject.loginResponse.observeForever(loginObserver)
+        testObject.loginModel.userName = "username"
+        testObject.loginModel.password = "password"
 
         `when`(malManagerFactory.get(ArgumentMatchers.anyString())).thenReturn(malManager)
+        `when`(sharedPref.putUsername(ArgumentMatchers.anyString())).thenReturn(sharedPref)
     }
 
     @After
@@ -57,68 +60,73 @@ class LoginViewModelTests {
     @Test
     fun `empty username provides an error message`() {
         testObject.loginModel.userName = ""
-        testObject.loginModel.password = "password"
 
         testObject.executeLogin("dummyString")
+
         verify(errorObserver).onChanged(R.string.login_failure_username)
         verify(malManagerFactory, Times(0)).get(ArgumentMatchers.anyString())
     }
 
     @Test
     fun `empty password provides an error message`() {
-        testObject.loginModel.userName = "username"
         testObject.loginModel.password = ""
 
         testObject.executeLogin("dummyString")
+
         verify(errorObserver).onChanged(R.string.login_failure_password)
         verify(malManagerFactory, Times(0)).get(ArgumentMatchers.anyString())
     }
 
     @Test
     fun `empty b64encoded credentials provides an error message`() {
-        testObject.loginModel.userName = "username"
-        testObject.loginModel.password = "password"
-
         testObject.executeLogin("")
+
         verify(errorObserver).onChanged(R.string.login_failure)
         verify(malManagerFactory, Times(0)).get(ArgumentMatchers.anyString())
     }
 
     @Test
     fun `failure to login provides an error message`() {
-        testObject.loginModel.userName = "username"
-        testObject.loginModel.password = "password"
-
         `when`(malManager.loginToAccount()).thenReturn(Observable.error(Exception("Test Exception")))
 
         testObject.executeLogin("dummyString")
         testScheduler.triggerActions()
+
         verify(errorObserver).onChanged(R.string.login_failure)
     }
 
     @Test
     fun `failure to login calls loginResponse with LoginStatus#ERROR`() {
-        testObject.loginModel.userName = "username"
-        testObject.loginModel.password = "password"
-
         `when`(malManager.loginToAccount()).thenReturn(Observable.error(Exception("Test Exception")))
 
         testObject.executeLogin("dummyString")
         testScheduler.triggerActions()
+
         verify(loginObserver).onChanged(LoginStatus.PROCESSING)
         verify(loginObserver).onChanged(LoginStatus.ERROR)
         verify(loginObserver).onChanged(LoginStatus.FINISHED)
     }
 
-    /*
     @Test
     fun `successful login saves login details to shared pref`() {
+        `when`(malManager.loginToAccount()).thenReturn(Observable.just(Any()))
 
+        testObject.executeLogin("dummyString")
+        testScheduler.triggerActions()
+
+        verify(sharedPref).putUsername(testObject.loginModel.userName)
+        verify(sharedPref).putAuth(ArgumentMatchers.anyString())
     }
 
     @Test
     fun `successful login calls loginResponse with LoginStatus#SUCCESS`() {
+        `when`(malManager.loginToAccount()).thenReturn(Observable.just(Any()))
 
+        testObject.executeLogin("dummyString")
+        testScheduler.triggerActions()
+
+        verify(loginObserver).onChanged(LoginStatus.PROCESSING)
+        verify(loginObserver).onChanged(LoginStatus.SUCCESS)
+        verify(loginObserver).onChanged(LoginStatus.FINISHED)
     }
-    */
 }
