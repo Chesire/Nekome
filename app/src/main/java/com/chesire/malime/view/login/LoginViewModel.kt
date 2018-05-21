@@ -5,19 +5,20 @@ import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.MutableLiveData
 import android.net.Uri
 import android.support.customtabs.CustomTabsIntent
-import android.util.Base64
 import com.chesire.malime.R
-import com.chesire.malime.mal.MalManager
+import com.chesire.malime.mal.MalManagerFactory
 import com.chesire.malime.util.SharedPref
-import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.Scheduler
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
 
 private const val malSignupUrl = "https://myanimelist.net/register.php"
 
 class LoginViewModel(
     private val context: Application,
-    private val sharedPref: SharedPref
+    private val sharedPref: SharedPref,
+    private val malManagerFactory: MalManagerFactory,
+    private val subscribeScheduler: Scheduler,
+    private val observeScheduler: Scheduler
 ) : AndroidViewModel(context) {
     private val disposables = CompositeDisposable()
     val loginResponse = MutableLiveData<LoginStatus>()
@@ -30,20 +31,15 @@ class LoginViewModel(
             .launchUrl(context, Uri.parse(malSignupUrl))
     }
 
-    fun executeLogin() {
-        if (!isValid(loginModel.userName, loginModel.password)) {
+    fun executeLogin(credentials: String) {
+        if (!isValid(loginModel.userName, loginModel.password, credentials)) {
             return
         }
 
-        val b64 = Base64.encodeToString(
-            "${loginModel.userName}:${loginModel.password}".toByteArray(Charsets.UTF_8),
-            Base64.NO_WRAP
-        )
-
-        val malManager = MalManager(b64)
+        val malManager = malManagerFactory.get(credentials)
         disposables.add(malManager.loginToAccount()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(subscribeScheduler)
+            .observeOn(observeScheduler)
             .doOnSubscribe({ _ ->
                 loginResponse.value = LoginStatus.PROCESSING
             })
@@ -54,7 +50,7 @@ class LoginViewModel(
                 { _ ->
                     sharedPref
                         .putUsername(loginModel.userName)
-                        .putAuth(b64)
+                        .putAuth(credentials)
                     loginResponse.value = LoginStatus.SUCCESS
                 },
                 { _ ->
@@ -65,7 +61,7 @@ class LoginViewModel(
         )
     }
 
-    private fun isValid(username: String, password: String): Boolean {
+    private fun isValid(username: String, password: String, credentials: String): Boolean {
         return when {
             username.isBlank() -> {
                 errorResponse.value = R.string.login_failure_username
@@ -73,6 +69,10 @@ class LoginViewModel(
             }
             password.isBlank() -> {
                 errorResponse.value = R.string.login_failure_password
+                false
+            }
+            credentials.isBlank() -> {
+                errorResponse.value = R.string.login_failure
                 false
             }
             else -> true

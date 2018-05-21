@@ -9,12 +9,14 @@ import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.annotation.StringRes
 import android.support.v7.app.AppCompatActivity
+import android.util.Base64
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.Toast
 import com.chesire.malime.R
 import com.chesire.malime.databinding.ActivityLoginBinding
+import com.chesire.malime.mal.MalManagerFactory
 import com.chesire.malime.util.SharedPref
 import com.chesire.malime.view.MainActivity
 
@@ -31,7 +33,14 @@ class LoginActivity : AppCompatActivity() {
         val binding =
             DataBindingUtil.setContentView<ActivityLoginBinding>(this, R.layout.activity_login)
         viewModel = ViewModelProviders
-            .of(this, LoginViewModelFactory(application, SharedPref(applicationContext)))
+            .of(
+                this,
+                LoginViewModelFactory(
+                    application,
+                    SharedPref(applicationContext),
+                    MalManagerFactory()
+                )
+            )
             .get(LoginViewModel::class.java)
 
         binding.vm = viewModel
@@ -71,7 +80,14 @@ class LoginActivity : AppCompatActivity() {
 
     private fun executeLoginMethod() {
         hideSystemKeyboard()
-        viewModel.executeLogin()
+        // We have to convert to base64 here, or the unit tests won't work as its an Android class
+        viewModel.executeLogin(
+            Base64.encodeToString(
+                "${viewModel.loginModel.userName}:${viewModel.loginModel.password}".toByteArray(
+                    Charsets.UTF_8
+                ), Base64.NO_WRAP
+            )
+        )
     }
 
     private fun processErrorResponse(@StringRes stringId: Int?) {
