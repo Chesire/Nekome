@@ -19,13 +19,20 @@ class AnimeRepository(
         return animeDao.getAll().toObservable()
     }
 
-    fun updateAnimeFromApi() {
+    /**
+     * Update anime in the db using data from the api.
+     *
+     * @param replace Do a fresh replace of all anime data, will not replace by default
+     */
+    fun updateAnimeFromApi(replace: Boolean = false) {
         malManager.getAllAnime()
             .subscribeOn(Schedulers.io())
             .subscribe(
                 {
-                    if (it.second != null) {
-                        storeAnimeInDb(it.second as List<Anime>)
+                    if (it.second == null) {
+                        clearAnimeInDb()
+                    } else {
+                        storeAnimeInDb(it.second as List<Anime>, replace)
                     }
                 },
                 {
@@ -33,8 +40,25 @@ class AnimeRepository(
                 })
     }
 
-    private fun storeAnimeInDb(anime: List<Anime>) {
-        Observable.fromCallable { animeDao.insertAll(anime) }
+    private fun clearAnimeInDb() {
+        Observable.fromCallable { animeDao.clear() }
+            .subscribeOn(Schedulers.io())
+            .observeOn(Schedulers.io())
+            .subscribe({
+                Timber.d("Clearing anime from the DB")
+            }, {
+                Timber.e(it, "Failure to clear anime from the DB")
+            })
+    }
+
+    private fun storeAnimeInDb(anime: List<Anime>, replace: Boolean) {
+        Observable.fromCallable {
+            if (replace) {
+                animeDao.freshInsert(anime)
+            } else {
+                animeDao.insertAll(anime)
+            }
+        }
             .subscribeOn(Schedulers.io())
             .observeOn(Schedulers.io())
             .subscribe({
