@@ -40,7 +40,6 @@ class MangaFragment : Fragment(),
 
     private var disposables = CompositeDisposable()
     private lateinit var sharedPref: SharedPref
-    private lateinit var username: String
     private lateinit var malManager: MalManager
     private lateinit var mangaDao: MangaDao
 
@@ -56,8 +55,7 @@ class MangaFragment : Fragment(),
         val requiredContext = requireContext()
 
         sharedPref = SharedPref(requiredContext)
-        username = sharedPref.getUsername()
-        malManager = MalManager(sharedPref.getAuth())
+        malManager = MalManager(sharedPref.getAuth(), sharedPref.getUsername())
         mangaDao = MalimeDatabase.getInstance(requiredContext).mangaDao()
 
         viewManager = LinearLayoutManager(requiredContext)
@@ -257,7 +255,7 @@ class MangaFragment : Fragment(),
     private fun executeGetLatestManga() {
         Timber.d("Getting latest manga from MAL")
 
-        disposables.add(malManager.getAllManga(username)
+        disposables.add(malManager.getAllManga()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(

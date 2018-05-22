@@ -40,7 +40,6 @@ class AnimeFragment : Fragment(),
 
     private var disposables = CompositeDisposable()
     private lateinit var sharedPref: SharedPref
-    private lateinit var username: String
     private lateinit var malManager: MalManager
     private lateinit var animeDao: AnimeDao
 
@@ -56,8 +55,7 @@ class AnimeFragment : Fragment(),
         val requiredContext = requireContext()
 
         sharedPref = SharedPref(requiredContext)
-        username = sharedPref.getUsername()
-        malManager = MalManager(sharedPref.getAuth())
+        malManager = MalManager(sharedPref.getAuth(), sharedPref.getUsername())
         animeDao = MalimeDatabase.getInstance(requiredContext).animeDao()
 
         viewManager = LinearLayoutManager(requiredContext)
@@ -261,7 +259,7 @@ class AnimeFragment : Fragment(),
     private fun executeGetLatestAnime() {
         Timber.d("Getting latest anime from MAL")
 
-        disposables.add(malManager.getAllAnime(username)
+        disposables.add(malManager.getAllAnime()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(

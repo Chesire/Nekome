@@ -17,20 +17,19 @@ class PeriodicUpdateService : JobService() {
 
     override fun onStartJob(params: JobParameters?): Boolean {
         val sharedPref = SharedPref(applicationContext)
-        val malManager = MalManager(sharedPref.getAuth())
+        val malManager = MalManager(sharedPref.getAuth(), sharedPref.getUsername())
 
         Timber.i("UpdateService primed, updating anime and manga")
-        getLatestAnime(params, sharedPref, malManager)
-        getLatestManga(params, sharedPref, malManager)
+        getLatestAnime(params, malManager)
+        getLatestManga(params, malManager)
         return true
     }
 
     private fun getLatestAnime(
         params: JobParameters?,
-        sharedPref: SharedPref,
         malManager: MalManager
     ) {
-        malManager.getAllAnime(sharedPref.getUsername())
+        malManager.getAllAnime()
             .subscribeOn(Schedulers.io())
             .subscribe(
                 { result ->
@@ -51,10 +50,9 @@ class PeriodicUpdateService : JobService() {
 
     private fun getLatestManga(
         params: JobParameters?,
-        sharedPref: SharedPref,
         malManager: MalManager
     ) {
-        malManager.getAllManga(sharedPref.getUsername())
+        malManager.getAllManga()
             .subscribeOn(Schedulers.io())
             .subscribe(
                 { result ->
