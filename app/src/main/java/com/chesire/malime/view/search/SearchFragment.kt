@@ -65,7 +65,7 @@ class SearchFragment : Fragment(), SearchInteractionListener {
         setHasOptionsMenu(true)
 
         val sharedPref = SharedPref(requireContext())
-        malManager = MalManager(sharedPref.getAuth())
+        malManager = MalManager(sharedPref.getAuth(), sharedPref.getUsername())
         MalimeDatabase.getInstance(requireContext()).also {
             animeDao = it.animeDao()
             mangaDao = it.mangaDao()
