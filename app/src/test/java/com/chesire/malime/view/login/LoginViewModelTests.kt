@@ -23,7 +23,7 @@ import org.mockito.internal.verification.Times
 @Suppress("DEPRECATION")
 class LoginViewModelTests {
     @get:Rule
-    var rule: TestRule = InstantTaskExecutorRule()
+    val rule: TestRule = InstantTaskExecutorRule()
 
     private lateinit var testObject: LoginViewModel
     private val sharedPref: SharedPref = customMock()
@@ -47,7 +47,12 @@ class LoginViewModelTests {
         testObject.loginModel.userName = "username"
         testObject.loginModel.password = "password"
 
-        `when`(malManagerFactory.get(ArgumentMatchers.anyString())).thenReturn(malManager)
+        `when`(
+            malManagerFactory.get(
+                ArgumentMatchers.anyString(),
+                ArgumentMatchers.anyString()
+            )
+        ).thenReturn(malManager)
         `when`(sharedPref.putUsername(ArgumentMatchers.anyString())).thenReturn(sharedPref)
     }
 
@@ -64,7 +69,10 @@ class LoginViewModelTests {
         testObject.executeLogin("dummyString")
 
         verify(errorObserver).onChanged(R.string.login_failure_username)
-        verify(malManagerFactory, Times(0)).get(ArgumentMatchers.anyString())
+        verify(malManagerFactory, Times(0)).get(
+            ArgumentMatchers.anyString(),
+            ArgumentMatchers.anyString()
+        )
     }
 
     @Test
@@ -74,7 +82,10 @@ class LoginViewModelTests {
         testObject.executeLogin("dummyString")
 
         verify(errorObserver).onChanged(R.string.login_failure_password)
-        verify(malManagerFactory, Times(0)).get(ArgumentMatchers.anyString())
+        verify(malManagerFactory, Times(0)).get(
+            ArgumentMatchers.anyString(),
+            ArgumentMatchers.anyString()
+        )
     }
 
     @Test
@@ -82,7 +93,10 @@ class LoginViewModelTests {
         testObject.executeLogin("")
 
         verify(errorObserver).onChanged(R.string.login_failure)
-        verify(malManagerFactory, Times(0)).get(ArgumentMatchers.anyString())
+        verify(malManagerFactory, Times(0)).get(
+            ArgumentMatchers.anyString(),
+            ArgumentMatchers.anyString()
+        )
     }
 
     @Test

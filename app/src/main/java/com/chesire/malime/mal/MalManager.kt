@@ -14,6 +14,7 @@ import timber.log.Timber
  */
 class MalManager(
     auth: String,
+    private val username: String,
     private val api: MalApi = MalApi(auth)
 ) {
     /**
@@ -73,10 +74,9 @@ class MalManager(
     /**
      * Request all anime for a user.
      *
-     * @param username of the user to get the anime for
      * @return [Observable] instance containing a [Pair] of a [MyInfo] and all found anime
      */
-    fun getAllAnime(username: String): Observable<Pair<MyInfo, List<Anime>?>> {
+    fun getAllAnime(): Observable<Pair<MyInfo, List<Anime>?>> {
         return Observable.create { subscriber ->
             val callResponse = api.getAllAnime(username)
             val response = callResponse.execute()
@@ -101,10 +101,9 @@ class MalManager(
     /**
      * Request all manga for a user.
      *
-     * @param username of the user to get the manga for
      * @return [Observable] instance containing a [Pair] of a [MyInfo] and all found manga
      */
-    fun getAllManga(username: String): Observable<Pair<MyInfo, List<Manga>?>> {
+    fun getAllManga(): Observable<Pair<MyInfo, List<Manga>?>> {
         return Observable.create { subscriber ->
             val callResponse = api.getAllManga(username)
             val response = callResponse.execute()
