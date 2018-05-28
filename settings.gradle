@@ -1,1 +1,3 @@
-include ':app', ':malime.core', ':malime.kitsu', ':malime.mal'
+include ':app',
+        ':malime.kitsu',
+        ':malime.mal'
