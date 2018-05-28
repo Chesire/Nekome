@@ -6,7 +6,7 @@ import android.arch.lifecycle.MutableLiveData
 import android.net.Uri
 import android.support.customtabs.CustomTabsIntent
 import com.chesire.malime.R
-import com.chesire.malime.kitsu.KitsuManager
+import com.chesire.malime.kitsu.api.KitsuManager
 import com.chesire.malime.mal.MalManagerFactory
 import com.chesire.malime.util.SharedPref
 import io.reactivex.Scheduler

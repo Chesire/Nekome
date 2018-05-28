@@ -5,7 +5,7 @@ import android.arch.lifecycle.Observer
 import android.test.mock.MockApplication
 import com.chesire.malime.R
 import com.chesire.malime.customMock
-import com.chesire.malime.mal.MalManager
+import com.chesire.malime.mal.api.MalManager
 import com.chesire.malime.mal.MalManagerFactory
 import com.chesire.malime.util.SharedPref
 import io.reactivex.Observable

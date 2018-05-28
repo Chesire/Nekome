@@ -1,8 +1,8 @@
 package com.chesire.malime.view.anime
 
-import com.chesire.malime.mal.MalManager
+import com.chesire.malime.mal.api.MalManager
 import com.chesire.malime.mal.models.Anime
-import com.chesire.malime.room.AnimeDao
+import com.chesire.malime.mal.room.AnimeDao
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber

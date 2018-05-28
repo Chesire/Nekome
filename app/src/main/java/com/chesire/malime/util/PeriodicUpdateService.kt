@@ -2,10 +2,10 @@ package com.chesire.malime.util
 
 import android.app.job.JobParameters
 import android.app.job.JobService
-import com.chesire.malime.mal.MalManager
+import com.chesire.malime.mal.api.MalManager
 import com.chesire.malime.mal.models.Anime
 import com.chesire.malime.mal.models.Manga
-import com.chesire.malime.room.MalimeDatabase
+import com.chesire.malime.mal.room.MalimeDatabase
 import io.reactivex.Completable
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber

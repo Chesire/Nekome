@@ -12,7 +12,7 @@ import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import com.chesire.malime.R
-import com.chesire.malime.room.MalimeDatabase
+import com.chesire.malime.mal.room.MalimeDatabase
 import com.chesire.malime.util.PeriodicUpdateHelper
 import com.chesire.malime.util.SharedPref
 import com.chesire.malime.view.anime.AnimeFragment

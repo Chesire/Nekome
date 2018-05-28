@@ -1,4 +1,4 @@
-package com.chesire.malime.room
+package com.chesire.malime.mal.room
 
 import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Delete

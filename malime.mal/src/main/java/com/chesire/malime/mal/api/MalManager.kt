@@ -1,4 +1,4 @@
-package com.chesire.malime.mal
+package com.chesire.malime.mal.api
 
 import com.chesire.malime.mal.models.Anime
 import com.chesire.malime.mal.models.Entry

@@ -1,5 +1,6 @@
-package com.chesire.malime.mal
+package com.chesire.malime.mal.api
 
+import com.chesire.malime.mal.BuildConfig
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Response

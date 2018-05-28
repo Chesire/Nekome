@@ -1,4 +1,4 @@
-package com.chesire.malime.kitsu
+package com.chesire.malime.kitsu.api
 
 import com.chesire.malime.kitsu.models.LoginRequest
 import com.chesire.malime.kitsu.models.LoginResponse

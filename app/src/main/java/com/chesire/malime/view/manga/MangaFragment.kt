@@ -19,11 +19,11 @@ import android.view.View
 import android.view.ViewGroup
 import com.chesire.malime.mal.MalStates
 import com.chesire.malime.R
-import com.chesire.malime.mal.MalManager
+import com.chesire.malime.mal.api.MalManager
 import com.chesire.malime.mal.models.Manga
 import com.chesire.malime.mal.models.UpdateManga
-import com.chesire.malime.room.MalimeDatabase
-import com.chesire.malime.room.MangaDao
+import com.chesire.malime.mal.room.MalimeDatabase
+import com.chesire.malime.mal.room.MangaDao
 import com.chesire.malime.util.SharedPref
 import com.chesire.malime.view.MalModelInteractionListener
 import io.reactivex.Completable
@@ -56,7 +56,10 @@ class MangaFragment : Fragment(),
 
         sharedPref = SharedPref(requiredContext)
         malManager =
-                MalManager(sharedPref.getAuth(), sharedPref.getUsername())
+                MalManager(
+                    sharedPref.getAuth(),
+                    sharedPref.getUsername()
+                )
         mangaDao = MalimeDatabase.getInstance(requiredContext).mangaDao()
 
         viewManager = LinearLayoutManager(requiredContext)
