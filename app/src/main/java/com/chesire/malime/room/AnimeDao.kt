@@ -7,7 +7,7 @@ import android.arch.persistence.room.OnConflictStrategy
 import android.arch.persistence.room.Query
 import android.arch.persistence.room.Transaction
 import android.arch.persistence.room.Update
-import com.chesire.malime.models.Anime
+import com.chesire.malime.mal.models.Anime
 import io.reactivex.Flowable
 
 @Dao

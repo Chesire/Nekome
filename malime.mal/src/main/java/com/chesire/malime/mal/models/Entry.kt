@@ -1,4 +1,4 @@
-package com.chesire.malime.models
+package com.chesire.malime.mal.models
 
 import android.arch.persistence.room.Ignore
 import android.os.Parcel
@@ -96,7 +96,8 @@ data class Entry(
     companion object {
         @JvmField
         val CREATOR: Parcelable.Creator<Entry> = object : Parcelable.Creator<Entry> {
-            override fun createFromParcel(source: Parcel): Entry = Entry(source)
+            override fun createFromParcel(source: Parcel): Entry =
+                Entry(source)
             override fun newArray(size: Int): Array<Entry?> = arrayOfNulls(size)
         }
     }

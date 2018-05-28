@@ -1,9 +1,9 @@
 package com.chesire.malime.mal
 
-import com.chesire.malime.models.Anime
-import com.chesire.malime.models.Entry
-import com.chesire.malime.models.Manga
-import com.chesire.malime.models.MyInfo
+import com.chesire.malime.mal.models.Anime
+import com.chesire.malime.mal.models.Entry
+import com.chesire.malime.mal.models.Manga
+import com.chesire.malime.mal.models.MyInfo
 import org.simpleframework.xml.Element
 import org.simpleframework.xml.ElementList
 import org.simpleframework.xml.Root

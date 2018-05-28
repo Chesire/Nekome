@@ -1,11 +1,11 @@
-package com.chesire.malime.models
+package com.chesire.malime.mal.models
 
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.Ignore
 import android.arch.persistence.room.PrimaryKey
 import android.os.Parcel
 import android.os.Parcelable
-import com.chesire.malime.MalStates
+import com.chesire.malime.mal.MalStates
 import org.simpleframework.xml.Element
 import org.simpleframework.xml.Root
 import java.text.SimpleDateFormat

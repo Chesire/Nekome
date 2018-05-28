@@ -1,7 +1,7 @@
-package com.chesire.malime
+package com.chesire.malime.mal
 
-import com.chesire.malime.models.UpdateAnime
-import com.chesire.malime.models.UpdateManga
+import com.chesire.malime.mal.models.UpdateAnime
+import com.chesire.malime.mal.models.UpdateManga
 
 /*
     Id is the value that is stored up on MAL,

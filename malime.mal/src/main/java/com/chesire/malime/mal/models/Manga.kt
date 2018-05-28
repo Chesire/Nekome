@@ -1,11 +1,11 @@
-package com.chesire.malime.models
+package com.chesire.malime.mal.models
 
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.Ignore
 import android.arch.persistence.room.PrimaryKey
 import android.os.Parcel
 import android.os.Parcelable
-import com.chesire.malime.MalStates
+import com.chesire.malime.mal.MalStates
 import org.simpleframework.xml.Element
 import org.simpleframework.xml.Root
 import java.text.SimpleDateFormat
@@ -206,7 +206,9 @@ data class Manga(
     companion object {
         @JvmField
         val CREATOR: Parcelable.Creator<Manga> = object : Parcelable.Creator<Manga> {
-            override fun createFromParcel(source: Parcel): Manga = Manga(source)
+            override fun createFromParcel(source: Parcel): Manga =
+                Manga(source)
+
             override fun newArray(size: Int): Array<Manga?> = arrayOfNulls(size)
         }
     }

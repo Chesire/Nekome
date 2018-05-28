@@ -10,8 +10,8 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import com.chesire.malime.R
-import com.chesire.malime.models.Anime
-import com.chesire.malime.models.UpdateAnime
+import com.chesire.malime.mal.models.Anime
+import com.chesire.malime.mal.models.UpdateAnime
 import com.chesire.malime.util.GlideApp
 import com.chesire.malime.util.SharedPref
 import com.chesire.malime.view.MalModelInteractionListener
@@ -103,7 +103,8 @@ class AnimeViewAdapter(
 
             animeView.setOnLongClickListener {
                 showLoadingLayout(true)
-                interactionListener.onLongClick(animeModel, UpdateAnime(animeModel), {
+                interactionListener.onLongClick(animeModel,
+                    UpdateAnime(animeModel), {
                     showLoadingLayout(false)
                 })
                 true

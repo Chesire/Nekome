@@ -43,6 +43,9 @@ android {
 }
 
 dependencies {
+    implementation project(path: ':malime.kitsu')
+    implementation project(path: ':malime.mal')
+
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
@@ -83,7 +86,6 @@ dependencies {
     kapt 'android.arch.persistence.room:compiler:1.1.0'
     kapt 'com.android.databinding:compiler:3.1.2'
     kapt 'com.github.bumptech.glide:compiler:4.6.1'
-    compile project(path: ':malime.kitsu')
 }
 
 apply plugin: 'com.google.gms.google-services'

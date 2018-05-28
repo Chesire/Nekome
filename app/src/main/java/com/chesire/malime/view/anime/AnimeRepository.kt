@@ -1,7 +1,7 @@
 package com.chesire.malime.view.anime
 
 import com.chesire.malime.mal.MalManager
-import com.chesire.malime.models.Anime
+import com.chesire.malime.mal.models.Anime
 import com.chesire.malime.room.AnimeDao
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers

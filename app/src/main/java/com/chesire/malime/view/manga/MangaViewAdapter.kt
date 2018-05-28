@@ -10,8 +10,8 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import com.chesire.malime.R
-import com.chesire.malime.models.Manga
-import com.chesire.malime.models.UpdateManga
+import com.chesire.malime.mal.models.Manga
+import com.chesire.malime.mal.models.UpdateManga
 import com.chesire.malime.util.GlideApp
 import com.chesire.malime.util.SharedPref
 import com.chesire.malime.view.MalModelInteractionListener
@@ -104,7 +104,8 @@ class MangaViewAdapter(
 
             mangaView.setOnLongClickListener {
                 showLoadingLayout(true)
-                interactionListener.onLongClick(mangaModel, UpdateManga(mangaModel), {
+                interactionListener.onLongClick(mangaModel,
+                    UpdateManga(mangaModel), {
                     showLoadingLayout(false)
                 })
                 true

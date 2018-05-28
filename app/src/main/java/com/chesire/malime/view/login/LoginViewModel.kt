@@ -6,6 +6,7 @@ import android.arch.lifecycle.MutableLiveData
 import android.net.Uri
 import android.support.customtabs.CustomTabsIntent
 import com.chesire.malime.R
+import com.chesire.malime.kitsu.KitsuManager
 import com.chesire.malime.mal.MalManagerFactory
 import com.chesire.malime.util.SharedPref
 import io.reactivex.Scheduler
@@ -36,13 +37,14 @@ class LoginViewModel(
             return
         }
 
-        val malManager = malManagerFactory.get(credentials, loginModel.userName)
-        disposables.add(malManager.loginToAccount()
+        //val malManager = malManagerFactory.get(credentials, loginModel.userName)
+        val kitsuManager = KitsuManager()
+        disposables.add(kitsuManager.login(loginModel.userName, loginModel.password)
             .subscribeOn(subscribeScheduler)
             .observeOn(observeScheduler)
-            .doOnSubscribe({ _ ->
+            .doOnSubscribe { _ ->
                 loginResponse.value = LoginStatus.PROCESSING
-            })
+            }
             .doFinally {
                 loginResponse.value = LoginStatus.FINISHED
             }

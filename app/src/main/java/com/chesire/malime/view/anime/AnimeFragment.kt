@@ -17,11 +17,11 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import com.chesire.malime.MalStates
+import com.chesire.malime.mal.MalStates
 import com.chesire.malime.R
 import com.chesire.malime.mal.MalManager
-import com.chesire.malime.models.Anime
-import com.chesire.malime.models.UpdateAnime
+import com.chesire.malime.mal.models.Anime
+import com.chesire.malime.mal.models.UpdateAnime
 import com.chesire.malime.room.AnimeDao
 import com.chesire.malime.room.MalimeDatabase
 import com.chesire.malime.util.SharedPref
@@ -55,7 +55,8 @@ class AnimeFragment : Fragment(),
         val requiredContext = requireContext()
 
         sharedPref = SharedPref(requiredContext)
-        malManager = MalManager(sharedPref.getAuth(), sharedPref.getUsername())
+        malManager =
+                MalManager(sharedPref.getAuth(), sharedPref.getUsername())
         animeDao = MalimeDatabase.getInstance(requiredContext).animeDao()
 
         viewManager = LinearLayoutManager(requiredContext)

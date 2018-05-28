@@ -1,38 +1,44 @@
-package com.chesire.malime.models
+package com.chesire.malime.mal.models
 
-import com.chesire.malime.MalStates
+import com.chesire.malime.mal.MalStates
 import timber.log.Timber
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 
-data class UpdateAnime(
+data class UpdateManga(
     val id: Int,
     val title: String,
-    var episode: Int,
-    val totalEpisodes: Int,
+    var chapter: Int,
+    var totalChapters: Int,
+    var volume: Int,
+    var totalVolumes: Int,
     var dateFinish: String,
     var status: Int,
     val score: Int
 ) {
-    constructor(animeModel: Anime) : this(
+    constructor(mangaModel: Manga) : this(
         // This should never result in being 0
-        id = animeModel.seriesAnimeDbId ?: 0,
-        title = animeModel.seriesTitle ?: "Unknown",
-        episode = animeModel.myWatchedEpisodes ?: 0,
-        totalEpisodes = animeModel.seriesEpisodes ?: 0,
+        id = mangaModel.seriesMangaDbId ?: 0,
+        title = mangaModel.seriesTitle ?: "Unknown",
+        chapter = mangaModel.myReadChapters ?: 0,
+        totalChapters = mangaModel.seriesChapters ?: 0,
+        volume = mangaModel.myReadVolumes ?: 0,
+        totalVolumes = mangaModel.seriesVolumes ?: 0,
         dateFinish = "",
-        status = animeModel.myStatus ?: 0,
-        score = animeModel.myScore ?: 0
+        status = mangaModel.myStatus ?: 0,
+        score = mangaModel.myScore ?: 0
     )
 
     constructor(entry: Entry) : this(
         id = entry.id!!,
         title = entry.title ?: "Unknown",
-        episode = 0,
-        totalEpisodes = entry.episodes ?: 0,
+        chapter = 0,
+        totalChapters = entry.chapters ?: 0,
+        volume = 0,
+        totalVolumes = entry.chapters ?: 0,
         dateFinish = "",
-        status = MalStates.WATCHING.id,
+        status = MalStates.READING.id,
         score = 0
     )
 
@@ -57,26 +63,26 @@ data class UpdateAnime(
         dateFinish = dateFormatter.format(calendar.time)
     }
 
-    fun setToWatchingState() {
-        status = MalStates.WATCHING.id
+    fun setToReadingState() {
+        status = MalStates.READING.id
         dateFinish = ""
     }
 
     fun getXml(): String {
         return "<entry>" +
-                "<episode>$episode</episode>" +
+                "<chapter>$chapter</chapter>" +
+                "<volume>$volume</volume>" +
                 "<status>$status</status>" +
                 "<score>$score</score>" +
-                "<storage_type></storage_type>" +
-                "<storage_value></storage_value>" +
-                "<times_rewatched></times_rewatched>" +
-                "<rewatch_value></rewatch_value>" +
+                "<times_reread></times_reread>" +
+                "<reread_value></reread_value>" +
                 "<date_start></date_start>" +
                 "<date_finish>$dateFinish</date_finish>" +
                 "<priority></priority>" +
                 "<enable_discussion></enable_discussion>" +
                 "<enable_rewatching></enable_rewatching>" +
                 "<comments></comments>" +
+                "<scan_group></scan_group>" +
                 "<tags></tags>" +
                 "</entry>"
     }

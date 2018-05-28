@@ -1,11 +1,11 @@
 package com.chesire.malime.mal
 
-import com.chesire.malime.models.Anime
-import com.chesire.malime.models.Entry
-import com.chesire.malime.models.Manga
-import com.chesire.malime.models.MyInfo
-import com.chesire.malime.models.UpdateAnime
-import com.chesire.malime.models.UpdateManga
+import com.chesire.malime.mal.models.Anime
+import com.chesire.malime.mal.models.Entry
+import com.chesire.malime.mal.models.Manga
+import com.chesire.malime.mal.models.MyInfo
+import com.chesire.malime.mal.models.UpdateAnime
+import com.chesire.malime.mal.models.UpdateManga
 import io.reactivex.Observable
 import timber.log.Timber
 

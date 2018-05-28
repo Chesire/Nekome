@@ -1,4 +1,4 @@
-package com.chesire.malime.models
+package com.chesire.malime.mal.models
 
 import org.simpleframework.xml.Element
 import org.simpleframework.xml.Root

@@ -4,8 +4,8 @@ import android.arch.persistence.room.Database
 import android.arch.persistence.room.Room
 import android.arch.persistence.room.RoomDatabase
 import android.content.Context
-import com.chesire.malime.models.Anime
-import com.chesire.malime.models.Manga
+import com.chesire.malime.mal.models.Anime
+import com.chesire.malime.mal.models.Manga
 import com.chesire.malime.util.SingletonHolder
 
 @Database(entities = [(Anime::class), (Manga::class)], version = 2)
