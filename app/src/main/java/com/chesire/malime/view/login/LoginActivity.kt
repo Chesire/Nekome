@@ -2,9 +2,12 @@ package com.chesire.malime.view.login
 
 import android.content.Intent
 import android.os.Bundle
+import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import com.chesire.malime.R
+import com.chesire.malime.util.SupportedService
 import com.chesire.malime.view.MainActivity
+import com.chesire.malime.view.login.kitsu.KitsuLoginFragment
 import com.chesire.malime.view.login.mal.MalLoginFragment
 import com.chesire.malime.view.login.service.ServiceSelectionFragment
 
@@ -28,14 +31,26 @@ class LoginActivity : AppCompatActivity(), LoginInteractor {
         }
     }
 
-    override fun serviceSelected() {
-        // Depending on the service selected, might go to a different fragment?
-        // Or pass in a param for the fields needed
+    override fun serviceSelected(service: SupportedService) {
+        val fragment: Fragment
+        val tag: String
+
+        when (service) {
+            SupportedService.MAL -> {
+                fragment = MalLoginFragment.newInstance()
+                tag = MalLoginFragment.tag
+            }
+            SupportedService.KITSU -> {
+                fragment = KitsuLoginFragment.newInstance()
+                tag = KitsuLoginFragment.tag
+            }
+        }
+
         supportFragmentManager.beginTransaction()
             .replace(
                 R.id.activity_login_layout,
-                MalLoginFragment.newInstance(),
-                MalLoginFragment.tag
+                fragment,
+                tag
             )
             .addToBackStack(null)
             .commit()

@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import com.chesire.malime.R
+import com.chesire.malime.util.SupportedService
 import com.chesire.malime.view.login.LoginInteractor
 
 class ServiceSelectionFragment : Fragment() {
@@ -20,10 +21,10 @@ class ServiceSelectionFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_serviceselection, container, false)
         view.findViewById<Button>(R.id.service_selection_mal_button).setOnClickListener {
-            loginInteractor.serviceSelected()
+            loginInteractor.serviceSelected(SupportedService.MAL)
         }
         view.findViewById<Button>(R.id.service_selection_kitsu_button).setOnClickListener {
-            loginInteractor.serviceSelected()
+            loginInteractor.serviceSelected(SupportedService.KITSU)
         }
 
         return view

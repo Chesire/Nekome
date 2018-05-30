@@ -78,7 +78,6 @@ class KitsuLoginFragment : BaseLoginFragment() {
         viewModel.executeLogin()
     }
 
-
     companion object {
         const val tag = "KitsuLoginFragment"
         fun newInstance(): KitsuLoginFragment {
