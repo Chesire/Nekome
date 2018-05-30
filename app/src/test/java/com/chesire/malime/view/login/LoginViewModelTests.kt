@@ -8,6 +8,8 @@ import com.chesire.malime.customMock
 import com.chesire.malime.mal.api.MalManager
 import com.chesire.malime.mal.MalManagerFactory
 import com.chesire.malime.util.SharedPref
+import com.chesire.malime.view.login.login.LoginStatus
+import com.chesire.malime.view.login.login.LoginViewModel
 import io.reactivex.Observable
 import io.reactivex.schedulers.TestScheduler
 import org.junit.After

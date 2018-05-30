@@ -1,10 +1,9 @@
-package com.chesire.malime.view.login
+package com.chesire.malime.view.login.login
 
 import android.app.ProgressDialog
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
-import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.annotation.StringRes
@@ -21,10 +20,11 @@ import com.chesire.malime.R
 import com.chesire.malime.databinding.FragmentLoginBinding
 import com.chesire.malime.mal.MalManagerFactory
 import com.chesire.malime.util.SharedPref
-import com.chesire.malime.view.MainActivity
+import com.chesire.malime.view.login.LoginInteractor
 
 @Suppress("DEPRECATION")
 class LoginFragment : Fragment() {
+    private lateinit var loginInteractor: LoginInteractor
     private lateinit var loginButton: Button
     private lateinit var viewModel: LoginViewModel
     private lateinit var progressDialog: ProgressDialog
@@ -91,6 +91,11 @@ class LoginFragment : Fragment() {
         return binding.root
     }
 
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+        loginInteractor = context as LoginInteractor
+    }
+
     private fun executeLoginMethod() {
         hideSystemKeyboard()
 
@@ -121,8 +126,7 @@ class LoginFragment : Fragment() {
                 progressDialog.show()
             }
             LoginStatus.SUCCESS -> {
-                startActivity(Intent(context, MainActivity::class.java))
-                //finish()
+                loginInteractor.loginSuccessful()
             }
             LoginStatus.FINISHED -> {
                 progressDialog.dismiss()

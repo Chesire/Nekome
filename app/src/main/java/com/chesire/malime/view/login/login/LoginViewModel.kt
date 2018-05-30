@@ -1,4 +1,4 @@
-package com.chesire.malime.view.login
+package com.chesire.malime.view.login.login
 
 import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
