@@ -4,7 +4,6 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
 import android.os.Bundle
-import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +11,6 @@ import android.view.inputmethod.EditorInfo
 import android.widget.Button
 import com.chesire.malime.R
 import com.chesire.malime.databinding.FragmentKitsuLoginBinding
-import com.chesire.malime.mal.MalManagerFactory
 import com.chesire.malime.util.SharedPref
 import com.chesire.malime.view.login.BaseLoginFragment
 import com.chesire.malime.view.login.LoginStatus
@@ -31,8 +29,7 @@ class KitsuLoginFragment : BaseLoginFragment() {
                 this,
                 LoginViewModelFactory(
                     requireActivity().application,
-                    SharedPref(requireActivity().application),
-                    MalManagerFactory()
+                    SharedPref(requireActivity().application)
                 )
             )
             .get(KitsuLoginViewModel::class.java)
@@ -82,15 +79,7 @@ class KitsuLoginFragment : BaseLoginFragment() {
 
     private fun executeLoginMethod() {
         hideSystemKeyboard()
-
-        // We have to convert to base64 here, or the unit tests won't work as Base64 is an Android class
-        viewModel.executeLogin(
-            Base64.encodeToString(
-                "${viewModel.loginModel.userName}:${viewModel.loginModel.password}".toByteArray(
-                    Charsets.UTF_8
-                ), Base64.NO_WRAP
-            )
-        )
+        viewModel.executeLogin()
     }
 
     private fun processLoginResponse(loginStatus: LoginStatus?) {

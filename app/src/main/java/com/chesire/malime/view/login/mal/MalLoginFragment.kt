@@ -12,7 +12,6 @@ import android.view.inputmethod.EditorInfo
 import android.widget.Button
 import com.chesire.malime.R
 import com.chesire.malime.databinding.FragmentMalLoginBinding
-import com.chesire.malime.mal.MalManagerFactory
 import com.chesire.malime.util.SharedPref
 import com.chesire.malime.view.login.BaseLoginFragment
 import com.chesire.malime.view.login.LoginStatus
@@ -31,8 +30,7 @@ class MalLoginFragment : BaseLoginFragment() {
                 this,
                 LoginViewModelFactory(
                     requireActivity().application,
-                    SharedPref(requireActivity().application),
-                    MalManagerFactory()
+                    SharedPref(requireActivity().application)
                 )
             )
             .get(MalLoginViewModel::class.java)

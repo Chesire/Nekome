@@ -3,43 +3,45 @@ package com.chesire.malime.view.login.kitsu
 import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.MutableLiveData
+import android.databinding.ObservableBoolean
 import android.net.Uri
 import android.support.customtabs.CustomTabsIntent
 import com.chesire.malime.R
-import com.chesire.malime.mal.MalManagerFactory
+import com.chesire.malime.kitsu.KitsuManagerFactory
 import com.chesire.malime.util.SharedPref
 import com.chesire.malime.view.login.LoginModel
 import com.chesire.malime.view.login.LoginStatus
 import io.reactivex.Scheduler
 import io.reactivex.disposables.CompositeDisposable
 
-private const val malSignupUrl = "https://myanimelist.net/register.php"
+private const val kitsuSignupUrl = "https://kitsu.io/explore/anime"
 
 class KitsuLoginViewModel(
     private val context: Application,
     private val sharedPref: SharedPref,
-    private val malManagerFactory: MalManagerFactory,
+    private val kitsuManagerFactory: KitsuManagerFactory,
     private val subscribeScheduler: Scheduler,
     private val observeScheduler: Scheduler
 ) : AndroidViewModel(context) {
     private val disposables = CompositeDisposable()
     val loginResponse = MutableLiveData<LoginStatus>()
     val errorResponse = MutableLiveData<Int>()
+    val attemptingLogin = ObservableBoolean()
     val loginModel = LoginModel()
 
-    fun createMalAccount() {
+    fun createAccount() {
         CustomTabsIntent.Builder()
             .build()
-            .launchUrl(context, Uri.parse(malSignupUrl))
+            .launchUrl(context, Uri.parse(kitsuSignupUrl))
     }
 
-    fun executeLogin(credentials: String) {
-        if (!isValid(loginModel.userName, loginModel.password, credentials)) {
+    fun executeLogin() {
+        if (!isValid(loginModel.email, loginModel.userName, loginModel.password)) {
             return
         }
 
-        val malManager = malManagerFactory.get(credentials, loginModel.userName)
-        disposables.add(malManager.loginToAccount()
+        val kitsuManager = kitsuManagerFactory.get()
+        disposables.add(kitsuManager.login(loginModel.email, loginModel.password)
             .subscribeOn(subscribeScheduler)
             .observeOn(observeScheduler)
             .doOnSubscribe { _ ->
@@ -52,7 +54,6 @@ class KitsuLoginViewModel(
                 { _ ->
                     sharedPref
                         .putUsername(loginModel.userName)
-                        .putAuth(credentials)
                     loginResponse.value = LoginStatus.SUCCESS
                 },
                 { _ ->
@@ -63,18 +64,18 @@ class KitsuLoginViewModel(
         )
     }
 
-    private fun isValid(username: String, password: String, credentials: String): Boolean {
+    private fun isValid(email: String, username: String, password: String): Boolean {
         return when {
+            email.isBlank() -> {
+                errorResponse.value = R.string.login_failure_email
+                false
+            }
             username.isBlank() -> {
                 errorResponse.value = R.string.login_failure_username
                 false
             }
             password.isBlank() -> {
                 errorResponse.value = R.string.login_failure_password
-                false
-            }
-            credentials.isBlank() -> {
-                errorResponse.value = R.string.login_failure
                 false
             }
             else -> true

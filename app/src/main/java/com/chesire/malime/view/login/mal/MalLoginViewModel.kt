@@ -3,6 +3,7 @@ package com.chesire.malime.view.login.mal
 import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.MutableLiveData
+import android.databinding.ObservableBoolean
 import android.net.Uri
 import android.support.customtabs.CustomTabsIntent
 import com.chesire.malime.R
@@ -25,9 +26,10 @@ class MalLoginViewModel(
     private val disposables = CompositeDisposable()
     val loginResponse = MutableLiveData<LoginStatus>()
     val errorResponse = MutableLiveData<Int>()
+    val attemptingLogin = ObservableBoolean()
     val loginModel = LoginModel()
 
-    fun createMalAccount() {
+    fun createAccount() {
         CustomTabsIntent.Builder()
             .build()
             .launchUrl(context, Uri.parse(malSignupUrl))
@@ -43,9 +45,11 @@ class MalLoginViewModel(
             .subscribeOn(subscribeScheduler)
             .observeOn(observeScheduler)
             .doOnSubscribe { _ ->
+                attemptingLogin.set(true)
                 loginResponse.value = LoginStatus.PROCESSING
             }
             .doFinally {
+                attemptingLogin.set(false)
                 loginResponse.value = LoginStatus.FINISHED
             }
             .subscribe(

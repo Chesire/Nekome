@@ -17,6 +17,7 @@
     <string name="login_helper_text">Please login to your MyAnimeList account</string>
     <string name="login_create_account">No MyAnimeList account? Create one</string>
     <string name="login_failure">Failure to login, please check credentials</string>
+    <string name="login_failure_email">Email cannot be empty</string>
     <string name="login_failure_username">Username cannot be empty</string>
     <string name="login_failure_password">Password cannot be empty</string>
     <string name="login_authenticating">Authenticating…</string>
