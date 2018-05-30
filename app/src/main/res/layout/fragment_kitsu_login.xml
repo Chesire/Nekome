@@ -38,7 +38,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="24dp"
                 android:gravity="center"
-                android:text="@string/login_helper_text"
+                android:text="@string/login_kitsu_helper_text"
                 android:textSize="16sp" />
 
             <android.support.design.widget.TextInputLayout
@@ -57,6 +57,24 @@
                     android:inputType="textNoSuggestions"
                     android:maxLines="1"
                     android:text="@={vm.loginModel.userName}" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/login_email_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/login_email_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/login_email"
+                    android:imeOptions="actionNext"
+                    android:inputType="textNoSuggestions"
+                    android:maxLines="1"
+                    android:text="@={vm.loginModel.email}" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -95,7 +113,7 @@
                 android:layout_marginBottom="24dp"
                 android:gravity="center"
                 android:onClick="@{() -> vm.createAccount()}"
-                android:text="@string/login_create_account"
+                android:text="@string/login_create_kitsu_account"
                 android:textSize="16sp" />
         </LinearLayout>
     </ScrollView>

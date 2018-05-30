@@ -38,7 +38,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="24dp"
                 android:gravity="center"
-                android:text="@string/login_helper_text"
+                android:text="@string/login_mal_helper_text"
                 android:textSize="16sp" />
 
             <android.support.design.widget.TextInputLayout
@@ -95,7 +95,7 @@
                 android:layout_marginBottom="24dp"
                 android:gravity="center"
                 android:onClick="@{() -> vm.createAccount()}"
-                android:text="@string/login_create_account"
+                android:text="@string/login_create_mal_account"
                 android:textSize="16sp" />
         </LinearLayout>
     </ScrollView>
