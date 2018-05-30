@@ -9,17 +9,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
-import android.widget.Button
 import com.chesire.malime.R
 import com.chesire.malime.databinding.FragmentMalLoginBinding
 import com.chesire.malime.util.SharedPref
 import com.chesire.malime.view.login.BaseLoginFragment
-import com.chesire.malime.view.login.LoginStatus
 import com.chesire.malime.view.login.LoginViewModelFactory
 
 @Suppress("DEPRECATION")
 class MalLoginFragment : BaseLoginFragment() {
-    private lateinit var loginButton: Button
     private lateinit var viewModel: MalLoginViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -64,8 +61,7 @@ class MalLoginFragment : BaseLoginFragment() {
 
         binding.vm = viewModel
 
-        loginButton = binding.loginButton
-        loginButton.setOnClickListener {
+        binding.loginButton.setOnClickListener {
             executeLoginMethod()
         }
         binding.loginPasswordEditText.setOnEditorActionListener { _, actionId, _ ->
@@ -89,28 +85,6 @@ class MalLoginFragment : BaseLoginFragment() {
                 ), Base64.NO_WRAP
             )
         )
-    }
-
-    private fun processLoginResponse(loginStatus: LoginStatus?) {
-        if (loginStatus == null) {
-            return
-        }
-
-        when (loginStatus) {
-            LoginStatus.PROCESSING -> {
-                loginButton.isEnabled = false
-                progressDialog.show()
-            }
-            LoginStatus.SUCCESS -> {
-                loginInteractor.loginSuccessful()
-            }
-            LoginStatus.FINISHED -> {
-                progressDialog.dismiss()
-            }
-            else -> {
-                loginButton.isEnabled = true
-            }
-        }
     }
 
     companion object {

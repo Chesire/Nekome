@@ -10,8 +10,8 @@ import android.widget.Toast
 import com.chesire.malime.R
 
 abstract class BaseLoginFragment : Fragment() {
-    protected lateinit var loginInteractor: LoginInteractor
-    protected lateinit var progressDialog: ProgressDialog
+    private lateinit var loginInteractor: LoginInteractor
+    private lateinit var progressDialog: ProgressDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,6 +25,27 @@ abstract class BaseLoginFragment : Fragment() {
     override fun onAttach(context: Context?) {
         super.onAttach(context)
         loginInteractor = context as LoginInteractor
+    }
+
+    protected fun processLoginResponse(loginStatus: LoginStatus?) {
+        if (loginStatus == null) {
+            return
+        }
+
+        when (loginStatus) {
+            LoginStatus.PROCESSING -> {
+                progressDialog.show()
+            }
+            LoginStatus.SUCCESS -> {
+                loginInteractor.loginSuccessful()
+            }
+            LoginStatus.FINISHED -> {
+                progressDialog.dismiss()
+            }
+            LoginStatus.ERROR -> {
+                // Handled in the view model
+            }
+        }
     }
 
     protected fun processErrorResponse(@StringRes stringId: Int?) {
