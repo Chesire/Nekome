@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.chesire.malime.R
 import com.chesire.malime.view.MainActivity
-import com.chesire.malime.view.login.login.LoginFragment
+import com.chesire.malime.view.login.mal.MalLoginFragment
 import com.chesire.malime.view.login.service.ServiceSelectionFragment
 
 class LoginActivity : AppCompatActivity(), LoginInteractor {
@@ -32,7 +32,11 @@ class LoginActivity : AppCompatActivity(), LoginInteractor {
         // Depending on the service selected, might go to a different fragment?
         // Or pass in a param for the fields needed
         supportFragmentManager.beginTransaction()
-            .replace(R.id.activity_login_layout, LoginFragment.newInstance(), LoginFragment.tag)
+            .replace(
+                R.id.activity_login_layout,
+                MalLoginFragment.newInstance(),
+                MalLoginFragment.tag
+            )
             .addToBackStack(null)
             .commit()
     }

@@ -7,7 +7,7 @@
 
         <variable
             name="vm"
-            type="com.chesire.malime.view.login.login.LoginViewModel" />
+            type="com.chesire.malime.view.login.mal.MalLoginViewModel" />
     </data>
 
     <ScrollView

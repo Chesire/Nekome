@@ -8,8 +8,7 @@ import com.chesire.malime.customMock
 import com.chesire.malime.mal.api.MalManager
 import com.chesire.malime.mal.MalManagerFactory
 import com.chesire.malime.util.SharedPref
-import com.chesire.malime.view.login.login.LoginStatus
-import com.chesire.malime.view.login.login.LoginViewModel
+import com.chesire.malime.view.login.mal.MalLoginViewModel
 import io.reactivex.Observable
 import io.reactivex.schedulers.TestScheduler
 import org.junit.After
@@ -27,7 +26,7 @@ class LoginViewModelTests {
     @get:Rule
     val rule: TestRule = InstantTaskExecutorRule()
 
-    private lateinit var testObject: LoginViewModel
+    private lateinit var testObject: MalLoginViewModel
     private val sharedPref: SharedPref = customMock()
     private val malManagerFactory: MalManagerFactory = customMock()
     private val malManager: MalManager = customMock()
@@ -37,7 +36,7 @@ class LoginViewModelTests {
 
     @Before
     fun setup() {
-        testObject = LoginViewModel(
+        testObject = MalLoginViewModel(
             MockApplication(),
             sharedPref,
             malManagerFactory,

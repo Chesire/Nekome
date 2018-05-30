@@ -1,4 +1,4 @@
-package com.chesire.malime.view.login.login
+package com.chesire.malime.view.login.mal
 
 import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
@@ -6,15 +6,16 @@ import android.arch.lifecycle.MutableLiveData
 import android.net.Uri
 import android.support.customtabs.CustomTabsIntent
 import com.chesire.malime.R
-import com.chesire.malime.kitsu.api.KitsuManager
 import com.chesire.malime.mal.MalManagerFactory
 import com.chesire.malime.util.SharedPref
+import com.chesire.malime.view.login.LoginModel
+import com.chesire.malime.view.login.LoginStatus
 import io.reactivex.Scheduler
 import io.reactivex.disposables.CompositeDisposable
 
 private const val malSignupUrl = "https://myanimelist.net/register.php"
 
-class LoginViewModel(
+class MalLoginViewModel(
     private val context: Application,
     private val sharedPref: SharedPref,
     private val malManagerFactory: MalManagerFactory,
@@ -37,9 +38,8 @@ class LoginViewModel(
             return
         }
 
-        //val malManager = malManagerFactory.get(credentials, loginModel.userName)
-        val kitsuManager = KitsuManager()
-        disposables.add(kitsuManager.login(loginModel.userName, loginModel.password)
+        val malManager = malManagerFactory.get(credentials, loginModel.userName)
+        disposables.add(malManager.loginToAccount()
             .subscribeOn(subscribeScheduler)
             .observeOn(observeScheduler)
             .doOnSubscribe { _ ->

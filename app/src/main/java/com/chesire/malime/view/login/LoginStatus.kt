@@ -1,4 +1,4 @@
-package com.chesire.malime.view.login.login
+package com.chesire.malime.view.login
 
 enum class LoginStatus {
     PROCESSING,

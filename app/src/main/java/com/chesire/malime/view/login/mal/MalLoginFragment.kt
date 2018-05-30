@@ -1,4 +1,4 @@
-package com.chesire.malime.view.login.login
+package com.chesire.malime.view.login.mal
 
 import android.app.ProgressDialog
 import android.arch.lifecycle.Observer
@@ -17,16 +17,18 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.Toast
 import com.chesire.malime.R
-import com.chesire.malime.databinding.FragmentLoginBinding
+import com.chesire.malime.databinding.FragmentMalLoginBinding
 import com.chesire.malime.mal.MalManagerFactory
 import com.chesire.malime.util.SharedPref
 import com.chesire.malime.view.login.LoginInteractor
+import com.chesire.malime.view.login.LoginStatus
+import com.chesire.malime.view.login.LoginViewModelFactory
 
 @Suppress("DEPRECATION")
-class LoginFragment : Fragment() {
+class MalLoginFragment : Fragment() {
     private lateinit var loginInteractor: LoginInteractor
     private lateinit var loginButton: Button
-    private lateinit var viewModel: LoginViewModel
+    private lateinit var viewModel: MalLoginViewModel
     private lateinit var progressDialog: ProgressDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,7 +43,7 @@ class LoginFragment : Fragment() {
                     MalManagerFactory()
                 )
             )
-            .get(LoginViewModel::class.java)
+            .get(MalLoginViewModel::class.java)
 
         viewModel.loginResponse.observe(
             this,
@@ -68,9 +70,9 @@ class LoginFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val binding =
-            DataBindingUtil.inflate<FragmentLoginBinding>(
+            DataBindingUtil.inflate<FragmentMalLoginBinding>(
                 inflater,
-                R.layout.fragment_login,
+                R.layout.fragment_mal_login,
                 container,
                 false
             )
@@ -146,9 +148,9 @@ class LoginFragment : Fragment() {
     }
 
     companion object {
-        const val tag = "LoginFragment"
-        fun newInstance(): LoginFragment {
-            val loginFragment = LoginFragment()
+        const val tag = "MalLoginFragment"
+        fun newInstance(): MalLoginFragment {
+            val loginFragment = MalLoginFragment()
             val args = Bundle()
             loginFragment.arguments = args
             return loginFragment
