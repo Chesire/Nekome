@@ -1,4 +1,4 @@
-package com.chesire.malime.view.login.mal
+package com.chesire.malime.view.login.kitsu
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
@@ -11,7 +11,7 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.Button
 import com.chesire.malime.R
-import com.chesire.malime.databinding.FragmentMalLoginBinding
+import com.chesire.malime.databinding.FragmentKitsuLoginBinding
 import com.chesire.malime.mal.MalManagerFactory
 import com.chesire.malime.util.SharedPref
 import com.chesire.malime.view.login.BaseLoginFragment
@@ -19,9 +19,9 @@ import com.chesire.malime.view.login.LoginStatus
 import com.chesire.malime.view.login.LoginViewModelFactory
 
 @Suppress("DEPRECATION")
-class MalLoginFragment : BaseLoginFragment() {
+class KitsuLoginFragment : BaseLoginFragment() {
     private lateinit var loginButton: Button
-    private lateinit var viewModel: MalLoginViewModel
+    private lateinit var viewModel: KitsuLoginViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,7 +35,7 @@ class MalLoginFragment : BaseLoginFragment() {
                     MalManagerFactory()
                 )
             )
-            .get(MalLoginViewModel::class.java)
+            .get(KitsuLoginViewModel::class.java)
 
         viewModel.loginResponse.observe(
             this,
@@ -57,9 +57,9 @@ class MalLoginFragment : BaseLoginFragment() {
         savedInstanceState: Bundle?
     ): View? {
         val binding =
-            DataBindingUtil.inflate<FragmentMalLoginBinding>(
+            DataBindingUtil.inflate<FragmentKitsuLoginBinding>(
                 inflater,
-                R.layout.fragment_mal_login,
+                R.layout.fragment_kitsu_login,
                 container,
                 false
             )
@@ -116,12 +116,12 @@ class MalLoginFragment : BaseLoginFragment() {
     }
 
     companion object {
-        const val tag = "MalLoginFragment"
-        fun newInstance(): MalLoginFragment {
-            val loginFragment = MalLoginFragment()
+        const val tag = "KitsuLoginFragment"
+        fun newInstance(): KitsuLoginFragment {
+            val kitsuLoginFragment = KitsuLoginFragment()
             val args = Bundle()
-            loginFragment.arguments = args
-            return loginFragment
+            kitsuLoginFragment.arguments = args
+            return kitsuLoginFragment
         }
     }
 }
