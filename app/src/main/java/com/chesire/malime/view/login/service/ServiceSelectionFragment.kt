@@ -19,10 +19,10 @@ class ServiceSelectionFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_serviceselection, container, false)
-        view.findViewById<Button>(R.id.button_1).setOnClickListener {
+        view.findViewById<Button>(R.id.service_selection_mal_button).setOnClickListener {
             loginInteractor.serviceSelected()
         }
-        view.findViewById<Button>(R.id.button_2).setOnClickListener {
+        view.findViewById<Button>(R.id.service_selection_kitsu_button).setOnClickListener {
             loginInteractor.serviceSelected()
         }
 

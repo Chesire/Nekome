@@ -29,6 +29,8 @@ class LoginActivity : AppCompatActivity(), LoginInteractor {
     }
 
     override fun serviceSelected() {
+        // Depending on the service selected, might go to a different fragment?
+        // Or pass in a param for the fields needed
         supportFragmentManager.beginTransaction()
             .replace(R.id.activity_login_layout, LoginFragment.newInstance(), LoginFragment.tag)
             .addToBackStack(null)

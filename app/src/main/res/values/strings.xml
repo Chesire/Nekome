@@ -7,6 +7,10 @@
     <string name="preference_title_crash_reporting">Crash Reporting</string>
     <string name="preference_summary_crash_reporting">Allow anonymous crash reporting?</string>
 
+    <string name="service_selection_header">Select your primary tracking service</string>
+    <string name="service_selection_mal">MyAnimeList</string>
+    <string name="service_selection_kitsu">Kitsu</string>
+
     <string name="login_username">Username</string>
     <string name="login_password">Password</string>
     <string name="login_button">Login</string>
