@@ -9,6 +9,7 @@ import android.support.customtabs.CustomTabsIntent
 import com.chesire.malime.R
 import com.chesire.malime.mal.MalManagerFactory
 import com.chesire.malime.util.SharedPref
+import com.chesire.malime.util.SupportedService
 import com.chesire.malime.view.login.LoginModel
 import com.chesire.malime.view.login.LoginStatus
 import io.reactivex.Scheduler
@@ -54,7 +55,8 @@ class MalLoginViewModel(
             }
             .subscribe(
                 {
-                    sharedPref.putUsername(loginModel.userName)
+                    sharedPref.putPrimaryService(SupportedService.MyAnimeList)
+                        .putUsername(loginModel.userName)
                         .putAuth(credentials)
                     loginResponse.value = LoginStatus.SUCCESS
                 },

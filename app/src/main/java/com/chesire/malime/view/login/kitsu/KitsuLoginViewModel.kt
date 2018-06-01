@@ -9,6 +9,7 @@ import android.support.customtabs.CustomTabsIntent
 import com.chesire.malime.R
 import com.chesire.malime.kitsu.KitsuManagerFactory
 import com.chesire.malime.util.SharedPref
+import com.chesire.malime.util.SupportedService
 import com.chesire.malime.view.login.LoginModel
 import com.chesire.malime.view.login.LoginStatus
 import io.reactivex.Scheduler
@@ -54,7 +55,8 @@ class KitsuLoginViewModel(
             .subscribe(
                 {
                     // Should also do something with the refresh token etc
-                    sharedPref.putUsername(loginModel.userName)
+                    sharedPref.putPrimaryService(SupportedService.Kitsu)
+                        .putUsername(loginModel.userName)
                         .putAuth(it.accessToken)
                 }, {
                     errorResponse.value = R.string.login_failure

@@ -9,6 +9,7 @@ import com.chesire.malime.util.sec.Encryptor
 private const val authAlias: String = "private_auth"
 private const val preferenceAuth: String = "auth"
 private const val preferenceUsername: String = "username"
+private const val preferencePrimaryService: String = "primaryService"
 private const val preferenceAllowCrashReporting: String = "allowCrashReporting"
 private const val preferenceAnimeFilterLength: String = "animeFilterLength"
 private const val preferenceAutoUpdateState: String = "autoUpdateState"
@@ -55,6 +56,18 @@ class SharedPref(
     fun putUsername(username: String): SharedPref {
         sharedPreferences.edit()
             .putString(preferenceUsername, username)
+            .apply()
+
+        return this
+    }
+
+    fun getPrimaryService(): SupportedService {
+        return SupportedService.valueOf(sharedPreferences.getString(preferencePrimaryService, ""))
+    }
+
+    fun putPrimaryService(service: SupportedService): SharedPref {
+        sharedPreferences.edit()
+            .putString(preferencePrimaryService, service.name)
             .apply()
 
         return this
