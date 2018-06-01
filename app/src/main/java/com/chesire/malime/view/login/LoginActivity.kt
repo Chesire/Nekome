@@ -36,11 +36,11 @@ class LoginActivity : AppCompatActivity(), LoginInteractor {
         val tag: String
 
         when (service) {
-            SupportedService.MAL -> {
+            SupportedService.MyAnimeList -> {
                 fragment = MalLoginFragment.newInstance()
                 tag = MalLoginFragment.tag
             }
-            SupportedService.KITSU -> {
+            SupportedService.Kitsu -> {
                 fragment = KitsuLoginFragment.newInstance()
                 tag = KitsuLoginFragment.tag
             }

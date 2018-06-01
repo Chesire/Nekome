@@ -9,6 +9,7 @@ import android.support.customtabs.CustomTabsIntent
 import com.chesire.malime.R
 import com.chesire.malime.kitsu.KitsuManagerFactory
 import com.chesire.malime.util.SharedPref
+import com.chesire.malime.util.SupportedService
 import com.chesire.malime.view.login.LoginModel
 import com.chesire.malime.view.login.LoginStatus
 import io.reactivex.Scheduler
@@ -44,19 +45,20 @@ class KitsuLoginViewModel(
         disposables.add(kitsuManager.login(loginModel.email, loginModel.password)
             .subscribeOn(subscribeScheduler)
             .observeOn(observeScheduler)
-            .doOnSubscribe { _ ->
+            .doOnSubscribe {
                 loginResponse.value = LoginStatus.PROCESSING
             }
             .doFinally {
                 loginResponse.value = LoginStatus.FINISHED
             }
             .subscribe(
-                { _ ->
-                    sharedPref
-                        .putUsername(loginModel.userName)
+                {
+                    // Should probably store the refresh token and such, but for now just the access
+                    sharedPref.putUsername(loginModel.userName, SupportedService.Kitsu)
+                        .putAuth(it.accessToken, SupportedService.Kitsu)
                     loginResponse.value = LoginStatus.SUCCESS
                 },
-                { _ ->
+                {
                     errorResponse.value = R.string.login_failure
                     loginResponse.value = LoginStatus.ERROR
                 }

@@ -21,10 +21,10 @@ class ServiceSelectionFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_serviceselection, container, false)
         view.findViewById<Button>(R.id.service_selection_mal_button).setOnClickListener {
-            loginInteractor.serviceSelected(SupportedService.MAL)
+            loginInteractor.serviceSelected(SupportedService.MyAnimeList)
         }
         view.findViewById<Button>(R.id.service_selection_kitsu_button).setOnClickListener {
-            loginInteractor.serviceSelected(SupportedService.KITSU)
+            loginInteractor.serviceSelected(SupportedService.Kitsu)
         }
 
         return view

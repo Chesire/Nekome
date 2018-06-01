@@ -9,6 +9,7 @@ import android.support.customtabs.CustomTabsIntent
 import com.chesire.malime.R
 import com.chesire.malime.mal.MalManagerFactory
 import com.chesire.malime.util.SharedPref
+import com.chesire.malime.util.SupportedService
 import com.chesire.malime.view.login.LoginModel
 import com.chesire.malime.view.login.LoginStatus
 import io.reactivex.Scheduler
@@ -44,7 +45,7 @@ class MalLoginViewModel(
         disposables.add(malManager.loginToAccount()
             .subscribeOn(subscribeScheduler)
             .observeOn(observeScheduler)
-            .doOnSubscribe { _ ->
+            .doOnSubscribe {
                 attemptingLogin.set(true)
                 loginResponse.value = LoginStatus.PROCESSING
             }
@@ -53,13 +54,12 @@ class MalLoginViewModel(
                 loginResponse.value = LoginStatus.FINISHED
             }
             .subscribe(
-                { _ ->
-                    sharedPref
-                        .putUsername(loginModel.userName)
-                        .putAuth(credentials)
+                {
+                    sharedPref.putUsername(loginModel.userName, SupportedService.MyAnimeList)
+                        .putAuth(credentials, SupportedService.MyAnimeList)
                     loginResponse.value = LoginStatus.SUCCESS
                 },
-                { _ ->
+                {
                     errorResponse.value = R.string.login_failure
                     loginResponse.value = LoginStatus.ERROR
                 }

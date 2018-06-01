@@ -25,8 +25,8 @@ class SharedPref(
     private val encryptor = Encryptor(context.applicationContext)
     private val decryptor = Decryptor()
 
-    fun getAuth(): String {
-        val text = sharedPreferences.getString(preferenceAuth, "")
+    fun getAuth(service: SupportedService): String {
+        val text = sharedPreferences.getString("${service.name} $preferenceAuth", "")
 
         return if (text.isNotBlank()) {
             decryptor.decryptData(
@@ -38,23 +38,26 @@ class SharedPref(
         }
     }
 
-    fun putAuth(auth: String): SharedPref {
+    fun putAuth(auth: String, service: SupportedService): SharedPref {
         val encrypted = encryptor.encryptText(authAlias, auth)
 
         sharedPreferences.edit()
-            .putString(preferenceAuth, Base64.encodeToString(encrypted, Base64.DEFAULT))
+            .putString(
+                "${service.name} $preferenceAuth",
+                Base64.encodeToString(encrypted, Base64.DEFAULT)
+            )
             .apply()
 
         return this
     }
 
-    fun getUsername(): String {
-        return sharedPreferences.getString(preferenceUsername, "")
+    fun getUsername(service: SupportedService): String {
+        return sharedPreferences.getString("${service.name} $preferenceUsername", "")
     }
 
-    fun putUsername(username: String): SharedPref {
+    fun putUsername(username: String, service: SupportedService): SharedPref {
         sharedPreferences.edit()
-            .putString(preferenceUsername, username)
+            .putString("${service.name} $preferenceUsername", username)
             .apply()
 
         return this
