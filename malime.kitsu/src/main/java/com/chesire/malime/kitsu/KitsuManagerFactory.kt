@@ -5,6 +5,6 @@ import com.chesire.malime.kitsu.api.KitsuManager
 
 class KitsuManagerFactory {
     fun get(): KitsuManager {
-        return KitsuManager(KitsuApi(""))
+        return KitsuManager(KitsuApi(""), 0)
     }
 }

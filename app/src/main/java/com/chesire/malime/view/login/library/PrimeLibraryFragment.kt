@@ -9,6 +9,10 @@ import android.view.View
 import android.view.ViewGroup
 import com.chesire.malime.R
 import com.chesire.malime.databinding.FragmentPrimeLibraryBinding
+import com.chesire.malime.kitsu.api.KitsuApi
+import com.chesire.malime.kitsu.api.KitsuManager
+import com.chesire.malime.kitsu.repositories.KitsuLibrary
+import com.chesire.malime.util.SharedPref
 
 class PrimeLibraryFragment : Fragment() {
     private lateinit var viewModel: PrimeLibraryViewModel
@@ -16,12 +20,23 @@ class PrimeLibraryFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        val sharedPref = SharedPref(requireContext())
         viewModel = ViewModelProviders
             .of(
                 this,
-                PrimeLibraryViewModelFactory(requireActivity().application)
+                PrimeLibraryViewModelFactory(
+                    requireActivity().application,
+                    KitsuLibrary(
+                        KitsuManager(
+                            KitsuApi(sharedPref.getAuth()),
+                            sharedPref.getUserId()
+                        )
+                    )
+                )
             )
             .get(PrimeLibraryViewModel::class.java)
+
+        viewModel.updateLibrary()
     }
 
     override fun onCreateView(

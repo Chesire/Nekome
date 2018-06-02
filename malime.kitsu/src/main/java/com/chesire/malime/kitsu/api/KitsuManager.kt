@@ -5,7 +5,8 @@ import io.reactivex.Single
 import timber.log.Timber
 
 class KitsuManager(
-    private val api: KitsuApi
+    private val api: KitsuApi,
+    private val userId: Int
 ) {
     fun login(username: String, password: String): Single<LoginResponse> {
         // The api mentions it wants the username, but it seems it wants the email address instead
