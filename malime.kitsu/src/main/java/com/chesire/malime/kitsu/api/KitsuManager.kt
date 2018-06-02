@@ -1,5 +1,7 @@
 package com.chesire.malime.kitsu.api
 
+import com.chesire.malime.kitsu.models.KitsuItem
+import com.chesire.malime.kitsu.models.LibraryResponse
 import com.chesire.malime.kitsu.models.LoginResponse
 import io.reactivex.Single
 import timber.log.Timber
@@ -43,7 +45,7 @@ class KitsuManager(
         }
     }
 
-    fun getItems(): Single<Any> {
+    fun getItems(): Single<List<KitsuItem>> {
         return Single.create {
             val callResponse = api.getItems(userId)
             val response = callResponse.execute()
@@ -51,7 +53,28 @@ class KitsuManager(
 
             if (response.isSuccessful && body != null && body.data.isNotEmpty()) {
                 Timber.i("Items found")
-                it.onSuccess(Any())
+
+                val myTitleData = body.data
+                val fullTitleData = body.included
+
+                val items = myTitleData.zip(fullTitleData, { user, full ->
+                    // Items should be married up by their index
+                    KitsuItem(
+                        seriesId = full.id,
+                        userSeriesId = user.id,
+                        type = full.type,
+                        slug = full.attributes.slug,
+                        canonicalTitle = full.attributes.canonicalTitle,
+                        seriesStatus = full.attributes.status,
+                        userSeriesStatus = user.attributes.status,
+                        progress = user.attributes.progress,
+                        episodeCount = full.attributes.episodeCount,
+                        chapterCount = full.attributes.chapterCount,
+                        nsfw = full.attributes.nsfw
+                    )
+                })
+
+                it.onSuccess(items)
             } else {
                 Timber.e(Throwable(response.message()), "Error getting the items")
                 it.tryOnError(Throwable(response.message()))

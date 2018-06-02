@@ -3,7 +3,7 @@ package com.chesire.malime.kitsu.models
 data class AttributesItem(
     val slug: String,
     val canonicalTitle: String,
-    val status: String, // replace with an enum
+    val status: String,
     val progress: Int,
     // val posterImage
     // val coverImage

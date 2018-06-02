@@ -5,5 +5,4 @@ data class LibraryItem(
     val type: String,
     val links: Map<String, String>,
     val attributes: AttributesItem
-    // private val relationships:
 )
