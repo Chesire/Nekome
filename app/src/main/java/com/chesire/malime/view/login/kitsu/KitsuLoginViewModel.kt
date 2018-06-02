@@ -77,7 +77,7 @@ class KitsuLoginViewModel(
                 false
             }
             username.isBlank() -> {
-                errorResponse.value = R.string.login_failure_username
+                errorResponse.value = R.string.login_failure_display_name
                 false
             }
             password.isBlank() -> {

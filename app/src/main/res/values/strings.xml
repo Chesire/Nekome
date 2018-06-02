@@ -12,6 +12,7 @@
     <string name="service_selection_kitsu">Kitsu</string>
 
     <string name="login_username">Username</string>
+    <string name="login_display_name">Display name</string>
     <string name="login_email">Email</string>
     <string name="login_password">Password</string>
     <string name="login_button">Login</string>
@@ -21,6 +22,7 @@
     <string name="login_create_kitsu_account">No Kitsu account? Create one</string>
     <string name="login_failure">Failure to login, please check credentials</string>
     <string name="login_failure_username">Username cannot be empty</string>
+    <string name="login_failure_display_name">Display name cannot be empty</string>
     <string name="login_failure_email">Email cannot be empty</string>
     <string name="login_failure_password">Password cannot be empty</string>
     <string name="login_authenticating">Authenticating…</string>

@@ -52,7 +52,7 @@
                     android:id="@+id/login_username_edit_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/login_username"
+                    android:hint="@string/login_display_name"
                     android:imeOptions="actionNext"
                     android:inputType="textNoSuggestions"
                     android:maxLines="1"
