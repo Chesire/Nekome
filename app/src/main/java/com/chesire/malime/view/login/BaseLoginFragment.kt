@@ -9,6 +9,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import com.chesire.malime.R
 
+@Suppress("DEPRECATION")
 abstract class BaseLoginFragment : Fragment() {
     private lateinit var loginInteractor: LoginInteractor
     private lateinit var progressDialog: ProgressDialog

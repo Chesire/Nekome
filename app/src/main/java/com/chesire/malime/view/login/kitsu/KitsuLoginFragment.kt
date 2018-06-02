@@ -14,7 +14,6 @@ import com.chesire.malime.util.SharedPref
 import com.chesire.malime.view.login.BaseLoginFragment
 import com.chesire.malime.view.login.LoginViewModelFactory
 
-@Suppress("DEPRECATION")
 class KitsuLoginFragment : BaseLoginFragment() {
     private lateinit var viewModel: KitsuLoginViewModel
 
@@ -50,8 +49,8 @@ class KitsuLoginFragment : BaseLoginFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding =
-            DataBindingUtil.inflate<FragmentKitsuLoginBinding>(
+        return DataBindingUtil
+            .inflate<FragmentKitsuLoginBinding>(
                 inflater,
                 R.layout.fragment_kitsu_login,
                 container,
@@ -65,9 +64,7 @@ class KitsuLoginFragment : BaseLoginFragment() {
                     }
                     false
                 }
-            }
-
-        return binding.root
+            }.root
     }
 
     private fun executeLoginMethod() {
