@@ -59,9 +59,11 @@ class KitsuLoginViewModel(
                 .subscribeOn(subscribeScheduler)
                 .observeOn(observeScheduler)
                 .doOnSubscribe {
+                    attemptingLogin.set(true)
                     loginResponse.value = LoginStatus.PROCESSING
                 }
                 .doFinally {
+                    attemptingLogin.set(false)
                     loginResponse.value = LoginStatus.FINISHED
                 }
                 .doOnError {
