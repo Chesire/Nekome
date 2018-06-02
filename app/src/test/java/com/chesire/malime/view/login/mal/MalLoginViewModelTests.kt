@@ -1,13 +1,15 @@
-package com.chesire.malime.view.login
+package com.chesire.malime.view.login.mal
 
 import android.arch.core.executor.testing.InstantTaskExecutorRule
 import android.arch.lifecycle.Observer
 import android.test.mock.MockApplication
 import com.chesire.malime.R
 import com.chesire.malime.customMock
-import com.chesire.malime.mal.api.MalManager
 import com.chesire.malime.mal.MalManagerFactory
+import com.chesire.malime.mal.api.MalManager
 import com.chesire.malime.util.SharedPref
+import com.chesire.malime.util.SupportedService
+import com.chesire.malime.view.login.LoginStatus
 import io.reactivex.Observable
 import io.reactivex.schedulers.TestScheduler
 import org.junit.After
@@ -21,11 +23,11 @@ import org.mockito.Mockito.verify
 import org.mockito.internal.verification.Times
 
 @Suppress("DEPRECATION")
-class LoginViewModelTests {
+class MalLoginViewModelTests {
     @get:Rule
     val rule: TestRule = InstantTaskExecutorRule()
 
-    private lateinit var testObject: LoginViewModel
+    private lateinit var testObject: MalLoginViewModel
     private val sharedPref: SharedPref = customMock()
     private val malManagerFactory: MalManagerFactory = customMock()
     private val malManager: MalManager = customMock()
@@ -35,7 +37,7 @@ class LoginViewModelTests {
 
     @Before
     fun setup() {
-        testObject = LoginViewModel(
+        testObject = MalLoginViewModel(
             MockApplication(),
             sharedPref,
             malManagerFactory,
@@ -53,6 +55,7 @@ class LoginViewModelTests {
                 ArgumentMatchers.anyString()
             )
         ).thenReturn(malManager)
+        `when`(sharedPref.putPrimaryService(SupportedService.MyAnimeList)).thenReturn(sharedPref)
         `when`(sharedPref.putUsername(ArgumentMatchers.anyString())).thenReturn(sharedPref)
     }
 
@@ -128,6 +131,7 @@ class LoginViewModelTests {
         testObject.executeLogin("dummyString")
         testScheduler.triggerActions()
 
+        verify(sharedPref).putPrimaryService(SupportedService.MyAnimeList)
         verify(sharedPref).putUsername(testObject.loginModel.userName)
         verify(sharedPref).putAuth(ArgumentMatchers.anyString())
     }

@@ -7,13 +7,23 @@
     <string name="preference_title_crash_reporting">Crash Reporting</string>
     <string name="preference_summary_crash_reporting">Allow anonymous crash reporting?</string>
 
+    <string name="service_selection_header">Select your primary tracking service</string>
+    <string name="service_selection_mal">MyAnimeList</string>
+    <string name="service_selection_kitsu">Kitsu</string>
+
     <string name="login_username">Username</string>
+    <string name="login_display_name">Display name</string>
+    <string name="login_email">Email</string>
     <string name="login_password">Password</string>
     <string name="login_button">Login</string>
-    <string name="login_helper_text">Please login to your MyAnimeList account</string>
-    <string name="login_create_account">No MyAnimeList account? Create one</string>
+    <string name="login_mal_helper_text">Please login to your MyAnimeList account</string>
+    <string name="login_kitsu_helper_text">Please login to your Kitsu account</string>
+    <string name="login_create_mal_account">No MyAnimeList account? Create one</string>
+    <string name="login_create_kitsu_account">No Kitsu account? Create one</string>
     <string name="login_failure">Failure to login, please check credentials</string>
     <string name="login_failure_username">Username cannot be empty</string>
+    <string name="login_failure_display_name">Display name cannot be empty</string>
+    <string name="login_failure_email">Email cannot be empty</string>
     <string name="login_failure_password">Password cannot be empty</string>
     <string name="login_authenticating">Authenticating…</string>
 

@@ -1,20 +1,23 @@
-package com.chesire.malime.view.login
+package com.chesire.malime.view.login.mal
 
 import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.MutableLiveData
+import android.databinding.ObservableBoolean
 import android.net.Uri
 import android.support.customtabs.CustomTabsIntent
 import com.chesire.malime.R
-import com.chesire.malime.kitsu.api.KitsuManager
 import com.chesire.malime.mal.MalManagerFactory
 import com.chesire.malime.util.SharedPref
+import com.chesire.malime.util.SupportedService
+import com.chesire.malime.view.login.LoginModel
+import com.chesire.malime.view.login.LoginStatus
 import io.reactivex.Scheduler
 import io.reactivex.disposables.CompositeDisposable
 
 private const val malSignupUrl = "https://myanimelist.net/register.php"
 
-class LoginViewModel(
+class MalLoginViewModel(
     private val context: Application,
     private val sharedPref: SharedPref,
     private val malManagerFactory: MalManagerFactory,
@@ -24,9 +27,10 @@ class LoginViewModel(
     private val disposables = CompositeDisposable()
     val loginResponse = MutableLiveData<LoginStatus>()
     val errorResponse = MutableLiveData<Int>()
+    val attemptingLogin = ObservableBoolean()
     val loginModel = LoginModel()
 
-    fun createMalAccount() {
+    fun createAccount() {
         CustomTabsIntent.Builder()
             .build()
             .launchUrl(context, Uri.parse(malSignupUrl))
@@ -37,25 +41,26 @@ class LoginViewModel(
             return
         }
 
-        //val malManager = malManagerFactory.get(credentials, loginModel.userName)
-        val kitsuManager = KitsuManager()
-        disposables.add(kitsuManager.login(loginModel.userName, loginModel.password)
+        val malManager = malManagerFactory.get(credentials, loginModel.userName)
+        disposables.add(malManager.loginToAccount()
             .subscribeOn(subscribeScheduler)
             .observeOn(observeScheduler)
-            .doOnSubscribe { _ ->
+            .doOnSubscribe {
+                attemptingLogin.set(true)
                 loginResponse.value = LoginStatus.PROCESSING
             }
             .doFinally {
+                attemptingLogin.set(false)
                 loginResponse.value = LoginStatus.FINISHED
             }
             .subscribe(
-                { _ ->
-                    sharedPref
+                {
+                    sharedPref.putPrimaryService(SupportedService.MyAnimeList)
                         .putUsername(loginModel.userName)
                         .putAuth(credentials)
                     loginResponse.value = LoginStatus.SUCCESS
                 },
-                { _ ->
+                {
                     errorResponse.value = R.string.login_failure
                     loginResponse.value = LoginStatus.ERROR
                 }

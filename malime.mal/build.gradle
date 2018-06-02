@@ -6,8 +6,6 @@ apply plugin: 'kotlin-kapt'
 android {
     compileSdkVersion 27
 
-
-
     defaultConfig {
         minSdkVersion 21
         targetSdkVersion 27
@@ -24,7 +22,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-
 }
 
 dependencies {
