@@ -57,19 +57,16 @@ class MalLoginFragment : BaseLoginFragment() {
                 R.layout.fragment_mal_login,
                 container,
                 false
-            )
-
-        binding.vm = viewModel
-
-        binding.loginButton.setOnClickListener {
-            executeLoginMethod()
-        }
-        binding.loginPasswordEditText.setOnEditorActionListener { _, actionId, _ ->
-            if (actionId == EditorInfo.IME_ACTION_DONE) {
-                executeLoginMethod()
+            ).apply {
+                vm = viewModel
+                loginButton.setOnClickListener { executeLoginMethod() }
+                loginPasswordEditText.setOnEditorActionListener { _, actionId, _ ->
+                    if (actionId == EditorInfo.IME_ACTION_DONE) {
+                        executeLoginMethod()
+                    }
+                    false
+                }
             }
-            false
-        }
 
         return binding.root
     }
