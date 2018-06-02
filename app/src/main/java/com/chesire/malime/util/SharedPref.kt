@@ -8,6 +8,7 @@ import com.chesire.malime.util.sec.Encryptor
 
 private const val authAlias: String = "private_auth"
 private const val preferenceAuth: String = "auth"
+private const val preferenceUserId: String = "userId"
 private const val preferenceUsername: String = "username"
 private const val preferencePrimaryService: String = "primaryService"
 private const val preferenceAllowCrashReporting: String = "allowCrashReporting"
@@ -44,6 +45,18 @@ class SharedPref(
 
         sharedPreferences.edit()
             .putString(preferenceAuth, Base64.encodeToString(encrypted, Base64.DEFAULT))
+            .apply()
+
+        return this
+    }
+
+    fun getUserId(): Int {
+        return sharedPreferences.getInt(preferenceUserId, 0)
+    }
+
+    fun putUserId(userId: Int): SharedPref {
+        sharedPreferences.edit()
+            .putInt(preferenceUserId, userId)
             .apply()
 
         return this
