@@ -48,10 +48,12 @@ class KitsuLoginViewModel(
             kitsuManager
                 .login(loginModel.email, loginModel.password)
                 .zipWith(kitsuManager.getUserId(loginModel.userName),
-                    BiFunction { loginResponse: LoginResponse, userId: Int ->
+                    BiFunction { response: LoginResponse, userId: Int ->
                         sharedPref.putPrimaryService(SupportedService.Kitsu)
                             .putUserId(userId)
-                            .putAuth(loginResponse.accessToken)
+                            .putAuth(response.accessToken)
+
+                        loginResponse.value = LoginStatus.SUCCESS
                     }
                 )
                 .subscribeOn(subscribeScheduler)
