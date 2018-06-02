@@ -16,6 +16,6 @@ interface KitsuService {
     @POST("api/oauth/token")
     fun login(@Body body: LoginRequest): Call<LoginResponse>
 
-    @GET("api/edge/users")
+    @GET("api/edge/users?fields[users]=id")
     fun getUser(@Query("filter[name]") username: String): Call<FilterResponse>
 }
