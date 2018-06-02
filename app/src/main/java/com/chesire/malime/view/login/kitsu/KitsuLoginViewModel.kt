@@ -8,12 +8,14 @@ import android.net.Uri
 import android.support.customtabs.CustomTabsIntent
 import com.chesire.malime.R
 import com.chesire.malime.kitsu.KitsuManagerFactory
+import com.chesire.malime.kitsu.models.LoginResponse
 import com.chesire.malime.util.SharedPref
 import com.chesire.malime.util.SupportedService
 import com.chesire.malime.view.login.LoginModel
 import com.chesire.malime.view.login.LoginStatus
 import io.reactivex.Scheduler
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.functions.BiFunction
 
 private const val kitsuSignupUrl = "https://kitsu.io/explore/anime"
 
@@ -42,27 +44,29 @@ class KitsuLoginViewModel(
         }
 
         val kitsuManager = kitsuManagerFactory.get()
-
-        disposables.add(kitsuManager.login(loginModel.email, loginModel.password)
-            .subscribeOn(subscribeScheduler)
-            .observeOn(observeScheduler)
-            .doOnSubscribe {
-                loginResponse.value = LoginStatus.PROCESSING
-            }
-            .doFinally {
-                loginResponse.value = LoginStatus.FINISHED
-            }
-            .subscribe(
-                {
-                    // Should also do something with the refresh token etc
-                    sharedPref.putPrimaryService(SupportedService.Kitsu)
-                        .putUsername(loginModel.userName)
-                        .putAuth(it.accessToken)
-                }, {
+        disposables.add(
+            kitsuManager
+                .login(loginModel.email, loginModel.password)
+                .zipWith(kitsuManager.getUserId(loginModel.userName),
+                    BiFunction { loginResponse: LoginResponse, userId: Int ->
+                        sharedPref.putPrimaryService(SupportedService.Kitsu)
+                            .putUserId(userId)
+                            .putAuth(loginResponse.accessToken)
+                    }
+                )
+                .subscribeOn(subscribeScheduler)
+                .observeOn(observeScheduler)
+                .doOnSubscribe {
+                    loginResponse.value = LoginStatus.PROCESSING
+                }
+                .doFinally {
+                    loginResponse.value = LoginStatus.FINISHED
+                }
+                .doOnError {
                     errorResponse.value = R.string.login_failure
                     loginResponse.value = LoginStatus.ERROR
                 }
-            )
+                .subscribe()
         )
     }
 
