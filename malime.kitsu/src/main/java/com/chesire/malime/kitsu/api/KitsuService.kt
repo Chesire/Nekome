@@ -23,14 +23,13 @@ interface KitsuService {
     @GET(
         "api/edge/users/{userId}/library-entries" +
                 "?include=anime,manga" +
-                "&page[limit]={limit}&page[offset]={offset}" +
                 "&fields[libraryEntries]=status,progress,anime,manga" +
                 "&fields[anime]=slug,canonicalTitle,status,posterImage,coverImage,episodeCount,nsfw" +
                 "&fields[manga]=slug,canonicalTitle,status,posterImage,chapterCount"
     )
     fun getUserLibrary(
         @Path("userId") userId: Int,
-        @Path("limit") limit: Int,
-        @Path("offset") offset: Int
+        @Query("page[limit]") limit: Int,
+        @Query("page[offset]") offset: Int
     ): Call<LibraryResponse>
 }

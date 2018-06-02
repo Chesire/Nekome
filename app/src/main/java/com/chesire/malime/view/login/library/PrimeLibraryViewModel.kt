@@ -5,7 +5,7 @@ import android.arch.lifecycle.AndroidViewModel
 import com.chesire.malime.kitsu.repositories.KitsuLibrary
 
 class PrimeLibraryViewModel(
-    private val context: Application,
+    context: Application,
     private val kitsuLibrary: KitsuLibrary
 ) : AndroidViewModel(context) {
 

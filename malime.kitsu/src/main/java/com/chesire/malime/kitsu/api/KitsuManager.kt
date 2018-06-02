@@ -42,4 +42,20 @@ class KitsuManager(
             }
         }
     }
+
+    fun getItems(): Single<Any> {
+        return Single.create {
+            val callResponse = api.getItems(userId)
+            val response = callResponse.execute()
+            val body = response.body()
+
+            if (response.isSuccessful && body != null && body.data.isNotEmpty()) {
+                Timber.i("Items found")
+                it.onSuccess(Any())
+            } else {
+                Timber.e(Throwable(response.message()), "Error getting the items")
+                it.tryOnError(Throwable(response.message()))
+            }
+        }
+    }
 }
