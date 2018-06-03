@@ -15,7 +15,6 @@ import com.chesire.malime.util.SharedPref
 import com.chesire.malime.view.login.BaseLoginFragment
 import com.chesire.malime.view.login.LoginViewModelFactory
 
-@Suppress("DEPRECATION")
 class MalLoginFragment : BaseLoginFragment() {
     private lateinit var viewModel: MalLoginViewModel
 
@@ -51,8 +50,8 @@ class MalLoginFragment : BaseLoginFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding =
-            DataBindingUtil.inflate<FragmentMalLoginBinding>(
+        return DataBindingUtil
+            .inflate<FragmentMalLoginBinding>(
                 inflater,
                 R.layout.fragment_mal_login,
                 container,
@@ -66,9 +65,7 @@ class MalLoginFragment : BaseLoginFragment() {
                     }
                     false
                 }
-            }
-
-        return binding.root
+            }.root
     }
 
     private fun executeLoginMethod() {

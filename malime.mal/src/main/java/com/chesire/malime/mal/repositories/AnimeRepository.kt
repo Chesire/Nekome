@@ -1,4 +1,4 @@
-package com.chesire.malime.view.anime
+package com.chesire.malime.mal.repositories
 
 import com.chesire.malime.mal.api.MalManager
 import com.chesire.malime.mal.models.Anime

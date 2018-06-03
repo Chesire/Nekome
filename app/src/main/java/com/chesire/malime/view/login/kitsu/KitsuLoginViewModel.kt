@@ -52,8 +52,6 @@ class KitsuLoginViewModel(
                         sharedPref.putPrimaryService(SupportedService.Kitsu)
                             .putUserId(userId)
                             .putAuth(response.accessToken)
-
-                        loginResponse.value = LoginStatus.SUCCESS
                     }
                 )
                 .subscribeOn(subscribeScheduler)
@@ -69,6 +67,9 @@ class KitsuLoginViewModel(
                 .doOnError {
                     errorResponse.value = R.string.login_failure
                     loginResponse.value = LoginStatus.ERROR
+                }
+                .doOnSuccess {
+                    loginResponse.value = LoginStatus.SUCCESS
                 }
                 .subscribe()
         )

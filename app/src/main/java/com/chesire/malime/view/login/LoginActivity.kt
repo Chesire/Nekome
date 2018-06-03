@@ -8,6 +8,7 @@ import com.chesire.malime.R
 import com.chesire.malime.util.SupportedService
 import com.chesire.malime.view.MainActivity
 import com.chesire.malime.view.login.kitsu.KitsuLoginFragment
+import com.chesire.malime.view.login.library.PrimeLibraryFragment
 import com.chesire.malime.view.login.mal.MalLoginFragment
 import com.chesire.malime.view.login.service.ServiceSelectionFragment
 
@@ -57,6 +58,17 @@ class LoginActivity : AppCompatActivity(), LoginInteractor {
     }
 
     override fun loginSuccessful() {
+        supportFragmentManager.beginTransaction()
+            .replace(
+                R.id.activity_login_layout,
+                PrimeLibraryFragment.newInstance(),
+                PrimeLibraryFragment.tag
+            )
+            .addToBackStack(null)
+            .commit()
+    }
+
+    override fun acquiredLibraries() {
         startActivity(Intent(this, MainActivity::class.java))
         finish()
     }

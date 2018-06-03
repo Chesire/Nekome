@@ -1,7 +1,7 @@
 package com.chesire.malime.kitsu.api
 
 import com.chesire.malime.kitsu.BuildConfig
-import com.chesire.malime.kitsu.models.FilterResponse
+import com.chesire.malime.kitsu.models.LibraryResponse
 import com.chesire.malime.kitsu.models.LoginRequest
 import com.chesire.malime.kitsu.models.LoginResponse
 import okhttp3.Interceptor
@@ -45,8 +45,12 @@ class KitsuApi(
         return kitsuService.login(LoginRequest(username, password))
     }
 
-    fun getUser(username: String): Call<FilterResponse> {
+    fun getUser(username: String): Call<LibraryResponse> {
         return kitsuService.getUser(username)
+    }
+
+    fun getUserLibrary(userId: Int, offset: Int): Call<LibraryResponse> {
+        return kitsuService.getUserLibrary(userId, offset)
     }
 
     /**
