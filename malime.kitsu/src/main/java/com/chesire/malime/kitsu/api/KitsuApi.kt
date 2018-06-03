@@ -49,8 +49,8 @@ class KitsuApi(
         return kitsuService.getUser(username)
     }
 
-    fun getItems(userId: Int): Call<LibraryResponse> {
-        return kitsuService.getUserLibrary(userId, 20, 0)
+    fun getUserLibrary(userId: Int, offset: Int): Call<LibraryResponse> {
+        return kitsuService.getUserLibrary(userId, offset)
     }
 
     /**

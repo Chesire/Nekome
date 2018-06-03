@@ -1,10 +1,12 @@
 package com.chesire.malime.kitsu.api
 
 import com.chesire.malime.kitsu.models.KitsuItem
-import com.chesire.malime.kitsu.models.LibraryResponse
 import com.chesire.malime.kitsu.models.LoginResponse
+import io.reactivex.Observable
 import io.reactivex.Single
 import timber.log.Timber
+
+private const val MAX_RETRIES = 3
 
 class KitsuManager(
     private val api: KitsuApi,
@@ -45,40 +47,67 @@ class KitsuManager(
         }
     }
 
-    fun getItems(): Single<List<KitsuItem>> {
-        return Single.create {
-            val callResponse = api.getItems(userId)
-            val response = callResponse.execute()
-            val body = response.body()
+    fun getUserLibrary(): Observable<List<KitsuItem>> {
+        return Observable.create {
+            var offset = 0
+            var retries = 0
 
-            if (response.isSuccessful && body != null && body.data.isNotEmpty()) {
-                Timber.i("Items found")
+            while (true) {
+                Timber.i("Getting user library from offset $offset")
 
-                val myTitleData = body.data
-                val fullTitleData = body.included
+                val callResponse = api.getUserLibrary(userId, offset)
+                val response = callResponse.execute()
+                val body = response.body()
 
-                val items = myTitleData.zip(fullTitleData, { user, full ->
-                    // Items should be married up by their index
-                    KitsuItem(
-                        seriesId = full.id,
-                        userSeriesId = user.id,
-                        type = full.type,
-                        slug = full.attributes.slug,
-                        canonicalTitle = full.attributes.canonicalTitle,
-                        seriesStatus = full.attributes.status,
-                        userSeriesStatus = user.attributes.status,
-                        progress = user.attributes.progress,
-                        episodeCount = full.attributes.episodeCount,
-                        chapterCount = full.attributes.chapterCount,
-                        nsfw = full.attributes.nsfw
+                if (response.isSuccessful && body != null && body.data.isNotEmpty()) {
+                    Timber.i("Got next set of user items")
+                    retries = 0
+
+                    // If it contains the "next" link, there are more to get
+                    val next = body.links["next"] ?: ""
+                    val userTitleData = body.data
+                    val fullTitleData = body.included
+
+                    val items = userTitleData.zip(fullTitleData, { user, full ->
+                        // Items should be married up by their index
+                        KitsuItem(
+                            seriesId = full.id,
+                            userSeriesId = user.id,
+                            type = full.type,
+                            slug = full.attributes.slug,
+                            canonicalTitle = full.attributes.canonicalTitle,
+                            seriesStatus = full.attributes.status,
+                            userSeriesStatus = user.attributes.status,
+                            progress = user.attributes.progress,
+                            episodeCount = full.attributes.episodeCount,
+                            chapterCount = full.attributes.chapterCount,
+                            nsfw = full.attributes.nsfw
+                        )
+                    })
+
+                    it.onNext(items)
+
+                    if (next.isEmpty()) {
+                        break
+                    } else {
+                        offset = next.substring(next.lastIndexOf('=') + 1).toInt()
+                    }
+                } else {
+                    Timber.e(
+                        Throwable(response.message()),
+                        "Error getting the items, on retry $retries/$MAX_RETRIES"
                     )
-                })
 
-                it.onSuccess(items)
-            } else {
-                Timber.e(Throwable(response.message()), "Error getting the items")
-                it.tryOnError(Throwable(response.message()))
+                    if (retries < MAX_RETRIES) {
+                        retries++
+                    } else {
+                        it.tryOnError(Throwable(response.message()))
+                        break
+                    }
+                }
             }
+
+            it.onComplete()
         }
     }
 }

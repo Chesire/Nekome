@@ -29,7 +29,7 @@ interface KitsuService {
     )
     fun getUserLibrary(
         @Path("userId") userId: Int,
-        @Query("page[limit]") limit: Int,
-        @Query("page[offset]") offset: Int
+        @Query("page[offset]") offset: Int,
+        @Query("page[limit]") limit: Int = 500 // might want to reduce to say 100
     ): Call<LibraryResponse>
 }

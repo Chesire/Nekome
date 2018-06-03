@@ -9,7 +9,7 @@ class KitsuLibrary(
 ) {
     fun updateLibrary() {
 
-        kitsuManager.getItems()
+        kitsuManager.getUserLibrary()
             .subscribeOn(Schedulers.io())
             .subscribe(
                 {
