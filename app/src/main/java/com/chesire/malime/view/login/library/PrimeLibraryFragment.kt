@@ -1,5 +1,6 @@
 package com.chesire.malime.view.login.library
 
+import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
 import android.os.Bundle
@@ -11,6 +12,7 @@ import com.chesire.malime.R
 import com.chesire.malime.databinding.FragmentPrimeLibraryBinding
 import com.chesire.malime.kitsu.api.KitsuApi
 import com.chesire.malime.kitsu.api.KitsuManager
+import com.chesire.malime.kitsu.models.KitsuItem
 import com.chesire.malime.kitsu.repositories.KitsuLibrary
 import com.chesire.malime.util.SharedPref
 
@@ -27,6 +29,7 @@ class PrimeLibraryFragment : Fragment() {
                 PrimeLibraryViewModelFactory(
                     requireActivity().application,
                     KitsuLibrary(
+                        requireContext(),
                         KitsuManager(
                             KitsuApi(sharedPref.getAuth()),
                             sharedPref.getUserId()
@@ -36,7 +39,20 @@ class PrimeLibraryFragment : Fragment() {
             )
             .get(PrimeLibraryViewModel::class.java)
 
+        viewModel.myLibrary.observe(this,
+            Observer {
+                if (it != null) {
+                    // list updated
+                    listUpdated(it)
+                }
+            }
+        )
+
         viewModel.updateLibrary()
+    }
+
+    private fun listUpdated(items: List<KitsuItem>) {
+        val s = ""
     }
 
     override fun onCreateView(

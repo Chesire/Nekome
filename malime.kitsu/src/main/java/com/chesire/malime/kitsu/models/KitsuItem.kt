@@ -1,10 +1,15 @@
 package com.chesire.malime.kitsu.models
 
+import android.arch.persistence.room.Entity
+import android.arch.persistence.room.PrimaryKey
+
+@Entity
 data class KitsuItem(
+    @PrimaryKey
     val seriesId: Int,
     val userSeriesId: Int,
     val type: String,
-    private val slug: String,
+    val slug: String,
     val canonicalTitle: String,
     val seriesStatus: String,
     val userSeriesStatus: String,
