@@ -4,7 +4,7 @@ import android.arch.persistence.room.Database
 import android.arch.persistence.room.Room
 import android.arch.persistence.room.RoomDatabase
 import android.content.Context
-import com.chesire.malime.mal.SingletonHolder
+import com.chesire.malime.core.SingletonHolder
 import com.chesire.malime.mal.models.Anime
 import com.chesire.malime.mal.models.Manga
 
