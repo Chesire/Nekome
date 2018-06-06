@@ -2,12 +2,13 @@ package com.chesire.malime.core.models
 
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
+import com.chesire.malime.core.ItemType
 
 @Entity
 data class MalimeModel(
     val seriesId: Int,
     val userSeriesId: Int,
-    val type: String,
+    val type: ItemType,
     val slug: String,
     val title: String,
     val seriesStatus: String,
@@ -15,7 +16,7 @@ data class MalimeModel(
     val progress: Int,
     //val posterImageSizes
     //val coverImageSizes
-    val total: Int,
+    val totalLength: Int,
     val nsfw: Boolean
 ) {
     @PrimaryKey(autoGenerate = true)
