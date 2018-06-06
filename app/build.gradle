@@ -43,10 +43,11 @@ android {
 }
 
 dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+
+    implementation project(path: ':malime.core')
     implementation project(path: ':malime.kitsu')
     implementation project(path: ':malime.mal')
-
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
