@@ -1,4 +1,4 @@
-package com.chesire.malime.core
+package com.chesire.malime.core.repositories
 
 import com.chesire.malime.core.models.MalimeModel
 import io.reactivex.Observable

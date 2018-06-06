@@ -3,6 +3,7 @@ package com.chesire.malime.util
 import android.content.Context
 import android.content.SharedPreferences
 import android.util.Base64
+import com.chesire.malime.core.SupportedService
 import com.chesire.malime.util.sec.Decryptor
 import com.chesire.malime.util.sec.Encryptor
 

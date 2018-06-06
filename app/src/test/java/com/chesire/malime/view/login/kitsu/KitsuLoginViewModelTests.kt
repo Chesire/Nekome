@@ -7,9 +7,8 @@ import com.chesire.malime.R
 import com.chesire.malime.customMock
 import com.chesire.malime.kitsu.KitsuManagerFactory
 import com.chesire.malime.kitsu.api.KitsuManager
-import com.chesire.malime.kitsu.models.LoginResponse
 import com.chesire.malime.util.SharedPref
-import com.chesire.malime.util.SupportedService
+import com.chesire.malime.core.SupportedService
 import com.chesire.malime.view.login.LoginStatus
 import io.reactivex.schedulers.TestScheduler
 import org.junit.After

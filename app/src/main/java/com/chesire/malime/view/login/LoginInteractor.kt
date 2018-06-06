@@ -1,6 +1,6 @@
 package com.chesire.malime.view.login
 
-import com.chesire.malime.util.SupportedService
+import com.chesire.malime.core.SupportedService
 
 interface LoginInteractor {
     fun serviceSelected(service: SupportedService)

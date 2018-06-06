@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import com.chesire.malime.R
-import com.chesire.malime.util.SupportedService
+import com.chesire.malime.core.SupportedService
 import com.chesire.malime.view.login.LoginInteractor
 
 class ServiceSelectionFragment : Fragment() {
