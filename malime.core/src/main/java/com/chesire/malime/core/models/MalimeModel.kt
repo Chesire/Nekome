@@ -2,6 +2,7 @@ package com.chesire.malime.core.models
 
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
+import com.chesire.malime.core.ItemStatus
 import com.chesire.malime.core.ItemType
 
 @Entity
@@ -12,7 +13,7 @@ data class MalimeModel(
     var slug: String,
     var title: String,
     var seriesStatus: String,
-    var userSeriesStatus: String,
+    var userSeriesStatus: ItemStatus,
     var progress: Int,
     //var posterImageSizes
     //var coverImageSizes
@@ -23,6 +24,4 @@ data class MalimeModel(
     // id needs to be null otherwise autoGenerate will not work
     // and Room will use the id assigned to it
     var id: Int? = null
-
-
 }

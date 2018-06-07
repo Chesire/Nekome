@@ -1,5 +1,6 @@
 package com.chesire.malime.mal.api
 
+import com.chesire.malime.core.ItemStatus
 import com.chesire.malime.core.ItemType
 import com.chesire.malime.core.api.MalimeApi
 import com.chesire.malime.core.models.LoginResponse
@@ -75,7 +76,7 @@ class MalManager(
                             slug = it.seriesTitle!!,
                             title = it.seriesTitle!!,
                             seriesStatus = it.seriesStatus.toString(),
-                            userSeriesStatus = it.myStatus.toString(),
+                            userSeriesStatus = ItemStatus.getStatusForMalId(it.myStatus!!),
                             progress = it.myWatchedEpisodes!!,
                             totalLength = it.seriesEpisodes!!,
                             nsfw = false
@@ -91,7 +92,7 @@ class MalManager(
                             slug = it.seriesTitle!!,
                             title = it.seriesTitle!!,
                             seriesStatus = it.seriesStatus.toString(),
-                            userSeriesStatus = it.myStatus.toString(),
+                            userSeriesStatus = ItemStatus.getStatusForMalId(it.myStatus!!),
                             progress = it.myReadChapters!!,
                             totalLength = it.seriesChapters!!,
                             nsfw = false

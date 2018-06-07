@@ -1,5 +1,6 @@
 package com.chesire.malime.kitsu.api
 
+import com.chesire.malime.core.ItemStatus
 import com.chesire.malime.core.ItemType
 import com.chesire.malime.core.api.MalimeApi
 import com.chesire.malime.core.models.LoginResponse
@@ -84,7 +85,7 @@ class KitsuManager(
                             slug = full.attributes.slug,
                             title = full.attributes.canonicalTitle,
                             seriesStatus = full.attributes.status,
-                            userSeriesStatus = user.attributes.status,
+                            userSeriesStatus = ItemStatus.getStatusForKitsuString(user.attributes.status),
                             progress = user.attributes.progress,
                             totalLength = if (ItemType.getTypeForString(full.type) == ItemType.Anime) {
                                 full.attributes.episodeCount
