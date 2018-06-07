@@ -1,8 +1,9 @@
 package com.chesire.malime.core.room
 
 import android.arch.persistence.room.TypeConverter
-import com.chesire.malime.core.ItemStatus
-import com.chesire.malime.core.ItemType
+import com.chesire.malime.core.flags.ItemType
+import com.chesire.malime.core.flags.SeriesStatus
+import com.chesire.malime.core.flags.UserSeriesStatus
 
 class Converters {
     @TypeConverter
@@ -16,12 +17,22 @@ class Converters {
     }
 
     @TypeConverter
-    fun fromItemStatus(status: ItemStatus): Int {
+    fun fromSeriesStatus(status: SeriesStatus): Int {
         return status.internalId
     }
 
     @TypeConverter
-    fun toItemStatus(id: Int): ItemStatus {
-        return ItemStatus.getStatusForInternalId(id)
+    fun toSeriesStatus(id: Int): SeriesStatus {
+        return SeriesStatus.getStatusForInternalId(id)
+    }
+
+    @TypeConverter
+    fun fromUserSeriesStatus(status: UserSeriesStatus): Int {
+        return status.internalId
+    }
+
+    @TypeConverter
+    fun toUserSeriesStatus(id: Int): UserSeriesStatus {
+        return UserSeriesStatus.getStatusForInternalId(id)
     }
 }

@@ -8,7 +8,7 @@ import com.chesire.malime.customMock
 import com.chesire.malime.mal.api.MalManagerFactory
 import com.chesire.malime.mal.api.MalManager
 import com.chesire.malime.util.SharedPref
-import com.chesire.malime.core.SupportedService
+import com.chesire.malime.core.flags.SupportedService
 import com.chesire.malime.view.login.LoginStatus
 import io.reactivex.Observable
 import io.reactivex.schedulers.TestScheduler

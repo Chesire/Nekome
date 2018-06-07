@@ -7,7 +7,7 @@ import android.databinding.ObservableBoolean
 import android.net.Uri
 import android.support.customtabs.CustomTabsIntent
 import com.chesire.malime.R
-import com.chesire.malime.core.SupportedService
+import com.chesire.malime.core.flags.SupportedService
 import com.chesire.malime.core.models.LoginResponse
 import com.chesire.malime.kitsu.api.KitsuManagerFactory
 import com.chesire.malime.util.SharedPref

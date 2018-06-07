@@ -1,8 +1,9 @@
 package com.chesire.malime.mal.api
 
-import com.chesire.malime.core.ItemStatus
-import com.chesire.malime.core.ItemType
 import com.chesire.malime.core.api.MalimeApi
+import com.chesire.malime.core.flags.ItemType
+import com.chesire.malime.core.flags.SeriesStatus
+import com.chesire.malime.core.flags.UserSeriesStatus
 import com.chesire.malime.core.models.LoginResponse
 import com.chesire.malime.core.models.MalimeModel
 import com.chesire.malime.mal.models.Anime
@@ -75,8 +76,8 @@ class MalManager(
                             type = ItemType.Anime,
                             slug = it.seriesTitle!!,
                             title = it.seriesTitle!!,
-                            seriesStatus = it.seriesStatus.toString(),
-                            userSeriesStatus = ItemStatus.getStatusForMalId(it.myStatus!!),
+                            seriesStatus = SeriesStatus.getStatusForMalId(it.seriesStatus!!),
+                            userSeriesStatus = UserSeriesStatus.getStatusForMalId(it.myStatus!!),
                             progress = it.myWatchedEpisodes!!,
                             totalLength = it.seriesEpisodes!!,
                             nsfw = false
@@ -91,8 +92,8 @@ class MalManager(
                             type = ItemType.Manga,
                             slug = it.seriesTitle!!,
                             title = it.seriesTitle!!,
-                            seriesStatus = it.seriesStatus.toString(),
-                            userSeriesStatus = ItemStatus.getStatusForMalId(it.myStatus!!),
+                            seriesStatus = SeriesStatus.getStatusForMalId(it.seriesStatus!!),
+                            userSeriesStatus = UserSeriesStatus.getStatusForMalId(it.myStatus!!),
                             progress = it.myReadChapters!!,
                             totalLength = it.seriesChapters!!,
                             nsfw = false
