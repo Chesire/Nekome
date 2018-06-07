@@ -1,5 +1,6 @@
 package com.chesire.malime.mal.api
 
+import com.chesire.malime.core.ItemType
 import com.chesire.malime.core.api.MalimeApi
 import com.chesire.malime.core.models.LoginResponse
 import com.chesire.malime.core.models.MalimeModel
@@ -11,6 +12,7 @@ import com.chesire.malime.mal.models.UpdateAnime
 import com.chesire.malime.mal.models.UpdateManga
 import io.reactivex.Observable
 import io.reactivex.Single
+import io.reactivex.functions.BiFunction
 import timber.log.Timber
 
 /**
@@ -59,7 +61,90 @@ class MalManager(
     }
 
     override fun getUserLibrary(): Observable<List<MalimeModel>> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return Observable.zip(
+            getUserAnime(),
+            getUserManga(),
+            BiFunction { anime: List<Anime>, manga: List<Manga> ->
+                val libraryItems = ArrayList<MalimeModel>()
+                anime.forEach {
+                    libraryItems.add(
+                        MalimeModel(
+                            seriesId = it.seriesAnimeDbId!!,
+                            userSeriesId = it.myId!!,
+                            type = ItemType.Anime,
+                            slug = it.seriesTitle!!,
+                            title = it.seriesTitle!!,
+                            seriesStatus = it.seriesStatus.toString(),
+                            userSeriesStatus = it.myStatus.toString(),
+                            progress = it.myWatchedEpisodes!!,
+                            totalLength = it.seriesEpisodes!!,
+                            nsfw = false
+                        )
+                    )
+                }
+                manga.forEach {
+                    libraryItems.add(
+                        MalimeModel(
+                            seriesId = it.seriesMangaDbId!!,
+                            userSeriesId = it.myId!!,
+                            type = ItemType.Manga,
+                            slug = it.seriesTitle!!,
+                            title = it.seriesTitle!!,
+                            seriesStatus = it.seriesStatus.toString(),
+                            userSeriesStatus = it.myStatus.toString(),
+                            progress = it.myReadChapters!!,
+                            totalLength = it.seriesChapters!!,
+                            nsfw = false
+                        )
+                    )
+                }
+                libraryItems
+            }
+        )
+    }
+
+    private fun getUserAnime(): Observable<List<Anime>> {
+        return Observable.create { subscriber ->
+            val callResponse = api.getAllAnime(username)
+            val response = callResponse.execute()
+
+            if (response.isSuccessful) {
+                Timber.i("Get all anime successful")
+
+                val responseBody = response.body()
+                if (responseBody?.myInfo == null) {
+                    subscriber.tryOnError(Throwable(response.message()))
+                } else {
+                    subscriber.onNext(responseBody.animeList!!)
+                    subscriber.onComplete()
+                }
+            } else {
+                Timber.e(Throwable(response.message()))
+                subscriber.tryOnError(Throwable(response.message()))
+            }
+        }
+    }
+
+    private fun getUserManga(): Observable<List<Manga>> {
+        return Observable.create { subscriber ->
+            val callResponse = api.getAllManga(username)
+            val response = callResponse.execute()
+
+            if (response.isSuccessful) {
+                Timber.i("Get all manga successful")
+
+                val responseBody = response.body()
+                if (responseBody?.myInfo == null) {
+                    subscriber.tryOnError(Throwable(response.message()))
+                } else {
+                    subscriber.onNext(responseBody.mangaList!!)
+                    subscriber.onComplete()
+                }
+            } else {
+                Timber.e(Throwable(response.message()))
+                subscriber.tryOnError(Throwable(response.message()))
+            }
+        }
     }
 
     /**
@@ -169,7 +254,6 @@ class MalManager(
             }
         }
     }
-
 
     /**
      * Executes a search for the anime [name].
