@@ -6,18 +6,18 @@ import com.chesire.malime.core.ItemType
 
 @Entity
 data class MalimeModel(
-    val seriesId: Int,
-    val userSeriesId: Int,
-    val type: ItemType,
-    val slug: String,
-    val title: String,
-    val seriesStatus: String,
-    val userSeriesStatus: String,
-    val progress: Int,
-    //val posterImageSizes
-    //val coverImageSizes
-    val totalLength: Int,
-    val nsfw: Boolean
+    var seriesId: Int,
+    var userSeriesId: Int,
+    var type: ItemType,
+    var slug: String,
+    var title: String,
+    var seriesStatus: String,
+    var userSeriesStatus: String,
+    var progress: Int,
+    //var posterImageSizes
+    //var coverImageSizes
+    var totalLength: Int,
+    var nsfw: Boolean
 ) {
     @PrimaryKey(autoGenerate = true)
     // id needs to be null otherwise autoGenerate will not work
