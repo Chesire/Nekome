@@ -37,18 +37,25 @@ class MalManager(
                 Timber.i("Login successful")
                 it.onSuccess(LoginResponse("", ""))
             } else {
-                Timber.e(
-                    Throwable(response.message()),
-                    "Error with the login method - %s",
-                    response.errorBody()
-                )
+                Timber.e(Throwable(response.message()), "Error with the login method")
                 it.tryOnError(Throwable(response.message()))
             }
         }
     }
 
     override fun getUserId(username: String): Single<Int> {
-        throw NotImplementedError("Don't need this for Malime")
+        return Single.create {
+            val callResponse = api.loginToAccount()
+            val response = callResponse.execute()
+
+            if (response.isSuccessful && response.body() != null) {
+                Timber.i("Login successful")
+                it.onSuccess(response.body()!!.id!!)
+            } else {
+                Timber.e(Throwable(response.message()), "Error with the login method")
+                it.tryOnError(Throwable(response.message()))
+            }
+        }
     }
 
     override fun getUserLibrary(): Observable<List<MalimeModel>> {
