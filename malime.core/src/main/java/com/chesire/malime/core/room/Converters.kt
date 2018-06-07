@@ -1,7 +1,6 @@
 package com.chesire.malime.core.room
 
 import android.arch.persistence.room.TypeConverter
-import android.arch.persistence.room.TypeConverters
 import com.chesire.malime.core.ItemType
 
 class Converters {
