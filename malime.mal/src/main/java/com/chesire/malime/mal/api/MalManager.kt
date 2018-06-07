@@ -1,5 +1,8 @@
 package com.chesire.malime.mal.api
 
+import com.chesire.malime.core.api.MalimeApi
+import com.chesire.malime.core.models.LoginResponse
+import com.chesire.malime.core.models.MalimeModel
 import com.chesire.malime.mal.models.Anime
 import com.chesire.malime.mal.models.Entry
 import com.chesire.malime.mal.models.Manga
@@ -7,16 +10,51 @@ import com.chesire.malime.mal.models.MyInfo
 import com.chesire.malime.mal.models.UpdateAnime
 import com.chesire.malime.mal.models.UpdateManga
 import io.reactivex.Observable
+import io.reactivex.Single
 import timber.log.Timber
 
 /**
  * Provides a manager to interact with the MyAnimeList API.
  */
 class MalManager(
-    auth: String,
-    private val username: String,
-    private val api: MalApi = MalApi(auth)
-) {
+    private val api: MalApi,
+    private val username: String
+) : MalimeApi {
+    /**
+     * Verifies a users credentials.
+     * <p>
+     * Since there is no "login" or auth token to store, this just verifies that the credentials
+     * entered are correct.
+     *
+     * @return [Single<LoginResponse>] with the success and failure states, will be an empty LoginResponse
+     */
+    override fun login(username: String, password: String): Single<LoginResponse> {
+        return Single.create {
+            val callResponse = api.loginToAccount()
+            val response = callResponse.execute()
+
+            if (response.isSuccessful) {
+                Timber.i("Login successful")
+                it.onSuccess(LoginResponse("", ""))
+            } else {
+                Timber.e(
+                    Throwable(response.message()),
+                    "Error with the login method - %s",
+                    response.errorBody()
+                )
+                it.tryOnError(Throwable(response.message()))
+            }
+        }
+    }
+
+    override fun getUserId(username: String): Single<Int> {
+        throw NotImplementedError("Don't need this for Malime")
+    }
+
+    override fun getUserLibrary(): Observable<List<MalimeModel>> {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
     /**
      * Adds a specific anime series with all data in [anime].
      *
@@ -125,33 +163,6 @@ class MalManager(
         }
     }
 
-    /**
-     * Verifies a users credentials.
-     * <p>
-     * Since there is no "login" or auth token to store, this just verifies that the credentials
-     * entered are correct.
-     *
-     * @return [Observable] with the success and failure states
-     */
-    fun loginToAccount(): Observable<Any> {
-        return Observable.create { subscriber ->
-            val callResponse = api.loginToAccount()
-            val response = callResponse.execute()
-
-            if (response.isSuccessful) {
-                Timber.i("Login method successful")
-                subscriber.onNext(Any())
-                subscriber.onComplete()
-            } else {
-                Timber.e(
-                    Throwable(response.message()),
-                    "Error with the login method - %s",
-                    response.errorBody()
-                )
-                subscriber.tryOnError(Throwable(response.message()))
-            }
-        }
-    }
 
     /**
      * Executes a search for the anime [name].

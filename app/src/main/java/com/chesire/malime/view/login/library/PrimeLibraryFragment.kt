@@ -42,7 +42,6 @@ class PrimeLibraryFragment : Fragment() {
         viewModel.myLibrary.observe(this,
             Observer {
                 if (it != null) {
-                    // list updated
                     listUpdated(it)
                 }
             }
