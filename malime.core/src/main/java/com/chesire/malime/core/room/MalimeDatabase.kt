@@ -14,7 +14,7 @@ abstract class MalimeDatabase : RoomDatabase() {
     companion object : SingletonHolder<MalimeDatabase, Context>({
         Room.databaseBuilder(
             it.applicationContext,
-            MalimeDatabase::class.java, "malime.db"
+            MalimeDatabase::class.java, "malimedatabase.db"
         ).build()
     })
 }

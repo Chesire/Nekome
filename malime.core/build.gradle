@@ -42,4 +42,7 @@ dependencies {
 
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
     implementation 'io.reactivex.rxjava2:rxjava:2.1.7'
+
+    kapt 'android.arch.lifecycle:compiler:1.1.1'
+    kapt 'android.arch.persistence.room:compiler:1.1.0'
 }

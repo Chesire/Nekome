@@ -8,7 +8,7 @@ import com.chesire.malime.core.ItemType
 data class MalimeModel(
     var seriesId: Int,
     var userSeriesId: Int,
-    var type: ItemType,
+    var type: String,
     var slug: String,
     var title: String,
     var seriesStatus: String,

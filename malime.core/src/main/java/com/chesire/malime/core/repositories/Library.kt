@@ -5,34 +5,31 @@ import com.chesire.malime.core.api.MalimeApi
 import com.chesire.malime.core.models.MalimeModel
 import com.chesire.malime.core.room.MalimeDatabase
 import io.reactivex.Observable
+import io.reactivex.schedulers.Schedulers
+import timber.log.Timber
 
 class Library(
     context: Context,
-    private val db: MalimeDatabase = MalimeDatabase.getInstance(context),
     private val malimeApi: MalimeApi
 ) {
+    private val db: MalimeDatabase = MalimeDatabase.getInstance(context)
+
     fun observeLibrary(): Observable<List<MalimeModel>> {
         return getLibraryFromDb()
     }
 
     fun updateLibraryFromApi() {
-        //fun updateLibraryFromApi(): Single<Boolean> {
-        // malimeApi.updateLib
-        // on new items push into the lib - merge conflicts
-        /*
-
-        kitsuManager.getUserLibrary()
+        malimeApi.getUserLibrary()
             .subscribeOn(Schedulers.io())
             .subscribe(
                 {
                     Timber.i("Success")
-                    kitsuDb.kitsuDao().insertAll(it)
+                    db.malimeDao().insertAll(it)
                 },
                 {
-                    Timber.e("Error")
-                })
-
-         */
+                    Timber.e(it)
+                }
+            )
     }
 
     fun clearLocalLibrary() {

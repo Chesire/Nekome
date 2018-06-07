@@ -80,13 +80,13 @@ class KitsuManager(
                         MalimeModel(
                             seriesId = full.id,
                             userSeriesId = user.id,
-                            type = ItemType.valueOf(full.type),
+                            type = full.type,
                             slug = full.attributes.slug,
                             title = full.attributes.canonicalTitle,
                             seriesStatus = full.attributes.status,
                             userSeriesStatus = user.attributes.status,
                             progress = user.attributes.progress,
-                            totalLength = if (ItemType.valueOf(full.type) == ItemType.Anime) {
+                            totalLength = if (full.type == "anime") {
                                 full.attributes.episodeCount
                             } else {
                                 full.attributes.chapterCount
