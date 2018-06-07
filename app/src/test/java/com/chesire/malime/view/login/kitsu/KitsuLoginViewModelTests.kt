@@ -5,7 +5,7 @@ import android.arch.lifecycle.Observer
 import android.test.mock.MockApplication
 import com.chesire.malime.R
 import com.chesire.malime.customMock
-import com.chesire.malime.kitsu.KitsuManagerFactory
+import com.chesire.malime.kitsu.api.KitsuManagerFactory
 import com.chesire.malime.kitsu.api.KitsuManager
 import com.chesire.malime.util.SharedPref
 import com.chesire.malime.core.SupportedService

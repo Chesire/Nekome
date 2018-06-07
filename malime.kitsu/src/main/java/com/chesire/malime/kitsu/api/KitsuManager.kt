@@ -1,8 +1,8 @@
 package com.chesire.malime.kitsu.api
 
+import com.chesire.malime.core.ItemType
 import com.chesire.malime.core.api.MalimeApi
-import com.chesire.malime.core.repositories.Library
-import com.chesire.malime.kitsu.models.KitsuItem
+import com.chesire.malime.core.models.MalimeModel
 import com.chesire.malime.kitsu.models.LoginResponse
 import io.reactivex.Observable
 import io.reactivex.Single
@@ -13,7 +13,7 @@ private const val MAX_RETRIES = 3
 class KitsuManager(
     private val api: KitsuApi,
     private val userId: Int
-): MalimeApi {
+) : MalimeApi {
     fun login(username: String, password: String): Single<LoginResponse> {
         // The api mentions it wants the username, but it seems it wants the email address instead
         return Single.create {
@@ -49,7 +49,7 @@ class KitsuManager(
         }
     }
 
-    fun getUserLibrary(): Observable<List<KitsuItem>> {
+    fun getUserLibrary(): Observable<List<MalimeModel>> {
         return Observable.create {
             var offset = 0
             var retries = 0
@@ -72,17 +72,20 @@ class KitsuManager(
 
                     val items = userTitleData.zip(fullTitleData, { user, full ->
                         // Items should be married up by their index
-                        KitsuItem(
+                        MalimeModel(
                             seriesId = full.id,
                             userSeriesId = user.id,
-                            type = full.type,
+                            type = ItemType.valueOf(full.type),
                             slug = full.attributes.slug,
-                            canonicalTitle = full.attributes.canonicalTitle,
+                            title = full.attributes.canonicalTitle,
                             seriesStatus = full.attributes.status,
                             userSeriesStatus = user.attributes.status,
                             progress = user.attributes.progress,
-                            episodeCount = full.attributes.episodeCount,
-                            chapterCount = full.attributes.chapterCount,
+                            totalLength = if (ItemType.valueOf(full.type) == ItemType.Anime) {
+                                full.attributes.episodeCount
+                            } else {
+                                full.attributes.chapterCount
+                            },
                             nsfw = full.attributes.nsfw
                         )
                     })
