@@ -8,7 +8,7 @@ import com.chesire.malime.core.ItemType
 data class MalimeModel(
     var seriesId: Int,
     var userSeriesId: Int,
-    var type: String,
+    var type: ItemType,
     var slug: String,
     var title: String,
     var seriesStatus: String,
@@ -23,4 +23,6 @@ data class MalimeModel(
     // id needs to be null otherwise autoGenerate will not work
     // and Room will use the id assigned to it
     var id: Int? = null
+
+
 }
