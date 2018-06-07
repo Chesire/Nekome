@@ -1,5 +1,7 @@
 package com.chesire.malime.kitsu.api
 
+import com.chesire.malime.core.api.MalimeApi
+import com.chesire.malime.core.repositories.Library
 import com.chesire.malime.kitsu.models.KitsuItem
 import com.chesire.malime.kitsu.models.LoginResponse
 import io.reactivex.Observable
@@ -11,7 +13,7 @@ private const val MAX_RETRIES = 3
 class KitsuManager(
     private val api: KitsuApi,
     private val userId: Int
-) {
+): MalimeApi {
     fun login(username: String, password: String): Single<LoginResponse> {
         // The api mentions it wants the username, but it seems it wants the email address instead
         return Single.create {
