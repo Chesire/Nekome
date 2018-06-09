@@ -14,19 +14,25 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import com.chesire.malime.R
+import com.chesire.malime.core.flags.ItemType
 import com.chesire.malime.core.repositories.Library
 import com.chesire.malime.databinding.FragmentMaldisplayBinding
 import com.chesire.malime.kitsu.api.KitsuManagerFactory
 import com.chesire.malime.util.SharedPref
 import kotlinx.android.synthetic.main.fragment_maldisplay.maldisplay_swipe_refresh
 
+private const val itemTypeBundleId = "itemTypeBundleId"
+
 class MalDisplayFragment : Fragment() {
     private lateinit var viewModel: MalDisplayViewModel
     private lateinit var viewAdapter: MalDisplayViewAdapter
+    private lateinit var type: ItemType
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
+
+        type = ItemType.getTypeForInternalId(arguments!!.getInt(itemTypeBundleId))
 
         val sharedPref = SharedPref(requireContext())
         viewAdapter = MalDisplayViewAdapter()
@@ -50,7 +56,7 @@ class MalDisplayFragment : Fragment() {
                 series.observe(this@MalDisplayFragment,
                     Observer {
                         if (it != null) {
-                            viewAdapter.addAll(it)
+                            viewAdapter.addAll(it.filter { it.type == type })
                         }
                     })
                 updatingStatus.observe(this@MalDisplayFragment,
@@ -100,9 +106,6 @@ class MalDisplayFragment : Fragment() {
 
     private fun onUpdateStatusChange(status: UpdatingSeriesStatus) {
         when (status) {
-            UpdatingSeriesStatus.Updating -> {
-                // nothing for now
-            }
             UpdatingSeriesStatus.Finished -> {
                 maldisplay_swipe_refresh.isRefreshing = false
             }
@@ -114,14 +117,20 @@ class MalDisplayFragment : Fragment() {
                     Snackbar.LENGTH_LONG
                 ).show()
             }
+            else -> {
+                // nothing for now
+            }
         }
     }
 
     companion object {
         const val tag = "MalDisplayFragment"
-        fun newInstance(): MalDisplayFragment {
+        const val malDisplayAnime = "MalDisplayFragmentAnime"
+        const val malDisplayManga = "MalDisplayFragmentFragment"
+        fun newInstance(type: ItemType): MalDisplayFragment {
             val malDisplayFragment = MalDisplayFragment()
             val args = Bundle()
+            args.putInt(itemTypeBundleId, type.internalId)
             malDisplayFragment.arguments = args
             return malDisplayFragment
         }

@@ -12,11 +12,12 @@ import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import com.chesire.malime.R
+import com.chesire.malime.core.flags.ItemType
 import com.chesire.malime.mal.room.MalimeDatabase
 import com.chesire.malime.util.PeriodicUpdateHelper
 import com.chesire.malime.util.SharedPref
-import com.chesire.malime.view.anime.AnimeFragment
 import com.chesire.malime.view.login.LoginActivity
+import com.chesire.malime.view.maldisplay.MalDisplayFragment
 import com.chesire.malime.view.manga.MangaFragment
 import com.chesire.malime.view.preferences.PrefActivity
 import com.chesire.malime.view.search.SearchFragment
@@ -40,14 +41,14 @@ class MainActivity : AppCompatActivity() {
 
             when (item.itemId) {
                 R.id.menu_main_navigation_anime -> {
-                    tag = AnimeFragment.tag
+                    tag = MalDisplayFragment.malDisplayAnime
                     fragment = supportFragmentManager.findFragmentByTag(tag)
-                            ?: AnimeFragment.newInstance()
+                            ?: MalDisplayFragment.newInstance(ItemType.Anime)
                 }
                 R.id.menu_main_navigation_manga -> {
-                    tag = MangaFragment.tag
+                    tag = MalDisplayFragment.malDisplayManga
                     fragment = supportFragmentManager.findFragmentByTag(tag)
-                            ?: MangaFragment.newInstance()
+                            ?: MalDisplayFragment.newInstance(ItemType.Manga)
                 }
                 else -> {
                     tag = SearchFragment.tag
@@ -62,8 +63,8 @@ class MainActivity : AppCompatActivity() {
 
         if (savedInstanceState == null) {
             setFragment(
-                AnimeFragment.newInstance(),
-                AnimeFragment.tag
+                MalDisplayFragment.newInstance(ItemType.Anime),
+                MalDisplayFragment.malDisplayAnime
             )
         } else {
             currentDisplayedFragmentTag =
@@ -156,7 +157,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun setFragment(fragment: Fragment, fragmentTag: String) {
         title = when (fragmentTag) {
-            AnimeFragment.tag -> getString(R.string.main_nav_anime)
+            MalDisplayFragment.tag -> getString(R.string.main_nav_anime)
             MangaFragment.tag -> getString(R.string.main_nav_manga)
             SearchFragment.tag -> getString(R.string.main_nav_search)
             else -> getString(R.string.app_name)
