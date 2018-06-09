@@ -15,6 +15,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.chesire.malime.R
 import com.chesire.malime.core.flags.ItemType
+import com.chesire.malime.core.models.MalimeModel
 import com.chesire.malime.core.repositories.Library
 import com.chesire.malime.databinding.FragmentMaldisplayBinding
 import com.chesire.malime.kitsu.api.KitsuManagerFactory
@@ -35,7 +36,6 @@ class MalDisplayFragment : Fragment() {
         type = ItemType.getTypeForInternalId(arguments!!.getInt(itemTypeBundleId))
 
         val sharedPref = SharedPref(requireContext())
-        viewAdapter = MalDisplayViewAdapter()
 
         viewModel = ViewModelProviders
             .of(
@@ -52,6 +52,9 @@ class MalDisplayFragment : Fragment() {
                 )
             )
             .get(MalDisplayViewModel::class.java)
+
+        viewAdapter = MalDisplayViewAdapter(viewModel)
+        viewModel
             .apply {
                 series.observe(this@MalDisplayFragment,
                     Observer {
@@ -59,10 +62,16 @@ class MalDisplayFragment : Fragment() {
                             viewAdapter.addAll(it.filter { it.type == type })
                         }
                     })
-                updatingStatus.observe(this@MalDisplayFragment,
+                updateAllStatus.observe(this@MalDisplayFragment,
                     Observer {
                         if (it != null) {
-                            onUpdateStatusChange(it)
+                            onUpdateAllStatusChange(it)
+                        }
+                    })
+                updateSeriesStatus.observe(this@MalDisplayFragment,
+                    Observer {
+                        if (it != null) {
+                            onUpdateSeriesStatusChange(it)
                         }
                     })
             }
@@ -104,7 +113,7 @@ class MalDisplayFragment : Fragment() {
         }
     }
 
-    private fun onUpdateStatusChange(status: UpdatingSeriesStatus) {
+    private fun onUpdateAllStatusChange(status: UpdatingSeriesStatus) {
         when (status) {
             UpdatingSeriesStatus.Finished -> {
                 maldisplay_swipe_refresh.isRefreshing = false
@@ -122,6 +131,28 @@ class MalDisplayFragment : Fragment() {
             }
         }
     }
+
+    private fun onUpdateSeriesStatusChange(status: Pair<MalimeModel, UpdatingSeriesStatus>) {
+        when (status.second) {
+            UpdatingSeriesStatus.Finished -> {
+                // maybe tell the adapter its done
+            }
+            UpdatingSeriesStatus.Error -> {
+                Snackbar.make(
+                    maldisplay_swipe_refresh,
+                    String.format(
+                        getString(R.string.malitem_update_series_failure),
+                        status.first.title
+                    ),
+                    Snackbar.LENGTH_LONG
+                ).show()
+            }
+            else -> {
+                // nothing for now
+            }
+        }
+    }
+
 
     companion object {
         const val tag = "MalDisplayFragment"

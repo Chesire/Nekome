@@ -9,9 +9,13 @@ import com.chesire.malime.core.models.MalimeModel
 import com.chesire.malime.databinding.ItemMalmodelBinding
 import com.chesire.malime.util.GlideApp
 import kotlinx.android.synthetic.main.item_malmodel.view.item_malmodel_image
+import kotlinx.android.synthetic.main.item_malmodel.view.item_malmodel_neg_one
+import kotlinx.android.synthetic.main.item_malmodel.view.item_malmodel_plus_one
 import timber.log.Timber
 
-class MalDisplayViewAdapter : RecyclerView.Adapter<MalDisplayViewAdapter.ViewHolder>() {
+class MalDisplayViewAdapter(
+    private val listener: ModelInteractionListener
+) : RecyclerView.Adapter<MalDisplayViewAdapter.ViewHolder>() {
     private val items = ArrayList<MalimeModel>()
 
     fun addAll(newItems: List<MalimeModel>) {
@@ -84,6 +88,17 @@ class MalDisplayViewAdapter : RecyclerView.Adapter<MalDisplayViewAdapter.ViewHol
                         }
                     )
                     .into(binding.root.item_malmodel_image)
+                binding.root.apply {
+                    item_malmodel_neg_one.setOnClickListener {
+                        listener.onSeriesNegativeOne(item)
+                    }
+                    item_malmodel_plus_one.setOnClickListener {
+                        listener.onSeriesPlusOne(item)
+                    }
+                    item_malmodel_image.setOnClickListener {
+                        listener.onImageClicked(item)
+                    }
+                }
             } else {
                 // this is the empty list, do not binding
                 Timber.w("Empty list found, not performing binding")

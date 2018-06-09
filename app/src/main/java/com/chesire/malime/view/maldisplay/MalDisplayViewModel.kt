@@ -10,19 +10,21 @@ import com.chesire.malime.core.repositories.Library
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Scheduler
 import io.reactivex.disposables.CompositeDisposable
+import timber.log.Timber
 
 class MalDisplayViewModel(
     context: Application,
     private val library: Library,
     private val subscribeScheduler: Scheduler,
     private val observeScheduler: Scheduler
-) : AndroidViewModel(context) {
+) : AndroidViewModel(context), ModelInteractionListener {
     private val disposables = CompositeDisposable()
 
     val series: LiveData<List<MalimeModel>> = LiveDataReactiveStreams.fromPublisher(
         library.observeLibrary().toFlowable(BackpressureStrategy.ERROR)
     )
-    val updatingStatus = MutableLiveData<UpdatingSeriesStatus>()
+    val updateAllStatus = MutableLiveData<UpdatingSeriesStatus>()
+    val updateSeriesStatus = MutableLiveData<Pair<MalimeModel, UpdatingSeriesStatus>>()
 
     fun checkForLatestSeries() {
         disposables.add(
@@ -30,18 +32,39 @@ class MalDisplayViewModel(
                 .subscribeOn(subscribeScheduler)
                 .observeOn(observeScheduler)
                 .doOnSubscribe {
-                    updatingStatus.value = UpdatingSeriesStatus.Updating
+                    updateAllStatus.value = UpdatingSeriesStatus.Updating
                 }
                 .doOnError {
-                    updatingStatus.value = UpdatingSeriesStatus.Error
+                    updateAllStatus.value = UpdatingSeriesStatus.Error
                 }
                 .doOnComplete {
-                    updatingStatus.value = UpdatingSeriesStatus.Finished
+                    updateAllStatus.value = UpdatingSeriesStatus.Finished
                 }
                 .subscribe {
                     library.insertIntoLocalLibrary(it)
                 }
         )
+    }
+
+    override fun onImageClicked(model: MalimeModel) {
+        // Make a chrome custom tab
+        Timber.d("Series ${model.title} image pressed, loading url")
+    }
+
+    override fun onSeriesNegativeOne(model: MalimeModel) {
+        // Update the series, with the progress - 1
+        Timber.d("Series ${model.title} progress being changed to ${model.progress - 1}")
+    }
+
+    override fun onSeriesPlusOne(model: MalimeModel) {
+        // Update the series, with the progress + 1
+        Timber.d("Series ${model.title} progress being changed to ${model.progress + 1}")
+    }
+
+    override fun onSeriesSetProgress(model: MalimeModel, newProgress: Int) {
+        // Update the series, with the progress set to [newProgress]
+        Timber.d("Series ${model.title} progress being changed to ${newProgress}")
+
     }
 
     override fun onCleared() {
