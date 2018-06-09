@@ -38,9 +38,9 @@ class MalDisplayViewModel(
                 .doOnComplete {
                     updatingStatus.value = UpdatingSeriesStatus.Finished
                 }
-                .subscribe({
+                .subscribe {
                     library.insertIntoLocalLibrary(it)
-                })
+                }
         )
     }
 
