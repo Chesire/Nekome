@@ -1,7 +1,11 @@
 package com.chesire.malime.kitsu.api
 
-import com.chesire.malime.kitsu.models.KitsuItem
-import com.chesire.malime.kitsu.models.LoginResponse
+import com.chesire.malime.core.api.MalimeApi
+import com.chesire.malime.core.flags.ItemType
+import com.chesire.malime.core.flags.SeriesStatus
+import com.chesire.malime.core.flags.UserSeriesStatus
+import com.chesire.malime.core.models.LoginResponse
+import com.chesire.malime.core.models.MalimeModel
 import io.reactivex.Observable
 import io.reactivex.Single
 import timber.log.Timber
@@ -11,8 +15,8 @@ private const val MAX_RETRIES = 3
 class KitsuManager(
     private val api: KitsuApi,
     private val userId: Int
-) {
-    fun login(username: String, password: String): Single<LoginResponse> {
+) : MalimeApi {
+    override fun login(username: String, password: String): Single<LoginResponse> {
         // The api mentions it wants the username, but it seems it wants the email address instead
         return Single.create {
             val callResponse = api.login(username, password)
@@ -22,7 +26,12 @@ class KitsuManager(
                 Timber.i("Login successful")
 
                 response.body().let { responseObject ->
-                    it.onSuccess(responseObject!!)
+                    it.onSuccess(
+                        LoginResponse(
+                            responseObject!!.accessToken,
+                            responseObject.refreshToken
+                        )
+                    )
                 }
             } else {
                 Timber.e(Throwable(response.message()), "Error logging in")
@@ -31,7 +40,7 @@ class KitsuManager(
         }
     }
 
-    fun getUserId(username: String): Single<Int> {
+    override fun getUserId(username: String): Single<Int> {
         return Single.create {
             val callResponse = api.getUser(username)
             val response = callResponse.execute()
@@ -47,7 +56,7 @@ class KitsuManager(
         }
     }
 
-    fun getUserLibrary(): Observable<List<KitsuItem>> {
+    override fun getUserLibrary(): Observable<List<MalimeModel>> {
         return Observable.create {
             var offset = 0
             var retries = 0
@@ -70,17 +79,22 @@ class KitsuManager(
 
                     val items = userTitleData.zip(fullTitleData, { user, full ->
                         // Items should be married up by their index
-                        KitsuItem(
+                        MalimeModel(
                             seriesId = full.id,
                             userSeriesId = user.id,
-                            type = full.type,
+                            type = ItemType.getTypeForString(full.type),
                             slug = full.attributes.slug,
-                            canonicalTitle = full.attributes.canonicalTitle,
-                            seriesStatus = full.attributes.status,
-                            userSeriesStatus = user.attributes.status,
+                            title = full.attributes.canonicalTitle,
+                            seriesStatus = SeriesStatus.getStatusForKitsuString(full.attributes.status),
+                            userSeriesStatus = UserSeriesStatus.getStatusForKitsuString(user.attributes.status),
                             progress = user.attributes.progress,
-                            episodeCount = full.attributes.episodeCount,
-                            chapterCount = full.attributes.chapterCount,
+                            totalLength = if (ItemType.getTypeForString(full.type) == ItemType.Anime) {
+                                full.attributes.episodeCount
+                            } else {
+                                full.attributes.chapterCount
+                            },
+                            posterImage = getImage(full.attributes.posterImage),
+                            coverImage = getImage(full.attributes.coverImage),
                             nsfw = full.attributes.nsfw
                         )
                     })
@@ -109,5 +123,14 @@ class KitsuManager(
 
             it.onComplete()
         }
+    }
+
+    private fun getImage(map: Map<String, String>): String {
+        return map["large"]
+                ?: map["medium"]
+                ?: map["original"]
+                ?: map["small"]
+                ?: map["tiny"]
+                ?: ""
     }
 }

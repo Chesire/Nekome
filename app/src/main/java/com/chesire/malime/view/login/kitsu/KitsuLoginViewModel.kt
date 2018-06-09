@@ -7,10 +7,10 @@ import android.databinding.ObservableBoolean
 import android.net.Uri
 import android.support.customtabs.CustomTabsIntent
 import com.chesire.malime.R
-import com.chesire.malime.kitsu.KitsuManagerFactory
-import com.chesire.malime.kitsu.models.LoginResponse
+import com.chesire.malime.core.flags.SupportedService
+import com.chesire.malime.core.models.LoginResponse
+import com.chesire.malime.kitsu.api.KitsuManagerFactory
 import com.chesire.malime.util.SharedPref
-import com.chesire.malime.util.SupportedService
 import com.chesire.malime.view.login.LoginModel
 import com.chesire.malime.view.login.LoginStatus
 import io.reactivex.Scheduler
@@ -51,7 +51,7 @@ class KitsuLoginViewModel(
                     BiFunction { response: LoginResponse, userId: Int ->
                         sharedPref.putPrimaryService(SupportedService.Kitsu)
                             .putUserId(userId)
-                            .putAuth(response.accessToken)
+                            .putAuth(response.authToken)
                     }
                 )
                 .subscribeOn(subscribeScheduler)

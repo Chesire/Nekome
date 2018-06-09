@@ -7,9 +7,9 @@ import android.databinding.ObservableBoolean
 import android.net.Uri
 import android.support.customtabs.CustomTabsIntent
 import com.chesire.malime.R
-import com.chesire.malime.mal.MalManagerFactory
+import com.chesire.malime.core.flags.SupportedService
+import com.chesire.malime.mal.api.MalManagerFactory
 import com.chesire.malime.util.SharedPref
-import com.chesire.malime.util.SupportedService
 import com.chesire.malime.view.login.LoginModel
 import com.chesire.malime.view.login.LoginStatus
 import io.reactivex.Scheduler
@@ -42,7 +42,7 @@ class MalLoginViewModel(
         }
 
         val malManager = malManagerFactory.get(credentials, loginModel.userName)
-        disposables.add(malManager.loginToAccount()
+        disposables.add(malManager.login(loginModel.userName, loginModel.password)
             .subscribeOn(subscribeScheduler)
             .observeOn(observeScheduler)
             .doOnSubscribe {

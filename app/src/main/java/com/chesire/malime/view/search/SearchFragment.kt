@@ -21,6 +21,7 @@ import android.widget.RadioGroup
 import android.widget.Toast
 import com.chesire.malime.R
 import com.chesire.malime.mal.api.MalManager
+import com.chesire.malime.mal.api.MalManagerFactory
 import com.chesire.malime.mal.models.Anime
 import com.chesire.malime.mal.models.Entry
 import com.chesire.malime.mal.models.Manga
@@ -66,7 +67,7 @@ class SearchFragment : Fragment(), SearchInteractionListener {
 
         val sharedPref = SharedPref(requireContext())
         malManager =
-                MalManager(
+                MalManagerFactory().get(
                     sharedPref.getAuth(),
                     sharedPref.getUsername()
                 )

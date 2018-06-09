@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import com.chesire.malime.R
-import com.chesire.malime.util.SupportedService
+import com.chesire.malime.core.flags.SupportedService
 import com.chesire.malime.view.MainActivity
 import com.chesire.malime.view.login.kitsu.KitsuLoginFragment
 import com.chesire.malime.view.login.library.PrimeLibraryFragment

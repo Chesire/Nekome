@@ -9,11 +9,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.chesire.malime.R
+import com.chesire.malime.core.models.MalimeModel
+import com.chesire.malime.core.repositories.Library
 import com.chesire.malime.databinding.FragmentPrimeLibraryBinding
 import com.chesire.malime.kitsu.api.KitsuApi
 import com.chesire.malime.kitsu.api.KitsuManager
-import com.chesire.malime.kitsu.models.KitsuItem
-import com.chesire.malime.kitsu.repositories.KitsuLibrary
 import com.chesire.malime.util.SharedPref
 
 class PrimeLibraryFragment : Fragment() {
@@ -28,7 +28,7 @@ class PrimeLibraryFragment : Fragment() {
                 this,
                 PrimeLibraryViewModelFactory(
                     requireActivity().application,
-                    KitsuLibrary(
+                    Library(
                         requireContext(),
                         KitsuManager(
                             KitsuApi(sharedPref.getAuth()),
@@ -42,7 +42,6 @@ class PrimeLibraryFragment : Fragment() {
         viewModel.myLibrary.observe(this,
             Observer {
                 if (it != null) {
-                    // list updated
                     listUpdated(it)
                 }
             }
@@ -51,7 +50,7 @@ class PrimeLibraryFragment : Fragment() {
         viewModel.updateLibrary()
     }
 
-    private fun listUpdated(items: List<KitsuItem>) {
+    private fun listUpdated(items: List<MalimeModel>) {
         val s = ""
     }
 

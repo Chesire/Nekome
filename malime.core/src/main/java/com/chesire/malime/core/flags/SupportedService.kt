@@ -1,4 +1,4 @@
-package com.chesire.malime.util
+package com.chesire.malime.core.flags
 
 enum class SupportedService {
     MyAnimeList,

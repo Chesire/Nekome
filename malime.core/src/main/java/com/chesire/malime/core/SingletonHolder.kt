@@ -1,4 +1,4 @@
-package com.chesire.malime.mal
+package com.chesire.malime.core
 
 // Reference: https://medium.com/@BladeCoder/kotlin-singletons-with-argument-194ef06edd9e
 /**

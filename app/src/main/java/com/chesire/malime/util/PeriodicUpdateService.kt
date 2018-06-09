@@ -3,6 +3,7 @@ package com.chesire.malime.util
 import android.app.job.JobParameters
 import android.app.job.JobService
 import com.chesire.malime.mal.api.MalManager
+import com.chesire.malime.mal.api.MalManagerFactory
 import com.chesire.malime.mal.models.Anime
 import com.chesire.malime.mal.models.Manga
 import com.chesire.malime.mal.room.MalimeDatabase
@@ -17,8 +18,7 @@ class PeriodicUpdateService : JobService() {
 
     override fun onStartJob(params: JobParameters?): Boolean {
         val sharedPref = SharedPref(applicationContext)
-        val malManager =
-            MalManager(sharedPref.getAuth(), sharedPref.getUsername())
+        val malManager = MalManagerFactory().get(sharedPref.getAuth(), sharedPref.getUsername())
 
         Timber.i("UpdateService primed, updating anime and manga")
         getLatestAnime(params, malManager)

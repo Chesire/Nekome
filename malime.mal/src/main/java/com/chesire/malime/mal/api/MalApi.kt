@@ -9,6 +9,8 @@ import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.simplexml.SimpleXmlConverterFactory
 
+private const val SERVICE_ENDPOINT = "https://myanimelist.net/"
+
 /**
  * Provides the layer between the [MalService] and the [MalManager].
  * <p>
@@ -18,7 +20,6 @@ import retrofit2.converter.simplexml.SimpleXmlConverterFactory
 class MalApi(
     auth: String
 ) {
-    private val SERVICE_ENDPOINT = "https://myanimelist.net/"
     private val malService: MalService
 
     init {
