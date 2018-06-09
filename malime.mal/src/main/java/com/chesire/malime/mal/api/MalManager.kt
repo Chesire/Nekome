@@ -80,6 +80,8 @@ class MalManager(
                             userSeriesStatus = UserSeriesStatus.getStatusForMalId(it.myStatus!!),
                             progress = it.myWatchedEpisodes!!,
                             totalLength = it.seriesEpisodes!!,
+                            posterImage = it.seriesImage!!,
+                            coverImage = it.seriesImage!!,
                             nsfw = false
                         )
                     )
@@ -96,6 +98,8 @@ class MalManager(
                             userSeriesStatus = UserSeriesStatus.getStatusForMalId(it.myStatus!!),
                             progress = it.myReadChapters!!,
                             totalLength = it.seriesChapters!!,
+                            posterImage = it.seriesImage!!,
+                            coverImage = it.seriesImage!!,
                             nsfw = false
                         )
                     )

@@ -5,8 +5,8 @@ data class AttributesItem(
     val canonicalTitle: String,
     val status: String,
     val progress: Int,
-    // val posterImage
-    // val coverImage
+    val posterImage: Map<String, String>,
+    val coverImage: Map<String, String>,
     val episodeCount: Int,
     val chapterCount: Int,
     val nsfw: Boolean

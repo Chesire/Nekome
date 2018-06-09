@@ -93,6 +93,8 @@ class KitsuManager(
                             } else {
                                 full.attributes.chapterCount
                             },
+                            posterImage = getImage(full.attributes.posterImage),
+                            coverImage = getImage(full.attributes.coverImage),
                             nsfw = full.attributes.nsfw
                         )
                     })
@@ -121,5 +123,14 @@ class KitsuManager(
 
             it.onComplete()
         }
+    }
+
+    private fun getImage(map: Map<String, String>): String {
+        return map["large"]
+                ?: map["medium"]
+                ?: map["original"]
+                ?: map["small"]
+                ?: map["tiny"]
+                ?: ""
     }
 }

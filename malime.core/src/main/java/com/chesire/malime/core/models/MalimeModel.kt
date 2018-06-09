@@ -16,9 +16,9 @@ data class MalimeModel(
     var seriesStatus: SeriesStatus,
     var userSeriesStatus: UserSeriesStatus,
     var progress: Int,
-    //var posterImageSizes
-    //var coverImageSizes
     var totalLength: Int,
+    var posterImage: String,
+    var coverImage: String,
     var nsfw: Boolean
 ) {
     @PrimaryKey(autoGenerate = true)
