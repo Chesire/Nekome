@@ -105,8 +105,8 @@ class AnimeViewAdapter(
                 showLoadingLayout(true)
                 interactionListener.onLongClick(animeModel,
                     UpdateAnime(animeModel), {
-                    showLoadingLayout(false)
-                })
+                        showLoadingLayout(false)
+                    })
                 true
             }
 

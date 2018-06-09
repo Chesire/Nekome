@@ -6,9 +6,11 @@ import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
+import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import com.chesire.malime.R
@@ -16,7 +18,6 @@ import com.chesire.malime.core.repositories.Library
 import com.chesire.malime.databinding.FragmentMaldisplayBinding
 import com.chesire.malime.kitsu.api.KitsuManagerFactory
 import com.chesire.malime.util.SharedPref
-import kotlinx.android.synthetic.main.fragment_maldisplay.maldisplay_recycler_view
 import kotlinx.android.synthetic.main.fragment_maldisplay.maldisplay_swipe_refresh
 
 class MalDisplayFragment : Fragment() {
@@ -25,8 +26,11 @@ class MalDisplayFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
 
         val sharedPref = SharedPref(requireContext())
+        viewAdapter = MalDisplayViewAdapter()
+
         viewModel = ViewModelProviders
             .of(
                 this,
@@ -42,37 +46,20 @@ class MalDisplayFragment : Fragment() {
                 )
             )
             .get(MalDisplayViewModel::class.java)
-
-        viewAdapter = MalDisplayViewAdapter()
-
-        viewModel.series.observe(this,
-            Observer {
-                if (it != null) {
-                    viewAdapter.addAll(it)
-                }
-            })
-        viewModel.updatingStatus.observe(this,
-            Observer {
-                if (it != null) {
-                    when (it) {
-                        UpdatingSeriesStatus.Updating -> {
-                            // nothing for now
+            .apply {
+                series.observe(this@MalDisplayFragment,
+                    Observer {
+                        if (it != null) {
+                            viewAdapter.addAll(it)
                         }
-                        UpdatingSeriesStatus.Finished -> {
-                            maldisplay_swipe_refresh.isRefreshing = false
+                    })
+                updatingStatus.observe(this@MalDisplayFragment,
+                    Observer {
+                        if (it != null) {
+                            onUpdateStatusChange(it)
                         }
-                        UpdatingSeriesStatus.Error -> {
-                            maldisplay_swipe_refresh.isRefreshing = false
-                            Snackbar.make(
-                                maldisplay_swipe_refresh,
-                                "Failed",
-                                Snackbar.LENGTH_LONG
-                            ).show()
-                        }
-
-                    }
-                }
-            })
+                    })
+            }
     }
 
     override fun onCreateView(
@@ -87,12 +74,47 @@ class MalDisplayFragment : Fragment() {
             false
         ).apply {
             vm = viewModel
+            maldisplayRecyclerView.apply {
+                setHasFixedSize(true)
+                layoutManager = LinearLayoutManager(requireContext())
+                adapter = viewAdapter
+                //(itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
+            }
         }.root
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
         inflater?.inflate(R.menu.menu_options, menu)
         super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        return if (item?.itemId == R.id.menu_options_filter) {
+            //spawnFilterDialog()
+            // when this is pressed, we need to handle it
+            true
+        } else {
+            super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun onUpdateStatusChange(status: UpdatingSeriesStatus) {
+        when (status) {
+            UpdatingSeriesStatus.Updating -> {
+                // nothing for now
+            }
+            UpdatingSeriesStatus.Finished -> {
+                maldisplay_swipe_refresh.isRefreshing = false
+            }
+            UpdatingSeriesStatus.Error -> {
+                maldisplay_swipe_refresh.isRefreshing = false
+                Snackbar.make(
+                    maldisplay_swipe_refresh,
+                    "Failed",
+                    Snackbar.LENGTH_LONG
+                ).show()
+            }
+        }
     }
 
     companion object {

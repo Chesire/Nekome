@@ -23,9 +23,10 @@ class Library(
     }
 
     fun insertIntoLocalLibrary(items: List<MalimeModel>) {
-        Completable.fromAction({
-            db.malimeDao().insertAll(items)
-        })
+        Completable
+            .fromAction({
+                db.malimeDao().insertAll(items)
+            })
             .subscribeOn(Schedulers.io())
             .subscribe()
     }
