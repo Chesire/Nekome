@@ -125,12 +125,15 @@ class KitsuManager(
         }
     }
 
-    private fun getImage(map: Map<String, String>): String {
-        return map["large"]
-                ?: map["medium"]
-                ?: map["original"]
-                ?: map["small"]
-                ?: map["tiny"]
+    private fun getImage(map: Map<String, Any>?): String {
+        if (map == null) {
+            return ""
+        }
+        return map["large"] as String?
+                ?: map["medium"] as String?
+                ?: map["original"] as String?
+                ?: map["small"] as String?
+                ?: map["tiny"] as String?
                 ?: ""
     }
 }
