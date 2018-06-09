@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 
+@Deprecated("Should use the MalimeModel now")
 data class UpdateManga(
     val id: Int,
     val title: String,
