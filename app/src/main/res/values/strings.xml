@@ -46,6 +46,8 @@
     <string name="malitem_update_series_failure">Update to series %s failed, please try again</string>
     <string name="malitem_update_series_state_dialog_title">Change Series State To:</string>
 
+    <string name="list_update_failure">Failed to update list</string>
+
     <string name="filter_dialog_title">Filter By:</string>
     <string name="filter_state_watching">Watching</string>
     <string name="filter_state_reading">Reading</string>

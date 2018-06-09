@@ -110,7 +110,7 @@ class MalDisplayFragment : Fragment() {
                 maldisplay_swipe_refresh.isRefreshing = false
                 Snackbar.make(
                     maldisplay_swipe_refresh,
-                    "Failed",
+                    R.string.list_update_failure,
                     Snackbar.LENGTH_LONG
                 ).show()
             }
