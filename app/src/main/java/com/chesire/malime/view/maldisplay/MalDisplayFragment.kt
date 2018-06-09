@@ -15,12 +15,15 @@ import android.view.View
 import android.view.ViewGroup
 import com.chesire.malime.R
 import com.chesire.malime.core.flags.ItemType
+import com.chesire.malime.core.flags.SupportedService
 import com.chesire.malime.core.models.MalimeModel
 import com.chesire.malime.core.repositories.Library
 import com.chesire.malime.databinding.FragmentMaldisplayBinding
 import com.chesire.malime.kitsu.api.KitsuManagerFactory
+import com.chesire.malime.mal.api.MalManagerFactory
 import com.chesire.malime.util.SharedPref
 import kotlinx.android.synthetic.main.fragment_maldisplay.maldisplay_swipe_refresh
+import timber.log.Timber
 
 private const val itemTypeBundleId = "itemTypeBundleId"
 
@@ -36,45 +39,45 @@ class MalDisplayFragment : Fragment() {
         type = ItemType.getTypeForInternalId(arguments!!.getInt(itemTypeBundleId))
 
         val sharedPref = SharedPref(requireContext())
+        val api = if (sharedPref.getPrimaryService() == SupportedService.Kitsu) {
+            Timber.i("Found Kitsu as supported service")
+            KitsuManagerFactory().get(sharedPref.getAuth(), sharedPref.getUserId())
+        } else {
+            Timber.i("Found Mal as supported service")
+            MalManagerFactory().get(sharedPref.getAuth(), sharedPref.getUsername())
+        }
 
         viewModel = ViewModelProviders
             .of(
                 this,
                 MalDisplayViewModelFactory(
                     requireActivity().application,
-                    Library(
-                        requireContext(),
-                        KitsuManagerFactory().get(
-                            sharedPref.getAuth(),
-                            sharedPref.getUserId()
-                        )
-                    )
+                    Library(requireContext(), api)
                 )
             )
             .get(MalDisplayViewModel::class.java)
 
         viewAdapter = MalDisplayViewAdapter(viewModel)
-        viewModel
-            .apply {
-                series.observe(this@MalDisplayFragment,
-                    Observer {
-                        if (it != null) {
-                            viewAdapter.addAll(it.filter { it.type == type })
-                        }
-                    })
-                updateAllStatus.observe(this@MalDisplayFragment,
-                    Observer {
-                        if (it != null) {
-                            onUpdateAllStatusChange(it)
-                        }
-                    })
-                updateSeriesStatus.observe(this@MalDisplayFragment,
-                    Observer {
-                        if (it != null) {
-                            onUpdateSeriesStatusChange(it)
-                        }
-                    })
-            }
+        viewModel.apply {
+            series.observe(this@MalDisplayFragment,
+                Observer {
+                    if (it != null) {
+                        viewAdapter.addAll(it.filter { it.type == type })
+                    }
+                })
+            updateAllStatus.observe(this@MalDisplayFragment,
+                Observer {
+                    if (it != null) {
+                        onUpdateAllStatusChange(it)
+                    }
+                })
+            updateSeriesStatus.observe(this@MalDisplayFragment,
+                Observer {
+                    if (it != null) {
+                        onUpdateSeriesStatusChange(it)
+                    }
+                })
+        }
     }
 
     override fun onCreateView(
