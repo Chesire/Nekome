@@ -25,4 +25,11 @@ data class MalimeModel(
     // id needs to be null otherwise autoGenerate will not work
     // and Room will use the id assigned to it
     var id: Int? = null
+
+    fun getTotalSeriesLength(): String =
+        if (totalLength == 0) {
+            "??"
+        } else {
+            totalLength.toString()
+        }
 }
