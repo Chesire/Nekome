@@ -21,7 +21,7 @@ class MalDisplayViewAdapter : RecyclerView.Adapter<MalDisplayViewAdapter.ViewHol
     }
 
     fun clear(item: MalimeModel) {
-        val foundItem = items.find { it.id == item.id }
+        val foundItem = items.find { it.seriesId == item.seriesId }
         items.remove(foundItem)
         notifyDataSetChanged()
     }
@@ -32,7 +32,7 @@ class MalDisplayViewAdapter : RecyclerView.Adapter<MalDisplayViewAdapter.ViewHol
     }
 
     fun update(item: MalimeModel) {
-        val foundItem = items.find { it.id == item.id }
+        val foundItem = items.find { it.seriesId == item.seriesId }
         // update the item, might do it automatically
         notifyDataSetChanged()
     }

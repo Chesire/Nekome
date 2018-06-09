@@ -8,6 +8,7 @@ import com.chesire.malime.core.flags.UserSeriesStatus
 
 @Entity
 data class MalimeModel(
+    @PrimaryKey
     var seriesId: Int,
     var userSeriesId: Int,
     var type: ItemType,
@@ -21,11 +22,6 @@ data class MalimeModel(
     var coverImage: String,
     var nsfw: Boolean
 ) {
-    @PrimaryKey(autoGenerate = true)
-    // id needs to be null otherwise autoGenerate will not work
-    // and Room will use the id assigned to it
-    var id: Int? = null
-
     fun getTotalSeriesLength(): String =
         if (totalLength == 0) {
             "??"
