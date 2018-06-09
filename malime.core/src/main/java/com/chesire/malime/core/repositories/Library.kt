@@ -4,9 +4,9 @@ import android.content.Context
 import com.chesire.malime.core.api.MalimeApi
 import com.chesire.malime.core.models.MalimeModel
 import com.chesire.malime.core.room.MalimeDatabase
+import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
-import timber.log.Timber
 
 class Library(
     context: Context,
@@ -18,18 +18,16 @@ class Library(
         return getLibraryFromDb()
     }
 
-    fun updateLibraryFromApi() {
-        malimeApi.getUserLibrary()
+    fun updateLibraryFromApi(): Observable<List<MalimeModel>> {
+        return malimeApi.getUserLibrary()
+    }
+
+    fun insertIntoLocalLibrary(items: List<MalimeModel>) {
+        Completable.fromAction({
+            db.malimeDao().insertAll(items)
+        })
             .subscribeOn(Schedulers.io())
-            .subscribe(
-                {
-                    Timber.i("Success")
-                    db.malimeDao().insertAll(it)
-                },
-                {
-                    Timber.e(it)
-                }
-            )
+            .subscribe()
     }
 
     fun clearLocalLibrary() {
