@@ -24,8 +24,6 @@ class MalDisplayViewModel(
         library.observeLibrary().toFlowable(BackpressureStrategy.ERROR)
     )
     val updateAllStatus = MutableLiveData<UpdatingSeriesStatus>()
-    // dont think this will work
-    val updateSeriesStatus = MutableLiveData<Pair<MalimeModel, UpdatingSeriesStatus>>()
 
     fun checkForLatestSeries() {
         disposables.add(

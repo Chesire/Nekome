@@ -16,7 +16,6 @@ import android.view.ViewGroup
 import com.chesire.malime.R
 import com.chesire.malime.core.flags.ItemType
 import com.chesire.malime.core.flags.SupportedService
-import com.chesire.malime.core.models.MalimeModel
 import com.chesire.malime.core.repositories.Library
 import com.chesire.malime.databinding.FragmentMaldisplayBinding
 import com.chesire.malime.kitsu.api.KitsuManagerFactory
@@ -69,12 +68,6 @@ class MalDisplayFragment : Fragment() {
                 Observer {
                     if (it != null) {
                         onUpdateAllStatusChange(it)
-                    }
-                })
-            updateSeriesStatus.observe(this@MalDisplayFragment,
-                Observer {
-                    if (it != null) {
-                        onUpdateSeriesStatusChange(it)
                     }
                 })
         }
@@ -134,28 +127,6 @@ class MalDisplayFragment : Fragment() {
             }
         }
     }
-
-    private fun onUpdateSeriesStatusChange(status: Pair<MalimeModel, UpdatingSeriesStatus>) {
-        when (status.second) {
-            UpdatingSeriesStatus.Finished -> {
-                // maybe tell the adapter its done
-            }
-            UpdatingSeriesStatus.Error -> {
-                Snackbar.make(
-                    maldisplay_swipe_refresh,
-                    String.format(
-                        getString(R.string.malitem_update_series_failure),
-                        status.first.title
-                    ),
-                    Snackbar.LENGTH_LONG
-                ).show()
-            }
-            else -> {
-                // nothing for now
-            }
-        }
-    }
-
 
     companion object {
         const val tag = "MalDisplayFragment"
