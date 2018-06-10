@@ -103,7 +103,9 @@ class KitsuManager(
                             },
                             posterImage = getImage(full.attributes.posterImage),
                             coverImage = getImage(full.attributes.coverImage),
-                            nsfw = full.attributes.nsfw
+                            nsfw = full.attributes.nsfw,
+                            startDate = user.attributes.startedAt ?: "",
+                            endDate = user.attributes.finishedAt ?: ""
                         )
                     })
 
@@ -184,24 +186,25 @@ class KitsuManager(
                 addProperty("id", item.userSeriesId)
                 addProperty("type", "libraryEntries")
                 add("attributes", JsonObject().apply {
-                    /*addProperty(
-                        "finishedAt",
-                        if (newProgress == item.totalLength) {
-                            currentTime
-                        } else {
-                            ""
-                        }
-                    )*/
-                    addProperty("progress", newProgress)
-                    /*addProperty(
+                    /*
+                    addProperty(
                         "startedAt",
                         if (item.progress == 0 && newProgress > 0) {
                             currentTime
                         } else {
-                            ""
+                            item.startDate
+                        }
+                    )
+                    addProperty(
+                        "finishedAt",
+                        if (newProgress == item.totalLength) {
+                            currentTime
+                        } else {
+                            item.endDate
                         }
                     )
                     */
+                    addProperty("progress", newProgress)
                     addProperty("status", newStatus.kitsuString)
                 })
             })
@@ -216,7 +219,6 @@ class KitsuManager(
             progress = updateItem.data.attributes.progress
             userSeriesStatus =
                     UserSeriesStatus.getStatusForKitsuString(updateItem.data.attributes.status)
-            // date start / date finish
         }
     }
 }

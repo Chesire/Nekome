@@ -20,8 +20,9 @@ data class MalimeModel(
     var totalLength: Int,
     var posterImage: String,
     var coverImage: String,
-    var nsfw: Boolean
-// should add date_finish and date_start
+    var nsfw: Boolean,
+    val startDate: String,
+    val endDate: String
 ) {
     fun getTotalSeriesLength(): String =
         if (totalLength == 0) {

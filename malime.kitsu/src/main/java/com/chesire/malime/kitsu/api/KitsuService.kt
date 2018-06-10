@@ -27,7 +27,7 @@ interface KitsuService {
     @GET(
         "api/edge/users/{userId}/library-entries" +
                 "?include=anime,manga" +
-                "&fields[libraryEntries]=status,progress,anime,manga" +
+                "&fields[libraryEntries]=status,progress,anime,manga,startedAt,finishedAt" +
                 "&fields[anime]=slug,canonicalTitle,status,posterImage,coverImage,episodeCount,nsfw" +
                 "&fields[manga]=slug,canonicalTitle,status,posterImage,chapterCount"
     )

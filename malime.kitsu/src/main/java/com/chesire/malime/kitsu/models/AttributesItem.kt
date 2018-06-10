@@ -9,5 +9,7 @@ data class AttributesItem(
     val coverImage: Map<String, Any>?,
     val episodeCount: Int,
     val chapterCount: Int,
-    val nsfw: Boolean
+    val nsfw: Boolean,
+    val startedAt: String?,
+    val finishedAt: String?
 )

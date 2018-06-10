@@ -85,7 +85,9 @@ class MalManager(
                             totalLength = it.seriesEpisodes!!,
                             posterImage = it.seriesImage!!,
                             coverImage = it.seriesImage!!,
-                            nsfw = false
+                            nsfw = false,
+                            startDate = it.myStartDate!!,
+                            endDate = it.myFinishDate!!
                         )
                     )
                 }
@@ -103,7 +105,9 @@ class MalManager(
                             totalLength = it.seriesChapters!!,
                             posterImage = it.seriesImage!!,
                             coverImage = it.seriesImage!!,
-                            nsfw = false
+                            nsfw = false,
+                            startDate = it.myStartDate!!,
+                            endDate = it.myFinishDate!!
                         )
                     )
                 }
