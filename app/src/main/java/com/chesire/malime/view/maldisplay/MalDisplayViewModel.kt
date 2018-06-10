@@ -52,19 +52,21 @@ class MalDisplayViewModel(
     }
 
     override fun onSeriesNegativeOne(model: MalimeModel) {
-        // Update the series, with the progress - 1
-        Timber.d("Series ${model.title} progress being changed to ${model.progress - 1}")
+        onSeriesSetProgress(model, model.progress - 1)
     }
 
     override fun onSeriesPlusOne(model: MalimeModel) {
-        // Update the series, with the progress + 1
-        Timber.d("Series ${model.title} progress being changed to ${model.progress + 1}")
+        onSeriesSetProgress(model, model.progress + 1)
     }
 
     override fun onSeriesSetProgress(model: MalimeModel, newProgress: Int) {
-        // Update the series, with the progress set to [newProgress]
-        Timber.d("Series ${model.title} progress being changed to ${newProgress}")
-
+        Timber.d("Series ${model.title} progress being changed to $newProgress")
+        disposables.add(
+            library.sendUpdateToApi(model, newProgress, model.userSeriesStatus)
+                .subscribeOn(subscribeScheduler)
+                .observeOn(observeScheduler)
+                .subscribe()
+        )
     }
 
     override fun onCleared() {

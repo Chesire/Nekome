@@ -4,8 +4,10 @@ import com.chesire.malime.kitsu.BuildConfig
 import com.chesire.malime.kitsu.models.LibraryResponse
 import com.chesire.malime.kitsu.models.LoginRequest
 import com.chesire.malime.kitsu.models.LoginResponse
+import com.chesire.malime.kitsu.models.UpdateItemResponse
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
+import okhttp3.RequestBody
 import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
@@ -53,6 +55,10 @@ class KitsuApi(
         return kitsuService.getUserLibrary(userId, offset)
     }
 
+    fun updateItem(seriesId: Int, updateModel: RequestBody): Call<UpdateItemResponse> {
+        return kitsuService.updateItem(seriesId, updateModel)
+    }
+
     /**
      * Provides an interceptor that handles the basic auth.
      */
@@ -64,6 +70,10 @@ class KitsuApi(
             val request = chain.request()
             val authenticatedRequest = request.newBuilder()
                 .header("Authorization", "Bearer $accessToken")
+                .header(
+                    "client_id",
+                    "dd031b32d2f56c990b1425efe6c42ad847e7fe3ab46bf1299f05ecd856bdb7dd"
+                )
                 .build()
 
             return chain.proceed(authenticatedRequest)

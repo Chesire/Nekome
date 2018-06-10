@@ -6,9 +6,16 @@ import com.chesire.malime.core.flags.SeriesStatus
 import com.chesire.malime.core.flags.UserSeriesStatus
 import com.chesire.malime.core.models.LoginResponse
 import com.chesire.malime.core.models.MalimeModel
+import com.google.gson.JsonObject
 import io.reactivex.Observable
 import io.reactivex.Single
+import okhttp3.MediaType
+import okhttp3.RequestBody
 import timber.log.Timber
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
+
 
 private const val MAX_RETRIES = 3
 
@@ -125,6 +132,32 @@ class KitsuManager(
         }
     }
 
+    override fun updateItem(
+        item: MalimeModel,
+        newProgress: Int,
+        newStatus: UserSeriesStatus
+    ): Single<MalimeModel> {
+        return Single.create {
+            val json = createUpdateModel(item, newProgress, newStatus)
+            val requestBody = RequestBody.create(MediaType.parse("application/vnd.api+json"), json)
+
+            val callResponse = api.updateItem(
+                item.userSeriesId,
+                requestBody
+            )
+            val response = callResponse.execute()
+            val body = response.body()
+
+            if (response.isSuccessful && body != null) {
+                Timber.i("Successfully updated series")
+                // make model from the response
+            } else {
+                Timber.e(Throwable(response.message()), "Error updating the series")
+                it.tryOnError(Throwable(response.message()))
+            }
+        }
+    }
+
     private fun getImage(map: Map<String, Any>?): String {
         if (map == null) {
             return ""
@@ -136,4 +169,46 @@ class KitsuManager(
                 ?: map["tiny"] as String?
                 ?: ""
     }
+
+    private fun createUpdateModel(
+        item: MalimeModel,
+        newProgress: Int,
+        newStatus: UserSeriesStatus
+    ): String {
+        val currentTime = SimpleDateFormat("MM/dd/yyyy", Locale.getDefault())
+            .format(Calendar.getInstance().time)
+
+        return JsonObject().apply {
+            add("data", JsonObject().apply {
+                addProperty("id", item.userSeriesId)
+                addProperty("type", "libraryEntries")
+                add("attributes", JsonObject().apply {
+                    /*addProperty(
+                        "finishedAt",
+                        if (newProgress == item.totalLength) {
+                            currentTime
+                        } else {
+                            ""
+                        }
+                    )*/
+                    addProperty("progress", newProgress)
+                    /*addProperty(
+                        "startedAt",
+                        if (item.progress == 0 && newProgress > 0) {
+                            currentTime
+                        } else {
+                            ""
+                        }
+                    )
+                    */
+                    addProperty("status", newStatus.kitsuString)
+                })
+            })
+        }.toString()
+    }
+
+    /*
+    private fun getUpdatedModel(): MalimeModel {
+        return MalimeModel()
+    }*/
 }
