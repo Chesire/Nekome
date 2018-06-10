@@ -1,16 +1,21 @@
 package com.chesire.malime.view.maldisplay
 
+import android.content.SharedPreferences
 import android.databinding.ViewDataBinding
 import android.support.design.widget.Snackbar
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Filter
+import android.widget.Filterable
 import com.chesire.malime.BR
 import com.chesire.malime.R
 import com.chesire.malime.core.models.MalimeModel
 import com.chesire.malime.databinding.ItemMalmodelBinding
 import com.chesire.malime.util.GlideApp
+import com.chesire.malime.util.preferenceFilter
+import com.chesire.malime.util.preferenceSort
 import kotlinx.android.synthetic.main.item_malmodel.view.item_malmodel_content_layout
 import kotlinx.android.synthetic.main.item_malmodel.view.item_malmodel_image
 import kotlinx.android.synthetic.main.item_malmodel.view.item_malmodel_loading_layout
@@ -20,19 +25,23 @@ import timber.log.Timber
 
 class MalDisplayViewAdapter(
     private val listener: ModelInteractionListener
-) : RecyclerView.Adapter<MalDisplayViewAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<MalDisplayViewAdapter.ViewHolder>(), Filterable,
+    SharedPreferences.OnSharedPreferenceChangeListener {
+
     private val items = ArrayList<MalimeModel>()
+    private val filteredItems = ArrayList<MalimeModel>()
+    private val filter = MalDisplayFilter()
 
     fun addAll(newItems: List<MalimeModel>) {
         items.clear()
         items.addAll(newItems)
-        notifyDataSetChanged()
+        filter.filter("")
     }
 
     fun clear(item: MalimeModel) {
         val foundItem = items.find { it.seriesId == item.seriesId }
         items.remove(foundItem)
-        notifyDataSetChanged()
+        filter.filter("")
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -58,11 +67,21 @@ class MalDisplayViewAdapter(
     }
 
     override fun getItemCount(): Int {
-        return items.count()
+        return filteredItems.count()
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(items[position])
+        holder.bind(filteredItems[position])
+    }
+
+    override fun getFilter(): Filter = filter
+
+    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
+        key?.let {
+            if (it.contains(preferenceSort) || it.contains(preferenceFilter)) {
+                filter.filter("")
+            }
+        }
     }
 
     inner class ViewHolder(
@@ -132,5 +151,16 @@ class MalDisplayViewAdapter(
                 contentLayout.getChildAt(i).isEnabled = enabled
             }
         }
+    }
+
+    inner class MalDisplayFilter : Filter() {
+        override fun performFiltering(constraint: CharSequence?): FilterResults {
+            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        }
+
+        override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        }
+
     }
 }
