@@ -5,6 +5,7 @@ import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.LiveDataReactiveStreams
 import android.arch.lifecycle.MutableLiveData
+import com.chesire.malime.core.flags.UserSeriesStatus
 import com.chesire.malime.core.models.MalimeModel
 import com.chesire.malime.core.repositories.Library
 import io.reactivex.BackpressureStrategy
@@ -50,14 +51,20 @@ class MalDisplayViewModel(
         Timber.d("Series ${model.title} image pressed, loading url")
     }
 
-    override fun onSeriesSetProgress(
+    override fun updateSeries(
         model: MalimeModel,
         newProgress: Int,
+        newStatus: UserSeriesStatus,
         callback: (success: Boolean) -> Unit
     ) {
-        Timber.d("Series ${model.title} progress being changed to $newProgress")
+        Timber.d(
+            "Series ${model.title}\n" +
+                    "Progress being changed from ${model.progress} to $newProgress\n" +
+                    "Status being changed from ${model.userSeriesStatus} to $newStatus"
+        )
+
         disposables.add(
-            library.sendUpdateToApi(model, newProgress, model.userSeriesStatus)
+            library.sendUpdateToApi(model, newProgress, newStatus)
                 .subscribeOn(subscribeScheduler)
                 .observeOn(observeScheduler)
                 .subscribe(

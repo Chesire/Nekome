@@ -116,7 +116,6 @@ class MalDisplayViewAdapter(
                 )
                 .into(binding.root.item_malmodel_image)
 
-
             binding.root.apply {
                 item_malmodel_neg_one.setOnClickListener {
                     updateSeriesProgress(item, item.progress - 1)
@@ -133,7 +132,7 @@ class MalDisplayViewAdapter(
         private fun updateSeriesProgress(item: MalimeModel, newProgress: Int) {
             setLayoutState(false)
 
-            listener.onSeriesSetProgress(item, newProgress, { success ->
+            listener.updateSeries(item, newProgress, item.userSeriesStatus, { success ->
                 setLayoutState(true)
                 if (!success) {
                     Snackbar.make(
@@ -160,7 +159,7 @@ class MalDisplayViewAdapter(
         }
     }
 
-    inner class MalDisplayFilter : Filter() {
+    private inner class MalDisplayFilter : Filter() {
         override fun performFiltering(constraint: CharSequence?): FilterResults {
             val results = FilterResults()
             val filterOption = sharedPref.getFilter()
