@@ -54,6 +54,10 @@ class Library(
         db.malimeDao().clear()
     }
 
+    fun getItemUrl(item: MalimeModel): String {
+        return malimeApi.getItemUrl(item)
+    }
+
     private fun getLibraryFromDb(): Observable<List<MalimeModel>> {
         return db.malimeDao().getAll().toObservable()
     }

@@ -47,6 +47,10 @@ class KitsuManager(
         }
     }
 
+    override fun getItemUrl(item: MalimeModel): String {
+        return "$KitsuEndpoint${item.type.text}/${item.slug}"
+    }
+
     override fun getUserId(username: String): Single<Int> {
         return Single.create {
             val callResponse = api.getUser(username)

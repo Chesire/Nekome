@@ -5,6 +5,8 @@ import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.LiveDataReactiveStreams
 import android.arch.lifecycle.MutableLiveData
+import android.net.Uri
+import android.support.customtabs.CustomTabsIntent
 import com.chesire.malime.core.flags.UserSeriesStatus
 import com.chesire.malime.core.models.MalimeModel
 import com.chesire.malime.core.repositories.Library
@@ -47,8 +49,10 @@ class MalDisplayViewModel(
     }
 
     override fun onImageClicked(model: MalimeModel) {
-        // Make a chrome custom tab
         Timber.d("Series ${model.title} image pressed, loading url")
+        CustomTabsIntent.Builder()
+            .build()
+            .launchUrl(getApplication(), Uri.parse(library.getItemUrl(model)))
     }
 
     override fun updateSeries(

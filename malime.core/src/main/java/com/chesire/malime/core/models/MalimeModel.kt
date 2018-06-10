@@ -1,6 +1,7 @@
 package com.chesire.malime.core.models
 
 import android.arch.persistence.room.Entity
+import android.arch.persistence.room.Ignore
 import android.arch.persistence.room.PrimaryKey
 import com.chesire.malime.core.flags.ItemType
 import com.chesire.malime.core.flags.SeriesStatus
@@ -24,6 +25,7 @@ data class MalimeModel(
     val startDate: String,
     val endDate: String
 ) {
+
     fun getTotalSeriesLength(): String =
         if (totalLength == 0) {
             "??"

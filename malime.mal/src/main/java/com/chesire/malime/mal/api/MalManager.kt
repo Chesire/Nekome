@@ -50,6 +50,10 @@ class MalManager(
         }
     }
 
+    override fun getItemUrl(item: MalimeModel): String {
+        return "$MyAnimeListEndpoint${item.type.text}/${item.seriesId}"
+    }
+
     override fun getUserId(username: String): Single<Int> {
         return Single.create {
             val callResponse = api.loginToAccount()
