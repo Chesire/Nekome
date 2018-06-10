@@ -14,7 +14,7 @@ import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-private const val ENDPOINT = "https://kitsu.io/"
+internal const val KitsuEndpoint = "https://kitsu.io/"
 
 class KitsuApi(
     accessToken: String
@@ -35,7 +35,7 @@ class KitsuApi(
         }
 
         val retrofit = Retrofit.Builder()
-            .baseUrl(ENDPOINT)
+            .baseUrl(KitsuEndpoint)
             .client(httpClient.build())
             .addConverterFactory(GsonConverterFactory.create())
             .build()

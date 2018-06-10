@@ -50,6 +50,10 @@ class MalManager(
         }
     }
 
+    override fun getItemUrl(item: MalimeModel): String {
+        return "$MyAnimeListEndpoint${item.type.text}/${item.seriesId}"
+    }
+
     override fun getUserId(username: String): Single<Int> {
         return Single.create {
             val callResponse = api.loginToAccount()
@@ -345,62 +349,6 @@ class MalManager(
                     subscriber.onComplete()
                 }
             } else {
-                subscriber.tryOnError(Throwable(response.message()))
-            }
-        }
-    }
-
-    /**
-     * Updates a specific anime series with all data in [anime].
-     *
-     * @param anime model containing all updates to the specified series
-     * @return [Observable] instance that has success and error states
-     */
-    @Deprecated("Use updateItem")
-    fun updateAnime(anime: UpdateAnime): Observable<Any> {
-        return Observable.create { subscriber ->
-            val callResponse = api.updateAnime(anime.id, anime.getXml())
-            val response = callResponse.execute()
-
-            if (response.isSuccessful) {
-                Timber.i("Anime [%s] has updated to episode [%d]", anime.title, anime.episode)
-                subscriber.onNext(Any())
-                subscriber.onComplete()
-            } else {
-                Timber.e(
-                    Throwable(response.message()),
-                    "Error Updating anime [%s] - %s",
-                    anime.title,
-                    response.errorBody()
-                )
-                subscriber.tryOnError(Throwable(response.message()))
-            }
-        }
-    }
-
-    /**
-     * Updates a specific manga series with all data in [manga].
-     *
-     * @param manga model containing all updates to the specified series
-     * @return [Observable] instance that has success and error states
-     */
-    @Deprecated("Use updateItem")
-    fun updateManga(manga: UpdateManga): Observable<Any> {
-        return Observable.create { subscriber ->
-            val callResponse = api.updateManga(manga.id, manga.getXml())
-            val response = callResponse.execute()
-
-            if (response.isSuccessful) {
-                Timber.i("Manga [%s] has updated to episode [%d]", manga.title, manga.chapter)
-                subscriber.onNext(Any())
-                subscriber.onComplete()
-            } else {
-                Timber.e(
-                    Throwable(response.message()),
-                    "Error Updating manga [%s] - %s",
-                    manga.title,
-                    response.errorBody()
-                )
                 subscriber.tryOnError(Throwable(response.message()))
             }
         }
