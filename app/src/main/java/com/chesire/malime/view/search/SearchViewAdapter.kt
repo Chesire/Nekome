@@ -12,9 +12,9 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import com.chesire.malime.R
-import com.chesire.malime.models.Anime
-import com.chesire.malime.models.Entry
-import com.chesire.malime.models.Manga
+import com.chesire.malime.mal.models.Anime
+import com.chesire.malime.mal.models.Entry
+import com.chesire.malime.mal.models.Manga
 import com.chesire.malime.util.GlideApp
 
 class SearchViewAdapter(

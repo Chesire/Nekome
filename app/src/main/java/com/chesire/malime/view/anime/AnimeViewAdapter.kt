@@ -10,8 +10,8 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import com.chesire.malime.R
-import com.chesire.malime.models.Anime
-import com.chesire.malime.models.UpdateAnime
+import com.chesire.malime.mal.models.Anime
+import com.chesire.malime.mal.models.UpdateAnime
 import com.chesire.malime.util.GlideApp
 import com.chesire.malime.util.SharedPref
 import com.chesire.malime.view.MalModelInteractionListener
@@ -103,9 +103,10 @@ class AnimeViewAdapter(
 
             animeView.setOnLongClickListener {
                 showLoadingLayout(true)
-                interactionListener.onLongClick(animeModel, UpdateAnime(animeModel), {
-                    showLoadingLayout(false)
-                })
+                interactionListener.onLongClick(animeModel,
+                    UpdateAnime(animeModel), {
+                        showLoadingLayout(false)
+                    })
                 true
             }
 
@@ -166,8 +167,8 @@ class AnimeViewAdapter(
 
         override fun performFiltering(p0: CharSequence?): FilterResults {
             val results = FilterResults()
-            val myFilter = sharedPref.getAnimeFilter()
-            val mySortOption = sharedPref.getAnimeSortOption()
+            val myFilter = sharedPref.getFilter()
+            val mySortOption = sharedPref.getSortOption()
             val tempList = items.filter {
                 val compareVal = when {
                 // Move the compare value down to 5, so we can more easily work with it
@@ -181,7 +182,7 @@ class AnimeViewAdapter(
             }
 
             results.values = tempList.sortedWith(
-                when (mySortOption) {
+                when (mySortOption.id) {
                     1 -> compareBy { it.seriesTitle }
                     2 -> compareBy { it.getSeriesStartDate() }
                     3 -> compareBy { it.getSeriesEndDate() }

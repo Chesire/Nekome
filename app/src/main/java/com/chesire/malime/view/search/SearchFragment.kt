@@ -20,15 +20,16 @@ import android.widget.ProgressBar
 import android.widget.RadioGroup
 import android.widget.Toast
 import com.chesire.malime.R
-import com.chesire.malime.mal.MalManager
-import com.chesire.malime.models.Anime
-import com.chesire.malime.models.Entry
-import com.chesire.malime.models.Manga
-import com.chesire.malime.models.UpdateAnime
-import com.chesire.malime.models.UpdateManga
-import com.chesire.malime.room.AnimeDao
-import com.chesire.malime.room.MalimeDatabase
-import com.chesire.malime.room.MangaDao
+import com.chesire.malime.mal.api.MalManager
+import com.chesire.malime.mal.api.MalManagerFactory
+import com.chesire.malime.mal.models.Anime
+import com.chesire.malime.mal.models.Entry
+import com.chesire.malime.mal.models.Manga
+import com.chesire.malime.mal.models.UpdateAnime
+import com.chesire.malime.mal.models.UpdateManga
+import com.chesire.malime.mal.room.AnimeDao
+import com.chesire.malime.mal.room.MalimeDatabase
+import com.chesire.malime.mal.room.MangaDao
 import com.chesire.malime.util.SharedPref
 import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -65,7 +66,11 @@ class SearchFragment : Fragment(), SearchInteractionListener {
         setHasOptionsMenu(true)
 
         val sharedPref = SharedPref(requireContext())
-        malManager = MalManager(sharedPref.getAuth())
+        malManager =
+                MalManagerFactory().get(
+                    sharedPref.getAuth(),
+                    sharedPref.getUsername()
+                )
         MalimeDatabase.getInstance(requireContext()).also {
             animeDao = it.animeDao()
             mangaDao = it.mangaDao()

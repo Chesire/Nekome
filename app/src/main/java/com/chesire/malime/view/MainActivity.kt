@@ -12,13 +12,14 @@ import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import com.chesire.malime.R
-import com.chesire.malime.room.MalimeDatabase
-import com.chesire.malime.util.PeriodicUpdateHelper
+import com.chesire.malime.core.flags.ItemType
+import com.chesire.malime.mal.room.MalimeDatabase
+import com.chesire.malime.util.updateservice.PeriodicUpdateHelper
 import com.chesire.malime.util.SharedPref
-import com.chesire.malime.view.anime.AnimeFragment
 import com.chesire.malime.view.login.LoginActivity
-import com.chesire.malime.view.manga.MangaFragment
+import com.chesire.malime.view.maldisplay.MalDisplayFragment
 import com.chesire.malime.view.preferences.PrefActivity
+import com.chesire.malime.view.preferences.SortOption
 import com.chesire.malime.view.search.SearchFragment
 import timber.log.Timber
 
@@ -40,14 +41,14 @@ class MainActivity : AppCompatActivity() {
 
             when (item.itemId) {
                 R.id.menu_main_navigation_anime -> {
-                    tag = AnimeFragment.tag
+                    tag = MalDisplayFragment.malDisplayAnime
                     fragment = supportFragmentManager.findFragmentByTag(tag)
-                            ?: AnimeFragment.newInstance()
+                            ?: MalDisplayFragment.newInstance(ItemType.Anime)
                 }
                 R.id.menu_main_navigation_manga -> {
-                    tag = MangaFragment.tag
+                    tag = MalDisplayFragment.malDisplayManga
                     fragment = supportFragmentManager.findFragmentByTag(tag)
-                            ?: MangaFragment.newInstance()
+                            ?: MalDisplayFragment.newInstance(ItemType.Manga)
                 }
                 else -> {
                     tag = SearchFragment.tag
@@ -62,8 +63,8 @@ class MainActivity : AppCompatActivity() {
 
         if (savedInstanceState == null) {
             setFragment(
-                AnimeFragment.newInstance(),
-                AnimeFragment.tag
+                MalDisplayFragment.newInstance(ItemType.Anime),
+                MalDisplayFragment.malDisplayAnime
             )
         } else {
             currentDisplayedFragmentTag =
@@ -74,7 +75,7 @@ class MainActivity : AppCompatActivity() {
             )
         }
 
-        PeriodicUpdateHelper().schedule(this)
+        //PeriodicUpdateHelper().schedule(this)
     }
 
     override fun onSaveInstanceState(outState: Bundle?) {
@@ -140,15 +141,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun spawnSortDialog() {
-        var sortOption = sharedPref.getAnimeSortOption()
+        var sortOption = sharedPref.getSortOption().id
 
         AlertDialog.Builder(this)
             .setTitle(R.string.sort_dialog_title)
-            .setSingleChoiceItems(R.array.anime_sort_options, sortOption, { _, which ->
-                sortOption = which
-            })
+            .setSingleChoiceItems(
+                SortOption.getOptionsStrings(applicationContext), sortOption, { _, which ->
+                    sortOption = which
+                })
             .setPositiveButton(android.R.string.ok, { _, _ ->
-                sharedPref.setAnimeSortOption(sortOption)
+                sharedPref.setSortOption(SortOption.getOptionFor(sortOption))
             })
             .setNegativeButton(android.R.string.cancel, null)
             .show()
@@ -156,8 +158,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun setFragment(fragment: Fragment, fragmentTag: String) {
         title = when (fragmentTag) {
-            AnimeFragment.tag -> getString(R.string.main_nav_anime)
-            MangaFragment.tag -> getString(R.string.main_nav_manga)
+            MalDisplayFragment.malDisplayAnime -> getString(R.string.main_nav_anime)
+            MalDisplayFragment.malDisplayManga -> getString(R.string.main_nav_manga)
             SearchFragment.tag -> getString(R.string.main_nav_search)
             else -> getString(R.string.app_name)
         }

@@ -10,8 +10,8 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import com.chesire.malime.R
-import com.chesire.malime.models.Manga
-import com.chesire.malime.models.UpdateManga
+import com.chesire.malime.mal.models.Manga
+import com.chesire.malime.mal.models.UpdateManga
 import com.chesire.malime.util.GlideApp
 import com.chesire.malime.util.SharedPref
 import com.chesire.malime.view.MalModelInteractionListener
@@ -104,7 +104,8 @@ class MangaViewAdapter(
 
             mangaView.setOnLongClickListener {
                 showLoadingLayout(true)
-                interactionListener.onLongClick(mangaModel, UpdateManga(mangaModel), {
+                interactionListener.onLongClick(mangaModel,
+                    UpdateManga(mangaModel), {
                     showLoadingLayout(false)
                 })
                 true
@@ -167,8 +168,8 @@ class MangaViewAdapter(
 
         override fun performFiltering(p0: CharSequence?): FilterResults {
             val results = FilterResults()
-            val myFilter = sharedPref.getAnimeFilter()
-            val mySortOption = sharedPref.getAnimeSortOption()
+            val myFilter = sharedPref.getFilter()
+            val mySortOption = sharedPref.getSortOption()
             val tempList = items.filter {
 
                 val compareVal = when {
@@ -183,7 +184,7 @@ class MangaViewAdapter(
             }
 
             results.values = tempList.sortedWith(
-                when (mySortOption) {
+                when (mySortOption.id) {
                     1 -> compareBy { it.seriesTitle }
                     2 -> compareBy { it.getSeriesStartDate() }
                     3 -> compareBy { it.getSeriesEndDate() }

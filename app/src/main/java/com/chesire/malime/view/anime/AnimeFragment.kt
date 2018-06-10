@@ -17,14 +17,17 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import com.chesire.malime.MalStates
 import com.chesire.malime.R
-import com.chesire.malime.mal.MalManager
-import com.chesire.malime.models.Anime
-import com.chesire.malime.models.UpdateAnime
-import com.chesire.malime.room.AnimeDao
-import com.chesire.malime.room.MalimeDatabase
+import com.chesire.malime.mal.MalStates
+import com.chesire.malime.mal.api.MalManager
+import com.chesire.malime.mal.api.MalManagerFactory
+import com.chesire.malime.mal.models.Anime
+import com.chesire.malime.mal.models.UpdateAnime
+import com.chesire.malime.mal.room.AnimeDao
+import com.chesire.malime.mal.room.MalimeDatabase
 import com.chesire.malime.util.SharedPref
+import com.chesire.malime.util.preferenceFilter
+import com.chesire.malime.util.preferenceSort
 import com.chesire.malime.view.MalModelInteractionListener
 import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -40,7 +43,6 @@ class AnimeFragment : Fragment(),
 
     private var disposables = CompositeDisposable()
     private lateinit var sharedPref: SharedPref
-    private lateinit var username: String
     private lateinit var malManager: MalManager
     private lateinit var animeDao: AnimeDao
 
@@ -56,8 +58,11 @@ class AnimeFragment : Fragment(),
         val requiredContext = requireContext()
 
         sharedPref = SharedPref(requiredContext)
-        username = sharedPref.getUsername()
-        malManager = MalManager(sharedPref.getAuth())
+        malManager =
+                MalManagerFactory().get(
+                    sharedPref.getAuth(),
+                    sharedPref.getUsername()
+                )
         animeDao = MalimeDatabase.getInstance(requiredContext).animeDao()
 
         viewManager = LinearLayoutManager(requiredContext)
@@ -128,7 +133,7 @@ class AnimeFragment : Fragment(),
     }
 
     private fun spawnFilterDialog() {
-        val states = sharedPref.getAnimeFilter()
+        val states = sharedPref.getFilter()
         AlertDialog.Builder(requireContext())
             .setTitle(R.string.filter_dialog_title)
             .setMultiChoiceItems(R.array.anime_states, states, { _, which, isChecked ->
@@ -143,7 +148,7 @@ class AnimeFragment : Fragment(),
                         Snackbar.LENGTH_LONG
                     ).show()
                 } else {
-                    sharedPref.setAnimeFilter(states)
+                    sharedPref.setFilter(states)
                 }
             })
             .setNegativeButton(android.R.string.cancel, null)
@@ -152,7 +157,7 @@ class AnimeFragment : Fragment(),
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, id: String?) {
         if (id != null &&
-            (id.contains(sharedPref.preferenceAnimeFilter) || id.contains(sharedPref.preferenceAnimeSortOption))
+            (id.contains(preferenceFilter) || id.contains(preferenceSort))
         ) {
             viewAdapter.filter.filter("")
         }
@@ -261,7 +266,7 @@ class AnimeFragment : Fragment(),
     private fun executeGetLatestAnime() {
         Timber.d("Getting latest anime from MAL")
 
-        disposables.add(malManager.getAllAnime(username)
+        disposables.add(malManager.getAllAnime()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
