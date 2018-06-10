@@ -1,6 +1,7 @@
 package com.chesire.malime.mal.api
 
 import com.chesire.malime.core.api.MalimeApi
+import com.chesire.malime.core.api.SearchApi
 import com.chesire.malime.core.flags.ItemType
 import com.chesire.malime.core.flags.SeriesStatus
 import com.chesire.malime.core.flags.UserSeriesStatus
@@ -26,7 +27,7 @@ import java.util.Locale
 class MalManager(
     private val api: MalApi,
     private val username: String
-) : MalimeApi {
+) : MalimeApi, SearchApi {
     /**
      * Verifies a users credentials.
      * <p>
@@ -146,6 +147,61 @@ class MalManager(
                     item.title
                 )
                 it.tryOnError(Throwable(response.message()))
+            }
+        }
+    }
+
+    override fun searchForSeriesWith(
+        name: String,
+        type: ItemType
+    ): Observable<List<MalimeModel>> {
+        return Observable.create { subscriber ->
+            val callResponse = if (type == ItemType.Anime) {
+                api.searchForAnime(name)
+            } else {
+                api.searchForManga(name)
+            }
+            val response = callResponse.execute()
+
+            if (response.isSuccessful) {
+                val responseBody = response.body()
+                if (responseBody == null) {
+                    subscriber.tryOnError(Throwable(response.message()))
+                } else {
+                    val list = if (type == ItemType.Anime) {
+                        (responseBody as MalService.SearchForAnimeResponse).entries
+                    } else {
+                        (responseBody as MalService.SearchForMangaResponse).entries
+                    }
+
+                    val responseList = list.map {
+                        MalimeModel(
+                            seriesId = it.id!!,
+                            userSeriesId = 0,
+                            type = type,
+                            slug = it.title!!,
+                            title = it.title,
+                            seriesStatus = SeriesStatus.Unknown,
+                            userSeriesStatus = UserSeriesStatus.Unknown,
+                            progress = 0,
+                            totalLength = if (type == ItemType.Anime) {
+                                it.episodes!!
+                            } else {
+                                it.chapters!!
+                            },
+                            posterImage = it.image!!,
+                            coverImage = it.image,
+                            nsfw = false,
+                            startDate = it.start_date!!,
+                            endDate = it.end_date!!
+                        )
+                    }
+
+                    subscriber.onNext(responseList)
+                    subscriber.onComplete()
+                }
+            } else {
+                subscriber.tryOnError(Throwable(response.message()))
             }
         }
     }
@@ -310,6 +366,7 @@ class MalManager(
      * @param name of the anime to find
      * @return [Observable] instance containing a list of all found anime
      */
+    @Deprecated("Use searchForSeriesWith")
     fun searchForAnime(name: String): Observable<List<Entry>> {
         return Observable.create { subscriber ->
             val callResponse = api.searchForAnime(name)
@@ -335,6 +392,7 @@ class MalManager(
      * @param name of the manga to find
      * @return [Observable] instance containing a list of all found manga
      */
+    @Deprecated("Use searchForSeriesWith")
     fun searchForManga(name: String): Observable<List<Entry>> {
         return Observable.create { subscriber ->
             val callResponse = api.searchForManga(name)
