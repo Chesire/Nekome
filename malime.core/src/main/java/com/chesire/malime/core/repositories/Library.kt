@@ -41,7 +41,7 @@ class Library(
             .subscribe()
     }
 
-    fun updateInLocalLibraru(item: MalimeModel) {
+    fun updateInLocalLibrary(item: MalimeModel) {
         Completable
             .fromAction {
                 db.malimeDao().update(item)

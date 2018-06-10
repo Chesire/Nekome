@@ -24,6 +24,7 @@ class MalDisplayViewModel(
         library.observeLibrary().toFlowable(BackpressureStrategy.ERROR)
     )
     val updateAllStatus = MutableLiveData<UpdatingSeriesStatus>()
+    // dont think this will work
     val updateSeriesStatus = MutableLiveData<Pair<MalimeModel, UpdatingSeriesStatus>>()
 
     fun checkForLatestSeries() {
@@ -65,7 +66,14 @@ class MalDisplayViewModel(
             library.sendUpdateToApi(model, newProgress, model.userSeriesStatus)
                 .subscribeOn(subscribeScheduler)
                 .observeOn(observeScheduler)
-                .subscribe()
+                .subscribe(
+                    {
+                        library.updateInLocalLibrary(it)
+                    },
+                    {
+                        // do something with the error
+                    }
+                )
         )
     }
 

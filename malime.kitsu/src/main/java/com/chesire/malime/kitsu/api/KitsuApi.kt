@@ -70,10 +70,6 @@ class KitsuApi(
             val request = chain.request()
             val authenticatedRequest = request.newBuilder()
                 .header("Authorization", "Bearer $accessToken")
-                .header(
-                    "client_id",
-                    "dd031b32d2f56c990b1425efe6c42ad847e7fe3ab46bf1299f05ecd856bdb7dd"
-                )
                 .build()
 
             return chain.proceed(authenticatedRequest)

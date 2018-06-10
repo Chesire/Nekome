@@ -6,6 +6,7 @@ import com.chesire.malime.core.flags.SeriesStatus
 import com.chesire.malime.core.flags.UserSeriesStatus
 import com.chesire.malime.core.models.LoginResponse
 import com.chesire.malime.core.models.MalimeModel
+import com.chesire.malime.kitsu.models.UpdateItemResponse
 import com.google.gson.JsonObject
 import io.reactivex.Observable
 import io.reactivex.Single
@@ -150,7 +151,7 @@ class KitsuManager(
 
             if (response.isSuccessful && body != null) {
                 Timber.i("Successfully updated series")
-                // make model from the response
+                it.onSuccess(getUpdatedModel(item, body))
             } else {
                 Timber.e(Throwable(response.message()), "Error updating the series")
                 it.tryOnError(Throwable(response.message()))
@@ -207,8 +208,15 @@ class KitsuManager(
         }.toString()
     }
 
-    /*
-    private fun getUpdatedModel(): MalimeModel {
-        return MalimeModel()
-    }*/
+    private fun getUpdatedModel(
+        originalItem: MalimeModel,
+        updateItem: UpdateItemResponse
+    ): MalimeModel {
+        return originalItem.copy().apply {
+            progress = updateItem.data.attributes.progress
+            userSeriesStatus =
+                    UserSeriesStatus.getStatusForKitsuString(updateItem.data.attributes.status)
+            // date start / date finish
+        }
+    }
 }
