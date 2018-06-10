@@ -5,5 +5,4 @@ import com.chesire.malime.core.flags.SupportedService
 interface LoginInteractor {
     fun serviceSelected(service: SupportedService)
     fun loginSuccessful()
-    fun acquiredLibraries()
 }
