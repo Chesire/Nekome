@@ -49,14 +49,18 @@
     <string name="list_update_failure">Failed to update list</string>
 
     <string name="filter_dialog_title">Filter By:</string>
+    <string name="filter_state_completed">Completed</string>
+    <string name="filter_state_current">Current</string>
+    <string name="filter_state_dropped">Dropped</string>
+    <string name="filter_state_on_hold">On-Hold</string>
+    <string name="filter_state_planned">Planned</string>
+    <string name="filter_state_unknown">Unknown</string>
+    <string name="filter_must_select">At least one filter must be selected</string>
+
     <string name="filter_state_watching">Watching</string>
     <string name="filter_state_reading">Reading</string>
-    <string name="filter_state_completed">Completed</string>
-    <string name="filter_state_on_hold">On-Hold</string>
-    <string name="filter_state_dropped">Dropped</string>
     <string name="filter_state_plan_to_watch">Plan to Watch</string>
     <string name="filter_state_plan_to_read">Plan to Read</string>
-    <string name="filter_must_select">At least one filter must be selected</string>
 
     <string name="sort_dialog_title">Sort By:</string>
     <string name="sort_choice_default">Default</string>
