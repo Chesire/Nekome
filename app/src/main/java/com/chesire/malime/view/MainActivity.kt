@@ -144,9 +144,10 @@ class MainActivity : AppCompatActivity() {
 
         AlertDialog.Builder(this)
             .setTitle(R.string.sort_dialog_title)
-            .setSingleChoiceItems(SortOption.getAllOptions(), sortOption, { _, which ->
-                sortOption = which
-            })
+            .setSingleChoiceItems(
+                SortOption.getOptionsStrings(applicationContext), sortOption, { _, which ->
+                    sortOption = which
+                })
             .setPositiveButton(android.R.string.ok, { _, _ ->
                 sharedPref.setSortOption(SortOption.getOptionFor(sortOption))
             })
