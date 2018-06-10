@@ -15,6 +15,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import com.chesire.malime.R
+import com.chesire.malime.R.id.maldisplay_swipe_refresh
 import com.chesire.malime.core.flags.ItemType
 import com.chesire.malime.core.flags.SupportedService
 import com.chesire.malime.core.flags.UserSeriesStatus
