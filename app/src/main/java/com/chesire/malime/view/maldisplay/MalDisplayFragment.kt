@@ -6,6 +6,7 @@ import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
+import android.support.v7.app.AlertDialog
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.Menu
@@ -16,11 +17,13 @@ import android.view.ViewGroup
 import com.chesire.malime.R
 import com.chesire.malime.core.flags.ItemType
 import com.chesire.malime.core.flags.SupportedService
+import com.chesire.malime.core.flags.UserSeriesStatus
 import com.chesire.malime.core.repositories.Library
 import com.chesire.malime.databinding.FragmentMaldisplayBinding
 import com.chesire.malime.kitsu.api.KitsuManagerFactory
 import com.chesire.malime.mal.api.MalManagerFactory
 import com.chesire.malime.util.SharedPref
+import com.chesire.malime.util.extension.getSeriesStatusStrings
 import kotlinx.android.synthetic.main.fragment_maldisplay.maldisplay_swipe_refresh
 import timber.log.Timber
 
@@ -29,6 +32,7 @@ private const val itemTypeBundleId = "itemTypeBundleId"
 class MalDisplayFragment : Fragment() {
     private lateinit var viewModel: MalDisplayViewModel
     private lateinit var viewAdapter: MalDisplayViewAdapter
+    private lateinit var sharedPref: SharedPref
     private lateinit var type: ItemType
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,8 +40,8 @@ class MalDisplayFragment : Fragment() {
         setHasOptionsMenu(true)
 
         type = ItemType.getTypeForInternalId(arguments!!.getInt(itemTypeBundleId))
+        sharedPref = SharedPref(requireContext())
 
-        val sharedPref = SharedPref(requireContext())
         val api = if (sharedPref.getPrimaryService() == SupportedService.Kitsu) {
             Timber.i("Found Kitsu as supported service")
             KitsuManagerFactory().get(sharedPref.getAuth(), sharedPref.getUserId())
@@ -109,7 +113,30 @@ class MalDisplayFragment : Fragment() {
     }
 
     private fun spawnFilterDialog() {
-        val states =
+        val states = sharedPref.getFilter()
+
+        AlertDialog.Builder(requireContext())
+            .setTitle(R.string.filter_dialog_title)
+            .setMultiChoiceItems(
+                UserSeriesStatus.getSeriesStatusStrings(requireContext()),
+                states,
+                { _, which, isChecked ->
+                    states[which] = isChecked
+                })
+            .setPositiveButton(android.R.string.ok, { _, _ ->
+                if (states.all { !it }) {
+                    Timber.w("User tried to set all filter states to false")
+                    Snackbar.make(
+                        view!!.findViewById(R.id.maldisplay_layout),
+                        R.string.filter_must_select,
+                        Snackbar.LENGTH_LONG
+                    ).show()
+                } else {
+                    sharedPref.setFilter(states)
+                }
+            })
+            .setNegativeButton(android.R.string.cancel, null)
+            .show()
     }
 
     private fun onUpdateAllStatusChange(status: UpdatingSeriesStatus) {

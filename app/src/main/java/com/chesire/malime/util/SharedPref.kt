@@ -14,7 +14,7 @@ private const val preferenceUserId: String = "userId"
 private const val preferenceUsername: String = "username"
 private const val preferencePrimaryService: String = "primaryService"
 private const val preferenceAllowCrashReporting: String = "allowCrashReporting"
-private const val preferenceAnimeFilterLength: String = "animeFilterLength"
+private const val preferenceFilterLength: String = "animeFilterLength"
 private const val preferenceAutoUpdateState: String = "autoUpdateState"
 const val preferenceFilter: String = "filter"
 const val preferenceSort: String = "sort"
@@ -93,7 +93,7 @@ class SharedPref(
     }
 
     fun getFilter(): BooleanArray {
-        val filterLength = sharedPreferences.getInt(preferenceAnimeFilterLength, 0)
+        val filterLength = sharedPreferences.getInt(preferenceFilterLength, 0)
         if (filterLength == 0) {
             return getDefaultFilter()
         }
@@ -108,7 +108,7 @@ class SharedPref(
 
     fun setFilter(input: BooleanArray): SharedPref {
         val editor = sharedPreferences.edit()
-        editor.putInt(preferenceAnimeFilterLength, input.count())
+        editor.putInt(preferenceFilterLength, input.count())
         for (i in input.indices) {
             editor.putBoolean(preferenceFilter + i, input[i])
         }
