@@ -37,6 +37,16 @@ interface KitsuService {
         @Query("page[limit]") limit: Int = 500 // might want to reduce to say 100
     ): Call<LibraryResponse>
 
+    @GET(
+        "api/edge/{type}" +
+                "&fields[anime]=slug,canonicalTitle,status,posterImage,coverImage,episodeCount,nsfw" +
+                "&fields[manga]=slug,canonicalTitle,status,posterImage,chapterCount"
+    )
+    fun search(
+        @Path("type") type: String,
+        @Query("filter[text]") title: String
+    ): Call<LibraryResponse>
+
     @PATCH("api/edge/library-entries/{id}")
     @Headers("Content-Type: application/vnd.api+json")
     fun updateItem(

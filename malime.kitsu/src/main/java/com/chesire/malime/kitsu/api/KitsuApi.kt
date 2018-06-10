@@ -1,5 +1,6 @@
 package com.chesire.malime.kitsu.api
 
+import com.chesire.malime.core.flags.ItemType
 import com.chesire.malime.kitsu.BuildConfig
 import com.chesire.malime.kitsu.models.LibraryResponse
 import com.chesire.malime.kitsu.models.LoginRequest
@@ -53,6 +54,10 @@ class KitsuApi(
 
     fun getUserLibrary(userId: Int, offset: Int): Call<LibraryResponse> {
         return kitsuService.getUserLibrary(userId, offset)
+    }
+
+    fun search(title: String, type: ItemType): Call<LibraryResponse> {
+        return kitsuService.search(title, type.text)
     }
 
     fun updateItem(seriesId: Int, updateModel: RequestBody): Call<UpdateItemResponse> {

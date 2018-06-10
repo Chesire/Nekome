@@ -1,6 +1,7 @@
 package com.chesire.malime.kitsu.api
 
 import com.chesire.malime.core.api.MalimeApi
+import com.chesire.malime.core.api.SearchApi
 import com.chesire.malime.core.flags.ItemType
 import com.chesire.malime.core.flags.SeriesStatus
 import com.chesire.malime.core.flags.UserSeriesStatus
@@ -22,7 +23,8 @@ private const val MAX_RETRIES = 3
 class KitsuManager(
     private val api: KitsuApi,
     private val userId: Int
-) : MalimeApi {
+) : MalimeApi, SearchApi {
+
     override fun login(username: String, password: String): Single<LoginResponse> {
         // The api mentions it wants the username, but it seems it wants the email address instead
         return Single.create {
@@ -159,6 +161,22 @@ class KitsuManager(
                 it.onSuccess(getUpdatedModel(item, body))
             } else {
                 Timber.e(Throwable(response.message()), "Error updating the series")
+                it.tryOnError(Throwable(response.message()))
+            }
+        }
+    }
+
+    override fun searchForSeriesWith(title: String, type: ItemType): Observable<List<MalimeModel>> {
+        return Observable.create {
+            val callResponse = api.search(title, type)
+            val response = callResponse.execute()
+            val body = response.body()
+
+            if (response.isSuccessful && body != null && body.data.isNotEmpty()) {
+                Timber.i("Successfully searched, found [${body.data.count()}] items")
+                
+            } else {
+                Timber.e(Throwable(response.message()), "Error performing search")
                 it.tryOnError(Throwable(response.message()))
             }
         }

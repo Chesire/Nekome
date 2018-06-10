@@ -5,5 +5,5 @@ import com.chesire.malime.core.models.MalimeModel
 import io.reactivex.Observable
 
 interface SearchApi {
-    fun searchForSeriesWith(name: String, type: ItemType): Observable<List<MalimeModel>>
+    fun searchForSeriesWith(title: String, type: ItemType): Observable<List<MalimeModel>>
 }

@@ -152,14 +152,14 @@ class MalManager(
     }
 
     override fun searchForSeriesWith(
-        name: String,
+        title: String,
         type: ItemType
     ): Observable<List<MalimeModel>> {
         return Observable.create { subscriber ->
             val callResponse = if (type == ItemType.Anime) {
-                api.searchForAnime(name)
+                api.searchForAnime(title)
             } else {
-                api.searchForManga(name)
+                api.searchForManga(title)
             }
             val response = callResponse.execute()
 
