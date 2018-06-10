@@ -15,12 +15,12 @@ private const val preferencePrimaryService: String = "primaryService"
 private const val preferenceAllowCrashReporting: String = "allowCrashReporting"
 private const val preferenceAnimeFilterLength: String = "animeFilterLength"
 private const val preferenceAutoUpdateState: String = "autoUpdateState"
+const val preferenceFilter: String = "filter"
+const val preferenceSort: String = "sort"
 
 class SharedPref(
     context: Context
 ) {
-    val preferenceAnimeFilter: String = "animeFilter"
-    val preferenceAnimeSortOption: String = "animeSortOption"
     val sharedPrefFile: String = "malime_shared_pref"
 
     private val sharedPreferences =
@@ -99,7 +99,7 @@ class SharedPref(
 
         val returnArray = BooleanArray(filterLength)
         for (i in 0 until filterLength) {
-            returnArray[i] = sharedPreferences.getBoolean(preferenceAnimeFilter + i, false)
+            returnArray[i] = sharedPreferences.getBoolean(preferenceFilter + i, false)
         }
 
         return returnArray
@@ -109,7 +109,7 @@ class SharedPref(
         val editor = sharedPreferences.edit()
         editor.putInt(preferenceAnimeFilterLength, input.count())
         for (i in input.indices) {
-            editor.putBoolean(preferenceAnimeFilter + i, input[i])
+            editor.putBoolean(preferenceFilter + i, input[i])
         }
         editor.apply()
 
@@ -118,12 +118,12 @@ class SharedPref(
 
     fun getAnimeSortOption(): Int {
         // If doesn't exist, return "Title"
-        return sharedPreferences.getInt(preferenceAnimeSortOption, 1)
+        return sharedPreferences.getInt(preferenceSort, 1)
     }
 
     fun setAnimeSortOption(sortOption: Int): SharedPref {
         sharedPreferences.edit()
-            .putInt(preferenceAnimeSortOption, sortOption)
+            .putInt(preferenceSort, sortOption)
             .apply()
 
         return this

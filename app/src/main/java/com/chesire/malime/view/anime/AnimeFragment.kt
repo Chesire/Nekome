@@ -26,6 +26,8 @@ import com.chesire.malime.mal.models.UpdateAnime
 import com.chesire.malime.mal.room.AnimeDao
 import com.chesire.malime.mal.room.MalimeDatabase
 import com.chesire.malime.util.SharedPref
+import com.chesire.malime.util.preferenceFilter
+import com.chesire.malime.util.preferenceSort
 import com.chesire.malime.view.MalModelInteractionListener
 import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -155,7 +157,7 @@ class AnimeFragment : Fragment(),
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, id: String?) {
         if (id != null &&
-            (id.contains(sharedPref.preferenceAnimeFilter) || id.contains(sharedPref.preferenceAnimeSortOption))
+            (id.contains(preferenceFilter) || id.contains(preferenceSort))
         ) {
             viewAdapter.filter.filter("")
         }
