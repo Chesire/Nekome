@@ -169,7 +169,7 @@ class MangaViewAdapter(
         override fun performFiltering(p0: CharSequence?): FilterResults {
             val results = FilterResults()
             val myFilter = sharedPref.getAnimeFilter()
-            val mySortOption = sharedPref.getAnimeSortOption()
+            val mySortOption = sharedPref.getSortOption()
             val tempList = items.filter {
 
                 val compareVal = when {

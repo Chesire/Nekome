@@ -140,7 +140,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun spawnSortDialog() {
-        var sortOption = sharedPref.getAnimeSortOption()
+        var sortOption = sharedPref.getSortOption()
 
         AlertDialog.Builder(this)
             .setTitle(R.string.sort_dialog_title)
@@ -148,7 +148,7 @@ class MainActivity : AppCompatActivity() {
                 sortOption = which
             })
             .setPositiveButton(android.R.string.ok, { _, _ ->
-                sharedPref.setAnimeSortOption(sortOption)
+                sharedPref.setSortOption(sortOption)
             })
             .setNegativeButton(android.R.string.cancel, null)
             .show()

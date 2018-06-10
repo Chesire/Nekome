@@ -116,12 +116,12 @@ class SharedPref(
         return this
     }
 
-    fun getAnimeSortOption(): Int {
+    fun getSortOption(): Int {
         // If doesn't exist, return "Title"
         return sharedPreferences.getInt(preferenceSort, 1)
     }
 
-    fun setAnimeSortOption(sortOption: Int): SharedPref {
+    fun setSortOption(sortOption: Int): SharedPref {
         sharedPreferences.edit()
             .putInt(preferenceSort, sortOption)
             .apply()
