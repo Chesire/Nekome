@@ -101,12 +101,15 @@ class MalDisplayFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         return if (item?.itemId == R.id.menu_options_filter) {
-            //spawnFilterDialog()
-            // when this is pressed, we need to handle it
+            spawnFilterDialog()
             true
         } else {
             super.onOptionsItemSelected(item)
         }
+    }
+
+    private fun spawnFilterDialog() {
+
     }
 
     private fun onUpdateAllStatusChange(status: UpdatingSeriesStatus) {

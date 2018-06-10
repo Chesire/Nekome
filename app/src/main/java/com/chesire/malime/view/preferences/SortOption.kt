@@ -1,4 +1,4 @@
-package com.chesire.malime.view
+package com.chesire.malime.view.preferences
 
 import android.content.Context
 import android.support.annotation.StringRes

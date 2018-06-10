@@ -1,6 +1,7 @@
-package com.chesire.malime
+package com.chesire.malime.util.extension
 
 import android.content.Context
+import com.chesire.malime.R
 import com.chesire.malime.core.flags.UserSeriesStatus
 
 fun UserSeriesStatus.getString(context: Context): String {

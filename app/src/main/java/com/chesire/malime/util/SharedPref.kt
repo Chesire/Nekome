@@ -6,7 +6,7 @@ import android.util.Base64
 import com.chesire.malime.core.flags.SupportedService
 import com.chesire.malime.util.sec.Decryptor
 import com.chesire.malime.util.sec.Encryptor
-import com.chesire.malime.view.SortOption
+import com.chesire.malime.view.preferences.SortOption
 
 private const val authAlias: String = "private_auth"
 private const val preferenceAuth: String = "auth"
