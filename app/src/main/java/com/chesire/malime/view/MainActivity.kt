@@ -18,7 +18,6 @@ import com.chesire.malime.util.PeriodicUpdateHelper
 import com.chesire.malime.util.SharedPref
 import com.chesire.malime.view.login.LoginActivity
 import com.chesire.malime.view.maldisplay.MalDisplayFragment
-import com.chesire.malime.view.manga.MangaFragment
 import com.chesire.malime.view.preferences.PrefActivity
 import com.chesire.malime.view.search.SearchFragment
 import timber.log.Timber
@@ -75,7 +74,7 @@ class MainActivity : AppCompatActivity() {
             )
         }
 
-        PeriodicUpdateHelper().schedule(this)
+        //PeriodicUpdateHelper().schedule(this)
     }
 
     override fun onSaveInstanceState(outState: Bundle?) {
@@ -157,8 +156,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun setFragment(fragment: Fragment, fragmentTag: String) {
         title = when (fragmentTag) {
-            MalDisplayFragment.tag -> getString(R.string.main_nav_anime)
-            MangaFragment.tag -> getString(R.string.main_nav_manga)
+            MalDisplayFragment.malDisplayAnime -> getString(R.string.main_nav_anime)
+            MalDisplayFragment.malDisplayManga -> getString(R.string.main_nav_manga)
             SearchFragment.tag -> getString(R.string.main_nav_search)
             else -> getString(R.string.app_name)
         }

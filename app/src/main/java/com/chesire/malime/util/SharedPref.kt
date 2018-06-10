@@ -137,6 +137,8 @@ class SharedPref(
         sharedPreferences.edit()
             .remove(preferenceAuth)
             .remove(preferenceUsername)
+            .remove(preferenceUserId)
+            .remove(preferencePrimaryService)
             .apply()
     }
 
