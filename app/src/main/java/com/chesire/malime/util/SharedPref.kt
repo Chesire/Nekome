@@ -6,6 +6,7 @@ import android.util.Base64
 import com.chesire.malime.core.flags.SupportedService
 import com.chesire.malime.util.sec.Decryptor
 import com.chesire.malime.util.sec.Encryptor
+import com.chesire.malime.view.SortOption
 
 private const val authAlias: String = "private_auth"
 private const val preferenceAuth: String = "auth"
@@ -116,14 +117,18 @@ class SharedPref(
         return this
     }
 
-    fun getSortOption(): Int {
-        // If doesn't exist, return "Title"
-        return sharedPreferences.getInt(preferenceSort, 1)
+    fun getSortOption(): SortOption {
+        return SortOption.getOptionFor(
+            sharedPreferences.getInt(
+                preferenceSort,
+                SortOption.Title.id
+            )
+        )
     }
 
-    fun setSortOption(sortOption: Int): SharedPref {
+    fun setSortOption(sortOption: SortOption): SharedPref {
         sharedPreferences.edit()
-            .putInt(preferenceSort, sortOption)
+            .putInt(preferenceSort, sortOption.id)
             .apply()
 
         return this

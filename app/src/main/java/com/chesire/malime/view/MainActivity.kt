@@ -140,15 +140,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun spawnSortDialog() {
-        var sortOption = sharedPref.getSortOption()
+        var sortOption = sharedPref.getSortOption().id
 
         AlertDialog.Builder(this)
             .setTitle(R.string.sort_dialog_title)
-            .setSingleChoiceItems(R.array.anime_sort_options, sortOption, { _, which ->
+            .setSingleChoiceItems(SortOption.getAllOptions(), sortOption, { _, which ->
                 sortOption = which
             })
             .setPositiveButton(android.R.string.ok, { _, _ ->
-                sharedPref.setSortOption(sortOption)
+                sharedPref.setSortOption(SortOption.getOptionFor(sortOption))
             })
             .setNegativeButton(android.R.string.cancel, null)
             .show()

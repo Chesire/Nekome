@@ -182,7 +182,7 @@ class AnimeViewAdapter(
             }
 
             results.values = tempList.sortedWith(
-                when (mySortOption) {
+                when (mySortOption.id) {
                     1 -> compareBy { it.seriesTitle }
                     2 -> compareBy { it.getSeriesStartDate() }
                     3 -> compareBy { it.getSeriesEndDate() }

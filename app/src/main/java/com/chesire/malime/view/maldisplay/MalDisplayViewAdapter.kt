@@ -17,6 +17,7 @@ import com.chesire.malime.util.GlideApp
 import com.chesire.malime.util.SharedPref
 import com.chesire.malime.util.preferenceFilter
 import com.chesire.malime.util.preferenceSort
+import com.chesire.malime.view.SortOption
 import kotlinx.android.synthetic.main.item_malmodel.view.item_malmodel_content_layout
 import kotlinx.android.synthetic.main.item_malmodel.view.item_malmodel_image
 import kotlinx.android.synthetic.main.item_malmodel.view.item_malmodel_loading_layout
@@ -164,7 +165,21 @@ class MalDisplayViewAdapter(
             // need to filter based on shared pref - should be redone first though
             // for now return everything
             val results = FilterResults()
-            results.values = items
+            val sortOption = sharedPref.getSortOption()
+
+            val tempList = items.filter {
+                // performing filtering
+                true
+            }
+
+            results.values = tempList.sortedWith(
+                when (sortOption) {
+                    SortOption.Default -> compareBy { it.userSeriesId }
+                    SortOption.Title -> compareBy { it.title }
+                    SortOption.StartDate -> compareBy { it.startDate }
+                    SortOption.EndDate -> compareBy { it.endDate }
+                }
+            )
             results.count = items.count()
             return results
         }
