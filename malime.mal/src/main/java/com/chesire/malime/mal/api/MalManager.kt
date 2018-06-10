@@ -249,6 +249,7 @@ class MalManager(
      *
      * @return [Observable] instance containing a [Pair] of a [MyInfo] and all found anime
      */
+    @Deprecated("Use getUserLibrary")
     fun getAllAnime(): Observable<Pair<MyInfo, List<Anime>?>> {
         return Observable.create { subscriber ->
             val callResponse = api.getAllAnime(username)
@@ -276,6 +277,7 @@ class MalManager(
      *
      * @return [Observable] instance containing a [Pair] of a [MyInfo] and all found manga
      */
+    @Deprecated("Use getUserLibrary")
     fun getAllManga(): Observable<Pair<MyInfo, List<Manga>?>> {
         return Observable.create { subscriber ->
             val callResponse = api.getAllManga(username)
@@ -476,12 +478,12 @@ class MalManager(
                 if (item.progress == 0 && newProgress > 0) {
                     "<date_start>$currentTime</date_start>"
                 } else {
-                    "<date_start></date_start>"
+                    "<date_start>${item.startDate}</date_start>"
                 } +
                 if (item.progress < item.totalLength && newProgress == item.totalLength) {
                     "<date_finish>$currentTime</date_finish>"
                 } else {
-                    "<date_finish></date_finish>"
+                    "<date_finish>${item.endDate}</date_finish>"
                 } +
                 "</entry>"
     }
