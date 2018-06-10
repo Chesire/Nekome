@@ -1,5 +1,6 @@
 package com.chesire.malime.view.maldisplay
 
+import android.app.AlertDialog
 import android.content.SharedPreferences
 import android.databinding.ViewDataBinding
 import android.support.design.widget.Snackbar
@@ -11,10 +12,12 @@ import android.widget.Filter
 import android.widget.Filterable
 import com.chesire.malime.BR
 import com.chesire.malime.R
+import com.chesire.malime.core.flags.UserSeriesStatus
 import com.chesire.malime.core.models.MalimeModel
 import com.chesire.malime.databinding.ItemMalmodelBinding
 import com.chesire.malime.util.GlideApp
 import com.chesire.malime.util.SharedPref
+import com.chesire.malime.util.extension.getSeriesStatusStrings
 import com.chesire.malime.util.preferenceFilter
 import com.chesire.malime.util.preferenceSort
 import com.chesire.malime.view.preferences.SortOption
@@ -118,21 +121,57 @@ class MalDisplayViewAdapter(
 
             binding.root.apply {
                 item_malmodel_neg_one.setOnClickListener {
-                    updateSeriesProgress(item, item.progress - 1)
+                    updateSeries(item, item.progress - 1, item.userSeriesStatus)
                 }
                 item_malmodel_plus_one.setOnClickListener {
-                    updateSeriesProgress(item, item.progress + 1)
+                    updateSeries(item, item.progress + 1, item.userSeriesStatus)
                 }
                 item_malmodel_image.setOnClickListener {
                     listener.onImageClicked(item)
                 }
+                binding.root.setOnLongClickListener {
+                    setLayoutState(false)
+
+                    var executing = false
+                    var state = item.userSeriesStatus.internalId - 1
+
+                    AlertDialog.Builder(context)
+                        .setTitle(R.string.malitem_update_series_state_dialog_title)
+                        .setSingleChoiceItems(
+                            UserSeriesStatus.getSeriesStatusStrings(context),
+                            state,
+                            { _, which ->
+                                state = which
+                            })
+                        .setPositiveButton(android.R.string.ok, { _, _ ->
+                            executing = true
+                            updateSeries(
+                                item,
+                                item.progress,
+                                UserSeriesStatus.getStatusForInternalId(state + 1)
+                            )
+                        })
+                        .setNegativeButton(android.R.string.cancel, null)
+                        .setOnDismissListener {
+                            Timber.d("Dismissing")
+                            if (!executing) {
+                                setLayoutState(true)
+                            }
+                        }
+                        .show()
+                    true
+                }
             }
         }
 
-        private fun updateSeriesProgress(item: MalimeModel, newProgress: Int) {
+        private fun updateSeries(
+            item: MalimeModel,
+            newProgress: Int,
+            newStatus: UserSeriesStatus
+        ) {
             setLayoutState(false)
 
-            listener.updateSeries(item, newProgress, item.userSeriesStatus, { success ->
+            listener.updateSeries(item, newProgress, newStatus, { success ->
                 setLayoutState(true)
                 if (!success) {
                     Snackbar.make(

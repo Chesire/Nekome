@@ -175,6 +175,7 @@ class AnimeFragment : Fragment(),
         callback: () -> Unit
     ) {
         var state = MalStates.getMalStateForId(originalModel.myStatus!!)!!.surfaceId
+
         var executing = false
         AlertDialog.Builder(requireContext())
             .setTitle(R.string.malitem_update_series_state_dialog_title)
