@@ -4,8 +4,10 @@ import com.chesire.malime.kitsu.BuildConfig
 import com.chesire.malime.kitsu.models.LibraryResponse
 import com.chesire.malime.kitsu.models.LoginRequest
 import com.chesire.malime.kitsu.models.LoginResponse
+import com.chesire.malime.kitsu.models.UpdateItemResponse
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
+import okhttp3.RequestBody
 import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
@@ -51,6 +53,10 @@ class KitsuApi(
 
     fun getUserLibrary(userId: Int, offset: Int): Call<LibraryResponse> {
         return kitsuService.getUserLibrary(userId, offset)
+    }
+
+    fun updateItem(seriesId: Int, updateModel: RequestBody): Call<UpdateItemResponse> {
+        return kitsuService.updateItem(seriesId, updateModel)
     }
 
     /**

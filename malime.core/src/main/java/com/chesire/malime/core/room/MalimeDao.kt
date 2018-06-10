@@ -4,6 +4,7 @@ import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Insert
 import android.arch.persistence.room.OnConflictStrategy
 import android.arch.persistence.room.Query
+import android.arch.persistence.room.Update
 import com.chesire.malime.core.models.MalimeModel
 import io.reactivex.Flowable
 
@@ -14,6 +15,9 @@ interface MalimeDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(items: List<MalimeModel>)
+
+    @Update
+    fun update(item: MalimeModel)
 
     @Query("DELETE FROM malimemodel")
     fun clear()

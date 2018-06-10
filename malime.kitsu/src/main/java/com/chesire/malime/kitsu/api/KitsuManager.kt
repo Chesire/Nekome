@@ -6,9 +6,16 @@ import com.chesire.malime.core.flags.SeriesStatus
 import com.chesire.malime.core.flags.UserSeriesStatus
 import com.chesire.malime.core.models.LoginResponse
 import com.chesire.malime.core.models.MalimeModel
+import com.chesire.malime.kitsu.models.UpdateItemResponse
+import com.google.gson.JsonObject
 import io.reactivex.Observable
 import io.reactivex.Single
+import okhttp3.MediaType
+import okhttp3.RequestBody
 import timber.log.Timber
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 private const val MAX_RETRIES = 3
 
@@ -95,7 +102,9 @@ class KitsuManager(
                             },
                             posterImage = getImage(full.attributes.posterImage),
                             coverImage = getImage(full.attributes.coverImage),
-                            nsfw = full.attributes.nsfw
+                            nsfw = full.attributes.nsfw,
+                            startDate = user.attributes.startedAt ?: "",
+                            endDate = user.attributes.finishedAt ?: ""
                         )
                     })
 
@@ -125,12 +134,90 @@ class KitsuManager(
         }
     }
 
-    private fun getImage(map: Map<String, String>): String {
-        return map["large"]
-                ?: map["medium"]
-                ?: map["original"]
-                ?: map["small"]
-                ?: map["tiny"]
+    override fun updateItem(
+        item: MalimeModel,
+        newProgress: Int,
+        newStatus: UserSeriesStatus
+    ): Single<MalimeModel> {
+        return Single.create {
+            val json = createUpdateModel(item, newProgress, newStatus)
+            val requestBody = RequestBody.create(MediaType.parse("application/vnd.api+json"), json)
+
+            val callResponse = api.updateItem(
+                item.userSeriesId,
+                requestBody
+            )
+            val response = callResponse.execute()
+            val body = response.body()
+
+            if (response.isSuccessful && body != null) {
+                Timber.i("Successfully updated series")
+                it.onSuccess(getUpdatedModel(item, body))
+            } else {
+                Timber.e(Throwable(response.message()), "Error updating the series")
+                it.tryOnError(Throwable(response.message()))
+            }
+        }
+    }
+
+    private fun getImage(map: Map<String, Any>?): String {
+        if (map == null) {
+            return ""
+        }
+        return map["large"] as String?
+                ?: map["medium"] as String?
+                ?: map["original"] as String?
+                ?: map["small"] as String?
+                ?: map["tiny"] as String?
                 ?: ""
+    }
+
+    private fun createUpdateModel(
+        item: MalimeModel,
+        newProgress: Int,
+        newStatus: UserSeriesStatus
+    ): String {
+        val currentTime = SimpleDateFormat("MM/dd/yyyy", Locale.getDefault())
+            .format(Calendar.getInstance().time)
+
+        return JsonObject().apply {
+            add("data", JsonObject().apply {
+                addProperty("id", item.userSeriesId)
+                addProperty("type", "libraryEntries")
+                add("attributes", JsonObject().apply {
+                    /*
+                    addProperty(
+                        "startedAt",
+                        if (item.progress == 0 && newProgress > 0) {
+                            currentTime
+                        } else {
+                            item.startDate
+                        }
+                    )
+                    addProperty(
+                        "finishedAt",
+                        if (newProgress == item.totalLength) {
+                            currentTime
+                        } else {
+                            item.endDate
+                        }
+                    )
+                    */
+                    addProperty("progress", newProgress)
+                    addProperty("status", newStatus.kitsuString)
+                })
+            })
+        }.toString()
+    }
+
+    private fun getUpdatedModel(
+        originalItem: MalimeModel,
+        updateItem: UpdateItemResponse
+    ): MalimeModel {
+        return originalItem.copy().apply {
+            progress = updateItem.data.attributes.progress
+            userSeriesStatus =
+                    UserSeriesStatus.getStatusForKitsuString(updateItem.data.attributes.status)
+        }
     }
 }

@@ -105,8 +105,8 @@ class AnimeViewAdapter(
                 showLoadingLayout(true)
                 interactionListener.onLongClick(animeModel,
                     UpdateAnime(animeModel), {
-                    showLoadingLayout(false)
-                })
+                        showLoadingLayout(false)
+                    })
                 true
             }
 
@@ -167,8 +167,8 @@ class AnimeViewAdapter(
 
         override fun performFiltering(p0: CharSequence?): FilterResults {
             val results = FilterResults()
-            val myFilter = sharedPref.getAnimeFilter()
-            val mySortOption = sharedPref.getAnimeSortOption()
+            val myFilter = sharedPref.getFilter()
+            val mySortOption = sharedPref.getSortOption()
             val tempList = items.filter {
                 val compareVal = when {
                 // Move the compare value down to 5, so we can more easily work with it
@@ -182,7 +182,7 @@ class AnimeViewAdapter(
             }
 
             results.values = tempList.sortedWith(
-                when (mySortOption) {
+                when (mySortOption.id) {
                     1 -> compareBy { it.seriesTitle }
                     2 -> compareBy { it.getSeriesStartDate() }
                     3 -> compareBy { it.getSeriesEndDate() }

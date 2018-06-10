@@ -1,24 +1,24 @@
-package com.chesire.malime.view.login.library
+package com.chesire.malime.view.maldisplay
 
 import android.app.Application
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
 import com.chesire.malime.core.repositories.Library
-import java.io.InvalidClassException
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 
-class PrimeLibraryViewModelFactory(
+class MalDisplayViewModelFactory(
     private val application: Application,
     private val library: Library
 ) :
     ViewModelProvider.NewInstanceFactory() {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        when {
-            modelClass.isAssignableFrom(PrimeLibraryViewModel::class.java) -> return PrimeLibraryViewModel(
-                application,
-                library
-            ) as T
-            else -> throw InvalidClassException("")
-        }
+        return MalDisplayViewModel(
+            application,
+            library,
+            Schedulers.io(),
+            AndroidSchedulers.mainThread()
+        ) as T
     }
 }

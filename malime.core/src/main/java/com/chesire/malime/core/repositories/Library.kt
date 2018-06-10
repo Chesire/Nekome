@@ -2,11 +2,13 @@ package com.chesire.malime.core.repositories
 
 import android.content.Context
 import com.chesire.malime.core.api.MalimeApi
+import com.chesire.malime.core.flags.UserSeriesStatus
 import com.chesire.malime.core.models.MalimeModel
 import com.chesire.malime.core.room.MalimeDatabase
+import io.reactivex.Completable
 import io.reactivex.Observable
+import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
-import timber.log.Timber
 
 class Library(
     context: Context,
@@ -18,18 +20,34 @@ class Library(
         return getLibraryFromDb()
     }
 
-    fun updateLibraryFromApi() {
-        malimeApi.getUserLibrary()
+    fun updateLibraryFromApi(): Observable<List<MalimeModel>> {
+        return malimeApi.getUserLibrary()
+    }
+
+    fun sendUpdateToApi(
+        item: MalimeModel,
+        newProgress: Int,
+        newStatus: UserSeriesStatus
+    ): Single<MalimeModel> {
+        return malimeApi.updateItem(item, newProgress, newStatus)
+    }
+
+    fun insertIntoLocalLibrary(items: List<MalimeModel>) {
+        Completable
+            .fromAction {
+                db.malimeDao().insertAll(items)
+            }
             .subscribeOn(Schedulers.io())
-            .subscribe(
-                {
-                    Timber.i("Success")
-                    db.malimeDao().insertAll(it)
-                },
-                {
-                    Timber.e(it)
-                }
-            )
+            .subscribe()
+    }
+
+    fun updateInLocalLibrary(item: MalimeModel) {
+        Completable
+            .fromAction {
+                db.malimeDao().update(item)
+            }
+            .subscribeOn(Schedulers.io())
+            .subscribe()
     }
 
     fun clearLocalLibrary() {

@@ -16,6 +16,9 @@ import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.functions.BiFunction
 import timber.log.Timber
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 /**
  * Provides a manager to interact with the MyAnimeList API.
@@ -82,7 +85,9 @@ class MalManager(
                             totalLength = it.seriesEpisodes!!,
                             posterImage = it.seriesImage!!,
                             coverImage = it.seriesImage!!,
-                            nsfw = false
+                            nsfw = false,
+                            startDate = it.myStartDate!!,
+                            endDate = it.myFinishDate!!
                         )
                     )
                 }
@@ -100,13 +105,45 @@ class MalManager(
                             totalLength = it.seriesChapters!!,
                             posterImage = it.seriesImage!!,
                             coverImage = it.seriesImage!!,
-                            nsfw = false
+                            nsfw = false,
+                            startDate = it.myStartDate!!,
+                            endDate = it.myFinishDate!!
                         )
                     )
                 }
                 libraryItems
             }
         )
+    }
+
+    override fun updateItem(
+        item: MalimeModel,
+        newProgress: Int,
+        newStatus: UserSeriesStatus
+    ): Single<MalimeModel> {
+        return Single.create {
+            val updateString = createUpdateString(item, newProgress, newStatus)
+            val callResponse = if (item.type == ItemType.Anime) {
+                api.updateAnime(item.seriesId, updateString)
+            } else {
+                api.updateManga(item.seriesId, updateString)
+            }
+
+            val response = callResponse.execute()
+            if (response.isSuccessful) {
+                Timber.i("Item [%s] has updated to progress [%d]", item.title, item.progress)
+                item.progress = newProgress
+                item.userSeriesStatus = newStatus
+                it.onSuccess(item)
+            } else {
+                Timber.e(
+                    Throwable(response.message()),
+                    "Error Updating item [%s]",
+                    item.title
+                )
+                it.tryOnError(Throwable(response.message()))
+            }
+        }
     }
 
     private fun getUserAnime(): Observable<List<Anime>> {
@@ -212,6 +249,7 @@ class MalManager(
      *
      * @return [Observable] instance containing a [Pair] of a [MyInfo] and all found anime
      */
+    @Deprecated("Use getUserLibrary")
     fun getAllAnime(): Observable<Pair<MyInfo, List<Anime>?>> {
         return Observable.create { subscriber ->
             val callResponse = api.getAllAnime(username)
@@ -239,6 +277,7 @@ class MalManager(
      *
      * @return [Observable] instance containing a [Pair] of a [MyInfo] and all found manga
      */
+    @Deprecated("Use getUserLibrary")
     fun getAllManga(): Observable<Pair<MyInfo, List<Manga>?>> {
         return Observable.create { subscriber ->
             val callResponse = api.getAllManga(username)
@@ -317,6 +356,7 @@ class MalManager(
      * @param anime model containing all updates to the specified series
      * @return [Observable] instance that has success and error states
      */
+    @Deprecated("Use updateItem")
     fun updateAnime(anime: UpdateAnime): Observable<Any> {
         return Observable.create { subscriber ->
             val callResponse = api.updateAnime(anime.id, anime.getXml())
@@ -344,6 +384,7 @@ class MalManager(
      * @param manga model containing all updates to the specified series
      * @return [Observable] instance that has success and error states
      */
+    @Deprecated("Use updateItem")
     fun updateManga(manga: UpdateManga): Observable<Any> {
         return Observable.create { subscriber ->
             val callResponse = api.updateManga(manga.id, manga.getXml())
@@ -363,5 +404,87 @@ class MalManager(
                 subscriber.tryOnError(Throwable(response.message()))
             }
         }
+    }
+
+    private fun createUpdateString(
+        item: MalimeModel,
+        newProgress: Int,
+        newStatus: UserSeriesStatus
+    ): String {
+        // Need to test if some of these can be removed...
+        // I'm not sure if it has to be in the correct order
+        // so for now it won't be... if it has to be the correct order is
+        /*
+        Anime:
+        "<entry>" +
+                "<episode>$newProgress</episode>" +
+                "<status>$status</status>" +
+                "<score>$score</score>" +
+                "<storage_type></storage_type>" +
+                "<storage_value></storage_value>" +
+                "<times_rewatched></times_rewatched>" +
+                "<rewatch_value></rewatch_value>" +
+                "<date_start></date_start>" +
+                "<date_finish>$dateFinish</date_finish>" +
+                "<priority></priority>" +
+                "<enable_discussion></enable_discussion>" +
+                "<enable_rewatching></enable_rewatching>" +
+                "<comments></comments>" +
+                "<tags></tags>" +
+                "</entry>"
+
+         Manga:
+         "<entry>" +
+                "<chapter>$chapter</chapter>" +
+                "<volume>$volume</volume>" +
+                "<status>$status</status>" +
+                "<score>$score</score>" +
+                "<times_reread></times_reread>" +
+                "<reread_value></reread_value>" +
+                "<date_start></date_start>" +
+                "<date_finish>$dateFinish</date_finish>" +
+                "<priority></priority>" +
+                "<enable_discussion></enable_discussion>" +
+                "<enable_rewatching></enable_rewatching>" +
+                "<comments></comments>" +
+                "<scan_group></scan_group>" +
+                "<tags></tags>" +
+                "</entry>"
+         */
+
+        val currentTime = SimpleDateFormat("MM/dd/yyyy", Locale.getDefault())
+            .format(Calendar.getInstance().time)
+        return "<entry>" +
+                "<priority></priority>" +
+                "<enable_discussion></enable_discussion>" +
+                "<enable_rewatching></enable_rewatching>" +
+                "<comments></comments>" +
+                "<tags></tags>" +
+                "<score></score>" +
+                "<status>${newStatus.malId}</status>" +
+                if (item.type == ItemType.Anime) {
+                    "<episode>$newProgress</episode>" +
+                            "<times_rewatched></times_rewatched>" +
+                            "<rewatch_value></rewatch_value>" +
+                            "<storage_type></storage_type>" +
+                            "<storage_value></storage_value>"
+                } else {
+                    "<chapter>$newProgress</chapter>" +
+                            "<volume></volume>" +
+                            "<times_reread></times_reread>" +
+                            "<reread_value></reread_value>" +
+                            "<scan_group></scan_group>"
+                } +
+                if (item.progress == 0 && newProgress > 0) {
+                    "<date_start>$currentTime</date_start>"
+                } else {
+                    "<date_start>${item.startDate}</date_start>"
+                } +
+                if (item.progress < item.totalLength && newProgress == item.totalLength) {
+                    "<date_finish>$currentTime</date_finish>"
+                } else {
+                    "<date_finish>${item.endDate}</date_finish>"
+                } +
+                "</entry>"
     }
 }

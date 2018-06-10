@@ -31,11 +31,11 @@
         <activity android:name=".view.preferences.PrefActivity" />
 
         <service
-            android:name=".util.PeriodicUpdateService"
+            android:name=".util.updateservice.PeriodicUpdateService"
             android:label="@string/update_service_name"
             android:permission="android.permission.BIND_JOB_SERVICE" />
 
-        <receiver android:name=".util.PeriodicUpdateReceiver">
+        <receiver android:name=".util.updateservice.PeriodicUpdateReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>

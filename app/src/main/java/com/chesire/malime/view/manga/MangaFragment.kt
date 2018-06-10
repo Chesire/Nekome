@@ -26,6 +26,8 @@ import com.chesire.malime.mal.models.UpdateManga
 import com.chesire.malime.mal.room.MalimeDatabase
 import com.chesire.malime.mal.room.MangaDao
 import com.chesire.malime.util.SharedPref
+import com.chesire.malime.util.preferenceFilter
+import com.chesire.malime.util.preferenceSort
 import com.chesire.malime.view.MalModelInteractionListener
 import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -131,7 +133,7 @@ class MangaFragment : Fragment(),
     }
 
     private fun spawnFilterDialog() {
-        val states = sharedPref.getAnimeFilter()
+        val states = sharedPref.getFilter()
         AlertDialog.Builder(requireContext())
             .setTitle(R.string.filter_dialog_title)
             .setMultiChoiceItems(R.array.manga_states, states, { _, which, isChecked ->
@@ -146,7 +148,7 @@ class MangaFragment : Fragment(),
                         Snackbar.LENGTH_LONG
                     ).show()
                 } else {
-                    sharedPref.setAnimeFilter(states)
+                    sharedPref.setFilter(states)
                 }
             })
             .setNegativeButton(android.R.string.cancel, null)
@@ -155,7 +157,7 @@ class MangaFragment : Fragment(),
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
         if (key != null &&
-            (key.contains(sharedPref.preferenceAnimeFilter) || key.contains(sharedPref.preferenceAnimeSortOption))
+            (key.contains(preferenceFilter) || key.contains(preferenceSort))
         ) {
             viewAdapter.filter.filter("")
         }
