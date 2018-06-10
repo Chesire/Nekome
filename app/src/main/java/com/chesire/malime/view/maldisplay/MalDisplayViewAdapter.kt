@@ -162,25 +162,27 @@ class MalDisplayViewAdapter(
 
     inner class MalDisplayFilter : Filter() {
         override fun performFiltering(constraint: CharSequence?): FilterResults {
-            // need to filter based on shared pref - should be redone first though
-            // for now return everything
             val results = FilterResults()
+            val filterOption = sharedPref.getFilter()
             val sortOption = sharedPref.getSortOption()
 
-            val tempList = items.filter {
-                // performing filtering
-                true
-            }
-
-            results.values = tempList.sortedWith(
-                when (sortOption) {
-                    SortOption.Default -> compareBy { it.userSeriesId }
-                    SortOption.Title -> compareBy { it.title }
-                    SortOption.StartDate -> compareBy { it.startDate }
-                    SortOption.EndDate -> compareBy { it.endDate }
+            val tempList = items
+                .filter {
+                    // Internal id starts at 0 for Unknown,
+                    // but we can't filter on that, so reduce it
+                    filterOption[it.userSeriesStatus.internalId - 1]
                 }
-            )
-            results.count = items.count()
+                .sortedWith(
+                    when (sortOption) {
+                        SortOption.Default -> compareBy { it.userSeriesId }
+                        SortOption.Title -> compareBy { it.title }
+                        SortOption.StartDate -> compareBy { it.startDate }
+                        SortOption.EndDate -> compareBy { it.endDate }
+                    }
+                )
+
+            results.values = tempList
+            results.count = tempList.count()
             return results
         }
 
