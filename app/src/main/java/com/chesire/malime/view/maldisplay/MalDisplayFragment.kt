@@ -56,7 +56,7 @@ class MalDisplayFragment : Fragment() {
             )
             .get(MalDisplayViewModel::class.java)
 
-        viewAdapter = MalDisplayViewAdapter(viewModel)
+        viewAdapter = MalDisplayViewAdapter(viewModel, SharedPref(requireContext()))
         viewModel.apply {
             series.observe(this@MalDisplayFragment,
                 Observer {

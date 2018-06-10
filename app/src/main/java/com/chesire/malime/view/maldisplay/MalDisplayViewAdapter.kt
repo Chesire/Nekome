@@ -14,6 +14,7 @@ import com.chesire.malime.R
 import com.chesire.malime.core.models.MalimeModel
 import com.chesire.malime.databinding.ItemMalmodelBinding
 import com.chesire.malime.util.GlideApp
+import com.chesire.malime.util.SharedPref
 import com.chesire.malime.util.preferenceFilter
 import com.chesire.malime.util.preferenceSort
 import kotlinx.android.synthetic.main.item_malmodel.view.item_malmodel_content_layout
@@ -24,13 +25,18 @@ import kotlinx.android.synthetic.main.item_malmodel.view.item_malmodel_plus_one
 import timber.log.Timber
 
 class MalDisplayViewAdapter(
-    private val listener: ModelInteractionListener
+    private val listener: ModelInteractionListener,
+    private val sharedPref: SharedPref
 ) : RecyclerView.Adapter<MalDisplayViewAdapter.ViewHolder>(), Filterable,
     SharedPreferences.OnSharedPreferenceChangeListener {
 
     private val items = ArrayList<MalimeModel>()
     private val filteredItems = ArrayList<MalimeModel>()
     private val filter = MalDisplayFilter()
+
+    init {
+        sharedPref.registerOnChangeListener(this)
+    }
 
     fun addAll(newItems: List<MalimeModel>) {
         items.clear()
@@ -155,12 +161,20 @@ class MalDisplayViewAdapter(
 
     inner class MalDisplayFilter : Filter() {
         override fun performFiltering(constraint: CharSequence?): FilterResults {
-            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            // need to filter based on shared pref - should be redone first though
+            // for now return everything
+            val results = FilterResults()
+            results.values = items
+            results.count = items.count()
+            return results
         }
 
         override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
-            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            filteredItems.clear()
+            if (results?.values is List<*>) {
+                filteredItems.addAll(results.values as List<MalimeModel>)
+            }
+            notifyDataSetChanged()
         }
-
     }
 }
