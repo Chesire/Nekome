@@ -167,7 +167,7 @@ class AnimeViewAdapter(
 
         override fun performFiltering(p0: CharSequence?): FilterResults {
             val results = FilterResults()
-            val myFilter = sharedPref.getAnimeFilter()
+            val myFilter = sharedPref.getFilter()
             val mySortOption = sharedPref.getSortOption()
             val tempList = items.filter {
                 val compareVal = when {

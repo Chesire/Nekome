@@ -133,7 +133,7 @@ class MangaFragment : Fragment(),
     }
 
     private fun spawnFilterDialog() {
-        val states = sharedPref.getAnimeFilter()
+        val states = sharedPref.getFilter()
         AlertDialog.Builder(requireContext())
             .setTitle(R.string.filter_dialog_title)
             .setMultiChoiceItems(R.array.manga_states, states, { _, which, isChecked ->
@@ -148,7 +148,7 @@ class MangaFragment : Fragment(),
                         Snackbar.LENGTH_LONG
                     ).show()
                 } else {
-                    sharedPref.setAnimeFilter(states)
+                    sharedPref.setFilter(states)
                 }
             })
             .setNegativeButton(android.R.string.cancel, null)

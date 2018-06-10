@@ -109,7 +109,7 @@ class MalDisplayFragment : Fragment() {
     }
 
     private fun spawnFilterDialog() {
-
+        val states =
     }
 
     private fun onUpdateAllStatusChange(status: UpdatingSeriesStatus) {

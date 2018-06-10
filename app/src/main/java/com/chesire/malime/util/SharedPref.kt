@@ -92,7 +92,7 @@ class SharedPref(
         return sharedPreferences.getBoolean(preferenceAllowCrashReporting, true)
     }
 
-    fun getAnimeFilter(): BooleanArray {
+    fun getFilter(): BooleanArray {
         val filterLength = sharedPreferences.getInt(preferenceAnimeFilterLength, 0)
         if (filterLength == 0) {
             return getDefaultFilter()
@@ -106,7 +106,7 @@ class SharedPref(
         return returnArray
     }
 
-    fun setAnimeFilter(input: BooleanArray): SharedPref {
+    fun setFilter(input: BooleanArray): SharedPref {
         val editor = sharedPreferences.edit()
         editor.putInt(preferenceAnimeFilterLength, input.count())
         for (i in input.indices) {
