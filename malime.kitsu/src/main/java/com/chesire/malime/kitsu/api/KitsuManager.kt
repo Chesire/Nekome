@@ -17,7 +17,6 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 
-
 private const val MAX_RETRIES = 3
 
 class KitsuManager(

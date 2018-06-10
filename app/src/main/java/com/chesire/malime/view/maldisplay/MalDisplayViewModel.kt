@@ -52,15 +52,11 @@ class MalDisplayViewModel(
         Timber.d("Series ${model.title} image pressed, loading url")
     }
 
-    override fun onSeriesNegativeOne(model: MalimeModel) {
-        onSeriesSetProgress(model, model.progress - 1)
-    }
-
-    override fun onSeriesPlusOne(model: MalimeModel) {
-        onSeriesSetProgress(model, model.progress + 1)
-    }
-
-    override fun onSeriesSetProgress(model: MalimeModel, newProgress: Int) {
+    override fun onSeriesSetProgress(
+        model: MalimeModel,
+        newProgress: Int,
+        callback: (success: Boolean) -> Unit
+    ) {
         Timber.d("Series ${model.title} progress being changed to $newProgress")
         disposables.add(
             library.sendUpdateToApi(model, newProgress, model.userSeriesStatus)
@@ -69,9 +65,10 @@ class MalDisplayViewModel(
                 .subscribe(
                     {
                         library.updateInLocalLibrary(it)
+                        callback(true)
                     },
                     {
-                        // do something with the error
+                        callback(false)
                     }
                 )
         )
