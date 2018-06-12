@@ -1,61 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/item_search_card_view"
-    android:layout_width="match_parent"
-    android:layout_height="120dp"
-    android:layout_gravity="center"
-    android:layout_margin="4dp"
-    card_view:cardCornerRadius="2dp">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto">
 
-    <RelativeLayout
-        android:id="@+id/item_search_content_layout"
+    <data>
+
+        <variable
+            name="model"
+            type="com.chesire.malime.core.models.MalimeModel" />
+
+        <import type="android.view.View" />
+    </data>
+
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/item_search_card_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="120dp"
+        android:layout_gravity="center"
+        android:layout_margin="4dp"
+        card_view:cardCornerRadius="2dp">
 
-        <ImageView
-            android:id="@+id/item_search_image"
-            style="@style/malitem_image_style" />
+        <RelativeLayout
+            android:id="@+id/item_search_content_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/item_search_title"
-            style="@style/malitem_heading_text_style"
-            android:layout_toEndOf="@id/item_search_image" />
+            <ImageView
+                android:id="@+id/item_search_image"
+                style="@style/malitem_image_style" />
 
-        <TextView
-            android:id="@+id/item_search_progress"
-            style="@style/search_body_text_style"
-            android:layout_below="@id/item_search_title"
-            android:layout_toEndOf="@id/item_search_image"
-            android:layout_toStartOf="@id/search_image_add_button"
-            android:maxLines="8" />
+            <TextView
+                android:id="@+id/item_search_title"
+                style="@style/malitem_heading_text_style"
+                android:layout_toEndOf="@id/item_search_image"
+                android:text="@{model.title}" />
 
-        <ImageButton
-            android:id="@+id/search_image_add_button"
-            style="@style/search_image_add_button_style"
-            android:layout_alignParentEnd="true"
-            android:src="@drawable/ic_exposure_plus_1_black" />
+            <TextView
+                android:id="@+id/item_search_progress"
+                style="@style/search_body_text_style"
+                android:layout_below="@id/item_search_title"
+                android:layout_toEndOf="@id/item_search_image"
+                android:layout_toStartOf="@id/search_image_add_button"
+                android:maxLines="8"
+                android:text="@{model.seriesStatus}" />
 
-    </RelativeLayout>
+            <ImageButton
+                android:id="@+id/search_image_add_button"
+                style="@style/search_image_add_button_style"
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/ic_exposure_plus_1_black" />
 
-    <RelativeLayout
-        android:id="@+id/item_search_loading_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone">
+        </RelativeLayout>
 
-        <ImageView
+        <RelativeLayout
+            android:id="@+id/item_search_loading_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:alpha="0.75"
-            android:background="#FFFAFAFA"
-            android:clickable="false" />
+            android:visibility="gone">
 
-        <ProgressBar
-            style="?android:attr/progressBarStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true" />
-    </RelativeLayout>
-</android.support.v7.widget.CardView>
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:alpha="0.75"
+                android:background="#FFFAFAFA"
+                android:clickable="false" />
+
+            <ProgressBar
+                style="?android:attr/progressBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true" />
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+</layout>

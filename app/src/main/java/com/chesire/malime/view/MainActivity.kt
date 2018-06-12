@@ -14,13 +14,13 @@ import android.view.MenuItem
 import com.chesire.malime.R
 import com.chesire.malime.core.flags.ItemType
 import com.chesire.malime.mal.room.MalimeDatabase
-import com.chesire.malime.util.updateservice.PeriodicUpdateHelper
 import com.chesire.malime.util.SharedPref
+import com.chesire.malime.util.updateservice.PeriodicUpdateHelper
 import com.chesire.malime.view.login.LoginActivity
 import com.chesire.malime.view.maldisplay.MalDisplayFragment
 import com.chesire.malime.view.preferences.PrefActivity
 import com.chesire.malime.view.preferences.SortOption
-import com.chesire.malime.view.search.SearchFragment
+import com.chesire.malime.view.search.Search2Fragment
 import timber.log.Timber
 
 class MainActivity : AppCompatActivity() {
@@ -51,9 +51,9 @@ class MainActivity : AppCompatActivity() {
                             ?: MalDisplayFragment.newInstance(ItemType.Manga)
                 }
                 else -> {
-                    tag = SearchFragment.tag
+                    tag = Search2Fragment.tag
                     fragment = supportFragmentManager.findFragmentByTag(tag)
-                            ?: SearchFragment.newInstance()
+                            ?: Search2Fragment.newInstance()
                 }
             }
 
@@ -160,7 +160,7 @@ class MainActivity : AppCompatActivity() {
         title = when (fragmentTag) {
             MalDisplayFragment.malDisplayAnime -> getString(R.string.main_nav_anime)
             MalDisplayFragment.malDisplayManga -> getString(R.string.main_nav_manga)
-            SearchFragment.tag -> getString(R.string.main_nav_search)
+            Search2Fragment.tag -> getString(R.string.main_nav_search)
             else -> getString(R.string.app_name)
         }
 
