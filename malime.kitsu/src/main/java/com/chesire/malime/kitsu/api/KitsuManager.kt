@@ -174,7 +174,30 @@ class KitsuManager(
 
             if (response.isSuccessful && body != null && body.data.isNotEmpty()) {
                 Timber.i("Successfully searched, found [${body.data.count()}] items")
-                
+                val items = body.data.map {
+                    MalimeModel(
+                        seriesId = it.id,
+                        userSeriesId = 0,
+                        type = ItemType.getTypeForString(it.type),
+                        slug = it.attributes.slug,
+                        title = it.attributes.canonicalTitle,
+                        seriesStatus = SeriesStatus.getStatusForKitsuString(it.attributes.status),
+                        userSeriesStatus = UserSeriesStatus.Unknown,
+                        progress = 0,
+                        totalLength = if (ItemType.getTypeForString(it.type) == ItemType.Anime) {
+                            it.attributes.episodeCount
+                        } else {
+                            it.attributes.chapterCount
+                        },
+                        posterImage = getImage(it.attributes.posterImage),
+                        coverImage = getImage(it.attributes.coverImage),
+                        nsfw = it.attributes.nsfw,
+                        startDate = "",
+                        endDate = ""
+                    )
+                }
+                it.onNext(items)
+                it.onComplete()
             } else {
                 Timber.e(Throwable(response.message()), "Error performing search")
                 it.tryOnError(Throwable(response.message()))

@@ -37,6 +37,7 @@ interface KitsuService {
         @Query("page[limit]") limit: Int = 500 // might want to reduce to say 100
     ): Call<LibraryResponse>
 
+    // Search is limited to 20 items at once, might want to do the above if more are required
     @GET(
         "api/edge/{type}" +
                 "&fields[anime]=slug,canonicalTitle,status,posterImage,coverImage,episodeCount,nsfw" +
