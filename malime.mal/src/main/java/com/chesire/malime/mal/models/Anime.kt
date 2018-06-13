@@ -1,16 +1,9 @@
 package com.chesire.malime.mal.models
 
 import android.arch.persistence.room.Entity
-import android.arch.persistence.room.Ignore
 import android.arch.persistence.room.PrimaryKey
-import android.os.Parcel
-import android.os.Parcelable
-import com.chesire.malime.mal.MalStates
 import org.simpleframework.xml.Element
 import org.simpleframework.xml.Root
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
 
 @Entity
 @Root(name = "anime")
@@ -40,12 +33,10 @@ data class Anime(
     @param:Element(name = "series_status", required = false)
     var seriesStatus: Int? = null,
 
-    @Deprecated("Use seriesStartDate instead")
     @field:Element(name = "series_start", required = false)
     @param:Element(name = "series_start", required = false)
     var seriesStart: String? = null,
 
-    @Deprecated("Use seriesEndDate instead")
     @field:Element(name = "series_end", required = false)
     @param:Element(name = "series_end", required = false)
     var seriesEnd: String? = null,
@@ -93,111 +84,4 @@ data class Anime(
     @field:Element(name = "my_tags", required = false)
     @param:Element(name = "my_tags", required = false)
     var myTags: String? = null
-) : Parcelable {
-    @Ignore
-    private val baseUrl: String = "https://myanimelist.net/anime/"
-
-    fun getMalUrl(): String = baseUrl + seriesAnimeDbId
-
-    fun getTotalEpisodes(): String =
-        if (seriesEpisodes == 0) {
-            "??"
-        } else {
-            seriesEpisodes.toString()
-        }
-
-    fun getSeriesStartDate(): Date = SimpleDateFormat("yyyy-MM-dd", Locale.ROOT).parse(seriesStart)
-
-    fun getSeriesEndDate(): Date {
-        val dateToUse: String = if (seriesEnd == "0000-00-00") {
-            "9999-99-99"
-        } else {
-            seriesEnd!!
-        }
-
-        return SimpleDateFormat("yyyy-MM-dd", Locale.ROOT).parse(dateToUse)
-    }
-
-    /**
-     * Creates a new [Anime] object to temporarily store in room.
-     */
-    constructor(searchItem: Entry) : this(
-        seriesAnimeDbId = searchItem.id,
-        seriesTitle = searchItem.title,
-        seriesSynonyms = searchItem.synonyms,
-        //seriesType = searchItem.type,
-        seriesEpisodes = searchItem.episodes,
-        //seriesStatus = searchItem.status,
-        seriesStart = searchItem.start_date,
-        seriesEnd = searchItem.end_date,
-        seriesImage = searchItem.image,
-        myId = 0,
-        myWatchedEpisodes = 0,
-        myStartDate = "",
-        myFinishDate = "",
-        myScore = 0,
-        myStatus = MalStates.WATCHING.id,
-        myRewatching = 0,
-        myRewatchingEp = 0,
-        myLastUpdated = 0,
-        myTags = ""
-    )
-
-    constructor(parcel: Parcel) : this(
-        parcel.readValue(Int::class.java.classLoader) as? Int,
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readValue(Int::class.java.classLoader) as? Int,
-        parcel.readValue(Int::class.java.classLoader) as? Int,
-        parcel.readValue(Int::class.java.classLoader) as? Int,
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readValue(Int::class.java.classLoader) as? Int,
-        parcel.readValue(Int::class.java.classLoader) as? Int,
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readValue(Int::class.java.classLoader) as? Int,
-        parcel.readValue(Int::class.java.classLoader) as? Int,
-        parcel.readValue(Int::class.java.classLoader) as? Int,
-        parcel.readValue(Int::class.java.classLoader) as? Int,
-        parcel.readValue(Int::class.java.classLoader) as? Int,
-        parcel.readString()
-    )
-
-    override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeValue(seriesAnimeDbId)
-        parcel.writeString(seriesTitle)
-        parcel.writeString(seriesSynonyms)
-        parcel.writeValue(seriesType)
-        parcel.writeValue(seriesEpisodes)
-        parcel.writeValue(seriesStatus)
-        parcel.writeString(seriesStart)
-        parcel.writeString(seriesEnd)
-        parcel.writeString(seriesImage)
-        parcel.writeValue(myId)
-        parcel.writeValue(myWatchedEpisodes)
-        parcel.writeString(myStartDate)
-        parcel.writeString(myFinishDate)
-        parcel.writeValue(myScore)
-        parcel.writeValue(myStatus)
-        parcel.writeValue(myRewatching)
-        parcel.writeValue(myRewatchingEp)
-        parcel.writeValue(myLastUpdated)
-        parcel.writeString(myTags)
-    }
-
-    override fun describeContents(): Int {
-        return 0
-    }
-
-    companion object CREATOR : Parcelable.Creator<Anime> {
-        override fun createFromParcel(parcel: Parcel): Anime {
-            return Anime(parcel)
-        }
-
-        override fun newArray(size: Int): Array<Anime?> {
-            return arrayOfNulls(size)
-        }
-    }
-}
+)
