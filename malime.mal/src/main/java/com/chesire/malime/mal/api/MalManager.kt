@@ -9,6 +9,8 @@ import com.chesire.malime.core.models.LoginResponse
 import com.chesire.malime.core.models.MalimeModel
 import com.chesire.malime.mal.models.Anime
 import com.chesire.malime.mal.models.Manga
+import com.chesire.malime.mal.models.response.SearchForAnimeResponse
+import com.chesire.malime.mal.models.response.SearchForMangaResponse
 import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.functions.BiFunction
@@ -190,9 +192,9 @@ class MalManager(
                     subscriber.tryOnError(Throwable(response.message()))
                 } else {
                     val list = if (type == ItemType.Anime) {
-                        (responseBody as MalService.SearchForAnimeResponse).entries
+                        (responseBody as SearchForAnimeResponse).entries
                     } else {
-                        (responseBody as MalService.SearchForMangaResponse).entries
+                        (responseBody as SearchForMangaResponse).entries
                     }
 
                     val responseList = list.map {
