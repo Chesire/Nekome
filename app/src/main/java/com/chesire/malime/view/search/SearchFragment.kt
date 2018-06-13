@@ -25,10 +25,10 @@ import com.chesire.malime.mal.api.MalManagerFactory
 import com.chesire.malime.util.SharedPref
 import timber.log.Timber
 
-class Search2Fragment : Fragment() {
+class SearchFragment : Fragment() {
     private var checkedOption = R.id.search_option_anime_choice
     private lateinit var viewModel: SearchViewModel
-    private lateinit var viewAdapter: Search2ViewAdapter
+    private lateinit var viewAdapter: SearchViewAdapter
     private lateinit var sharedPref: SharedPref
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,16 +55,16 @@ class Search2Fragment : Fragment() {
                 )
             )
             .get(SearchViewModel::class.java)
-        viewAdapter = Search2ViewAdapter(viewModel)
+        viewAdapter = SearchViewAdapter(viewModel)
 
         viewModel.apply {
-            series.observe(this@Search2Fragment,
+            series.observe(this@SearchFragment,
                 Observer {
                     if (it != null) {
                         viewAdapter.setCurrentItems(it)
                     }
                 })
-            searchItems.observe(this@Search2Fragment,
+            searchItems.observe(this@SearchFragment,
                 Observer {
                     if (it != null) {
                         viewAdapter.addSearchItems(it)
@@ -124,9 +124,9 @@ class Search2Fragment : Fragment() {
     }
 
     companion object {
-        const val tag = "Search2Fragment"
-        fun newInstance(): Search2Fragment {
-            val search2Fragment = Search2Fragment()
+        const val tag = "SearchFragment"
+        fun newInstance(): SearchFragment {
+            val search2Fragment = SearchFragment()
             val args = Bundle()
             search2Fragment.arguments = args
             return search2Fragment

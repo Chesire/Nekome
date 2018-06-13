@@ -15,9 +15,9 @@ import kotlinx.android.synthetic.main.item_search.view.item_search_image
 import kotlinx.android.synthetic.main.item_search.view.item_search_loading_layout
 import kotlinx.android.synthetic.main.item_search.view.search_image_add_button
 
-class Search2ViewAdapter(
-    private val interactor: Search2InteractionListener
-) : RecyclerView.Adapter<Search2ViewAdapter.ViewHolder>() {
+class SearchViewAdapter(
+    private val interactor: SearchInteractionListener
+) : RecyclerView.Adapter<SearchViewAdapter.ViewHolder>() {
     private val searchItems = ArrayList<MalimeModel>()
     private val currentItems = ArrayList<MalimeModel>()
 

@@ -22,7 +22,7 @@ class SearchViewModel(
     private val library: Library,
     private val subscribeScheduler: Scheduler,
     private val observeScheduler: Scheduler
-) : AndroidViewModel(context), Search2InteractionListener {
+) : AndroidViewModel(context), SearchInteractionListener {
     private val disposables = CompositeDisposable()
     val series: LiveData<List<MalimeModel>> = LiveDataReactiveStreams.fromPublisher(
         library.observeLibrary().toFlowable(BackpressureStrategy.ERROR)
