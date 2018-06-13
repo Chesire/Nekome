@@ -36,14 +36,14 @@ class SearchViewModel(
                 .subscribeOn(subscribeScheduler)
                 .observeOn(observeScheduler)
                 .doOnSubscribe {
-                    params.isSearching = true
+                    params.searching = true
                 }
                 .doOnComplete {
-                    params.isSearching = false
+                    params.searching = false
                 }
                 .doOnError {
                     Timber.e(it, "Error performing the search")
-                    params.isSearching = false
+                    params.searching = false
                 }
                 .subscribe {
                     Timber.i("Found ${it.count()} items")
