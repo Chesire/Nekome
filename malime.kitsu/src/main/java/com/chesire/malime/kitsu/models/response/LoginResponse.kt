@@ -1,4 +1,4 @@
-package com.chesire.malime.kitsu.models
+package com.chesire.malime.kitsu.models.response
 
 import com.google.gson.annotations.SerializedName
 

@@ -1,12 +1,12 @@
 package com.chesire.malime.mal.api
 
 import com.chesire.malime.mal.models.Anime
-import com.chesire.malime.mal.models.Entry
 import com.chesire.malime.mal.models.Manga
-import com.chesire.malime.mal.models.MyInfo
-import org.simpleframework.xml.Element
-import org.simpleframework.xml.ElementList
-import org.simpleframework.xml.Root
+import com.chesire.malime.mal.models.response.GetAllAnimeResponse
+import com.chesire.malime.mal.models.response.GetAllMangaResponse
+import com.chesire.malime.mal.models.response.LoginToAccountResponse
+import com.chesire.malime.mal.models.response.SearchForAnimeResponse
+import com.chesire.malime.mal.models.response.SearchForMangaResponse
 import retrofit2.Call
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
@@ -99,7 +99,7 @@ interface MalService {
      * The [data] param must be a string representation of XML.
      *
      * @param id The id of the anime to update, this will be the [Anime.seriesAnimeDbId]
-     * @param data String representation of the anime model, handled by the [UpdateAnime.getXml]
+     * @param data String representation of the anime model
      * @return Call to execute for the POST method
      */
     @FormUrlEncoded
@@ -109,72 +109,19 @@ interface MalService {
         @Field("data") data: String
     ): Call<Void>
 
+    /**
+     * Executes a POST to update the data for a manga.
+     *
+     * The [data] param must be a string representation of XML.
+     *
+     * @param id The id of the manga to update, this will be the [Manga.seriesMangaDbId]
+     * @param data String representation of the manga model
+     * @return Call to execute for the POST method
+     */
     @FormUrlEncoded
     @POST("api/mangalist/update/{id}.xml")
     fun updateManga(
         @Path("id") id: Int,
         @Field("data") data: String
     ): Call<Void>
-
-    /**
-     * Response object to handle calls to [getAllAnime].
-     */
-    @Root(name = "myanimelist")
-    data class GetAllAnimeResponse(
-        @field:Element(name = "myinfo", required = false)
-        @param:Element(name = "myinfo", required = false)
-        val myInfo: MyInfo? = null,
-
-        @field:ElementList(inline = true, entry = "anime", required = false)
-        @param:ElementList(inline = true, entry = "anime", required = false)
-        val animeList: List<Anime>? = null
-    )
-
-    /**
-     * Response object to handle calls to [getAllManga].
-     */
-    @Root(name = "myanimelist")
-    data class GetAllMangaResponse(
-        @field:Element(name = "myinfo", required = false)
-        @param:Element(name = "myinfo", required = false)
-        val myInfo: MyInfo? = null,
-
-        @field:ElementList(inline = true, entry = "manga", required = false)
-        @param:ElementList(inline = true, entry = "manga", required = false)
-        val mangaList: List<Manga>? = null
-    )
-
-    /**
-     * Response object to handle calls to [loginToAccount].
-     */
-    @Root(name = "user")
-    data class LoginToAccountResponse(
-        @field:Element(name = "id", required = false)
-        @param:Element(name = "id", required = false)
-        val id: Int? = null,
-
-        @field:Element(name = "username", required = false)
-        @param:Element(name = "username", required = false)
-        val username: String? = null
-    )
-
-    /**
-     * Response object to handle calls to [searchForAnime].
-     */
-    @Root(name = "anime")
-    data class SearchForAnimeResponse(
-        @field:ElementList(inline = true, entry = "entry")
-        @param:ElementList(inline = true, entry = "entry")
-        val entries: List<Entry>
-    )
-
-    /**
-     * Response object to handle calls to [searchForManga].
-     */
-    @Root(name = "manga")
-    data class SearchForMangaResponse(
-        @field:ElementList(inline = true, entry = "entry")
-        @param:ElementList(inline = true, entry = "entry")
-        val entries: List<Entry>
-    )
 }

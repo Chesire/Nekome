@@ -1,9 +1,10 @@
 package com.chesire.malime.kitsu.api
 
-import com.chesire.malime.kitsu.models.LibraryResponse
+import com.chesire.malime.kitsu.models.response.AddItemResponse
+import com.chesire.malime.kitsu.models.response.LibraryResponse
 import com.chesire.malime.kitsu.models.LoginRequest
-import com.chesire.malime.kitsu.models.LoginResponse
-import com.chesire.malime.kitsu.models.UpdateItemResponse
+import com.chesire.malime.kitsu.models.response.LoginResponse
+import com.chesire.malime.kitsu.models.response.UpdateItemResponse
 import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.http.Body
@@ -36,6 +37,26 @@ interface KitsuService {
         @Query("page[offset]") offset: Int,
         @Query("page[limit]") limit: Int = 500 // might want to reduce to say 100
     ): Call<LibraryResponse>
+
+    // Search is limited to 20 items at once, might want to do the above if more are required
+    @GET(
+        "api/edge/{type}" +
+                "?fields[anime]=slug,canonicalTitle,status,posterImage,coverImage,episodeCount,nsfw" +
+                "&fields[manga]=slug,canonicalTitle,status,posterImage,chapterCount"
+    )
+    fun search(
+        @Path("type") type: String,
+        @Query("filter[text]") title: String
+    ): Call<LibraryResponse>
+
+    @POST(
+        "api/edge/library-entries" +
+                "?include=anime,manga" +
+                "&fields[anime]=slug,canonicalTitle,status,posterImage,coverImage,episodeCount,nsfw" +
+                "&fields[manga]=slug,canonicalTitle,status,posterImage,chapterCount"
+    )
+    @Headers("Content-Type: application/vnd.api+json")
+    fun addItem(@Body data: RequestBody): Call<AddItemResponse>
 
     @PATCH("api/edge/library-entries/{id}")
     @Headers("Content-Type: application/vnd.api+json")

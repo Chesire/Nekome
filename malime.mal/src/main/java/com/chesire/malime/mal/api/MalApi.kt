@@ -1,6 +1,11 @@
 package com.chesire.malime.mal.api
 
 import com.chesire.malime.mal.BuildConfig
+import com.chesire.malime.mal.models.response.GetAllAnimeResponse
+import com.chesire.malime.mal.models.response.GetAllMangaResponse
+import com.chesire.malime.mal.models.response.LoginToAccountResponse
+import com.chesire.malime.mal.models.response.SearchForAnimeResponse
+import com.chesire.malime.mal.models.response.SearchForMangaResponse
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Response
@@ -61,35 +66,35 @@ class MalApi(
     /**
      * Wraps the [MalService.getAllAnime] method.
      */
-    fun getAllAnime(username: String): Call<MalService.GetAllAnimeResponse> {
+    fun getAllAnime(username: String): Call<GetAllAnimeResponse> {
         return malService.getAllAnime(username)
     }
 
     /**
      * Wraps the [MalService.getAllManga] method.
      */
-    fun getAllManga(username: String): Call<MalService.GetAllMangaResponse> {
+    fun getAllManga(username: String): Call<GetAllMangaResponse> {
         return malService.getAllManga(username)
     }
 
     /**
      * Wraps the [MalService.loginToAccount] method.
      */
-    fun loginToAccount(): Call<MalService.LoginToAccountResponse> {
+    fun loginToAccount(): Call<LoginToAccountResponse> {
         return malService.loginToAccount()
     }
 
     /**
      * Wraps the [MalService.searchForAnime] method.
      */
-    fun searchForAnime(name: String): Call<MalService.SearchForAnimeResponse> {
+    fun searchForAnime(name: String): Call<SearchForAnimeResponse> {
         return malService.searchForAnime(name)
     }
 
     /**
      * Wraps the [MalService.searchForManga] method.
      */
-    fun searchForManga(name: String): Call<MalService.SearchForMangaResponse> {
+    fun searchForManga(name: String): Call<SearchForMangaResponse> {
         return malService.searchForManga(name)
     }
 

@@ -1,12 +1,13 @@
 package com.chesire.malime.kitsu.api
 
 import com.chesire.malime.core.api.MalimeApi
+import com.chesire.malime.core.api.SearchApi
 import com.chesire.malime.core.flags.ItemType
 import com.chesire.malime.core.flags.SeriesStatus
 import com.chesire.malime.core.flags.UserSeriesStatus
 import com.chesire.malime.core.models.LoginResponse
 import com.chesire.malime.core.models.MalimeModel
-import com.chesire.malime.kitsu.models.UpdateItemResponse
+import com.chesire.malime.kitsu.models.response.UpdateItemResponse
 import com.google.gson.JsonObject
 import io.reactivex.Observable
 import io.reactivex.Single
@@ -22,7 +23,8 @@ private const val MAX_RETRIES = 3
 class KitsuManager(
     private val api: KitsuApi,
     private val userId: Int
-) : MalimeApi {
+) : MalimeApi, SearchApi {
+
     override fun login(username: String, password: String): Single<LoginResponse> {
         // The api mentions it wants the username, but it seems it wants the email address instead
         return Single.create {
@@ -79,7 +81,7 @@ class KitsuManager(
                 val response = callResponse.execute()
                 val body = response.body()
 
-                if (response.isSuccessful && body != null && body.data.isNotEmpty()) {
+                if (response.isSuccessful && body != null) {
                     Timber.i("Got next set of user items")
                     retries = 0
 
@@ -138,6 +140,47 @@ class KitsuManager(
         }
     }
 
+    override fun addItem(item: MalimeModel): Single<MalimeModel> {
+        return Single.create {
+            val json = createNewModel(item)
+            val requestBody = RequestBody.create(MediaType.parse("application/vnd.api+json"), json)
+
+            val callResponse = api.addItem(requestBody)
+            val response = callResponse.execute()
+            val body = response.body()
+
+            if (response.isSuccessful && body != null) {
+                Timber.i("Successfully updated series")
+                val seriesData = body.included[0]
+                val newItem = MalimeModel(
+                    seriesId = seriesData.id,
+                    userSeriesId = body.data.id,
+                    type = ItemType.getTypeForString(seriesData.type),
+                    slug = seriesData.attributes.slug,
+                    title = seriesData.attributes.canonicalTitle,
+                    seriesStatus = SeriesStatus.getStatusForKitsuString(seriesData.attributes.status),
+                    userSeriesStatus = UserSeriesStatus.getStatusForKitsuString(body.data.attributes.status),
+                    progress = body.data.attributes.progress,
+                    totalLength = if (ItemType.getTypeForString(seriesData.type) == ItemType.Anime) {
+                        seriesData.attributes.episodeCount
+                    } else {
+                        seriesData.attributes.chapterCount
+                    },
+                    posterImage = getImage(seriesData.attributes.posterImage),
+                    coverImage = getImage(seriesData.attributes.coverImage),
+                    nsfw = seriesData.attributes.nsfw,
+                    startDate = seriesData.attributes.startedAt ?: "",
+                    endDate = seriesData.attributes.finishedAt ?: ""
+                )
+
+                it.onSuccess(newItem)
+            } else {
+                Timber.e(Throwable(response.message()), "Error updating the series")
+                it.tryOnError(Throwable(response.message()))
+            }
+        }
+    }
+
     override fun updateItem(
         item: MalimeModel,
         newProgress: Int,
@@ -164,6 +207,45 @@ class KitsuManager(
         }
     }
 
+    override fun searchForSeriesWith(title: String, type: ItemType): Observable<List<MalimeModel>> {
+        return Observable.create {
+            val callResponse = api.search(title, type)
+            val response = callResponse.execute()
+            val body = response.body()
+
+            if (response.isSuccessful && body != null && body.data.isNotEmpty()) {
+                Timber.i("Successfully searched, found [${body.data.count()}] items")
+                val items = body.data.map {
+                    MalimeModel(
+                        seriesId = it.id,
+                        userSeriesId = 0,
+                        type = ItemType.getTypeForString(it.type),
+                        slug = it.attributes.slug,
+                        title = it.attributes.canonicalTitle,
+                        seriesStatus = SeriesStatus.getStatusForKitsuString(it.attributes.status),
+                        userSeriesStatus = UserSeriesStatus.Unknown,
+                        progress = 0,
+                        totalLength = if (ItemType.getTypeForString(it.type) == ItemType.Anime) {
+                            it.attributes.episodeCount
+                        } else {
+                            it.attributes.chapterCount
+                        },
+                        posterImage = getImage(it.attributes.posterImage),
+                        coverImage = getImage(it.attributes.coverImage),
+                        nsfw = it.attributes.nsfw,
+                        startDate = "",
+                        endDate = ""
+                    )
+                }
+                it.onNext(items)
+                it.onComplete()
+            } else {
+                Timber.e(Throwable(response.message()), "Error performing search")
+                it.tryOnError(Throwable(response.message()))
+            }
+        }
+    }
+
     private fun getImage(map: Map<String, Any>?): String {
         if (map == null) {
             return ""
@@ -174,6 +256,32 @@ class KitsuManager(
                 ?: map["small"] as String?
                 ?: map["tiny"] as String?
                 ?: ""
+    }
+
+    private fun createNewModel(item: MalimeModel): String {
+        return JsonObject().apply {
+            add("data", JsonObject().apply {
+                addProperty("type", "libraryEntries")
+                add("attributes", JsonObject().apply {
+                    addProperty("progress", 0)
+                    addProperty("status", UserSeriesStatus.Current.kitsuString)
+                })
+                add("relationships", JsonObject().apply {
+                    add("user", JsonObject().apply {
+                        add("data", JsonObject().apply {
+                            addProperty("type", "users")
+                            addProperty("id", userId)
+                        })
+                    })
+                    add("media", JsonObject().apply {
+                        add("data", JsonObject().apply {
+                            addProperty("type", item.type.text)
+                            addProperty("id", item.seriesId)
+                        })
+                    })
+                })
+            })
+        }.toString()
     }
 
     private fun createUpdateModel(

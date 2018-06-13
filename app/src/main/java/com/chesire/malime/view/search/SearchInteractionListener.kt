@@ -1,8 +1,8 @@
 package com.chesire.malime.view.search
 
-import com.chesire.malime.mal.models.Entry
+import com.chesire.malime.core.models.MalimeModel
 
 interface SearchInteractionListener {
-    fun onAddPressed(selectedEntry: Entry, callback: (Boolean) -> Unit)
-    fun onImageClicked(entry: Entry)
+    fun addNewSeries(selectedSeries: MalimeModel, callback: (Boolean) -> Unit)
+    fun navigateToSeries(selectedSeries: MalimeModel)
 }

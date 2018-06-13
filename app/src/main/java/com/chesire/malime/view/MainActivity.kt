@@ -13,9 +13,9 @@ import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import com.chesire.malime.R
 import com.chesire.malime.core.flags.ItemType
-import com.chesire.malime.mal.room.MalimeDatabase
-import com.chesire.malime.util.updateservice.PeriodicUpdateHelper
+import com.chesire.malime.core.room.MalimeDatabase
 import com.chesire.malime.util.SharedPref
+import com.chesire.malime.util.updateservice.PeriodicUpdateHelper
 import com.chesire.malime.view.login.LoginActivity
 import com.chesire.malime.view.maldisplay.MalDisplayFragment
 import com.chesire.malime.view.preferences.PrefActivity

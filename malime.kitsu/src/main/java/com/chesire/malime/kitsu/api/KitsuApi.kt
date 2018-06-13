@@ -1,10 +1,12 @@
 package com.chesire.malime.kitsu.api
 
+import com.chesire.malime.core.flags.ItemType
 import com.chesire.malime.kitsu.BuildConfig
-import com.chesire.malime.kitsu.models.LibraryResponse
+import com.chesire.malime.kitsu.models.response.AddItemResponse
+import com.chesire.malime.kitsu.models.response.LibraryResponse
 import com.chesire.malime.kitsu.models.LoginRequest
-import com.chesire.malime.kitsu.models.LoginResponse
-import com.chesire.malime.kitsu.models.UpdateItemResponse
+import com.chesire.malime.kitsu.models.response.LoginResponse
+import com.chesire.malime.kitsu.models.response.UpdateItemResponse
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody
@@ -53,6 +55,14 @@ class KitsuApi(
 
     fun getUserLibrary(userId: Int, offset: Int): Call<LibraryResponse> {
         return kitsuService.getUserLibrary(userId, offset)
+    }
+
+    fun search(title: String, type: ItemType): Call<LibraryResponse> {
+        return kitsuService.search(type.text, title)
+    }
+
+    fun addItem(data: RequestBody): Call<AddItemResponse> {
+        return kitsuService.addItem(data)
     }
 
     fun updateItem(seriesId: Int, updateModel: RequestBody): Call<UpdateItemResponse> {

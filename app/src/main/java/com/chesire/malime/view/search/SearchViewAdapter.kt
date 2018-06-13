@@ -1,152 +1,120 @@
 package com.chesire.malime.view.search
 
-import android.os.Build
+import android.support.design.widget.Snackbar
 import android.support.v7.widget.RecyclerView
-import android.text.Html
-import android.text.Spanned
-import android.text.SpannedString
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
-import android.widget.ImageView
-import android.widget.TextView
+import com.chesire.malime.BR
 import com.chesire.malime.R
-import com.chesire.malime.mal.models.Anime
-import com.chesire.malime.mal.models.Entry
-import com.chesire.malime.mal.models.Manga
+import com.chesire.malime.core.models.MalimeModel
+import com.chesire.malime.databinding.ItemSearchBinding
 import com.chesire.malime.util.GlideApp
+import kotlinx.android.synthetic.main.item_search.view.item_search_content_layout
+import kotlinx.android.synthetic.main.item_search.view.item_search_image
+import kotlinx.android.synthetic.main.item_search.view.item_search_loading_layout
+import kotlinx.android.synthetic.main.item_search.view.search_image_add_button
 
 class SearchViewAdapter(
-    private val interactionListener: SearchInteractionListener
+    private val interactor: SearchInteractionListener
 ) : RecyclerView.Adapter<SearchViewAdapter.ViewHolder>() {
-    private val items = ArrayList<Entry>()
-    private val currentAnime = ArrayList<Anime>()
-    private val currentManga = ArrayList<Manga>()
-    private var currentAnimeIds: MutableList<Int?> = ArrayList()
-    private var currentMangaIds: MutableList<Int?> = ArrayList()
+    private val searchItems = ArrayList<MalimeModel>()
+    private val currentItems = ArrayList<MalimeModel>()
 
-    fun getAll(): ArrayList<Entry> {
-        return items
+    fun addSearchItems(newItems: List<MalimeModel>) {
+        searchItems.clear()
+        searchItems.addAll(newItems)
+        notifyDataSetChanged()
     }
 
-    fun getCurrentAnime(): ArrayList<Anime> {
-        return currentAnime
-    }
-
-    fun getCurrentManga(): ArrayList<Manga> {
-        return currentManga
-    }
-
-    fun setCurrentAnime(animeList: List<Anime>) {
-        currentAnime.clear()
-        currentAnime.addAll(animeList)
-        currentAnimeIds = currentAnime.map { it.seriesAnimeDbId }.toMutableList()
-    }
-
-    fun setCurrentManga(mangaList: List<Manga>) {
-        currentManga.clear()
-        currentManga.addAll(mangaList)
-        currentMangaIds = currentManga.map { it.seriesMangaDbId }.toMutableList()
-    }
-
-    fun update(newItems: List<Entry>) {
-        items.clear()
-        items.addAll(newItems)
+    fun setCurrentItems(newItems: List<MalimeModel>) {
+        currentItems.clear()
+        currentItems.addAll(newItems)
         notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.item_search, parent, false)
+            ItemSearchBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
         )
     }
 
     override fun getItemCount(): Int {
-        return items.count()
+        return searchItems.count()
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bindModel(items[position])
+        holder.bind(searchItems[position])
     }
 
     inner class ViewHolder(
-        private val searchView: View
-    ) : RecyclerView.ViewHolder(searchView) {
-        private val loadingLayout = searchView.findViewById<View>(R.id.item_search_loading_layout)
-        private val contentLayout =
-            searchView.findViewById<ViewGroup>(R.id.item_search_content_layout)
+        private val searchView: ItemSearchBinding
+    ) : RecyclerView.ViewHolder(searchView.root) {
+        private val loadingLayout = searchView.root.item_search_loading_layout
+        private val contentLayout = searchView.root.item_search_content_layout
 
-        fun bindModel(entryModel: Entry) {
-            val image = searchView.findViewById<ImageView>(R.id.item_search_image)
+        fun bind(item: MalimeModel) {
+            val image = searchView.itemSearchImage
 
-            // Setup the image
-            GlideApp.with(searchView)
-                .load(entryModel.image)
+            searchView.setVariable(BR.model, item)
+            searchView.executePendingBindings()
+
+            GlideApp.with(searchView.root)
+                .load(
+                    if (item.posterImage == "") {
+                        item.coverImage
+                    } else {
+                        item.posterImage
+                    }
+                )
                 .into(image)
-            image.setOnClickListener {
-                interactionListener.onImageClicked(entryModel)
+
+            if (currentItems.find { it.seriesId == item.seriesId } == null) {
+                searchView.searchImageAddButton.visibility = View.VISIBLE
+            } else {
+                searchView.searchImageAddButton.visibility = View.INVISIBLE
             }
 
-            // Setup the text
-            searchView.findViewById<TextView>(R.id.item_search_title).text = entryModel.title
-            searchView.findViewById<TextView>(R.id.item_search_progress).text =
-                    fromHtml(entryModel.synopsis)
-
-            val addButton = searchView.findViewById<ImageButton>(R.id.search_image_add_button)
-            val knownIds = if (items.first().chapters == null) {
-                currentAnimeIds
-            } else {
-                currentMangaIds
-            }
-
-            if (knownIds.contains(entryModel.id)) {
-                addButton.visibility = View.INVISIBLE
-            } else {
-                addButton.visibility = View.VISIBLE
-                addButton.setOnClickListener {
-                    showLoadingLayout(true)
-                    interactionListener.onAddPressed(entryModel, { success ->
-                        showLoadingLayout(false)
-
-                        if (success) {
-                            addButton.visibility = View.INVISIBLE
-                            addEntryToKnownIds(entryModel)
-                        }
-                    })
+            searchView.root.apply {
+                item_search_image.setOnClickListener {
+                    interactor.navigateToSeries(item)
+                }
+                search_image_add_button.setOnClickListener {
+                    addSeries(item)
                 }
             }
         }
 
-        private fun addEntryToKnownIds(entryModel: Entry) {
-            if (entryModel.chapters == null) {
-                currentAnimeIds.add(entryModel.id)
-            } else {
-                currentMangaIds.add(entryModel.id)
-            }
+        private fun addSeries(item: MalimeModel) {
+            setLayoutState(false)
+
+            interactor.addNewSeries(item, { success ->
+                setLayoutState(true)
+                if (!success) {
+                    Snackbar.make(
+                        loadingLayout,
+                        String.format(
+                            searchView.root.context.getString(R.string.search_add_failed),
+                            item.title
+                        ), Snackbar.LENGTH_LONG
+                    ).show()
+                }
+            })
         }
 
-        private fun fromHtml(input: String?): Spanned {
-            return when {
-                input == null -> SpannedString("")
-                Build.VERSION.SDK_INT >= Build.VERSION_CODES.N -> Html.fromHtml(
-                    input,
-                    Html.FROM_HTML_MODE_LEGACY
-                )
-                else -> Html.fromHtml(input)
-            }
-        }
-
-        private fun showLoadingLayout(displayLoader: Boolean) {
-            loadingLayout.visibility = if (displayLoader) {
-                View.VISIBLE
-            } else {
+        private fun setLayoutState(enabled: Boolean) {
+            loadingLayout.visibility = if (enabled) {
                 View.GONE
+            } else {
+                View.VISIBLE
             }
-
-            contentLayout.isEnabled = !displayLoader
+            contentLayout.isEnabled = enabled
             for (i in 0 until contentLayout.childCount) {
-                contentLayout.getChildAt(i).isEnabled = !displayLoader
+                contentLayout.getChildAt(i).isEnabled = enabled
             }
         }
     }

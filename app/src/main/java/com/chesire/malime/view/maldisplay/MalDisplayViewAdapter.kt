@@ -208,7 +208,12 @@ class MalDisplayViewAdapter(
                 .filter {
                     // Internal id starts at 0 for Unknown,
                     // but we can't filter on that, so reduce it
-                    filterOption[it.userSeriesStatus.internalId - 1]
+                    val filterId = if (it.userSeriesStatus.internalId == 0) {
+                        1
+                    } else {
+                        it.userSeriesStatus.internalId
+                    }
+                    filterOption[filterId - 1]
                 }
                 .sortedWith(
                     when (sortOption) {
