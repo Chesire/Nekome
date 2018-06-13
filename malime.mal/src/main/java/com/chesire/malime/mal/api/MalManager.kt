@@ -119,8 +119,26 @@ class MalManager(
 
     override fun addItem(item: MalimeModel): Single<MalimeModel> {
         return Single.create {
-            Timber.i("Attempting to add new series [${item.title}]")
-            updateItem(item, 0, UserSeriesStatus.Current)
+            val updateString = createUpdateString(item, 0, UserSeriesStatus.Current)
+            val callResponse = if (item.type == ItemType.Anime) {
+                api.addAnime(item.seriesId, updateString)
+            } else {
+                api.addManga(item.seriesId, updateString)
+            }
+            val response = callResponse.execute()
+
+            if (response.isSuccessful) {
+                Timber.i("Item [${item.title}] added")
+                it.onSuccess(item.copy().apply { userSeriesStatus = UserSeriesStatus.Current })
+            } else {
+                Timber.e(
+                    Throwable(response.message()),
+                    "Error adding item [%s] - %s",
+                    item.title,
+                    response.errorBody()
+                )
+                it.tryOnError(Throwable(response.message()))
+            }
         }
     }
 
