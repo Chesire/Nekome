@@ -1,10 +1,12 @@
 package com.chesire.malime.view.search
 
+import android.support.design.widget.Snackbar
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.chesire.malime.BR
+import com.chesire.malime.R
 import com.chesire.malime.core.models.MalimeModel
 import com.chesire.malime.databinding.ItemSearchBinding
 import com.chesire.malime.util.GlideApp
@@ -13,7 +15,9 @@ import kotlinx.android.synthetic.main.item_search.view.item_search_image
 import kotlinx.android.synthetic.main.item_search.view.item_search_loading_layout
 import kotlinx.android.synthetic.main.item_search.view.search_image_add_button
 
-class Search2ViewAdapter : RecyclerView.Adapter<Search2ViewAdapter.ViewHolder>() {
+class Search2ViewAdapter(
+    private val interactor: Search2InteractionListener
+) : RecyclerView.Adapter<Search2ViewAdapter.ViewHolder>() {
     private val searchItems = ArrayList<MalimeModel>()
     private val currentItems = ArrayList<MalimeModel>()
 
@@ -77,30 +81,29 @@ class Search2ViewAdapter : RecyclerView.Adapter<Search2ViewAdapter.ViewHolder>()
 
             searchView.root.apply {
                 item_search_image.setOnClickListener {
-                    // on image clicked
+                    interactor.navigateToSeries(item)
                 }
                 search_image_add_button.setOnClickListener {
                     addSeries(item)
                 }
             }
-
         }
 
         private fun addSeries(item: MalimeModel) {
             setLayoutState(false)
 
-            /*listener.updateSeries(item, newProgress, newStatus, { success ->
+            interactor.addNewSeries(item, { success ->
                 setLayoutState(true)
                 if (!success) {
                     Snackbar.make(
                         loadingLayout,
                         String.format(
-                            binding.root.context.getString(R.string.malitem_update_series_failure),
+                            searchView.root.context.getString(R.string.search_add_failed),
                             item.title
                         ), Snackbar.LENGTH_LONG
                     ).show()
                 }
-            })*/
+            })
         }
 
         private fun setLayoutState(enabled: Boolean) {

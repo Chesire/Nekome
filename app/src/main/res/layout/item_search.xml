@@ -42,8 +42,7 @@
                 android:layout_below="@id/item_search_title"
                 android:layout_toEndOf="@id/item_search_image"
                 android:layout_toStartOf="@id/search_image_add_button"
-                android:maxLines="8"
-                android:text="@{model.seriesStatus}" />
+                android:maxLines="8" />
 
             <ImageButton
                 android:id="@+id/search_image_add_button"

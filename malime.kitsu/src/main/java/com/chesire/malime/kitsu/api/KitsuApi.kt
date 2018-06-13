@@ -57,7 +57,7 @@ class KitsuApi(
     }
 
     fun search(title: String, type: ItemType): Call<LibraryResponse> {
-        return kitsuService.search(title, type.text)
+        return kitsuService.search(type.text, title)
     }
 
     fun updateItem(seriesId: Int, updateModel: RequestBody): Call<UpdateItemResponse> {

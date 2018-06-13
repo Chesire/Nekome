@@ -6,6 +6,8 @@
         <variable
             name="vm"
             type="com.chesire.malime.view.search.SearchViewModel" />
+
+        <import type="android.view.View" />
     </data>
 
     <RelativeLayout
@@ -28,7 +30,7 @@
                 android:imeOptions="actionSearch"
                 android:inputType="textNoSuggestions"
                 android:maxLines="1"
-                android:text="@={vm.searchText}" />
+                android:text="@={vm.params.searchText}" />
         </android.support.design.widget.TextInputLayout>
 
         <RadioGroup
@@ -61,6 +63,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/search_option_choices"
             android:layout_margin="8dp"
+            android:checked="@{vm.params.nsfwEnabled}"
             android:text="@string/search_nsfw_allowed"
             android:visibility="gone" />
 
@@ -77,7 +80,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:indeterminate="true"
-            android:visibility="invisible" />
+            android:visibility="@{vm.params.searching ? View.VISIBLE : View.INVISIBLE}" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/search_all_items"

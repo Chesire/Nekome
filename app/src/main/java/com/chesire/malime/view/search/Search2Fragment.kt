@@ -1,10 +1,12 @@
 package com.chesire.malime.view.search
 
+import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -14,6 +16,7 @@ import android.view.inputmethod.InputMethodManager
 import com.chesire.malime.R
 import com.chesire.malime.core.api.MalimeApi
 import com.chesire.malime.core.api.SearchApi
+import com.chesire.malime.core.flags.ItemType
 import com.chesire.malime.core.flags.SupportedService
 import com.chesire.malime.core.repositories.Library
 import com.chesire.malime.databinding.FragmentSearchBinding
@@ -23,8 +26,10 @@ import com.chesire.malime.util.SharedPref
 import timber.log.Timber
 
 class Search2Fragment : Fragment() {
-    private lateinit var sharedPref: SharedPref
+    private var checkedOption = R.id.search_option_anime_choice
     private lateinit var viewModel: SearchViewModel
+    private lateinit var viewAdapter: Search2ViewAdapter
+    private lateinit var sharedPref: SharedPref
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,6 +55,22 @@ class Search2Fragment : Fragment() {
                 )
             )
             .get(SearchViewModel::class.java)
+        viewAdapter = Search2ViewAdapter(viewModel)
+
+        viewModel.apply {
+            series.observe(this@Search2Fragment,
+                Observer {
+                    if (it != null) {
+                        viewAdapter.setCurrentItems(it)
+                    }
+                })
+            searchItems.observe(this@Search2Fragment,
+                Observer {
+                    if (it != null) {
+                        viewAdapter.addSearchItems(it)
+                    }
+                })
+        }
     }
 
     override fun onCreateView(
@@ -64,6 +85,28 @@ class Search2Fragment : Fragment() {
             false
         ).apply {
             vm = viewModel
+            searchAllItems.apply {
+                setHasFixedSize(true)
+                layoutManager = LinearLayoutManager(requireContext())
+                adapter = viewAdapter
+            }
+            searchSearchTermEditText.setOnEditorActionListener { _, _, _ ->
+                hideSystemKeyboard()
+                viewModel.searchForSeries(
+                    when (checkedOption) {
+                        R.id.search_option_anime_choice -> ItemType.Anime
+                        R.id.search_option_manga_choice -> ItemType.Manga
+                        else -> {
+                            Timber.e("Unknown search method selected")
+                            ItemType.Unknown
+                        }
+                    }
+                )
+                true
+            }
+            searchOptionChoices.setOnCheckedChangeListener { _, checkedId ->
+                checkedOption = checkedId
+            }
         }.root
     }
 

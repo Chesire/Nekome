@@ -40,7 +40,7 @@ interface KitsuService {
     // Search is limited to 20 items at once, might want to do the above if more are required
     @GET(
         "api/edge/{type}" +
-                "&fields[anime]=slug,canonicalTitle,status,posterImage,coverImage,episodeCount,nsfw" +
+                "?fields[anime]=slug,canonicalTitle,status,posterImage,coverImage,episodeCount,nsfw" +
                 "&fields[manga]=slug,canonicalTitle,status,posterImage,chapterCount"
     )
     fun search(

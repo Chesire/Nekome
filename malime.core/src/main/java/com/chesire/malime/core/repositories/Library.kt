@@ -14,7 +14,7 @@ class Library(
     context: Context,
     private val malimeApi: MalimeApi
 ) {
-    private val db: MalimeDatabase = MalimeDatabase.getInstance(context)
+    private val db = MalimeDatabase.getInstance(context)
 
     fun observeLibrary(): Observable<List<MalimeModel>> {
         return getLibraryFromDb()
