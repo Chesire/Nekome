@@ -14,6 +14,9 @@ interface MalimeDao {
     fun getAll(): Flowable<List<MalimeModel>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insert(item: MalimeModel)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(items: List<MalimeModel>)
 
     @Update

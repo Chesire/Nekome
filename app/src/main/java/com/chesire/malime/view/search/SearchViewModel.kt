@@ -58,7 +58,20 @@ class SearchViewModel(
     }
 
     override fun addNewSeries(selectedSeries: MalimeModel, callback: (Boolean) -> Unit) {
-        // call the add method
+        disposables.add(
+            library.sendNewToApi(selectedSeries)
+                .subscribeOn(subscribeScheduler)
+                .observeOn(observeScheduler)
+                .subscribe(
+                    {
+                        library.insertIntoLocalLibrary(it)
+                        callback(true)
+                    },
+                    {
+                        callback(false)
+                    }
+                )
+        )
     }
 
     override fun navigateToSeries(selectedSeries: MalimeModel) {

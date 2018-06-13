@@ -24,12 +24,25 @@ class Library(
         return malimeApi.getUserLibrary()
     }
 
+    fun sendNewToApi(item: MalimeModel): Single<MalimeModel> {
+        return malimeApi.addItem(item)
+    }
+
     fun sendUpdateToApi(
         item: MalimeModel,
         newProgress: Int,
         newStatus: UserSeriesStatus
     ): Single<MalimeModel> {
         return malimeApi.updateItem(item, newProgress, newStatus)
+    }
+
+    fun insertIntoLocalLibrary(item: MalimeModel) {
+        Completable
+            .fromAction {
+                db.malimeDao().insert(item)
+            }
+            .subscribeOn(Schedulers.io())
+            .subscribe()
     }
 
     fun insertIntoLocalLibrary(items: List<MalimeModel>) {
