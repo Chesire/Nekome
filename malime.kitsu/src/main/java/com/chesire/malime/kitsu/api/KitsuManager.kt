@@ -140,6 +140,10 @@ class KitsuManager(
         }
     }
 
+    override fun addItem(item: MalimeModel): Single<MalimeModel> {
+        return Single.create { }
+    }
+
     override fun updateItem(
         item: MalimeModel,
         newProgress: Int,
