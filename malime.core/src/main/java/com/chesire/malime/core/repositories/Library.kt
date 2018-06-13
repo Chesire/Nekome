@@ -63,10 +63,6 @@ class Library(
             .subscribe()
     }
 
-    fun clearLocalLibrary() {
-        db.malimeDao().clear()
-    }
-
     fun getItemUrl(item: MalimeModel): String {
         return malimeApi.getItemUrl(item)
     }
