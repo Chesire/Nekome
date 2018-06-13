@@ -7,7 +7,7 @@ import com.chesire.malime.core.flags.SeriesStatus
 import com.chesire.malime.core.flags.UserSeriesStatus
 import com.chesire.malime.core.models.LoginResponse
 import com.chesire.malime.core.models.MalimeModel
-import com.chesire.malime.kitsu.models.UpdateItemResponse
+import com.chesire.malime.kitsu.models.response.UpdateItemResponse
 import com.google.gson.JsonObject
 import io.reactivex.Observable
 import io.reactivex.Single
