@@ -48,6 +48,10 @@ interface KitsuService {
         @Query("filter[text]") title: String
     ): Call<LibraryResponse>
 
+    @POST("api/edge/library-entries")
+    @Headers("Content-Type: application/vnd.api+json")
+    fun addItem(@Body data: RequestBody): Call<UpdateItemResponse>
+
     @PATCH("api/edge/library-entries/{id}")
     @Headers("Content-Type: application/vnd.api+json")
     fun updateItem(

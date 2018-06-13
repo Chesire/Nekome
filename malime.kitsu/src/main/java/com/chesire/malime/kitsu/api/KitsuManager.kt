@@ -13,6 +13,8 @@ import io.reactivex.Observable
 import io.reactivex.Single
 import okhttp3.MediaType
 import okhttp3.RequestBody
+import okhttp3.ResponseBody
+import org.json.JSONObject
 import timber.log.Timber
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -81,7 +83,7 @@ class KitsuManager(
                 val response = callResponse.execute()
                 val body = response.body()
 
-                if (response.isSuccessful && body != null && body.data.isNotEmpty()) {
+                if (response.isSuccessful && body != null) {
                     Timber.i("Got next set of user items")
                     retries = 0
 
@@ -141,7 +143,22 @@ class KitsuManager(
     }
 
     override fun addItem(item: MalimeModel): Single<MalimeModel> {
-        return Single.create { }
+        return Single.create {
+            val json = createNewModel(item)
+            val requestBody = RequestBody.create(MediaType.parse("application/vnd.api+json"), json)
+
+            val callResponse = api.addItem(requestBody)
+            val response = callResponse.execute()
+            val body = response.body()
+
+            if (response.isSuccessful && body != null) {
+                Timber.i("Successfully updated series")
+                it.onSuccess(item)
+            } else {
+                Timber.e(Throwable(response.message()), "Error updating the series")
+                it.tryOnError(Throwable(response.message()))
+            }
+        }
     }
 
     override fun updateItem(
@@ -221,6 +238,32 @@ class KitsuManager(
                 ?: ""
     }
 
+    private fun createNewModel(item: MalimeModel): String {
+        return JsonObject().apply {
+            add("data", JsonObject().apply {
+                addProperty("type", "libraryEntries")
+                add("attributes", JsonObject().apply {
+                    addProperty("progress", 0)
+                    addProperty("status", UserSeriesStatus.Current.kitsuString)
+                })
+                add("relationships", JsonObject().apply {
+                    add("user", JsonObject().apply {
+                        add("data", JsonObject().apply {
+                            addProperty("type", "users")
+                            addProperty("id", userId)
+                        })
+                    })
+                    add("media", JsonObject().apply {
+                        add("data", JsonObject().apply {
+                            addProperty("type", item.type.text)
+                            addProperty("id", item.seriesId)
+                        })
+                    })
+                })
+            })
+        }.toString()
+    }
+
     private fun createUpdateModel(
         item: MalimeModel,
         newProgress: Int,
@@ -267,6 +310,14 @@ class KitsuManager(
             progress = updateItem.data.attributes.progress
             userSeriesStatus =
                     UserSeriesStatus.getStatusForKitsuString(updateItem.data.attributes.status)
+        }
+    }
+
+    private fun getError(error: ResponseBody?) {
+        try {
+            val jObjError = JSONObject(error!!.string())
+            val s = ""
+        } catch (e: Exception) {
         }
     }
 }
