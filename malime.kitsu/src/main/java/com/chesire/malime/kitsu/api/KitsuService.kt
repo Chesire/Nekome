@@ -1,5 +1,6 @@
 package com.chesire.malime.kitsu.api
 
+import com.chesire.malime.kitsu.models.AddItemResponse
 import com.chesire.malime.kitsu.models.LibraryResponse
 import com.chesire.malime.kitsu.models.LoginRequest
 import com.chesire.malime.kitsu.models.LoginResponse
@@ -48,9 +49,14 @@ interface KitsuService {
         @Query("filter[text]") title: String
     ): Call<LibraryResponse>
 
-    @POST("api/edge/library-entries")
+    @POST(
+        "api/edge/library-entries" +
+                "?include=anime,manga" +
+                "&fields[anime]=slug,canonicalTitle,status,posterImage,coverImage,episodeCount,nsfw" +
+                "&fields[manga]=slug,canonicalTitle,status,posterImage,chapterCount"
+    )
     @Headers("Content-Type: application/vnd.api+json")
-    fun addItem(@Body data: RequestBody): Call<UpdateItemResponse>
+    fun addItem(@Body data: RequestBody): Call<AddItemResponse>
 
     @PATCH("api/edge/library-entries/{id}")
     @Headers("Content-Type: application/vnd.api+json")

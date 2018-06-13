@@ -13,8 +13,6 @@ import io.reactivex.Observable
 import io.reactivex.Single
 import okhttp3.MediaType
 import okhttp3.RequestBody
-import okhttp3.ResponseBody
-import org.json.JSONObject
 import timber.log.Timber
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -153,7 +151,29 @@ class KitsuManager(
 
             if (response.isSuccessful && body != null) {
                 Timber.i("Successfully updated series")
-                it.onSuccess(item)
+                val seriesData = body.included[0]
+                val newItem = MalimeModel(
+                    seriesId = seriesData.id,
+                    userSeriesId = body.data.id,
+                    type = ItemType.getTypeForString(seriesData.type),
+                    slug = seriesData.attributes.slug,
+                    title = seriesData.attributes.canonicalTitle,
+                    seriesStatus = SeriesStatus.getStatusForKitsuString(seriesData.attributes.status),
+                    userSeriesStatus = UserSeriesStatus.getStatusForKitsuString(body.data.attributes.status),
+                    progress = body.data.attributes.progress,
+                    totalLength = if (ItemType.getTypeForString(seriesData.type) == ItemType.Anime) {
+                        seriesData.attributes.episodeCount
+                    } else {
+                        seriesData.attributes.chapterCount
+                    },
+                    posterImage = getImage(seriesData.attributes.posterImage),
+                    coverImage = getImage(seriesData.attributes.coverImage),
+                    nsfw = seriesData.attributes.nsfw,
+                    startDate = seriesData.attributes.startedAt ?: "",
+                    endDate = seriesData.attributes.finishedAt ?: ""
+                )
+
+                it.onSuccess(newItem)
             } else {
                 Timber.e(Throwable(response.message()), "Error updating the series")
                 it.tryOnError(Throwable(response.message()))
@@ -310,14 +330,6 @@ class KitsuManager(
             progress = updateItem.data.attributes.progress
             userSeriesStatus =
                     UserSeriesStatus.getStatusForKitsuString(updateItem.data.attributes.status)
-        }
-    }
-
-    private fun getError(error: ResponseBody?) {
-        try {
-            val jObjError = JSONObject(error!!.string())
-            val s = ""
-        } catch (e: Exception) {
         }
     }
 }

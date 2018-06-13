@@ -2,7 +2,7 @@ package com.chesire.malime.kitsu.api
 
 import com.chesire.malime.core.flags.ItemType
 import com.chesire.malime.kitsu.BuildConfig
-import com.chesire.malime.kitsu.models.LibraryItem
+import com.chesire.malime.kitsu.models.AddItemResponse
 import com.chesire.malime.kitsu.models.LibraryResponse
 import com.chesire.malime.kitsu.models.LoginRequest
 import com.chesire.malime.kitsu.models.LoginResponse
@@ -61,7 +61,7 @@ class KitsuApi(
         return kitsuService.search(type.text, title)
     }
 
-    fun addItem(data: RequestBody): Call<UpdateItemResponse> {
+    fun addItem(data: RequestBody): Call<AddItemResponse> {
         return kitsuService.addItem(data)
     }
 
