@@ -35,7 +35,7 @@ dependencies {
     implementation 'android.arch.persistence.room:runtime:1.1.0'
     implementation 'android.arch.persistence.room:rxjava2:1.1.0'
     implementation 'com.android.support:appcompat-v7:27.1.1'
-    implementation 'com.jakewharton.timber:timber:4.6.0'
+    implementation "com.jakewharton.timber:timber:$timber_version"
     implementation 'com.squareup.retrofit2:retrofit:2.3.0'
     implementation('com.squareup.retrofit2:converter-simplexml:2.3.0') {
         exclude module: 'stax-api'
