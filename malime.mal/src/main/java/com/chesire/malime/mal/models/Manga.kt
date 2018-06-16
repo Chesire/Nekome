@@ -1,14 +1,10 @@
 package com.chesire.malime.mal.models
 
-import android.arch.persistence.room.Entity
-import android.arch.persistence.room.PrimaryKey
 import org.simpleframework.xml.Element
 import org.simpleframework.xml.Root
 
-@Entity
 @Root(name = "manga")
 data class Manga(
-    @PrimaryKey
     @field:Element(name = "series_mangadb_id", required = false)
     @param:Element(name = "series_mangadb_id", required = false)
     var seriesMangaDbId: Int? = null,
