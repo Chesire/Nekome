@@ -22,6 +22,9 @@ interface KitsuService {
     @POST("api/oauth/token")
     fun login(@Body body: LoginRequest): Call<LoginResponse>
 
+    /**
+     * Gets the user ID, requires authentication to be set.
+     */
     @GET("api/edge/users?fields[users]=id&filter[self]=true")
     fun getUser(): Call<LibraryResponse>
 
