@@ -3,9 +3,6 @@
     package="com.chesire.malime">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <meta-data
-        android:name="firebase_crashlytics_collection_enabled"
-        android:value="false" />
 
     <application
         android:name=".MalimeApplication"
@@ -15,6 +12,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <meta-data
+            android:name="firebase_crashlytics_collection_enabled"
+            android:value="false" />
+
         <activity
             android:name=".LaunchActivity"
             android:theme="@android:style/Theme.NoDisplay">
