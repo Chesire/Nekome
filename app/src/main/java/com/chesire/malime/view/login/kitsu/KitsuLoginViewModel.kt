@@ -15,7 +15,6 @@ import com.chesire.malime.view.login.LoginModel
 import com.chesire.malime.view.login.LoginStatus
 import io.reactivex.Scheduler
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.functions.BiFunction
 
 private const val kitsuSignupUrl = "https://kitsu.io/explore/anime"
 
@@ -43,17 +42,15 @@ class KitsuLoginViewModel(
             return
         }
 
+        var apiResponse: LoginResponse? = null
         val kitsuManager = kitsuManagerFactory.get()
         disposables.add(
-            kitsuManager
-                .login(loginModel.email, loginModel.password)
-                .zipWith(kitsuManager.getUserId(loginModel.userName),
-                    BiFunction { response: LoginResponse, userId: Int ->
-                        sharedPref.putPrimaryService(SupportedService.Kitsu)
-                            .putUserId(userId)
-                            .putAuth(response.authToken)
-                    }
-                )
+            kitsuManager.login(loginModel.email, loginModel.password)
+                .flatMap {
+                    apiResponse = it
+                    val authenticatedManager = kitsuManagerFactory.get(it.authToken)
+                    return@flatMap authenticatedManager.getUserId("")
+                }
                 .subscribeOn(subscribeScheduler)
                 .observeOn(observeScheduler)
                 .doOnSubscribe {
@@ -70,6 +67,10 @@ class KitsuLoginViewModel(
                 }
                 .doOnSuccess {
                     loginResponse.value = LoginStatus.SUCCESS
+
+                    sharedPref.putPrimaryService(SupportedService.Kitsu)
+                        .putUserId(it)
+                        .putAuth(apiResponse!!.authToken)
                 }
                 .subscribe()
         )
