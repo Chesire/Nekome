@@ -1,0 +1,3 @@
+<resources>
+    <string name="view_profile_kitsu">https://kitsu.io/users/%s</string>
+</resources>

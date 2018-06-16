@@ -71,7 +71,4 @@
     <string name="search_text_hint">Enter search term</string>
     <string name="search_nsfw_allowed">Show NSFW</string>
     <string name="search_add_failed">Failed to add %s, please try again</string>
-
-    <string name="view_profile_mal">https://myanimelist.net/profile/%s</string>
-    <string name="view_profile_kitsu">https://kitsu.io/users/%s</string>
 </resources>
