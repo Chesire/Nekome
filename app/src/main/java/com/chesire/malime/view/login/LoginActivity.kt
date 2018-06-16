@@ -9,7 +9,6 @@ import com.chesire.malime.core.flags.SupportedService
 import com.chesire.malime.view.MainActivity
 import com.chesire.malime.view.login.kitsu.KitsuLoginFragment
 import com.chesire.malime.view.login.mal.MalLoginFragment
-import com.chesire.malime.view.login.service.ServiceSelectionFragment
 
 class LoginActivity : AppCompatActivity(), LoginInteractor {
     override fun onCreate(savedInstanceState: Bundle?) {
