@@ -27,7 +27,9 @@
         <activity
             android:name=".view.login.LoginActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".view.MainActivity" />
+        <activity
+            android:name=".view.MainActivity"
+            android:windowSoftInputMode="adjustPan" />
         <activity android:name=".view.preferences.PrefActivity" />
 
         <service
