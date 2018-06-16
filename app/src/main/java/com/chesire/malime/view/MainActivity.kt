@@ -120,7 +120,7 @@ class MainActivity : AppCompatActivity() {
         handlerThread.start()
         Handler(handlerThread.looper).post {
             Timber.d("Clearing the internal Room DB")
-            MalimeDatabase.getInstance(this).clearAllTables()
+            MalimeDatabase.clearAllTables(this)
 
             Timber.d("Clearing internal login details")
             sharedPref.clearLoginDetails()
