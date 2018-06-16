@@ -15,7 +15,6 @@ import com.chesire.malime.view.login.LoginModel
 import com.chesire.malime.view.login.LoginStatus
 import io.reactivex.Scheduler
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.functions.BiFunction
 
 private const val kitsuSignupUrl = "https://kitsu.io/explore/anime"
 
@@ -39,50 +38,47 @@ class KitsuLoginViewModel(
     }
 
     fun executeLogin() {
-        if (!isValid(loginModel.email, loginModel.userName, loginModel.password)) {
+        if (!isValid(loginModel.userName, loginModel.password)) {
             return
         }
 
+        var apiResponse: LoginResponse? = null
         val kitsuManager = kitsuManagerFactory.get()
-        disposables.add(
-            kitsuManager
-                .login(loginModel.email, loginModel.password)
-                .zipWith(kitsuManager.getUserId(loginModel.userName),
-                    BiFunction { response: LoginResponse, userId: Int ->
-                        sharedPref.putPrimaryService(SupportedService.Kitsu)
-                            .putUserId(userId)
-                            .putAuth(response.authToken)
-                    }
-                )
-                .subscribeOn(subscribeScheduler)
-                .observeOn(observeScheduler)
-                .doOnSubscribe {
-                    attemptingLogin.set(true)
-                    loginResponse.value = LoginStatus.PROCESSING
-                }
-                .doFinally {
-                    attemptingLogin.set(false)
-                    loginResponse.value = LoginStatus.FINISHED
-                }
-                .doOnError {
-                    errorResponse.value = R.string.login_failure
-                    loginResponse.value = LoginStatus.ERROR
-                }
-                .doOnSuccess {
-                    loginResponse.value = LoginStatus.SUCCESS
-                }
-                .subscribe()
+        disposables.add(kitsuManager.login(loginModel.userName, loginModel.password)
+            .flatMap {
+                apiResponse = it
+                val authenticatedManager = kitsuManagerFactory.get(it.authToken)
+                return@flatMap authenticatedManager.getUserId()
+            }
+            .subscribeOn(subscribeScheduler)
+            .observeOn(observeScheduler)
+            .doOnSubscribe {
+                attemptingLogin.set(true)
+                loginResponse.value = LoginStatus.PROCESSING
+            }
+            .doFinally {
+                attemptingLogin.set(false)
+                loginResponse.value = LoginStatus.FINISHED
+            }
+            .doOnError {
+                errorResponse.value = R.string.login_failure
+                loginResponse.value = LoginStatus.ERROR
+            }
+            .doOnSuccess {
+                loginResponse.value = LoginStatus.SUCCESS
+
+                sharedPref.putPrimaryService(SupportedService.Kitsu)
+                    .putUserId(it)
+                    .putAuth(apiResponse!!.authToken)
+            }
+            .subscribe()
         )
     }
 
-    private fun isValid(email: String, username: String, password: String): Boolean {
+    private fun isValid(username: String, password: String): Boolean {
         return when {
-            email.isBlank() -> {
-                errorResponse.value = R.string.login_failure_email
-                false
-            }
             username.isBlank() -> {
-                errorResponse.value = R.string.login_failure_display_name
+                errorResponse.value = R.string.login_failure_email
                 false
             }
             password.isBlank() -> {

@@ -53,7 +53,7 @@ class MalManager(
         return "$MyAnimeListEndpoint${item.type.text}/${item.seriesId}"
     }
 
-    override fun getUserId(username: String): Single<Int> {
+    override fun getUserId(): Single<Int> {
         return Single.create {
             val callResponse = api.loginToAccount()
             val response = callResponse.execute()
