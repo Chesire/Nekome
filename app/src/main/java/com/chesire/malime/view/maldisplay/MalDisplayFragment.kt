@@ -94,7 +94,7 @@ class MalDisplayFragment : Fragment() {
                 setHasFixedSize(true)
                 layoutManager = LinearLayoutManager(requireContext())
                 adapter = viewAdapter
-                //(itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
+                // (itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
             }
         }.root
     }
