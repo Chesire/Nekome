@@ -75,7 +75,7 @@ class MainActivity : AppCompatActivity() {
             )
         }
 
-        //PeriodicUpdateHelper().schedule(this)
+        PeriodicUpdateHelper().schedule(this, sharedPref)
     }
 
     override fun onSaveInstanceState(outState: Bundle?) {
@@ -103,9 +103,9 @@ class MainActivity : AppCompatActivity() {
                     .setTitle(R.string.options_log_out)
                     .setMessage(R.string.log_out_confirmation)
                     .setNegativeButton(android.R.string.no, null)
-                    .setPositiveButton(android.R.string.yes, { _, _ ->
+                    .setPositiveButton(android.R.string.yes) { _, _ ->
                         logout()
-                    })
+                    }
                     .show()
 
                 return true
@@ -121,7 +121,7 @@ class MainActivity : AppCompatActivity() {
     private fun logout() {
         val handlerThread = HandlerThread("ClearRoomDBThread")
         handlerThread.start()
-        Handler(handlerThread.looper).post({
+        Handler(handlerThread.looper).post {
             Timber.d("Clearing the internal Room DB")
             MalimeDatabase.getInstance(this).clearAllTables()
 
@@ -129,7 +129,7 @@ class MainActivity : AppCompatActivity() {
             sharedPref.clearLoginDetails()
 
             Timber.d("Clearing the update helper")
-            PeriodicUpdateHelper().cancel(this)
+            PeriodicUpdateHelper().cancel(this, sharedPref)
 
             Timber.d("Navigating to LoginActivity")
             startActivity(Intent(this, LoginActivity::class.java))
@@ -137,7 +137,7 @@ class MainActivity : AppCompatActivity() {
 
             Timber.d("Closing the handler thread")
             handlerThread.quitSafely()
-        })
+        }
     }
 
     private fun spawnSortDialog() {
@@ -149,9 +149,9 @@ class MainActivity : AppCompatActivity() {
                 SortOption.getOptionsStrings(applicationContext), sortOption, { _, which ->
                     sortOption = which
                 })
-            .setPositiveButton(android.R.string.ok, { _, _ ->
+            .setPositiveButton(android.R.string.ok) { _, _ ->
                 sharedPref.setSortOption(SortOption.getOptionFor(sortOption))
-            })
+            }
             .setNegativeButton(android.R.string.cancel, null)
             .show()
     }
