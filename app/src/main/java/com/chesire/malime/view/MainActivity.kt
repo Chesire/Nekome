@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import com.chesire.malime.R
 import com.chesire.malime.core.flags.ItemType
+import com.chesire.malime.core.flags.SupportedService
 import com.chesire.malime.core.room.MalimeDatabase
 import com.chesire.malime.util.SharedPref
 import com.chesire.malime.util.updateservice.PeriodicUpdateHelper
@@ -22,6 +23,7 @@ import com.chesire.malime.view.preferences.PrefActivity
 import com.chesire.malime.view.preferences.SortOption
 import com.chesire.malime.view.search.SearchFragment
 import timber.log.Timber
+import java.util.Locale
 
 class MainActivity : AppCompatActivity() {
     private val sharedPref: SharedPref by lazy {
@@ -86,12 +88,7 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when {
             item?.itemId == R.id.menu_options_view_profile -> {
-                CustomTabsIntent.Builder()
-                    .build()
-                    .launchUrl(
-                        this,
-                        Uri.parse("https://myanimelist.net/profile/${sharedPref.getUsername()}")
-                    )
+                launchProfile()
                 return true
             }
             item?.itemId == R.id.menu_options_settings -> {
@@ -154,6 +151,29 @@ class MainActivity : AppCompatActivity() {
             }
             .setNegativeButton(android.R.string.cancel, null)
             .show()
+    }
+
+    private fun launchProfile() {
+        CustomTabsIntent.Builder()
+            .build()
+            .launchUrl(
+                this,
+                Uri.parse(
+                    if (sharedPref.getPrimaryService() == SupportedService.MyAnimeList) {
+                        String.format(
+                            Locale.ROOT,
+                            getString(R.string.view_profile_mal),
+                            sharedPref.getUsername()
+                        )
+                    } else {
+                        String.format(
+                            Locale.ROOT,
+                            getString(R.string.view_profile_kitsu),
+                            sharedPref.getUserId()
+                        )
+                    }
+                )
+            )
     }
 
     private fun setFragment(fragment: Fragment, fragmentTag: String) {
