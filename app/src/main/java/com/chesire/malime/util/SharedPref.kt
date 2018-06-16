@@ -15,7 +15,7 @@ private const val preferenceUsername: String = "username"
 private const val preferencePrimaryService: String = "primaryService"
 private const val preferenceAllowCrashReporting: String = "allowCrashReporting"
 private const val preferenceFilterLength: String = "animeFilterLength"
-private const val preferenceAutoUpdateState: String = "autoUpdateState"
+private const val preferenceSeriesUpdateSchedulerEnabled: String = "seriesUpdateSchedulerEnabled"
 const val preferenceFilter: String = "filter"
 const val preferenceSort: String = "sort"
 
@@ -134,8 +134,16 @@ class SharedPref(
         return this
     }
 
-    fun getAutoUpdateSeriesState(): Boolean {
-        return sharedPreferences.getBoolean(preferenceAutoUpdateState, false)
+    fun getSeriesUpdateSchedulerEnabled(): Boolean {
+        return sharedPreferences.getBoolean(preferenceSeriesUpdateSchedulerEnabled, false)
+    }
+
+    fun setSeriesUpdateSchedulerEnabled(state: Boolean): SharedPref {
+        sharedPreferences.edit()
+            .putBoolean(preferenceSeriesUpdateSchedulerEnabled, state)
+            .apply()
+
+        return this
     }
 
     fun clearLoginDetails() {
