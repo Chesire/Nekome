@@ -93,11 +93,13 @@ class SharedPref(
     }
 
     fun getFilter(): BooleanArray {
-        val filterLength = sharedPreferences.getInt(preferenceFilterLength, 0)
-        if (filterLength == 0) {
-            return getDefaultFilter()
+        if (!hasStoredFilter()) {
+            val defaultFilter = getDefaultFilter()
+            setFilter(defaultFilter)
+            return defaultFilter
         }
 
+        val filterLength = sharedPreferences.getInt(preferenceFilterLength, 0)
         val returnArray = BooleanArray(filterLength)
         for (i in 0 until filterLength) {
             returnArray[i] = sharedPreferences.getBoolean(preferenceFilter + i, false)
@@ -161,6 +163,21 @@ class SharedPref(
 
     fun unregisterOnChangeListener(listener: SharedPreferences.OnSharedPreferenceChangeListener) {
         sharedPreferences.unregisterOnSharedPreferenceChangeListener(listener)
+    }
+
+    private fun hasStoredFilter(): Boolean {
+        if (!sharedPreferences.contains(preferenceFilterLength)) {
+            return false
+        }
+
+        val filterLength = sharedPreferences.getInt(preferenceFilterLength, 0)
+        for (i in 0 until filterLength) {
+            if (!sharedPreferences.contains(preferenceFilter + i)) {
+                return false
+            }
+        }
+
+        return true
     }
 
     private fun getDefaultFilter(): BooleanArray {
