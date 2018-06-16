@@ -18,8 +18,7 @@ enum class SeriesStatus(
         }
 
         fun getStatusForMalId(id: Int): SeriesStatus {
-            // TODO: Get the values used for MAL, for now return Unknown
-            return Unknown
+            return SeriesStatus.values().find { it.malId == id } ?: Unknown
         }
 
         fun getStatusForInternalId(id: Int): SeriesStatus {
