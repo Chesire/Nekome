@@ -14,9 +14,6 @@ import io.reactivex.Single
 import okhttp3.MediaType
 import okhttp3.RequestBody
 import timber.log.Timber
-import java.text.SimpleDateFormat
-import java.util.Calendar
-import java.util.Locale
 
 private const val MAX_RETRIES = 3
 
@@ -289,8 +286,8 @@ class KitsuManager(
         newProgress: Int,
         newStatus: UserSeriesStatus
     ): String {
-        val currentTime = SimpleDateFormat("MM/dd/yyyy", Locale.getDefault())
-            .format(Calendar.getInstance().time)
+        // val currentTime = SimpleDateFormat("MM/dd/yyyy", Locale.getDefault())
+        //    .format(Calendar.getInstance().time)
 
         return JsonObject().apply {
             add("data", JsonObject().apply {

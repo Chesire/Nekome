@@ -18,5 +18,9 @@ abstract class MalimeDatabase : RoomDatabase() {
             it.applicationContext,
             MalimeDatabase::class.java, "malimedatabase.db"
         ).build()
-    })
+    }) {
+        fun clearAllTables(context: Context) {
+            this.getInstance(context).clearAllTables()
+        }
+    }
 }
