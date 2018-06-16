@@ -24,8 +24,8 @@ class LoginActivity : AppCompatActivity(), LoginInteractor {
             supportFragmentManager.beginTransaction()
                 .replace(
                     R.id.activity_login_layout,
-                    ServiceSelectionFragment.newInstance(),
-                    ServiceSelectionFragment.tag
+                    KitsuLoginFragment.newInstance(),
+                    KitsuLoginFragment.tag
                 )
                 .commit()
         }
