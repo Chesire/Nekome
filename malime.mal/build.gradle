@@ -32,9 +32,7 @@ dependencies {
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
-    implementation 'android.arch.persistence.room:runtime:1.1.0'
-    implementation 'android.arch.persistence.room:rxjava2:1.1.0'
-    implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation "com.android.support:appcompat-v7:$support_lib_version"
     implementation "com.jakewharton.timber:timber:$timber_version"
     implementation 'com.squareup.retrofit2:retrofit:2.3.0'
     implementation('com.squareup.retrofit2:converter-simplexml:2.3.0') {
@@ -48,7 +46,4 @@ dependencies {
 
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-
-    kapt 'android.arch.lifecycle:compiler:1.1.1'
-    kapt 'android.arch.persistence.room:compiler:1.1.0'
 }
