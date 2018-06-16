@@ -95,7 +95,9 @@ class SharedPref(
     fun getFilter(): BooleanArray {
         val filterLength = sharedPreferences.getInt(preferenceFilterLength, 0)
         if (filterLength == 0) {
-            return getDefaultFilter()
+            val defaultFilter = getDefaultFilter()
+            setFilter(defaultFilter)
+            return defaultFilter
         }
 
         val returnArray = BooleanArray(filterLength)
