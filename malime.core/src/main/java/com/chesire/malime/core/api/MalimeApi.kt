@@ -9,7 +9,7 @@ import io.reactivex.Single
 interface MalimeApi {
     fun addItem(item: MalimeModel): Single<MalimeModel>
     fun getItemUrl(item: MalimeModel): String
-    fun getUserId(username: String): Single<Int>
+    fun getUserId(): Single<Int>
     fun getUserLibrary(): Observable<List<MalimeModel>>
     fun login(username: String, password: String): Single<LoginResponse>
     fun updateItem(

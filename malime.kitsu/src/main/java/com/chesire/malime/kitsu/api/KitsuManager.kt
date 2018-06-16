@@ -53,9 +53,9 @@ class KitsuManager(
         return "$KitsuEndpoint${item.type.text}/${item.slug}"
     }
 
-    override fun getUserId(username: String): Single<Int> {
+    override fun getUserId(): Single<Int> {
         return Single.create {
-            val callResponse = api.getUser(username)
+            val callResponse = api.getUser()
             val response = callResponse.execute()
             val body = response.body()
 

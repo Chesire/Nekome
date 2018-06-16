@@ -1,8 +1,8 @@
 package com.chesire.malime.kitsu.api
 
+import com.chesire.malime.kitsu.models.LoginRequest
 import com.chesire.malime.kitsu.models.response.AddItemResponse
 import com.chesire.malime.kitsu.models.response.LibraryResponse
-import com.chesire.malime.kitsu.models.LoginRequest
 import com.chesire.malime.kitsu.models.response.LoginResponse
 import com.chesire.malime.kitsu.models.response.UpdateItemResponse
 import okhttp3.RequestBody
@@ -22,8 +22,8 @@ interface KitsuService {
     @POST("api/oauth/token")
     fun login(@Body body: LoginRequest): Call<LoginResponse>
 
-    @GET("api/edge/users?fields[users]=id")
-    fun getUser(@Query("filter[name]") username: String): Call<LibraryResponse>
+    @GET("api/edge/users?fields[users]=id&filter[self]=true")
+    fun getUser(): Call<LibraryResponse>
 
     @GET(
         "api/edge/users/{userId}/library-entries" +
