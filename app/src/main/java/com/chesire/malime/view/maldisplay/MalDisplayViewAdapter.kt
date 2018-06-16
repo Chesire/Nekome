@@ -139,18 +139,18 @@ class MalDisplayViewAdapter(
                         .setTitle(R.string.malitem_update_series_state_dialog_title)
                         .setSingleChoiceItems(
                             UserSeriesStatus.getSeriesStatusStrings(context),
-                            state,
-                            { _, which ->
-                                state = which
-                            })
-                        .setPositiveButton(android.R.string.ok, { _, _ ->
+                            state
+                        ) { _, which ->
+                            state = which
+                        }
+                        .setPositiveButton(android.R.string.ok) { _, _ ->
                             executing = true
                             updateSeries(
                                 item,
                                 item.progress,
                                 UserSeriesStatus.getStatusForInternalId(state + 1)
                             )
-                        })
+                        }
                         .setNegativeButton(android.R.string.cancel, null)
                         .setOnDismissListener {
                             Timber.d("Dismissing")
@@ -171,8 +171,9 @@ class MalDisplayViewAdapter(
         ) {
             setLayoutState(false)
 
-            listener.updateSeries(item, newProgress, newStatus, { success ->
+            listener.updateSeries(item, newProgress, newStatus) { success ->
                 setLayoutState(true)
+
                 if (!success) {
                     Snackbar.make(
                         loadingLayout,
@@ -182,7 +183,7 @@ class MalDisplayViewAdapter(
                         ), Snackbar.LENGTH_LONG
                     ).show()
                 }
-            })
+            }
         }
 
         private fun setLayoutState(enabled: Boolean) {
@@ -207,9 +208,9 @@ class MalDisplayViewAdapter(
             val tempList = items
                 .filter {
                     // Internal id starts at 0 for Unknown,
-                    // but we can't filter on that, so reduce it
-                    val filterId = if (it.userSeriesStatus.internalId == 0) {
-                        1
+                    // but we can't filter on that, so change it to current
+                    val filterId = if (it.userSeriesStatus == UserSeriesStatus.Unknown) {
+                        UserSeriesStatus.Current.internalId
                     } else {
                         it.userSeriesStatus.internalId
                     }

@@ -43,7 +43,7 @@ class MalDisplayFragment : Fragment() {
         type = ItemType.getTypeForInternalId(arguments!!.getInt(itemTypeBundleId))
         sharedPref = SharedPref(requireContext())
 
-        val api = if (sharedPref.getPrimaryService() == SupportedService.Kitsu) {
+        val api: MalimeApi = if (sharedPref.getPrimaryService() == SupportedService.Kitsu) {
             Timber.i("Found Kitsu as supported service")
             KitsuManagerFactory().get(sharedPref.getAuth(), sharedPref.getUserId())
         } else {
@@ -56,7 +56,7 @@ class MalDisplayFragment : Fragment() {
                 this,
                 MalDisplayViewModelFactory(
                     requireActivity().application,
-                    Library(requireContext(), api as MalimeApi)
+                    Library(requireContext(), api)
                 )
             )
             .get(MalDisplayViewModel::class.java)
