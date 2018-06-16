@@ -38,18 +38,18 @@ class KitsuLoginViewModel(
     }
 
     fun executeLogin() {
-        if (!isValid(loginModel.email, loginModel.userName, loginModel.password)) {
+        if (!isValid(loginModel.userName, loginModel.password)) {
             return
         }
 
         var apiResponse: LoginResponse? = null
         val kitsuManager = kitsuManagerFactory.get()
         disposables.add(
-            kitsuManager.login(loginModel.email, loginModel.password)
+            kitsuManager.login(loginModel.userName, loginModel.password)
                 .flatMap {
                     apiResponse = it
                     val authenticatedManager = kitsuManagerFactory.get(it.authToken)
-                    return@flatMap authenticatedManager.getUserId("")
+                    return@flatMap authenticatedManager.getUserId()
                 }
                 .subscribeOn(subscribeScheduler)
                 .observeOn(observeScheduler)
@@ -76,14 +76,10 @@ class KitsuLoginViewModel(
         )
     }
 
-    private fun isValid(email: String, username: String, password: String): Boolean {
+    private fun isValid(username: String, password: String): Boolean {
         return when {
-            email.isBlank() -> {
-                errorResponse.value = R.string.login_failure_email
-                false
-            }
             username.isBlank() -> {
-                errorResponse.value = R.string.login_failure_display_name
+                errorResponse.value = R.string.login_failure_email
                 false
             }
             password.isBlank() -> {

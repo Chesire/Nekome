@@ -52,29 +52,11 @@
                     android:id="@+id/login_username_edit_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/login_display_name"
-                    android:imeOptions="actionNext"
-                    android:inputType="textNoSuggestions"
-                    android:maxLines="1"
-                    android:text="@={vm.loginModel.userName}" />
-            </android.support.design.widget.TextInputLayout>
-
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/login_email_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:layout_marginTop="8dp">
-
-                <android.support.design.widget.TextInputEditText
-                    android:id="@+id/login_email_edit_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
                     android:hint="@string/login_email"
                     android:imeOptions="actionNext"
                     android:inputType="textNoSuggestions"
                     android:maxLines="1"
-                    android:text="@={vm.loginModel.email}" />
+                    android:text="@={vm.loginModel.username}" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
