@@ -177,6 +177,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setFragment(fragment: Fragment, fragmentTag: String) {
+        val currentFragment = supportFragmentManager.primaryNavigationFragment
+        if (currentFragment == fragment) {
+            return
+        }
+
         title = when (fragmentTag) {
             MalDisplayFragment.malDisplayAnime -> getString(R.string.main_nav_anime)
             MalDisplayFragment.malDisplayManga -> getString(R.string.main_nav_manga)
@@ -184,9 +189,22 @@ class MainActivity : AppCompatActivity() {
             else -> getString(R.string.app_name)
         }
 
+        val transaction = supportFragmentManager.beginTransaction()
+        if (currentFragment != null) {
+            transaction.detach(currentFragment)
+        }
+
+        var taggedFragment = supportFragmentManager.findFragmentByTag(fragmentTag)
+        if (taggedFragment == null) {
+            taggedFragment = fragment
+            transaction.add(R.id.activity_main_frame, taggedFragment, fragmentTag)
+        } else {
+            transaction.attach(taggedFragment)
+        }
+        transaction.setPrimaryNavigationFragment(taggedFragment)
+        transaction.setReorderingAllowed(true)
+
         currentDisplayedFragmentTag = fragmentTag
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.activity_main_frame, fragment, fragmentTag)
-            .commit()
+        transaction.commit()
     }
 }
