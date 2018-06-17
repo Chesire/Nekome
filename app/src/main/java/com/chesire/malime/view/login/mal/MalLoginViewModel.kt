@@ -8,6 +8,7 @@ import android.net.Uri
 import android.support.customtabs.CustomTabsIntent
 import com.chesire.malime.R
 import com.chesire.malime.core.flags.SupportedService
+import com.chesire.malime.core.models.AuthModel
 import com.chesire.malime.mal.api.MalManagerFactory
 import com.chesire.malime.util.SharedPref
 import com.chesire.malime.view.login.LoginModel
@@ -57,7 +58,7 @@ class MalLoginViewModel(
                 {
                     sharedPref.putPrimaryService(SupportedService.MyAnimeList)
                         .putUsername(loginModel.userName)
-                        .putAuth(credentials)
+                        .putAuthModel(AuthModel(credentials, "", 0))
                     loginResponse.value = LoginStatus.SUCCESS
                 },
                 {

@@ -8,7 +8,7 @@ import android.net.Uri
 import android.support.customtabs.CustomTabsIntent
 import com.chesire.malime.R
 import com.chesire.malime.core.flags.SupportedService
-import com.chesire.malime.core.models.LoginResponse
+import com.chesire.malime.core.models.AuthModel
 import com.chesire.malime.kitsu.api.KitsuManagerFactory
 import com.chesire.malime.util.SharedPref
 import com.chesire.malime.view.login.LoginModel
@@ -42,7 +42,7 @@ class KitsuLoginViewModel(
             return
         }
 
-        var apiResponse: LoginResponse? = null
+        var apiResponse: AuthModel? = null
         val kitsuManager = kitsuManagerFactory.get()
         disposables.add(kitsuManager.login(loginModel.userName, loginModel.password)
             .flatMap {
@@ -69,8 +69,7 @@ class KitsuLoginViewModel(
 
                 sharedPref.putPrimaryService(SupportedService.Kitsu)
                     .putUserId(it)
-                    .putAuth(apiResponse!!.authToken)
-                    .putRefresh(apiResponse!!.refreshToken)
+                    .putAuthModel(apiResponse!!)
             }
             .subscribe()
         )
