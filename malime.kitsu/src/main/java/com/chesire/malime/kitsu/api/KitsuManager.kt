@@ -287,32 +287,11 @@ class KitsuManager(
         newProgress: Int,
         newStatus: UserSeriesStatus
     ): String {
-        // val currentTime = SimpleDateFormat("MM/dd/yyyy", Locale.getDefault())
-        //    .format(Calendar.getInstance().time)
-
         return JsonObject().apply {
             add("data", JsonObject().apply {
                 addProperty("id", item.userSeriesId)
                 addProperty("type", "libraryEntries")
                 add("attributes", JsonObject().apply {
-                    /*
-                    addProperty(
-                        "startedAt",
-                        if (item.progress == 0 && newProgress > 0) {
-                            currentTime
-                        } else {
-                            item.startDate
-                        }
-                    )
-                    addProperty(
-                        "finishedAt",
-                        if (newProgress == item.totalLength) {
-                            currentTime
-                        } else {
-                            item.endDate
-                        }
-                    )
-                    */
                     addProperty("progress", newProgress)
                     addProperty("status", newStatus.kitsuString)
                 })
