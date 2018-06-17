@@ -1,8 +1,10 @@
 package com.chesire.malime.kitsu.api
 
 import com.chesire.malime.core.flags.ItemType
+import com.chesire.malime.core.models.AuthModel
 import com.chesire.malime.kitsu.BuildConfig
 import com.chesire.malime.kitsu.models.request.LoginRequest
+import com.chesire.malime.kitsu.models.request.RefreshAuthRequest
 import com.chesire.malime.kitsu.models.response.AddItemResponse
 import com.chesire.malime.kitsu.models.response.LibraryResponse
 import com.chesire.malime.kitsu.models.response.LoginResponse
@@ -19,14 +21,14 @@ import retrofit2.converter.gson.GsonConverterFactory
 internal const val KitsuEndpoint = "https://kitsu.io/"
 
 class KitsuApi(
-    accessToken: String
+    authModel: AuthModel
 ) {
     private val kitsuService: KitsuService
 
     init {
         val httpClient = OkHttpClient()
             .newBuilder()
-            .addInterceptor(BasicAuthInterceptor(accessToken))
+            .addInterceptor(AuthInterceptor(authModel))
 
         if (BuildConfig.DEBUG) {
             val interceptor: HttpLoggingInterceptor = HttpLoggingInterceptor().apply {
@@ -46,12 +48,11 @@ class KitsuApi(
     }
 
     fun login(username: String, password: String): Call<LoginResponse> {
-        return kitsuService.login(
-            LoginRequest(
-                username,
-                password
-            )
-        )
+        return kitsuService.login(LoginRequest(username, password))
+    }
+
+    private fun refreshAuthToken(refreshToken: String): Call<LoginResponse> {
+        return kitsuService.refreshAuth(RefreshAuthRequest(refreshToken))
     }
 
     fun getUser(): Call<LibraryResponse> {
@@ -77,14 +78,35 @@ class KitsuApi(
     /**
      * Provides an interceptor that handles the basic auth.
      */
-    class BasicAuthInterceptor(
-        private val accessToken: String
+    inner class AuthInterceptor(
+        private val authModel: AuthModel
     ) : Interceptor {
+        private var updatingAuthToken = false
 
         override fun intercept(chain: Interceptor.Chain): Response {
             val request = chain.request()
+            if (updatingAuthToken) {
+                return chain.proceed(request)
+            }
+
+            if (authModel.expireAt != 0L && System.currentTimeMillis() / 1000 > authModel.expireAt) {
+                // The auth token has expired, update it using the refresh token
+                updatingAuthToken = true
+                val refreshCall = refreshAuthToken(authModel.refreshToken)
+                val refreshResponse = refreshCall.execute()
+                updatingAuthToken = false
+
+                if (refreshResponse.isSuccessful) {
+                    refreshResponse.body().let {
+                        authModel.authToken = it!!.accessToken
+                        authModel.refreshToken = it.refreshToken
+                        authModel.expireAt = it.expiresIn
+                    }
+                }
+            }
+
             val authenticatedRequest = request.newBuilder()
-                .header("Authorization", "Bearer $accessToken")
+                .header("Authorization", "Bearer ${authModel.authToken}")
                 .build()
 
             return chain.proceed(authenticatedRequest)
