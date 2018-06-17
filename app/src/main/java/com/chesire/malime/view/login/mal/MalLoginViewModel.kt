@@ -42,7 +42,7 @@ class MalLoginViewModel(
             return
         }
 
-        val malManager = malManagerFactory.get(credentials, loginModel.userName)
+        val malManager = malManagerFactory.get(AuthModel(credentials, "", 0), loginModel.userName)
         disposables.add(malManager.login(loginModel.userName, loginModel.password)
             .subscribeOn(subscribeScheduler)
             .observeOn(observeScheduler)
