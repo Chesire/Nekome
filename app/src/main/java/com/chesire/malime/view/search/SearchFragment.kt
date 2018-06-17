@@ -39,10 +39,10 @@ class SearchFragment : Fragment() {
 
         val api: MalimeApi = if (sharedPref.getPrimaryService() == SupportedService.Kitsu) {
             Timber.i("Found Kitsu as supported service")
-            KitsuManagerFactory().get(sharedPref.getAuth(), sharedPref.getUserId())
+            KitsuManagerFactory().get(sharedPref, sharedPref.getUserId())
         } else {
             Timber.i("Found Mal as supported service")
-            MalManagerFactory().get(sharedPref.getAuth(), sharedPref.getUsername())
+            MalManagerFactory().get(sharedPref, sharedPref.getUsername())
         }
 
         viewModel = ViewModelProviders

@@ -7,8 +7,9 @@ import android.databinding.ObservableBoolean
 import android.net.Uri
 import android.support.customtabs.CustomTabsIntent
 import com.chesire.malime.R
+import com.chesire.malime.core.api.AuthHandler
 import com.chesire.malime.core.flags.SupportedService
-import com.chesire.malime.core.models.LoginResponse
+import com.chesire.malime.core.models.AuthModel
 import com.chesire.malime.kitsu.api.KitsuManagerFactory
 import com.chesire.malime.util.SharedPref
 import com.chesire.malime.view.login.LoginModel
@@ -24,8 +25,9 @@ class KitsuLoginViewModel(
     private val kitsuManagerFactory: KitsuManagerFactory,
     private val subscribeScheduler: Scheduler,
     private val observeScheduler: Scheduler
-) : AndroidViewModel(context) {
+) : AndroidViewModel(context), AuthHandler {
     private val disposables = CompositeDisposable()
+    private var tempAuthModel: AuthModel = AuthModel("", "", 0)
     val loginResponse = MutableLiveData<LoginStatus>()
     val errorResponse = MutableLiveData<Int>()
     val attemptingLogin = ObservableBoolean()
@@ -42,13 +44,15 @@ class KitsuLoginViewModel(
             return
         }
 
-        var apiResponse: LoginResponse? = null
-        val kitsuManager = kitsuManagerFactory.get()
+        val kitsuManager = kitsuManagerFactory.get(this)
         disposables.add(kitsuManager.login(loginModel.userName, loginModel.password)
             .flatMap {
-                apiResponse = it
-                val authenticatedManager = kitsuManagerFactory.get(it.authToken)
-                return@flatMap authenticatedManager.getUserId()
+                tempAuthModel = AuthModel(
+                    it.authToken,
+                    it.refreshToken,
+                    it.expireAt
+                )
+                return@flatMap kitsuManagerFactory.get(this).getUserId()
             }
             .subscribeOn(subscribeScheduler)
             .observeOn(observeScheduler)
@@ -69,7 +73,7 @@ class KitsuLoginViewModel(
 
                 sharedPref.putPrimaryService(SupportedService.Kitsu)
                     .putUserId(it)
-                    .putAuth(apiResponse!!.authToken)
+                    .setAuth(tempAuthModel)
             }
             .subscribe()
         )
@@ -87,6 +91,14 @@ class KitsuLoginViewModel(
             }
             else -> true
         }
+    }
+
+    override fun getAuth(): AuthModel {
+        return tempAuthModel
+    }
+
+    override fun setAuth(newModel: AuthModel) {
+        // Not needed
     }
 
     override fun onCleared() {

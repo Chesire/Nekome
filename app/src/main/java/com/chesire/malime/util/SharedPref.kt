@@ -3,13 +3,18 @@ package com.chesire.malime.util
 import android.content.Context
 import android.content.SharedPreferences
 import android.util.Base64
+import com.chesire.malime.core.api.AuthHandler
 import com.chesire.malime.core.flags.SupportedService
+import com.chesire.malime.core.models.AuthModel
 import com.chesire.malime.util.sec.Decryptor
 import com.chesire.malime.util.sec.Encryptor
 import com.chesire.malime.view.preferences.SortOption
 
 private const val authAlias: String = "private_auth"
+private const val refreshAlias: String = "private_refresh"
 private const val preferenceAuth: String = "auth"
+private const val preferenceRefresh: String = "refresh"
+private const val preferenceRefreshExpireAt: String = "refreshExpireAt"
 private const val preferenceUserId: String = "userId"
 private const val preferenceUsername: String = "username"
 private const val preferencePrimaryService: String = "primaryService"
@@ -21,7 +26,7 @@ const val preferenceSort: String = "sort"
 
 class SharedPref(
     context: Context
-) {
+) : AuthHandler {
     val sharedPrefFile: String = "malime_shared_pref"
 
     private val sharedPreferences =
@@ -29,27 +34,40 @@ class SharedPref(
     private val encryptor = Encryptor(context.applicationContext)
     private val decryptor = Decryptor()
 
-    fun getAuth(): String {
-        val text = sharedPreferences.getString(preferenceAuth, "")
+    override fun getAuth(): AuthModel {
+        val auth = sharedPreferences.getString(preferenceAuth, "")
+        val refresh = sharedPreferences.getString(preferenceRefresh, "")
 
-        return if (text.isNotBlank()) {
-            decryptor.decryptData(
-                authAlias,
-                Base64.decode(text, Base64.DEFAULT)
-            )
-        } else {
-            ""
-        }
+        return AuthModel(
+            if (auth.isNotBlank()) {
+                decryptor.decryptData(
+                    authAlias,
+                    Base64.decode(auth, Base64.DEFAULT)
+                )
+            } else {
+                ""
+            },
+            if (refresh.isNotBlank()) {
+                decryptor.decryptData(
+                    refreshAlias,
+                    Base64.decode(refresh, Base64.DEFAULT)
+                )
+            } else {
+                ""
+            },
+            sharedPreferences.getLong(preferenceRefreshExpireAt, 0)
+        )
     }
 
-    fun putAuth(auth: String): SharedPref {
-        val encrypted = encryptor.encryptText(authAlias, auth)
+    override fun setAuth(newModel: AuthModel) {
+        val auth = encryptor.encryptText(authAlias, newModel.authToken)
+        val refresh = encryptor.encryptText(refreshAlias, newModel.refreshToken)
 
         sharedPreferences.edit()
-            .putString(preferenceAuth, Base64.encodeToString(encrypted, Base64.DEFAULT))
+            .putString(preferenceAuth, Base64.encodeToString(auth, Base64.DEFAULT))
+            .putString(preferenceRefresh, Base64.encodeToString(refresh, Base64.DEFAULT))
+            .putLong(preferenceRefreshExpireAt, newModel.expireAt)
             .apply()
-
-        return this
     }
 
     fun getUserId(): Int {
