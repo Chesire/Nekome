@@ -12,7 +12,6 @@
     <string name="service_selection_kitsu">Kitsu</string>
 
     <string name="login_username">Username</string>
-    <string name="login_display_name">Display name</string>
     <string name="login_email">Email</string>
     <string name="login_password">Password</string>
     <string name="login_button">Login</string>
@@ -22,7 +21,6 @@
     <string name="login_create_kitsu_account">No Kitsu account? Create one</string>
     <string name="login_failure">Failure to login, please check credentials</string>
     <string name="login_failure_username">Username cannot be empty</string>
-    <string name="login_failure_display_name">Display name cannot be empty</string>
     <string name="login_failure_email">Email cannot be empty</string>
     <string name="login_failure_password">Password cannot be empty</string>
     <string name="login_authenticating">Authenticating…</string>
@@ -38,11 +36,6 @@
     <string name="options_log_out">Log Out</string>
     <string name="log_out_confirmation">Are you sure?</string>
 
-    <string name="malitem_progress_text">%1$s / %2$s</string>
-    <string name="malitem_update_series_complete_title">Series Complete</string>
-    <string name="malitem_update_series_complete_body">Update series state to completed?</string>
-    <string name="malitem_update_series_reverted_title">Series No Longer Complete</string>
-    <string name="malitem_update_series_reverted_body">Update series state to watching?</string>
     <string name="malitem_update_series_failure">Update to series %s failed, please try again</string>
     <string name="malitem_update_series_state_dialog_title">Change Series State To:</string>
 
@@ -56,11 +49,6 @@
     <string name="filter_state_planned">Planned</string>
     <string name="filter_state_unknown">Unknown</string>
     <string name="filter_must_select">At least one filter must be selected</string>
-
-    <string name="filter_state_watching">Watching</string>
-    <string name="filter_state_reading">Reading</string>
-    <string name="filter_state_plan_to_watch">Plan to Watch</string>
-    <string name="filter_state_plan_to_read">Plan to Read</string>
 
     <string name="sort_dialog_title">Sort By:</string>
     <string name="sort_choice_default">Default</string>
