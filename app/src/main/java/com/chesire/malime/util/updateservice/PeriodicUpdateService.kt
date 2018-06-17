@@ -21,10 +21,10 @@ class PeriodicUpdateService : JobService() {
 
         val api: MalimeApi = if (sharedPref.getPrimaryService() == SupportedService.Kitsu) {
             Timber.i("Found Kitsu as supported service")
-            KitsuManagerFactory().get(sharedPref.getAuthModel(), sharedPref.getUserId())
+            KitsuManagerFactory().get(sharedPref, sharedPref.getUserId())
         } else {
             Timber.i("Found Mal as supported service")
-            MalManagerFactory().get(sharedPref.getAuthModel(), sharedPref.getUsername())
+            MalManagerFactory().get(sharedPref, sharedPref.getUsername())
         }
 
         val library = Library(applicationContext, api)

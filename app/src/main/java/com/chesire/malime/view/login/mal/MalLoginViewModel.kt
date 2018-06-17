@@ -7,6 +7,7 @@ import android.databinding.ObservableBoolean
 import android.net.Uri
 import android.support.customtabs.CustomTabsIntent
 import com.chesire.malime.R
+import com.chesire.malime.core.api.AuthHandler
 import com.chesire.malime.core.flags.SupportedService
 import com.chesire.malime.core.models.AuthModel
 import com.chesire.malime.mal.api.MalManagerFactory
@@ -24,8 +25,9 @@ class MalLoginViewModel(
     private val malManagerFactory: MalManagerFactory,
     private val subscribeScheduler: Scheduler,
     private val observeScheduler: Scheduler
-) : AndroidViewModel(context) {
+) : AndroidViewModel(context), AuthHandler {
     private val disposables = CompositeDisposable()
+    private lateinit var tempAuthModel: AuthModel
     val loginResponse = MutableLiveData<LoginStatus>()
     val errorResponse = MutableLiveData<Int>()
     val attemptingLogin = ObservableBoolean()
@@ -42,7 +44,8 @@ class MalLoginViewModel(
             return
         }
 
-        val malManager = malManagerFactory.get(AuthModel(credentials, "", 0), loginModel.userName)
+        tempAuthModel = AuthModel(credentials, "", 0)
+        val malManager = malManagerFactory.get(this, loginModel.userName)
         disposables.add(malManager.login(loginModel.userName, loginModel.password)
             .subscribeOn(subscribeScheduler)
             .observeOn(observeScheduler)
@@ -58,7 +61,7 @@ class MalLoginViewModel(
                 {
                     sharedPref.putPrimaryService(SupportedService.MyAnimeList)
                         .putUsername(loginModel.userName)
-                        .putAuthModel(AuthModel(credentials, "", 0))
+                        .setAuth(AuthModel(credentials, "", 0))
                     loginResponse.value = LoginStatus.SUCCESS
                 },
                 {
@@ -85,6 +88,14 @@ class MalLoginViewModel(
             }
             else -> true
         }
+    }
+
+    override fun getAuth(): AuthModel {
+        return tempAuthModel
+    }
+
+    override fun setAuth(newModel: AuthModel) {
+        // Not needed
     }
 
     override fun onCleared() {

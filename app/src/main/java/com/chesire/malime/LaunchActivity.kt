@@ -14,7 +14,7 @@ class LaunchActivity : Activity() {
 
         val sharedPref = SharedPref(this)
         val loadIntent =
-            if (sharedPref.getAuthModel().authToken.isNotBlank() &&
+            if (sharedPref.getAuth().authToken.isNotBlank() &&
                 (sharedPref.getUsername().isNotEmpty() || sharedPref.getUserId() != 0)
             ) {
                 Intent(this, MainActivity::class.java)

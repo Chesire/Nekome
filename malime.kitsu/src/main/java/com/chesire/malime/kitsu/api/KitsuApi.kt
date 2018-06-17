@@ -1,5 +1,6 @@
 package com.chesire.malime.kitsu.api
 
+import com.chesire.malime.core.api.AuthHandler
 import com.chesire.malime.core.flags.ItemType
 import com.chesire.malime.core.models.AuthModel
 import com.chesire.malime.kitsu.BuildConfig
@@ -21,14 +22,14 @@ import retrofit2.converter.gson.GsonConverterFactory
 internal const val KitsuEndpoint = "https://kitsu.io/"
 
 class KitsuApi(
-    authModel: AuthModel
+    private val authHandler: AuthHandler
 ) {
     private val kitsuService: KitsuService
 
     init {
         val httpClient = OkHttpClient()
             .newBuilder()
-            .addInterceptor(AuthInterceptor(authModel))
+            .addInterceptor(AuthInterceptor(authHandler.getAuth()))
 
         if (BuildConfig.DEBUG) {
             val interceptor: HttpLoggingInterceptor = HttpLoggingInterceptor().apply {
@@ -109,12 +110,12 @@ class KitsuApi(
             updatingAuthToken = false
 
             if (refreshResponse.isSuccessful) {
-                // need to send back to app somehow
                 refreshResponse.body().let {
                     authModel.authToken = it!!.accessToken
                     authModel.refreshToken = it.refreshToken
                     authModel.expireAt = it.expiresIn
                 }
+                authHandler.setAuth(authModel)
             }
         }
     }

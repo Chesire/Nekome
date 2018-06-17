@@ -3,6 +3,7 @@ package com.chesire.malime.util
 import android.content.Context
 import android.content.SharedPreferences
 import android.util.Base64
+import com.chesire.malime.core.api.AuthHandler
 import com.chesire.malime.core.flags.SupportedService
 import com.chesire.malime.core.models.AuthModel
 import com.chesire.malime.util.sec.Decryptor
@@ -25,7 +26,7 @@ const val preferenceSort: String = "sort"
 
 class SharedPref(
     context: Context
-) {
+) : AuthHandler {
     val sharedPrefFile: String = "malime_shared_pref"
 
     private val sharedPreferences =
@@ -33,7 +34,7 @@ class SharedPref(
     private val encryptor = Encryptor(context.applicationContext)
     private val decryptor = Decryptor()
 
-    fun getAuthModel(): AuthModel {
+    override fun getAuth(): AuthModel {
         val auth = sharedPreferences.getString(preferenceAuth, "")
         val refresh = sharedPreferences.getString(preferenceRefresh, "")
 
@@ -58,17 +59,15 @@ class SharedPref(
         )
     }
 
-    fun putAuthModel(model: AuthModel): SharedPref {
-        val auth = encryptor.encryptText(authAlias, model.authToken)
-        val refresh = encryptor.encryptText(refreshAlias, model.refreshToken)
+    override fun setAuth(newModel: AuthModel) {
+        val auth = encryptor.encryptText(authAlias, newModel.authToken)
+        val refresh = encryptor.encryptText(refreshAlias, newModel.refreshToken)
 
         sharedPreferences.edit()
             .putString(preferenceAuth, Base64.encodeToString(auth, Base64.DEFAULT))
             .putString(preferenceRefresh, Base64.encodeToString(refresh, Base64.DEFAULT))
-            .putLong(preferenceRefreshExpireAt, model.expireAt)
+            .putLong(preferenceRefreshExpireAt, newModel.expireAt)
             .apply()
-
-        return this
     }
 
     fun getUserId(): Int {
