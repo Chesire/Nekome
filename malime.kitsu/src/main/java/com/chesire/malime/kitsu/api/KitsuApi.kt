@@ -2,7 +2,7 @@ package com.chesire.malime.kitsu.api
 
 import com.chesire.malime.core.flags.ItemType
 import com.chesire.malime.kitsu.BuildConfig
-import com.chesire.malime.kitsu.models.LoginRequest
+import com.chesire.malime.kitsu.models.request.LoginRequest
 import com.chesire.malime.kitsu.models.response.AddItemResponse
 import com.chesire.malime.kitsu.models.response.LibraryResponse
 import com.chesire.malime.kitsu.models.response.LoginResponse
@@ -46,7 +46,12 @@ class KitsuApi(
     }
 
     fun login(username: String, password: String): Call<LoginResponse> {
-        return kitsuService.login(LoginRequest(username, password))
+        return kitsuService.login(
+            LoginRequest(
+                username,
+                password
+            )
+        )
     }
 
     fun getUser(): Call<LibraryResponse> {

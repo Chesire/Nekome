@@ -1,6 +1,7 @@
 package com.chesire.malime.kitsu.api
 
-import com.chesire.malime.kitsu.models.LoginRequest
+import com.chesire.malime.kitsu.models.request.LoginRequest
+import com.chesire.malime.kitsu.models.request.RefreshAuthRequest
 import com.chesire.malime.kitsu.models.response.AddItemResponse
 import com.chesire.malime.kitsu.models.response.LibraryResponse
 import com.chesire.malime.kitsu.models.response.LoginResponse
@@ -21,6 +22,9 @@ import retrofit2.http.Query
 interface KitsuService {
     @POST("api/oauth/token")
     fun login(@Body body: LoginRequest): Call<LoginResponse>
+
+    @POST("api/oauth/token")
+    fun refreshAuth(@Body body: RefreshAuthRequest): Call<LoginResponse>
 
     /**
      * Gets the user ID, requires authentication to be set.
