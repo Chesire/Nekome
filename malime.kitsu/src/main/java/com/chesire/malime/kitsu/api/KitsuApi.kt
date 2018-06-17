@@ -76,7 +76,7 @@ class KitsuApi(
     }
 
     /**
-     * Provides an interceptor that handles the basic auth.
+     * Provides an interceptor that handles the auth and refreshing the token when needed.
      */
     inner class AuthInterceptor(
         private val authModel: AuthModel
@@ -86,23 +86,12 @@ class KitsuApi(
         override fun intercept(chain: Interceptor.Chain): Response {
             val request = chain.request()
             if (updatingAuthToken) {
+                // If we are currently updating the token just push it through
                 return chain.proceed(request)
             }
 
             if (authModel.expireAt != 0L && System.currentTimeMillis() / 1000 > authModel.expireAt) {
-                // The auth token has expired, update it using the refresh token
-                updatingAuthToken = true
-                val refreshCall = refreshAuthToken(authModel.refreshToken)
-                val refreshResponse = refreshCall.execute()
-                updatingAuthToken = false
-
-                if (refreshResponse.isSuccessful) {
-                    refreshResponse.body().let {
-                        authModel.authToken = it!!.accessToken
-                        authModel.refreshToken = it.refreshToken
-                        authModel.expireAt = it.expiresIn
-                    }
-                }
+                updateAuthToken()
             }
 
             val authenticatedRequest = request.newBuilder()
@@ -110,6 +99,23 @@ class KitsuApi(
                 .build()
 
             return chain.proceed(authenticatedRequest)
+        }
+
+        private fun updateAuthToken() {
+            // The auth token has expired, update it using the refresh token
+            updatingAuthToken = true
+            val refreshCall = refreshAuthToken(authModel.refreshToken)
+            val refreshResponse = refreshCall.execute()
+            updatingAuthToken = false
+
+            if (refreshResponse.isSuccessful) {
+                // need to send back to app somehow
+                refreshResponse.body().let {
+                    authModel.authToken = it!!.accessToken
+                    authModel.refreshToken = it.refreshToken
+                    authModel.expireAt = it.expiresIn
+                }
+            }
         }
     }
 }
