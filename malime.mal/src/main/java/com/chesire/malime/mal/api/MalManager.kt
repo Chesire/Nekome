@@ -5,7 +5,7 @@ import com.chesire.malime.core.api.SearchApi
 import com.chesire.malime.core.flags.ItemType
 import com.chesire.malime.core.flags.SeriesStatus
 import com.chesire.malime.core.flags.UserSeriesStatus
-import com.chesire.malime.core.models.LoginResponse
+import com.chesire.malime.core.models.AuthModel
 import com.chesire.malime.core.models.MalimeModel
 import com.chesire.malime.mal.models.Anime
 import com.chesire.malime.mal.models.Manga
@@ -32,16 +32,16 @@ class MalManager(
      * Since there is no "login" or auth token to store, this just verifies that the credentials
      * entered are correct.
      *
-     * @return [Single<LoginResponse>] with the success and failure states, will be an empty LoginResponse
+     * @return [Single<AuthModel>] with the success and failure states, will be an empty AuthModel
      */
-    override fun login(username: String, password: String): Single<LoginResponse> {
+    override fun login(username: String, password: String): Single<AuthModel> {
         return Single.create {
             val callResponse = api.loginToAccount()
             val response = callResponse.execute()
 
             if (response.isSuccessful) {
                 Timber.i("Login successful")
-                it.onSuccess(LoginResponse("", ""))
+                it.onSuccess(AuthModel("", "", 0))
             } else {
                 Timber.e(Throwable(response.message()), "Error with the login method")
                 it.tryOnError(Throwable(response.message()))

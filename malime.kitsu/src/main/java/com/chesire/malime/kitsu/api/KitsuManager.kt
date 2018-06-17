@@ -5,7 +5,7 @@ import com.chesire.malime.core.api.SearchApi
 import com.chesire.malime.core.flags.ItemType
 import com.chesire.malime.core.flags.SeriesStatus
 import com.chesire.malime.core.flags.UserSeriesStatus
-import com.chesire.malime.core.models.LoginResponse
+import com.chesire.malime.core.models.AuthModel
 import com.chesire.malime.core.models.MalimeModel
 import com.chesire.malime.kitsu.models.response.UpdateItemResponse
 import com.google.gson.JsonObject
@@ -22,7 +22,7 @@ class KitsuManager(
     private val userId: Int
 ) : MalimeApi, SearchApi {
 
-    override fun login(username: String, password: String): Single<LoginResponse> {
+    override fun login(username: String, password: String): Single<AuthModel> {
         // The api mentions it wants the username, but it seems it wants the email address instead
         return Single.create {
             val callResponse = api.login(username, password)
@@ -33,9 +33,10 @@ class KitsuManager(
 
                 response.body().let { responseObject ->
                     it.onSuccess(
-                        LoginResponse(
+                        AuthModel(
                             responseObject!!.accessToken,
-                            responseObject.refreshToken
+                            responseObject.refreshToken,
+                            responseObject.createdAt + responseObject.expiresIn
                         )
                     )
                 }
