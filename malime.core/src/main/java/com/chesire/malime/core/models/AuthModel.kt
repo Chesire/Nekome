@@ -1,7 +1,7 @@
 package com.chesire.malime.core.models
 
-class AuthModel(
-    val authToken: String,
-    val refreshToken: String,
-    val expireAt: Long
+data class AuthModel(
+    var authToken: String,
+    var refreshToken: String,
+    var expireAt: Long
 )
