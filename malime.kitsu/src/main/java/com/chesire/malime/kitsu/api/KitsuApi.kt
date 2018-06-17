@@ -113,7 +113,7 @@ class KitsuApi(
                 refreshResponse.body().let {
                     authModel.authToken = it!!.accessToken
                     authModel.refreshToken = it.refreshToken
-                    authModel.expireAt = it.expiresIn
+                    authModel.expireAt = it.createdAt + it.expiresIn
                 }
                 authHandler.setAuth(authModel)
             }
