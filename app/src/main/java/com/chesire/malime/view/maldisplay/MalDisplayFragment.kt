@@ -2,12 +2,15 @@ package com.chesire.malime.view.maldisplay
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.content.res.Configuration
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v7.app.AlertDialog
+import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.OrientationHelper
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -92,9 +95,18 @@ class MalDisplayFragment : Fragment() {
             vm = viewModel
             maldisplayRecyclerView.apply {
                 setHasFixedSize(true)
-                layoutManager = LinearLayoutManager(requireContext())
+                layoutManager =
+                        if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                            GridLayoutManager(
+                                requireContext(),
+                                2,
+                                OrientationHelper.VERTICAL,
+                                false
+                            )
+                        } else {
+                            LinearLayoutManager(requireContext())
+                        }
                 adapter = viewAdapter
-                // (itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
             }
         }.root
     }
