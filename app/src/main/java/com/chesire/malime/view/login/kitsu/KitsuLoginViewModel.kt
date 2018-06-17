@@ -47,7 +47,13 @@ class KitsuLoginViewModel(
         disposables.add(kitsuManager.login(loginModel.userName, loginModel.password)
             .flatMap {
                 apiResponse = it
-                val authenticatedManager = kitsuManagerFactory.get(it.authToken)
+                val authenticatedManager = kitsuManagerFactory.get(
+                    AuthModel(
+                        it.authToken,
+                        it.refreshToken,
+                        it.expireAt
+                    )
+                )
                 return@flatMap authenticatedManager.getUserId()
             }
             .subscribeOn(subscribeScheduler)

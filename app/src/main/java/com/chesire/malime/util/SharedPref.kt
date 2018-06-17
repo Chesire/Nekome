@@ -71,56 +71,6 @@ class SharedPref(
         return this
     }
 
-    @Deprecated("Use AuthModel methods instead")
-    fun getAuth(): String {
-        val text = sharedPreferences.getString(preferenceAuth, "")
-
-        return if (text.isNotBlank()) {
-            decryptor.decryptData(
-                authAlias,
-                Base64.decode(text, Base64.DEFAULT)
-            )
-        } else {
-            ""
-        }
-    }
-
-    @Deprecated("Use AuthModel methods instead")
-    fun putAuth(auth: String): SharedPref {
-        val encrypted = encryptor.encryptText(authAlias, auth)
-
-        sharedPreferences.edit()
-            .putString(preferenceAuth, Base64.encodeToString(encrypted, Base64.DEFAULT))
-            .apply()
-
-        return this
-    }
-
-    @Deprecated("Use AuthModel methods instead")
-    fun getRefresh(): String {
-        val text = sharedPreferences.getString(preferenceRefresh, "")
-
-        return if (text.isNotBlank()) {
-            decryptor.decryptData(
-                refreshAlias,
-                Base64.decode(text, Base64.DEFAULT)
-            )
-        } else {
-            ""
-        }
-    }
-
-    @Deprecated("Use AuthModel methods instead")
-    fun putRefresh(refresh: String): SharedPref {
-        val encrypted = encryptor.encryptText(refreshAlias, refresh)
-
-        sharedPreferences.edit()
-            .putString(preferenceRefresh, Base64.encodeToString(encrypted, Base64.DEFAULT))
-            .apply()
-
-        return this
-    }
-
     fun getUserId(): Int {
         return sharedPreferences.getInt(preferenceUserId, 0)
     }
