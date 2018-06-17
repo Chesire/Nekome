@@ -9,7 +9,9 @@ import com.chesire.malime.util.sec.Encryptor
 import com.chesire.malime.view.preferences.SortOption
 
 private const val authAlias: String = "private_auth"
+private const val refreshAlias: String = "private_refresh"
 private const val preferenceAuth: String = "auth"
+private const val preferenceRefresh: String = "refresh"
 private const val preferenceUserId: String = "userId"
 private const val preferenceUsername: String = "username"
 private const val preferencePrimaryService: String = "primaryService"
@@ -47,6 +49,29 @@ class SharedPref(
 
         sharedPreferences.edit()
             .putString(preferenceAuth, Base64.encodeToString(encrypted, Base64.DEFAULT))
+            .apply()
+
+        return this
+    }
+
+    fun getRefresh(): String {
+        val text = sharedPreferences.getString(preferenceRefresh, "")
+
+        return if (text.isNotBlank()) {
+            decryptor.decryptData(
+                refreshAlias,
+                Base64.decode(text, Base64.DEFAULT)
+            )
+        } else {
+            ""
+        }
+    }
+
+    fun putRefresh(refresh: String): SharedPref {
+        val encrypted = encryptor.encryptText(refreshAlias, refresh)
+
+        sharedPreferences.edit()
+            .putString(preferenceRefresh, Base64.encodeToString(encrypted, Base64.DEFAULT))
             .apply()
 
         return this

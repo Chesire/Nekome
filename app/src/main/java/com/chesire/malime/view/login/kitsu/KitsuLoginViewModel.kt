@@ -70,6 +70,7 @@ class KitsuLoginViewModel(
                 sharedPref.putPrimaryService(SupportedService.Kitsu)
                     .putUserId(it)
                     .putAuth(apiResponse!!.authToken)
+                    .putRefresh(apiResponse!!.refreshToken)
             }
             .subscribe()
         )
