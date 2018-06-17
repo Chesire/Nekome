@@ -3,10 +3,13 @@ package com.chesire.malime.view.search
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
+import android.content.res.Configuration
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.OrientationHelper
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -87,7 +90,17 @@ class SearchFragment : Fragment() {
             vm = viewModel
             searchAllItems.apply {
                 setHasFixedSize(true)
-                layoutManager = LinearLayoutManager(requireContext())
+                layoutManager =
+                        if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                            GridLayoutManager(
+                                requireContext(),
+                                2,
+                                OrientationHelper.VERTICAL,
+                                false
+                            )
+                        } else {
+                            LinearLayoutManager(requireContext())
+                        }
                 adapter = viewAdapter
             }
             searchSearchTermEditText.setOnEditorActionListener { _, _, _ ->
