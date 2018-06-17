@@ -1,5 +1,6 @@
 package com.chesire.malime.mal.api
 
+import com.chesire.malime.core.models.AuthModel
 import com.chesire.malime.mal.BuildConfig
 import com.chesire.malime.mal.models.response.GetAllAnimeResponse
 import com.chesire.malime.mal.models.response.GetAllMangaResponse
@@ -23,7 +24,7 @@ internal const val MyAnimeListEndpoint = "https://myanimelist.net/"
  * on it.
  */
 class MalApi(
-    auth: String
+    auth: AuthModel
 ) {
     private val malService: MalService
 
@@ -116,13 +117,13 @@ class MalApi(
      * Provides an interceptor that handles the basic auth.
      */
     class BasicAuthInterceptor(
-        private val auth: String
+        private val auth: AuthModel
     ) : Interceptor {
 
         override fun intercept(chain: Interceptor.Chain): Response {
             val request = chain.request()
             val authenticatedRequest = request.newBuilder()
-                .header("Authorization", "Basic $auth")
+                .header("Authorization", "Basic ${auth.authToken}")
                 .build()
 
             return chain.proceed(authenticatedRequest)
