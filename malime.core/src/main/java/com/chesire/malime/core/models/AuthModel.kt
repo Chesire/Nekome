@@ -1,7 +1,7 @@
 package com.chesire.malime.core.models
 
-class LoginResponse(
+class AuthModel(
     val authToken: String,
     val refreshToken: String,
-    val expiresAt: Long
+    val expireAt: Long
 )
