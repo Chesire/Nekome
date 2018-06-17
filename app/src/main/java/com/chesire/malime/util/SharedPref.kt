@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.util.Base64
 import com.chesire.malime.core.flags.SupportedService
+import com.chesire.malime.core.models.AuthModel
 import com.chesire.malime.util.sec.Decryptor
 import com.chesire.malime.util.sec.Encryptor
 import com.chesire.malime.view.preferences.SortOption
@@ -12,6 +13,7 @@ private const val authAlias: String = "private_auth"
 private const val refreshAlias: String = "private_refresh"
 private const val preferenceAuth: String = "auth"
 private const val preferenceRefresh: String = "refresh"
+private const val preferenceRefreshExpireAt: String = "refreshExpireAt"
 private const val preferenceUserId: String = "userId"
 private const val preferenceUsername: String = "username"
 private const val preferencePrimaryService: String = "primaryService"
@@ -31,6 +33,45 @@ class SharedPref(
     private val encryptor = Encryptor(context.applicationContext)
     private val decryptor = Decryptor()
 
+    fun getAuthModel(): AuthModel {
+        val auth = sharedPreferences.getString(preferenceAuth, "")
+        val refresh = sharedPreferences.getString(preferenceRefresh, "")
+
+        return AuthModel(
+            if (auth.isNotBlank()) {
+                decryptor.decryptData(
+                    authAlias,
+                    Base64.decode(auth, Base64.DEFAULT)
+                )
+            } else {
+                ""
+            },
+            if (refresh.isNotBlank()) {
+                decryptor.decryptData(
+                    refreshAlias,
+                    Base64.decode(refresh, Base64.DEFAULT)
+                )
+            } else {
+                ""
+            },
+            sharedPreferences.getLong(preferenceRefreshExpireAt, 0)
+        )
+    }
+
+    fun putAuthModel(model: AuthModel): SharedPref {
+        val auth = encryptor.encryptText(authAlias, model.authToken)
+        val refresh = encryptor.encryptText(refreshAlias, model.refreshToken)
+
+        sharedPreferences.edit()
+            .putString(preferenceAuth, Base64.encodeToString(auth, Base64.DEFAULT))
+            .putString(preferenceRefresh, Base64.encodeToString(refresh, Base64.DEFAULT))
+            .putLong(preferenceRefreshExpireAt, model.expireAt)
+            .apply()
+
+        return this
+    }
+
+    @Deprecated("Use AuthModel methods instead")
     fun getAuth(): String {
         val text = sharedPreferences.getString(preferenceAuth, "")
 
@@ -44,6 +85,7 @@ class SharedPref(
         }
     }
 
+    @Deprecated("Use AuthModel methods instead")
     fun putAuth(auth: String): SharedPref {
         val encrypted = encryptor.encryptText(authAlias, auth)
 
@@ -54,6 +96,7 @@ class SharedPref(
         return this
     }
 
+    @Deprecated("Use AuthModel methods instead")
     fun getRefresh(): String {
         val text = sharedPreferences.getString(preferenceRefresh, "")
 
@@ -67,6 +110,7 @@ class SharedPref(
         }
     }
 
+    @Deprecated("Use AuthModel methods instead")
     fun putRefresh(refresh: String): SharedPref {
         val encrypted = encryptor.encryptText(refreshAlias, refresh)
 
