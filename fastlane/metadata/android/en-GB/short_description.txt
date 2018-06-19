@@ -1,1 +1,1 @@
-Keep track of your anime and manga, through the use of the MyAnimeList API.
+Keep track of your anime and manga, through the use of Kitsu or MyAnimeList.

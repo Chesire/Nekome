@@ -1,4 +1,6 @@
-App to interface with MyAnimeList to keep your current anime and manga series progress up to date.
+<b>Note: MyAnimeList is now back online, but their API is still unavailable, as such this application will only work with Kitsu until MyAnimeList is back online.</b>
+
+App to interface with Kitsu & MyAnimeList to keep your current anime and manga series progress up to date.
 
 The app will let you: 
 * Add a new anime/manga series to track 
@@ -7,4 +9,4 @@ The app will let you:
 
 This app does NOT allow you to read or watch anything, this merely allows you to track your current progress. 
 
-Note: A free account with MyAnimeList is required to use this application.
+Note: A free account with Kitsu or MyAnimeList is required to use this application.
