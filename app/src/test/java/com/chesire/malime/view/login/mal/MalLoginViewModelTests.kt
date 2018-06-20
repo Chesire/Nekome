@@ -4,8 +4,8 @@ import android.arch.core.executor.testing.InstantTaskExecutorRule
 import android.arch.lifecycle.Observer
 import android.test.mock.MockApplication
 import com.chesire.malime.R
-import com.chesire.malime.core.api.AuthHandler
 import com.chesire.malime.core.flags.SupportedService
+import com.chesire.malime.core.models.AuthModel
 import com.chesire.malime.customMock
 import com.chesire.malime.mal.api.MalManager
 import com.chesire.malime.mal.api.MalManagerFactory
@@ -34,7 +34,6 @@ class MalLoginViewModelTests {
     private val malManager: MalManager = customMock()
     private val errorObserver: Observer<Int> = customMock()
     private val loginObserver: Observer<LoginStatus> = customMock()
-    private val authHandler: AuthHandler = customMock()
     private val testScheduler = TestScheduler()
 
     @Before
@@ -53,8 +52,8 @@ class MalLoginViewModelTests {
 
         `when`(
             malManagerFactory.get(
-                authHandler,
-                ArgumentMatchers.anyString()
+                testObject,
+                testObject.loginModel.userName
             )
         ).thenReturn(malManager)
         `when`(sharedPref.putPrimaryService(SupportedService.MyAnimeList)).thenReturn(sharedPref)
@@ -75,8 +74,8 @@ class MalLoginViewModelTests {
 
         verify(errorObserver).onChanged(R.string.login_failure_username)
         verify(malManagerFactory, Times(0)).get(
-            authHandler,
-            ArgumentMatchers.anyString()
+            testObject,
+            testObject.loginModel.userName
         )
     }
 
@@ -88,8 +87,8 @@ class MalLoginViewModelTests {
 
         verify(errorObserver).onChanged(R.string.login_failure_password)
         verify(malManagerFactory, Times(0)).get(
-            authHandler,
-            ArgumentMatchers.anyString()
+            testObject,
+            testObject.loginModel.userName
         )
     }
 
@@ -99,8 +98,8 @@ class MalLoginViewModelTests {
 
         verify(errorObserver).onChanged(R.string.login_failure)
         verify(malManagerFactory, Times(0)).get(
-            authHandler,
-            ArgumentMatchers.anyString()
+            testObject,
+            testObject.loginModel.userName
         )
     }
 
@@ -108,8 +107,8 @@ class MalLoginViewModelTests {
     fun `failure to login provides an error message`() {
         `when`(
             malManager.login(
-                ArgumentMatchers.anyString(),
-                ArgumentMatchers.anyString()
+                testObject.loginModel.userName,
+                testObject.loginModel.password
             )
         ).thenReturn(Single.error(Exception("Test Exception")))
 
@@ -123,8 +122,8 @@ class MalLoginViewModelTests {
     fun `failure to login calls loginResponse with LoginStatus#ERROR`() {
         `when`(
             malManager.login(
-                ArgumentMatchers.anyString(),
-                ArgumentMatchers.anyString()
+                testObject.loginModel.userName,
+                testObject.loginModel.password
             )
         ).thenReturn(Single.error(Exception("Test Exception")))
 
@@ -138,29 +137,31 @@ class MalLoginViewModelTests {
 
     @Test
     fun `successful login saves login details to shared pref`() {
+        val authToken = "dummyString"
+        val returnedModel = AuthModel(authToken, "", 0)
         `when`(
             malManager.login(
-                ArgumentMatchers.anyString(),
-                ArgumentMatchers.anyString()
+                testObject.loginModel.userName,
+                testObject.loginModel.password
             )
-        ).thenReturn(Single.just(ArgumentMatchers.any()))
+        ).thenReturn(Single.just(returnedModel))
 
-        testObject.executeLogin("dummyString")
+        testObject.executeLogin(authToken)
         testScheduler.triggerActions()
 
         verify(sharedPref).putPrimaryService(SupportedService.MyAnimeList)
         verify(sharedPref).putUsername(testObject.loginModel.userName)
-        verify(sharedPref).setAuth(ArgumentMatchers.any())
+        verify(sharedPref).setAuth(returnedModel)
     }
 
     @Test
     fun `successful login calls loginResponse with LoginStatus#SUCCESS`() {
         `when`(
             malManager.login(
-                ArgumentMatchers.anyString(),
-                ArgumentMatchers.anyString()
+                testObject.loginModel.userName,
+                testObject.loginModel.password
             )
-        ).thenReturn(Single.just(ArgumentMatchers.any()))
+        ).thenReturn(Single.just(AuthModel("", "", 0)))
 
         testObject.executeLogin("dummyString")
         testScheduler.triggerActions()
