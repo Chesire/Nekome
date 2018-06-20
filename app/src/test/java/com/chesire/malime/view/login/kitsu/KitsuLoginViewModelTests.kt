@@ -33,7 +33,6 @@ class KitsuLoginViewModelTests {
     private val kitsuManager: KitsuManager = customMock()
     private val errorObserver: Observer<Int> = customMock()
     private val loginObserver: Observer<LoginStatus> = customMock()
-    private val authHandler: AuthHandler = customMock()
     private val testScheduler = TestScheduler()
 
     @Before
@@ -50,7 +49,7 @@ class KitsuLoginViewModelTests {
         testObject.loginModel.userName = "username"
         testObject.loginModel.password = "password"
 
-        `when`(kitsuManagerFactory.get(authHandler)).thenReturn(kitsuManager)
+        `when`(kitsuManagerFactory.get(testObject)).thenReturn(kitsuManager)
         `when`(sharedPref.putPrimaryService(SupportedService.Kitsu)).thenReturn(sharedPref)
         `when`(sharedPref.putUserId(ArgumentMatchers.anyInt())).thenReturn(sharedPref)
     }
@@ -62,13 +61,13 @@ class KitsuLoginViewModelTests {
     }
 
     @Test
-    fun `empty username provides an error message`() {
+    fun `empty email provides an error message`() {
         testObject.loginModel.userName = ""
 
         testObject.executeLogin()
 
-        verify(errorObserver).onChanged(R.string.login_failure_username)
-        verify(kitsuManagerFactory, Times(0)).get(authHandler)
+        verify(errorObserver).onChanged(R.string.login_failure_email)
+        verify(kitsuManagerFactory, Times(0)).get(testObject)
     }
 
     @Test
@@ -78,7 +77,7 @@ class KitsuLoginViewModelTests {
         testObject.executeLogin()
 
         verify(errorObserver).onChanged(R.string.login_failure_password)
-        verify(kitsuManagerFactory, Times(0)).get(authHandler)
+        verify(kitsuManagerFactory, Times(0)).get(testObject)
     }
 
     /*
