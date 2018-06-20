@@ -139,6 +139,7 @@ class MalLoginViewModelTests {
     fun `successful login saves login details to shared pref`() {
         val authToken = "dummyString"
         val returnedModel = AuthModel(authToken, "", 0)
+
         `when`(
             malManager.login(
                 testObject.loginModel.userName,
