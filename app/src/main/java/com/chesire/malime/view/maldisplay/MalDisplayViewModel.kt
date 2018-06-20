@@ -61,11 +61,7 @@ class MalDisplayViewModel(
         newStatus: UserSeriesStatus,
         callback: (success: Boolean) -> Unit
     ) {
-        Timber.d(
-            "Series ${model.title}\n" +
-                    "Progress being changed from ${model.progress} to $newProgress\n" +
-                    "Status being changed from ${model.userSeriesStatus} to $newStatus"
-        )
+        Timber.d("Series ${model.title}\nProgress being changed from ${model.progress} to $newProgress\nStatus being changed from ${model.userSeriesStatus} to $newStatus")
 
         disposables.add(
             library.sendUpdateToApi(model, newProgress, newStatus)
