@@ -4,11 +4,12 @@ import android.arch.core.executor.testing.InstantTaskExecutorRule
 import android.arch.lifecycle.Observer
 import android.test.mock.MockApplication
 import com.chesire.malime.R
-import com.chesire.malime.customMock
-import com.chesire.malime.kitsu.api.KitsuManagerFactory
-import com.chesire.malime.kitsu.api.KitsuManager
-import com.chesire.malime.util.SharedPref
+import com.chesire.malime.core.api.AuthHandler
 import com.chesire.malime.core.flags.SupportedService
+import com.chesire.malime.customMock
+import com.chesire.malime.kitsu.api.KitsuManager
+import com.chesire.malime.kitsu.api.KitsuManagerFactory
+import com.chesire.malime.util.SharedPref
 import com.chesire.malime.view.login.LoginStatus
 import io.reactivex.schedulers.TestScheduler
 import org.junit.After
@@ -32,6 +33,7 @@ class KitsuLoginViewModelTests {
     private val kitsuManager: KitsuManager = customMock()
     private val errorObserver: Observer<Int> = customMock()
     private val loginObserver: Observer<LoginStatus> = customMock()
+    private val authHandler: AuthHandler = customMock()
     private val testScheduler = TestScheduler()
 
     @Before
@@ -46,10 +48,9 @@ class KitsuLoginViewModelTests {
         testObject.errorResponse.observeForever(errorObserver)
         testObject.loginResponse.observeForever(loginObserver)
         testObject.loginModel.userName = "username"
-        testObject.loginModel.email = "email"
         testObject.loginModel.password = "password"
 
-        `when`(kitsuManagerFactory.get()).thenReturn(kitsuManager)
+        `when`(kitsuManagerFactory.get(authHandler)).thenReturn(kitsuManager)
         `when`(sharedPref.putPrimaryService(SupportedService.Kitsu)).thenReturn(sharedPref)
         `when`(sharedPref.putUserId(ArgumentMatchers.anyInt())).thenReturn(sharedPref)
     }
@@ -66,18 +67,8 @@ class KitsuLoginViewModelTests {
 
         testObject.executeLogin()
 
-        verify(errorObserver).onChanged(R.string.login_failure_display_name)
-        verify(kitsuManagerFactory, Times(0)).get()
-    }
-
-    @Test
-    fun `empty email provides an error message`() {
-        testObject.loginModel.email = ""
-
-        testObject.executeLogin()
-
-        verify(errorObserver).onChanged(R.string.login_failure_email)
-        verify(kitsuManagerFactory, Times(0)).get()
+        verify(errorObserver).onChanged(R.string.login_failure_username)
+        verify(kitsuManagerFactory, Times(0)).get(authHandler)
     }
 
     @Test
@@ -87,7 +78,7 @@ class KitsuLoginViewModelTests {
         testObject.executeLogin()
 
         verify(errorObserver).onChanged(R.string.login_failure_password)
-        verify(kitsuManagerFactory, Times(0)).get()
+        verify(kitsuManagerFactory, Times(0)).get(authHandler)
     }
 
     /*
