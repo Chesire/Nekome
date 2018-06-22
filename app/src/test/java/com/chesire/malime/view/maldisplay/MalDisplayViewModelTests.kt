@@ -103,7 +103,7 @@ class MalDisplayViewModelTests {
     @Test
     fun `update series fires callback on failure`() {
         val malimeModel: MalimeModel = customMock()
-        var callbackCalled = false
+        var callbackResult = false
 
         `when`(
             library.sendUpdateToApi(malimeModel, 5, UserSeriesStatus.Completed)
@@ -112,18 +112,18 @@ class MalDisplayViewModelTests {
         )
 
         testObject.updateSeries(malimeModel, 5, UserSeriesStatus.Completed) {
-            callbackCalled = false
+            callbackResult = false
         }
         testScheduler.triggerActions()
 
-        assert(!callbackCalled)
+        assert(!callbackResult)
     }
 
     @Test
     fun `update series fires callback on success`() {
         val malimeModel: MalimeModel = customMock()
         val returnedModel: MalimeModel = customMock()
-        var callbackCalled = false
+        var callbackResult = false
 
         `when`(
             library.sendUpdateToApi(malimeModel, 5, UserSeriesStatus.Completed)
@@ -132,11 +132,11 @@ class MalDisplayViewModelTests {
         )
 
         testObject.updateSeries(malimeModel, 5, UserSeriesStatus.Completed) {
-            callbackCalled = true
+            callbackResult = true
         }
         testScheduler.triggerActions()
 
-        assert(callbackCalled)
+        assert(callbackResult)
     }
 
     @Test
