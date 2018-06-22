@@ -155,6 +155,5 @@ class KitsuLoginViewModelTests {
         verify(loginObserver).onChanged(LoginStatus.PROCESSING)
         verify(loginObserver).onChanged(LoginStatus.SUCCESS)
         verify(loginObserver).onChanged(LoginStatus.FINISHED)
-
     }
 }
