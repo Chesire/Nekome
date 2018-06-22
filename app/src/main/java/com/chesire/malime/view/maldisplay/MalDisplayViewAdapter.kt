@@ -48,32 +48,14 @@ class MalDisplayViewAdapter(
         filter.filter("")
     }
 
-    fun clear(item: MalimeModel) {
-        val foundItem = items.find { it.seriesId == item.seriesId }
-        items.remove(foundItem)
-        filter.filter("")
-    }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        if (items.count() == 0) {
-            // we should show a screen with no items
-            // for now return the same item
-            return ViewHolder(
-                ItemMalmodelBinding.inflate(
-                    LayoutInflater.from(parent.context),
-                    parent,
-                    false
-                )
+        return ViewHolder(
+            ItemMalmodelBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
             )
-        } else {
-            return ViewHolder(
-                ItemMalmodelBinding.inflate(
-                    LayoutInflater.from(parent.context),
-                    parent,
-                    false
-                )
-            )
-        }
+        )
     }
 
     override fun getItemCount(): Int {
