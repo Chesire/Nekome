@@ -31,7 +31,7 @@ class SearchViewModel(
     val params = SearchParams()
 
     fun searchForSeries(type: ItemType) {
-        if (params.searchText.isBlank() && type == ItemType.Unknown) {
+        if (params.searchText.isBlank() || type == ItemType.Unknown) {
             Timber.w("No text entered or type was unknown")
             return
         }
