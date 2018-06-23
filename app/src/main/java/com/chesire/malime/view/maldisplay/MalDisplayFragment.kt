@@ -93,7 +93,9 @@ class MalDisplayFragment : Fragment() {
             false
         ).apply {
             vm = viewModel
+
             maldisplayRecyclerView.apply {
+                setEmptyView(maldisplayEmptyView)
                 setHasFixedSize(true)
                 layoutManager =
                         if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
