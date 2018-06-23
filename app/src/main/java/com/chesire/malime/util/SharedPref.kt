@@ -1,5 +1,6 @@
 package com.chesire.malime.util
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
 import android.util.Base64
@@ -98,10 +99,12 @@ class SharedPref(
         return SupportedService.valueOf(sharedPreferences.getString(preferencePrimaryService, ""))
     }
 
+    @SuppressLint("ApplySharedPref")
     fun putPrimaryService(service: SupportedService): SharedPref {
+        // Push this into shared preferences straight away, instead of waiting in the background
         sharedPreferences.edit()
             .putString(preferencePrimaryService, service.name)
-            .apply()
+            .commit()
 
         return this
     }
