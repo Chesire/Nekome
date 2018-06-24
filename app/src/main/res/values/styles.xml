@@ -34,17 +34,15 @@
     <style name="malitem_image_style">
         <item name="android:layout_width">80dp</item>
         <item name="android:layout_height">120dp</item>
-        <item name="android:layout_alignParentStart">true</item>
         <item name="android:layout_margin">4dp</item>
         <item name="android:layout_centerVertical">true</item>
     </style>
 
     <style name="malitem_heading_text_style" parent="TextAppearance.AppCompat.Subhead">
-        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_alignParentTop">true</item>
         <item name="android:layout_margin">4dp</item>
-        <item name="android:gravity">center_horizontal</item>
     </style>
 
     <style name="malitem_progress_text_style">
@@ -62,18 +60,11 @@
         <item name="android:background">@android:color/transparent</item>
     </style>
 
-    <style name="search_body_text_style">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">match_parent</item>
-        <item name="android:layout_margin">2dp</item>
-        <item name="android:gravity">center_horizontal</item>
-    </style>
-
     <style name="search_image_add_button_style">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_width">48dp</item>
+        <item name="android:layout_height">48dp</item>
         <item name="android:layout_centerVertical">true</item>
-        <item name="android:padding">4dp</item>
+        <item name="android:padding">12dp</item>
         <item name="android:background">@android:color/transparent</item>
     </style>
 
