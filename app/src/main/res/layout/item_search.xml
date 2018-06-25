@@ -36,37 +36,49 @@
             <TextView
                 android:id="@+id/item_search_title"
                 style="@style/malitem_heading_text_style"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:lines="1"
                 android:text="@{model.title}"
+                android:textAlignment="center"
+                app:layout_constrainedWidth="true"
+                app:layout_constraintBottom_toTopOf="@+id/item_search_type_text"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/item_search_image"
-                app:layout_constraintTop_toTopOf="parent"
                 tools:text="Series Title" />
 
             <TextView
                 android:id="@+id/item_search_type_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                app:layout_constraintBottom_toTopOf="@+id/item_search_status_text"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/item_search_image"
-                app:layout_constraintTop_toBottomOf="@+id/item_search_title"
+                app:layout_constraintStart_toEndOf="@+id/item_search_image"
                 tools:text="OVA" />
 
             <TextView
                 android:id="@+id/item_search_status_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                app:layout_constraintBottom_toTopOf="@+id/search_image_add_button"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/item_search_image"
-                app:layout_constraintTop_toBottomOf="@id/item_search_type_text"
+                app:layout_constraintStart_toEndOf="@+id/item_search_image"
                 tools:text="Finished" />
 
             <ImageButton
                 android:id="@+id/search_image_add_button"
                 style="@style/search_image_add_button_style"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
                 android:src="@drawable/ic_library_add_black"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/item_search_image" />
+                app:layout_constraintStart_toEndOf="@+id/item_search_image" />
 
         </android.support.constraint.ConstraintLayout>
 
