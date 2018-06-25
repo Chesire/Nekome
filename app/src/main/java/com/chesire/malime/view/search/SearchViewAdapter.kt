@@ -99,15 +99,17 @@ class SearchViewAdapter(
 
             interactor.addNewSeries(item) { success ->
                 setLayoutState(true)
-                if (!success) {
-                    Snackbar.make(
-                        loadingLayout,
-                        String.format(
-                            searchView.root.context.getString(R.string.search_add_failed),
-                            item.title
-                        ), Snackbar.LENGTH_LONG
-                    ).show()
-                }
+                Snackbar.make(
+                    loadingLayout,
+                    String.format(
+                        if (success) {
+                            searchView.root.context.getString(R.string.search_add_success)
+                        } else {
+                            searchView.root.context.getString(R.string.search_add_failed)
+                        },
+                        item.title
+                    ), Snackbar.LENGTH_LONG
+                ).show()
             }
         }
 
