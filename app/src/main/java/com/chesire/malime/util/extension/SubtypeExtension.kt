@@ -18,7 +18,7 @@ fun Subtype.getString(context: Context): String {
         Subtype.Manhwa -> R.string.series_subtype_manhwa
         Subtype.Novel -> R.string.series_subtype_novel
         Subtype.OEL -> R.string.series_subtype_oel
-        Subtype.OneShot -> R.string.series_subtype_oneshot
+        Subtype.Oneshot -> R.string.series_subtype_oneshot
         Subtype.Unknown -> R.string.series_subtype_unknown
     }
 

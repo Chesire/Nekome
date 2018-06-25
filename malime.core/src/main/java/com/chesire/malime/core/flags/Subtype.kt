@@ -22,7 +22,7 @@ enum class Subtype(
     Manhwa(10, 10, "manhwa"),
     Novel(11, 11, "novel"),
     OEL(12, 12, "oel"),
-    OneShot(13, 13, "oneshot");
+    Oneshot(13, 13, "oneshot");
 
     companion object {
         fun getSubtypeForKitsuString(inputString: String): Subtype {
