@@ -23,7 +23,7 @@ class Converters {
     }
 
     @TypeConverter
-    fun fromSubtype(id: Int): Subtype {
+    fun toSubtype(id: Int): Subtype {
         return Subtype.getSubtypeForInternalId(id)
     }
 
