@@ -5,6 +5,7 @@ data class AttributesItem(
     val canonicalTitle: String,
     val status: String,
     val progress: Int,
+    val subtype: String,
     val posterImage: Map<String, Any>?,
     val coverImage: Map<String, Any>?,
     val episodeCount: Int,

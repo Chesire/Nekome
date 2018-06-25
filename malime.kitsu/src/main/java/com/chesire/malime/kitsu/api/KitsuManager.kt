@@ -4,6 +4,7 @@ import com.chesire.malime.core.api.MalimeApi
 import com.chesire.malime.core.api.SearchApi
 import com.chesire.malime.core.flags.ItemType
 import com.chesire.malime.core.flags.SeriesStatus
+import com.chesire.malime.core.flags.Subtype
 import com.chesire.malime.core.flags.UserSeriesStatus
 import com.chesire.malime.core.models.AuthModel
 import com.chesire.malime.core.models.MalimeModel
@@ -88,12 +89,13 @@ class KitsuManager(
                     val userTitleData = body.data
                     val fullTitleData = body.included
 
-                    val items = userTitleData.zip(fullTitleData, { user, full ->
+                    val items = userTitleData.zip(fullTitleData) { user, full ->
                         // Items should be married up by their index
                         MalimeModel(
                             seriesId = full.id,
                             userSeriesId = user.id,
                             type = ItemType.getTypeForString(full.type),
+                            subtype = Subtype.getSubtypeForKitsuString(full.attributes.subtype),
                             slug = full.attributes.slug,
                             title = full.attributes.canonicalTitle,
                             seriesStatus = SeriesStatus.getStatusForKitsuString(full.attributes.status),
@@ -110,7 +112,7 @@ class KitsuManager(
                             startDate = user.attributes.startedAt ?: "",
                             endDate = user.attributes.finishedAt ?: ""
                         )
-                    })
+                    }
 
                     it.onNext(items)
 
@@ -154,6 +156,7 @@ class KitsuManager(
                     seriesId = seriesData.id,
                     userSeriesId = body.data.id,
                     type = ItemType.getTypeForString(seriesData.type),
+                    subtype = Subtype.getSubtypeForKitsuString(seriesData.attributes.subtype),
                     slug = seriesData.attributes.slug,
                     title = seriesData.attributes.canonicalTitle,
                     seriesStatus = SeriesStatus.getStatusForKitsuString(seriesData.attributes.status),
@@ -218,6 +221,7 @@ class KitsuManager(
                         seriesId = it.id,
                         userSeriesId = 0,
                         type = ItemType.getTypeForString(it.type),
+                        subtype = Subtype.getSubtypeForKitsuString(it.attributes.subtype),
                         slug = it.attributes.slug,
                         title = it.attributes.canonicalTitle,
                         seriesStatus = SeriesStatus.getStatusForKitsuString(it.attributes.status),

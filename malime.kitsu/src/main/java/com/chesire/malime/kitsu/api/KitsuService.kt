@@ -36,8 +36,8 @@ interface KitsuService {
         "api/edge/users/{userId}/library-entries" +
                 "?include=anime,manga" +
                 "&fields[libraryEntries]=status,progress,anime,manga,startedAt,finishedAt" +
-                "&fields[anime]=slug,canonicalTitle,status,posterImage,coverImage,episodeCount,nsfw" +
-                "&fields[manga]=slug,canonicalTitle,status,posterImage,chapterCount"
+                "&fields[anime]=slug,canonicalTitle,status,subtype,posterImage,coverImage,episodeCount,nsfw" +
+                "&fields[manga]=slug,canonicalTitle,status,subtype,posterImage,chapterCount"
     )
     fun getUserLibrary(
         @Path("userId") userId: Int,
@@ -48,8 +48,8 @@ interface KitsuService {
     // Search is limited to 20 items at once, might want to do the above if more are required
     @GET(
         "api/edge/{type}" +
-                "?fields[anime]=slug,canonicalTitle,status,posterImage,coverImage,episodeCount,nsfw" +
-                "&fields[manga]=slug,canonicalTitle,status,posterImage,chapterCount"
+                "?fields[anime]=slug,canonicalTitle,status,subtype,posterImage,coverImage,episodeCount,nsfw" +
+                "&fields[manga]=slug,canonicalTitle,status,subtype,posterImage,chapterCount"
     )
     fun search(
         @Path("type") type: String,
@@ -59,8 +59,8 @@ interface KitsuService {
     @POST(
         "api/edge/library-entries" +
                 "?include=anime,manga" +
-                "&fields[anime]=slug,canonicalTitle,status,posterImage,coverImage,episodeCount,nsfw" +
-                "&fields[manga]=slug,canonicalTitle,status,posterImage,chapterCount"
+                "&fields[anime]=slug,canonicalTitle,status,subtype,posterImage,coverImage,episodeCount,nsfw" +
+                "&fields[manga]=slug,canonicalTitle,status,subtype,posterImage,chapterCount"
     )
     @Headers("Content-Type: application/vnd.api+json")
     fun addItem(@Body data: RequestBody): Call<AddItemResponse>

@@ -1,6 +1,6 @@
 package com.chesire.malime.core.flags
 
-enum class SubType(
+enum class Subtype(
     val internalId: Int,
     val malId: Int,// this might be a string in MAL?
     val kitsuString: String
@@ -25,16 +25,16 @@ enum class SubType(
     OneShot(13, 13, "oneshot");
 
     companion object {
-        fun getSubTypeForKitsuString(inputString: String): SubType {
-            return SubType.values().find { it.kitsuString == inputString } ?: Unknown
+        fun getSubtypeForKitsuString(inputString: String): Subtype {
+            return Subtype.values().find { it.kitsuString == inputString } ?: Unknown
         }
 
-        fun getSubTypeForMalId(id: Int): SubType {
-            return SubType.values().find { it.malId == id } ?: Unknown
+        fun getSubtypeForMalId(id: Int): Subtype {
+            return Subtype.values().find { it.malId == id } ?: Unknown
         }
 
-        fun getSubTypeForInternalId(id: Int): SubType {
-            return SubType.values().find { it.internalId == id } ?: Unknown
+        fun getSubtypeForInternalId(id: Int): Subtype {
+            return Subtype.values().find { it.internalId == id } ?: Unknown
         }
     }
 }
