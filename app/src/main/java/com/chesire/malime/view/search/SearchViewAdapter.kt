@@ -15,6 +15,7 @@ import kotlinx.android.synthetic.main.item_search.view.item_search_content_layou
 import kotlinx.android.synthetic.main.item_search.view.item_search_image
 import kotlinx.android.synthetic.main.item_search.view.item_search_loading_layout
 import kotlinx.android.synthetic.main.item_search.view.item_search_status_text
+import kotlinx.android.synthetic.main.item_search.view.item_search_type_text
 import kotlinx.android.synthetic.main.item_search.view.search_image_add_button
 
 class SearchViewAdapter(
@@ -82,6 +83,7 @@ class SearchViewAdapter(
             }
 
             searchView.root.apply {
+                item_search_type_text.text = item.subtype.getString(context)
                 item_search_status_text.text = item.seriesStatus.getString(context)
                 item_search_image.setOnClickListener {
                     interactor.navigateToSeries(item)
