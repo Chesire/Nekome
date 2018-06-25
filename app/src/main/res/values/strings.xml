@@ -57,6 +57,13 @@
     <string name="sort_choice_start_date">Start Date</string>
     <string name="sort_choice_end_date">End Date</string>
 
+    <string name="series_state_current">Current</string>
+    <string name="series_state_finished">Finished</string>
+    <string name="series_state_tba">TBA</string>
+    <string name="series_state_unreleased">Unreleased</string>
+    <string name="series_state_upcoming">Upcoming</string>
+    <string name="series_state_unknown">Unknown</string>
+
     <string name="search_text_hint">Enter search term</string>
     <string name="search_nsfw_allowed">Show NSFW</string>
     <string name="search_add_failed">Failed to add %s, please try again</string>

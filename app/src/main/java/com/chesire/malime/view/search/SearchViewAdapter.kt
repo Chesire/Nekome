@@ -10,9 +10,11 @@ import com.chesire.malime.R
 import com.chesire.malime.core.models.MalimeModel
 import com.chesire.malime.databinding.ItemSearchBinding
 import com.chesire.malime.util.GlideApp
+import com.chesire.malime.util.extension.getString
 import kotlinx.android.synthetic.main.item_search.view.item_search_content_layout
 import kotlinx.android.synthetic.main.item_search.view.item_search_image
 import kotlinx.android.synthetic.main.item_search.view.item_search_loading_layout
+import kotlinx.android.synthetic.main.item_search.view.item_search_status_text
 import kotlinx.android.synthetic.main.item_search.view.search_image_add_button
 
 class SearchViewAdapter(
@@ -80,6 +82,7 @@ class SearchViewAdapter(
             }
 
             searchView.root.apply {
+                item_search_status_text.text = item.seriesStatus.getString(context)
                 item_search_image.setOnClickListener {
                     interactor.navigateToSeries(item)
                 }
@@ -92,7 +95,7 @@ class SearchViewAdapter(
         private fun addSeries(item: MalimeModel) {
             setLayoutState(false)
 
-            interactor.addNewSeries(item, { success ->
+            interactor.addNewSeries(item) { success ->
                 setLayoutState(true)
                 if (!success) {
                     Snackbar.make(
@@ -103,7 +106,7 @@ class SearchViewAdapter(
                         ), Snackbar.LENGTH_LONG
                     ).show()
                 }
-            })
+            }
         }
 
         private fun setLayoutState(enabled: Boolean) {
