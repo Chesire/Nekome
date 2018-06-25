@@ -8,7 +8,7 @@ import android.content.Context
 import com.chesire.malime.core.SingletonHolder
 import com.chesire.malime.core.models.MalimeModel
 
-@Database(entities = [(MalimeModel::class)], version = 1)
+@Database(entities = [(MalimeModel::class)], version = 2)
 @TypeConverters(Converters::class)
 abstract class MalimeDatabase : RoomDatabase() {
     abstract fun malimeDao(): MalimeDao
