@@ -4,6 +4,7 @@ import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
 import com.chesire.malime.core.flags.ItemType
 import com.chesire.malime.core.flags.SeriesStatus
+import com.chesire.malime.core.flags.Subtype
 import com.chesire.malime.core.flags.UserSeriesStatus
 
 @Entity
@@ -12,6 +13,7 @@ data class MalimeModel(
     var seriesId: Int,
     var userSeriesId: Int,
     var type: ItemType,
+    var subtype: Subtype,
     var slug: String,
     var title: String,
     var seriesStatus: SeriesStatus,

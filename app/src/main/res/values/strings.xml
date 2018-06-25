@@ -57,7 +57,30 @@
     <string name="sort_choice_start_date">Start Date</string>
     <string name="sort_choice_end_date">End Date</string>
 
+    <string name="series_state_current">Current</string>
+    <string name="series_state_finished">Finished</string>
+    <string name="series_state_tba">TBA</string>
+    <string name="series_state_unreleased">Unreleased</string>
+    <string name="series_state_upcoming">Upcoming</string>
+    <string name="series_state_unknown">Unknown</string>
+
+    <string name="series_subtype_ona">ONA</string>
+    <string name="series_subtype_ova">OVA</string>
+    <string name="series_subtype_tv">TV</string>
+    <string name="series_subtype_movie">Movie</string>
+    <string name="series_subtype_music">Music</string>
+    <string name="series_subtype_special">Special</string>
+    <string name="series_subtype_doujin">Doujin</string>
+    <string name="series_subtype_manga">Manga</string>
+    <string name="series_subtype_manhua">Manhua</string>
+    <string name="series_subtype_manhwa">Manhwa</string>
+    <string name="series_subtype_novel">Novel</string>
+    <string name="series_subtype_oel">OEL</string>
+    <string name="series_subtype_oneshot">Oneshot</string>
+    <string name="series_subtype_unknown">Unknown</string>
+
     <string name="search_text_hint">Enter search term</string>
     <string name="search_nsfw_allowed">Show NSFW</string>
+    <string name="search_add_success">Series %s has been added to library</string>
     <string name="search_add_failed">Failed to add %s, please try again</string>
 </resources>

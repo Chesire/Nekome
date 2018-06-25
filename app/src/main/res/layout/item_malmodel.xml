@@ -31,7 +31,9 @@
             <TextView
                 android:id="@+id/item_malmodel_title"
                 style="@style/malitem_heading_text_style"
+                android:layout_width="match_parent"
                 android:layout_toEndOf="@id/item_malmodel_image"
+                android:gravity="center_horizontal"
                 android:text="@{model.title}" />
 
             <TextView

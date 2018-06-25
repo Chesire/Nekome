@@ -4,6 +4,7 @@ import com.chesire.malime.core.api.MalimeApi
 import com.chesire.malime.core.api.SearchApi
 import com.chesire.malime.core.flags.ItemType
 import com.chesire.malime.core.flags.SeriesStatus
+import com.chesire.malime.core.flags.Subtype
 import com.chesire.malime.core.flags.UserSeriesStatus
 import com.chesire.malime.core.models.AuthModel
 import com.chesire.malime.core.models.MalimeModel
@@ -80,6 +81,7 @@ class MalManager(
                             seriesId = it.seriesAnimeDbId!!,
                             userSeriesId = it.myId!!,
                             type = ItemType.Anime,
+                            subtype = Subtype.Unknown,
                             slug = it.seriesTitle!!,
                             title = it.seriesTitle!!,
                             seriesStatus = SeriesStatus.getStatusForMalId(it.seriesStatus!!),
@@ -100,6 +102,7 @@ class MalManager(
                             seriesId = it.seriesMangaDbId!!,
                             userSeriesId = it.myId!!,
                             type = ItemType.Manga,
+                            subtype = Subtype.Unknown,
                             slug = it.seriesTitle!!,
                             title = it.seriesTitle!!,
                             seriesStatus = SeriesStatus.getStatusForMalId(it.seriesStatus!!),
@@ -202,6 +205,7 @@ class MalManager(
                             seriesId = it.id!!,
                             userSeriesId = 0,
                             type = type,
+                            subtype = Subtype.Unknown,
                             slug = it.title!!,
                             title = it.title,
                             seriesStatus = SeriesStatus.Unknown,
