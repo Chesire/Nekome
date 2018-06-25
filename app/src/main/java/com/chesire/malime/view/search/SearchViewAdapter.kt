@@ -78,8 +78,10 @@ class SearchViewAdapter(
 
             if (currentItems.find { it.seriesId == item.seriesId } == null) {
                 searchView.searchImageAddButton.visibility = View.VISIBLE
+                contentLayout.alpha = 1f
             } else {
                 searchView.searchImageAddButton.visibility = View.INVISIBLE
+                contentLayout.alpha = 0.3f
             }
 
             searchView.root.apply {
