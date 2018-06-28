@@ -63,22 +63,21 @@ class MalDisplayFragment : Fragment() {
                 )
             )
             .get(MalDisplayViewModel::class.java)
-
-        viewAdapter = MalDisplayViewAdapter(viewModel, SharedPref(requireContext()))
-        viewModel.apply {
-            series.observe(this@MalDisplayFragment,
-                Observer {
-                    if (it != null) {
-                        viewAdapter.addAll(it.filter { it.type == type })
-                    }
-                })
-            updateAllStatus.observe(this@MalDisplayFragment,
-                Observer {
-                    if (it != null) {
-                        onUpdateAllStatusChange(it)
-                    }
-                })
-        }
+            .apply {
+                series.observe(this@MalDisplayFragment,
+                    Observer {
+                        if (it != null) {
+                            // Check for null here to be safe, as we initialize the adapter below
+                            viewAdapter?.addAll(it.filter { it.type == type })
+                        }
+                    })
+                updateAllStatus.observe(this@MalDisplayFragment,
+                    Observer {
+                        if (it != null) {
+                            onUpdateAllStatusChange(it)
+                        }
+                    })
+            }
     }
 
     override fun onCreateView(
@@ -86,6 +85,8 @@ class MalDisplayFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        viewAdapter = MalDisplayViewAdapter(viewModel, SharedPref(requireContext()))
+
         return DataBindingUtil.inflate<FragmentMaldisplayBinding>(
             inflater,
             R.layout.fragment_maldisplay,

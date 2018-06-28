@@ -14,8 +14,7 @@ class EmptyableRecyclerView @JvmOverloads constructor(
     context: Context?,
     attrs: AttributeSet? = null,
     defStyle: Int = 0
-) :
-    RecyclerView(context, attrs, defStyle) {
+) : RecyclerView(context, attrs, defStyle) {
 
     private lateinit var emptyView: View
     private val observer: AdapterDataObserver = object : AdapterDataObserver() {
