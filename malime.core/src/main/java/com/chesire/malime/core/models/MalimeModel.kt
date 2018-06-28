@@ -32,4 +32,7 @@ data class MalimeModel(
         } else {
             totalLength.toString()
         }
+
+    fun canDecreaseProgress(): Boolean = progress != 0
+    fun canIncreaseProgress(): Boolean = totalLength == 0 || progress < totalLength
 }

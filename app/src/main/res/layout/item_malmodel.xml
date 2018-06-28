@@ -48,14 +48,14 @@
                 style="@style/malitem_image_button_style"
                 android:layout_toEndOf="@id/item_malmodel_image"
                 android:src="@drawable/ic_exposure_neg_1_black"
-                android:visibility="@{model.progress == 0 ? View.GONE : View.VISIBLE}" />
+                android:visibility="@{model.canDecreaseProgress() ? View.VISIBLE : View.GONE}" />
 
             <ImageButton
                 android:id="@+id/item_malmodel_plus_one"
                 style="@style/malitem_image_button_style"
                 android:layout_alignParentEnd="true"
                 android:src="@drawable/ic_exposure_plus_1_black"
-                android:visibility="@{model.progress == model.totalLength ? View.GONE : View.VISIBLE}" />
+                android:visibility="@{model.canIncreaseProgress() ? View.VISIBLE : View.GONE}" />
 
         </RelativeLayout>
 
