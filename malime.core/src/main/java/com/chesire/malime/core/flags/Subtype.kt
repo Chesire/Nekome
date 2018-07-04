@@ -2,7 +2,7 @@ package com.chesire.malime.core.flags
 
 enum class Subtype(
     val internalId: Int,
-    val malId: Int,// this might be a string in MAL?
+    val malId: Int, // this might be a string in MAL?
     val kitsuString: String
 ) {
     Unknown(0, 0, "unknown"),
