@@ -15,6 +15,7 @@ android {
         versionCode 5
         versionName "0.0.5"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        resConfigs "en"
     }
     signingConfigs {
         release {
@@ -30,7 +31,8 @@ android {
         release {
             resValue "string", "app_name", "@string/app_name_release"
             signingConfig signingConfigs.release
-            minifyEnabled false
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         debug {
