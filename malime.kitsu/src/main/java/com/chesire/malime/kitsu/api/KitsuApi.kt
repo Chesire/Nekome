@@ -60,8 +60,13 @@ class KitsuApi(
         return kitsuService.getUser()
     }
 
-    fun getUserLibrary(userId: Int, offset: Int): Call<LibraryResponse> {
-        return kitsuService.getUserLibrary(userId, offset)
+    fun getUserLibrary(userId: Int, offset: Int, type: ItemType): Call<LibraryResponse> {
+        // Ideally wanted to keep the api without logic, but this is nicer than in the manager
+        return if (type == ItemType.Anime) {
+            kitsuService.getUserAnime(userId, offset)
+        } else {
+            kitsuService.getUserManga(userId, offset)
+        }
     }
 
     fun search(title: String, type: ItemType): Call<LibraryResponse> {

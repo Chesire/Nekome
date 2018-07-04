@@ -32,17 +32,50 @@ interface KitsuService {
     @GET("api/edge/users?fields[users]=id&filter[self]=true")
     fun getUser(): Call<LibraryResponse>
 
+    @Deprecated("Use the getUserAnime and getUserManga")
     @GET(
         "api/edge/users/{userId}/library-entries" +
                 "?include=anime,manga" +
                 "&fields[libraryEntries]=status,progress,anime,manga,startedAt,finishedAt" +
                 "&fields[anime]=slug,canonicalTitle,status,subtype,posterImage,coverImage,episodeCount,nsfw" +
-                "&fields[manga]=slug,canonicalTitle,status,subtype,posterImage,chapterCount"
+                "&fields[manga]=slug,canonicalTitle,status,subtype,posterImage,chapterCount" +
+                "&filter[kind]=manga" +
+                "&sort=manga.titles.canonical"
     )
     fun getUserLibrary(
         @Path("userId") userId: Int,
         @Query("page[offset]") offset: Int,
-        @Query("page[limit]") limit: Int = 500 // might want to reduce to say 100
+        @Query("page[limit]") limit: Int = 200
+    ): Call<LibraryResponse>
+
+    // if this limit is changed, then the kitsuManager#getUserEntriesForType offset should be changed to match
+    @GET(
+        "api/edge/users/{userId}/library-entries" +
+                "?include=anime" +
+                "&fields[libraryEntries]=status,progress,anime,startedAt,finishedAt" +
+                "&fields[anime]=slug,canonicalTitle,status,subtype,posterImage,coverImage,episodeCount,nsfw" +
+                "&filter[kind]=anime" +
+                "&sort=anime.titles.canonical"
+    )
+    fun getUserAnime(
+        @Path("userId") userId: Int,
+        @Query("page[offset]") offset: Int,
+        @Query("page[limit]") limit: Int = 200
+    ): Call<LibraryResponse>
+
+    // if this limit is changed, then the kitsuManager#getUserEntriesForType offset should be changed to match
+    @GET(
+        "api/edge/users/{userId}/library-entries" +
+                "?include=manga" +
+                "&fields[libraryEntries]=status,progress,manga,startedAt,finishedAt" +
+                "&fields[manga]=slug,canonicalTitle,status,subtype,posterImage,chapterCount" +
+                "&filter[kind]=manga" +
+                "&sort=manga.titles.canonical"
+    )
+    fun getUserManga(
+        @Path("userId") userId: Int,
+        @Query("page[offset]") offset: Int,
+        @Query("page[limit]") limit: Int = 200
     ): Call<LibraryResponse>
 
     // Search is limited to 20 items at once, might want to do the above if more are required
