@@ -37,7 +37,8 @@ interface KitsuService {
                 "?include=anime,manga" +
                 "&fields[libraryEntries]=status,progress,anime,manga,startedAt,finishedAt" +
                 "&fields[anime]=slug,canonicalTitle,status,subtype,posterImage,coverImage,episodeCount,nsfw" +
-                "&fields[manga]=slug,canonicalTitle,status,subtype,posterImage,chapterCount"
+                "&fields[manga]=slug,canonicalTitle,status,subtype,posterImage,chapterCount" +
+                "&sort=anime.titles.canonical"
     )
     fun getUserLibrary(
         @Path("userId") userId: Int,
