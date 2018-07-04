@@ -99,6 +99,8 @@ class MalDisplayViewAdapter(
                         item.posterImage
                     }
                 )
+                .placeholder(R.drawable.ic_image_black)
+                .error(R.drawable.ic_broken_image_black)
                 .into(binding.root.item_malmodel_image)
 
             binding.root.apply {
