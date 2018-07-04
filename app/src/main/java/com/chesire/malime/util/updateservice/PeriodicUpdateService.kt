@@ -36,7 +36,7 @@ class PeriodicUpdateService : JobService() {
 
     private fun getLatestLibrary(params: JobParameters?, library: Library) {
         library.updateLibraryFromApi()
-            .subscribeOn(Schedulers.io())
+            .subscribeOn(Schedulers.computation())
             .subscribe({
                 Timber.d("Periodic update has received new library")
                 library.insertIntoLocalLibrary(it)

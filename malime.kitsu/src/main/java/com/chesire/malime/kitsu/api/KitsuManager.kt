@@ -12,6 +12,7 @@ import com.chesire.malime.kitsu.models.response.UpdateItemResponse
 import com.google.gson.JsonObject
 import io.reactivex.Observable
 import io.reactivex.Single
+import io.reactivex.schedulers.Schedulers
 import okhttp3.MediaType
 import okhttp3.RequestBody
 import timber.log.Timber
@@ -69,19 +70,32 @@ class KitsuManager(
     }
 
     override fun getUserLibrary(): Observable<List<MalimeModel>> {
+        // Execute get anime and get manga parallel
+        return Observable
+            .just(
+                getUserEntriesForType(ItemType.Anime),
+                getUserEntriesForType(ItemType.Manga)
+            )
+            .flatMap {
+                it.subscribeOn(Schedulers.computation())
+            }
+    }
+
+    private fun getUserEntriesForType(type: ItemType): Observable<List<MalimeModel>> {
         return Observable.create {
+            var page = 0
             var offset = 0
             var retries = 0
 
             while (true) {
-                Timber.i("Getting user library from offset $offset")
+                Timber.i("Getting user $type from offset $offset")
 
-                val callResponse = api.getUserLibrary(userId, offset)
+                val callResponse = api.getUserLibrary(userId, offset, type)
                 val response = callResponse.execute()
                 val body = response.body()
 
                 if (response.isSuccessful && body != null) {
-                    Timber.i("Got next set of user items")
+                    Timber.i("Found ${body.data.count()} items")
                     retries = 0
 
                     // If it contains the "next" link, there are more to get
@@ -91,17 +105,18 @@ class KitsuManager(
 
                     val items = userTitleData.zip(fullTitleData) { user, full ->
                         // Items should be married up by their index
+
                         MalimeModel(
                             seriesId = full.id,
                             userSeriesId = user.id,
-                            type = ItemType.getTypeForString(full.type),
+                            type = type,
                             subtype = Subtype.getSubtypeForKitsuString(full.attributes.subtype),
                             slug = full.attributes.slug,
                             title = full.attributes.canonicalTitle,
                             seriesStatus = SeriesStatus.getStatusForKitsuString(full.attributes.status),
                             userSeriesStatus = UserSeriesStatus.getStatusForKitsuString(user.attributes.status),
                             progress = user.attributes.progress,
-                            totalLength = if (ItemType.getTypeForString(full.type) == ItemType.Anime) {
+                            totalLength = if (type == ItemType.Anime) {
                                 full.attributes.episodeCount
                             } else {
                                 full.attributes.chapterCount
@@ -119,12 +134,13 @@ class KitsuManager(
                     if (next.isEmpty()) {
                         break
                     } else {
-                        offset = next.substring(next.lastIndexOf('=') + 1).toInt()
+                        page++
+                        offset = 200 * page
                     }
                 } else {
                     Timber.e(
                         Throwable(response.message()),
-                        "Error getting the items, on retry $retries/$MAX_RETRIES"
+                        "Error getting the items for type $type, on retry $retries/$MAX_RETRIES"
                     )
 
                     if (retries < MAX_RETRIES) {
