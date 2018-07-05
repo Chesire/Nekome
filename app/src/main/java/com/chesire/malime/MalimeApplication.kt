@@ -12,7 +12,6 @@ import timber.log.Timber
 class MalimeApplication : Application() {
     override fun onCreate() {
         super.onCreate()
-
         startLeakCanary()
 
         // This is to handle switching fragments quickly while a request is occurring.
@@ -43,8 +42,8 @@ class MalimeApplication : Application() {
     private fun startStrictMode() {
         StrictMode.setThreadPolicy(
             StrictMode.ThreadPolicy.Builder()
-                .detectDiskReads()
-                .detectDiskWrites()
+                //.detectDiskReads()  // This should be restored once some optimisation has been run
+                //.detectDiskWrites() // This should be restored once some optimisation has been run
                 .detectNetwork()
                 .detectCustomSlowCalls()
                 .penaltyLog()
