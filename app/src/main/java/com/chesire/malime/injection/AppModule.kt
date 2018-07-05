@@ -5,7 +5,7 @@ import android.content.Context
 import dagger.Module
 import dagger.Provides
 
-@Module
+@Module(includes = [(ViewModelModule::class)])
 internal class AppModule {
     @Provides
     fun provideApplicationContext(application: Application): Context {

@@ -16,10 +16,11 @@ import com.chesire.malime.view.login.LoginModel
 import com.chesire.malime.view.login.LoginStatus
 import io.reactivex.Scheduler
 import io.reactivex.disposables.CompositeDisposable
+import javax.inject.Inject
 
 private const val kitsuSignupUrl = "https://kitsu.io/explore/anime"
 
-class KitsuLoginViewModel(
+class KitsuLoginViewModel @Inject constructor(
     private val context: Application,
     private val sharedPref: SharedPref,
     private val kitsuManagerFactory: KitsuManagerFactory,
