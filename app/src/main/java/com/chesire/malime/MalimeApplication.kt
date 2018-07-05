@@ -1,15 +1,24 @@
 package com.chesire.malime
 
+import android.app.Activity
 import android.app.Application
 import android.os.StrictMode
+import com.chesire.malime.injection.DaggerAppComponent
 import com.chesire.malime.util.SharedPref
 import com.crashlytics.android.Crashlytics
 import com.squareup.leakcanary.LeakCanary
+import dagger.android.AndroidInjector
+import dagger.android.DispatchingAndroidInjector
+import dagger.android.HasActivityInjector
 import io.fabric.sdk.android.Fabric
 import io.reactivex.plugins.RxJavaPlugins
 import timber.log.Timber
+import javax.inject.Inject
 
-class MalimeApplication : Application() {
+class MalimeApplication : Application(), HasActivityInjector {
+    @Inject
+    lateinit var activityInjector: DispatchingAndroidInjector<Activity>
+
     override fun onCreate() {
         super.onCreate()
         startLeakCanary()
@@ -28,7 +37,14 @@ class MalimeApplication : Application() {
                 Fabric.with(this, Crashlytics())
             }
         }
+
+        DaggerAppComponent.builder()
+            .application(this)
+            .build()
+            .inject(this)
     }
+
+    override fun activityInjector(): AndroidInjector<Activity> = activityInjector
 
     private fun startLeakCanary() {
         if (LeakCanary.isInAnalyzerProcess(this)) {
