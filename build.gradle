@@ -2,7 +2,7 @@
 
 buildscript {
     ext.dokka_version = '0.9.16'
-    ext.kotlin_version = '1.2.50'
+    ext.kotlin_version = '1.2.51'
     ext.support_lib_version = '27.1.1'
     ext.timber_version = '4.7.0'
     repositories {

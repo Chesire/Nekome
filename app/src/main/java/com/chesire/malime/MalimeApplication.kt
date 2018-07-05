@@ -3,6 +3,7 @@ package com.chesire.malime
 import android.app.Application
 import com.chesire.malime.util.SharedPref
 import com.crashlytics.android.Crashlytics
+import com.squareup.leakcanary.LeakCanary
 import io.fabric.sdk.android.Fabric
 import io.reactivex.plugins.RxJavaPlugins
 import timber.log.Timber
@@ -10,6 +11,13 @@ import timber.log.Timber
 class MalimeApplication : Application() {
     override fun onCreate() {
         super.onCreate()
+
+        if (LeakCanary.isInAnalyzerProcess(this)) {
+            // This process is dedicated to LeakCanary for heap analysis.
+            // You should not init your app in this process.
+            return
+        }
+        LeakCanary.install(this)
 
         // This is to handle switching fragments quickly while a request is occurring.
         // TODO: Revisit this, as will require some more reading into RXJava
