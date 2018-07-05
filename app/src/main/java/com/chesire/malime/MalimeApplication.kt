@@ -9,7 +9,6 @@ import io.fabric.sdk.android.Fabric
 import io.reactivex.plugins.RxJavaPlugins
 import timber.log.Timber
 
-
 class MalimeApplication : Application() {
     override fun onCreate() {
         super.onCreate()
@@ -53,7 +52,11 @@ class MalimeApplication : Application() {
         )
         StrictMode.setVmPolicy(
             StrictMode.VmPolicy.Builder()
-                .detectAll()
+                .detectActivityLeaks()
+                .detectFileUriExposure()
+                .detectLeakedClosableObjects()
+                .detectLeakedRegistrationObjects()
+                .detectLeakedSqlLiteObjects()
                 .penaltyLog()
                 .build()
         )
