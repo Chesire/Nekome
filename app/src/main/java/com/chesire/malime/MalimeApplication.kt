@@ -3,7 +3,7 @@ package com.chesire.malime
 import android.app.Activity
 import android.app.Application
 import android.os.StrictMode
-import com.chesire.malime.injection.DaggerAppComponent
+import com.chesire.malime.injection.AppInjector
 import com.chesire.malime.util.SharedPref
 import com.crashlytics.android.Crashlytics
 import com.squareup.leakcanary.LeakCanary
@@ -38,10 +38,7 @@ class MalimeApplication : Application(), HasActivityInjector {
             }
         }
 
-        DaggerAppComponent.builder()
-            .application(this)
-            .build()
-            .inject(this)
+        AppInjector.init(this)
     }
 
     override fun activityInjector(): AndroidInjector<Activity> = activityInjector
