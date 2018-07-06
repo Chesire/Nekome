@@ -2,7 +2,6 @@ package com.chesire.malime.view.login.kitsu
 
 import android.arch.core.executor.testing.InstantTaskExecutorRule
 import android.arch.lifecycle.Observer
-import android.test.mock.MockApplication
 import com.chesire.malime.R
 import com.chesire.malime.core.flags.SupportedService
 import com.chesire.malime.core.models.AuthModel
@@ -39,12 +38,11 @@ class KitsuLoginViewModelTests {
     @Before
     fun setup() {
         testObject = KitsuLoginViewModel(
-            MockApplication(),
             sharedPref,
-            kitsuManagerFactory,
-            testScheduler,
-            testScheduler
+            kitsuManagerFactory
         )
+        testObject.observeScheduler = testScheduler
+        testObject.subscribeScheduler = testScheduler
         testObject.errorResponse.observeForever(errorObserver)
         testObject.loginResponse.observeForever(loginObserver)
         testObject.loginModel.userName = "username"
