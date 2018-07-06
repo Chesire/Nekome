@@ -2,7 +2,6 @@ package com.chesire.malime.view.login.mal
 
 import android.arch.core.executor.testing.InstantTaskExecutorRule
 import android.arch.lifecycle.Observer
-import android.test.mock.MockApplication
 import com.chesire.malime.R
 import com.chesire.malime.core.flags.SupportedService
 import com.chesire.malime.core.models.AuthModel
@@ -23,7 +22,6 @@ import org.mockito.Mockito.`when`
 import org.mockito.Mockito.verify
 import org.mockito.internal.verification.Times
 
-@Suppress("DEPRECATION")
 class MalLoginViewModelTests {
     @get:Rule
     val rule: TestRule = InstantTaskExecutorRule()
@@ -39,12 +37,11 @@ class MalLoginViewModelTests {
     @Before
     fun setup() {
         testObject = MalLoginViewModel(
-            MockApplication(),
             sharedPref,
-            malManagerFactory,
-            testScheduler,
-            testScheduler
+            malManagerFactory
         )
+        testObject.observeScheduler = testScheduler
+        testObject.subscribeScheduler = testScheduler
         testObject.errorResponse.observeForever(errorObserver)
         testObject.loginResponse.observeForever(loginObserver)
         testObject.loginModel.userName = "username"

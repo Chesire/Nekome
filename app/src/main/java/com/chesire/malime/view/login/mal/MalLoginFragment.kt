@@ -1,9 +1,12 @@
 package com.chesire.malime.view.login.mal
 
 import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
+import android.net.Uri
 import android.os.Bundle
+import android.support.customtabs.CustomTabsIntent
 import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
@@ -11,38 +14,43 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import com.chesire.malime.R
 import com.chesire.malime.databinding.FragmentMalLoginBinding
-import com.chesire.malime.util.SharedPref
+import com.chesire.malime.injection.Injectable
+import com.chesire.malime.util.autoCleared
 import com.chesire.malime.view.login.BaseLoginFragment
-import com.chesire.malime.view.login.LoginViewModelFactory
+import javax.inject.Inject
 
-class MalLoginFragment : BaseLoginFragment() {
+private const val malSignupUrl = "https://myanimelist.net/register.php"
+
+class MalLoginFragment : BaseLoginFragment(), Injectable {
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
     private lateinit var viewModel: MalLoginViewModel
+    private var binding by autoCleared<FragmentMalLoginBinding>()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
 
         viewModel = ViewModelProviders
             .of(
                 this,
-                LoginViewModelFactory(
-                    requireActivity().application,
-                    SharedPref(requireActivity().application)
-                )
+                viewModelFactory
             )
             .get(MalLoginViewModel::class.java)
-
-        viewModel.loginResponse.observe(
-            this,
-            Observer {
-                processLoginResponse(it)
+            .apply {
+                loginResponse.observe(
+                    this@MalLoginFragment,
+                    Observer {
+                        processLoginResponse(it)
+                    }
+                )
+                errorResponse.observe(
+                    this@MalLoginFragment,
+                    Observer {
+                        processErrorResponse(it)
+                    }
+                )
             }
-        )
-        viewModel.errorResponse.observe(
-            this,
-            Observer {
-                processErrorResponse(it)
-            }
-        )
+        binding.vm = viewModel
     }
 
     override fun onCreateView(
@@ -57,8 +65,9 @@ class MalLoginFragment : BaseLoginFragment() {
                 container,
                 false
             ).apply {
-                vm = viewModel
+                binding = this
                 loginButton.setOnClickListener { executeLoginMethod() }
+                loginCreateAccount.setOnClickListener { createAccount() }
                 loginPasswordEditText.setOnEditorActionListener { _, actionId, _ ->
                     if (actionId == EditorInfo.IME_ACTION_DONE) {
                         executeLoginMethod()
@@ -66,6 +75,12 @@ class MalLoginFragment : BaseLoginFragment() {
                     false
                 }
             }.root
+    }
+
+    private fun createAccount() {
+        CustomTabsIntent.Builder()
+            .build()
+            .launchUrl(context, Uri.parse(malSignupUrl))
     }
 
     private fun executeLoginMethod() {

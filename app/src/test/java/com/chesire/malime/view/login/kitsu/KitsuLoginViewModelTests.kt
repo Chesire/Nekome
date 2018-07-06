@@ -22,7 +22,6 @@ import org.mockito.Mockito.`when`
 import org.mockito.Mockito.verify
 import org.mockito.internal.verification.Times
 
-@Suppress("DEPRECATION")
 class KitsuLoginViewModelTests {
     @get:Rule
     val rule: TestRule = InstantTaskExecutorRule()

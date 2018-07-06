@@ -57,7 +57,7 @@ class KitsuLoginFragment : BaseLoginFragment(), Injectable {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val dataBinding = DataBindingUtil
+        return DataBindingUtil
             .inflate<FragmentKitsuLoginBinding>(
                 inflater,
                 R.layout.fragment_kitsu_login,
@@ -73,8 +73,7 @@ class KitsuLoginFragment : BaseLoginFragment(), Injectable {
                     }
                     false
                 }
-            }
-        return dataBinding.root
+            }.root
     }
 
     private fun createAccount() {
