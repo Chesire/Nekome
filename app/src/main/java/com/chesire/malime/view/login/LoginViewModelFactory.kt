@@ -19,20 +19,17 @@ class LoginViewModelFactory(
     ViewModelProvider.NewInstanceFactory() {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        when {
-            modelClass.isAssignableFrom(MalLoginViewModel::class.java) -> return MalLoginViewModel(
+        return when {
+            modelClass.isAssignableFrom(MalLoginViewModel::class.java) -> MalLoginViewModel(
                 application,
                 sharedPref,
                 MalManagerFactory(),
                 Schedulers.io(),
                 AndroidSchedulers.mainThread()
             ) as T
-            modelClass.isAssignableFrom(KitsuLoginViewModel::class.java) -> return KitsuLoginViewModel(
-                application,
+            modelClass.isAssignableFrom(KitsuLoginViewModel::class.java) -> KitsuLoginViewModel(
                 sharedPref,
-                KitsuManagerFactory(),
-                Schedulers.io(),
-                AndroidSchedulers.mainThread()
+                KitsuManagerFactory()
             ) as T
             else -> throw InvalidClassException("")
         }

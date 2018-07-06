@@ -9,8 +9,14 @@ import com.chesire.malime.core.flags.SupportedService
 import com.chesire.malime.view.MainActivity
 import com.chesire.malime.view.login.kitsu.KitsuLoginFragment
 import com.chesire.malime.view.login.mal.MalLoginFragment
+import dagger.android.DispatchingAndroidInjector
+import dagger.android.support.HasSupportFragmentInjector
+import javax.inject.Inject
 
-class LoginActivity : AppCompatActivity(), LoginInteractor {
+class LoginActivity : AppCompatActivity(), LoginInteractor, HasSupportFragmentInjector {
+    @Inject
+    lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -59,4 +65,6 @@ class LoginActivity : AppCompatActivity(), LoginInteractor {
         startActivity(Intent(this, MainActivity::class.java))
         finish()
     }
+
+    override fun supportFragmentInjector() = dispatchingAndroidInjector
 }
