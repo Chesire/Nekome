@@ -10,6 +10,7 @@ import android.support.v4.app.Fragment
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.OrientationHelper
+import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -23,22 +24,26 @@ import com.chesire.malime.core.flags.ItemType
 import com.chesire.malime.core.flags.SupportedService
 import com.chesire.malime.core.repositories.Library
 import com.chesire.malime.databinding.FragmentSearchBinding
+import com.chesire.malime.injection.Injectable
 import com.chesire.malime.kitsu.api.KitsuManagerFactory
 import com.chesire.malime.mal.api.MalManagerFactory
 import com.chesire.malime.util.SharedPref
+import com.chesire.malime.util.autoCleared
 import timber.log.Timber
+import javax.inject.Inject
 
-class SearchFragment : Fragment() {
+class SearchFragment : Fragment(), Injectable {
     private var checkedOption = R.id.search_option_anime_choice
+    private var binding by autoCleared<FragmentSearchBinding>()
     private lateinit var viewModel: SearchViewModel
     private lateinit var viewAdapter: SearchViewAdapter
-    private lateinit var sharedPref: SharedPref
+    private lateinit var recyclerView: RecyclerView
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
+    @Inject
+    lateinit var sharedPref: SharedPref
 
-        sharedPref = SharedPref(requireContext())
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
 
         val api: MalimeApi = if (sharedPref.getPrimaryService() == SupportedService.Kitsu) {
             Timber.i("Found Kitsu as supported service")
@@ -58,22 +63,29 @@ class SearchFragment : Fragment() {
                 )
             )
             .get(SearchViewModel::class.java)
-        viewAdapter = SearchViewAdapter(viewModel)
+            .apply {
+                series.observe(this@SearchFragment,
+                    Observer {
+                        it?.let {
+                            viewAdapter.setCurrentItems(it)
+                        }
+                    })
+                searchItems.observe(this@SearchFragment,
+                    Observer {
+                        it?.let {
+                            viewAdapter.addSearchItems(it)
+                        }
+                    })
+            }
 
-        viewModel.apply {
-            series.observe(this@SearchFragment,
-                Observer {
-                    if (it != null) {
-                        viewAdapter.setCurrentItems(it)
-                    }
-                })
-            searchItems.observe(this@SearchFragment,
-                Observer {
-                    if (it != null) {
-                        viewAdapter.addSearchItems(it)
-                    }
-                })
-        }
+        viewAdapter = SearchViewAdapter(viewModel)
+        recyclerView.adapter = viewAdapter
+        binding.vm = viewModel
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
     }
 
     override fun onCreateView(
@@ -87,8 +99,9 @@ class SearchFragment : Fragment() {
             container,
             false
         ).apply {
-            vm = viewModel
+            binding = this
             searchAllItems.apply {
+                recyclerView = this
                 setHasFixedSize(true)
                 layoutManager =
                         if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
@@ -101,7 +114,6 @@ class SearchFragment : Fragment() {
                         } else {
                             LinearLayoutManager(requireContext())
                         }
-                adapter = viewAdapter
             }
             searchSearchTermEditText.setOnEditorActionListener { _, _, _ ->
                 hideSystemKeyboard()
