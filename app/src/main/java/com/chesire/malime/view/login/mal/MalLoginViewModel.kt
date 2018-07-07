@@ -6,7 +6,7 @@ import android.databinding.ObservableBoolean
 import com.chesire.malime.R
 import com.chesire.malime.core.flags.SupportedService
 import com.chesire.malime.mal.api.MalAuthorizer
-import com.chesire.malime.mal.api.MalManagerFactory
+import com.chesire.malime.mal.api.MalManager
 import com.chesire.malime.util.IOScheduler
 import com.chesire.malime.util.SharedPref
 import com.chesire.malime.util.UIScheduler
@@ -20,7 +20,7 @@ import javax.inject.Inject
 
 class MalLoginViewModel @Inject constructor(
     private val sharedPref: SharedPref,
-    private val malManagerFactory: MalManagerFactory,
+    private val malManager: MalManager,
     private val authorizer: MalAuthorizer
 ) : ViewModel() {
     private val disposables = CompositeDisposable()
@@ -42,7 +42,6 @@ class MalLoginViewModel @Inject constructor(
             return
         }
 
-        val malManager = malManagerFactory.get(authorizer)
         disposables.add(malManager.login(loginModel.userName, loginModel.password)
             .subscribeOn(subscribeScheduler)
             .observeOn(observeScheduler)

@@ -6,7 +6,7 @@ import android.databinding.ObservableBoolean
 import com.chesire.malime.R
 import com.chesire.malime.core.flags.SupportedService
 import com.chesire.malime.kitsu.api.KitsuAuthorizer
-import com.chesire.malime.kitsu.api.KitsuManagerFactory
+import com.chesire.malime.kitsu.api.KitsuManager
 import com.chesire.malime.util.IOScheduler
 import com.chesire.malime.util.SharedPref
 import com.chesire.malime.util.UIScheduler
@@ -18,7 +18,7 @@ import javax.inject.Inject
 
 class KitsuLoginViewModel @Inject constructor(
     private val sharedPref: SharedPref,
-    private val kitsuManagerFactory: KitsuManagerFactory,
+    private val kitsuManager: KitsuManager,
     private val authorizer: KitsuAuthorizer
 ) : ViewModel() {
     private val disposables = CompositeDisposable()
@@ -40,7 +40,6 @@ class KitsuLoginViewModel @Inject constructor(
             return
         }
 
-        val kitsuManager = kitsuManagerFactory.get(authorizer)
         disposables.add(kitsuManager.login(loginModel.userName, loginModel.password)
             .flatMap {
                 authorizer.storeAuthDetails(it)
