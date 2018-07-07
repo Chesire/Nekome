@@ -1,4 +1,4 @@
-package com.chesire.malime.util.sec
+package com.chesire.malime.core.sec
 
 import android.annotation.TargetApi
 import android.content.Context
