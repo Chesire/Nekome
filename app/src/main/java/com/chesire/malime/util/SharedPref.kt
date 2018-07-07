@@ -10,6 +10,7 @@ import com.chesire.malime.core.models.AuthModel
 import com.chesire.malime.util.sec.Decryptor
 import com.chesire.malime.util.sec.Encryptor
 import com.chesire.malime.view.preferences.SortOption
+import javax.inject.Inject
 
 private const val authAlias: String = "private_auth"
 private const val refreshAlias: String = "private_refresh"
@@ -25,9 +26,7 @@ private const val preferenceSeriesUpdateSchedulerEnabled: String = "seriesUpdate
 const val preferenceFilter: String = "filter"
 const val preferenceSort: String = "sort"
 
-class SharedPref(
-    context: Context
-) : AuthHandler {
+class SharedPref @Inject constructor(context: Context) : AuthHandler {
     val sharedPrefFile: String = "malime_shared_pref"
 
     private val sharedPreferences =

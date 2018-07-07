@@ -1,31 +1,26 @@
 package com.chesire.malime.view.login.mal
 
-import android.app.Application
-import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.MutableLiveData
+import android.arch.lifecycle.ViewModel
 import android.databinding.ObservableBoolean
-import android.net.Uri
-import android.support.customtabs.CustomTabsIntent
 import com.chesire.malime.R
 import com.chesire.malime.core.api.AuthHandler
 import com.chesire.malime.core.flags.SupportedService
 import com.chesire.malime.core.models.AuthModel
 import com.chesire.malime.mal.api.MalManagerFactory
+import com.chesire.malime.util.IOScheduler
 import com.chesire.malime.util.SharedPref
+import com.chesire.malime.util.UIScheduler
 import com.chesire.malime.view.login.LoginModel
 import com.chesire.malime.view.login.LoginStatus
 import io.reactivex.Scheduler
 import io.reactivex.disposables.CompositeDisposable
+import javax.inject.Inject
 
-private const val malSignupUrl = "https://myanimelist.net/register.php"
-
-class MalLoginViewModel(
-    private val context: Application,
+class MalLoginViewModel @Inject constructor(
     private val sharedPref: SharedPref,
-    private val malManagerFactory: MalManagerFactory,
-    private val subscribeScheduler: Scheduler,
-    private val observeScheduler: Scheduler
-) : AndroidViewModel(context), AuthHandler {
+    private val malManagerFactory: MalManagerFactory
+) : ViewModel(), AuthHandler {
     private val disposables = CompositeDisposable()
     private lateinit var tempAuthModel: AuthModel
     val loginResponse = MutableLiveData<LoginStatus>()
@@ -33,11 +28,13 @@ class MalLoginViewModel(
     val attemptingLogin = ObservableBoolean()
     val loginModel = LoginModel()
 
-    fun createAccount() {
-        CustomTabsIntent.Builder()
-            .build()
-            .launchUrl(context, Uri.parse(malSignupUrl))
-    }
+    @Inject
+    @field:IOScheduler
+    lateinit var subscribeScheduler: Scheduler
+
+    @Inject
+    @field:UIScheduler
+    lateinit var observeScheduler: Scheduler
 
     fun executeLogin(credentials: String) {
         if (!isValid(loginModel.userName, loginModel.password, credentials)) {

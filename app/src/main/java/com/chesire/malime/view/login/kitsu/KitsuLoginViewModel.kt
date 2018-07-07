@@ -1,31 +1,26 @@
 package com.chesire.malime.view.login.kitsu
 
-import android.app.Application
-import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.MutableLiveData
+import android.arch.lifecycle.ViewModel
 import android.databinding.ObservableBoolean
-import android.net.Uri
-import android.support.customtabs.CustomTabsIntent
 import com.chesire.malime.R
 import com.chesire.malime.core.api.AuthHandler
 import com.chesire.malime.core.flags.SupportedService
 import com.chesire.malime.core.models.AuthModel
 import com.chesire.malime.kitsu.api.KitsuManagerFactory
+import com.chesire.malime.util.IOScheduler
 import com.chesire.malime.util.SharedPref
+import com.chesire.malime.util.UIScheduler
 import com.chesire.malime.view.login.LoginModel
 import com.chesire.malime.view.login.LoginStatus
 import io.reactivex.Scheduler
 import io.reactivex.disposables.CompositeDisposable
+import javax.inject.Inject
 
-private const val kitsuSignupUrl = "https://kitsu.io/explore/anime"
-
-class KitsuLoginViewModel(
-    private val context: Application,
+class KitsuLoginViewModel @Inject constructor(
     private val sharedPref: SharedPref,
-    private val kitsuManagerFactory: KitsuManagerFactory,
-    private val subscribeScheduler: Scheduler,
-    private val observeScheduler: Scheduler
-) : AndroidViewModel(context), AuthHandler {
+    private val kitsuManagerFactory: KitsuManagerFactory
+) : ViewModel(), AuthHandler {
     private val disposables = CompositeDisposable()
     private var tempAuthModel: AuthModel = AuthModel("", "", 0)
     val loginResponse = MutableLiveData<LoginStatus>()
@@ -33,11 +28,13 @@ class KitsuLoginViewModel(
     val attemptingLogin = ObservableBoolean()
     val loginModel = LoginModel()
 
-    fun createAccount() {
-        CustomTabsIntent.Builder()
-            .build()
-            .launchUrl(context, Uri.parse(kitsuSignupUrl))
-    }
+    @Inject
+    @field:IOScheduler
+    lateinit var subscribeScheduler: Scheduler
+
+    @Inject
+    @field:UIScheduler
+    lateinit var observeScheduler: Scheduler
 
     fun executeLogin() {
         if (!isValid(loginModel.userName, loginModel.password)) {
