@@ -35,8 +35,8 @@ private const val itemTypeBundleId = "itemTypeBundleId"
 
 class MalDisplayFragment : Fragment(), Injectable {
     private var binding by autoCleared<FragmentMaldisplayBinding>()
+    private var viewAdapter by autoCleared<MalDisplayViewAdapter>()
     private lateinit var viewModel: MalDisplayViewModel
-    private lateinit var viewAdapter: MalDisplayViewAdapter
     private lateinit var type: ItemType
     private lateinit var recyclerView: RecyclerView
 
@@ -45,36 +45,10 @@ class MalDisplayFragment : Fragment(), Injectable {
     @Inject
     lateinit var sharedPref: SharedPref
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
-        type = ItemType.getTypeForInternalId(arguments!!.getInt(itemTypeBundleId))
-
-        viewModel = ViewModelProviders
-            .of(this, viewModelFactory)
-            .get(MalDisplayViewModel::class.java)
-            .apply {
-                series.observe(this@MalDisplayFragment,
-                    Observer {
-                        it?.let {
-                            viewAdapter.addAll(it.filter { it.type == type })
-                        }
-                    })
-                updateAllStatus.observe(this@MalDisplayFragment,
-                    Observer {
-                        it?.let {
-                            onUpdateAllStatusChange(it)
-                        }
-                    })
-            }
-
-        viewAdapter = MalDisplayViewAdapter(viewModel, sharedPref)
-        recyclerView.adapter = viewAdapter
-        binding.vm = viewModel
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        type = ItemType.getTypeForInternalId(arguments!!.getInt(itemTypeBundleId))
+
         setHasOptionsMenu(true)
     }
 
@@ -107,6 +81,32 @@ class MalDisplayFragment : Fragment(), Injectable {
                         }
             }
         }.root
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        viewModel = ViewModelProviders
+            .of(this, viewModelFactory)
+            .get(MalDisplayViewModel::class.java)
+            .apply {
+                series.observe(this@MalDisplayFragment,
+                    Observer {
+                        it?.let {
+                            viewAdapter.addAll(it.filter { it.type == type })
+                        }
+                    })
+                updateAllStatus.observe(this@MalDisplayFragment,
+                    Observer {
+                        it?.let {
+                            onUpdateAllStatusChange(it)
+                        }
+                    })
+            }
+
+        viewAdapter = MalDisplayViewAdapter(viewModel, sharedPref)
+        recyclerView.adapter = viewAdapter
+        binding.vm = viewModel
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {

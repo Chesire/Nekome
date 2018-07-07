@@ -36,27 +36,21 @@ class Library @Inject constructor(
 
     fun insertIntoLocalLibrary(item: MalimeModel) {
         Completable
-            .fromAction {
-                dao.insert(item)
-            }
+            .fromAction { dao.insert(item) }
             .subscribeOn(Schedulers.io())
             .subscribe()
     }
 
     fun insertIntoLocalLibrary(items: List<MalimeModel>) {
         Completable
-            .fromAction {
-                dao.insertAll(items)
-            }
+            .fromAction { dao.insertAll(items) }
             .subscribeOn(Schedulers.io())
             .subscribe()
     }
 
     fun updateInLocalLibrary(item: MalimeModel) {
         Completable
-            .fromAction {
-                dao.update(item)
-            }
+            .fromAction { dao.update(item) }
             .subscribeOn(Schedulers.io())
             .subscribe()
     }
