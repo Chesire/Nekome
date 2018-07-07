@@ -6,8 +6,8 @@ import com.chesire.malime.R
 import com.chesire.malime.core.flags.SupportedService
 import com.chesire.malime.core.models.AuthModel
 import com.chesire.malime.customMock
+import com.chesire.malime.kitsu.api.KitsuAuthorizer
 import com.chesire.malime.kitsu.api.KitsuManager
-import com.chesire.malime.kitsu.api.KitsuManagerFactory
 import com.chesire.malime.util.SharedPref
 import com.chesire.malime.view.login.LoginStatus
 import io.reactivex.Single
@@ -17,10 +17,9 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TestRule
-import org.mockito.ArgumentMatchers
 import org.mockito.Mockito.`when`
+import org.mockito.Mockito.never
 import org.mockito.Mockito.verify
-import org.mockito.internal.verification.Times
 
 class KitsuLoginViewModelTests {
     @get:Rule
@@ -28,28 +27,23 @@ class KitsuLoginViewModelTests {
 
     private lateinit var testObject: KitsuLoginViewModel
     private val sharedPref: SharedPref = customMock()
-    private val kitsuManagerFactory: KitsuManagerFactory = customMock()
     private val kitsuManager: KitsuManager = customMock()
+    private val authorizer: KitsuAuthorizer = customMock()
     private val errorObserver: Observer<Int> = customMock()
     private val loginObserver: Observer<LoginStatus> = customMock()
     private val testScheduler = TestScheduler()
 
     @Before
     fun setup() {
-        testObject = KitsuLoginViewModel(
-            sharedPref,
-            kitsuManagerFactory
-        )
-        testObject.observeScheduler = testScheduler
-        testObject.subscribeScheduler = testScheduler
-        testObject.errorResponse.observeForever(errorObserver)
-        testObject.loginResponse.observeForever(loginObserver)
-        testObject.loginModel.userName = "username"
-        testObject.loginModel.password = "password"
-
-        `when`(kitsuManagerFactory.get(testObject)).thenReturn(kitsuManager)
-        `when`(sharedPref.putPrimaryService(SupportedService.Kitsu)).thenReturn(sharedPref)
-        `when`(sharedPref.putUserId(ArgumentMatchers.anyInt())).thenReturn(sharedPref)
+        testObject = KitsuLoginViewModel(sharedPref, kitsuManager, authorizer)
+            .apply {
+                observeScheduler = testScheduler
+                subscribeScheduler = testScheduler
+                errorResponse.observeForever(errorObserver)
+                loginResponse.observeForever(loginObserver)
+                loginModel.userName = "username"
+                loginModel.password = "password"
+            }
     }
 
     @After
@@ -65,7 +59,10 @@ class KitsuLoginViewModelTests {
         testObject.executeLogin()
 
         verify(errorObserver).onChanged(R.string.login_failure_email)
-        verify(kitsuManagerFactory, Times(0)).get(testObject)
+        verify(kitsuManager, never()).login(
+            testObject.loginModel.userName,
+            testObject.loginModel.password
+        )
     }
 
     @Test
@@ -75,7 +72,10 @@ class KitsuLoginViewModelTests {
         testObject.executeLogin()
 
         verify(errorObserver).onChanged(R.string.login_failure_password)
-        verify(kitsuManagerFactory, Times(0)).get(testObject)
+        verify(kitsuManager, never()).login(
+            testObject.loginModel.userName,
+            testObject.loginModel.password
+        )
     }
 
     @Test
@@ -111,10 +111,48 @@ class KitsuLoginViewModelTests {
     }
 
     @Test
+    fun `successful login but failure to get user id clears auth`() {
+        val returnedModel = AuthModel("authtoken", "refresh", 0, "provider")
+
+        `when`(
+            kitsuManager.login(
+                testObject.loginModel.userName,
+                testObject.loginModel.password
+            )
+        ).thenReturn(Single.just(returnedModel))
+        `when`(kitsuManager.getUserId()).thenReturn(Single.error(Exception("Test Exception")))
+
+        testObject.executeLogin()
+        testScheduler.triggerActions()
+
+        verify(authorizer).storeAuthDetails(returnedModel)
+        verify(authorizer).clear()
+    }
+
+    @Test
+    fun `successful login but failure to get user id calls loginResponse with LoginStatus#ERROR`() {
+        val returnedModel = AuthModel("authtoken", "refresh", 0, "provider")
+
+        `when`(
+            kitsuManager.login(
+                testObject.loginModel.userName,
+                testObject.loginModel.password
+            )
+        ).thenReturn(Single.just(returnedModel))
+        `when`(kitsuManager.getUserId()).thenReturn(Single.error(Exception("Test Exception")))
+
+        testObject.executeLogin()
+        testScheduler.triggerActions()
+
+        verify(loginObserver).onChanged(LoginStatus.PROCESSING)
+        verify(loginObserver).onChanged(LoginStatus.ERROR)
+        verify(loginObserver).onChanged(LoginStatus.FINISHED)
+    }
+
+    @Test
     fun `successful login saves login details to shared pref`() {
         val expectedId = 915
-        val authToken = "dummyString"
-        val returnedModel = AuthModel(authToken, "", 0)
+        val returnedModel = AuthModel("authtoken", "refresh", 0, "provider")
 
         `when`(
             kitsuManager.login(
@@ -127,16 +165,16 @@ class KitsuLoginViewModelTests {
         testObject.executeLogin()
         testScheduler.triggerActions()
 
+        verify(authorizer).storeAuthDetails(returnedModel)
         verify(sharedPref).putPrimaryService(SupportedService.Kitsu)
-        verify(sharedPref).putUserId(expectedId)
-        verify(sharedPref).setAuth(returnedModel)
+        verify(authorizer).storeUser(expectedId)
+        verify(authorizer, never()).clear()
     }
 
     @Test
     fun `successful login calls loginResponse with LoginStatus#SUCCESS`() {
         val expectedId = 915
-        val authToken = "dummyString"
-        val returnedModel = AuthModel(authToken, "", 0)
+        val returnedModel = AuthModel("authtoken", "refresh", 0, "provider")
 
         `when`(
             kitsuManager.login(
