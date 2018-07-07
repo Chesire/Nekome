@@ -1,6 +1,7 @@
 package com.chesire.malime.view.search
 
 import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import android.content.res.Configuration
 import android.databinding.DataBindingUtil
@@ -16,18 +17,9 @@ import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
 import com.chesire.malime.R
-import com.chesire.malime.core.api.MalimeApi
-import com.chesire.malime.core.api.SearchApi
 import com.chesire.malime.core.flags.ItemType
-import com.chesire.malime.core.flags.SupportedService
-import com.chesire.malime.core.repositories.Library
-import com.chesire.malime.core.room.MalimeDatabase
 import com.chesire.malime.databinding.FragmentSearchBinding
 import com.chesire.malime.injection.Injectable
-import com.chesire.malime.kitsu.api.KitsuAuthorizer
-import com.chesire.malime.kitsu.api.KitsuManagerFactory
-import com.chesire.malime.mal.api.MalAuthorizer
-import com.chesire.malime.mal.api.MalManagerFactory
 import com.chesire.malime.util.SharedPref
 import com.chesire.malime.util.autoCleared
 import com.chesire.malime.util.extension.hideSystemKeyboard
@@ -42,28 +34,15 @@ class SearchFragment : Fragment(), Injectable {
     private lateinit var recyclerView: RecyclerView
 
     @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+    @Inject
     lateinit var sharedPref: SharedPref
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        val api: MalimeApi = if (sharedPref.getPrimaryService() == SupportedService.Kitsu) {
-            Timber.i("Found Kitsu as supported service")
-            KitsuManagerFactory().get(KitsuAuthorizer(requireContext()))
-        } else {
-            Timber.i("Found Mal as supported service")
-            MalManagerFactory().get(MalAuthorizer(requireContext()))
-        }
-
         viewModel = ViewModelProviders
-            .of(
-                this,
-                SearchViewModelFactory(
-                    requireActivity().application,
-                    api as SearchApi,
-                    Library(api, MalimeDatabase.getInstance(requireContext()).malimeDao())
-                )
-            )
+            .of(this, viewModelFactory)
             .get(SearchViewModel::class.java)
             .apply {
                 series.observe(this@SearchFragment,
@@ -78,6 +57,16 @@ class SearchFragment : Fragment(), Injectable {
                             viewAdapter.addSearchItems(it)
                         }
                     })
+                searchForSeries(
+                    when (checkedOption) {
+                        R.id.search_option_anime_choice -> ItemType.Anime
+                        R.id.search_option_manga_choice -> ItemType.Manga
+                        else -> {
+                            Timber.e("Unknown search method selected")
+                            ItemType.Unknown
+                        }
+                    }
+                )
             }
 
         viewAdapter = SearchViewAdapter(viewModel)
@@ -119,16 +108,6 @@ class SearchFragment : Fragment(), Injectable {
             }
             searchSearchTermEditText.setOnEditorActionListener { _, _, _ ->
                 requireActivity().hideSystemKeyboard(requireContext())
-                viewModel.searchForSeries(
-                    when (checkedOption) {
-                        R.id.search_option_anime_choice -> ItemType.Anime
-                        R.id.search_option_manga_choice -> ItemType.Manga
-                        else -> {
-                            Timber.e("Unknown search method selected")
-                            ItemType.Unknown
-                        }
-                    }
-                )
                 true
             }
             searchOptionChoices.setOnCheckedChangeListener { _, checkedId ->

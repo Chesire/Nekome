@@ -23,12 +23,11 @@ internal abstract class ViewModelModule {
     @ViewModelKey(MalDisplayViewModel::class)
     abstract fun bindMalDisplayViewModel(viewModel: MalDisplayViewModel): ViewModel
 
-    /*
     @Binds
     @IntoMap
     @ViewModelKey(SearchViewModel::class)
     abstract fun bindSearchViewModel(viewModel: SearchViewModel): ViewModel
-    */
+
     @Binds
     abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
 }
