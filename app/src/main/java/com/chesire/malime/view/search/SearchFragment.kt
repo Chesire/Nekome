@@ -2,7 +2,6 @@ package com.chesire.malime.view.search
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
-import android.content.Context
 import android.content.res.Configuration
 import android.databinding.DataBindingUtil
 import android.os.Bundle
@@ -16,7 +15,6 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
 import com.chesire.malime.R
 import com.chesire.malime.core.api.MalimeApi
 import com.chesire.malime.core.api.SearchApi
@@ -29,6 +27,7 @@ import com.chesire.malime.kitsu.api.KitsuManagerFactory
 import com.chesire.malime.mal.api.MalManagerFactory
 import com.chesire.malime.util.SharedPref
 import com.chesire.malime.util.autoCleared
+import com.chesire.malime.util.extension.hideSystemKeyboard
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -116,7 +115,7 @@ class SearchFragment : Fragment(), Injectable {
                         }
             }
             searchSearchTermEditText.setOnEditorActionListener { _, _, _ ->
-                hideSystemKeyboard()
+                requireActivity().hideSystemKeyboard(requireContext())
                 viewModel.searchForSeries(
                     when (checkedOption) {
                         R.id.search_option_anime_choice -> ItemType.Anime
@@ -138,14 +137,6 @@ class SearchFragment : Fragment(), Injectable {
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
         inflater?.inflate(R.menu.menu_search, menu)
         super.onCreateOptionsMenu(menu, inflater)
-    }
-
-    private fun hideSystemKeyboard() {
-        requireActivity().currentFocus?.let {
-            val imm =
-                requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            imm.hideSoftInputFromWindow(it.windowToken, 0)
-        }
     }
 
     companion object {

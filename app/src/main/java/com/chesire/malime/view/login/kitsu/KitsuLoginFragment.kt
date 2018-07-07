@@ -15,6 +15,7 @@ import com.chesire.malime.R
 import com.chesire.malime.databinding.FragmentKitsuLoginBinding
 import com.chesire.malime.injection.Injectable
 import com.chesire.malime.util.autoCleared
+import com.chesire.malime.util.extension.hideSystemKeyboard
 import com.chesire.malime.view.login.BaseLoginFragment
 import javax.inject.Inject
 
@@ -83,7 +84,7 @@ class KitsuLoginFragment : BaseLoginFragment(), Injectable {
     }
 
     private fun executeLoginMethod() {
-        hideSystemKeyboard()
+        requireActivity().hideSystemKeyboard(requireContext())
         viewModel.executeLogin()
     }
 

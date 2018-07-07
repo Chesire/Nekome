@@ -16,6 +16,7 @@ import com.chesire.malime.R
 import com.chesire.malime.databinding.FragmentMalLoginBinding
 import com.chesire.malime.injection.Injectable
 import com.chesire.malime.util.autoCleared
+import com.chesire.malime.util.extension.hideSystemKeyboard
 import com.chesire.malime.view.login.BaseLoginFragment
 import javax.inject.Inject
 
@@ -84,7 +85,7 @@ class MalLoginFragment : BaseLoginFragment(), Injectable {
     }
 
     private fun executeLoginMethod() {
-        hideSystemKeyboard()
+        requireActivity().hideSystemKeyboard(requireContext())
 
         // We have to convert to base64 here, or the unit tests won't work as Base64 is an Android class
         viewModel.executeLogin(
