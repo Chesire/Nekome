@@ -23,6 +23,7 @@ import com.chesire.malime.injection.Injectable
 import com.chesire.malime.util.SharedPref
 import com.chesire.malime.util.autoCleared
 import com.chesire.malime.util.extension.hideSystemKeyboard
+import kotlinx.android.synthetic.main.fragment_search.search_search_term_edit_text
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -37,42 +38,6 @@ class SearchFragment : Fragment(), Injectable {
     lateinit var viewModelFactory: ViewModelProvider.Factory
     @Inject
     lateinit var sharedPref: SharedPref
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
-        viewModel = ViewModelProviders
-            .of(this, viewModelFactory)
-            .get(SearchViewModel::class.java)
-            .apply {
-                series.observe(this@SearchFragment,
-                    Observer {
-                        it?.let {
-                            viewAdapter.setCurrentItems(it)
-                        }
-                    })
-                searchItems.observe(this@SearchFragment,
-                    Observer {
-                        it?.let {
-                            viewAdapter.addSearchItems(it)
-                        }
-                    })
-                searchForSeries(
-                    when (checkedOption) {
-                        R.id.search_option_anime_choice -> ItemType.Anime
-                        R.id.search_option_manga_choice -> ItemType.Manga
-                        else -> {
-                            Timber.e("Unknown search method selected")
-                            ItemType.Unknown
-                        }
-                    }
-                )
-            }
-
-        viewAdapter = SearchViewAdapter(viewModel)
-        recyclerView.adapter = viewAdapter
-        binding.vm = viewModel
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -106,14 +71,50 @@ class SearchFragment : Fragment(), Injectable {
                             LinearLayoutManager(requireContext())
                         }
             }
-            searchSearchTermEditText.setOnEditorActionListener { _, _, _ ->
-                requireActivity().hideSystemKeyboard(requireContext())
-                true
-            }
             searchOptionChoices.setOnCheckedChangeListener { _, checkedId ->
                 checkedOption = checkedId
             }
         }.root
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        viewModel = ViewModelProviders
+            .of(this, viewModelFactory)
+            .get(SearchViewModel::class.java)
+            .apply {
+                series.observe(this@SearchFragment,
+                    Observer {
+                        it?.let {
+                            viewAdapter.setCurrentItems(it)
+                        }
+                    })
+                searchItems.observe(this@SearchFragment,
+                    Observer {
+                        it?.let {
+                            viewAdapter.addSearchItems(it)
+                        }
+                    })
+            }
+        search_search_term_edit_text.setOnEditorActionListener { _, _, _ ->
+            requireActivity().hideSystemKeyboard(requireContext())
+            viewModel.searchForSeries(
+                when (checkedOption) {
+                    R.id.search_option_anime_choice -> ItemType.Anime
+                    R.id.search_option_manga_choice -> ItemType.Manga
+                    else -> {
+                        Timber.e("Unknown search method selected")
+                        ItemType.Unknown
+                    }
+                }
+            )
+            true
+        }
+
+        viewAdapter = SearchViewAdapter(viewModel)
+        recyclerView.adapter = viewAdapter
+        binding.vm = viewModel
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
