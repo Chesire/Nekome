@@ -22,15 +22,21 @@ import com.chesire.malime.view.maldisplay.MalDisplayFragment
 import com.chesire.malime.view.preferences.PrefActivity
 import com.chesire.malime.view.preferences.SortOption
 import com.chesire.malime.view.search.SearchFragment
+import dagger.android.DispatchingAndroidInjector
+import dagger.android.support.HasSupportFragmentInjector
 import timber.log.Timber
 import java.util.Locale
+import javax.inject.Inject
 
-class MainActivity : AppCompatActivity() {
-    private val sharedPref: SharedPref by lazy {
-        SharedPref(this)
-    }
+class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
     private var currentDisplayedFragmentTagBundleId = "currentFragment"
     private var currentDisplayedFragmentTag = ""
+
+    @Inject
+    lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
+
+    @Inject
+    lateinit var sharedPref: SharedPref
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -115,6 +121,8 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun supportFragmentInjector() = dispatchingAndroidInjector
+
     private fun logout() {
         val handlerThread = HandlerThread("ClearRoomDBThread")
         handlerThread.start()
@@ -143,9 +151,11 @@ class MainActivity : AppCompatActivity() {
         AlertDialog.Builder(this)
             .setTitle(R.string.sort_dialog_title)
             .setSingleChoiceItems(
-                SortOption.getOptionsStrings(applicationContext), sortOption, { _, which ->
-                    sortOption = which
-                })
+                SortOption.getOptionsStrings(applicationContext),
+                sortOption
+            ) { _, which ->
+                sortOption = which
+            }
             .setPositiveButton(android.R.string.ok) { _, _ ->
                 sharedPref.setSortOption(SortOption.getOptionFor(sortOption))
             }
