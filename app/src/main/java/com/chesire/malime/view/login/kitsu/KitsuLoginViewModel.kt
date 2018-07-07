@@ -5,7 +5,6 @@ import android.arch.lifecycle.ViewModel
 import android.databinding.ObservableBoolean
 import com.chesire.malime.R
 import com.chesire.malime.core.flags.SupportedService
-import com.chesire.malime.core.models.AuthModel
 import com.chesire.malime.kitsu.api.KitsuAuthorizer
 import com.chesire.malime.kitsu.api.KitsuManagerFactory
 import com.chesire.malime.util.IOScheduler
@@ -23,7 +22,6 @@ class KitsuLoginViewModel @Inject constructor(
     private val authorizer: KitsuAuthorizer
 ) : ViewModel() {
     private val disposables = CompositeDisposable()
-    private lateinit var tempAuthModel: AuthModel
     val loginResponse = MutableLiveData<LoginStatus>()
     val errorResponse = MutableLiveData<Int>()
     val attemptingLogin = ObservableBoolean()
@@ -67,7 +65,6 @@ class KitsuLoginViewModel @Inject constructor(
                 loginResponse.value = LoginStatus.SUCCESS
 
                 sharedPref.putPrimaryService(SupportedService.Kitsu)
-                authorizer.storeAuthDetails(tempAuthModel)
                 authorizer.storeUser(it)
             }
             .subscribe()
