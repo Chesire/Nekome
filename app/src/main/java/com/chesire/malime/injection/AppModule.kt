@@ -44,12 +44,12 @@ internal class AppModule {
     @Provides
     fun provideAuthorization(
         kitsuAuthorizer: KitsuAuthorizer
-        //malAuthorizer: MalAuthorizer
+        // malAuthorizer: MalAuthorizer
     ): Authorization {
         return Authorization(
             mapOf(
                 Pair(SupportedService.Kitsu, kitsuAuthorizer)
-                //Pair(SupportedService.MyAnimeList, malAuthorizer)
+                // Pair(SupportedService.MyAnimeList, malAuthorizer)
             )
         )
     }
