@@ -24,7 +24,9 @@ import com.chesire.malime.core.flags.SupportedService
 import com.chesire.malime.core.flags.UserSeriesStatus
 import com.chesire.malime.core.repositories.Library
 import com.chesire.malime.databinding.FragmentMaldisplayBinding
+import com.chesire.malime.kitsu.api.KitsuAuthorizer
 import com.chesire.malime.kitsu.api.KitsuManagerFactory
+import com.chesire.malime.mal.api.MalAuthorizer
 import com.chesire.malime.mal.api.MalManagerFactory
 import com.chesire.malime.util.SharedPref
 import com.chesire.malime.util.extension.getSeriesStatusStrings
@@ -48,10 +50,10 @@ class MalDisplayFragment : Fragment() {
 
         val api: MalimeApi = if (sharedPref.getPrimaryService() == SupportedService.Kitsu) {
             Timber.i("Found Kitsu as supported service")
-            KitsuManagerFactory().get(sharedPref, sharedPref.getUserId())
+            KitsuManagerFactory().get(KitsuAuthorizer(requireContext()))
         } else {
             Timber.i("Found Mal as supported service")
-            MalManagerFactory().get(sharedPref, sharedPref.getUsername())
+            MalManagerFactory().get(MalAuthorizer(requireContext()))
         }
 
         viewModel = ViewModelProviders

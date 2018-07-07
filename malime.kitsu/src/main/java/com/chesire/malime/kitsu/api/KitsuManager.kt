@@ -16,13 +16,15 @@ import io.reactivex.schedulers.Schedulers
 import okhttp3.MediaType
 import okhttp3.RequestBody
 import timber.log.Timber
+import javax.inject.Inject
 
 private const val MAX_RETRIES = 3
 
-class KitsuManager(
+class KitsuManager @Inject constructor(
     private val api: KitsuApi,
-    private val userId: Int
+    authorizer: KitsuAuthorizer
 ) : MalimeApi, SearchApi {
+    private val userId = authorizer.retrieveUser()
 
     override fun login(username: String, password: String): Single<AuthModel> {
         // The api mentions it wants the username, but it seems it wants the email address instead
@@ -38,7 +40,8 @@ class KitsuManager(
                         AuthModel(
                             responseObject!!.accessToken,
                             responseObject.refreshToken,
-                            responseObject.createdAt + responseObject.expiresIn
+                            responseObject.createdAt + responseObject.expiresIn,
+                            "kitsu"
                         )
                     )
                 }

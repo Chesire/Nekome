@@ -7,16 +7,17 @@ import com.chesire.malime.core.models.AuthModel
 import com.chesire.malime.core.sec.Decryptor
 import com.chesire.malime.core.sec.Encryptor
 import com.google.gson.Gson
+import javax.inject.Inject
 
 private const val authPrefFile: String = "malime_mal_auth_pref"
 private const val authAlias: String = "mal_private_auth"
 private const val preferenceAuth: String = "pref_auth"
 private const val preferenceUser: String = "pref_user"
 
-class MalAuthorizer(context: Context) : Authorizer<String> {
+class MalAuthorizer @Inject constructor(context: Context) : Authorizer<String> {
     private val pref = context.getSharedPreferences(authPrefFile, Context.MODE_PRIVATE)
-    private val encryptor = Encryptor(context.applicationContext)
-    private val decryptor = Decryptor()
+    private val encryptor by lazy { Encryptor(context.applicationContext) }
+    private val decryptor by lazy { Decryptor() }
 
     override fun storeAuthDetails(model: AuthModel) {
         val encrypted = encryptor.encryptText(authAlias, Gson().toJson(model))
@@ -33,6 +34,10 @@ class MalAuthorizer(context: Context) : Authorizer<String> {
         } else {
             AuthModel("", "", 0, "")
         }
+    }
+
+    override fun isDefaultUser(user: Any?): Boolean {
+        return (user as? String)?.isBlank() ?: false
     }
 
     override fun storeUser(user: String) {

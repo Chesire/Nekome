@@ -1,6 +1,5 @@
 package com.chesire.malime.kitsu.api
 
-import com.chesire.malime.core.api.AuthHandler
 import com.chesire.malime.core.flags.ItemType
 import com.chesire.malime.core.models.AuthModel
 import com.chesire.malime.kitsu.BuildConfig
@@ -18,18 +17,17 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Inject
 
 internal const val KitsuEndpoint = "https://kitsu.io/"
 
-class KitsuApi(
-    private val authHandler: AuthHandler
-) {
+class KitsuApi @Inject constructor(authorizer: KitsuAuthorizer) {
     private val kitsuService: KitsuService
 
     init {
         val httpClient = OkHttpClient()
             .newBuilder()
-            .addInterceptor(AuthInterceptor(authHandler.getAuth()))
+            .addInterceptor(AuthInterceptor(authorizer))
 
         if (BuildConfig.DEBUG) {
             val interceptor: HttpLoggingInterceptor = HttpLoggingInterceptor().apply {
@@ -84,9 +82,7 @@ class KitsuApi(
     /**
      * Provides an interceptor that handles the auth and refreshing the token when needed.
      */
-    inner class AuthInterceptor(
-        private val authModel: AuthModel
-    ) : Interceptor {
+    inner class AuthInterceptor(private val authorizer: KitsuAuthorizer) : Interceptor {
         private var updatingAuthToken = false
 
         override fun intercept(chain: Interceptor.Chain): Response {
@@ -96,8 +92,9 @@ class KitsuApi(
                 return chain.proceed(request)
             }
 
+            val authModel = authorizer.retrieveAuthDetails()
             if (authModel.expireAt != 0L && System.currentTimeMillis() / 1000 > authModel.expireAt) {
-                updateAuthToken()
+                updateAuthToken(authModel)
             }
 
             val authenticatedRequest = request.newBuilder()
@@ -107,7 +104,7 @@ class KitsuApi(
             return chain.proceed(authenticatedRequest)
         }
 
-        private fun updateAuthToken() {
+        private fun updateAuthToken(authModel: AuthModel) {
             // The auth token has expired, update it using the refresh token
             updatingAuthToken = true
             val refreshCall = refreshAuthToken(authModel.refreshToken)
@@ -120,7 +117,7 @@ class KitsuApi(
                     authModel.refreshToken = it.refreshToken
                     authModel.expireAt = it.createdAt + it.expiresIn
                 }
-                authHandler.setAuth(authModel)
+                authorizer.storeAuthDetails(authModel)
             }
         }
     }

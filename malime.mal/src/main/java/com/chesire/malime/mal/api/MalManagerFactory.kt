@@ -1,13 +1,15 @@
 package com.chesire.malime.mal.api
 
-import com.chesire.malime.core.api.AuthHandler
-
 class MalManagerFactory {
-    fun get(authHandler: AuthHandler, username: String = ""): MalManager {
+    fun get(authorizer: MalAuthorizer): MalManager {
         return MalManager(
+            MalApi(authorizer),
+            ""
+        )
+        /*return MalManager(
             MalApi(authHandler),
             username
-        )
+        )*/
     }
 
     /*
