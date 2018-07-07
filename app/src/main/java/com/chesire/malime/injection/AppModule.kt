@@ -27,11 +27,8 @@ internal class AppModule {
     @Provides
     fun provideDatabase(application: Application): MalimeDatabase {
         return Room
-            .databaseBuilder(
-                application,
-                MalimeDatabase::class.java,
-                "malimedatabase.db"
-            )
+            .databaseBuilder(application, MalimeDatabase::class.java, "malimedatabase.db")
+            .fallbackToDestructiveMigration()
             .build()
     }
 
