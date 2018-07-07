@@ -1,21 +1,19 @@
 package com.chesire.malime.core.repositories
 
-import android.content.Context
 import com.chesire.malime.core.api.MalimeApi
 import com.chesire.malime.core.flags.UserSeriesStatus
 import com.chesire.malime.core.models.MalimeModel
-import com.chesire.malime.core.room.MalimeDatabase
+import com.chesire.malime.core.room.MalimeDao
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
+import javax.inject.Inject
 
-class Library(
-    context: Context,
-    private val malimeApi: MalimeApi
+class Library @Inject constructor(
+    private val malimeApi: MalimeApi,
+    private val dao: MalimeDao
 ) {
-    private val db = MalimeDatabase.getInstance(context)
-
     fun observeLibrary(): Observable<List<MalimeModel>> {
         return getLibraryFromDb()
     }
@@ -39,7 +37,7 @@ class Library(
     fun insertIntoLocalLibrary(item: MalimeModel) {
         Completable
             .fromAction {
-                db.malimeDao().insert(item)
+                dao.insert(item)
             }
             .subscribeOn(Schedulers.io())
             .subscribe()
@@ -48,7 +46,7 @@ class Library(
     fun insertIntoLocalLibrary(items: List<MalimeModel>) {
         Completable
             .fromAction {
-                db.malimeDao().insertAll(items)
+                dao.insertAll(items)
             }
             .subscribeOn(Schedulers.io())
             .subscribe()
@@ -57,7 +55,7 @@ class Library(
     fun updateInLocalLibrary(item: MalimeModel) {
         Completable
             .fromAction {
-                db.malimeDao().update(item)
+                dao.update(item)
             }
             .subscribeOn(Schedulers.io())
             .subscribe()
@@ -68,6 +66,6 @@ class Library(
     }
 
     private fun getLibraryFromDb(): Observable<List<MalimeModel>> {
-        return db.malimeDao().getAll().toObservable()
+        return dao.getAll().toObservable()
     }
 }

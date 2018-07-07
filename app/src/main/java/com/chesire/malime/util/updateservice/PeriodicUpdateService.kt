@@ -5,6 +5,7 @@ import android.app.job.JobService
 import com.chesire.malime.core.api.MalimeApi
 import com.chesire.malime.core.flags.SupportedService
 import com.chesire.malime.core.repositories.Library
+import com.chesire.malime.core.room.MalimeDatabase
 import com.chesire.malime.kitsu.api.KitsuAuthorizer
 import com.chesire.malime.kitsu.api.KitsuManagerFactory
 import com.chesire.malime.mal.api.MalAuthorizer
@@ -23,14 +24,13 @@ class PeriodicUpdateService : JobService() {
 
         val api: MalimeApi = if (sharedPref.getPrimaryService() == SupportedService.Kitsu) {
             Timber.i("Found Kitsu as supported service")
-
             KitsuManagerFactory().get(KitsuAuthorizer(applicationContext))
         } else {
             Timber.i("Found Mal as supported service")
             MalManagerFactory().get(MalAuthorizer(applicationContext))
         }
 
-        val library = Library(applicationContext, api)
+        val library = Library(api, MalimeDatabase.getInstance(applicationContext).malimeDao())
 
         Timber.i("UpdateService primed, updating libraries")
         getLatestLibrary(params, library)

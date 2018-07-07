@@ -1,6 +1,7 @@
 package com.chesire.malime.view.maldisplay
 
 import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import android.content.res.Configuration
 import android.databinding.DataBindingUtil
@@ -11,6 +12,7 @@ import android.support.v7.app.AlertDialog
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.OrientationHelper
+import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -18,68 +20,62 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import com.chesire.malime.R
-import com.chesire.malime.core.api.MalimeApi
 import com.chesire.malime.core.flags.ItemType
-import com.chesire.malime.core.flags.SupportedService
 import com.chesire.malime.core.flags.UserSeriesStatus
-import com.chesire.malime.core.repositories.Library
 import com.chesire.malime.databinding.FragmentMaldisplayBinding
-import com.chesire.malime.kitsu.api.KitsuAuthorizer
-import com.chesire.malime.kitsu.api.KitsuManagerFactory
-import com.chesire.malime.mal.api.MalAuthorizer
-import com.chesire.malime.mal.api.MalManagerFactory
+import com.chesire.malime.injection.Injectable
 import com.chesire.malime.util.SharedPref
+import com.chesire.malime.util.autoCleared
 import com.chesire.malime.util.extension.getSeriesStatusStrings
 import kotlinx.android.synthetic.main.fragment_maldisplay.maldisplay_swipe_refresh
 import timber.log.Timber
+import javax.inject.Inject
 
 private const val itemTypeBundleId = "itemTypeBundleId"
 
-class MalDisplayFragment : Fragment() {
+class MalDisplayFragment : Fragment(), Injectable {
+    private var binding by autoCleared<FragmentMaldisplayBinding>()
     private lateinit var viewModel: MalDisplayViewModel
     private lateinit var viewAdapter: MalDisplayViewAdapter
-    private lateinit var sharedPref: SharedPref
     private lateinit var type: ItemType
+    private lateinit var recyclerView: RecyclerView
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+    @Inject
+    lateinit var sharedPref: SharedPref
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
 
         type = ItemType.getTypeForInternalId(arguments!!.getInt(itemTypeBundleId))
-        sharedPref = SharedPref(requireContext())
-
-        val api: MalimeApi = if (sharedPref.getPrimaryService() == SupportedService.Kitsu) {
-            Timber.i("Found Kitsu as supported service")
-            KitsuManagerFactory().get(KitsuAuthorizer(requireContext()))
-        } else {
-            Timber.i("Found Mal as supported service")
-            MalManagerFactory().get(MalAuthorizer(requireContext()))
-        }
 
         viewModel = ViewModelProviders
-            .of(
-                this,
-                MalDisplayViewModelFactory(
-                    requireActivity().application,
-                    Library(requireContext(), api)
-                )
-            )
+            .of(this, viewModelFactory)
             .get(MalDisplayViewModel::class.java)
             .apply {
                 series.observe(this@MalDisplayFragment,
                     Observer {
-                        if (it != null) {
-                            // Check for null here to be safe, as we initialize the adapter below
-                            viewAdapter?.addAll(it.filter { it.type == type })
+                        it?.let {
+                            viewAdapter.addAll(it.filter { it.type == type })
                         }
                     })
                 updateAllStatus.observe(this@MalDisplayFragment,
                     Observer {
-                        if (it != null) {
+                        it?.let {
                             onUpdateAllStatusChange(it)
                         }
                     })
             }
+
+        viewAdapter = MalDisplayViewAdapter(viewModel, sharedPref)
+        recyclerView.adapter = viewAdapter
+        binding.vm = viewModel
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
     }
 
     override fun onCreateView(
@@ -87,17 +83,15 @@ class MalDisplayFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        viewAdapter = MalDisplayViewAdapter(viewModel, SharedPref(requireContext()))
-
         return DataBindingUtil.inflate<FragmentMaldisplayBinding>(
             inflater,
             R.layout.fragment_maldisplay,
             container,
             false
         ).apply {
-            vm = viewModel
-
+            binding = this
             maldisplayRecyclerView.apply {
+                recyclerView = this
                 setEmptyView(maldisplayEmptyView)
                 setHasFixedSize(true)
                 layoutManager =
@@ -111,7 +105,6 @@ class MalDisplayFragment : Fragment() {
                         } else {
                             LinearLayoutManager(requireContext())
                         }
-                adapter = viewAdapter
             }
         }.root
     }
@@ -137,11 +130,11 @@ class MalDisplayFragment : Fragment() {
             .setTitle(R.string.filter_dialog_title)
             .setMultiChoiceItems(
                 UserSeriesStatus.getSeriesStatusStrings(requireContext()),
-                states,
-                { _, which, isChecked ->
-                    states[which] = isChecked
-                })
-            .setPositiveButton(android.R.string.ok, { _, _ ->
+                states
+            ) { _, which, isChecked ->
+                states[which] = isChecked
+            }
+            .setPositiveButton(android.R.string.ok) { _, _ ->
                 if (states.all { !it }) {
                     Timber.w("User tried to set all filter states to false")
                     Snackbar.make(
@@ -152,7 +145,7 @@ class MalDisplayFragment : Fragment() {
                 } else {
                     sharedPref.setFilter(states)
                 }
-            })
+            }
             .setNegativeButton(android.R.string.cancel, null)
             .show()
     }

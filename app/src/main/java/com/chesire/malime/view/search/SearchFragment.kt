@@ -21,6 +21,7 @@ import com.chesire.malime.core.api.SearchApi
 import com.chesire.malime.core.flags.ItemType
 import com.chesire.malime.core.flags.SupportedService
 import com.chesire.malime.core.repositories.Library
+import com.chesire.malime.core.room.MalimeDatabase
 import com.chesire.malime.databinding.FragmentSearchBinding
 import com.chesire.malime.injection.Injectable
 import com.chesire.malime.kitsu.api.KitsuAuthorizer
@@ -60,7 +61,7 @@ class SearchFragment : Fragment(), Injectable {
                 SearchViewModelFactory(
                     requireActivity().application,
                     api as SearchApi,
-                    Library(requireContext(), api)
+                    Library(api, MalimeDatabase.getInstance(requireContext()).malimeDao())
                 )
             )
             .get(SearchViewModel::class.java)
