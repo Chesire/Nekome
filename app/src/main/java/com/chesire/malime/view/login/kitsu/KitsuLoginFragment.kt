@@ -31,10 +31,7 @@ class KitsuLoginFragment : BaseLoginFragment(), Injectable {
         super.onActivityCreated(savedInstanceState)
 
         viewModel = ViewModelProviders
-            .of(
-                this,
-                viewModelFactory
-            )
+            .of(this, viewModelFactory)
             .get(KitsuLoginViewModel::class.java)
             .apply {
                 loginResponse.observe(

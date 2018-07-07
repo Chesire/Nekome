@@ -55,8 +55,8 @@ class MalimeApplication : Application(), HasActivityInjector {
     private fun startStrictMode() {
         StrictMode.setThreadPolicy(
             StrictMode.ThreadPolicy.Builder()
-                //.detectDiskReads()  // This should be restored once some optimisation has been run
-                //.detectDiskWrites() // This should be restored once some optimisation has been run
+                // .detectDiskReads()  // This should be restored once some optimisation has been run
+                // .detectDiskWrites() // This should be restored once some optimisation has been run
                 .detectNetwork()
                 .detectCustomSlowCalls()
                 .penaltyLog()

@@ -32,10 +32,7 @@ class MalLoginFragment : BaseLoginFragment(), Injectable {
         super.onActivityCreated(savedInstanceState)
 
         viewModel = ViewModelProviders
-            .of(
-                this,
-                viewModelFactory
-            )
+            .of(this, viewModelFactory)
             .get(MalLoginViewModel::class.java)
             .apply {
                 loginResponse.observe(
