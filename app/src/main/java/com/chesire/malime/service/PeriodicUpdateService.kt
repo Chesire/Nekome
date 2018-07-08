@@ -1,34 +1,30 @@
-package com.chesire.malime.util.updateservice
+package com.chesire.malime.service
 
 import android.app.job.JobParameters
 import android.app.job.JobService
-import com.chesire.malime.core.api.MalimeApi
-import com.chesire.malime.core.flags.SupportedService
 import com.chesire.malime.core.repositories.Library
-import com.chesire.malime.kitsu.api.KitsuManagerFactory
-import com.chesire.malime.mal.api.MalManagerFactory
 import com.chesire.malime.util.SharedPref
+import dagger.android.AndroidInjection
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
+import javax.inject.Inject
 
 class PeriodicUpdateService : JobService() {
+    @Inject
+    lateinit var library: Library
+    @Inject
+    lateinit var sharedPref: SharedPref
+
+    override fun onCreate() {
+        super.onCreate()
+        AndroidInjection.inject(this)
+    }
+
     override fun onStopJob(params: JobParameters?): Boolean {
         return false
     }
 
     override fun onStartJob(params: JobParameters?): Boolean {
-        val sharedPref = SharedPref(applicationContext)
-
-        val api: MalimeApi = if (sharedPref.getPrimaryService() == SupportedService.Kitsu) {
-            Timber.i("Found Kitsu as supported service")
-            KitsuManagerFactory().get(sharedPref, sharedPref.getUserId())
-        } else {
-            Timber.i("Found Mal as supported service")
-            MalManagerFactory().get(sharedPref, sharedPref.getUsername())
-        }
-
-        val library = Library(applicationContext, api)
-
         Timber.i("UpdateService primed, updating libraries")
         getLatestLibrary(params, library)
         return true

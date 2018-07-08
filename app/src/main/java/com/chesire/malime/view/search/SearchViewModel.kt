@@ -11,19 +11,29 @@ import com.chesire.malime.core.api.SearchApi
 import com.chesire.malime.core.flags.ItemType
 import com.chesire.malime.core.models.MalimeModel
 import com.chesire.malime.core.repositories.Library
+import com.chesire.malime.util.IOScheduler
+import com.chesire.malime.util.UIScheduler
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Scheduler
 import io.reactivex.disposables.CompositeDisposable
 import timber.log.Timber
+import javax.inject.Inject
 
-class SearchViewModel(
+class SearchViewModel @Inject constructor(
     context: Application,
     private val searchApi: SearchApi,
-    private val library: Library,
-    private val subscribeScheduler: Scheduler,
-    private val observeScheduler: Scheduler
+    private val library: Library
 ) : AndroidViewModel(context), SearchInteractionListener {
     private val disposables = CompositeDisposable()
+
+    @Inject
+    @field:IOScheduler
+    lateinit var subscribeScheduler: Scheduler
+
+    @Inject
+    @field:UIScheduler
+    lateinit var observeScheduler: Scheduler
+
     val series: LiveData<List<MalimeModel>> = LiveDataReactiveStreams.fromPublisher(
         library.observeLibrary().toFlowable(BackpressureStrategy.ERROR)
     )

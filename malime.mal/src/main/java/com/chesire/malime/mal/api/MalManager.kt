@@ -42,7 +42,7 @@ class MalManager(
 
             if (response.isSuccessful) {
                 Timber.i("Login successful")
-                it.onSuccess(AuthModel("", "", 0))
+                it.onSuccess(AuthModel("", "", 0, "mal"))
             } else {
                 Timber.e(Throwable(response.message()), "Error with the login method")
                 it.tryOnError(Throwable(response.message()))

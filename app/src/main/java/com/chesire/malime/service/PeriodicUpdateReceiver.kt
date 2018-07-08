@@ -1,4 +1,4 @@
-package com.chesire.malime.util.updateservice
+package com.chesire.malime.service
 
 import android.content.BroadcastReceiver
 import android.content.Context

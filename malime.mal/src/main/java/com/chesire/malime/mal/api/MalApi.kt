@@ -1,6 +1,5 @@
 package com.chesire.malime.mal.api
 
-import com.chesire.malime.core.api.AuthHandler
 import com.chesire.malime.core.models.AuthModel
 import com.chesire.malime.mal.BuildConfig
 import com.chesire.malime.mal.models.response.GetAllAnimeResponse
@@ -24,15 +23,13 @@ internal const val MyAnimeListEndpoint = "https://myanimelist.net/"
  * This generates the Retrofit instance to use with [MalService] and gives simple methods to execute
  * on it.
  */
-class MalApi(
-    authHandler: AuthHandler
-) {
+class MalApi(authorizer: MalAuthorizer) {
     private val malService: MalService
 
     init {
         val httpClient = OkHttpClient()
             .newBuilder()
-            .addInterceptor(BasicAuthInterceptor(authHandler.getAuth()))
+            .addInterceptor(BasicAuthInterceptor(authorizer.retrieveAuthDetails()))
 
         if (BuildConfig.DEBUG) {
             val interceptor: HttpLoggingInterceptor = HttpLoggingInterceptor().apply {

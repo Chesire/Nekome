@@ -4,10 +4,9 @@ import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import android.databinding.ObservableBoolean
 import com.chesire.malime.R
-import com.chesire.malime.core.api.AuthHandler
 import com.chesire.malime.core.flags.SupportedService
-import com.chesire.malime.core.models.AuthModel
-import com.chesire.malime.mal.api.MalManagerFactory
+import com.chesire.malime.mal.api.MalAuthorizer
+import com.chesire.malime.mal.api.MalManager
 import com.chesire.malime.util.IOScheduler
 import com.chesire.malime.util.SharedPref
 import com.chesire.malime.util.UIScheduler
@@ -17,12 +16,14 @@ import io.reactivex.Scheduler
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
+// When MAL support is added again, the AppModule needs to be updated to allow usage of the Mal service
+
 class MalLoginViewModel @Inject constructor(
     private val sharedPref: SharedPref,
-    private val malManagerFactory: MalManagerFactory
-) : ViewModel(), AuthHandler {
+    private val malManager: MalManager,
+    private val authorizer: MalAuthorizer
+) : ViewModel() {
     private val disposables = CompositeDisposable()
-    private lateinit var tempAuthModel: AuthModel
     val loginResponse = MutableLiveData<LoginStatus>()
     val errorResponse = MutableLiveData<Int>()
     val attemptingLogin = ObservableBoolean()
@@ -41,8 +42,6 @@ class MalLoginViewModel @Inject constructor(
             return
         }
 
-        tempAuthModel = AuthModel(credentials, "", 0)
-        val malManager = malManagerFactory.get(this, loginModel.userName)
         disposables.add(malManager.login(loginModel.userName, loginModel.password)
             .subscribeOn(subscribeScheduler)
             .observeOn(observeScheduler)
@@ -56,10 +55,11 @@ class MalLoginViewModel @Inject constructor(
             }
             .subscribe(
                 {
-                    sharedPref.putPrimaryService(SupportedService.MyAnimeList)
-                        .putUsername(loginModel.userName)
-                        .setAuth(AuthModel(credentials, "", 0))
                     loginResponse.value = LoginStatus.SUCCESS
+
+                    sharedPref.putPrimaryService(SupportedService.MyAnimeList)
+                    authorizer.storeAuthDetails(it)
+                    authorizer.storeUser(loginModel.userName)
                 },
                 {
                     errorResponse.value = R.string.login_failure
@@ -85,14 +85,6 @@ class MalLoginViewModel @Inject constructor(
             }
             else -> true
         }
-    }
-
-    override fun getAuth(): AuthModel {
-        return tempAuthModel
-    }
-
-    override fun setAuth(newModel: AuthModel) {
-        // Not needed
     }
 
     override fun onCleared() {

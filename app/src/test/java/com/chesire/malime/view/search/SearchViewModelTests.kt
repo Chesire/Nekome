@@ -41,15 +41,13 @@ class SearchViewModelTests {
         `when`(mockItems.toFlowable(BackpressureStrategy.ERROR)).thenReturn(flowableItems)
         `when`(library.observeLibrary()).thenReturn(mockItems)
 
-        testObject = SearchViewModel(
-            MockApplication(),
-            searchApi,
-            library,
-            testScheduler,
-            testScheduler
-        )
-        testObject.series.observeForever(seriesObserver)
-        testObject.searchItems.observeForever(searchObserver)
+        testObject = SearchViewModel(MockApplication(), searchApi, library)
+            .apply {
+                observeScheduler = testScheduler
+                subscribeScheduler = testScheduler
+                series.observeForever(seriesObserver)
+                searchItems.observeForever(searchObserver)
+            }
     }
 
     @After

@@ -1,4 +1,4 @@
-package com.chesire.malime.util.updateservice
+package com.chesire.malime.service
 
 import android.app.job.JobInfo
 import android.app.job.JobScheduler

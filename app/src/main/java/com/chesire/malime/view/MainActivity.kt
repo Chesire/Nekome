@@ -14,9 +14,10 @@ import android.view.MenuItem
 import com.chesire.malime.R
 import com.chesire.malime.core.flags.ItemType
 import com.chesire.malime.core.flags.SupportedService
+import com.chesire.malime.core.repositories.Authorization
 import com.chesire.malime.core.room.MalimeDatabase
 import com.chesire.malime.util.SharedPref
-import com.chesire.malime.util.updateservice.PeriodicUpdateHelper
+import com.chesire.malime.service.PeriodicUpdateHelper
 import com.chesire.malime.view.login.LoginActivity
 import com.chesire.malime.view.maldisplay.MalDisplayFragment
 import com.chesire.malime.view.preferences.PrefActivity
@@ -34,9 +35,12 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
 
     @Inject
     lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
-
     @Inject
     lateinit var sharedPref: SharedPref
+    @Inject
+    lateinit var authorization: Authorization
+    @Inject
+    lateinit var db: MalimeDatabase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -128,10 +132,10 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
         handlerThread.start()
         Handler(handlerThread.looper).post {
             Timber.d("Clearing the internal Room DB")
-            MalimeDatabase.clearAllTables(this)
+            db.clearAllTables()
 
             Timber.d("Clearing internal login details")
-            sharedPref.clearLoginDetails()
+            authorization.logoutAll()
 
             Timber.d("Clearing the update helper")
             PeriodicUpdateHelper().cancel(this, sharedPref)
@@ -173,13 +177,13 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
                         String.format(
                             Locale.ROOT,
                             getString(R.string.view_profile_mal),
-                            sharedPref.getUsername()
+                            authorization.getUser(SupportedService.MyAnimeList)
                         )
                     } else {
                         String.format(
                             Locale.ROOT,
                             getString(R.string.view_profile_kitsu),
-                            sharedPref.getUserId()
+                            authorization.getUser(SupportedService.Kitsu)
                         )
                     }
                 )

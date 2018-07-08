@@ -1,6 +1,7 @@
 package com.chesire.malime.view.search
 
 import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import android.content.res.Configuration
 import android.databinding.DataBindingUtil
@@ -16,18 +17,13 @@ import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
 import com.chesire.malime.R
-import com.chesire.malime.core.api.MalimeApi
-import com.chesire.malime.core.api.SearchApi
 import com.chesire.malime.core.flags.ItemType
-import com.chesire.malime.core.flags.SupportedService
-import com.chesire.malime.core.repositories.Library
 import com.chesire.malime.databinding.FragmentSearchBinding
 import com.chesire.malime.injection.Injectable
-import com.chesire.malime.kitsu.api.KitsuManagerFactory
-import com.chesire.malime.mal.api.MalManagerFactory
 import com.chesire.malime.util.SharedPref
 import com.chesire.malime.util.autoCleared
 import com.chesire.malime.util.extension.hideSystemKeyboard
+import kotlinx.android.synthetic.main.fragment_search.search_search_term_edit_text
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -39,48 +35,9 @@ class SearchFragment : Fragment(), Injectable {
     private lateinit var recyclerView: RecyclerView
 
     @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+    @Inject
     lateinit var sharedPref: SharedPref
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
-        val api: MalimeApi = if (sharedPref.getPrimaryService() == SupportedService.Kitsu) {
-            Timber.i("Found Kitsu as supported service")
-            KitsuManagerFactory().get(sharedPref, sharedPref.getUserId())
-        } else {
-            Timber.i("Found Mal as supported service")
-            MalManagerFactory().get(sharedPref, sharedPref.getUsername())
-        }
-
-        viewModel = ViewModelProviders
-            .of(
-                this,
-                SearchViewModelFactory(
-                    requireActivity().application,
-                    api as SearchApi,
-                    Library(requireContext(), api)
-                )
-            )
-            .get(SearchViewModel::class.java)
-            .apply {
-                series.observe(this@SearchFragment,
-                    Observer {
-                        it?.let {
-                            viewAdapter.setCurrentItems(it)
-                        }
-                    })
-                searchItems.observe(this@SearchFragment,
-                    Observer {
-                        it?.let {
-                            viewAdapter.addSearchItems(it)
-                        }
-                    })
-            }
-
-        viewAdapter = SearchViewAdapter(viewModel)
-        recyclerView.adapter = viewAdapter
-        binding.vm = viewModel
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -114,24 +71,50 @@ class SearchFragment : Fragment(), Injectable {
                             LinearLayoutManager(requireContext())
                         }
             }
-            searchSearchTermEditText.setOnEditorActionListener { _, _, _ ->
-                requireActivity().hideSystemKeyboard(requireContext())
-                viewModel.searchForSeries(
-                    when (checkedOption) {
-                        R.id.search_option_anime_choice -> ItemType.Anime
-                        R.id.search_option_manga_choice -> ItemType.Manga
-                        else -> {
-                            Timber.e("Unknown search method selected")
-                            ItemType.Unknown
-                        }
-                    }
-                )
-                true
-            }
             searchOptionChoices.setOnCheckedChangeListener { _, checkedId ->
                 checkedOption = checkedId
             }
         }.root
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        viewModel = ViewModelProviders
+            .of(this, viewModelFactory)
+            .get(SearchViewModel::class.java)
+            .apply {
+                series.observe(this@SearchFragment,
+                    Observer {
+                        it?.let {
+                            viewAdapter.setCurrentItems(it)
+                        }
+                    })
+                searchItems.observe(this@SearchFragment,
+                    Observer {
+                        it?.let {
+                            viewAdapter.addSearchItems(it)
+                        }
+                    })
+            }
+        search_search_term_edit_text.setOnEditorActionListener { _, _, _ ->
+            requireActivity().hideSystemKeyboard(requireContext())
+            viewModel.searchForSeries(
+                when (checkedOption) {
+                    R.id.search_option_anime_choice -> ItemType.Anime
+                    R.id.search_option_manga_choice -> ItemType.Manga
+                    else -> {
+                        Timber.e("Unknown search method selected")
+                        ItemType.Unknown
+                    }
+                }
+            )
+            true
+        }
+
+        viewAdapter = SearchViewAdapter(viewModel)
+        recyclerView.adapter = viewAdapter
+        binding.vm = viewModel
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {

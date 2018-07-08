@@ -38,14 +38,13 @@ class MalDisplayViewModelTests {
         `when`(mockItems.toFlowable(BackpressureStrategy.ERROR)).thenReturn(flowableItems)
         `when`(library.observeLibrary()).thenReturn(mockItems)
 
-        testObject = MalDisplayViewModel(
-            MockApplication(),
-            library,
-            testScheduler,
-            testScheduler
-        )
-        testObject.series.observeForever(seriesObserver)
-        testObject.updateAllStatus.observeForever(updateObserver)
+        testObject = MalDisplayViewModel(MockApplication(), library)
+            .apply {
+                observeScheduler = testScheduler
+                subscribeScheduler = testScheduler
+                series.observeForever(seriesObserver)
+                updateAllStatus.observeForever(updateObserver)
+            }
     }
 
     @After
