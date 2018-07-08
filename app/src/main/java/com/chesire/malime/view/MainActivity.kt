@@ -35,11 +35,12 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
 
     @Inject
     lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
-
     @Inject
     lateinit var sharedPref: SharedPref
     @Inject
     lateinit var authorization: Authorization
+    @Inject
+    lateinit var db: MalimeDatabase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -131,7 +132,7 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
         handlerThread.start()
         Handler(handlerThread.looper).post {
             Timber.d("Clearing the internal Room DB")
-            MalimeDatabase.clearAllTables(this)
+            db.clearAllTables()
 
             Timber.d("Clearing internal login details")
             authorization.logoutAll()

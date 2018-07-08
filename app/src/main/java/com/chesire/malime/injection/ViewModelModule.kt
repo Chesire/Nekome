@@ -12,22 +12,22 @@ import dagger.multibindings.IntoMap
 
 @Suppress("unused")
 @Module
-internal abstract class ViewModelModule {
+abstract class ViewModelModule {
     @Binds
     @IntoMap
     @ViewModelKey(KitsuLoginViewModel::class)
-    abstract fun bindKitsuLoginViewModel(viewModel: KitsuLoginViewModel): ViewModel
+    internal abstract fun bindKitsuLoginViewModel(viewModel: KitsuLoginViewModel): ViewModel
 
     @Binds
     @IntoMap
     @ViewModelKey(MalDisplayViewModel::class)
-    abstract fun bindMalDisplayViewModel(viewModel: MalDisplayViewModel): ViewModel
+    internal abstract fun bindMalDisplayViewModel(viewModel: MalDisplayViewModel): ViewModel
 
     @Binds
     @IntoMap
     @ViewModelKey(SearchViewModel::class)
-    abstract fun bindSearchViewModel(viewModel: SearchViewModel): ViewModel
+    internal abstract fun bindSearchViewModel(viewModel: SearchViewModel): ViewModel
 
     @Binds
-    abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
+    internal abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
 }

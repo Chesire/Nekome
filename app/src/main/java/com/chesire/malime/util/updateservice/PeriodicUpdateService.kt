@@ -3,8 +3,8 @@ package com.chesire.malime.util.updateservice
 import android.app.job.JobParameters
 import android.app.job.JobService
 import com.chesire.malime.core.repositories.Library
-import com.chesire.malime.injection.ServiceInjector
 import com.chesire.malime.util.SharedPref
+import dagger.android.AndroidInjection
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 import javax.inject.Inject
@@ -17,7 +17,7 @@ class PeriodicUpdateService : JobService() {
 
     override fun onCreate() {
         super.onCreate()
-        ServiceInjector.init(this)
+        AndroidInjection.inject(this)
     }
 
     override fun onStopJob(params: JobParameters?): Boolean {

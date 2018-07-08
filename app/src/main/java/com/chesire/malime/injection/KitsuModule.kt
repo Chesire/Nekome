@@ -5,7 +5,7 @@ import dagger.Module
 import dagger.Provides
 
 @Module
-class KitsuModule {
+internal class KitsuModule {
     @Provides
     fun providesKitsuManagerFactory(): KitsuManagerFactory {
         return KitsuManagerFactory()

@@ -11,14 +11,14 @@ import dagger.android.ContributesAndroidInjector
 @Module
 abstract class FragmentModule {
     @ContributesAndroidInjector
-    abstract fun contributeKitsuLoginFragment(): KitsuLoginFragment
+    internal abstract fun contributeKitsuLoginFragment(): KitsuLoginFragment
 
     @ContributesAndroidInjector
-    abstract fun contributeMalDisplayFragment(): MalDisplayFragment
+    internal abstract fun contributeMalDisplayFragment(): MalDisplayFragment
 
     @ContributesAndroidInjector
-    abstract fun contributeMalLoginFragment(): MalLoginFragment
+    internal abstract fun contributeMalLoginFragment(): MalLoginFragment
 
     @ContributesAndroidInjector
-    abstract fun contributeSearchFragment(): SearchFragment
+    internal abstract fun contributeSearchFragment(): SearchFragment
 }
