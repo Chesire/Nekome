@@ -23,9 +23,7 @@ internal const val MyAnimeListEndpoint = "https://myanimelist.net/"
  * This generates the Retrofit instance to use with [MalService] and gives simple methods to execute
  * on it.
  */
-class MalApi(
-    authorizer: MalAuthorizer
-) {
+class MalApi(authorizer: MalAuthorizer) {
     private val malService: MalService
 
     init {

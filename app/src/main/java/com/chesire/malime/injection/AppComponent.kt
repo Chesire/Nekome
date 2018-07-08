@@ -6,7 +6,6 @@ import com.chesire.malime.injection.androidmodules.ActivityModule
 import com.chesire.malime.injection.androidmodules.ServiceModule
 import com.chesire.malime.injection.modules.AppModule
 import com.chesire.malime.injection.modules.DatabaseModule
-import com.chesire.malime.injection.modules.KitsuModule
 import com.chesire.malime.injection.modules.ServerModule
 import com.chesire.malime.injection.modules.UiModule
 import dagger.BindsInstance
@@ -21,7 +20,6 @@ import javax.inject.Singleton
         (AndroidInjectionModule::class),
         (AppModule::class),
         (DatabaseModule::class),
-        (KitsuModule::class),
         (ServerModule::class),
         (ServiceModule::class),
         (UiModule::class)

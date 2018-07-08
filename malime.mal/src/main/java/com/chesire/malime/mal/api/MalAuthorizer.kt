@@ -14,6 +14,7 @@ private const val authAlias: String = "mal_private_auth"
 private const val preferenceAuth: String = "pref_auth"
 private const val preferenceUser: String = "pref_user"
 
+// TODO: this should perform some caching on the credentials
 class MalAuthorizer @Inject constructor(context: Context) : Authorizer<String> {
     private val pref = context.getSharedPreferences(authPrefFile, Context.MODE_PRIVATE)
     private val encryptor by lazy { Encryptor(context.applicationContext) }
