@@ -1,4 +1,4 @@
-package com.chesire.malime.injection
+package com.chesire.malime.injection.androidmodules
 
 import com.chesire.malime.LaunchActivity
 import com.chesire.malime.view.MainActivity

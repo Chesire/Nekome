@@ -1,4 +1,4 @@
-package com.chesire.malime.injection
+package com.chesire.malime.injection.androidmodules
 
 import com.chesire.malime.view.login.kitsu.KitsuLoginFragment
 import com.chesire.malime.view.login.mal.MalLoginFragment

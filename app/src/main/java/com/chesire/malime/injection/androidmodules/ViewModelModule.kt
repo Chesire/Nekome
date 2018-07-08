@@ -1,4 +1,4 @@
-package com.chesire.malime.injection
+package com.chesire.malime.injection.androidmodules
 
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider

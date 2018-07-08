@@ -1,4 +1,4 @@
-package com.chesire.malime.injection
+package com.chesire.malime.injection.modules
 
 import com.chesire.malime.util.IOScheduler
 import com.chesire.malime.util.UIScheduler

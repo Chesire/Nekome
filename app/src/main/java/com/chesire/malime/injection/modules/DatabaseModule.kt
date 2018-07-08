@@ -1,4 +1,4 @@
-package com.chesire.malime.injection
+package com.chesire.malime.injection.modules
 
 import android.arch.persistence.room.Room
 import android.content.Context

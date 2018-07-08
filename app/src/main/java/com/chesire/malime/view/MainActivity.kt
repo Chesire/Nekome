@@ -17,7 +17,7 @@ import com.chesire.malime.core.flags.SupportedService
 import com.chesire.malime.core.repositories.Authorization
 import com.chesire.malime.core.room.MalimeDatabase
 import com.chesire.malime.util.SharedPref
-import com.chesire.malime.util.updateservice.PeriodicUpdateHelper
+import com.chesire.malime.service.PeriodicUpdateHelper
 import com.chesire.malime.view.login.LoginActivity
 import com.chesire.malime.view.maldisplay.MalDisplayFragment
 import com.chesire.malime.view.preferences.PrefActivity

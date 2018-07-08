@@ -1,4 +1,4 @@
-package com.chesire.malime.injection
+package com.chesire.malime.injection.modules
 
 import com.chesire.malime.core.api.MalimeApi
 import com.chesire.malime.core.api.SearchApi

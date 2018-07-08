@@ -1,6 +1,6 @@
-package com.chesire.malime.injection
+package com.chesire.malime.injection.androidmodules
 
-import com.chesire.malime.util.updateservice.PeriodicUpdateService
+import com.chesire.malime.service.PeriodicUpdateService
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
