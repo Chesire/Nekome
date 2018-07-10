@@ -8,12 +8,14 @@ import com.chesire.malime.core.sec.Decryptor
 import com.chesire.malime.core.sec.Encryptor
 import com.google.gson.Gson
 import javax.inject.Inject
+import javax.inject.Singleton
 
 private const val authPrefFile: String = "malime_kitsu_auth_pref"
 private const val authAlias: String = "kitsu_private_auth"
 private const val preferenceAuth: String = "pref_auth"
 private const val preferenceUser: String = "pref_user"
 
+@Singleton
 class KitsuAuthorizer @Inject constructor(context: Context) : Authorizer<Int> {
     private val pref = context.getSharedPreferences(authPrefFile, Context.MODE_PRIVATE)
     private val encryptor by lazy { Encryptor(context.applicationContext) }

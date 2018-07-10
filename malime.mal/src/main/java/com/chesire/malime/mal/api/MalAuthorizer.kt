@@ -8,6 +8,7 @@ import com.chesire.malime.core.sec.Decryptor
 import com.chesire.malime.core.sec.Encryptor
 import com.google.gson.Gson
 import javax.inject.Inject
+import javax.inject.Singleton
 
 private const val authPrefFile: String = "malime_mal_auth_pref"
 private const val authAlias: String = "mal_private_auth"
@@ -15,6 +16,7 @@ private const val preferenceAuth: String = "pref_auth"
 private const val preferenceUser: String = "pref_user"
 
 // TODO: this should perform some caching on the credentials
+@Singleton
 class MalAuthorizer @Inject constructor(context: Context) : Authorizer<String> {
     private val pref = context.getSharedPreferences(authPrefFile, Context.MODE_PRIVATE)
     private val encryptor by lazy { Encryptor(context.applicationContext) }
