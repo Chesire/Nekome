@@ -22,10 +22,22 @@ buildscript {
     }
 }
 
+plugins {
+    id "io.gitlab.arturbosch.detekt" version "1.0.0.RC7-3"
+}
+
 allprojects {
     repositories {
         google()
         jcenter()
+    }
+}
+
+detekt {
+    version = "1.0.0.RC7-3"
+    defaultProfile {
+        input = file("app/src/main/java")
+        filters = ".*/resources/.*,.*/build/.*"
     }
 }
 
