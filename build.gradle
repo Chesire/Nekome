@@ -36,6 +36,7 @@ allprojects {
 detekt {
     version = "1.0.0.RC7-3"
     defaultProfile {
+        config = file("default-detekt-config.yml")
         input = file("app/src/main/java")
         filters = ".*/resources/.*,.*/build/.*"
     }
