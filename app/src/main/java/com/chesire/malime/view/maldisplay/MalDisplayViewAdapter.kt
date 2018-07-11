@@ -18,8 +18,8 @@ import com.chesire.malime.databinding.ItemMalmodelBinding
 import com.chesire.malime.util.GlideApp
 import com.chesire.malime.util.SharedPref
 import com.chesire.malime.util.extension.getSeriesStatusStrings
-import com.chesire.malime.util.preferenceFilter
-import com.chesire.malime.util.preferenceSort
+import com.chesire.malime.util.PREF_FILTER
+import com.chesire.malime.util.PREF_SORT
 import com.chesire.malime.view.preferences.SortOption
 import kotlinx.android.synthetic.main.item_malmodel.view.item_malmodel_content_layout
 import kotlinx.android.synthetic.main.item_malmodel.view.item_malmodel_image
@@ -70,7 +70,7 @@ class MalDisplayViewAdapter(
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
         key?.let {
-            if (it.contains(preferenceSort) || it.contains(preferenceFilter)) {
+            if (it.contains(PREF_SORT) || it.contains(PREF_FILTER)) {
                 filter.filter("")
             }
         }

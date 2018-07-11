@@ -20,7 +20,7 @@ import com.chesire.malime.util.extension.hideSystemKeyboard
 import com.chesire.malime.view.login.BaseLoginFragment
 import javax.inject.Inject
 
-private const val malSignupUrl = "https://myanimelist.net/register.php"
+private const val MAL_SIGNUP_URL = "https://myanimelist.net/register.php"
 
 class MalLoginFragment : BaseLoginFragment(), Injectable {
     @Inject
@@ -78,7 +78,7 @@ class MalLoginFragment : BaseLoginFragment(), Injectable {
     private fun createAccount() {
         CustomTabsIntent.Builder()
             .build()
-            .launchUrl(context, Uri.parse(malSignupUrl))
+            .launchUrl(context, Uri.parse(MAL_SIGNUP_URL))
     }
 
     private fun executeLoginMethod() {

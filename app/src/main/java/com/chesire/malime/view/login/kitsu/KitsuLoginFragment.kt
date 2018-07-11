@@ -19,7 +19,7 @@ import com.chesire.malime.util.extension.hideSystemKeyboard
 import com.chesire.malime.view.login.BaseLoginFragment
 import javax.inject.Inject
 
-private const val kitsuSignupUrl = "https://kitsu.io/explore/anime"
+private const val KITSU_SIGNUP_URL = "https://kitsu.io/explore/anime"
 
 class KitsuLoginFragment : BaseLoginFragment(), Injectable {
     @Inject
@@ -77,7 +77,7 @@ class KitsuLoginFragment : BaseLoginFragment(), Injectable {
     private fun createAccount() {
         CustomTabsIntent.Builder()
             .build()
-            .launchUrl(context, Uri.parse(kitsuSignupUrl))
+            .launchUrl(context, Uri.parse(KITSU_SIGNUP_URL))
     }
 
     private fun executeLoginMethod() {
