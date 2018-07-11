@@ -22,6 +22,7 @@ abstract class BaseLoginFragment : Fragment() {
         }
     }
 
+    @Suppress("UnsafeCast")
     override fun onAttach(context: Context?) {
         super.onAttach(context)
         loginInteractor = context as LoginInteractor

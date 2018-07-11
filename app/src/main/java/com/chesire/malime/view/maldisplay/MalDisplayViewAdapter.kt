@@ -212,6 +212,7 @@ class MalDisplayViewAdapter(
             return results
         }
 
+        @Suppress("UNCHECKED_CAST", "UnsafeCast")
         override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
             filteredItems.clear()
             if (results?.values is List<*>) {

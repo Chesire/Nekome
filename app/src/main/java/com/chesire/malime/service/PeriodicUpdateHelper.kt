@@ -23,14 +23,14 @@ class PeriodicUpdateHelper {
             .setPeriodic(TimeUnit.HOURS.toMillis(12))
             .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
 
-        val jobScheduler = context.getSystemService(Context.JOB_SCHEDULER_SERVICE) as JobScheduler
-        jobScheduler.schedule(builder.build())
+        val jobScheduler = context.getSystemService(Context.JOB_SCHEDULER_SERVICE) as? JobScheduler
+        jobScheduler?.schedule(builder.build())
     }
 
     fun cancel(context: Context, sharedPref: SharedPref) {
         sharedPref.setSeriesUpdateSchedulerEnabled(false)
 
-        val jobScheduler = context.getSystemService(Context.JOB_SCHEDULER_SERVICE) as JobScheduler
-        jobScheduler.cancel(schedulerId)
+        val jobScheduler = context.getSystemService(Context.JOB_SCHEDULER_SERVICE) as? JobScheduler
+        jobScheduler?.cancel(schedulerId)
     }
 }
