@@ -21,7 +21,7 @@ internal class ServerModule {
     ): Authorization {
         return Authorization(
             mapOf(
-                Pair(SupportedService.Kitsu, kitsuAuthorizer)
+                SupportedService.Kitsu to kitsuAuthorizer
                 // Pair(SupportedService.MyAnimeList, malAuthorizer)
             )
         )

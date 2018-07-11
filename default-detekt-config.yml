@@ -393,8 +393,8 @@ style:
     active: true
     includeLineWrapping: false
   ForbiddenComment:
-    active: true
-    values: 'TODO:,FIXME:,STOPSHIP:'
+    active: false
+    values: 'FIXME:,STOPSHIP:'
   ForbiddenImport:
     active: false
     imports: ''
@@ -406,7 +406,7 @@ style:
     active: true
     maxJumpCount: 1
   MagicNumber:
-    active: true
+    active: false
     ignoreNumbers: '-1,0,1,2'
     ignoreHashCodeFunction: false
     ignorePropertyDeclaration: false
@@ -446,7 +446,7 @@ style:
   RedundantVisibilityModifierRule:
     active: true
   ReturnCount:
-    active: true
+    active: false
     max: 2
     excludedFunctions: "equals"
   SafeCast:
