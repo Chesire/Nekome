@@ -7,12 +7,12 @@ import com.chesire.malime.core.flags.SupportedService
 import com.chesire.malime.view.preferences.SortOption
 import javax.inject.Inject
 
-private const val PREF_PRIMARY_SERVICE: String = "primaryService"
-private const val PREF_ALLOW_CRASH_REPORTING: String = "allowCrashReporting"
-private const val PREF_FILTER_LENGTH: String = "animeFilterLength"
-private const val PREF_SERIES_UPDATE_SCHEDULER_ENABLED: String = "seriesUpdateSchedulerEnabled"
-const val PREF_FILTER: String = "filter"
-const val PREF_SORT: String = "sort"
+private const val PREF_PRIMARY_SERVICE = "primaryService"
+private const val PREF_ALLOW_CRASH_REPORTING = "allowCrashReporting"
+private const val PREF_FILTER_LENGTH = "animeFilterLength"
+private const val PREF_SERIES_UPDATE_SCHEDULER_ENABLED = "seriesUpdateSchedulerEnabled"
+const val PREF_FILTER = "filter"
+const val PREF_SORT = "sort"
 const val SHARED_PREF_FILE = "malime_shared_pref"
 
 @Suppress("TooManyFunctions")
