@@ -15,6 +15,7 @@ const val PREF_FILTER: String = "filter"
 const val PREF_SORT: String = "sort"
 const val SHARED_PREF_FILE = "malime_shared_pref"
 
+@Suppress("TooManyFunctions")
 class SharedPref @Inject constructor(context: Context) {
     private val sharedPreferences =
         context.getSharedPreferences(SHARED_PREF_FILE, Context.MODE_PRIVATE)
