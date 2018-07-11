@@ -8,7 +8,6 @@
 [//]: # (Add pictures of the app 1 - 3)
 
 ## Features
-
 Features include:
 
 - Track Anime and Manga series progress
@@ -18,7 +17,6 @@ Features include:
 - [Kitsu](https://kitsu.io) and [MyAnimeList](https://myanimelist.net/)* support 
 
 Note: MyAnimeList currently has a broken API, so it has been disabled and not actively developed in the application.
-
 
 ## Development setup
 Clone the project down and run it from Android studio, all dependencies will be handled by gradle.  
@@ -49,7 +47,6 @@ If any items raised by detekt conflict with ktlint, the ktlint rules should be f
 ### Leaks
 Running the application in debug will add a second application on the Android device labeled [LeakCanary](https://github.com/square/leakcanary), this is to detect any leaks that occur in the application.  
 In order to get leak data LeakCanary should be provided with storage access.
-
 
 ## Tests
 All viewmodels should be tested as throughly as possible.  
