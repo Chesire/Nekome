@@ -4,6 +4,7 @@ import android.content.Context
 import com.chesire.malime.R
 import com.chesire.malime.core.flags.Subtype
 
+@Suppress("ComplexMethod")
 fun Subtype.getString(context: Context): String {
     val stringId = when (this) {
         Subtype.ONA -> R.string.series_subtype_ona

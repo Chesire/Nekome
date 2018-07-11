@@ -30,6 +30,7 @@ class ServiceSelectionFragment : Fragment() {
         return view
     }
 
+    @Suppress("UnsafeCast")
     override fun onAttach(context: Context?) {
         super.onAttach(context)
         loginInteractor = context as LoginInteractor

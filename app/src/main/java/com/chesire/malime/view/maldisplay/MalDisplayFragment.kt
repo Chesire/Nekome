@@ -31,7 +31,7 @@ import kotlinx.android.synthetic.main.fragment_maldisplay.maldisplay_swipe_refre
 import timber.log.Timber
 import javax.inject.Inject
 
-private const val itemTypeBundleId = "itemTypeBundleId"
+private const val ITEM_TYPE_BUNDLE_ID = "ITEM_TYPE_BUNDLE_ID"
 
 class MalDisplayFragment : Fragment(), Injectable {
     private var binding by autoCleared<FragmentMaldisplayBinding>()
@@ -47,7 +47,7 @@ class MalDisplayFragment : Fragment(), Injectable {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        type = ItemType.getTypeForInternalId(arguments!!.getInt(itemTypeBundleId))
+        type = ItemType.getTypeForInternalId(arguments!!.getInt(ITEM_TYPE_BUNDLE_ID))
 
         setHasOptionsMenu(true)
     }
@@ -152,9 +152,7 @@ class MalDisplayFragment : Fragment(), Injectable {
 
     private fun onUpdateAllStatusChange(status: UpdatingSeriesStatus) {
         when (status) {
-            UpdatingSeriesStatus.Finished -> {
-                maldisplay_swipe_refresh.isRefreshing = false
-            }
+            UpdatingSeriesStatus.Finished -> maldisplay_swipe_refresh.isRefreshing = false
             UpdatingSeriesStatus.Error -> {
                 maldisplay_swipe_refresh.isRefreshing = false
                 Snackbar.make(
@@ -176,7 +174,7 @@ class MalDisplayFragment : Fragment(), Injectable {
         fun newInstance(type: ItemType): MalDisplayFragment {
             val malDisplayFragment = MalDisplayFragment()
             val args = Bundle()
-            args.putInt(itemTypeBundleId, type.internalId)
+            args.putInt(ITEM_TYPE_BUNDLE_ID, type.internalId)
             malDisplayFragment.arguments = args
             return malDisplayFragment
         }
