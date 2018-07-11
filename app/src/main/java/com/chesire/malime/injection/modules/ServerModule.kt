@@ -29,13 +29,9 @@ internal class ServerModule {
 
     // for now we can just return the KitsuManager, as we don't support anything else yet
     @Provides
-    fun providesMalimeApi(manager: KitsuManager): MalimeApi {
-        return manager
-    }
+    fun providesMalimeApi(manager: KitsuManager): MalimeApi = manager
 
     // for now we can just return the KitsuManager, as we don't support anything else yet
     @Provides
-    fun providesSearchApi(manager: KitsuManager): SearchApi {
-        return manager
-    }
+    fun providesSearchApi(manager: KitsuManager): SearchApi = manager
 }

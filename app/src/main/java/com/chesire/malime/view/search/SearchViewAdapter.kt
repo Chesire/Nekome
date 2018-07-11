@@ -46,9 +46,7 @@ class SearchViewAdapter(
         )
     }
 
-    override fun getItemCount(): Int {
-        return searchItems.count()
-    }
+    override fun getItemCount() = searchItems.count()
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(searchItems[position])

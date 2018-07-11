@@ -19,9 +19,8 @@ class SharedPref @Inject constructor(context: Context) {
     private val sharedPreferences =
         context.getSharedPreferences(SHARED_PREF_FILE, Context.MODE_PRIVATE)
 
-    fun getPrimaryService(): SupportedService {
-        return SupportedService.valueOf(sharedPreferences.getString(PREF_PRIMARY_SERVICE, ""))
-    }
+    fun getPrimaryService() =
+        SupportedService.valueOf(sharedPreferences.getString(PREF_PRIMARY_SERVICE, ""))
 
     @SuppressLint("ApplySharedPref")
     fun putPrimaryService(service: SupportedService): SharedPref {
@@ -33,9 +32,7 @@ class SharedPref @Inject constructor(context: Context) {
         return this
     }
 
-    fun getAllowCrashReporting(): Boolean {
-        return sharedPreferences.getBoolean(PREF_ALLOW_CRASH_REPORTING, true)
-    }
+    fun getAllowCrashReporting() = sharedPreferences.getBoolean(PREF_ALLOW_CRASH_REPORTING, true)
 
     fun getFilter(): BooleanArray {
         if (!hasStoredFilter()) {
@@ -81,9 +78,8 @@ class SharedPref @Inject constructor(context: Context) {
         return this
     }
 
-    fun getSeriesUpdateSchedulerEnabled(): Boolean {
-        return sharedPreferences.getBoolean(PREF_SERIES_UPDATE_SCHEDULER_ENABLED, false)
-    }
+    fun getSeriesUpdateSchedulerEnabled() =
+        sharedPreferences.getBoolean(PREF_SERIES_UPDATE_SCHEDULER_ENABLED, false)
 
     fun setSeriesUpdateSchedulerEnabled(state: Boolean): SharedPref {
         sharedPreferences.edit()
@@ -116,7 +112,5 @@ class SharedPref @Inject constructor(context: Context) {
         return true
     }
 
-    private fun getDefaultFilter(): BooleanArray {
-        return booleanArrayOf(true, false, false, false, false)
-    }
+    private fun getDefaultFilter() = booleanArrayOf(true, false, false, false, false)
 }

@@ -461,7 +461,8 @@ style:
   TrailingWhitespace:
     active: true
   UnnecessaryAbstractClass:
-    active: true
+    # This is false, as Dagger uses Abstract modules
+    active: false
   UnnecessaryInheritance:
     active: true
   UnnecessaryParentheses:
@@ -471,7 +472,8 @@ style:
   UnusedImports:
     active: true
   UnusedPrivateMember:
-    active: true
+    # This is false, as it seemed to flag false positives in an abstract class
+    active: false
     allowedNames: "(_|ignored|expected)"
   UseDataClass:
     active: true

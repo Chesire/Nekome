@@ -33,17 +33,10 @@ abstract class BaseLoginFragment : Fragment() {
         }
 
         when (loginStatus) {
-            LoginStatus.PROCESSING -> {
-                progressDialog.show()
-            }
-            LoginStatus.SUCCESS -> {
-                loginInteractor.loginSuccessful()
-            }
-            LoginStatus.FINISHED -> {
-                progressDialog.dismiss()
-            }
-            LoginStatus.ERROR -> {
-                // Handled in the view model
+            LoginStatus.PROCESSING -> progressDialog.show()
+            LoginStatus.SUCCESS -> loginInteractor.loginSuccessful()
+            LoginStatus.FINISHED -> progressDialog.dismiss()
+            LoginStatus.ERROR -> { // Handled in the view model
             }
         }
     }

@@ -152,9 +152,7 @@ class MalDisplayFragment : Fragment(), Injectable {
 
     private fun onUpdateAllStatusChange(status: UpdatingSeriesStatus) {
         when (status) {
-            UpdatingSeriesStatus.Finished -> {
-                maldisplay_swipe_refresh.isRefreshing = false
-            }
+            UpdatingSeriesStatus.Finished -> maldisplay_swipe_refresh.isRefreshing = false
             UpdatingSeriesStatus.Error -> {
                 maldisplay_swipe_refresh.isRefreshing = false
                 Snackbar.make(
