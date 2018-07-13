@@ -22,10 +22,25 @@ buildscript {
     }
 }
 
+plugins {
+    id "io.gitlab.arturbosch.detekt" version "1.0.0.RC7-3"
+}
+
 allprojects {
     repositories {
         google()
         jcenter()
+    }
+}
+
+detekt {
+    version = "1.0.0.RC7-3"
+    defaultProfile {
+        config = file("default-detekt-config.yml")
+        filters = ".*/resources/.*,.*/build/.*"
+        input = file("app/src/main/java")
+        output = file("app/build/reports/detekt")
+        outputName = "detekt-results"
     }
 }
 

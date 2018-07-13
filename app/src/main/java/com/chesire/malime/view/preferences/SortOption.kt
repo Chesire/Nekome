@@ -15,12 +15,9 @@ enum class SortOption(
     EndDate(3, R.string.sort_choice_end_date);
 
     companion object {
-        fun getOptionFor(id: Int): SortOption {
-            return SortOption.values().find { it.id == id } ?: Default
-        }
+        fun getOptionFor(id: Int) = SortOption.values().find { it.id == id } ?: Default
 
-        fun getOptionsStrings(context: Context): Array<CharSequence> {
-            return SortOption.values().map { context.getString(it.stringId) }.toTypedArray()
-        }
+        fun getOptionsStrings(context: Context) =
+            SortOption.values().map { context.getString(it.stringId) }.toTypedArray()
     }
 }

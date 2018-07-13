@@ -20,9 +20,7 @@ class PeriodicUpdateService : JobService() {
         AndroidInjection.inject(this)
     }
 
-    override fun onStopJob(params: JobParameters?): Boolean {
-        return false
-    }
+    override fun onStopJob(params: JobParameters?) = false
 
     override fun onStartJob(params: JobParameters?): Boolean {
         Timber.i("UpdateService primed, updating libraries")

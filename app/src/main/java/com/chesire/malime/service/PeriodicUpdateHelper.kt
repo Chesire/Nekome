@@ -8,9 +8,9 @@ import com.chesire.malime.util.SharedPref
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
-class PeriodicUpdateHelper {
-    private val schedulerId = 137
+private const val SCHEDULER_ID = 137
 
+class PeriodicUpdateHelper {
     fun schedule(context: Context, sharedPref: SharedPref) {
         if (sharedPref.getSeriesUpdateSchedulerEnabled()) {
             Timber.v("Scheduler is already running")
@@ -19,18 +19,18 @@ class PeriodicUpdateHelper {
         sharedPref.setSeriesUpdateSchedulerEnabled(true)
 
         val serviceComponent = ComponentName(context, PeriodicUpdateService::class.java)
-        val builder = JobInfo.Builder(schedulerId, serviceComponent)
+        val builder = JobInfo.Builder(SCHEDULER_ID, serviceComponent)
             .setPeriodic(TimeUnit.HOURS.toMillis(12))
             .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
 
-        val jobScheduler = context.getSystemService(Context.JOB_SCHEDULER_SERVICE) as JobScheduler
-        jobScheduler.schedule(builder.build())
+        val jobScheduler = context.getSystemService(Context.JOB_SCHEDULER_SERVICE) as? JobScheduler
+        jobScheduler?.schedule(builder.build())
     }
 
     fun cancel(context: Context, sharedPref: SharedPref) {
         sharedPref.setSeriesUpdateSchedulerEnabled(false)
 
-        val jobScheduler = context.getSystemService(Context.JOB_SCHEDULER_SERVICE) as JobScheduler
-        jobScheduler.cancel(schedulerId)
+        val jobScheduler = context.getSystemService(Context.JOB_SCHEDULER_SERVICE) as? JobScheduler
+        jobScheduler?.cancel(SCHEDULER_ID)
     }
 }
