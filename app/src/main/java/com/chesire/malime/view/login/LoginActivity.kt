@@ -49,9 +49,7 @@ class LoginActivity : AppCompatActivity(), LoginInteractor, HasSupportFragmentIn
                 fragment = KitsuLoginFragment.newInstance()
                 tag = KitsuLoginFragment.tag
             }
-            SupportedService.Unknown -> {
-                throw NoWhenBranchMatchedException("Should not reach unknown")
-            }
+            SupportedService.Unknown -> throw NoWhenBranchMatchedException("Should not reach unknown")
         }
 
         supportFragmentManager.beginTransaction()
