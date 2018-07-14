@@ -37,8 +37,12 @@
             android:name="com.chesire.malime.service.PeriodicUpdateService"
             android:label="@string/update_service_name"
             android:permission="android.permission.BIND_JOB_SERVICE" />
+        <service
+            android:name="com.chesire.malime.service.RefreshTokenService"
+            android:label="@string/refresh_service_name"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
 
-        <receiver android:name="com.chesire.malime.service.PeriodicUpdateReceiver">
+        <receiver android:name="com.chesire.malime.service.Receiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
