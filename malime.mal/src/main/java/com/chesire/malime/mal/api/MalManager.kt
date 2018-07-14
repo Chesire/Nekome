@@ -1,5 +1,6 @@
 package com.chesire.malime.mal.api
 
+import com.chesire.malime.core.api.AuthApi
 import com.chesire.malime.core.api.MalimeApi
 import com.chesire.malime.core.api.SearchApi
 import com.chesire.malime.core.flags.ItemType
@@ -26,7 +27,8 @@ import java.util.Locale
 class MalManager(
     private val api: MalApi,
     private val username: String
-) : MalimeApi, SearchApi {
+) : AuthApi, MalimeApi, SearchApi {
+
     /**
      * Verifies a users credentials.
      * <p>
@@ -48,6 +50,11 @@ class MalManager(
                 it.tryOnError(Throwable(response.message()))
             }
         }
+    }
+
+    override fun getNewAuthToken(refreshToken: String): Single<AuthModel> {
+        // MyAnimeList does not support auth tokens currently
+        return Single.never()
     }
 
     override fun getItemUrl(item: MalimeModel): String {

@@ -11,7 +11,6 @@ interface MalimeApi {
     fun getItemUrl(item: MalimeModel): String
     fun getUserId(): Single<Int>
     fun getUserLibrary(): Observable<List<MalimeModel>>
-    fun login(username: String, password: String): Single<AuthModel>
     fun updateItem(
         item: MalimeModel,
         newProgress: Int,
