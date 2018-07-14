@@ -4,6 +4,7 @@ import android.app.job.JobInfo
 import android.app.job.JobScheduler
 import android.content.ComponentName
 import android.content.Context
+import com.chesire.malime.core.flags.SupportedService
 import com.chesire.malime.util.SharedPref
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
@@ -11,9 +12,9 @@ import java.util.concurrent.TimeUnit
 private const val SCHEDULER_ID = 137
 
 class PeriodicUpdateHelper {
-    fun schedule(context: Context, sharedPref: SharedPref) {
-        if (sharedPref.getSeriesUpdateSchedulerEnabled()) {
-            Timber.v("Scheduler is already running")
+    fun schedule(context: Context, sharedPref: SharedPref, force: Boolean = false) {
+        if (!isScheduleValid(sharedPref, force)) {
+            Timber.v("Periodic update service will not activate")
             return
         }
         sharedPref.setSeriesUpdateSchedulerEnabled(true)
@@ -32,5 +33,14 @@ class PeriodicUpdateHelper {
 
         val jobScheduler = context.getSystemService(Context.JOB_SCHEDULER_SERVICE) as? JobScheduler
         jobScheduler?.cancel(SCHEDULER_ID)
+    }
+
+    private fun isScheduleValid(sharedPref: SharedPref, force: Boolean): Boolean {
+        // If there is no primary service, we haven't logged in yet
+        return if (sharedPref.getPrimaryService() == SupportedService.Unknown) {
+            false
+        } else {
+            !(sharedPref.getSeriesUpdateSchedulerEnabled() && !force)
+        }
     }
 }
