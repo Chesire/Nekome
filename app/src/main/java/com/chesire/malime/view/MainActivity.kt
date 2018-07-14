@@ -16,8 +16,9 @@ import com.chesire.malime.core.flags.ItemType
 import com.chesire.malime.core.flags.SupportedService
 import com.chesire.malime.core.repositories.Authorization
 import com.chesire.malime.core.room.MalimeDatabase
-import com.chesire.malime.util.SharedPref
 import com.chesire.malime.service.PeriodicUpdateHelper
+import com.chesire.malime.service.RefreshTokenHelper
+import com.chesire.malime.util.SharedPref
 import com.chesire.malime.view.login.LoginActivity
 import com.chesire.malime.view.maldisplay.MalDisplayFragment
 import com.chesire.malime.view.preferences.PrefActivity
@@ -88,6 +89,7 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
         }
 
         PeriodicUpdateHelper().schedule(this, sharedPref)
+        RefreshTokenHelper().schedule(this, sharedPref)
     }
 
     override fun onSaveInstanceState(outState: Bundle?) {
@@ -137,8 +139,9 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
             Timber.d("Clearing internal login details")
             authorization.logoutAll()
 
-            Timber.d("Clearing the update helper")
+            Timber.d("Clearing the service helpers")
             PeriodicUpdateHelper().cancel(this, sharedPref)
+            RefreshTokenHelper().cancel(this, sharedPref)
 
             Timber.d("Navigating to LoginActivity")
             startActivity(Intent(this, LoginActivity::class.java))
