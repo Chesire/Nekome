@@ -60,6 +60,13 @@
         <item name="android:background">@android:color/transparent</item>
     </style>
 
+    <style name="malitem_progressbar_style" parent="Widget.AppCompat.ProgressBar.Horizontal">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_alignParentBottom">true</item>
+        <item name="android:indeterminate">false</item>
+    </style>
+
     <style name="search_image_add_button_style">
         <item name="android:layout_width">48dp</item>
         <item name="android:layout_height">48dp</item>

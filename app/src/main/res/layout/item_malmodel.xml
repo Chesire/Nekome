@@ -48,14 +48,21 @@
                 style="@style/malitem_image_button_style"
                 android:layout_toEndOf="@id/item_malmodel_image"
                 android:src="@drawable/ic_exposure_neg_1_black"
-                android:visibility="@{model.canDecreaseProgress() ? View.VISIBLE : View.GONE}" />
+                android:visibility="@{model.canDecreaseProgress() ? View.VISIBLE : View.INVISIBLE}" />
+
+            <ProgressBar
+                android:id="@+id/item_malmodel_progress_bar"
+                style="@style/malitem_progressbar_style"
+                android:layout_toEndOf="@+id/item_malmodel_neg_one"
+                android:layout_toStartOf="@+id/item_malmodel_plus_one"
+                android:progress="@{model.getSeriesProgressPercent()}" />
 
             <ImageButton
                 android:id="@+id/item_malmodel_plus_one"
                 style="@style/malitem_image_button_style"
                 android:layout_alignParentEnd="true"
                 android:src="@drawable/ic_exposure_plus_1_black"
-                android:visibility="@{model.canIncreaseProgress() ? View.VISIBLE : View.GONE}" />
+                android:visibility="@{model.canIncreaseProgress() ? View.VISIBLE : View.INVISIBLE}" />
 
         </RelativeLayout>
 
