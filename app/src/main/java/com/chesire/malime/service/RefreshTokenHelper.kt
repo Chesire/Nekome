@@ -9,17 +9,17 @@ import com.chesire.malime.util.SharedPref
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
-private const val SCHEDULER_ID = 137
+private const val SCHEDULER_ID = 138
 
-class PeriodicUpdateHelper {
+class RefreshTokenHelper {
     fun schedule(context: Context, sharedPref: SharedPref, force: Boolean = false) {
         if (!isScheduleValid(sharedPref, force)) {
-            Timber.v("Periodic update service will not activate")
+            Timber.v("Refresh token service will not activate")
             return
         }
-        sharedPref.setSeriesUpdateSchedulerEnabled(true)
+        sharedPref.setRefreshTokenSchedulerEnabled(true)
 
-        val serviceComponent = ComponentName(context, PeriodicUpdateService::class.java)
+        val serviceComponent = ComponentName(context, RefreshTokenService::class.java)
         val builder = JobInfo.Builder(SCHEDULER_ID, serviceComponent)
             .setPeriodic(TimeUnit.HOURS.toMillis(12))
             .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
@@ -29,7 +29,7 @@ class PeriodicUpdateHelper {
     }
 
     fun cancel(context: Context, sharedPref: SharedPref) {
-        sharedPref.setSeriesUpdateSchedulerEnabled(false)
+        sharedPref.setRefreshTokenSchedulerEnabled(false)
 
         val jobScheduler = context.getSystemService(Context.JOB_SCHEDULER_SERVICE) as? JobScheduler
         jobScheduler?.cancel(SCHEDULER_ID)
@@ -40,7 +40,7 @@ class PeriodicUpdateHelper {
         return if (sharedPref.getPrimaryService() == SupportedService.Unknown) {
             false
         } else {
-            !(sharedPref.getSeriesUpdateSchedulerEnabled() && !force)
+            !(sharedPref.getRefreshTokenSchedulerEnabled() && !force)
         }
     }
 }

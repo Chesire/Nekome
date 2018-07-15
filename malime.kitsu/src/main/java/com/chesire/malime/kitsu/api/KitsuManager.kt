@@ -1,5 +1,6 @@
 package com.chesire.malime.kitsu.api
 
+import com.chesire.malime.core.api.AuthApi
 import com.chesire.malime.core.api.MalimeApi
 import com.chesire.malime.core.api.SearchApi
 import com.chesire.malime.core.flags.ItemType
@@ -23,7 +24,7 @@ private const val MAX_RETRIES = 3
 class KitsuManager @Inject constructor(
     private val api: KitsuApi,
     authorizer: KitsuAuthorizer
-) : MalimeApi, SearchApi {
+) : AuthApi, MalimeApi, SearchApi {
     private val userId = authorizer.retrieveUser()
 
     override fun login(username: String, password: String): Single<AuthModel> {
@@ -35,10 +36,10 @@ class KitsuManager @Inject constructor(
             if (response.isSuccessful && response.body() != null) {
                 Timber.i("Login successful")
 
-                response.body().let { responseObject ->
+                response.body()?.let { responseObject ->
                     it.onSuccess(
                         AuthModel(
-                            responseObject!!.accessToken,
+                            responseObject.accessToken,
                             responseObject.refreshToken,
                             responseObject.createdAt + responseObject.expiresIn,
                             "kitsu"
@@ -47,6 +48,31 @@ class KitsuManager @Inject constructor(
                 }
             } else {
                 Timber.e(Throwable(response.message()), "Error logging in")
+                it.tryOnError(Throwable(response.message()))
+            }
+        }
+    }
+
+    override fun getNewAuthToken(refreshToken: String): Single<AuthModel> {
+        return Single.create {
+            val callResponse = api.refreshAuthToken(refreshToken)
+            val response = callResponse.execute()
+
+            if (response.isSuccessful && response.body() != null) {
+                Timber.i("Successfully refreshed auth token")
+
+                response.body()?.let { responseObject ->
+                    it.onSuccess(
+                        AuthModel(
+                            responseObject.accessToken,
+                            responseObject.refreshToken,
+                            responseObject.createdAt + responseObject.expiresIn,
+                            "kitsu"
+                        )
+                    )
+                }
+            } else {
+                Timber.e(Throwable(response.message()), "Error regenerating auth token")
                 it.tryOnError(Throwable(response.message()))
             }
         }

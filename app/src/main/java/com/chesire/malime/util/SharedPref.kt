@@ -11,6 +11,7 @@ private const val PREF_PRIMARY_SERVICE = "primaryService"
 private const val PREF_ALLOW_CRASH_REPORTING = "allowCrashReporting"
 private const val PREF_FILTER_LENGTH = "animeFilterLength"
 private const val PREF_SERIES_UPDATE_SCHEDULER_ENABLED = "seriesUpdateSchedulerEnabled"
+private const val PREF_REFRESH_TOKEN_SCHEDULER_ENABLED = "refreshTokenSchedulerEnabled"
 const val PREF_FILTER = "filter"
 const val PREF_SORT = "sort"
 const val SHARED_PREF_FILE = "malime_shared_pref"
@@ -21,7 +22,7 @@ class SharedPref @Inject constructor(context: Context) {
         context.getSharedPreferences(SHARED_PREF_FILE, Context.MODE_PRIVATE)
 
     fun getPrimaryService() =
-        SupportedService.valueOf(sharedPreferences.getString(PREF_PRIMARY_SERVICE, ""))
+        SupportedService.valueOf(sharedPreferences.getString(PREF_PRIMARY_SERVICE, "unknown"))
 
     @SuppressLint("ApplySharedPref")
     fun putPrimaryService(service: SupportedService): SharedPref {
@@ -85,6 +86,17 @@ class SharedPref @Inject constructor(context: Context) {
     fun setSeriesUpdateSchedulerEnabled(state: Boolean): SharedPref {
         sharedPreferences.edit()
             .putBoolean(PREF_SERIES_UPDATE_SCHEDULER_ENABLED, state)
+            .apply()
+
+        return this
+    }
+
+    fun getRefreshTokenSchedulerEnabled() =
+        sharedPreferences.getBoolean(PREF_REFRESH_TOKEN_SCHEDULER_ENABLED, false)
+
+    fun setRefreshTokenSchedulerEnabled(state: Boolean): SharedPref {
+        sharedPreferences.edit()
+            .putBoolean(PREF_REFRESH_TOKEN_SCHEDULER_ENABLED, state)
             .apply()
 
         return this

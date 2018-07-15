@@ -50,7 +50,7 @@ class KitsuApi @Inject constructor(authorizer: KitsuAuthorizer) {
         return kitsuService.login(LoginRequest(username, password))
     }
 
-    private fun refreshAuthToken(refreshToken: String): Call<LoginResponse> {
+    fun refreshAuthToken(refreshToken: String): Call<LoginResponse> {
         return kitsuService.refreshAuth(RefreshAuthRequest(refreshToken))
     }
 

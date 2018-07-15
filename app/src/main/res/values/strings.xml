@@ -2,6 +2,7 @@
     <string name="app_name_debug">Malime Debug</string>
     <string name="app_name_release">Malime</string>
     <string name="update_service_name">Periodic Update Service</string>
+    <string name="refresh_service_name">Refresh Token Service</string>
 
     <string name="preference_title_crash_reporting">Crash Reporting</string>
     <string name="preference_summary_crash_reporting">Allow anonymous crash reporting?</string>
