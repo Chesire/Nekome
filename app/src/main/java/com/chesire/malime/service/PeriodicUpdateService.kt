@@ -12,7 +12,6 @@ import javax.inject.Inject
 class PeriodicUpdateService : JobService() {
     @Inject
     lateinit var library: Library
-
     @Inject
     @field:ComputationScheduler
     lateinit var subscribeScheduler: Scheduler

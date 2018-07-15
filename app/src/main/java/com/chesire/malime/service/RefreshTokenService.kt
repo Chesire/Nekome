@@ -4,8 +4,9 @@ import android.app.job.JobParameters
 import android.app.job.JobService
 import com.chesire.malime.kitsu.api.KitsuAuthorizer
 import com.chesire.malime.kitsu.api.KitsuManager
+import com.chesire.malime.util.ComputationScheduler
 import dagger.android.AndroidInjection
-import io.reactivex.schedulers.Schedulers
+import io.reactivex.Scheduler
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -16,6 +17,9 @@ class RefreshTokenService : JobService() {
     lateinit var kitsuManager: KitsuManager
     @Inject
     lateinit var kitsuAuthorizer: KitsuAuthorizer
+    @Inject
+    @field:ComputationScheduler
+    lateinit var subscribeScheduler: Scheduler
 
     override fun onCreate() {
         super.onCreate()
@@ -37,8 +41,7 @@ class RefreshTokenService : JobService() {
         val current = System.currentTimeMillis() / 1000
         val diff = (expireAt - current) * 1000
 
-        // If there are less than two days left, refresh token
-        if (TimeUnit.MILLISECONDS.toDays(diff) < 2) {
+        if (TimeUnit.MILLISECONDS.toDays(diff) <= 2) {
             refreshAuthTokens(params, currentAuthModel.refreshToken)
         } else {
             Timber.v("No need to refresh token yet, expiry in [$diff]")
@@ -48,7 +51,7 @@ class RefreshTokenService : JobService() {
 
     private fun refreshAuthTokens(params: JobParameters?, refreshToken: String) {
         kitsuManager.getNewAuthToken(refreshToken)
-            .subscribeOn(Schedulers.computation())
+            .subscribeOn(subscribeScheduler)
             .subscribe({
                 Timber.d("Refresh token service has received new auth token")
                 kitsuAuthorizer.storeAuthDetails(it)
