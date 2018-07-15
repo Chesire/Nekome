@@ -52,6 +52,7 @@ class RefreshTokenService : JobService() {
             .subscribe({
                 Timber.d("Refresh token service has received new auth token")
                 kitsuAuthorizer.storeAuthDetails(it)
+                jobFinished(params, false)
             }, {
                 Timber.e("Refresh token service encountered an issue")
                 jobFinished(params, true)
