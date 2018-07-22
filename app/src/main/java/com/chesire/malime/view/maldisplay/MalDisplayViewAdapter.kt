@@ -6,10 +6,12 @@ import android.databinding.ViewDataBinding
 import android.support.design.widget.Snackbar
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
+import android.widget.PopupMenu
 import com.chesire.malime.BR
 import com.chesire.malime.R
 import com.chesire.malime.core.flags.UserSeriesStatus
@@ -24,6 +26,7 @@ import com.chesire.malime.view.preferences.SortOption
 import kotlinx.android.synthetic.main.item_malmodel.view.item_malmodel_content_layout
 import kotlinx.android.synthetic.main.item_malmodel.view.item_malmodel_image
 import kotlinx.android.synthetic.main.item_malmodel.view.item_malmodel_loading_layout
+import kotlinx.android.synthetic.main.item_malmodel.view.item_malmodel_more
 import kotlinx.android.synthetic.main.item_malmodel.view.item_malmodel_plus_one
 import timber.log.Timber
 
@@ -75,22 +78,24 @@ class MalDisplayViewAdapter(
 
     inner class ViewHolder(
         private val binding: ViewDataBinding
-    ) : RecyclerView.ViewHolder(binding.root) {
+    ) : RecyclerView.ViewHolder(binding.root), PopupMenu.OnMenuItemClickListener {
         private val loadingLayout = binding.root.item_malmodel_loading_layout
         private val contentLayout = binding.root.item_malmodel_content_layout
+        private lateinit var malItem: MalimeModel
 
         fun bind(item: MalimeModel?) {
             if (item == null) {
                 Timber.w("Empty list found, not performing binding")
                 return
             }
+            malItem = item
 
             binding.setVariable(BR.model, item)
             binding.executePendingBindings()
 
             GlideApp.with(binding.root)
                 .load(
-                    if (item.posterImage == "") {
+                    if (item.posterImage.isEmpty()) {
                         item.coverImage
                     } else {
                         item.posterImage
@@ -101,55 +106,61 @@ class MalDisplayViewAdapter(
                 .into(binding.root.item_malmodel_image)
 
             binding.root.apply {
-                /*item_malmodel_neg_one.setOnClickListener {
-                    updateSeries(item, item.progress - 1, item.userSeriesStatus)
-                }*/
                 item_malmodel_plus_one.setOnClickListener {
                     updateSeries(item, item.progress + 1, item.userSeriesStatus)
                 }
-                item_malmodel_image.setOnClickListener {
-                    listener.onImageClicked(item)
-                }
-                binding.root.setOnLongClickListener {
-                    setLayoutState(false)
-
-                    var executing = false
-                    var state = item.userSeriesStatus.internalId - 1
-
-                    AlertDialog.Builder(context)
-                        .setTitle(R.string.malitem_update_series_state_dialog_title)
-                        .setSingleChoiceItems(
-                            UserSeriesStatus.getSeriesStatusStrings(context),
-                            state
-                        ) { _, which ->
-                            state = which
-                        }
-                        .setPositiveButton(android.R.string.ok) { _, _ ->
-                            executing = true
-                            updateSeries(
-                                item,
-                                item.progress,
-                                UserSeriesStatus.getStatusForInternalId(state + 1)
-                            )
-                        }
-                        .setNegativeButton(android.R.string.cancel, null)
-                        .setOnDismissListener {
-                            Timber.d("Dismissing")
-                            if (!executing) {
-                                setLayoutState(true)
-                            }
-                        }
-                        .show()
-                    true
-                }
+                item_malmodel_more.setOnClickListener { showPopupMenu() }
             }
         }
 
-        private fun updateSeries(
-            item: MalimeModel,
-            newProgress: Int,
-            newStatus: UserSeriesStatus
-        ) {
+        private fun showPopupMenu() {
+            val popup = PopupMenu(binding.root.context, binding.root.item_malmodel_more)
+            popup.inflate(R.menu.menu_maldisplay_item)
+            popup.show()
+        }
+
+        override fun onMenuItemClick(item: MenuItem?): Boolean {
+            when (item?.itemId) {
+                R.id.menu_maldisplay_series_profile -> listener.showSeriesProfile(malItem)
+                R.id.menu_maldisplay_series_progress -> showProgressDialog()
+                R.id.menu_maldisplay_series_state -> showStateDialog()
+                R.id.menu_maldisplay_series_delete -> showDeleteDialog()
+                else -> return false
+            }
+            return true
+        }
+
+        private fun showProgressDialog() {
+
+        }
+
+        private fun showStateDialog() {
+            var state = malItem.userSeriesStatus.internalId - 1
+
+            AlertDialog.Builder(binding.root.context)
+                .setTitle(R.string.malitem_update_series_state_dialog_title)
+                .setSingleChoiceItems(
+                    UserSeriesStatus.getSeriesStatusStrings(binding.root.context),
+                    state
+                ) { _, which ->
+                    state = which
+                }
+                .setPositiveButton(android.R.string.ok) { _, _ ->
+                    updateSeries(
+                        malItem,
+                        malItem.progress,
+                        UserSeriesStatus.getStatusForInternalId(state + 1)
+                    )
+                }
+                .setNegativeButton(android.R.string.cancel, null)
+                .show()
+        }
+
+        private fun showDeleteDialog() {
+            
+        }
+
+        private fun updateSeries(item: MalimeModel, newProgress: Int, newStatus: UserSeriesStatus) {
             setLayoutState(false)
 
             listener.updateSeries(item, newProgress, newStatus) { success ->

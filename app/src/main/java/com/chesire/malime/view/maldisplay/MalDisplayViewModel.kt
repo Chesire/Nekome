@@ -57,7 +57,7 @@ class MalDisplayViewModel @Inject constructor(
         )
     }
 
-    override fun onImageClicked(model: MalimeModel) {
+    override fun showSeriesProfile(model: MalimeModel) {
         Timber.d("Series ${model.title} image pressed, loading url")
         CustomTabsIntent.Builder()
             .build()
