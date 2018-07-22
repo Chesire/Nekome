@@ -117,6 +117,7 @@ class MalDisplayViewAdapter(
             popup.show()
         }
 
+        @Suppress("ComplexMethod")
         override fun onMenuItemClick(item: MenuItem?): Boolean {
             when (item?.itemId) {
                 R.id.menu_maldisplay_series_profile -> listener.showSeriesProfile(malItem)
@@ -149,23 +150,22 @@ class MalDisplayViewAdapter(
                 .setPositiveButton(android.R.string.ok) { _, _ ->
                     val parsedInt = input.text.toString().toIntOrNull()
                     when {
-                        parsedInt == null -> {
-                            Snackbar.make(
-                                loadingLayout,
-                                R.string.maldisplay_progress_invalid,
-                                Snackbar.LENGTH_LONG
-                            ).show()
-                        }
-                        parsedInt > malItem.totalLength && malItem.totalLength != 0 -> {
-                            Snackbar.make(
-                                loadingLayout,
-                                R.string.maldisplay_progress_invalid,
-                                Snackbar.LENGTH_LONG
-                            ).show()
-                        }
+                        parsedInt == null -> Snackbar.make(
+                            loadingLayout,
+                            R.string.maldisplay_progress_invalid,
+                            Snackbar.LENGTH_LONG
+                        ).show()
+
+                        parsedInt > malItem.totalLength && malItem.totalLength != 0 -> Snackbar.make(
+                            loadingLayout,
+                            R.string.maldisplay_progress_invalid,
+                            Snackbar.LENGTH_LONG
+                        ).show()
+
                         parsedInt == malItem.progress -> {
                             // no change
                         }
+
                         else -> updateSeries(malItem, parsedInt, malItem.userSeriesStatus)
                     }
                 }
