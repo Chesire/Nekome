@@ -2,10 +2,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/menu_maldisplay_series_profile"
-        android:title="View series Kitsu profile" />
+        android:title="@string/maldisplay_menu_view_kitsu_profile" />
     <item
         android:id="@+id/menu_maldisplay_series_status"
-        android:title="@string/maldisplay_set_status">
+        android:title="@string/maldisplay_menu_set_status">
         <menu>
             <item
                 android:id="@+id/menu_maldisplay_state_complete"
@@ -29,5 +29,5 @@
         android:title="Set series progress" />
     <item
         android:id="@+id/menu_maldisplay_series_delete"
-        android:title="Delete series" />
+        android:title="@string/maldisplay_menu_delete" />
 </menu>
