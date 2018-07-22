@@ -64,6 +64,25 @@ class MalDisplayViewModel @Inject constructor(
             .launchUrl(getApplication(), Uri.parse(library.getItemUrl(model)))
     }
 
+    override fun deleteSeries(model: MalimeModel, callback: (success: Boolean) -> Unit) {
+        Timber.d("Series ${model.title} is being deleted")
+
+        disposables.add(
+            library.sendDeleteToApi(model)
+                .subscribeOn(subscribeScheduler)
+                .observeOn(observeScheduler)
+                .subscribe(
+                    {
+                        library.deleteFromLocalLibrary(model)
+                        callback(true)
+                    },
+                    {
+                        callback(false)
+                    }
+                )
+        )
+    }
+
     override fun updateSeries(
         model: MalimeModel,
         newProgress: Int,

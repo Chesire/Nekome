@@ -119,7 +119,7 @@ class MalDisplayViewAdapter(
             when (item?.itemId) {
                 R.id.menu_maldisplay_series_profile -> listener.showSeriesProfile(malItem)
                 R.id.menu_maldisplay_series_progress -> showProgressDialog()
-                R.id.menu_maldisplay_series_delete -> showDeleteDialog()
+                R.id.menu_maldisplay_series_delete -> confirmDelete()
                 R.id.menu_maldisplay_state_complete -> confirmStateChange(UserSeriesStatus.Completed)
                 R.id.menu_maldisplay_state_current -> confirmStateChange(UserSeriesStatus.Current)
                 R.id.menu_maldisplay_state_dropped -> confirmStateChange(UserSeriesStatus.Dropped)
@@ -132,6 +132,50 @@ class MalDisplayViewAdapter(
 
         private fun showProgressDialog() {
             // need to add something for user to enter number
+        }
+
+        private fun confirmDelete() {
+            Timber.d("Trying to delete series ${malItem.title}")
+            val context = binding.root.context
+
+            AlertDialog.Builder(context)
+                .setTitle(R.string.maldisplay_confirm_status_change_title)
+                .setMessage(
+                    String.format(
+                        Locale.getDefault(),
+                        context.getString(R.string.maldisplay_confirm_delete_body),
+                        malItem.title
+                    )
+                )
+                .setPositiveButton(android.R.string.yes) { _, _ ->
+                    deleteSeries(malItem)
+                }
+                .setNegativeButton(android.R.string.no, null)
+                .show()
+        }
+
+        private fun deleteSeries(item: MalimeModel) {
+            setLayoutState(false)
+
+            listener.deleteSeries(item) { success ->
+                setLayoutState(true)
+
+                val toastBody = if (success) {
+                    R.string.maldisplay_delete_successful
+                } else {
+                    R.string.maldisplay_delete_failure
+                }
+
+                Snackbar.make(
+                    loadingLayout,
+                    String.format(
+                        Locale.getDefault(),
+                        binding.root.context.getString(toastBody),
+                        item.title
+                    ),
+                    Snackbar.LENGTH_LONG
+                ).show()
+            }
         }
 
         private fun confirmStateChange(newStatus: UserSeriesStatus) {
@@ -153,10 +197,6 @@ class MalDisplayViewAdapter(
                 }
                 .setNegativeButton(android.R.string.no, null)
                 .show()
-        }
-
-        private fun showDeleteDialog() {
-
         }
 
         private fun updateSeries(item: MalimeModel, newProgress: Int, newStatus: UserSeriesStatus) {
