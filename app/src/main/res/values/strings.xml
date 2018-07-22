@@ -37,6 +37,9 @@
     <string name="log_out_confirmation">Are you sure?</string>
 
     <string name="maldisplay_empty_title">No series with current filter found</string>
+    <string name="maldisplay_set_status">Set series status</string>
+    <string name="maldisplay_confirm_status_change_title">Confirm</string>
+    <string name="maldisplay_confirm_status_change_body">Are you sure you want to set %s to %s?</string>
 
     <string name="malitem_update_series_failure">Update to series %s failed, please try again</string>
     <string name="malitem_update_series_state_dialog_title">Change Series State To:</string>

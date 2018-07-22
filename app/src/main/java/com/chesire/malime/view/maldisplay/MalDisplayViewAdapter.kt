@@ -21,7 +21,7 @@ import com.chesire.malime.util.GlideApp
 import com.chesire.malime.util.PREF_FILTER
 import com.chesire.malime.util.PREF_SORT
 import com.chesire.malime.util.SharedPref
-import com.chesire.malime.util.extension.getSeriesStatusStrings
+import com.chesire.malime.util.extension.getString
 import com.chesire.malime.view.preferences.SortOption
 import kotlinx.android.synthetic.main.item_malmodel.view.item_malmodel_content_layout
 import kotlinx.android.synthetic.main.item_malmodel.view.item_malmodel_image
@@ -29,6 +29,7 @@ import kotlinx.android.synthetic.main.item_malmodel.view.item_malmodel_loading_l
 import kotlinx.android.synthetic.main.item_malmodel.view.item_malmodel_more
 import kotlinx.android.synthetic.main.item_malmodel.view.item_malmodel_plus_one
 import timber.log.Timber
+import java.util.Locale
 
 class MalDisplayViewAdapter(
     private val listener: ModelInteractionListener,
@@ -94,13 +95,7 @@ class MalDisplayViewAdapter(
             binding.executePendingBindings()
 
             GlideApp.with(binding.root)
-                .load(
-                    if (item.posterImage.isEmpty()) {
-                        item.coverImage
-                    } else {
-                        item.posterImage
-                    }
-                )
+                .load(if (item.posterImage.isEmpty()) item.coverImage else item.posterImage)
                 .placeholder(R.drawable.ic_image_black)
                 .error(R.drawable.ic_broken_image_black)
                 .into(binding.root.item_malmodel_image)
@@ -116,6 +111,7 @@ class MalDisplayViewAdapter(
         private fun showPopupMenu() {
             val popup = PopupMenu(binding.root.context, binding.root.item_malmodel_more)
             popup.inflate(R.menu.menu_maldisplay_item)
+            popup.setOnMenuItemClickListener(this)
             popup.show()
         }
 
@@ -123,41 +119,44 @@ class MalDisplayViewAdapter(
             when (item?.itemId) {
                 R.id.menu_maldisplay_series_profile -> listener.showSeriesProfile(malItem)
                 R.id.menu_maldisplay_series_progress -> showProgressDialog()
-                R.id.menu_maldisplay_series_state -> showStateDialog()
                 R.id.menu_maldisplay_series_delete -> showDeleteDialog()
+                R.id.menu_maldisplay_state_complete -> confirmStateChange(UserSeriesStatus.Completed)
+                R.id.menu_maldisplay_state_current -> confirmStateChange(UserSeriesStatus.Current)
+                R.id.menu_maldisplay_state_dropped -> confirmStateChange(UserSeriesStatus.Dropped)
+                R.id.menu_maldisplay_state_on_hold -> confirmStateChange(UserSeriesStatus.OnHold)
+                R.id.menu_maldisplay_state_planned -> confirmStateChange(UserSeriesStatus.Planned)
                 else -> return false
             }
             return true
         }
 
         private fun showProgressDialog() {
-
+            // need to add something for user to enter number
         }
 
-        private fun showStateDialog() {
-            var state = malItem.userSeriesStatus.internalId - 1
+        private fun confirmStateChange(newStatus: UserSeriesStatus) {
+            Timber.d("Trying to set series ${malItem.title} to state $newStatus")
+            val context = binding.root.context
 
-            AlertDialog.Builder(binding.root.context)
-                .setTitle(R.string.malitem_update_series_state_dialog_title)
-                .setSingleChoiceItems(
-                    UserSeriesStatus.getSeriesStatusStrings(binding.root.context),
-                    state
-                ) { _, which ->
-                    state = which
-                }
-                .setPositiveButton(android.R.string.ok) { _, _ ->
-                    updateSeries(
-                        malItem,
-                        malItem.progress,
-                        UserSeriesStatus.getStatusForInternalId(state + 1)
+            AlertDialog.Builder(context)
+                .setTitle(R.string.maldisplay_confirm_status_change_title)
+                .setMessage(
+                    String.format(
+                        Locale.getDefault(),
+                        context.getString(R.string.maldisplay_confirm_status_change_body),
+                        malItem.title,
+                        newStatus.getString(context)
                     )
+                )
+                .setPositiveButton(android.R.string.yes) { _, _ ->
+                    updateSeries(malItem, malItem.progress, newStatus)
                 }
-                .setNegativeButton(android.R.string.cancel, null)
+                .setNegativeButton(android.R.string.no, null)
                 .show()
         }
 
         private fun showDeleteDialog() {
-            
+
         }
 
         private fun updateSeries(item: MalimeModel, newProgress: Int, newStatus: UserSeriesStatus) {
