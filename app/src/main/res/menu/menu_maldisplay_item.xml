@@ -26,7 +26,7 @@
     </item>
     <item
         android:id="@+id/menu_maldisplay_series_progress"
-        android:title="Set series progress" />
+        android:title="@string/maldisplay_menu_set_progress" />
     <item
         android:id="@+id/menu_maldisplay_series_delete"
         android:title="@string/maldisplay_menu_delete" />

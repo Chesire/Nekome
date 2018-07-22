@@ -5,10 +5,12 @@ import android.content.SharedPreferences
 import android.databinding.ViewDataBinding
 import android.support.design.widget.Snackbar
 import android.support.v7.widget.RecyclerView
+import android.text.InputType
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.Filter
 import android.widget.Filterable
 import android.widget.PopupMenu
@@ -131,7 +133,36 @@ class MalDisplayViewAdapter(
         }
 
         private fun showProgressDialog() {
-            // need to add something for user to enter number
+            Timber.d("Trying to update series progress for ${malItem.title}")
+            val context = binding.root.context
+
+            val input = EditText(context)
+                .apply {
+                    setText(malItem.progress.toString())
+                    inputType = InputType.TYPE_CLASS_NUMBER
+                    setSelection(text.length)
+                }
+
+            AlertDialog.Builder(context)
+                .setTitle(R.string.maldisplay_menu_set_progress_title)
+                .setView(input)
+                .setPositiveButton(android.R.string.ok) { _, _ ->
+                    val parsedInt = input.text.toString().toIntOrNull()
+                    when {
+                        parsedInt == null -> {
+                            // invalid number
+                        }
+                        parsedInt > malItem.totalLength && malItem.totalLength != 0 -> {
+                            // input too high
+                        }
+                        parsedInt == malItem.progress -> {
+                            // no change
+                        }
+                        else -> updateSeries(malItem, parsedInt, malItem.userSeriesStatus)
+                    }
+                }
+                .setNegativeButton(android.R.string.cancel, null)
+                .show()
         }
 
         private fun confirmDelete() {
