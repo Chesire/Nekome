@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto">
 
@@ -14,7 +15,7 @@
     <android.support.v7.widget.CardView
         android:id="@+id/item_malmodel_card_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="100dp"
         android:layout_gravity="center"
         android:layout_margin="4dp"
         card_view:cardCornerRadius="2dp">
@@ -26,15 +27,34 @@
 
             <ImageView
                 android:id="@+id/item_malmodel_image"
-                style="@style/malitem_image_style" />
+                style="@style/malitem_image_style"
+                android:layout_alignParentStart="true" />
 
             <TextView
                 android:id="@+id/item_malmodel_title"
                 style="@style/malitem_heading_text_style"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_toEndOf="@id/item_malmodel_image"
-                android:gravity="center_horizontal"
+                android:layout_toStartOf="@+id/item_malmodel_more"
+                android:maxLines="1"
                 android:text="@{model.title}" />
+
+            <ImageView
+                android:id="@+id/item_malmodel_more"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:padding="4dp"
+                android:src="@drawable/ic_more_vert_black" />
+
+            <ProgressBar
+                android:id="@+id/item_malmodel_progress_bar"
+                style="@style/malitem_progressbar_style"
+                android:layout_below="@+id/item_malmodel_title"
+                android:layout_toEndOf="@+id/item_malmodel_image"
+                android:padding="4dp"
+                android:progress="@{model.getSeriesProgressPercent()}" />
 
             <TextView
                 android:id="@+id/item_malmodel_progress"
@@ -43,19 +63,13 @@
                 android:layout_toEndOf="@id/item_malmodel_image"
                 android:text='@{String.format("%s/%s", model.progress, model.totalSeriesLength)}' />
 
-            <ImageButton
-                android:id="@+id/item_malmodel_neg_one"
-                style="@style/malitem_image_button_style"
-                android:layout_toEndOf="@id/item_malmodel_image"
-                android:src="@drawable/ic_exposure_neg_1_black"
-                android:visibility="@{model.canDecreaseProgress() ? View.VISIBLE : View.GONE}" />
 
             <ImageButton
                 android:id="@+id/item_malmodel_plus_one"
                 style="@style/malitem_image_button_style"
                 android:layout_alignParentEnd="true"
                 android:src="@drawable/ic_exposure_plus_1_black"
-                android:visibility="@{model.canIncreaseProgress() ? View.VISIBLE : View.GONE}" />
+                android:visibility="@{model.canIncreaseProgress() ? View.VISIBLE : View.INVISIBLE}" />
 
         </RelativeLayout>
 

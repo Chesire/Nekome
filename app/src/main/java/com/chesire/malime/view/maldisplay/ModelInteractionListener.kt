@@ -4,7 +4,8 @@ import com.chesire.malime.core.flags.UserSeriesStatus
 import com.chesire.malime.core.models.MalimeModel
 
 interface ModelInteractionListener {
-    fun onImageClicked(model: MalimeModel)
+    fun showSeriesProfile(model: MalimeModel)
+    fun deleteSeries(model: MalimeModel, callback: (success: Boolean) -> Unit)
     fun updateSeries(
         model: MalimeModel,
         newProgress: Int,

@@ -9,6 +9,7 @@ import com.chesire.malime.kitsu.models.response.UpdateItemResponse
 import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.PATCH
@@ -97,6 +98,9 @@ interface KitsuService {
     )
     @Headers("Content-Type: application/vnd.api+json")
     fun addItem(@Body data: RequestBody): Call<AddItemResponse>
+
+    @DELETE("api/edge/library-entries/{id}")
+    fun deleteItem(@Path("id") seriesId: Int): Call<Any>
 
     @PATCH("api/edge/library-entries/{id}")
     @Headers("Content-Type: application/vnd.api+json")

@@ -57,11 +57,30 @@ class MalDisplayViewModel @Inject constructor(
         )
     }
 
-    override fun onImageClicked(model: MalimeModel) {
+    override fun showSeriesProfile(model: MalimeModel) {
         Timber.d("Series ${model.title} image pressed, loading url")
         CustomTabsIntent.Builder()
             .build()
             .launchUrl(getApplication(), Uri.parse(library.getItemUrl(model)))
+    }
+
+    override fun deleteSeries(model: MalimeModel, callback: (success: Boolean) -> Unit) {
+        Timber.d("Series ${model.title} is being deleted")
+
+        disposables.add(
+            library.sendDeleteToApi(model)
+                .subscribeOn(subscribeScheduler)
+                .observeOn(observeScheduler)
+                .subscribe(
+                    {
+                        library.deleteFromLocalLibrary(it)
+                        callback(true)
+                    },
+                    {
+                        callback(false)
+                    }
+                )
+        )
     }
 
     override fun updateSeries(

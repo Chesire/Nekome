@@ -13,6 +13,8 @@ import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.schedulers.TestScheduler
 import org.junit.After
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -115,7 +117,7 @@ class MalDisplayViewModelTests {
         }
         testScheduler.triggerActions()
 
-        assert(!callbackResult)
+        assertFalse(callbackResult)
     }
 
     @Test
@@ -135,7 +137,7 @@ class MalDisplayViewModelTests {
         }
         testScheduler.triggerActions()
 
-        assert(callbackResult)
+        assertTrue(callbackResult)
     }
 
     @Test
@@ -155,5 +157,50 @@ class MalDisplayViewModelTests {
         testScheduler.triggerActions()
 
         verify(library).updateInLocalLibrary(returnedModel)
+    }
+
+    @Test
+    fun `delete series fires callback on failure`() {
+        val malimeModel: MalimeModel = customMock()
+        var callbackResult = false
+
+        `when`(library.sendDeleteToApi(malimeModel))
+            .thenReturn(Single.error(Exception("Test Exception")))
+
+        testObject.deleteSeries(malimeModel) { callbackResult = false }
+        testScheduler.triggerActions()
+
+        assertFalse(callbackResult)
+    }
+
+    @Test
+    fun `delete series fires callback on success`() {
+        val malimeModel: MalimeModel = customMock()
+        val returnedModel: MalimeModel = customMock()
+        var callbackResult = false
+
+        `when`(library.sendDeleteToApi(malimeModel))
+            .thenReturn(Single.just(returnedModel))
+
+        testObject.deleteSeries(malimeModel) { callbackResult = true }
+        testScheduler.triggerActions()
+
+        assertTrue(callbackResult)
+    }
+
+    @Test
+    fun `delete series fires updates library success`() {
+        val malimeModel: MalimeModel = customMock()
+        val returnedModel: MalimeModel = customMock()
+
+        `when`(library.sendDeleteToApi(malimeModel))
+            .thenReturn(Single.just(returnedModel))
+
+        testObject.deleteSeries(malimeModel) {
+            // No callback checked here
+        }
+        testScheduler.triggerActions()
+
+        verify(library).deleteFromLocalLibrary(returnedModel)
     }
 }

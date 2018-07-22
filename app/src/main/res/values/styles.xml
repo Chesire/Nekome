@@ -32,13 +32,13 @@
     </style>
 
     <style name="malitem_image_style">
-        <item name="android:layout_width">80dp</item>
-        <item name="android:layout_height">120dp</item>
+        <item name="android:layout_width">65dp</item>
+        <item name="android:layout_height">100dp</item>
         <item name="android:layout_margin">4dp</item>
         <item name="android:layout_centerVertical">true</item>
     </style>
 
-    <style name="malitem_heading_text_style" parent="TextAppearance.AppCompat.Subhead">
+    <style name="malitem_heading_text_style" parent="TextAppearance.AppCompat.Light.SearchResult.Subtitle">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_alignParentTop">true</item>
@@ -58,6 +58,12 @@
         <item name="android:layout_alignParentBottom">true</item>
         <item name="android:padding">4dp</item>
         <item name="android:background">@android:color/transparent</item>
+    </style>
+
+    <style name="malitem_progressbar_style" parent="Widget.AppCompat.ProgressBar.Horizontal">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:indeterminate">false</item>
     </style>
 
     <style name="search_image_add_button_style">

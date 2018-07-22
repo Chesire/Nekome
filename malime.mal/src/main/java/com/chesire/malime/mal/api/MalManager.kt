@@ -28,7 +28,6 @@ class MalManager(
     private val api: MalApi,
     private val username: String
 ) : AuthApi, MalimeApi, SearchApi {
-
     /**
      * Verifies a users credentials.
      * <p>
@@ -152,6 +151,10 @@ class MalManager(
                 it.tryOnError(Throwable(response.message()))
             }
         }
+    }
+
+    override fun deleteItem(item: MalimeModel): Single<MalimeModel> {
+        TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
     }
 
     override fun updateItem(

@@ -75,6 +75,10 @@ class KitsuApi @Inject constructor(authorizer: KitsuAuthorizer) {
         return kitsuService.addItem(data)
     }
 
+    fun deleteItem(seriesId: Int): Call<Any> {
+        return kitsuService.deleteItem(seriesId)
+    }
+
     fun updateItem(seriesId: Int, updateModel: RequestBody): Call<UpdateItemResponse> {
         return kitsuService.updateItem(seriesId, updateModel)
     }

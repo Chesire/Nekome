@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_maldisplay_series_profile"
+        android:title="@string/maldisplay_menu_view_kitsu_profile" />
+    <item
+        android:id="@+id/menu_maldisplay_series_status"
+        android:title="@string/maldisplay_menu_set_status">
+        <menu>
+            <item
+                android:id="@+id/menu_maldisplay_state_complete"
+                android:title="@string/filter_state_completed" />
+            <item
+                android:id="@+id/menu_maldisplay_state_current"
+                android:title="@string/filter_state_current" />
+            <item
+                android:id="@+id/menu_maldisplay_state_dropped"
+                android:title="@string/filter_state_dropped" />
+            <item
+                android:id="@+id/menu_maldisplay_state_on_hold"
+                android:title="@string/filter_state_on_hold" />
+            <item
+                android:id="@+id/menu_maldisplay_state_planned"
+                android:title="@string/filter_state_planned" />
+        </menu>
+    </item>
+    <item
+        android:id="@+id/menu_maldisplay_series_progress"
+        android:title="@string/maldisplay_menu_set_progress" />
+    <item
+        android:id="@+id/menu_maldisplay_series_delete"
+        android:title="@string/maldisplay_menu_delete" />
+</menu>
