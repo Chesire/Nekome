@@ -47,6 +47,7 @@
     <string name="maldisplay_confirm_delete_body">Are you sure you want to delete %s?</string>
     <string name="maldisplay_delete_successful">%s successfully deleted</string>
     <string name="maldisplay_delete_failure">Failed to delete %s</string>
+    <string name="maldisplay_progress_invalid">Invalid number entered, please try again</string>
 
     <string name="malitem_update_series_failure">Update to series %s failed, please try again</string>
     <string name="malitem_update_series_state_dialog_title">Change Series State To:</string>

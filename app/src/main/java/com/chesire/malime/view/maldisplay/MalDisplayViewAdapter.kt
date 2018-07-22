@@ -150,10 +150,18 @@ class MalDisplayViewAdapter(
                     val parsedInt = input.text.toString().toIntOrNull()
                     when {
                         parsedInt == null -> {
-                            // invalid number
+                            Snackbar.make(
+                                loadingLayout,
+                                R.string.maldisplay_progress_invalid,
+                                Snackbar.LENGTH_LONG
+                            ).show()
                         }
                         parsedInt > malItem.totalLength && malItem.totalLength != 0 -> {
-                            // input too high
+                            Snackbar.make(
+                                loadingLayout,
+                                R.string.maldisplay_progress_invalid,
+                                Snackbar.LENGTH_LONG
+                            ).show()
                         }
                         parsedInt == malItem.progress -> {
                             // no change
