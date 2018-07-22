@@ -73,7 +73,7 @@ class MalDisplayViewModel @Inject constructor(
                 .observeOn(observeScheduler)
                 .subscribe(
                     {
-                        library.deleteFromLocalLibrary(model)
+                        library.deleteFromLocalLibrary(it)
                         callback(true)
                     },
                     {

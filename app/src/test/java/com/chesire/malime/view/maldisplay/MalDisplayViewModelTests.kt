@@ -156,4 +156,49 @@ class MalDisplayViewModelTests {
 
         verify(library).updateInLocalLibrary(returnedModel)
     }
+
+    @Test
+    fun `delete series fires callback on failure`() {
+        val malimeModel: MalimeModel = customMock()
+        var callbackResult = false
+
+        `when`(library.sendDeleteToApi(malimeModel))
+            .thenReturn(Single.error(Exception("Test Exception")))
+
+        testObject.deleteSeries(malimeModel) { callbackResult = false }
+        testScheduler.triggerActions()
+
+        assert(!callbackResult)
+    }
+
+    @Test
+    fun `delete series fires callback on success`() {
+        val malimeModel: MalimeModel = customMock()
+        val returnedModel: MalimeModel = customMock()
+        var callbackResult = false
+
+        `when`(library.sendDeleteToApi(malimeModel))
+            .thenReturn(Single.just(returnedModel))
+
+        testObject.deleteSeries(malimeModel) { callbackResult = true }
+        testScheduler.triggerActions()
+
+        assert(!callbackResult)
+    }
+
+    @Test
+    fun `delete series fires updates library success`() {
+        val malimeModel: MalimeModel = customMock()
+        val returnedModel: MalimeModel = customMock()
+
+        `when`(library.sendDeleteToApi(malimeModel))
+            .thenReturn(Single.just(returnedModel))
+
+        testObject.deleteSeries(malimeModel) {
+            // No callback checked here
+        }
+        testScheduler.triggerActions()
+
+        verify(library).deleteFromLocalLibrary(returnedModel)
+    }
 }
