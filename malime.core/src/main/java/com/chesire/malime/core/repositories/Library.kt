@@ -34,6 +34,17 @@ class Library @Inject constructor(
         return malimeApi.updateItem(item, newProgress, newStatus)
     }
 
+    fun sendDeleteToApi(item: MalimeModel): Single<MalimeModel> {
+        return malimeApi.deleteItem(item)
+    }
+
+    fun deleteFromLocalLibrary(item: MalimeModel) {
+        Completable
+            .fromAction { dao.delete(item) }
+            .subscribeOn(Schedulers.io())
+            .subscribe()
+    }
+
     fun insertIntoLocalLibrary(item: MalimeModel) {
         Completable
             .fromAction { dao.insert(item) }

@@ -227,6 +227,21 @@ class KitsuManager @Inject constructor(
         }
     }
 
+    override fun deleteItem(item: MalimeModel): Single<MalimeModel> {
+        return Single.create {
+            val callResponse = api.deleteItem(item.userSeriesId)
+            val response = callResponse.execute()
+
+            if (response.isSuccessful) {
+                Timber.i("Successfully deleted series")
+                it.onSuccess(item)
+            } else {
+                Timber.e(Throwable(response.message()), "Error deleting the series")
+                it.tryOnError(Throwable(response.message()))
+            }
+        }
+    }
+
     override fun updateItem(
         item: MalimeModel,
         newProgress: Int,
@@ -236,10 +251,7 @@ class KitsuManager @Inject constructor(
             val json = createUpdateModel(item, newProgress, newStatus)
             val requestBody = RequestBody.create(MediaType.parse("application/vnd.api+json"), json)
 
-            val callResponse = api.updateItem(
-                item.userSeriesId,
-                requestBody
-            )
+            val callResponse = api.updateItem(item.userSeriesId, requestBody)
             val response = callResponse.execute()
             val body = response.body()
 
