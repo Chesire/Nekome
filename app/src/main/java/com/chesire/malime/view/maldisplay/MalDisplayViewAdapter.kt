@@ -24,7 +24,6 @@ import com.chesire.malime.view.preferences.SortOption
 import kotlinx.android.synthetic.main.item_malmodel.view.item_malmodel_content_layout
 import kotlinx.android.synthetic.main.item_malmodel.view.item_malmodel_image
 import kotlinx.android.synthetic.main.item_malmodel.view.item_malmodel_loading_layout
-import kotlinx.android.synthetic.main.item_malmodel.view.item_malmodel_neg_one
 import kotlinx.android.synthetic.main.item_malmodel.view.item_malmodel_plus_one
 import timber.log.Timber
 
@@ -102,9 +101,9 @@ class MalDisplayViewAdapter(
                 .into(binding.root.item_malmodel_image)
 
             binding.root.apply {
-                item_malmodel_neg_one.setOnClickListener {
+                /*item_malmodel_neg_one.setOnClickListener {
                     updateSeries(item, item.progress - 1, item.userSeriesStatus)
-                }
+                }*/
                 item_malmodel_plus_one.setOnClickListener {
                     updateSeries(item, item.progress + 1, item.userSeriesStatus)
                 }
