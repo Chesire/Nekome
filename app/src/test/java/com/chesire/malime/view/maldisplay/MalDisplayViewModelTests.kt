@@ -13,6 +13,8 @@ import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.schedulers.TestScheduler
 import org.junit.After
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -115,7 +117,7 @@ class MalDisplayViewModelTests {
         }
         testScheduler.triggerActions()
 
-        assert(!callbackResult)
+        assertFalse(callbackResult)
     }
 
     @Test
@@ -135,7 +137,7 @@ class MalDisplayViewModelTests {
         }
         testScheduler.triggerActions()
 
-        assert(callbackResult)
+        assertTrue(callbackResult)
     }
 
     @Test
@@ -168,7 +170,7 @@ class MalDisplayViewModelTests {
         testObject.deleteSeries(malimeModel) { callbackResult = false }
         testScheduler.triggerActions()
 
-        assert(!callbackResult)
+        assertFalse(callbackResult)
     }
 
     @Test
@@ -183,7 +185,7 @@ class MalDisplayViewModelTests {
         testObject.deleteSeries(malimeModel) { callbackResult = true }
         testScheduler.triggerActions()
 
-        assert(!callbackResult)
+        assertTrue(callbackResult)
     }
 
     @Test

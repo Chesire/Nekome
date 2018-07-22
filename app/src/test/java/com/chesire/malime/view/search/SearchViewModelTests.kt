@@ -14,6 +14,8 @@ import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.schedulers.TestScheduler
 import org.junit.After
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -92,9 +94,9 @@ class SearchViewModelTests {
 
         testObject.searchForSeries(ItemType.Anime)
 
-        assert(testObject.params.searching)
+        assertTrue(testObject.params.searching)
         testScheduler.triggerActions()
-        assert(!testObject.params.searching)
+        assertFalse(testObject.params.searching)
     }
 
     @Test
@@ -130,7 +132,7 @@ class SearchViewModelTests {
         }
         testScheduler.triggerActions()
 
-        assert(!callbackResult)
+        assertFalse(callbackResult)
     }
 
     @Test
@@ -150,7 +152,7 @@ class SearchViewModelTests {
         }
         testScheduler.triggerActions()
 
-        assert(callbackResult)
+        assertTrue(callbackResult)
     }
 
     @Test
