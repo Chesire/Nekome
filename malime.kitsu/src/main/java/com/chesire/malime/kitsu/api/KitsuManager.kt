@@ -17,6 +17,7 @@ import io.reactivex.schedulers.Schedulers
 import okhttp3.MediaType
 import okhttp3.RequestBody
 import timber.log.Timber
+import java.net.HttpURLConnection
 import javax.inject.Inject
 
 private const val MAX_RETRIES = 3
@@ -232,7 +233,8 @@ class KitsuManager @Inject constructor(
             val callResponse = api.deleteItem(item.userSeriesId)
             val response = callResponse.execute()
 
-            if (response.isSuccessful) {
+            // If the series is not found, its likely already deleted
+            if (response.isSuccessful || response.code() == HttpURLConnection.HTTP_NOT_FOUND) {
                 Timber.i("Successfully deleted series")
                 it.onSuccess(item)
             } else {
