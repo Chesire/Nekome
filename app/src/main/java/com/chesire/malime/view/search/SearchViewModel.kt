@@ -6,7 +6,9 @@ import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.LiveDataReactiveStreams
 import android.arch.lifecycle.MutableLiveData
 import android.net.Uri
+import android.support.annotation.StringRes
 import android.support.customtabs.CustomTabsIntent
+import com.chesire.malime.R
 import com.chesire.malime.core.api.SearchApi
 import com.chesire.malime.core.flags.ItemType
 import com.chesire.malime.core.models.MalimeModel
@@ -40,7 +42,7 @@ class SearchViewModel @Inject constructor(
     val searchItems = MutableLiveData<List<MalimeModel>>()
     val params = SearchParams()
 
-    fun searchForSeries(type: ItemType) {
+    fun searchForSeries(type: ItemType, @StringRes errorCallback: (Int) -> Unit) {
         if (params.searchText.isBlank() || type == ItemType.Unknown) {
             Timber.w("No text entered or type was unknown")
             return
@@ -59,10 +61,14 @@ class SearchViewModel @Inject constructor(
                 .doOnError {
                     Timber.e(it, "Error performing the search")
                     params.searching = false
+                    errorCallback(R.string.search_failed_general_error)
                 }
                 .subscribe {
                     Timber.i("Found ${it.count()} items")
                     searchItems.value = it
+                    if (it.isEmpty()) {
+                        errorCallback(R.string.search_failed_no_items)
+                    }
                 }
         )
     }
