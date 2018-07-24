@@ -3,6 +3,7 @@ package com.chesire.malime.view.search
 import android.arch.core.executor.testing.InstantTaskExecutorRule
 import android.arch.lifecycle.Observer
 import android.test.mock.MockApplication
+import com.chesire.malime.R
 import com.chesire.malime.core.api.SearchApi
 import com.chesire.malime.core.flags.ItemType
 import com.chesire.malime.core.models.MalimeModel
@@ -14,6 +15,7 @@ import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.schedulers.TestScheduler
 import org.junit.After
+import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Before
@@ -62,7 +64,7 @@ class SearchViewModelTests {
     fun `cannot search for series with empty search text`() {
         testObject.params.searchText = ""
 
-        testObject.searchForSeries(ItemType.Anime)
+        testObject.searchForSeries(ItemType.Anime) { }
 
         verify(searchApi, Times(0)).searchForSeriesWith(
             "", ItemType.Anime
@@ -75,7 +77,7 @@ class SearchViewModelTests {
         val searchText = "Some series"
         testObject.params.searchText = searchText
 
-        testObject.searchForSeries(ItemType.Unknown)
+        testObject.searchForSeries(ItemType.Unknown) { }
 
         verify(searchApi, Times(0)).searchForSeriesWith(
             "Some Series", ItemType.Unknown
@@ -92,11 +94,46 @@ class SearchViewModelTests {
             Observable.error(Exception("Test Exception"))
         )
 
-        testObject.searchForSeries(ItemType.Anime)
+        testObject.searchForSeries(ItemType.Anime) { }
 
         assertTrue(testObject.params.searching)
         testScheduler.triggerActions()
         assertFalse(testObject.params.searching)
+    }
+
+    @Test
+    fun `on failed search error message is displayed`() {
+        var actualResource = 0
+        testObject.params.searchText = "Some series"
+
+        `when`(
+            searchApi.searchForSeriesWith(testObject.params.searchText, ItemType.Anime)
+        ).thenReturn(
+            Observable.error(Exception("Test Exception"))
+        )
+
+        testObject.searchForSeries(ItemType.Anime) { actualResource = it }
+        testScheduler.triggerActions()
+
+        assertEquals(R.string.search_failed_general_error, actualResource)
+    }
+
+    @Test
+    fun `on successful search, with no items error callback is invoked`() {
+        val expectedList = listOf<MalimeModel>()
+        var actualResource = 0
+        testObject.params.searchText = "Some series"
+
+        `when`(
+            searchApi.searchForSeriesWith(testObject.params.searchText, ItemType.Anime)
+        ).thenReturn(
+            Observable.just(expectedList)
+        )
+
+        testObject.searchForSeries(ItemType.Anime) { actualResource = it }
+        testScheduler.triggerActions()
+
+        assertEquals(R.string.search_failed_no_items, actualResource)
     }
 
     @Test
@@ -110,10 +147,29 @@ class SearchViewModelTests {
             Observable.just(expectedList)
         )
 
-        testObject.searchForSeries(ItemType.Anime)
+        testObject.searchForSeries(ItemType.Anime) { }
         testScheduler.triggerActions()
 
         verify(searchObserver).onChanged(expectedList)
+    }
+
+    @Test
+    fun `on successful search, no error callback is invoked`() {
+        val expectedList = listOf<MalimeModel>(customMock())
+        var invoked = false
+        testObject.params.searchText = "Some series"
+
+        `when`(
+            searchApi.searchForSeriesWith(testObject.params.searchText, ItemType.Anime)
+        ).thenReturn(
+            Observable.just(expectedList)
+        )
+
+        testObject.searchForSeries(ItemType.Anime) { invoked = true }
+        testScheduler.triggerActions()
+
+        verify(searchObserver).onChanged(expectedList)
+        assertFalse(invoked)
     }
 
     @Test
