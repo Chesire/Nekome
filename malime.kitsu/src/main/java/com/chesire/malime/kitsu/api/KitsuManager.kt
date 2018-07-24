@@ -273,7 +273,7 @@ class KitsuManager @Inject constructor(
             val response = callResponse.execute()
             val body = response.body()
 
-            if (response.isSuccessful && body != null && body.data.isNotEmpty()) {
+            if (response.isSuccessful && body != null) {
                 Timber.i("Successfully searched, found [${body.data.count()}] items")
                 val items = body.data.map {
                     MalimeModel(

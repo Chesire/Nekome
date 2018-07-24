@@ -95,4 +95,6 @@
     <string name="search_nsfw_allowed">Show NSFW</string>
     <string name="search_add_success">Series %s has been added to library</string>
     <string name="search_add_failed">Failed to add %s, please try again</string>
+    <string name="search_failed_general_error">Search failed, please try again</string>
+    <string name="search_failed_no_items">No items found</string>
 </resources>

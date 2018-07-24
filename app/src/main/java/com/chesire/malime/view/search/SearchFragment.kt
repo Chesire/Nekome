@@ -6,6 +6,7 @@ import android.arch.lifecycle.ViewModelProviders
 import android.content.res.Configuration
 import android.databinding.DataBindingUtil
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
@@ -24,7 +25,6 @@ import com.chesire.malime.util.SharedPref
 import com.chesire.malime.util.autoCleared
 import com.chesire.malime.util.extension.hideSystemKeyboard
 import kotlinx.android.synthetic.main.fragment_search.search_search_term_edit_text
-import timber.log.Timber
 import javax.inject.Inject
 
 class SearchFragment : Fragment(), Injectable {
@@ -103,12 +103,11 @@ class SearchFragment : Fragment(), Injectable {
                 when (checkedOption) {
                     R.id.search_option_anime_choice -> ItemType.Anime
                     R.id.search_option_manga_choice -> ItemType.Manga
-                    else -> {
-                        Timber.e("Unknown search method selected")
-                        ItemType.Unknown
-                    }
+                    else -> ItemType.Unknown
                 }
-            )
+            ) {
+                Snackbar.make(binding.root, getString(it), Snackbar.LENGTH_LONG).show()
+            }
             true
         }
 
