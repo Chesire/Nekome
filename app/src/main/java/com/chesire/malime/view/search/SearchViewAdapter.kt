@@ -97,7 +97,6 @@ class SearchViewAdapter(
             popup.show()
         }
 
-        @Suppress("ComplexMethod")
         override fun onMenuItemClick(item: MenuItem?): Boolean {
             when (item?.itemId) {
                 R.id.menu_maldisplay_state_complete -> addSeries(UserSeriesStatus.Completed)
