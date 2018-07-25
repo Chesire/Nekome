@@ -10,12 +10,12 @@ import com.chesire.malime.core.flags.UserSeriesStatus
 import com.chesire.malime.core.models.AuthModel
 import com.chesire.malime.core.models.MalimeModel
 import com.chesire.malime.kitsu.models.response.UpdateItemResponse
-import com.google.gson.JsonObject
 import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import okhttp3.MediaType
 import okhttp3.RequestBody
+import org.json.JSONObject
 import timber.log.Timber
 import java.net.HttpURLConnection
 import javax.inject.Inject
@@ -320,29 +320,31 @@ class KitsuManager @Inject constructor(
     }
 
     private fun createNewModel(item: MalimeModel): String {
-        return JsonObject().apply {
-            add("data", JsonObject().apply {
-                addProperty("type", "libraryEntries")
-                add("attributes", JsonObject().apply {
-                    addProperty("progress", item.progress)
-                    addProperty("status", item.userSeriesStatus.kitsuString)
-                })
-                add("relationships", JsonObject().apply {
-                    add("user", JsonObject().apply {
-                        add("data", JsonObject().apply {
-                            addProperty("type", "users")
-                            addProperty("id", userId)
-                        })
-                    })
-                    add("media", JsonObject().apply {
-                        add("data", JsonObject().apply {
-                            addProperty("type", item.type.text)
-                            addProperty("id", item.seriesId)
-                        })
-                    })
-                })
-            })
-        }.toString()
+        return JSONObject(
+            mapOf(
+                "data" to mapOf(
+                    "type" to "libraryEntries",
+                    "attributes" to mapOf(
+                        "progress" to item.progress,
+                        "status" to item.userSeriesStatus.kitsuString
+                    ),
+                    "relationships" to mapOf(
+                        "user" to mapOf(
+                            "data" to mapOf(
+                                "type" to "users",
+                                "id" to userId
+                            )
+                        ),
+                        "media" to mapOf(
+                            "data" to mapOf(
+                                "type" to item.type.text,
+                                "id" to item.seriesId
+                            )
+                        )
+                    )
+                )
+            )
+        ).toString()
     }
 
     private fun createUpdateModel(
@@ -350,16 +352,18 @@ class KitsuManager @Inject constructor(
         newProgress: Int,
         newStatus: UserSeriesStatus
     ): String {
-        return JsonObject().apply {
-            add("data", JsonObject().apply {
-                addProperty("id", item.userSeriesId)
-                addProperty("type", "libraryEntries")
-                add("attributes", JsonObject().apply {
-                    addProperty("progress", newProgress)
-                    addProperty("status", newStatus.kitsuString)
-                })
-            })
-        }.toString()
+        return JSONObject(
+            mapOf(
+                "data" to mapOf(
+                    "id" to item.userSeriesId,
+                    "type" to "libraryEntries",
+                    "attributes" to mapOf(
+                        "progress" to newProgress,
+                        "status" to newStatus.kitsuString
+                    )
+                )
+            )
+        ).toString()
     }
 
     private fun getUpdatedModel(
