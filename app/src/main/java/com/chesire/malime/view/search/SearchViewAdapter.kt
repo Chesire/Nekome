@@ -3,10 +3,13 @@ package com.chesire.malime.view.search
 import android.support.design.widget.Snackbar
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.PopupMenu
 import com.chesire.malime.BR
 import com.chesire.malime.R
+import com.chesire.malime.core.flags.UserSeriesStatus
 import com.chesire.malime.core.models.MalimeModel
 import com.chesire.malime.databinding.ItemSearchBinding
 import com.chesire.malime.util.GlideApp
@@ -54,25 +57,22 @@ class SearchViewAdapter(
 
     inner class ViewHolder(
         private val searchView: ItemSearchBinding
-    ) : RecyclerView.ViewHolder(searchView.root) {
+    ) : RecyclerView.ViewHolder(searchView.root), PopupMenu.OnMenuItemClickListener {
         private val loadingLayout = searchView.root.item_search_loading_layout
         private val contentLayout = searchView.root.item_search_content_layout
+        private lateinit var malItem: MalimeModel
 
         fun bind(item: MalimeModel) {
-            val image = searchView.itemSearchImage
+            malItem = item
 
             searchView.setVariable(BR.model, item)
             searchView.executePendingBindings()
 
             GlideApp.with(searchView.root)
-                .load(
-                    if (item.posterImage == "") {
-                        item.coverImage
-                    } else {
-                        item.posterImage
-                    }
-                )
-                .into(image)
+                .load(if (item.posterImage.isEmpty()) item.coverImage else item.posterImage)
+                .placeholder(R.drawable.ic_image_black)
+                .error(R.drawable.ic_broken_image_black)
+                .into(searchView.itemSearchImage)
 
             if (currentItems.find { it.seriesId == item.seriesId } == null) {
                 searchView.searchImageAddButton.visibility = View.VISIBLE
@@ -85,19 +85,41 @@ class SearchViewAdapter(
             searchView.root.apply {
                 item_search_type_text.text = item.subtype.getString(context)
                 item_search_status_text.text = item.seriesStatus.getString(context)
-                item_search_image.setOnClickListener {
-                    interactor.navigateToSeries(item)
-                }
-                search_image_add_button.setOnClickListener {
-                    addSeries(item)
-                }
+                item_search_image.setOnClickListener { interactor.navigateToSeries(item) }
+                search_image_add_button.setOnClickListener { showAddMenu() }
             }
         }
 
-        private fun addSeries(item: MalimeModel) {
+        private fun showAddMenu() {
+            val popup = PopupMenu(searchView.root.context, searchView.root.search_image_add_button)
+            popup.inflate(R.menu.menu_possible_states)
+            popup.setOnMenuItemClickListener(this)
+            popup.show()
+        }
+
+        override fun onMenuItemClick(item: MenuItem?): Boolean {
+            when (item?.itemId) {
+                R.id.menu_maldisplay_state_complete -> addSeries(UserSeriesStatus.Completed)
+                R.id.menu_maldisplay_state_current -> addSeries(UserSeriesStatus.Current)
+                R.id.menu_maldisplay_state_dropped -> addSeries(UserSeriesStatus.Dropped)
+                R.id.menu_maldisplay_state_on_hold -> addSeries(UserSeriesStatus.OnHold)
+                R.id.menu_maldisplay_state_planned -> addSeries(UserSeriesStatus.Planned)
+                else -> return false
+            }
+            return true
+        }
+
+        private fun addSeries(status: UserSeriesStatus) {
             setLayoutState(false)
 
-            interactor.addNewSeries(item) { success ->
+            malItem.userSeriesStatus = status
+            if (status == UserSeriesStatus.Completed) {
+                malItem.progress = malItem.totalLength
+            } else {
+                malItem.progress = 0
+            }
+
+            interactor.addNewSeries(malItem) { success ->
                 setLayoutState(true)
                 Snackbar.make(
                     loadingLayout,
@@ -107,7 +129,7 @@ class SearchViewAdapter(
                         } else {
                             searchView.root.context.getString(R.string.search_add_failed)
                         },
-                        item.title
+                        malItem.title
                     ), Snackbar.LENGTH_LONG
                 ).show()
             }
