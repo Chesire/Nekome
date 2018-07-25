@@ -63,7 +63,6 @@
                 android:layout_toEndOf="@id/item_malmodel_image"
                 android:text='@{String.format("%s/%s", model.progress, model.totalSeriesLength)}' />
 
-
             <ImageButton
                 android:id="@+id/item_malmodel_plus_one"
                 style="@style/malitem_image_button_style"
