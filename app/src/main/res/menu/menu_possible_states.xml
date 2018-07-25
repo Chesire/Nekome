@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_maldisplay_state_complete"
+        android:title="@string/filter_state_completed" />
+    <item
+        android:id="@+id/menu_maldisplay_state_current"
+        android:title="@string/filter_state_current" />
+    <item
+        android:id="@+id/menu_maldisplay_state_dropped"
+        android:title="@string/filter_state_dropped" />
+    <item
+        android:id="@+id/menu_maldisplay_state_on_hold"
+        android:title="@string/filter_state_on_hold" />
+    <item
+        android:id="@+id/menu_maldisplay_state_planned"
+        android:title="@string/filter_state_planned" />
+</menu>
