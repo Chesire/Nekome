@@ -324,7 +324,7 @@ class KitsuManager @Inject constructor(
             add("data", JsonObject().apply {
                 addProperty("type", "libraryEntries")
                 add("attributes", JsonObject().apply {
-                    addProperty("progress", 0)
+                    addProperty("progress", item.progress)
                     addProperty("status", item.userSeriesStatus.kitsuString)
                 })
                 add("relationships", JsonObject().apply {

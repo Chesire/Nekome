@@ -114,6 +114,11 @@ class SearchViewAdapter(
             setLayoutState(false)
 
             malItem.userSeriesStatus = status
+            if (status == UserSeriesStatus.Completed) {
+                malItem.progress = malItem.totalLength
+            } else {
+                malItem.progress = 0
+            }
 
             interactor.addNewSeries(malItem) { success ->
                 setLayoutState(true)
