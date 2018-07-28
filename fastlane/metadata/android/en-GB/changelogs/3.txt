@@ -1,0 +1,3 @@
+Beta release
+
+MyAnimeList has currently broken their API, so no functionality will currently work unfortunately.
