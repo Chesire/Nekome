@@ -15,7 +15,7 @@ import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.simplexml.SimpleXmlConverterFactory
 
-internal const val MyAnimeListEndpoint = "https://myanimelist.net/"
+private const val MyAnimeListEndpoint = "https://myanimelist.net/"
 
 /**
  * Provides the layer between the [MalService] and the [MalManager].

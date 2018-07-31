@@ -19,7 +19,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Inject
 
-internal const val KitsuEndpoint = "https://kitsu.io/"
+private const val KitsuEndpoint = "https://kitsu.io/"
 
 class KitsuApi @Inject constructor(authorizer: KitsuAuthorizer) {
     private val kitsuService: KitsuService
