@@ -1,3 +1,4 @@
 <resources>
     <string name="view_profile_mal">https://myanimelist.net/profile/%s</string>
+    <string name="view_series_mal">https://myanimelist.net/%s/%s"</string>
 </resources>
