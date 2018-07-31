@@ -66,10 +66,6 @@ class Library @Inject constructor(
             .subscribe()
     }
 
-    fun getItemUrl(item: MalimeModel): String {
-        return malimeApi.getItemUrl(item)
-    }
-
     private fun getLibraryFromDb(): Observable<List<MalimeModel>> {
         return dao.getAll().toObservable()
     }

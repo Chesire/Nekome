@@ -19,15 +19,17 @@ import android.view.View
 import android.view.ViewGroup
 import com.chesire.malime.R
 import com.chesire.malime.core.flags.ItemType
+import com.chesire.malime.core.models.MalimeModel
 import com.chesire.malime.databinding.FragmentSearchBinding
 import com.chesire.malime.injection.Injectable
 import com.chesire.malime.util.SharedPref
+import com.chesire.malime.util.UrlLoader
 import com.chesire.malime.util.autoCleared
 import com.chesire.malime.util.extension.hideSystemKeyboard
 import kotlinx.android.synthetic.main.fragment_search.search_search_term_edit_text
 import javax.inject.Inject
 
-class SearchFragment : Fragment(), Injectable {
+class SearchFragment : Fragment(), Injectable, SearchInteractionListener {
     private var checkedOption = R.id.search_option_anime_choice
     private var binding by autoCleared<FragmentSearchBinding>()
     private lateinit var viewModel: SearchViewModel
@@ -38,6 +40,8 @@ class SearchFragment : Fragment(), Injectable {
     lateinit var viewModelFactory: ViewModelProvider.Factory
     @Inject
     lateinit var sharedPref: SharedPref
+    @Inject
+    lateinit var urlLoader: UrlLoader
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -111,7 +115,7 @@ class SearchFragment : Fragment(), Injectable {
             true
         }
 
-        viewAdapter = SearchViewAdapter(viewModel)
+        viewAdapter = SearchViewAdapter(this)
         recyclerView.adapter = viewAdapter
         binding.vm = viewModel
     }
@@ -119,6 +123,14 @@ class SearchFragment : Fragment(), Injectable {
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
         inflater?.inflate(R.menu.menu_search, menu)
         super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun addNewSeries(selectedSeries: MalimeModel, callback: (Boolean) -> Unit) {
+        viewModel.addNewSeries(selectedSeries, callback)
+    }
+
+    override fun navigateToSeries(selectedSeries: MalimeModel) {
+        urlLoader.loadSeries(requireContext(), sharedPref.getPrimaryService(), selectedSeries)
     }
 
     companion object {

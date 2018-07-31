@@ -1,12 +1,9 @@
 package com.chesire.malime.view.maldisplay
 
-import android.app.Application
-import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.LiveDataReactiveStreams
 import android.arch.lifecycle.MutableLiveData
-import android.net.Uri
-import android.support.customtabs.CustomTabsIntent
+import android.arch.lifecycle.ViewModel
 import com.chesire.malime.core.flags.UserSeriesStatus
 import com.chesire.malime.core.models.MalimeModel
 import com.chesire.malime.core.repositories.Library
@@ -19,9 +16,8 @@ import timber.log.Timber
 import javax.inject.Inject
 
 class MalDisplayViewModel @Inject constructor(
-    context: Application,
     private val library: Library
-) : AndroidViewModel(context), ModelInteractionListener {
+) : ViewModel() {
     private val disposables = CompositeDisposable()
 
     @Inject
@@ -57,14 +53,7 @@ class MalDisplayViewModel @Inject constructor(
         )
     }
 
-    override fun showSeriesProfile(model: MalimeModel) {
-        Timber.d("Series ${model.title} image pressed, loading url")
-        CustomTabsIntent.Builder()
-            .build()
-            .launchUrl(getApplication(), Uri.parse(library.getItemUrl(model)))
-    }
-
-    override fun deleteSeries(model: MalimeModel, callback: (success: Boolean) -> Unit) {
+    fun deleteSeries(model: MalimeModel, callback: (success: Boolean) -> Unit) {
         Timber.d("Series ${model.title} is being deleted")
 
         disposables.add(
@@ -83,7 +72,7 @@ class MalDisplayViewModel @Inject constructor(
         )
     }
 
-    override fun updateSeries(
+    fun updateSeries(
         model: MalimeModel,
         newProgress: Int,
         newStatus: UserSeriesStatus,

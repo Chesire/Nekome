@@ -2,7 +2,6 @@ package com.chesire.malime.view.maldisplay
 
 import android.arch.core.executor.testing.InstantTaskExecutorRule
 import android.arch.lifecycle.Observer
-import android.test.mock.MockApplication
 import com.chesire.malime.core.flags.UserSeriesStatus
 import com.chesire.malime.core.models.MalimeModel
 import com.chesire.malime.core.repositories.Library
@@ -22,7 +21,6 @@ import org.junit.rules.TestRule
 import org.mockito.Mockito.`when`
 import org.mockito.Mockito.verify
 
-@Suppress("DEPRECATION")
 class MalDisplayViewModelTests {
     @get:Rule
     val rule: TestRule = InstantTaskExecutorRule()
@@ -40,7 +38,7 @@ class MalDisplayViewModelTests {
         `when`(mockItems.toFlowable(BackpressureStrategy.ERROR)).thenReturn(flowableItems)
         `when`(library.observeLibrary()).thenReturn(mockItems)
 
-        testObject = MalDisplayViewModel(MockApplication(), library)
+        testObject = MalDisplayViewModel(library)
             .apply {
                 observeScheduler = testScheduler
                 subscribeScheduler = testScheduler
