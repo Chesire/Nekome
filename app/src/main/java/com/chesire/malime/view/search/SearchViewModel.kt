@@ -5,9 +5,7 @@ import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.LiveDataReactiveStreams
 import android.arch.lifecycle.MutableLiveData
-import android.net.Uri
 import android.support.annotation.StringRes
-import android.support.customtabs.CustomTabsIntent
 import com.chesire.malime.R
 import com.chesire.malime.core.api.SearchApi
 import com.chesire.malime.core.flags.ItemType
@@ -25,7 +23,7 @@ class SearchViewModel @Inject constructor(
     context: Application,
     private val searchApi: SearchApi,
     private val library: Library
-) : AndroidViewModel(context), SearchInteractionListener {
+) : AndroidViewModel(context) {
     private val disposables = CompositeDisposable()
 
     @Inject
@@ -73,7 +71,7 @@ class SearchViewModel @Inject constructor(
         )
     }
 
-    override fun addNewSeries(selectedSeries: MalimeModel, callback: (Boolean) -> Unit) {
+    fun addNewSeries(selectedSeries: MalimeModel, callback: (Boolean) -> Unit) {
         disposables.add(
             library.sendNewToApi(selectedSeries)
                 .subscribeOn(subscribeScheduler)
@@ -88,13 +86,6 @@ class SearchViewModel @Inject constructor(
                     }
                 )
         )
-    }
-
-    override fun navigateToSeries(selectedSeries: MalimeModel) {
-        Timber.d("Series ${selectedSeries.title} image pressed, loading url")
-        CustomTabsIntent.Builder()
-            .build()
-            .launchUrl(getApplication(), Uri.parse(library.getItemUrl(selectedSeries)))
     }
 
     override fun onCleared() {

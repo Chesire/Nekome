@@ -22,9 +22,11 @@ import android.view.ViewGroup
 import com.chesire.malime.R
 import com.chesire.malime.core.flags.ItemType
 import com.chesire.malime.core.flags.UserSeriesStatus
+import com.chesire.malime.core.models.MalimeModel
 import com.chesire.malime.databinding.FragmentMaldisplayBinding
 import com.chesire.malime.injection.Injectable
 import com.chesire.malime.util.SharedPref
+import com.chesire.malime.util.UrlLoader
 import com.chesire.malime.util.autoCleared
 import com.chesire.malime.util.extension.getSeriesStatusStrings
 import kotlinx.android.synthetic.main.fragment_maldisplay.maldisplay_swipe_refresh
@@ -33,7 +35,7 @@ import javax.inject.Inject
 
 private const val ITEM_TYPE_BUNDLE_ID = "ITEM_TYPE_BUNDLE_ID"
 
-class MalDisplayFragment : Fragment(), Injectable {
+class MalDisplayFragment : Fragment(), Injectable, ModelInteractionListener {
     private var binding by autoCleared<FragmentMaldisplayBinding>()
     private var viewAdapter by autoCleared<MalDisplayViewAdapter>()
     private lateinit var viewModel: MalDisplayViewModel
@@ -44,6 +46,8 @@ class MalDisplayFragment : Fragment(), Injectable {
     lateinit var viewModelFactory: ViewModelProvider.Factory
     @Inject
     lateinit var sharedPref: SharedPref
+    @Inject
+    lateinit var urlLoader: UrlLoader
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -104,7 +108,7 @@ class MalDisplayFragment : Fragment(), Injectable {
                     })
             }
 
-        viewAdapter = MalDisplayViewAdapter(viewModel, sharedPref)
+        viewAdapter = MalDisplayViewAdapter(this, sharedPref)
         recyclerView.adapter = viewAdapter
         binding.vm = viewModel
     }
@@ -165,6 +169,23 @@ class MalDisplayFragment : Fragment(), Injectable {
                 // nothing for now
             }
         }
+    }
+
+    override fun showSeriesProfile(model: MalimeModel) {
+        urlLoader.loadSeries(requireContext(), sharedPref.getPrimaryService(), model)
+    }
+
+    override fun deleteSeries(model: MalimeModel, callback: (success: Boolean) -> Unit) {
+        viewModel.deleteSeries(model, callback)
+    }
+
+    override fun updateSeries(
+        model: MalimeModel,
+        newProgress: Int,
+        newStatus: UserSeriesStatus,
+        callback: (success: Boolean) -> Unit
+    ) {
+        viewModel.updateSeries(model, newProgress, newStatus, callback)
     }
 
     companion object {
