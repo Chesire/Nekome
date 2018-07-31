@@ -1,10 +1,9 @@
 package com.chesire.malime.view.maldisplay
 
-import android.app.Application
-import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.LiveDataReactiveStreams
 import android.arch.lifecycle.MutableLiveData
+import android.arch.lifecycle.ViewModel
 import com.chesire.malime.core.flags.UserSeriesStatus
 import com.chesire.malime.core.models.MalimeModel
 import com.chesire.malime.core.repositories.Library
@@ -17,9 +16,8 @@ import timber.log.Timber
 import javax.inject.Inject
 
 class MalDisplayViewModel @Inject constructor(
-    context: Application,
     private val library: Library
-) : AndroidViewModel(context) {
+) : ViewModel() {
     private val disposables = CompositeDisposable()
 
     @Inject

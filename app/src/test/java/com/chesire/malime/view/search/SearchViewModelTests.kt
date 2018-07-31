@@ -2,7 +2,6 @@ package com.chesire.malime.view.search
 
 import android.arch.core.executor.testing.InstantTaskExecutorRule
 import android.arch.lifecycle.Observer
-import android.test.mock.MockApplication
 import com.chesire.malime.R
 import com.chesire.malime.core.api.SearchApi
 import com.chesire.malime.core.flags.ItemType
@@ -26,7 +25,6 @@ import org.mockito.Mockito.`when`
 import org.mockito.Mockito.verify
 import org.mockito.internal.verification.Times
 
-@Suppress("DEPRECATION")
 class SearchViewModelTests {
     @get:Rule
     val rule: TestRule = InstantTaskExecutorRule()
@@ -45,7 +43,7 @@ class SearchViewModelTests {
         `when`(mockItems.toFlowable(BackpressureStrategy.ERROR)).thenReturn(flowableItems)
         `when`(library.observeLibrary()).thenReturn(mockItems)
 
-        testObject = SearchViewModel(MockApplication(), searchApi, library)
+        testObject = SearchViewModel(searchApi, library)
             .apply {
                 observeScheduler = testScheduler
                 subscribeScheduler = testScheduler
