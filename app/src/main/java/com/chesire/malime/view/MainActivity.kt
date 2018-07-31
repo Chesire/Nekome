@@ -1,11 +1,9 @@
 package com.chesire.malime.view
 
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.HandlerThread
-import android.support.customtabs.CustomTabsIntent
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
 import android.support.v7.app.AlertDialog
@@ -13,12 +11,12 @@ import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import com.chesire.malime.R
 import com.chesire.malime.core.flags.ItemType
-import com.chesire.malime.core.flags.SupportedService
 import com.chesire.malime.core.repositories.Authorization
 import com.chesire.malime.core.room.MalimeDatabase
 import com.chesire.malime.service.PeriodicUpdateHelper
 import com.chesire.malime.service.RefreshTokenHelper
 import com.chesire.malime.util.SharedPref
+import com.chesire.malime.util.UrlLoader
 import com.chesire.malime.view.login.LoginActivity
 import com.chesire.malime.view.maldisplay.MalDisplayFragment
 import com.chesire.malime.view.preferences.PrefActivity
@@ -27,7 +25,6 @@ import com.chesire.malime.view.search.SearchFragment
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
 import timber.log.Timber
-import java.util.Locale
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
@@ -42,6 +39,8 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
     lateinit var authorization: Authorization
     @Inject
     lateinit var db: MalimeDatabase
+    @Inject
+    lateinit var urlLoader: UrlLoader
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -171,26 +170,8 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
     }
 
     private fun launchProfile() {
-        CustomTabsIntent.Builder()
-            .build()
-            .launchUrl(
-                this,
-                Uri.parse(
-                    if (sharedPref.getPrimaryService() == SupportedService.MyAnimeList) {
-                        String.format(
-                            Locale.ROOT,
-                            getString(R.string.view_profile_mal),
-                            authorization.getUser(SupportedService.MyAnimeList)
-                        )
-                    } else {
-                        String.format(
-                            Locale.ROOT,
-                            getString(R.string.view_profile_kitsu),
-                            authorization.getUser(SupportedService.Kitsu)
-                        )
-                    }
-                )
-            )
+        val primaryService = sharedPref.getPrimaryService()
+        urlLoader.loadProfile(this, primaryService, authorization.getUser(primaryService))
     }
 
     private fun setFragment(fragment: Fragment, fragmentTag: String) {
