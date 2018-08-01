@@ -6,4 +6,5 @@ import io.reactivex.Single
 interface AuthApi {
     fun login(username: String, password: String): Single<AuthModel>
     fun getNewAuthToken(refreshToken: String): Single<AuthModel>
+    fun getUserId(): Single<Int>
 }
