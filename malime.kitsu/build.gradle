@@ -37,7 +37,7 @@ dependencies {
     implementation "com.jakewharton.timber:timber:$timber_version"
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
-    api 'com.squareup.okhttp3:logging-interceptor:3.6.0'
+    api 'com.squareup.okhttp3:logging-interceptor:3.11.0'
     implementation "io.reactivex.rxjava2:rxandroid:$rxandroid_version"
     implementation "io.reactivex.rxjava2:rxjava:$rxjava_version"
 

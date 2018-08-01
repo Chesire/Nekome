@@ -42,7 +42,7 @@ dependencies {
         exclude module: 'xpp3'
         // should switch to com.squareup.retrofit2:converter-jaxb:latest when can be tested
     }
-    api 'com.squareup.okhttp3:logging-interceptor:3.6.0'
+    api 'com.squareup.okhttp3:logging-interceptor:3.11.0'
     implementation "io.reactivex.rxjava2:rxandroid:$rxandroid_version"
     implementation "io.reactivex.rxjava2:rxjava:$rxjava_version"
 
