@@ -35,8 +35,8 @@ dependencies {
     implementation "com.android.support:appcompat-v7:$support_lib_version"
     implementation 'com.google.code.gson:gson:2.8.5'
     implementation "com.jakewharton.timber:timber:$timber_version"
-    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
-    implementation('com.squareup.retrofit2:converter-simplexml:2.3.0') {
+    implementation 'com.squareup.retrofit2:retrofit:2.4.0'
+    implementation('com.squareup.retrofit2:converter-simplexml:2.4.0') {
         exclude module: 'stax'
         exclude module: 'stax-api'
         exclude module: 'xpp3'
