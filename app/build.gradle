@@ -80,8 +80,9 @@ dependencies {
     implementation "com.google.dagger:dagger-android:$dagger_version"
     implementation "com.google.dagger:dagger-android-support:$dagger_version"
 
-    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.5.4'
-    releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.6.1'
+    debugImplementation 'com.squareup.leakcanary:leakcanary-support-fragment:1.6.1'
+    releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.6.1'
 
     testImplementation 'android.arch.persistence.room:testing:1.1.1'
     testImplementation 'android.arch.core:core-testing:1.1.1'
