@@ -1,32 +1,32 @@
 package com.chesire.malime.core.flags
 
-import junit.framework.Assert
+import org.junit.Assert.assertEquals
 import org.junit.Test
 
 class SeriesStatusTests {
     @Test
     fun `get status for Kitsu string of "unknown", returns Unknown status`() {
-        Assert.assertEquals(SeriesStatus.Unknown, SeriesStatus.getStatusForKitsuString("unknown"))
+        assertEquals(SeriesStatus.Unknown, SeriesStatus.getStatusForKitsuString("unknown"))
     }
 
     @Test
     fun `get status for Kitsu string of "current", returns Current status`() {
-        Assert.assertEquals(SeriesStatus.Current, SeriesStatus.getStatusForKitsuString("current"))
+        assertEquals(SeriesStatus.Current, SeriesStatus.getStatusForKitsuString("current"))
     }
 
     @Test
     fun `get status for Kitsu string of "finished", returns Finished status`() {
-        Assert.assertEquals(SeriesStatus.Finished, SeriesStatus.getStatusForKitsuString("finished"))
+        assertEquals(SeriesStatus.Finished, SeriesStatus.getStatusForKitsuString("finished"))
     }
 
     @Test
     fun `get status for Kitsu string of "tba", returns TBA status`() {
-        Assert.assertEquals(SeriesStatus.TBA, SeriesStatus.getStatusForKitsuString("tba"))
+        assertEquals(SeriesStatus.TBA, SeriesStatus.getStatusForKitsuString("tba"))
     }
 
     @Test
     fun `get status for Kitsu string of "unreleased", returns Unreleased status`() {
-        Assert.assertEquals(
+        assertEquals(
             SeriesStatus.Unreleased,
             SeriesStatus.getStatusForKitsuString("unreleased")
         )
@@ -34,12 +34,12 @@ class SeriesStatusTests {
 
     @Test
     fun `get status for Kitsu string of "upcoming", returns Upcoming status`() {
-        Assert.assertEquals(SeriesStatus.Upcoming, SeriesStatus.getStatusForKitsuString("upcoming"))
+        assertEquals(SeriesStatus.Upcoming, SeriesStatus.getStatusForKitsuString("upcoming"))
     }
 
     @Test
     fun `get status for unexpected Kitsu string of "unexpected", returns Unknown status`() {
-        Assert.assertEquals(
+        assertEquals(
             SeriesStatus.Unknown,
             SeriesStatus.getStatusForKitsuString("unexpected")
         )
@@ -47,71 +47,71 @@ class SeriesStatusTests {
 
     @Test
     fun `get status for Mal id of 0, returns Unknown status`() {
-        Assert.assertEquals(SeriesStatus.Unknown, SeriesStatus.getStatusForMalId(0))
+        assertEquals(SeriesStatus.Unknown, SeriesStatus.getStatusForMalId(0))
     }
 
     @Test
     fun `get status for Mal id of 1, returns Current status`() {
-        Assert.assertEquals(SeriesStatus.Current, SeriesStatus.getStatusForMalId(1))
+        assertEquals(SeriesStatus.Current, SeriesStatus.getStatusForMalId(1))
     }
 
     @Test
     fun `get status for Mal id of 2, returns Finished status`() {
-        Assert.assertEquals(SeriesStatus.Finished, SeriesStatus.getStatusForMalId(2))
+        assertEquals(SeriesStatus.Finished, SeriesStatus.getStatusForMalId(2))
     }
 
     @Test
     fun `get status for Mal id of 3, returns TBA status`() {
-        Assert.assertEquals(SeriesStatus.TBA, SeriesStatus.getStatusForMalId(3))
+        assertEquals(SeriesStatus.TBA, SeriesStatus.getStatusForMalId(3))
     }
 
     @Test
     fun `get status for Mal id of 4, returns Unreleased status`() {
-        Assert.assertEquals(SeriesStatus.Unreleased, SeriesStatus.getStatusForMalId(4))
+        assertEquals(SeriesStatus.Unreleased, SeriesStatus.getStatusForMalId(4))
     }
 
     @Test
     fun `get status for Mal id of 6, returns Upcoming status`() {
-        Assert.assertEquals(SeriesStatus.Upcoming, SeriesStatus.getStatusForMalId(6))
+        assertEquals(SeriesStatus.Upcoming, SeriesStatus.getStatusForMalId(6))
     }
 
     @Test
     fun `get status for unexpected Mal id of 999, returns Unknown status`() {
-        Assert.assertEquals(SeriesStatus.Unknown, SeriesStatus.getStatusForMalId(999))
+        assertEquals(SeriesStatus.Unknown, SeriesStatus.getStatusForMalId(999))
     }
 
     @Test
     fun `get status for id of 0, returns Unknown status`() {
-        Assert.assertEquals(SeriesStatus.Unknown, SeriesStatus.getStatusForInternalId(0))
+        assertEquals(SeriesStatus.Unknown, SeriesStatus.getStatusForInternalId(0))
     }
 
     @Test
     fun `get status for id of 1, returns Current status`() {
-        Assert.assertEquals(SeriesStatus.Current, SeriesStatus.getStatusForInternalId(1))
+        assertEquals(SeriesStatus.Current, SeriesStatus.getStatusForInternalId(1))
     }
 
     @Test
     fun `get status for id of 2, returns Finished status`() {
-        Assert.assertEquals(SeriesStatus.Finished, SeriesStatus.getStatusForInternalId(2))
+        assertEquals(SeriesStatus.Finished, SeriesStatus.getStatusForInternalId(2))
     }
 
     @Test
     fun `get status for id of 3, returns TBA status`() {
-        Assert.assertEquals(SeriesStatus.TBA, SeriesStatus.getStatusForInternalId(3))
+        assertEquals(SeriesStatus.TBA, SeriesStatus.getStatusForInternalId(3))
     }
 
     @Test
     fun `get status for id of 4, returns Unreleased status`() {
-        Assert.assertEquals(SeriesStatus.Unreleased, SeriesStatus.getStatusForInternalId(4))
+        assertEquals(SeriesStatus.Unreleased, SeriesStatus.getStatusForInternalId(4))
     }
 
     @Test
     fun `get status for id of 5, returns Upcoming status`() {
-        Assert.assertEquals(SeriesStatus.Upcoming, SeriesStatus.getStatusForInternalId(5))
+        assertEquals(SeriesStatus.Upcoming, SeriesStatus.getStatusForInternalId(5))
     }
 
     @Test
     fun `get status for unexpected id of 999, returns Unknown status`() {
-        Assert.assertEquals(SeriesStatus.Unknown, SeriesStatus.getStatusForInternalId(999))
+        assertEquals(SeriesStatus.Unknown, SeriesStatus.getStatusForInternalId(999))
     }
 }
