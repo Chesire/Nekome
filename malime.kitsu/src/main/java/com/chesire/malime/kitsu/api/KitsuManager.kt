@@ -1,7 +1,7 @@
 package com.chesire.malime.kitsu.api
 
 import com.chesire.malime.core.api.AuthApi
-import com.chesire.malime.core.api.MalimeApi
+import com.chesire.malime.core.api.LibraryApi
 import com.chesire.malime.core.api.SearchApi
 import com.chesire.malime.core.flags.ItemType
 import com.chesire.malime.core.flags.SeriesStatus
@@ -25,7 +25,7 @@ private const val MAX_RETRIES = 3
 class KitsuManager @Inject constructor(
     private val api: KitsuApi,
     authorizer: KitsuAuthorizer
-) : AuthApi, MalimeApi, SearchApi {
+) : AuthApi, LibraryApi, SearchApi {
     private val userId = authorizer.retrieveUser()
 
     override fun login(username: String, password: String): Single<AuthModel> {

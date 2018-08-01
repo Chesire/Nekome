@@ -3,11 +3,11 @@ package com.chesire.malime.view.login.kitsu
 import android.arch.core.executor.testing.InstantTaskExecutorRule
 import android.arch.lifecycle.Observer
 import com.chesire.malime.R
+import com.chesire.malime.core.api.AuthApi
 import com.chesire.malime.core.flags.SupportedService
 import com.chesire.malime.core.models.AuthModel
 import com.chesire.malime.customMock
 import com.chesire.malime.kitsu.api.KitsuAuthorizer
-import com.chesire.malime.kitsu.api.KitsuManager
 import com.chesire.malime.util.SharedPref
 import com.chesire.malime.view.login.LoginStatus
 import io.reactivex.Single
@@ -27,7 +27,7 @@ class KitsuLoginViewModelTests {
 
     private lateinit var testObject: KitsuLoginViewModel
     private val sharedPref: SharedPref = customMock()
-    private val kitsuManager: KitsuManager = customMock()
+    private val auth: AuthApi = customMock()
     private val authorizer: KitsuAuthorizer = customMock()
     private val errorObserver: Observer<Int> = customMock()
     private val loginObserver: Observer<LoginStatus> = customMock()
@@ -35,7 +35,7 @@ class KitsuLoginViewModelTests {
 
     @Before
     fun setup() {
-        testObject = KitsuLoginViewModel(sharedPref, kitsuManager, authorizer)
+        testObject = KitsuLoginViewModel(sharedPref, auth, authorizer)
             .apply {
                 observeScheduler = testScheduler
                 subscribeScheduler = testScheduler
@@ -59,7 +59,7 @@ class KitsuLoginViewModelTests {
         testObject.executeLogin()
 
         verify(errorObserver).onChanged(R.string.login_failure_email)
-        verify(kitsuManager, never()).login(
+        verify(auth, never()).login(
             testObject.loginModel.userName,
             testObject.loginModel.password
         )
@@ -72,7 +72,7 @@ class KitsuLoginViewModelTests {
         testObject.executeLogin()
 
         verify(errorObserver).onChanged(R.string.login_failure_password)
-        verify(kitsuManager, never()).login(
+        verify(auth, never()).login(
             testObject.loginModel.userName,
             testObject.loginModel.password
         )
@@ -81,7 +81,7 @@ class KitsuLoginViewModelTests {
     @Test
     fun `failure to login provides error message`() {
         `when`(
-            kitsuManager.login(
+            auth.login(
                 testObject.loginModel.userName,
                 testObject.loginModel.password
             )
@@ -96,7 +96,7 @@ class KitsuLoginViewModelTests {
     @Test
     fun `failure to login calls loginResponse with LoginStatus#ERROR`() {
         `when`(
-            kitsuManager.login(
+            auth.login(
                 testObject.loginModel.userName,
                 testObject.loginModel.password
             )
@@ -115,12 +115,12 @@ class KitsuLoginViewModelTests {
         val returnedModel = AuthModel("authtoken", "refresh", 0, "provider")
 
         `when`(
-            kitsuManager.login(
+            auth.login(
                 testObject.loginModel.userName,
                 testObject.loginModel.password
             )
         ).thenReturn(Single.just(returnedModel))
-        `when`(kitsuManager.getUserId()).thenReturn(Single.error(Exception("Test Exception")))
+        `when`(auth.getUserId()).thenReturn(Single.error(Exception("Test Exception")))
 
         testObject.executeLogin()
         testScheduler.triggerActions()
@@ -134,12 +134,12 @@ class KitsuLoginViewModelTests {
         val returnedModel = AuthModel("authtoken", "refresh", 0, "provider")
 
         `when`(
-            kitsuManager.login(
+            auth.login(
                 testObject.loginModel.userName,
                 testObject.loginModel.password
             )
         ).thenReturn(Single.just(returnedModel))
-        `when`(kitsuManager.getUserId()).thenReturn(Single.error(Exception("Test Exception")))
+        `when`(auth.getUserId()).thenReturn(Single.error(Exception("Test Exception")))
 
         testObject.executeLogin()
         testScheduler.triggerActions()
@@ -155,12 +155,12 @@ class KitsuLoginViewModelTests {
         val returnedModel = AuthModel("authtoken", "refresh", 0, "provider")
 
         `when`(
-            kitsuManager.login(
+            auth.login(
                 testObject.loginModel.userName,
                 testObject.loginModel.password
             )
         ).thenReturn(Single.just(returnedModel))
-        `when`(kitsuManager.getUserId()).thenReturn(Single.just(expectedId))
+        `when`(auth.getUserId()).thenReturn(Single.just(expectedId))
 
         testObject.executeLogin()
         testScheduler.triggerActions()
@@ -177,12 +177,12 @@ class KitsuLoginViewModelTests {
         val returnedModel = AuthModel("authtoken", "refresh", 0, "provider")
 
         `when`(
-            kitsuManager.login(
+            auth.login(
                 testObject.loginModel.userName,
                 testObject.loginModel.password
             )
         ).thenReturn(Single.just(returnedModel))
-        `when`(kitsuManager.getUserId()).thenReturn(Single.just(expectedId))
+        `when`(auth.getUserId()).thenReturn(Single.just(expectedId))
 
         testObject.executeLogin()
         testScheduler.triggerActions()

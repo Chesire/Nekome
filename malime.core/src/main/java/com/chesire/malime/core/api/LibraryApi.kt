@@ -5,10 +5,9 @@ import com.chesire.malime.core.models.MalimeModel
 import io.reactivex.Observable
 import io.reactivex.Single
 
-interface MalimeApi {
+interface LibraryApi {
     fun addItem(item: MalimeModel): Single<MalimeModel>
     fun deleteItem(item: MalimeModel): Single<MalimeModel>
-    fun getUserId(): Single<Int>
     fun getUserLibrary(): Observable<List<MalimeModel>>
     fun updateItem(
         item: MalimeModel,
