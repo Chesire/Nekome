@@ -1,6 +1,6 @@
 package com.chesire.malime.core.repositories
 
-import com.chesire.malime.core.api.MalimeApi
+import com.chesire.malime.core.api.LibraryApi
 import com.chesire.malime.core.flags.UserSeriesStatus
 import com.chesire.malime.core.models.MalimeModel
 import com.chesire.malime.core.room.MalimeDao
@@ -11,7 +11,7 @@ import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 class Library @Inject constructor(
-    private val malimeApi: MalimeApi,
+    private val libraryApi: LibraryApi,
     private val dao: MalimeDao
 ) {
     fun observeLibrary(): Observable<List<MalimeModel>> {
@@ -19,11 +19,11 @@ class Library @Inject constructor(
     }
 
     fun updateLibraryFromApi(): Observable<List<MalimeModel>> {
-        return malimeApi.getUserLibrary()
+        return libraryApi.getUserLibrary()
     }
 
     fun sendNewToApi(item: MalimeModel): Single<MalimeModel> {
-        return malimeApi.addItem(item)
+        return libraryApi.addItem(item)
     }
 
     fun sendUpdateToApi(
@@ -31,11 +31,11 @@ class Library @Inject constructor(
         newProgress: Int,
         newStatus: UserSeriesStatus
     ): Single<MalimeModel> {
-        return malimeApi.updateItem(item, newProgress, newStatus)
+        return libraryApi.updateItem(item, newProgress, newStatus)
     }
 
     fun sendDeleteToApi(item: MalimeModel): Single<MalimeModel> {
-        return malimeApi.deleteItem(item)
+        return libraryApi.deleteItem(item)
     }
 
     fun deleteFromLocalLibrary(item: MalimeModel) {

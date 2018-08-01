@@ -1,7 +1,7 @@
 package com.chesire.malime.mal.api
 
 import com.chesire.malime.core.api.AuthApi
-import com.chesire.malime.core.api.MalimeApi
+import com.chesire.malime.core.api.LibraryApi
 import com.chesire.malime.core.api.SearchApi
 import com.chesire.malime.core.flags.ItemType
 import com.chesire.malime.core.flags.SeriesStatus
@@ -27,7 +27,7 @@ import java.util.Locale
 class MalManager(
     private val api: MalApi,
     private val username: String
-) : AuthApi, MalimeApi, SearchApi {
+) : AuthApi, LibraryApi, SearchApi {
     /**
      * Verifies a users credentials.
      * <p>
