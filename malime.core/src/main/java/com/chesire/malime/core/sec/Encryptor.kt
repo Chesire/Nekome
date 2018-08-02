@@ -13,13 +13,14 @@ import java.security.KeyPairGenerator
 import java.security.KeyStore
 import java.util.Calendar
 import javax.crypto.Cipher
+import javax.inject.Inject
 import javax.security.auth.x500.X500Principal
 
 private const val transformation = "RSA/ECB/PKCS1Padding"
 private const val algorithm = "RSA"
 private const val androidKeyStore = "AndroidKeyStore"
 
-class Encryptor(private val context: Context) {
+class Encryptor @Inject constructor(private val context: Context) {
     private val keyStore = KeyStore.getInstance(androidKeyStore)
 
     init {

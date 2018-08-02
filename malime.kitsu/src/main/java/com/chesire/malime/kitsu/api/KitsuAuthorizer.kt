@@ -1,7 +1,9 @@
 package com.chesire.malime.kitsu.api
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.util.Base64
+import com.chesire.malime.core.PreferenceProvider
 import com.chesire.malime.core.api.Authorizer
 import com.chesire.malime.core.models.AuthModel
 import com.chesire.malime.core.sec.Decryptor
@@ -16,12 +18,19 @@ private const val preferenceAuth: String = "pref_auth"
 private const val preferenceUser: String = "pref_user"
 
 @Singleton
-class KitsuAuthorizer @Inject constructor(context: Context) : Authorizer<Int> {
-    private val pref = context.getSharedPreferences(authPrefFile, Context.MODE_PRIVATE)
-    private val encryptor by lazy { Encryptor(context.applicationContext) }
-    private val decryptor by lazy { Decryptor() }
-    private var cachedModel: AuthModel = getEmptyAuthModel()
-    private var cachedUser: Int = -1
+class KitsuAuthorizer @Inject constructor(
+    context: Context,
+    prefProvider: PreferenceProvider,
+    private val encryptor: Encryptor,
+    private val decryptor: Decryptor
+) : Authorizer<Int> {
+    private val pref: SharedPreferences = prefProvider.getPreferencesFor(
+        context,
+        authPrefFile,
+        Context.MODE_PRIVATE
+    )
+    private var cachedModel = getEmptyAuthModel()
+    private var cachedUser = -1
 
     override fun storeAuthDetails(model: AuthModel) {
         cachedModel = model
