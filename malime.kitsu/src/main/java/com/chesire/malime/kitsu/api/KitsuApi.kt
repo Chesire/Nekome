@@ -116,8 +116,8 @@ class KitsuApi @Inject constructor(authorizer: KitsuAuthorizer) {
             updatingAuthToken = false
 
             if (refreshResponse.isSuccessful) {
-                refreshResponse.body().let {
-                    authModel.authToken = it!!.accessToken
+                refreshResponse.body()?.let {
+                    authModel.authToken = it.accessToken
                     authModel.refreshToken = it.refreshToken
                     authModel.expireAt = it.createdAt + it.expiresIn
                 }
