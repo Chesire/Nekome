@@ -76,12 +76,12 @@ class KitsuAuthInterceptor(private val authorizer: KitsuAuthorizer) : Intercepto
                                     "kitsu"
                                 )
                             authorizer.storeAuthDetails(newAuthModel)
+                            Timber.d("Successfully refreshed auth token")
                         }
                     }
                 }
             } catch (ex: Exception) {
-                Timber.e(ex, "Error trying to update auth token")
-                return@execute
+                Timber.e(ex, "Error trying to refresh auth token")
             } finally {
                 conn?.disconnect()
             }
