@@ -30,23 +30,28 @@ data class MalimeModel(
     val endDate: String
 ) {
     fun getTotalSeriesLength(): String =
-        if (totalLength == 0) {
-            UNKNOWN
-        } else {
+        if (totalLength > 0) {
             totalLength.toString()
+        } else {
+            UNKNOWN
         }
 
     fun getSeriesProgressPercent(): Int =
         if (getTotalSeriesLength() == UNKNOWN) {
-            if (progress == 0) {
+            if (progress <= 0) {
                 0
             } else {
                 50
             }
         } else {
-            (progress.toDouble().div(totalLength.toDouble()) * 100).roundToInt()
+            val percent = (progress.toDouble().div(totalLength.toDouble()) * 100).roundToInt()
+            if (percent > 0) {
+                percent
+            } else {
+                0
+            }
         }
 
-    fun canDecreaseProgress(): Boolean = progress != 0
+    fun canDecreaseProgress(): Boolean = progress > 0
     fun canIncreaseProgress(): Boolean = totalLength == 0 || progress < totalLength
 }

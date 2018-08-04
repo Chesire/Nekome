@@ -4,11 +4,12 @@ import java.nio.charset.StandardCharsets
 import java.security.KeyStore
 import java.security.PrivateKey
 import javax.crypto.Cipher
+import javax.inject.Inject
 
 private const val transformation = "RSA/ECB/PKCS1Padding"
 private const val androidKeyStore = "AndroidKeyStore"
 
-class Decryptor {
+class Decryptor @Inject constructor() {
     private val keyStore = KeyStore.getInstance(androidKeyStore)
 
     init {
