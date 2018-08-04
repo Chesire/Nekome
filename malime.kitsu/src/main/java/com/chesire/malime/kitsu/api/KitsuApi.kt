@@ -11,9 +11,7 @@ import okhttp3.RequestBody
 import retrofit2.Call
 import javax.inject.Inject
 
-class KitsuApi @Inject constructor(
-    private val kitsuService: KitsuService
-) {
+class KitsuApi @Inject constructor(private val kitsuService: KitsuService) {
     fun login(username: String, password: String): Call<LoginResponse> {
         return kitsuService.login(LoginRequest(username, password))
     }
