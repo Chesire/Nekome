@@ -171,7 +171,9 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
 
     private fun launchProfile() {
         val primaryService = sharedPref.getPrimaryService()
-        urlLoader.loadProfile(this, primaryService, authorization.getUser(primaryService))
+        authorization.getUser<Int?>(primaryService)?.let {
+            urlLoader.loadProfile(this, primaryService, it)
+        }
     }
 
     private fun setFragment(fragment: Fragment, fragmentTag: String) {
