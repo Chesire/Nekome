@@ -22,7 +22,12 @@ class SharedPref @Inject constructor(context: Context) {
         context.getSharedPreferences(SHARED_PREF_FILE, Context.MODE_PRIVATE)
 
     fun getPrimaryService() =
-        SupportedService.valueOf(sharedPreferences.getString(PREF_PRIMARY_SERVICE, "unknown"))
+        SupportedService.valueOf(
+            sharedPreferences.getString(
+                PREF_PRIMARY_SERVICE,
+                SupportedService.Unknown.name
+            )
+        )
 
     @SuppressLint("ApplySharedPref")
     fun putPrimaryService(service: SupportedService): SharedPref {
