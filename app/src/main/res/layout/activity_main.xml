@@ -22,5 +22,6 @@
         android:background="@color/colorPrimary"
         app:itemIconTint="@color/nav_item_state_list"
         app:itemTextColor="@color/nav_item_state_list"
+        app:layout_behavior="com.chesire.malime.util.BottomNavigationBehavior"
         app:menu="@menu/menu_main_navigation" />
 </android.support.design.widget.CoordinatorLayout>
