@@ -11,7 +11,7 @@ import kotlin.math.max
 import kotlin.math.min
 
 /**
- * Provides behavior to make the bottom navigation scroll down when the frame above it scrolls
+ * Provides behavior to make the bottom navigation scroll down when the frame above it scrolls.
  */
 @Suppress("UNUSED")
 class BottomNavigationBehavior<V : View>(
@@ -25,9 +25,7 @@ class BottomNavigationBehavior<V : View>(
         target: View,
         axes: Int,
         type: Int
-    ): Boolean {
-        return axes == ViewCompat.SCROLL_AXIS_VERTICAL
-    }
+    ): Boolean = axes == ViewCompat.SCROLL_AXIS_VERTICAL
 
     override fun layoutDependsOn(parent: CoordinatorLayout?, child: V, dependency: View?): Boolean {
         if (dependency is Snackbar.SnackbarLayout) {
@@ -50,13 +48,11 @@ class BottomNavigationBehavior<V : View>(
     }
 
     private fun updateSnackbar(child: View, snackbarLayout: Snackbar.SnackbarLayout) {
-        if (snackbarLayout.layoutParams is CoordinatorLayout.LayoutParams) {
-            val params = snackbarLayout.layoutParams as CoordinatorLayout.LayoutParams
-
-            params.anchorId = child.id
-            params.anchorGravity = Gravity.TOP
-            params.gravity = Gravity.TOP
-            snackbarLayout.layoutParams = params
+        (snackbarLayout.layoutParams as? CoordinatorLayout.LayoutParams)?.apply {
+            anchorId = child.id
+            anchorGravity = Gravity.TOP
+            gravity = Gravity.TOP
+            snackbarLayout.layoutParams = this
         }
     }
 }
