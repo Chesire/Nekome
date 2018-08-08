@@ -1,7 +1,7 @@
-App to interface with Kitsu to keep your current anime and manga series progress up to date.
+An ad free and open source app to interface with Kitsu to keep your current anime and manga series progress up to date.
 
-The app will let you: 
-* Add a new anime/manga series to track 
+Application features: 
+* Add new anime/manga series to track 
 * Update current series episode/chapter number 
 * Change series status 
 
