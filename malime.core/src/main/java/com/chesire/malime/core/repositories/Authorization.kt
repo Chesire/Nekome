@@ -14,8 +14,8 @@ class Authorization(private val authorizers: Map<SupportedService, Authorizer<*>
     }
 
     fun logoutAll() {
-        authorizers.forEach { _, value ->
-            value.clear()
+        SupportedService.values().forEach {
+            authorizers[it]?.clear()
         }
     }
 }
