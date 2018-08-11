@@ -1,6 +1,7 @@
 package com.chesire.malime.view.maldisplay
 
 import android.app.AlertDialog
+import android.content.Context
 import android.content.SharedPreferences
 import android.databinding.ViewDataBinding
 import android.support.design.widget.Snackbar
@@ -20,8 +21,6 @@ import com.chesire.malime.core.flags.UserSeriesStatus
 import com.chesire.malime.core.models.MalimeModel
 import com.chesire.malime.databinding.ItemMalmodelBinding
 import com.chesire.malime.util.GlideApp
-import com.chesire.malime.util.PREF_FILTER
-import com.chesire.malime.util.PREF_SORT
 import com.chesire.malime.util.SharedPref
 import com.chesire.malime.util.extension.getString
 import com.chesire.malime.view.preferences.SortOption
@@ -34,10 +33,13 @@ import timber.log.Timber
 import java.util.Locale
 
 class MalDisplayViewAdapter(
+    context: Context,
     private val listener: ModelInteractionListener,
     private val sharedPref: SharedPref
 ) : RecyclerView.Adapter<MalDisplayViewAdapter.ViewHolder>(), Filterable,
     SharedPreferences.OnSharedPreferenceChangeListener {
+    private val sortPref = context.getString(R.string.key_sort)
+    private val filterPref = context.getString(R.string.key_filter)
 
     private val items = ArrayList<MalimeModel>()
     private val filteredItems = ArrayList<MalimeModel>()
@@ -73,7 +75,7 @@ class MalDisplayViewAdapter(
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
         key?.let {
-            if (it.contains(PREF_SORT) || it.contains(PREF_FILTER)) {
+            if (it.contains(sortPref) || it.contains(filterPref)) {
                 filter.filter("")
             }
         }

@@ -3,43 +3,43 @@ package com.chesire.malime.util
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
+import com.chesire.malime.R
 import com.chesire.malime.core.flags.SupportedService
 import com.chesire.malime.view.preferences.SortOption
 import javax.inject.Inject
 
-private const val PREF_PRIMARY_SERVICE = "primaryService"
-private const val PREF_ALLOW_CRASH_REPORTING = "allowCrashReporting"
-private const val PREF_FILTER_LENGTH = "animeFilterLength"
-private const val PREF_SERIES_UPDATE_SCHEDULER_ENABLED = "seriesUpdateSchedulerEnabled"
-private const val PREF_REFRESH_TOKEN_SCHEDULER_ENABLED = "refreshTokenSchedulerEnabled"
-const val PREF_FILTER = "filter"
-const val PREF_SORT = "sort"
-const val SHARED_PREF_FILE = "malime_shared_pref"
-
 @Suppress("TooManyFunctions")
 class SharedPref @Inject constructor(context: Context) {
+    private val allowCrashReporting = context.getString(R.string.key_allow_crash_reporting)
+    private val updateSchedulerEnabled = context.getString(R.string.key_update_scheduler_enabled)
+    private val refreshSchedulerEnabled = context.getString(R.string.key_refresh_scheduler_enabled)
+    private val animeFilterLength = context.getString(R.string.key_anime_filter_length)
+    private val primaryService = context.getString(R.string.key_primary_service)
+    private val filter = context.getString(R.string.key_filter)
+    private val sort = context.getString(R.string.key_sort)
+
     private val sharedPreferences =
-        context.getSharedPreferences(SHARED_PREF_FILE, Context.MODE_PRIVATE)
+        context.getSharedPreferences(
+            context.getString(R.string.key_shared_pref_file_name),
+            Context.MODE_PRIVATE
+        )
 
     fun getPrimaryService() =
         SupportedService.valueOf(
-            sharedPreferences.getString(
-                PREF_PRIMARY_SERVICE,
-                SupportedService.Unknown.name
-            )
+            sharedPreferences.getString(primaryService, SupportedService.Unknown.name)
         )
 
     @SuppressLint("ApplySharedPref")
     fun putPrimaryService(service: SupportedService): SharedPref {
         // Push this into shared preferences straight away, instead of waiting in the background
         sharedPreferences.edit()
-            .putString(PREF_PRIMARY_SERVICE, service.name)
+            .putString(primaryService, service.name)
             .commit()
 
         return this
     }
 
-    fun getAllowCrashReporting() = sharedPreferences.getBoolean(PREF_ALLOW_CRASH_REPORTING, true)
+    fun getAllowCrashReporting() = sharedPreferences.getBoolean(allowCrashReporting, true)
 
     fun getFilter(): BooleanArray {
         if (!hasStoredFilter()) {
@@ -48,10 +48,10 @@ class SharedPref @Inject constructor(context: Context) {
             return defaultFilter
         }
 
-        val filterLength = sharedPreferences.getInt(PREF_FILTER_LENGTH, 0)
+        val filterLength = sharedPreferences.getInt(animeFilterLength, 0)
         val returnArray = BooleanArray(filterLength)
         for (i in 0 until filterLength) {
-            returnArray[i] = sharedPreferences.getBoolean(PREF_FILTER + i, false)
+            returnArray[i] = sharedPreferences.getBoolean(filter + i, false)
         }
 
         return returnArray
@@ -59,9 +59,9 @@ class SharedPref @Inject constructor(context: Context) {
 
     fun setFilter(input: BooleanArray): SharedPref {
         val editor = sharedPreferences.edit()
-        editor.putInt(PREF_FILTER_LENGTH, input.count())
+        editor.putInt(animeFilterLength, input.count())
         for (i in input.indices) {
-            editor.putBoolean(PREF_FILTER + i, input[i])
+            editor.putBoolean(filter + i, input[i])
         }
         editor.apply()
 
@@ -71,7 +71,7 @@ class SharedPref @Inject constructor(context: Context) {
     fun getSortOption(): SortOption {
         return SortOption.getOptionFor(
             sharedPreferences.getInt(
-                PREF_SORT,
+                sort,
                 SortOption.Title.id
             )
         )
@@ -79,29 +79,29 @@ class SharedPref @Inject constructor(context: Context) {
 
     fun setSortOption(sortOption: SortOption): SharedPref {
         sharedPreferences.edit()
-            .putInt(PREF_SORT, sortOption.id)
+            .putInt(sort, sortOption.id)
             .apply()
 
         return this
     }
 
     fun getSeriesUpdateSchedulerEnabled() =
-        sharedPreferences.getBoolean(PREF_SERIES_UPDATE_SCHEDULER_ENABLED, false)
+        sharedPreferences.getBoolean(updateSchedulerEnabled, false)
 
     fun setSeriesUpdateSchedulerEnabled(state: Boolean): SharedPref {
         sharedPreferences.edit()
-            .putBoolean(PREF_SERIES_UPDATE_SCHEDULER_ENABLED, state)
+            .putBoolean(updateSchedulerEnabled, state)
             .apply()
 
         return this
     }
 
     fun getRefreshTokenSchedulerEnabled() =
-        sharedPreferences.getBoolean(PREF_REFRESH_TOKEN_SCHEDULER_ENABLED, false)
+        sharedPreferences.getBoolean(refreshSchedulerEnabled, false)
 
     fun setRefreshTokenSchedulerEnabled(state: Boolean): SharedPref {
         sharedPreferences.edit()
-            .putBoolean(PREF_REFRESH_TOKEN_SCHEDULER_ENABLED, state)
+            .putBoolean(refreshSchedulerEnabled, state)
             .apply()
 
         return this
@@ -116,13 +116,13 @@ class SharedPref @Inject constructor(context: Context) {
     }
 
     private fun hasStoredFilter(): Boolean {
-        if (!sharedPreferences.contains(PREF_FILTER_LENGTH)) {
+        if (!sharedPreferences.contains(animeFilterLength)) {
             return false
         }
 
-        val filterLength = sharedPreferences.getInt(PREF_FILTER_LENGTH, 0)
+        val filterLength = sharedPreferences.getInt(animeFilterLength, 0)
         for (i in 0 until filterLength) {
-            if (!sharedPreferences.contains(PREF_FILTER + i)) {
+            if (!sharedPreferences.contains(filter + i)) {
                 return false
             }
         }

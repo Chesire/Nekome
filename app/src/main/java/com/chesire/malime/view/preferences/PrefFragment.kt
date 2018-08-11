@@ -4,13 +4,12 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.preference.PreferenceFragmentCompat
 import com.chesire.malime.R
-import com.chesire.malime.util.SHARED_PREF_FILE
 import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
 
 class PrefFragment : PreferenceFragmentCompat() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
-        val manager = preferenceManager
-        manager.sharedPreferencesName = SHARED_PREF_FILE
+        preferenceManager.sharedPreferencesName =
+                requireContext().getString(R.string.key_shared_pref_file_name)
         addPreferencesFromResource(R.xml.preferences)
     }
 
