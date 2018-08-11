@@ -3,7 +3,7 @@
 
     <android.support.v7.preference.CheckBoxPreference
         android:defaultValue="true"
-        android:key="allowCrashReporting"
+        android:key="@string/key_allow_crash_reporting"
         android:summary="@string/preference_summary_crash_reporting"
         android:title="@string/preference_title_crash_reporting" />
 

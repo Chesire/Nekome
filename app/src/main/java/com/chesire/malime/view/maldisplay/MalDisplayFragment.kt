@@ -108,7 +108,7 @@ class MalDisplayFragment : Fragment(), Injectable, ModelInteractionListener {
                     })
             }
 
-        viewAdapter = MalDisplayViewAdapter(this, sharedPref)
+        viewAdapter = MalDisplayViewAdapter(requireContext(), this, sharedPref)
         recyclerView.adapter = viewAdapter
         binding.vm = viewModel
     }
