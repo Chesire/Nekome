@@ -15,7 +15,7 @@ android {
         targetSdkVersion 27
         versionCode 10
         versionName "1.0.1"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "com.chesire.malime.MockTestRunner"
         resConfigs "en"
     }
     signingConfigs {
