@@ -9,15 +9,15 @@ import javax.inject.Inject
 
 class MockLibraryApi @Inject constructor() : LibraryApi {
     override fun addItem(item: MalimeModel): Single<MalimeModel> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
     }
 
     override fun deleteItem(item: MalimeModel): Single<MalimeModel> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
     }
 
     override fun getUserLibrary(): Observable<List<MalimeModel>> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
     }
 
     override fun updateItem(
@@ -25,6 +25,6 @@ class MockLibraryApi @Inject constructor() : LibraryApi {
         newProgress: Int,
         newStatus: UserSeriesStatus
     ): Single<MalimeModel> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
     }
 }
