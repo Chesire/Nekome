@@ -98,6 +98,8 @@ dependencies {
     kapt 'com.github.bumptech.glide:compiler:4.7.1'
     kapt "com.google.dagger:dagger-compiler:$dagger_version"
     kapt "com.google.dagger:dagger-android-processor:$dagger_version"
+    kaptAndroidTest "com.google.dagger:dagger-compiler:$dagger_version"
+    kaptAndroidTest "com.google.dagger:dagger-android-processor:$dagger_version"
 }
 
 apply plugin: 'com.google.gms.google-services'

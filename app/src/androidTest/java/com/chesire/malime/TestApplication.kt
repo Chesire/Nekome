@@ -3,6 +3,7 @@ package com.chesire.malime
 import android.app.Activity
 import android.app.Application
 import android.app.Service
+import com.chesire.malime.injection.MockInjector
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
@@ -22,7 +23,7 @@ class TestApplication : Application(), HasActivityInjector, HasServiceInjector {
 
     override fun onCreate() {
         super.onCreate()
-        // Prime the test injector
+        MockInjector.init(this)
     }
 
     override fun activityInjector(): AndroidInjector<Activity> = activityInjector
