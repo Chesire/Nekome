@@ -5,8 +5,8 @@ import com.chesire.malime.TestApplication
 import com.chesire.malime.injection.androidmodules.ActivityModule
 import com.chesire.malime.injection.androidmodules.ServiceModule
 import com.chesire.malime.injection.modules.AppModule
-import com.chesire.malime.injection.modules.DatabaseModule
-import com.chesire.malime.injection.modules.ServerModule
+import com.chesire.malime.injection.modules.MockDatabaseModule
+import com.chesire.malime.injection.modules.MockServerModule
 import com.chesire.malime.injection.modules.UiModule
 import dagger.BindsInstance
 import dagger.Component
@@ -19,8 +19,8 @@ import javax.inject.Singleton
         (ActivityModule::class),
         (AndroidInjectionModule::class),
         (AppModule::class),
-        (DatabaseModule::class),
-        (ServerModule::class),
+        (MockDatabaseModule::class),
+        (MockServerModule::class),
         (ServiceModule::class),
         (UiModule::class)
     ]
