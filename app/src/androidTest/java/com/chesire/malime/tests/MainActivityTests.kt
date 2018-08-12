@@ -8,7 +8,9 @@ import android.support.test.espresso.assertion.ViewAssertions.matches
 import android.support.test.espresso.intent.Intents
 import android.support.test.espresso.intent.matcher.IntentMatchers
 import android.support.test.espresso.matcher.BoundedMatcher
+import android.support.test.espresso.matcher.RootMatchers.isDialog
 import android.support.test.espresso.matcher.ViewMatchers
+import android.support.test.espresso.matcher.ViewMatchers.isDisplayed
 import android.support.test.espresso.matcher.ViewMatchers.withId
 import android.support.test.espresso.matcher.ViewMatchers.withText
 import android.support.test.rule.ActivityTestRule
@@ -16,6 +18,7 @@ import android.support.test.runner.AndroidJUnit4
 import android.view.View
 import com.chesire.malime.R
 import com.chesire.malime.view.MainActivity
+import com.chesire.malime.view.login.LoginActivity
 import com.chesire.malime.view.preferences.PrefActivity
 import org.hamcrest.Description
 import org.hamcrest.Matcher
@@ -123,13 +126,18 @@ class MainActivityTests {
     }
 
     @Test
-    fun cancellingLogout() {
-
-    }
-
-    @Test
     fun executingLogoutGoesBackToLogin() {
+        Intents.init()
+        onView(withId(R.id.menu_main_navigation_anime)).perform(click())
+        openActionBarOverflowOrOptionsMenu(activityRule.activity)
+        onView(withText(R.string.options_log_out)).perform(click())
+        onView(withText(android.R.string.yes))
+            .inRoot(isDialog())
+            .check(matches(isDisplayed()))
+            .perform(click())
 
+        Intents.intended(IntentMatchers.hasComponent(LoginActivity::class.java.name))
+        Intents.release()
     }
 
     private fun withBottomNavItemCheckedStatus(isChecked: Boolean): Matcher<View> {
