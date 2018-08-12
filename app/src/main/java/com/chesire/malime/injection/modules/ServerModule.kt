@@ -1,6 +1,7 @@
 package com.chesire.malime.injection.modules
 
 import com.chesire.malime.core.api.AuthApi
+import com.chesire.malime.core.api.Authorizer
 import com.chesire.malime.core.api.LibraryApi
 import com.chesire.malime.core.api.SearchApi
 import com.chesire.malime.core.flags.SupportedService
@@ -47,6 +48,10 @@ internal class ServerModule {
     // for now we can just return the KitsuManager, as we don't support anything else yet
     @Provides
     fun providesSearchApi(manager: KitsuManager): SearchApi = manager
+
+    // for now we can just return the KitsuAuthorizer, as we don't support anything else yet
+    @Provides
+    fun providesAuthorizer(authorizer: KitsuAuthorizer): Authorizer<*> = authorizer
 
     @Singleton
     @Provides
