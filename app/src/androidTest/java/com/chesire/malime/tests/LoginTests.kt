@@ -1,9 +1,24 @@
 package com.chesire.malime.tests
 
+import android.support.test.espresso.Espresso.onView
+import android.support.test.espresso.action.ViewActions.clearText
+import android.support.test.espresso.action.ViewActions.click
+import android.support.test.espresso.action.ViewActions.closeSoftKeyboard
+import android.support.test.espresso.action.ViewActions.typeText
+import android.support.test.espresso.assertion.ViewAssertions.matches
+import android.support.test.espresso.matcher.RootMatchers.withDecorView
+import android.support.test.espresso.matcher.ViewMatchers.isDisplayed
+import android.support.test.espresso.matcher.ViewMatchers.withId
+import android.support.test.espresso.matcher.ViewMatchers.withText
 import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
+import com.chesire.malime.INVALID_PASSWORD
+import com.chesire.malime.INVALID_USERNAME
+import com.chesire.malime.R
+import com.chesire.malime.VALID_PASSWORD
+import com.chesire.malime.VALID_USERNAME
 import com.chesire.malime.view.login.LoginActivity
-import org.junit.Assert
+import org.hamcrest.CoreMatchers.not
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -14,10 +29,59 @@ class LoginTests {
     val activityRule = ActivityTestRule(LoginActivity::class.java)
 
     @Test
-    fun loadTheView() {
-        val activity = activityRule.activity
+    fun displayErrorForBlankUsername() {
+        onView(withId(R.id.login_username_edit_text)).perform(clearText())
+        onView(withId(R.id.login_password_edit_text)).perform(
+            typeText(VALID_PASSWORD),
+            closeSoftKeyboard()
+        )
 
-        Assert.assertEquals(true, true)
+        onView(withId(R.id.login_button)).perform(click())
 
+        onView(withText(R.string.login_failure_email))
+            .inRoot(withDecorView(not(activityRule.activity.window.decorView)))
+            .check(matches(isDisplayed()))
+    }
+
+    @Test
+    fun displayErrorForBlankPassword() {
+        onView(withId(R.id.login_username_edit_text)).perform(typeText(VALID_USERNAME))
+        onView(withId(R.id.login_password_edit_text)).perform(clearText(), closeSoftKeyboard())
+
+        onView(withId(R.id.login_button)).perform(click())
+
+        onView(withText(R.string.login_failure_password))
+            .inRoot(withDecorView(not(activityRule.activity.window.decorView)))
+            .check(matches(isDisplayed()))
+    }
+
+    @Test
+    fun displayErrorForInvalidUsername() {
+        onView(withId(R.id.login_username_edit_text)).perform(typeText(INVALID_USERNAME))
+        onView(withId(R.id.login_password_edit_text)).perform(
+            typeText(VALID_PASSWORD),
+            closeSoftKeyboard()
+        )
+
+        onView(withId(R.id.login_button)).perform(click())
+
+        onView(withText(R.string.login_failure))
+            .inRoot(withDecorView(not(activityRule.activity.window.decorView)))
+            .check(matches(isDisplayed()))
+    }
+
+    @Test
+    fun displayErrorForInvalidPassword() {
+        onView(withId(R.id.login_username_edit_text)).perform(typeText(VALID_USERNAME))
+        onView(withId(R.id.login_password_edit_text)).perform(
+            typeText(INVALID_PASSWORD),
+            closeSoftKeyboard()
+        )
+
+        onView(withId(R.id.login_button)).perform(click())
+
+        onView(withText(R.string.login_failure))
+            .inRoot(withDecorView(not(activityRule.activity.window.decorView)))
+            .check(matches(isDisplayed()))
     }
 }
