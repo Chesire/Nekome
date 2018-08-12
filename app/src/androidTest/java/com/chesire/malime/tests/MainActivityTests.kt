@@ -149,8 +149,8 @@ class MainActivityTests {
 
             override fun describeTo(description: Description) {
                 if (triedMatching) {
-                    description.appendText("with BottomNavigationItem check status: " + isChecked.toString())
-                    description.appendText("But was: " + (!isChecked).toString())
+                    description.appendText("with BottomNavigationItem check status: $isChecked")
+                    description.appendText("But was: ${!isChecked}")
                 }
             }
 
