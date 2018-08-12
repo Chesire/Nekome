@@ -14,6 +14,7 @@ import com.chesire.malime.view.login.LoginModel
 import com.chesire.malime.view.login.LoginStatus
 import io.reactivex.Scheduler
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.rxkotlin.subscribeBy
 import javax.inject.Inject
 
 class KitsuLoginViewModel @Inject constructor(
@@ -55,18 +56,19 @@ class KitsuLoginViewModel @Inject constructor(
                 attemptingLogin.set(false)
                 loginResponse.value = LoginStatus.FINISHED
             }
-            .doOnError {
-                errorResponse.value = R.string.login_failure
-                loginResponse.value = LoginStatus.ERROR
-                authorizer.clear()
-            }
-            .doOnSuccess {
-                loginResponse.value = LoginStatus.SUCCESS
+            .subscribeBy(
+                onError = {
+                    errorResponse.value = R.string.login_failure
+                    loginResponse.value = LoginStatus.ERROR
+                    authorizer.clear()
+                },
+                onSuccess = {
+                    loginResponse.value = LoginStatus.SUCCESS
 
-                sharedPref.putPrimaryService(SupportedService.Kitsu)
-                authorizer.storeUser(it)
-            }
-            .subscribe()
+                    sharedPref.putPrimaryService(SupportedService.Kitsu)
+                    authorizer.storeUser(it)
+                }
+            )
         )
     }
 
