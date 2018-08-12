@@ -5,6 +5,7 @@ import android.support.test.espresso.Espresso.onView
 import android.support.test.espresso.action.ViewActions.click
 import android.support.test.espresso.assertion.ViewAssertions.matches
 import android.support.test.espresso.matcher.BoundedMatcher
+import android.support.test.espresso.matcher.ViewMatchers
 import android.support.test.espresso.matcher.ViewMatchers.withId
 import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
@@ -25,6 +26,7 @@ class MainActivityTests {
     @Test
     fun canNavigateToAnimeView() {
         onView(withId(R.id.menu_main_navigation_anime)).perform(click())
+
         onView(withId(R.id.menu_main_navigation_anime)).check(
             matches(
                 withBottomNavItemCheckedStatus(true)
@@ -40,11 +42,13 @@ class MainActivityTests {
                 withBottomNavItemCheckedStatus(false)
             )
         )
+        onView(withId(R.id.maldisplay_layout)).check(matches(ViewMatchers.isDisplayed()))
     }
 
     @Test
     fun canNavigateToMangaView() {
         onView(withId(R.id.menu_main_navigation_manga)).perform(click())
+
         onView(withId(R.id.menu_main_navigation_anime)).check(
             matches(
                 withBottomNavItemCheckedStatus(false)
@@ -60,11 +64,13 @@ class MainActivityTests {
                 withBottomNavItemCheckedStatus(false)
             )
         )
+        onView(withId(R.id.maldisplay_layout)).check(matches(ViewMatchers.isDisplayed()))
     }
 
     @Test
     fun canNavigateToSearchView() {
         onView(withId(R.id.menu_main_navigation_search)).perform(click())
+
         onView(withId(R.id.menu_main_navigation_anime)).check(
             matches(
                 withBottomNavItemCheckedStatus(false)
@@ -80,6 +86,7 @@ class MainActivityTests {
                 withBottomNavItemCheckedStatus(true)
             )
         )
+        onView(withId(R.id.search_layout)).check(matches(ViewMatchers.isDisplayed()))
     }
 
     @Test
@@ -106,23 +113,23 @@ class MainActivityTests {
     fun canChangeSortOption() {
 
     }
-}
 
-fun withBottomNavItemCheckedStatus(isChecked: Boolean): Matcher<View> {
-    return object :
-        BoundedMatcher<View, BottomNavigationItemView>(BottomNavigationItemView::class.java) {
-        var triedMatching: Boolean = false
+    private fun withBottomNavItemCheckedStatus(isChecked: Boolean): Matcher<View> {
+        return object :
+            BoundedMatcher<View, BottomNavigationItemView>(BottomNavigationItemView::class.java) {
+            var triedMatching: Boolean = false
 
-        override fun describeTo(description: Description) {
-            if (triedMatching) {
-                description.appendText("with BottomNavigationItem check status: " + isChecked.toString())
-                description.appendText("But was: " + (!isChecked).toString())
+            override fun describeTo(description: Description) {
+                if (triedMatching) {
+                    description.appendText("with BottomNavigationItem check status: " + isChecked.toString())
+                    description.appendText("But was: " + (!isChecked).toString())
+                }
             }
-        }
 
-        override fun matchesSafely(item: BottomNavigationItemView): Boolean {
-            triedMatching = true
-            return item.itemData.isChecked == isChecked
+            override fun matchesSafely(item: BottomNavigationItemView): Boolean {
+                triedMatching = true
+                return item.itemData.isChecked == isChecked
+            }
         }
     }
 }
