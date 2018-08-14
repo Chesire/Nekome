@@ -49,9 +49,7 @@ class SearchViewModel @Inject constructor(
             searchApi.searchForSeriesWith(params.searchText, type)
                 .subscribeOn(subscribeScheduler)
                 .observeOn(observeScheduler)
-                .doOnSubscribe {
-                    params.searching = true
-                }
+                .doOnSubscribe { params.searching = true }
                 .subscribeBy(
                     onError = {
                         Timber.e(it, "Error performing the search")
