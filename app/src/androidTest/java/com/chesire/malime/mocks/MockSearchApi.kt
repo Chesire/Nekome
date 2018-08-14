@@ -2,7 +2,6 @@ package com.chesire.malime.mocks
 
 import com.chesire.malime.INVALID_SEARCH
 import com.chesire.malime.VALID_SEARCH_MULTIPLE_ITEMS
-import com.chesire.malime.VALID_SEARCH_MULTIPLE_OBSERVABLE_CALLS
 import com.chesire.malime.VALID_SEARCH_NO_ITEMS
 import com.chesire.malime.VALID_SEARCH_SINGLE_ITEM
 import com.chesire.malime.core.api.SearchApi
@@ -11,24 +10,22 @@ import com.chesire.malime.core.flags.SeriesStatus
 import com.chesire.malime.core.flags.Subtype
 import com.chesire.malime.core.flags.UserSeriesStatus
 import com.chesire.malime.core.models.MalimeModel
-import io.reactivex.Observable
+import io.reactivex.Single
 import javax.inject.Inject
 
 class MockSearchApi @Inject constructor() : SearchApi {
-    override fun searchForSeriesWith(title: String, type: ItemType): Observable<List<MalimeModel>> {
-        return Observable.create {
+    override fun searchForSeriesWith(title: String, type: ItemType): Single<List<MalimeModel>> {
+        return Single.create {
             when (title) {
                 INVALID_SEARCH -> it.tryOnError(Throwable("Invalid search supplied"))
                 VALID_SEARCH_NO_ITEMS -> {
-                    it.onNext(listOf())
-                    it.onComplete()
+                    it.onSuccess(listOf())
                 }
                 VALID_SEARCH_SINGLE_ITEM -> {
-                    it.onNext(listOf(getMalimeModel()))
-                    it.onComplete()
+                    it.onSuccess(listOf(getMalimeModel()))
                 }
                 VALID_SEARCH_MULTIPLE_ITEMS -> {
-                    it.onNext(
+                    it.onSuccess(
                         listOf(
                             getMalimeModel(seriesId = 0),
                             getMalimeModel(seriesId = 1),
@@ -43,13 +40,6 @@ class MockSearchApi @Inject constructor() : SearchApi {
                             getMalimeModel(seriesId = 10)
                         )
                     )
-                    it.onComplete()
-                }
-                VALID_SEARCH_MULTIPLE_OBSERVABLE_CALLS -> {
-                    for (i in 0..10) {
-                        it.onNext(listOf(getMalimeModel(seriesId = i)))
-                    }
-                    it.onComplete()
                 }
             }
         }
