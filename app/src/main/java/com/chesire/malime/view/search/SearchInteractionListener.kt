@@ -4,5 +4,5 @@ import com.chesire.malime.core.models.MalimeModel
 
 interface SearchInteractionListener {
     fun addNewSeries(selectedSeries: MalimeModel, callback: (Boolean) -> Unit)
-    fun navigateToSeries(selectedSeries: MalimeModel)
+    fun showSeriesProfile(selectedSeries: MalimeModel)
 }
