@@ -85,7 +85,7 @@ class SearchViewAdapter(
             searchView.root.apply {
                 item_search_type_text.text = item.subtype.getString(context)
                 item_search_status_text.text = item.seriesStatus.getString(context)
-                item_search_image.setOnClickListener { interactor.navigateToSeries(item) }
+                item_search_image.setOnClickListener { interactor.showSeriesProfile(item) }
                 search_image_add_button.setOnClickListener { showAddMenu() }
             }
         }
