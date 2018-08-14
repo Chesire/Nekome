@@ -15,6 +15,7 @@ import com.chesire.malime.util.UIScheduler
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Scheduler
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.rxkotlin.subscribeBy
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -51,21 +52,23 @@ class SearchViewModel @Inject constructor(
                 .doOnSubscribe {
                     params.searching = true
                 }
-                .doOnComplete {
-                    params.searching = false
-                }
-                .doOnError {
-                    Timber.e(it, "Error performing the search")
-                    params.searching = false
-                    errorCallback(R.string.search_failed_general_error)
-                }
-                .subscribe {
-                    Timber.i("Found ${it.count()} items")
-                    searchItems.value = it
-                    if (it.isEmpty()) {
-                        errorCallback(R.string.search_failed_no_items)
+                .subscribeBy(
+                    onError = {
+                        Timber.e(it, "Error performing the search")
+                        params.searching = false
+                        errorCallback(R.string.search_failed_general_error)
+                    },
+                    onNext = {
+                        Timber.i("Found ${it.count()} items")
+                        searchItems.value = it
+                        if (it.isEmpty()) {
+                            errorCallback(R.string.search_failed_no_items)
+                        }
+                    },
+                    onComplete = {
+                        params.searching = false
                     }
-                }
+                )
         )
     }
 
