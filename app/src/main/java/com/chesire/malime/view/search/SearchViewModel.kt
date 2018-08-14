@@ -58,15 +58,13 @@ class SearchViewModel @Inject constructor(
                         params.searching = false
                         errorCallback(R.string.search_failed_general_error)
                     },
-                    onNext = {
+                    onSuccess = {
                         Timber.i("Found ${it.count()} items")
+                        params.searching = false
                         searchItems.value = it
                         if (it.isEmpty()) {
                             errorCallback(R.string.search_failed_no_items)
                         }
-                    },
-                    onComplete = {
-                        params.searching = false
                     }
                 )
         )
