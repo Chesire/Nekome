@@ -21,6 +21,7 @@ import com.schibsted.spain.barista.assertion.BaristaRecyclerViewAssertions.asser
 import com.schibsted.spain.barista.assertion.BaristaVisibilityAssertions.assertNotExist
 import com.schibsted.spain.barista.interaction.BaristaClickInteractions.clickOn
 import com.schibsted.spain.barista.interaction.BaristaRadioButtonInteractions.clickRadioButtonItem
+import com.schibsted.spain.barista.interaction.BaristaSleepInteractions.sleep
 import org.junit.Before
 import org.junit.Ignore
 import org.junit.Rule
@@ -130,6 +131,7 @@ class SearchTests {
             pressImeActionButton()
         )
 
+        sleep(100)
         assertRecyclerViewItemCount(R.id.search_all_items, 1)
     }
 
@@ -141,6 +143,7 @@ class SearchTests {
             pressImeActionButton()
         )
 
+        sleep(100)
         assertRecyclerViewItemCount(R.id.search_all_items, 1)
     }
 
@@ -152,6 +155,7 @@ class SearchTests {
             pressImeActionButton()
         )
 
+        sleep(100)
         assertRecyclerViewItemCount(R.id.search_all_items, 11)
     }
 
@@ -163,21 +167,8 @@ class SearchTests {
             pressImeActionButton()
         )
 
+        sleep(100)
         assertRecyclerViewItemCount(R.id.search_all_items, 11)
-    }
-
-    @Test
-    @Ignore
-    fun successfulAnimeSearchCanReturnMultipleTimes() {
-        // return multiple times in onNext with the observer
-        clickRadioButtonItem(R.id.search_option_choices, R.id.search_option_anime_choice)
-    }
-
-    @Test
-    @Ignore
-    fun successfulMangaSearchCanReturnMultipleTimes() {
-        // return multiple times in onNext with the observer
-        clickRadioButtonItem(R.id.search_option_choices, R.id.search_option_manga_choice)
     }
 
     @Test
