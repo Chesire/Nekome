@@ -12,9 +12,12 @@ import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
 import com.chesire.malime.INVALID_SEARCH
 import com.chesire.malime.R
+import com.chesire.malime.VALID_SEARCH_MULTIPLE_ITEMS
 import com.chesire.malime.VALID_SEARCH_NO_ITEMS
+import com.chesire.malime.VALID_SEARCH_SINGLE_ITEM
 import com.chesire.malime.tools.ToastMatcher.Companion.onToast
 import com.chesire.malime.view.MainActivity
+import com.schibsted.spain.barista.assertion.BaristaRecyclerViewAssertions.assertRecyclerViewItemCount
 import com.schibsted.spain.barista.assertion.BaristaVisibilityAssertions.assertNotExist
 import com.schibsted.spain.barista.interaction.BaristaClickInteractions.clickOn
 import com.schibsted.spain.barista.interaction.BaristaRadioButtonInteractions.clickRadioButtonItem
@@ -120,85 +123,130 @@ class SearchTests {
     }
 
     @Test
-    fun animeSearchIsPerformedWithAnimeSearchOption() {
+    fun successfulAnimeSearchHasListOfSingleSearchItem() {
+        clickRadioButtonItem(R.id.search_option_choices, R.id.search_option_anime_choice)
+        onView(withId(R.id.search_search_term_edit_text)).perform(
+            typeText(VALID_SEARCH_SINGLE_ITEM),
+            pressImeActionButton()
+        )
 
+        assertRecyclerViewItemCount(R.id.search_all_items, 1)
+    }
+
+    @Test
+    fun successfulMangaSearchHasListOfSingleSearchItem() {
+        clickRadioButtonItem(R.id.search_option_choices, R.id.search_option_manga_choice)
+        onView(withId(R.id.search_search_term_edit_text)).perform(
+            typeText(VALID_SEARCH_SINGLE_ITEM),
+            pressImeActionButton()
+        )
+
+        assertRecyclerViewItemCount(R.id.search_all_items, 1)
+    }
+
+    @Test
+    fun successfulAnimeSearchHasListOfSearchItems() {
+        clickRadioButtonItem(R.id.search_option_choices, R.id.search_option_anime_choice)
+        onView(withId(R.id.search_search_term_edit_text)).perform(
+            typeText(VALID_SEARCH_MULTIPLE_ITEMS),
+            pressImeActionButton()
+        )
+
+        assertRecyclerViewItemCount(R.id.search_all_items, 11)
+    }
+
+    @Test
+    fun successfulMangaSearchHasListOfSearchItems() {
+        clickRadioButtonItem(R.id.search_option_choices, R.id.search_option_manga_choice)
+        onView(withId(R.id.search_search_term_edit_text)).perform(
+            typeText(VALID_SEARCH_MULTIPLE_ITEMS),
+            pressImeActionButton()
+        )
+
+        assertRecyclerViewItemCount(R.id.search_all_items, 11)
     }
 
     @Test
     @Ignore
-    fun mangaSearchIsPerformedWithMangaSearchOption() {
-
-    }
-
-    @Test
-    @Ignore
-    fun successfulSearchHasListOfSearchItems() {
-
-    }
-
-    @Test
-    @Ignore
-    fun successfulSearchCanReturnMultipleTimes() {
+    fun successfulAnimeSearchCanReturnMultipleTimes() {
         // return multiple times in onNext with the observer
+        clickRadioButtonItem(R.id.search_option_choices, R.id.search_option_anime_choice)
+    }
+
+    @Test
+    @Ignore
+    fun successfulMangaSearchCanReturnMultipleTimes() {
+        // return multiple times in onNext with the observer
+        clickRadioButtonItem(R.id.search_option_choices, R.id.search_option_manga_choice)
     }
 
     @Test
     @Ignore
     fun canAddAnimeItemWithCompletedStatus() {
+        clickRadioButtonItem(R.id.search_option_choices, R.id.search_option_anime_choice)
 
     }
 
     @Test
     @Ignore
     fun canAddAnimeItemWithCurrentStatus() {
+        clickRadioButtonItem(R.id.search_option_choices, R.id.search_option_anime_choice)
 
     }
 
     @Test
     @Ignore
     fun canAddAnimeItemWithDroppedStatus() {
+        clickRadioButtonItem(R.id.search_option_choices, R.id.search_option_anime_choice)
 
     }
 
     @Test
     @Ignore
     fun canAddAnimeItemWithOnHoldStatus() {
+        clickRadioButtonItem(R.id.search_option_choices, R.id.search_option_anime_choice)
 
     }
 
     @Test
     @Ignore
     fun canAddAnimeItemWithPlannedStatus() {
+        clickRadioButtonItem(R.id.search_option_choices, R.id.search_option_anime_choice)
 
     }
 
     @Test
     @Ignore
     fun canAddMangaItemWithCompletedStatus() {
+        clickRadioButtonItem(R.id.search_option_choices, R.id.search_option_manga_choice)
 
     }
 
     @Test
     @Ignore
     fun canAddMangaItemWithCurrentStatus() {
+        clickRadioButtonItem(R.id.search_option_choices, R.id.search_option_manga_choice)
 
     }
 
     @Test
     @Ignore
     fun canAddMangaItemWithDroppedStatus() {
+        clickRadioButtonItem(R.id.search_option_choices, R.id.search_option_manga_choice)
 
     }
 
     @Test
     @Ignore
     fun canAddMangaItemWithOnHoldStatus() {
+        clickRadioButtonItem(R.id.search_option_choices, R.id.search_option_manga_choice)
 
     }
 
     @Test
     @Ignore
     fun canAddMangaItemWithPlannedStatus() {
+        clickRadioButtonItem(R.id.search_option_choices, R.id.search_option_manga_choice)
 
     }
 

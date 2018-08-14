@@ -40,8 +40,7 @@ class MockSearchApi @Inject constructor() : SearchApi {
                             getMalimeModel(seriesId = 7),
                             getMalimeModel(seriesId = 8),
                             getMalimeModel(seriesId = 9),
-                            getMalimeModel(seriesId = 10),
-                            getMalimeModel(seriesId = 11)
+                            getMalimeModel(seriesId = 10)
                         )
                     )
                     it.onComplete()
