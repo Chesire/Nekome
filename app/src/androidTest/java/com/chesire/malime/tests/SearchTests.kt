@@ -98,7 +98,7 @@ class SearchTests {
     }
 
     @Test
-    fun failedAnimeSearchNoItemsProducesError() {
+    fun animeSearchWithNoItemsProducesError() {
         clickRadioButtonItem(R.id.search_option_choices, R.id.search_option_anime_choice)
         onView(withId(R.id.search_search_term_edit_text)).perform(
             typeText(INVALID_SEARCH_NO_ITEMS),
@@ -109,7 +109,7 @@ class SearchTests {
     }
 
     @Test
-    fun failedMangaSearchNoItemsProducesError() {
+    fun mangaSearchWithNoItemsProducesError() {
         clickRadioButtonItem(R.id.search_option_choices, R.id.search_option_manga_choice)
         onView(withId(R.id.search_search_term_edit_text)).perform(
             typeText(INVALID_SEARCH_NO_ITEMS),
@@ -127,7 +127,7 @@ class SearchTests {
 
     @Test
     @Ignore
-    fun mangaSearchIsPerformedWithAnimeSearchOption() {
+    fun mangaSearchIsPerformedWithMangaSearchOption() {
 
     }
 
