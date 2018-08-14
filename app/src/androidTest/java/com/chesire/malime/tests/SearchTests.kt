@@ -1,14 +1,11 @@
 package com.chesire.malime.tests
 
-import android.support.test.espresso.Espresso.onView
-import android.support.test.espresso.action.ViewActions.click
-import android.support.test.espresso.assertion.ViewAssertions.doesNotExist
-import android.support.test.espresso.matcher.ViewMatchers.withId
 import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
 import com.chesire.malime.R
 import com.chesire.malime.view.MainActivity
-import org.junit.After
+import com.schibsted.spain.barista.assertion.BaristaVisibilityAssertions.assertNotExist
+import com.schibsted.spain.barista.interaction.BaristaClickInteractions.clickOn
 import org.junit.Before
 import org.junit.Ignore
 import org.junit.Rule
@@ -22,23 +19,17 @@ class SearchTests {
 
     @Before
     fun setup() {
-        // Navigate to search view
-        onView(withId(R.id.menu_main_navigation_search)).perform(click())
-    }
-
-    @After
-    fun teardown() {
-        // To be implemented
+        clickOn(R.id.menu_main_navigation_search)
     }
 
     @Test
     fun sortOptionShouldNotBeAvailable() {
-        onView(withId(R.id.menu_options_sort)).check(doesNotExist())
+        assertNotExist(R.id.menu_options_sort)
     }
 
     @Test
     fun filterOptionShouldNotBeAvailable() {
-        onView(withId(R.id.menu_options_filter)).check(doesNotExist())
+        assertNotExist(R.id.menu_options_filter)
     }
 
     @Test
