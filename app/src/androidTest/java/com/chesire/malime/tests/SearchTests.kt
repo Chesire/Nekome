@@ -11,8 +11,8 @@ import android.support.test.espresso.matcher.ViewMatchers.withId
 import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
 import com.chesire.malime.INVALID_SEARCH
-import com.chesire.malime.INVALID_SEARCH_NO_ITEMS
 import com.chesire.malime.R
+import com.chesire.malime.VALID_SEARCH_NO_ITEMS
 import com.chesire.malime.tools.ToastMatcher.Companion.onToast
 import com.chesire.malime.view.MainActivity
 import com.schibsted.spain.barista.assertion.BaristaVisibilityAssertions.assertNotExist
@@ -101,7 +101,7 @@ class SearchTests {
     fun animeSearchWithNoItemsProducesError() {
         clickRadioButtonItem(R.id.search_option_choices, R.id.search_option_anime_choice)
         onView(withId(R.id.search_search_term_edit_text)).perform(
-            typeText(INVALID_SEARCH_NO_ITEMS),
+            typeText(VALID_SEARCH_NO_ITEMS),
             pressImeActionButton()
         )
 
@@ -112,7 +112,7 @@ class SearchTests {
     fun mangaSearchWithNoItemsProducesError() {
         clickRadioButtonItem(R.id.search_option_choices, R.id.search_option_manga_choice)
         onView(withId(R.id.search_search_term_edit_text)).perform(
-            typeText(INVALID_SEARCH_NO_ITEMS),
+            typeText(VALID_SEARCH_NO_ITEMS),
             pressImeActionButton()
         )
 
@@ -120,7 +120,6 @@ class SearchTests {
     }
 
     @Test
-    @Ignore
     fun animeSearchIsPerformedWithAnimeSearchOption() {
 
     }
