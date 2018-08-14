@@ -2,6 +2,7 @@ package com.chesire.malime.tests
 
 import android.support.test.espresso.Espresso.onView
 import android.support.test.espresso.action.ViewActions.click
+import android.support.test.espresso.assertion.ViewAssertions.doesNotExist
 import android.support.test.espresso.matcher.ViewMatchers.withId
 import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
@@ -32,12 +33,12 @@ class SearchTests {
 
     @Test
     fun sortOptionShouldNotBeAvailable() {
-
+        onView(withId(R.id.menu_options_sort)).check(doesNotExist())
     }
 
     @Test
     fun filterOptionShouldNotBeAvailable() {
-
+        onView(withId(R.id.menu_options_filter)).check(doesNotExist())
     }
 
     @Test
