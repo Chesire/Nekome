@@ -89,7 +89,7 @@ class SearchViewModelTests {
         `when`(
             searchApi.searchForSeriesWith(testObject.params.searchText, ItemType.Anime)
         ).thenReturn(
-            Observable.error(Exception("Test Exception"))
+            Single.error(Exception("Test Exception"))
         )
 
         testObject.searchForSeries(ItemType.Anime) { }
@@ -107,7 +107,7 @@ class SearchViewModelTests {
         `when`(
             searchApi.searchForSeriesWith(testObject.params.searchText, ItemType.Anime)
         ).thenReturn(
-            Observable.error(Exception("Test Exception"))
+            Single.error(Exception("Test Exception"))
         )
 
         testObject.searchForSeries(ItemType.Anime) { actualResource = it }
@@ -125,7 +125,7 @@ class SearchViewModelTests {
         `when`(
             searchApi.searchForSeriesWith(testObject.params.searchText, ItemType.Anime)
         ).thenReturn(
-            Observable.just(expectedList)
+            Single.just(expectedList)
         )
 
         testObject.searchForSeries(ItemType.Anime) { actualResource = it }
@@ -142,7 +142,7 @@ class SearchViewModelTests {
         `when`(
             searchApi.searchForSeriesWith(testObject.params.searchText, ItemType.Anime)
         ).thenReturn(
-            Observable.just(expectedList)
+            Single.just(expectedList)
         )
 
         testObject.searchForSeries(ItemType.Anime) { }
@@ -160,7 +160,7 @@ class SearchViewModelTests {
         `when`(
             searchApi.searchForSeriesWith(testObject.params.searchText, ItemType.Anime)
         ).thenReturn(
-            Observable.just(expectedList)
+            Single.just(expectedList)
         )
 
         testObject.searchForSeries(ItemType.Anime) { invoked = true }

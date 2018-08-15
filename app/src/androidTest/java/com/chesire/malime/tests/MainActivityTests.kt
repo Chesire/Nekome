@@ -22,6 +22,7 @@ import com.chesire.malime.view.login.LoginActivity
 import com.chesire.malime.view.preferences.PrefActivity
 import org.hamcrest.Description
 import org.hamcrest.Matcher
+import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -98,6 +99,7 @@ class MainActivityTests {
     }
 
     @Test
+    @Ignore
     fun canLaunchProfile() {
         // Couldn't find anything that says how this could be tested...
         // Leaving this here as it will need to be done at some point
@@ -147,8 +149,8 @@ class MainActivityTests {
 
             override fun describeTo(description: Description) {
                 if (triedMatching) {
-                    description.appendText("with BottomNavigationItem check status: " + isChecked.toString())
-                    description.appendText("But was: " + (!isChecked).toString())
+                    description.appendText("with BottomNavigationItem check status: $isChecked")
+                    description.appendText("But was: ${!isChecked}")
                 }
             }
 

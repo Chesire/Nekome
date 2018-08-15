@@ -186,8 +186,8 @@ class MalManager(
     override fun searchForSeriesWith(
         title: String,
         type: ItemType
-    ): Observable<List<MalimeModel>> {
-        return Observable.create { subscriber ->
+    ): Single<List<MalimeModel>> {
+        return Single.create { subscriber ->
             val callResponse = if (type == ItemType.Anime) {
                 api.searchForAnime(title)
             } else {
@@ -230,8 +230,7 @@ class MalManager(
                         )
                     }
 
-                    subscriber.onNext(responseList)
-                    subscriber.onComplete()
+                    subscriber.onSuccess(responseList)
                 }
             } else {
                 subscriber.tryOnError(Throwable(response.message()))

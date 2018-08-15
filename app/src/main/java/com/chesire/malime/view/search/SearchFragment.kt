@@ -129,17 +129,17 @@ class SearchFragment : Fragment(), Injectable, SearchInteractionListener {
         viewModel.addNewSeries(selectedSeries, callback)
     }
 
-    override fun navigateToSeries(selectedSeries: MalimeModel) {
+    override fun showSeriesProfile(selectedSeries: MalimeModel) {
         urlLoader.loadSeries(requireContext(), sharedPref.getPrimaryService(), selectedSeries)
     }
 
     companion object {
         const val tag = "SearchFragment"
         fun newInstance(): SearchFragment {
-            val search2Fragment = SearchFragment()
+            val searchFragment = SearchFragment()
             val args = Bundle()
-            search2Fragment.arguments = args
-            return search2Fragment
+            searchFragment.arguments = args
+            return searchFragment
         }
     }
 }

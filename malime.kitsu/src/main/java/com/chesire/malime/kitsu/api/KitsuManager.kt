@@ -263,8 +263,8 @@ class KitsuManager @Inject constructor(
         }
     }
 
-    override fun searchForSeriesWith(title: String, type: ItemType): Observable<List<MalimeModel>> {
-        return Observable.create {
+    override fun searchForSeriesWith(title: String, type: ItemType): Single<List<MalimeModel>> {
+        return Single.create {
             val callResponse = api.search(title, type)
             val response = callResponse.execute()
             val body = response.body()
@@ -294,8 +294,7 @@ class KitsuManager @Inject constructor(
                         endDate = ""
                     )
                 }
-                it.onNext(items)
-                it.onComplete()
+                it.onSuccess(items)
             } else {
                 Timber.e(Throwable(response.message()), "Error performing search")
                 it.tryOnError(Throwable(response.message()))
@@ -308,11 +307,11 @@ class KitsuManager @Inject constructor(
             return ""
         }
         return map["large"] as String?
-                ?: map["medium"] as String?
-                ?: map["original"] as String?
-                ?: map["small"] as String?
-                ?: map["tiny"] as String?
-                ?: ""
+            ?: map["medium"] as String?
+            ?: map["original"] as String?
+            ?: map["small"] as String?
+            ?: map["tiny"] as String?
+            ?: ""
     }
 
     private fun createNewModel(item: MalimeModel): String {
