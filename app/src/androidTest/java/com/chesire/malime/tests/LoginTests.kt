@@ -23,6 +23,7 @@ import com.chesire.malime.VALID_PASSWORD
 import com.chesire.malime.VALID_USERNAME
 import com.chesire.malime.view.MainActivity
 import com.chesire.malime.view.login.LoginActivity
+import com.schibsted.spain.barista.interaction.BaristaSleepInteractions.sleep
 import org.hamcrest.CoreMatchers.not
 import org.junit.Ignore
 import org.junit.Rule
@@ -114,6 +115,7 @@ class LoginTests {
             pressImeActionButton()
         )
 
+        sleep(300)
         intended(hasComponent(MainActivity::class.java.name))
         Intents.release()
     }
