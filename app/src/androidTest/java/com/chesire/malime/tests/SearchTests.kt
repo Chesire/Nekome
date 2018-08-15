@@ -16,7 +16,7 @@ import android.support.test.runner.AndroidJUnit4
 import com.chesire.malime.INVALID_SEARCH
 import com.chesire.malime.INVALID_SEARCH_ADD_TITLE
 import com.chesire.malime.R
-import com.chesire.malime.VALID_ADD_TITLE
+import com.chesire.malime.VALID_SEARCH_ADD_TITLE
 import com.chesire.malime.VALID_SEARCH_MULTIPLE_ITEMS
 import com.chesire.malime.VALID_SEARCH_NO_ITEMS
 import com.chesire.malime.VALID_SEARCH_SINGLE_ITEM
@@ -242,7 +242,7 @@ class SearchTests {
             String.format(
                 Locale.ROOT,
                 activityRule.activity.getString(R.string.search_add_success),
-                VALID_ADD_TITLE
+                VALID_SEARCH_ADD_TITLE
             )
         ).check(matches(isDisplayed()))
     }
@@ -263,7 +263,7 @@ class SearchTests {
             String.format(
                 Locale.ROOT,
                 activityRule.activity.getString(R.string.search_add_success),
-                VALID_ADD_TITLE
+                VALID_SEARCH_ADD_TITLE
             )
         ).check(matches(isDisplayed()))
     }
@@ -284,7 +284,7 @@ class SearchTests {
             String.format(
                 Locale.ROOT,
                 activityRule.activity.getString(R.string.search_add_success),
-                VALID_ADD_TITLE
+                VALID_SEARCH_ADD_TITLE
             )
         ).check(matches(isDisplayed()))
     }
@@ -305,7 +305,7 @@ class SearchTests {
             String.format(
                 Locale.ROOT,
                 activityRule.activity.getString(R.string.search_add_success),
-                VALID_ADD_TITLE
+                VALID_SEARCH_ADD_TITLE
             )
         ).check(matches(isDisplayed()))
     }
@@ -326,7 +326,7 @@ class SearchTests {
             String.format(
                 Locale.ROOT,
                 activityRule.activity.getString(R.string.search_add_success),
-                VALID_ADD_TITLE
+                VALID_SEARCH_ADD_TITLE
             )
         ).check(matches(isDisplayed()))
     }
@@ -347,7 +347,7 @@ class SearchTests {
             String.format(
                 Locale.ROOT,
                 activityRule.activity.getString(R.string.search_add_success),
-                VALID_ADD_TITLE
+                VALID_SEARCH_ADD_TITLE
             )
         ).check(matches(isDisplayed()))
     }
@@ -368,7 +368,7 @@ class SearchTests {
             String.format(
                 Locale.ROOT,
                 activityRule.activity.getString(R.string.search_add_success),
-                VALID_ADD_TITLE
+                VALID_SEARCH_ADD_TITLE
             )
         ).check(matches(isDisplayed()))
     }
@@ -389,7 +389,7 @@ class SearchTests {
             String.format(
                 Locale.ROOT,
                 activityRule.activity.getString(R.string.search_add_success),
-                VALID_ADD_TITLE
+                VALID_SEARCH_ADD_TITLE
             )
         ).check(matches(isDisplayed()))
     }
@@ -410,7 +410,7 @@ class SearchTests {
             String.format(
                 Locale.ROOT,
                 activityRule.activity.getString(R.string.search_add_success),
-                VALID_ADD_TITLE
+                VALID_SEARCH_ADD_TITLE
             )
         ).check(matches(isDisplayed()))
     }
@@ -431,7 +431,7 @@ class SearchTests {
             String.format(
                 Locale.ROOT,
                 activityRule.activity.getString(R.string.search_add_success),
-                VALID_ADD_TITLE
+                VALID_SEARCH_ADD_TITLE
             )
         ).check(matches(isDisplayed()))
     }

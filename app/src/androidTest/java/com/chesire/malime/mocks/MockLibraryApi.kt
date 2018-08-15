@@ -1,7 +1,7 @@
 package com.chesire.malime.mocks
 
 import com.chesire.malime.INVALID_SEARCH_ADD_TITLE
-import com.chesire.malime.VALID_ADD_TITLE
+import com.chesire.malime.VALID_SEARCH_ADD_TITLE
 import com.chesire.malime.core.api.LibraryApi
 import com.chesire.malime.core.flags.UserSeriesStatus
 import com.chesire.malime.core.models.MalimeModel
@@ -16,7 +16,7 @@ class MockLibraryApi @Inject constructor() : LibraryApi {
                 INVALID_SEARCH_ADD_TITLE -> {
                     it.onError(Throwable("Invalid add title supplied"))
                 }
-                VALID_ADD_TITLE -> {
+                VALID_SEARCH_ADD_TITLE -> {
                     it.onSuccess(item)
                 }
             }

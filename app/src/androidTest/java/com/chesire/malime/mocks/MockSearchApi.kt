@@ -2,7 +2,7 @@ package com.chesire.malime.mocks
 
 import com.chesire.malime.INVALID_SEARCH
 import com.chesire.malime.INVALID_SEARCH_ADD_TITLE
-import com.chesire.malime.VALID_ADD_TITLE
+import com.chesire.malime.VALID_SEARCH_ADD_TITLE
 import com.chesire.malime.VALID_SEARCH_MULTIPLE_ITEMS
 import com.chesire.malime.VALID_SEARCH_NO_ITEMS
 import com.chesire.malime.VALID_SEARCH_SINGLE_ITEM
@@ -56,7 +56,7 @@ class MockSearchApi @Inject constructor() : SearchApi {
         type: ItemType = ItemType.Unknown,
         subtype: Subtype = Subtype.Unknown,
         slug: String = "SERIES-SLUG",
-        title: String = VALID_ADD_TITLE,
+        title: String = VALID_SEARCH_ADD_TITLE,
         seriesStatus: SeriesStatus = SeriesStatus.Unknown,
         userSeriesStatus: UserSeriesStatus = UserSeriesStatus.Unknown,
         progress: Int = 0,
