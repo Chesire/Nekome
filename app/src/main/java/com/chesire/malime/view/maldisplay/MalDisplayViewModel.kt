@@ -12,6 +12,7 @@ import com.chesire.malime.util.UIScheduler
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Scheduler
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.rxkotlin.subscribeBy
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -38,18 +39,12 @@ class MalDisplayViewModel @Inject constructor(
             library.updateLibraryFromApi()
                 .subscribeOn(subscribeScheduler)
                 .observeOn(observeScheduler)
-                .doOnSubscribe {
-                    updateAllStatus.value = UpdatingSeriesStatus.Updating
-                }
-                .doOnError {
-                    updateAllStatus.value = UpdatingSeriesStatus.Error
-                }
-                .doOnComplete {
-                    updateAllStatus.value = UpdatingSeriesStatus.Finished
-                }
-                .subscribe {
-                    library.insertIntoLocalLibrary(it)
-                }
+                .doOnSubscribe { updateAllStatus.value = UpdatingSeriesStatus.Updating }
+                .subscribeBy(
+                    onError = { updateAllStatus.value = UpdatingSeriesStatus.Error },
+                    onNext = { library.insertIntoLocalLibrary(it) },
+                    onComplete = { updateAllStatus.value = UpdatingSeriesStatus.Finished }
+                )
         )
     }
 
@@ -60,13 +55,11 @@ class MalDisplayViewModel @Inject constructor(
             library.sendDeleteToApi(model)
                 .subscribeOn(subscribeScheduler)
                 .observeOn(observeScheduler)
-                .subscribe(
-                    {
+                .subscribeBy(
+                    onError = { callback(false) },
+                    onSuccess = {
                         library.deleteFromLocalLibrary(it)
                         callback(true)
-                    },
-                    {
-                        callback(false)
                     }
                 )
         )
@@ -84,13 +77,11 @@ class MalDisplayViewModel @Inject constructor(
             library.sendUpdateToApi(model, newProgress, newStatus)
                 .subscribeOn(subscribeScheduler)
                 .observeOn(observeScheduler)
-                .subscribe(
-                    {
+                .subscribeBy(
+                    onError = { callback(false) },
+                    onSuccess = {
                         library.updateInLocalLibrary(it)
                         callback(true)
-                    },
-                    {
-                        callback(false)
                     }
                 )
         )

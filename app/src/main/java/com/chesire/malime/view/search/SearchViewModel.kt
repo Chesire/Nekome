@@ -73,13 +73,11 @@ class SearchViewModel @Inject constructor(
             library.sendNewToApi(selectedSeries)
                 .subscribeOn(subscribeScheduler)
                 .observeOn(observeScheduler)
-                .subscribe(
-                    {
+                .subscribeBy(
+                    onError = { callback(false) },
+                    onSuccess = {
                         library.insertIntoLocalLibrary(it)
                         callback(true)
-                    },
-                    {
-                        callback(false)
                     }
                 )
         )
