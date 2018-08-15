@@ -14,7 +14,9 @@ import android.support.test.espresso.matcher.ViewMatchers.withText
 import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
 import com.chesire.malime.INVALID_SEARCH
+import com.chesire.malime.INVALID_SEARCH_ADD_TITLE
 import com.chesire.malime.R
+import com.chesire.malime.VALID_ADD_TITLE
 import com.chesire.malime.VALID_SEARCH_MULTIPLE_ITEMS
 import com.chesire.malime.VALID_SEARCH_NO_ITEMS
 import com.chesire.malime.VALID_SEARCH_SINGLE_ITEM
@@ -31,6 +33,7 @@ import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import java.util.Locale
 
 /**
  * Requirements:
@@ -40,7 +43,6 @@ import org.junit.runner.RunWith
  */
 @RunWith(AndroidJUnit4::class)
 class SearchTests {
-
     @get:Rule
     val activityRule = ActivityTestRule(MainActivity::class.java)
 
@@ -184,16 +186,47 @@ class SearchTests {
 
     @Test
     fun failureToAddAnimeProducesError() {
+        clickRadioButtonItem(R.id.search_option_choices, R.id.search_option_anime_choice)
+        onView(withId(R.id.search_search_term_edit_text)).perform(
+            typeText(INVALID_SEARCH_ADD_TITLE),
+            pressImeActionButton()
+        )
 
+        sleep(100)
+        clickListItemChild(R.id.search_all_items, 0, R.id.search_image_add_button)
+        onView(withText(R.string.filter_state_completed)).inRoot(isPlatformPopup()).perform(click())
+
+        onToast(
+            String.format(
+                Locale.ROOT,
+                activityRule.activity.getString(R.string.search_add_failed),
+                INVALID_SEARCH_ADD_TITLE
+            )
+        ).check(matches(isDisplayed()))
     }
 
     @Test
     fun failureToAddMangaProducesError() {
+        clickRadioButtonItem(R.id.search_option_choices, R.id.search_option_manga_choice)
+        onView(withId(R.id.search_search_term_edit_text)).perform(
+            typeText(INVALID_SEARCH_ADD_TITLE),
+            pressImeActionButton()
+        )
 
+        sleep(100)
+        clickListItemChild(R.id.search_all_items, 0, R.id.search_image_add_button)
+        onView(withText(R.string.filter_state_completed)).inRoot(isPlatformPopup()).perform(click())
+
+        onToast(
+            String.format(
+                Locale.ROOT,
+                activityRule.activity.getString(R.string.search_add_failed),
+                INVALID_SEARCH_ADD_TITLE
+            )
+        ).check(matches(isDisplayed()))
     }
 
     @Test
-    @Ignore
     fun canAddAnimeItemWithCompletedStatus() {
         clickRadioButtonItem(R.id.search_option_choices, R.id.search_option_anime_choice)
         onView(withId(R.id.search_search_term_edit_text)).perform(
@@ -204,74 +237,202 @@ class SearchTests {
         sleep(100)
         clickListItemChild(R.id.search_all_items, 0, R.id.search_image_add_button)
         onView(withText(R.string.filter_state_completed)).inRoot(isPlatformPopup()).perform(click())
+
+        onToast(
+            String.format(
+                Locale.ROOT,
+                activityRule.activity.getString(R.string.search_add_success),
+                VALID_ADD_TITLE
+            )
+        ).check(matches(isDisplayed()))
     }
 
     @Test
-    @Ignore
     fun canAddAnimeItemWithCurrentStatus() {
         clickRadioButtonItem(R.id.search_option_choices, R.id.search_option_anime_choice)
+        onView(withId(R.id.search_search_term_edit_text)).perform(
+            typeText(VALID_SEARCH_MULTIPLE_ITEMS),
+            pressImeActionButton()
+        )
 
+        sleep(100)
+        clickListItemChild(R.id.search_all_items, 1, R.id.search_image_add_button)
+        onView(withText(R.string.filter_state_current)).inRoot(isPlatformPopup()).perform(click())
+
+        onToast(
+            String.format(
+                Locale.ROOT,
+                activityRule.activity.getString(R.string.search_add_success),
+                VALID_ADD_TITLE
+            )
+        ).check(matches(isDisplayed()))
     }
 
     @Test
-    @Ignore
     fun canAddAnimeItemWithDroppedStatus() {
         clickRadioButtonItem(R.id.search_option_choices, R.id.search_option_anime_choice)
+        onView(withId(R.id.search_search_term_edit_text)).perform(
+            typeText(VALID_SEARCH_MULTIPLE_ITEMS),
+            pressImeActionButton()
+        )
 
+        sleep(100)
+        clickListItemChild(R.id.search_all_items, 2, R.id.search_image_add_button)
+        onView(withText(R.string.filter_state_dropped)).inRoot(isPlatformPopup()).perform(click())
+
+        onToast(
+            String.format(
+                Locale.ROOT,
+                activityRule.activity.getString(R.string.search_add_success),
+                VALID_ADD_TITLE
+            )
+        ).check(matches(isDisplayed()))
     }
 
     @Test
-    @Ignore
     fun canAddAnimeItemWithOnHoldStatus() {
         clickRadioButtonItem(R.id.search_option_choices, R.id.search_option_anime_choice)
+        onView(withId(R.id.search_search_term_edit_text)).perform(
+            typeText(VALID_SEARCH_MULTIPLE_ITEMS),
+            pressImeActionButton()
+        )
 
+        sleep(100)
+        clickListItemChild(R.id.search_all_items, 3, R.id.search_image_add_button)
+        onView(withText(R.string.filter_state_on_hold)).inRoot(isPlatformPopup()).perform(click())
+
+        onToast(
+            String.format(
+                Locale.ROOT,
+                activityRule.activity.getString(R.string.search_add_success),
+                VALID_ADD_TITLE
+            )
+        ).check(matches(isDisplayed()))
     }
 
     @Test
-    @Ignore
     fun canAddAnimeItemWithPlannedStatus() {
         clickRadioButtonItem(R.id.search_option_choices, R.id.search_option_anime_choice)
+        onView(withId(R.id.search_search_term_edit_text)).perform(
+            typeText(VALID_SEARCH_MULTIPLE_ITEMS),
+            pressImeActionButton()
+        )
 
+        sleep(100)
+        clickListItemChild(R.id.search_all_items, 4, R.id.search_image_add_button)
+        onView(withText(R.string.filter_state_planned)).inRoot(isPlatformPopup()).perform(click())
+
+        onToast(
+            String.format(
+                Locale.ROOT,
+                activityRule.activity.getString(R.string.search_add_success),
+                VALID_ADD_TITLE
+            )
+        ).check(matches(isDisplayed()))
     }
 
     @Test
-    @Ignore
     fun canAddMangaItemWithCompletedStatus() {
         clickRadioButtonItem(R.id.search_option_choices, R.id.search_option_manga_choice)
+        onView(withId(R.id.search_search_term_edit_text)).perform(
+            typeText(VALID_SEARCH_MULTIPLE_ITEMS),
+            pressImeActionButton()
+        )
 
+        sleep(100)
+        clickListItemChild(R.id.search_all_items, 5, R.id.search_image_add_button)
+        onView(withText(R.string.filter_state_completed)).inRoot(isPlatformPopup()).perform(click())
+
+        onToast(
+            String.format(
+                Locale.ROOT,
+                activityRule.activity.getString(R.string.search_add_success),
+                VALID_ADD_TITLE
+            )
+        ).check(matches(isDisplayed()))
     }
 
     @Test
-    @Ignore
     fun canAddMangaItemWithCurrentStatus() {
         clickRadioButtonItem(R.id.search_option_choices, R.id.search_option_manga_choice)
+        onView(withId(R.id.search_search_term_edit_text)).perform(
+            typeText(VALID_SEARCH_MULTIPLE_ITEMS),
+            pressImeActionButton()
+        )
 
+        sleep(100)
+        clickListItemChild(R.id.search_all_items, 6, R.id.search_image_add_button)
+        onView(withText(R.string.filter_state_current)).inRoot(isPlatformPopup()).perform(click())
+
+        onToast(
+            String.format(
+                Locale.ROOT,
+                activityRule.activity.getString(R.string.search_add_success),
+                VALID_ADD_TITLE
+            )
+        ).check(matches(isDisplayed()))
     }
 
     @Test
-    @Ignore
     fun canAddMangaItemWithDroppedStatus() {
         clickRadioButtonItem(R.id.search_option_choices, R.id.search_option_manga_choice)
+        onView(withId(R.id.search_search_term_edit_text)).perform(
+            typeText(VALID_SEARCH_MULTIPLE_ITEMS),
+            pressImeActionButton()
+        )
 
+        sleep(100)
+        clickListItemChild(R.id.search_all_items, 7, R.id.search_image_add_button)
+        onView(withText(R.string.filter_state_dropped)).inRoot(isPlatformPopup()).perform(click())
+
+        onToast(
+            String.format(
+                Locale.ROOT,
+                activityRule.activity.getString(R.string.search_add_success),
+                VALID_ADD_TITLE
+            )
+        ).check(matches(isDisplayed()))
     }
 
     @Test
-    @Ignore
     fun canAddMangaItemWithOnHoldStatus() {
         clickRadioButtonItem(R.id.search_option_choices, R.id.search_option_manga_choice)
+        onView(withId(R.id.search_search_term_edit_text)).perform(
+            typeText(VALID_SEARCH_MULTIPLE_ITEMS),
+            pressImeActionButton()
+        )
 
+        sleep(100)
+        clickListItemChild(R.id.search_all_items, 8, R.id.search_image_add_button)
+        onView(withText(R.string.filter_state_on_hold)).inRoot(isPlatformPopup()).perform(click())
+
+        onToast(
+            String.format(
+                Locale.ROOT,
+                activityRule.activity.getString(R.string.search_add_success),
+                VALID_ADD_TITLE
+            )
+        ).check(matches(isDisplayed()))
     }
 
     @Test
-    @Ignore
     fun canAddMangaItemWithPlannedStatus() {
         clickRadioButtonItem(R.id.search_option_choices, R.id.search_option_manga_choice)
+        onView(withId(R.id.search_search_term_edit_text)).perform(
+            typeText(VALID_SEARCH_MULTIPLE_ITEMS),
+            pressImeActionButton()
+        )
 
-    }
+        sleep(100)
+        clickListItemChild(R.id.search_all_items, 9, R.id.search_image_add_button)
+        onView(withText(R.string.filter_state_planned)).inRoot(isPlatformPopup()).perform(click())
 
-    @Test
-    @Ignore
-    fun itemAlreadyAddedCannotBeAddedAgain() {
-
+        onToast(
+            String.format(
+                Locale.ROOT,
+                activityRule.activity.getString(R.string.search_add_success),
+                VALID_ADD_TITLE
+            )
+        ).check(matches(isDisplayed()))
     }
 }

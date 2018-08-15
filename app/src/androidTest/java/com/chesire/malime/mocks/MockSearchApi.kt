@@ -1,6 +1,8 @@
 package com.chesire.malime.mocks
 
 import com.chesire.malime.INVALID_SEARCH
+import com.chesire.malime.INVALID_SEARCH_ADD_TITLE
+import com.chesire.malime.VALID_ADD_TITLE
 import com.chesire.malime.VALID_SEARCH_MULTIPLE_ITEMS
 import com.chesire.malime.VALID_SEARCH_NO_ITEMS
 import com.chesire.malime.VALID_SEARCH_SINGLE_ITEM
@@ -18,6 +20,9 @@ class MockSearchApi @Inject constructor() : SearchApi {
         return Single.create {
             when (title) {
                 INVALID_SEARCH -> it.tryOnError(Throwable("Invalid search supplied"))
+                INVALID_SEARCH_ADD_TITLE -> {
+                    it.onSuccess(listOf(getMalimeModel(title = INVALID_SEARCH_ADD_TITLE)))
+                }
                 VALID_SEARCH_NO_ITEMS -> {
                     it.onSuccess(listOf())
                 }
@@ -51,7 +56,7 @@ class MockSearchApi @Inject constructor() : SearchApi {
         type: ItemType = ItemType.Unknown,
         subtype: Subtype = Subtype.Unknown,
         slug: String = "SERIES-SLUG",
-        title: String = "SERIES-TITLE",
+        title: String = VALID_ADD_TITLE,
         seriesStatus: SeriesStatus = SeriesStatus.Unknown,
         userSeriesStatus: UserSeriesStatus = UserSeriesStatus.Unknown,
         progress: Int = 0,
