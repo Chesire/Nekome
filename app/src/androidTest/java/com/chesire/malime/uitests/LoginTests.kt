@@ -1,4 +1,4 @@
-package com.chesire.malime.tests
+package com.chesire.malime.uitests
 
 import android.support.test.espresso.Espresso.onView
 import android.support.test.espresso.action.ViewActions.clearText

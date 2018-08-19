@@ -1,4 +1,4 @@
-package com.chesire.malime.tests
+package com.chesire.malime.uitests
 
 /*
 @RunWith(AndroidJUnit4::class)

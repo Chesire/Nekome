@@ -1,4 +1,4 @@
-package com.chesire.malime.tests
+package com.chesire.malime.uitests
 
 import android.support.design.internal.BottomNavigationItemView
 import android.support.test.espresso.Espresso.onView
