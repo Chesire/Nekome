@@ -9,6 +9,7 @@ import com.chesire.malime.core.flags.Subtype
 import com.chesire.malime.core.flags.UserSeriesStatus
 import com.chesire.malime.core.models.AuthModel
 import com.chesire.malime.core.models.MalimeModel
+import com.chesire.malime.kitsu.models.LibraryItem
 import com.chesire.malime.kitsu.models.response.UpdateItemResponse
 import io.reactivex.Observable
 import io.reactivex.Single
@@ -130,29 +131,7 @@ class KitsuManager @Inject constructor(
                     val fullTitleData = body.included
 
                     val items = userTitleData.zip(fullTitleData) { user, full ->
-                        // Items should be married up by their index
-
-                        MalimeModel(
-                            seriesId = full.id,
-                            userSeriesId = user.id,
-                            type = type,
-                            subtype = Subtype.getSubtypeForKitsuString(full.attributes.subtype),
-                            slug = full.attributes.slug,
-                            title = full.attributes.canonicalTitle,
-                            seriesStatus = SeriesStatus.getStatusForKitsuString(full.attributes.status),
-                            userSeriesStatus = UserSeriesStatus.getStatusForKitsuString(user.attributes.status),
-                            progress = user.attributes.progress,
-                            totalLength = if (type == ItemType.Anime) {
-                                full.attributes.episodeCount
-                            } else {
-                                full.attributes.chapterCount
-                            },
-                            posterImage = getImage(full.attributes.posterImage),
-                            coverImage = getImage(full.attributes.coverImage),
-                            nsfw = full.attributes.nsfw,
-                            startDate = user.attributes.startedAt ?: "",
-                            endDate = user.attributes.finishedAt ?: ""
-                        )
+                        getModelFrom(user, full)
                     }
 
                     it.onNext(items)
@@ -193,30 +172,7 @@ class KitsuManager @Inject constructor(
 
             if (response.isSuccessful && body != null) {
                 Timber.i("Successfully updated series")
-                val seriesData = body.included[0]
-                val newItem = MalimeModel(
-                    seriesId = seriesData.id,
-                    userSeriesId = body.data.id,
-                    type = ItemType.getTypeForString(seriesData.type),
-                    subtype = Subtype.getSubtypeForKitsuString(seriesData.attributes.subtype),
-                    slug = seriesData.attributes.slug,
-                    title = seriesData.attributes.canonicalTitle,
-                    seriesStatus = SeriesStatus.getStatusForKitsuString(seriesData.attributes.status),
-                    userSeriesStatus = UserSeriesStatus.getStatusForKitsuString(body.data.attributes.status),
-                    progress = body.data.attributes.progress,
-                    totalLength = if (ItemType.getTypeForString(seriesData.type) == ItemType.Anime) {
-                        seriesData.attributes.episodeCount
-                    } else {
-                        seriesData.attributes.chapterCount
-                    },
-                    posterImage = getImage(seriesData.attributes.posterImage),
-                    coverImage = getImage(seriesData.attributes.coverImage),
-                    nsfw = seriesData.attributes.nsfw,
-                    startDate = seriesData.attributes.startedAt ?: "",
-                    endDate = seriesData.attributes.finishedAt ?: ""
-                )
-
-                it.onSuccess(newItem)
+                it.onSuccess(getModelFrom(body.data, body.included[0]))
             } else {
                 Timber.e(Throwable(response.message()), "Error updating the series")
                 it.tryOnError(Throwable(response.message()))
@@ -271,35 +227,60 @@ class KitsuManager @Inject constructor(
 
             if (response.isSuccessful && body != null) {
                 Timber.i("Successfully searched, found [${body.data.count()}] items")
-                val items = body.data.map {
-                    MalimeModel(
-                        seriesId = it.id,
-                        userSeriesId = 0,
-                        type = ItemType.getTypeForString(it.type),
-                        subtype = Subtype.getSubtypeForKitsuString(it.attributes.subtype),
-                        slug = it.attributes.slug,
-                        title = it.attributes.canonicalTitle,
-                        seriesStatus = SeriesStatus.getStatusForKitsuString(it.attributes.status),
-                        userSeriesStatus = UserSeriesStatus.Unknown,
-                        progress = 0,
-                        totalLength = if (ItemType.getTypeForString(it.type) == ItemType.Anime) {
-                            it.attributes.episodeCount
-                        } else {
-                            it.attributes.chapterCount
-                        },
-                        posterImage = getImage(it.attributes.posterImage),
-                        coverImage = getImage(it.attributes.coverImage),
-                        nsfw = it.attributes.nsfw,
-                        startDate = "",
-                        endDate = ""
-                    )
-                }
-                it.onSuccess(items)
+                it.onSuccess(body.data.map { libItem -> getModelFrom(libItem) })
             } else {
                 Timber.e(Throwable(response.message()), "Error performing search")
                 it.tryOnError(Throwable(response.message()))
             }
         }
+    }
+
+    private fun getModelFrom(libraryItem: LibraryItem): MalimeModel {
+        return MalimeModel(
+            seriesId = libraryItem.id,
+            userSeriesId = 0,
+            type = ItemType.getTypeForString(libraryItem.type),
+            subtype = Subtype.getSubtypeForKitsuString(libraryItem.attributes.subtype),
+            slug = libraryItem.attributes.slug,
+            title = libraryItem.attributes.canonicalTitle,
+            seriesStatus = SeriesStatus.getStatusForKitsuString(libraryItem.attributes.status),
+            userSeriesStatus = UserSeriesStatus.Unknown,
+            progress = 0,
+            totalLength = if (ItemType.getTypeForString(libraryItem.type) == ItemType.Anime) {
+                libraryItem.attributes.episodeCount
+            } else {
+                libraryItem.attributes.chapterCount
+            },
+            posterImage = getImage(libraryItem.attributes.posterImage),
+            coverImage = getImage(libraryItem.attributes.coverImage),
+            nsfw = libraryItem.attributes.nsfw,
+            startDate = "",
+            endDate = ""
+        )
+    }
+
+    private fun getModelFrom(user: LibraryItem, included: LibraryItem): MalimeModel {
+        return MalimeModel(
+            seriesId = included.id,
+            userSeriesId = user.id,
+            type = ItemType.getTypeForString(included.type),
+            subtype = Subtype.getSubtypeForKitsuString(included.attributes.subtype),
+            slug = included.attributes.slug,
+            title = included.attributes.canonicalTitle,
+            seriesStatus = SeriesStatus.getStatusForKitsuString(included.attributes.status),
+            userSeriesStatus = UserSeriesStatus.getStatusForKitsuString(user.attributes.status),
+            progress = user.attributes.progress,
+            totalLength = if (ItemType.getTypeForString(included.type) == ItemType.Anime) {
+                included.attributes.episodeCount
+            } else {
+                included.attributes.chapterCount
+            },
+            posterImage = getImage(included.attributes.posterImage),
+            coverImage = getImage(included.attributes.coverImage),
+            nsfw = included.attributes.nsfw,
+            startDate = included.attributes.startedAt ?: "",
+            endDate = included.attributes.finishedAt ?: ""
+        )
     }
 
     private fun getImage(map: Map<String, Any>?): String {
