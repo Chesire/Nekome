@@ -1,6 +1,5 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.google.android.gms.oss-licenses-plugin'
-apply plugin: 'io.fabric'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
@@ -13,8 +12,8 @@ android {
         applicationId "com.chesire.malime"
         minSdkVersion 21
         targetSdkVersion 27
-        versionCode 10
-        versionName "1.0.1"
+        versionCode 11
+        versionName "1.0.2"
         testInstrumentationRunner "com.chesire.malime.MockTestRunner"
         resConfigs "en"
     }
@@ -68,8 +67,6 @@ dependencies {
     implementation 'android.arch.lifecycle:extensions:1.1.1'
     implementation 'android.arch.lifecycle:reactivestreams:1.1.1'
 
-    implementation 'com.crashlytics.sdk.android:crashlytics:2.9.4'
-
     implementation 'com.github.bumptech.glide:glide:4.7.1'
     implementation "com.jakewharton.timber:timber:$timber_version"
 
@@ -106,5 +103,3 @@ dependencies {
     kaptAndroidTest "com.google.dagger:dagger-compiler:$dagger_version"
     kaptAndroidTest "com.google.dagger:dagger-android-processor:$dagger_version"
 }
-
-apply plugin: 'com.google.gms.google-services'

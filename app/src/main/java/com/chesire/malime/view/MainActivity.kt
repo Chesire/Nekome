@@ -19,7 +19,6 @@ import com.chesire.malime.util.SharedPref
 import com.chesire.malime.util.UrlLoader
 import com.chesire.malime.view.login.LoginActivity
 import com.chesire.malime.view.maldisplay.MalDisplayFragment
-import com.chesire.malime.view.preferences.PrefActivity
 import com.chesire.malime.view.preferences.SortOption
 import com.chesire.malime.view.search.SearchFragment
 import dagger.android.DispatchingAndroidInjector
@@ -100,10 +99,6 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
         when {
             item?.itemId == R.id.menu_options_view_profile -> {
                 launchProfile()
-                return true
-            }
-            item?.itemId == R.id.menu_options_settings -> {
-                startActivity(Intent(this, PrefActivity::class.java))
                 return true
             }
             item?.itemId == R.id.menu_options_log_out -> {
