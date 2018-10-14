@@ -12,13 +12,14 @@ import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjectionModule
 import dagger.android.AndroidInjector
+import dagger.android.support.AndroidSupportInjectionModule
 import javax.inject.Singleton
 
 @Singleton
 @Component(
     modules = [
         (ActivityModule::class),
-        (AndroidInjectionModule::class),
+        (AndroidSupportInjectionModule::class),
         (AppModule::class),
         (DatabaseModule::class),
         (ServerModule::class),
