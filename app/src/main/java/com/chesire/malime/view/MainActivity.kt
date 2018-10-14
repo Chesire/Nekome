@@ -77,7 +77,7 @@ class MainActivity : DaggerAppCompatActivity() {
             currentDisplayedFragmentTag =
                     savedInstanceState.getString(currentDisplayedFragmentTagBundleId)
             setFragment(
-                supportFragmentManager.findFragmentByTag(currentDisplayedFragmentTag),
+                supportFragmentManager.findFragmentByTag(currentDisplayedFragmentTag)!!,
                 currentDisplayedFragmentTag
             )
         }

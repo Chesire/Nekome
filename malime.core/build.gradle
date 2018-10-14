@@ -6,11 +6,11 @@ apply from: '../app/dokka.gradle'
 apply from: '../app/ktlint.gradle'
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion 28
 
     defaultConfig {
         minSdkVersion 21
-        targetSdkVersion 27
+        targetSdkVersion 28
         versionCode 1
         versionName "1.0"
 

@@ -11,7 +11,7 @@ import android.view.View
  * based on: https://gist.github.com/adelnizamutdinov/31c8f054d1af4588dc5c
  */
 class EmptyableRecyclerView @JvmOverloads constructor(
-    context: Context?,
+    context: Context,
     attrs: AttributeSet? = null,
     defStyle: Int = 0
 ) : RecyclerView(context, attrs, defStyle) {
@@ -44,7 +44,7 @@ class EmptyableRecyclerView @JvmOverloads constructor(
 
     fun checkIfEmpty() {
         if (adapter != null) {
-            val emptyViewVisible = adapter.itemCount == 0
+            val emptyViewVisible = adapter!!.itemCount == 0
             emptyView.visibility = if (emptyViewVisible) VISIBLE else GONE
             visibility = if (emptyViewVisible) GONE else VISIBLE
         }
