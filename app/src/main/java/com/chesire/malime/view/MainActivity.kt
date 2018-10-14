@@ -81,7 +81,7 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
             currentDisplayedFragmentTag =
                     savedInstanceState.getString(currentDisplayedFragmentTagBundleId)
             setFragment(
-                supportFragmentManager.findFragmentByTag(currentDisplayedFragmentTag),
+                supportFragmentManager.findFragmentByTag(currentDisplayedFragmentTag)!!,
                 currentDisplayedFragmentTag
             )
         }

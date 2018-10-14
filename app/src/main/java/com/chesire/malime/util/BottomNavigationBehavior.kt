@@ -27,7 +27,7 @@ class BottomNavigationBehavior<V : View>(
         type: Int
     ): Boolean = axes == ViewCompat.SCROLL_AXIS_VERTICAL
 
-    override fun layoutDependsOn(parent: CoordinatorLayout?, child: V, dependency: View?): Boolean {
+    override fun layoutDependsOn(parent: CoordinatorLayout, child: V, dependency: View): Boolean {
         if (dependency is Snackbar.SnackbarLayout) {
             updateSnackbar(child, dependency)
         }
