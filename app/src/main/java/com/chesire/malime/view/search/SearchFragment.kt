@@ -7,7 +7,6 @@ import android.content.res.Configuration
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.design.widget.Snackbar
-import android.support.v4.app.Fragment
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.OrientationHelper
@@ -21,15 +20,15 @@ import com.chesire.malime.R
 import com.chesire.malime.core.flags.ItemType
 import com.chesire.malime.core.models.MalimeModel
 import com.chesire.malime.databinding.FragmentSearchBinding
-import com.chesire.malime.injection.Injectable
 import com.chesire.malime.util.SharedPref
 import com.chesire.malime.util.UrlLoader
 import com.chesire.malime.util.autoCleared
 import com.chesire.malime.util.extension.hideSystemKeyboard
+import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_search.search_search_term_edit_text
 import javax.inject.Inject
 
-class SearchFragment : Fragment(), Injectable, SearchInteractionListener {
+class SearchFragment : DaggerFragment(), SearchInteractionListener {
     private var checkedOption = R.id.search_option_anime_choice
     private var binding by autoCleared<FragmentSearchBinding>()
     private lateinit var viewModel: SearchViewModel

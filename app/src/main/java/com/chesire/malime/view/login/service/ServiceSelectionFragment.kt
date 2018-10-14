@@ -2,7 +2,6 @@ package com.chesire.malime.view.login.service
 
 import android.content.Context
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,8 +9,9 @@ import android.widget.Button
 import com.chesire.malime.R
 import com.chesire.malime.core.flags.SupportedService
 import com.chesire.malime.view.login.LoginInteractor
+import dagger.android.support.DaggerFragment
 
-class ServiceSelectionFragment : Fragment() {
+class ServiceSelectionFragment : DaggerFragment() {
     private lateinit var loginInteractor: LoginInteractor
 
     override fun onCreateView(

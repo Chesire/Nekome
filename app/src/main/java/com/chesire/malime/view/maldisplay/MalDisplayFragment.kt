@@ -7,7 +7,6 @@ import android.content.res.Configuration
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.design.widget.Snackbar
-import android.support.v4.app.Fragment
 import android.support.v7.app.AlertDialog
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
@@ -24,18 +23,18 @@ import com.chesire.malime.core.flags.ItemType
 import com.chesire.malime.core.flags.UserSeriesStatus
 import com.chesire.malime.core.models.MalimeModel
 import com.chesire.malime.databinding.FragmentMaldisplayBinding
-import com.chesire.malime.injection.Injectable
 import com.chesire.malime.util.SharedPref
 import com.chesire.malime.util.UrlLoader
 import com.chesire.malime.util.autoCleared
 import com.chesire.malime.util.extension.getSeriesStatusStrings
+import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_maldisplay.maldisplay_swipe_refresh
 import timber.log.Timber
 import javax.inject.Inject
 
 private const val ITEM_TYPE_BUNDLE_ID = "ITEM_TYPE_BUNDLE_ID"
 
-class MalDisplayFragment : Fragment(), Injectable, ModelInteractionListener {
+class MalDisplayFragment : DaggerFragment(), ModelInteractionListener {
     private var binding by autoCleared<FragmentMaldisplayBinding>()
     private var viewAdapter by autoCleared<MalDisplayViewAdapter>()
     private lateinit var viewModel: MalDisplayViewModel

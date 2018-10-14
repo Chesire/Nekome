@@ -11,6 +11,7 @@ import com.chesire.malime.injection.modules.UiModule
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjectionModule
+import dagger.android.AndroidInjector
 import javax.inject.Singleton
 
 @Singleton
@@ -25,14 +26,12 @@ import javax.inject.Singleton
         (UiModule::class)
     ]
 )
-interface AppComponent {
+interface AppComponent : AndroidInjector<MalimeApplication> {
     @Component.Builder
     interface Builder {
         @BindsInstance
-        fun application(application: Application): Builder
+        fun create(application: Application): Builder
 
         fun build(): AppComponent
     }
-
-    fun inject(malimeApp: MalimeApplication)
 }

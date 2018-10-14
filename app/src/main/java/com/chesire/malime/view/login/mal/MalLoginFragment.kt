@@ -14,7 +14,6 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import com.chesire.malime.R
 import com.chesire.malime.databinding.FragmentMalLoginBinding
-import com.chesire.malime.injection.Injectable
 import com.chesire.malime.util.autoCleared
 import com.chesire.malime.util.extension.hideSystemKeyboard
 import com.chesire.malime.view.login.BaseLoginFragment
@@ -22,7 +21,7 @@ import javax.inject.Inject
 
 private const val MAL_SIGNUP_URL = "https://myanimelist.net/register.php"
 
-class MalLoginFragment : BaseLoginFragment(), Injectable {
+class MalLoginFragment : BaseLoginFragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
     private lateinit var viewModel: MalLoginViewModel

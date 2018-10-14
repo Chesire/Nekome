@@ -4,12 +4,12 @@ import android.app.ProgressDialog
 import android.content.Context
 import android.os.Bundle
 import android.support.annotation.StringRes
-import android.support.v4.app.Fragment
 import android.widget.Toast
 import com.chesire.malime.R
+import dagger.android.support.DaggerFragment
 
 @Suppress("DEPRECATION")
-abstract class BaseLoginFragment : Fragment() {
+abstract class BaseLoginFragment : DaggerFragment() {
     private lateinit var loginInteractor: LoginInteractor
     private lateinit var progressDialog: ProgressDialog
 

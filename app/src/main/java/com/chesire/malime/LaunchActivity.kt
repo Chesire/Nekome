@@ -1,15 +1,14 @@
 package com.chesire.malime
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import com.chesire.malime.core.repositories.Authorization
-import com.chesire.malime.injection.Injectable
 import com.chesire.malime.view.MainActivity
 import com.chesire.malime.view.login.LoginActivity
+import dagger.android.DaggerActivity
 import javax.inject.Inject
 
-class LaunchActivity : Activity(), Injectable {
+class LaunchActivity : DaggerActivity() {
     @Inject
     lateinit var authorization: Authorization
 
