@@ -7,7 +7,6 @@ import android.os.HandlerThread
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
 import android.support.v7.app.AlertDialog
-import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import com.chesire.malime.R
 import com.chesire.malime.core.flags.ItemType
@@ -21,17 +20,14 @@ import com.chesire.malime.view.login.LoginActivity
 import com.chesire.malime.view.maldisplay.MalDisplayFragment
 import com.chesire.malime.view.preferences.SortOption
 import com.chesire.malime.view.search.SearchFragment
-import dagger.android.DispatchingAndroidInjector
-import dagger.android.support.HasSupportFragmentInjector
+import dagger.android.support.DaggerAppCompatActivity
 import timber.log.Timber
 import javax.inject.Inject
 
-class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
+class MainActivity : DaggerAppCompatActivity() {
     private var currentDisplayedFragmentTagBundleId = "currentFragment"
     private var currentDisplayedFragmentTag = ""
 
-    @Inject
-    lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
     @Inject
     lateinit var sharedPref: SharedPref
     @Inject
@@ -120,8 +116,6 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
             else -> return super.onOptionsItemSelected(item)
         }
     }
-
-    override fun supportFragmentInjector() = dispatchingAndroidInjector
 
     private fun logout() {
         val handlerThread = HandlerThread("ClearRoomDBThread")

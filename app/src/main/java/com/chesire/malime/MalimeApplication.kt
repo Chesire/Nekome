@@ -1,53 +1,41 @@
 package com.chesire.malime
 
-import android.app.Activity
-import android.app.Application
-import android.app.Service
 import android.os.StrictMode
-import com.chesire.malime.injection.AppInjector
+import com.chesire.malime.injection.DaggerAppComponent
 import com.squareup.leakcanary.LeakCanary
 import dagger.android.AndroidInjector
-import dagger.android.DispatchingAndroidInjector
-import dagger.android.HasActivityInjector
-import dagger.android.HasServiceInjector
+import dagger.android.DaggerApplication
 import io.reactivex.plugins.RxJavaPlugins
 import timber.log.Timber
-import javax.inject.Inject
 
-class MalimeApplication : Application(), HasActivityInjector, HasServiceInjector {
-    @Inject
-    lateinit var activityInjector: DispatchingAndroidInjector<Activity>
-    @Inject
-    lateinit var serviceInjector: DispatchingAndroidInjector<Service>
+class MalimeApplication : DaggerApplication() {
 
     override fun onCreate() {
         super.onCreate()
-        startLeakCanary()
+        if (BuildConfig.DEBUG) {
+            if (LeakCanary.isInAnalyzerProcess(this)) {
+                // This process is dedicated to LeakCanary for heap analysis.
+                // You should not init your app in this process.
+                return
+            }
+            LeakCanary.install(this)
+
+            Timber.plant(Timber.DebugTree())
+            startStrictMode()
+        }
 
         // This is to handle switching fragments quickly while a request is occurring.
         // TODO: Revisit this, as will require some more reading into RXJava
         RxJavaPlugins.setErrorHandler {
             Timber.e(it, "Caught exception in RXJava")
         }
-
-        if (BuildConfig.DEBUG) {
-            Timber.plant(Timber.DebugTree())
-            startStrictMode()
-        }
-
-        AppInjector.init(this)
     }
 
-    override fun activityInjector(): AndroidInjector<Activity> = activityInjector
-    override fun serviceInjector(): AndroidInjector<Service> = serviceInjector
-
-    private fun startLeakCanary() {
-        if (LeakCanary.isInAnalyzerProcess(this)) {
-            // This process is dedicated to LeakCanary for heap analysis.
-            // You should not init your app in this process.
-            return
-        }
-        LeakCanary.install(this)
+    override fun applicationInjector(): AndroidInjector<out DaggerApplication> {
+        return DaggerAppComponent
+            .builder()
+            .create(this)
+            .build()
     }
 
     private fun startStrictMode() {
