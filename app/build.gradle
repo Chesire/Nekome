@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.google.android.gms.oss-licenses-plugin'
+apply plugin: 'kotlin-allopen'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
@@ -44,6 +45,10 @@ android {
     dataBinding {
         enabled = true
     }
+}
+
+allOpen {
+    annotation('com.chesire.malime.AllOpen')
 }
 
 dependencies {
@@ -91,6 +96,9 @@ dependencies {
     androidTestImplementation 'com.android.support.test:rules:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-intents:3.0.2'
+    androidTestImplementation 'com.github.fabioCollini.daggermock:daggermock:0.8.4'
+    androidTestImplementation 'com.github.fabioCollini.daggermock:daggermock-kotlin:0.8.4'
+    androidTestImplementation 'com.github.tmurakami:dexopener:1.0.4'
     androidTestImplementation('com.schibsted.spain:barista:2.5.0') {
         exclude group: 'com.android.support'
         exclude group: 'org.jetbrains.kotlin'
