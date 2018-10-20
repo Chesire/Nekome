@@ -12,7 +12,10 @@ import javax.inject.Singleton
 internal class MockDatabaseModule {
     @Provides
     fun provideDatabase(context: Context): MalimeDatabase {
-        return Room.inMemoryDatabaseBuilder(context, MalimeDatabase::class.java).build()
+        return Room
+            .inMemoryDatabaseBuilder(context, MalimeDatabase::class.java)
+            .fallbackToDestructiveMigration()
+            .build()
     }
 
     @Singleton
