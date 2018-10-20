@@ -99,6 +99,7 @@ dependencies {
     androidTestImplementation 'com.github.fabioCollini.daggermock:daggermock:0.8.4'
     androidTestImplementation 'com.github.fabioCollini.daggermock:daggermock-kotlin:0.8.4'
     androidTestImplementation 'com.github.tmurakami:dexopener:1.0.4'
+    androidTestImplementation 'org.mockito:mockito-android:2.22.0'
     androidTestImplementation('com.schibsted.spain:barista:2.5.0') {
         exclude group: 'com.android.support'
         exclude group: 'org.jetbrains.kotlin'

@@ -31,6 +31,8 @@ import javax.inject.Singleton
 interface MockComponent : AndroidInjector<MockApplication> {
     @Component.Builder
     interface Builder {
+        fun mockAppModule(mockAppModule: MockAppModule): Builder
+
         @BindsInstance
         fun create(application: Application): Builder
 
