@@ -1,5 +1,6 @@
 package com.chesire.malime.injection.modules
 
+import com.chesire.malime.OpenForTesting
 import com.chesire.malime.core.api.AuthApi
 import com.chesire.malime.core.api.Authorizer
 import com.chesire.malime.core.api.LibraryApi
@@ -15,8 +16,9 @@ import dagger.Provides
 import javax.inject.Singleton
 
 @Suppress("unused")
+@OpenForTesting
 @Module
-internal class MockServerModule {
+class MockServerModule {
     @Singleton
     @Provides
     fun providesAuthorization(authorizer: MockAuthorizer): Authorization {

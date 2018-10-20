@@ -3,9 +3,10 @@ package com.chesire.malime.injection
 import android.support.test.InstrumentationRegistry.getInstrumentation
 import com.chesire.malime.MockApplication
 import com.chesire.malime.injection.modules.MockAppModule
+import com.chesire.malime.injection.modules.MockServerModule
 import it.cosenonjaviste.daggermock.DaggerMock
 
-fun espressoDaggerMockRule() = DaggerMock.rule<MockComponent>(MockAppModule()) {
+fun espressoDaggerMockRule() = DaggerMock.rule<MockComponent>(MockAppModule(), MockServerModule()) {
     set {
         it.inject(app)
     }
