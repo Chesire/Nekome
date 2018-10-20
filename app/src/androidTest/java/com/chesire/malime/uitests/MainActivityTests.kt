@@ -17,11 +17,14 @@ import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
 import android.view.View
 import com.chesire.malime.R
+import com.chesire.malime.injection.espressoDaggerMockRule
 import com.chesire.malime.view.MainActivity
 import com.chesire.malime.view.login.LoginActivity
 import com.chesire.malime.view.preferences.PrefActivity
 import org.hamcrest.Description
 import org.hamcrest.Matcher
+import org.junit.After
+import org.junit.Before
 import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test
@@ -30,70 +33,68 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class MainActivityTests {
     @get:Rule
-    val activityRule = ActivityTestRule(MainActivity::class.java)
+    var daggerRule = espressoDaggerMockRule()
+
+    @get:Rule
+    val activityRule = ActivityTestRule(MainActivity::class.java, false, false)
+
+    @Before
+    fun setUp() {
+        Intents.init()
+    }
+
+    @After
+    fun tearDown() {
+        Intents.release()
+    }
 
     @Test
     fun canNavigateToAnimeView() {
+        activityRule.launchActivity(null)
         onView(withId(R.id.menu_main_navigation_anime)).perform(click())
 
         onView(withId(R.id.menu_main_navigation_anime)).check(
-            matches(
-                withBottomNavItemCheckedStatus(true)
-            )
+            matches(withBottomNavItemCheckedStatus(true))
         )
         onView(withId(R.id.menu_main_navigation_manga)).check(
-            matches(
-                withBottomNavItemCheckedStatus(false)
-            )
+            matches(withBottomNavItemCheckedStatus(false))
         )
         onView(withId(R.id.menu_main_navigation_search)).check(
-            matches(
-                withBottomNavItemCheckedStatus(false)
-            )
+            matches(withBottomNavItemCheckedStatus(false))
         )
         onView(withId(R.id.maldisplay_layout)).check(matches(ViewMatchers.isDisplayed()))
     }
 
     @Test
     fun canNavigateToMangaView() {
+        activityRule.launchActivity(null)
         onView(withId(R.id.menu_main_navigation_manga)).perform(click())
 
         onView(withId(R.id.menu_main_navigation_anime)).check(
-            matches(
-                withBottomNavItemCheckedStatus(false)
-            )
+            matches(withBottomNavItemCheckedStatus(false))
         )
         onView(withId(R.id.menu_main_navigation_manga)).check(
-            matches(
-                withBottomNavItemCheckedStatus(true)
-            )
+            matches(withBottomNavItemCheckedStatus(true))
         )
         onView(withId(R.id.menu_main_navigation_search)).check(
-            matches(
-                withBottomNavItemCheckedStatus(false)
-            )
+            matches(withBottomNavItemCheckedStatus(false))
         )
         onView(withId(R.id.maldisplay_layout)).check(matches(ViewMatchers.isDisplayed()))
     }
 
     @Test
     fun canNavigateToSearchView() {
+        activityRule.launchActivity(null)
         onView(withId(R.id.menu_main_navigation_search)).perform(click())
 
         onView(withId(R.id.menu_main_navigation_anime)).check(
-            matches(
-                withBottomNavItemCheckedStatus(false)
-            )
+            matches(withBottomNavItemCheckedStatus(false))
         )
         onView(withId(R.id.menu_main_navigation_manga)).check(
-            matches(
-                withBottomNavItemCheckedStatus(false)
-            )
+            matches(withBottomNavItemCheckedStatus(false))
         )
         onView(withId(R.id.menu_main_navigation_search)).check(
-            matches(
-                withBottomNavItemCheckedStatus(true)
-            )
+            matches(withBottomNavItemCheckedStatus(true))
         )
         onView(withId(R.id.search_layout)).check(matches(ViewMatchers.isDisplayed()))
     }
@@ -106,30 +107,30 @@ class MainActivityTests {
     }
 
     @Test
+    @Ignore("Settings is no longer displayed")
     fun canLaunchPreferencesFromMalDisplay() {
-        Intents.init()
+        activityRule.launchActivity(null)
         onView(withId(R.id.menu_main_navigation_anime)).perform(click())
         openActionBarOverflowOrOptionsMenu(activityRule.activity)
         onView(withText(R.string.options_settings)).perform(click())
 
         Intents.intended(IntentMatchers.hasComponent(PrefActivity::class.java.name))
-        Intents.release()
     }
 
     @Test
+    @Ignore("Settings is no longer displayed")
     fun canLaunchPreferencesFromSearch() {
-        Intents.init()
+        activityRule.launchActivity(null)
         onView(withId(R.id.menu_main_navigation_search)).perform(click())
         openActionBarOverflowOrOptionsMenu(activityRule.activity)
         onView(withText(R.string.options_settings)).perform(click())
 
         Intents.intended(IntentMatchers.hasComponent(PrefActivity::class.java.name))
-        Intents.release()
     }
 
     @Test
     fun executingLogoutGoesBackToLogin() {
-        Intents.init()
+        activityRule.launchActivity(null)
         onView(withId(R.id.menu_main_navigation_anime)).perform(click())
         openActionBarOverflowOrOptionsMenu(activityRule.activity)
         onView(withText(R.string.options_log_out)).perform(click())
@@ -139,7 +140,6 @@ class MainActivityTests {
             .perform(click())
 
         Intents.intended(IntentMatchers.hasComponent(LoginActivity::class.java.name))
-        Intents.release()
     }
 
     private fun withBottomNavItemCheckedStatus(isChecked: Boolean): Matcher<View> {
