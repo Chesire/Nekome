@@ -6,10 +6,10 @@ import android.support.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu
 import android.support.test.espresso.action.ViewActions.click
 import android.support.test.espresso.assertion.ViewAssertions.matches
 import android.support.test.espresso.intent.Intents
+import android.support.test.espresso.intent.Intents.intended
 import android.support.test.espresso.intent.matcher.IntentMatchers
 import android.support.test.espresso.matcher.BoundedMatcher
 import android.support.test.espresso.matcher.RootMatchers.isDialog
-import android.support.test.espresso.matcher.ViewMatchers
 import android.support.test.espresso.matcher.ViewMatchers.isDisplayed
 import android.support.test.espresso.matcher.ViewMatchers.withId
 import android.support.test.espresso.matcher.ViewMatchers.withText
@@ -21,6 +21,8 @@ import com.chesire.malime.injection.espressoDaggerMockRule
 import com.chesire.malime.view.MainActivity
 import com.chesire.malime.view.login.LoginActivity
 import com.chesire.malime.view.preferences.PrefActivity
+import com.schibsted.spain.barista.assertion.BaristaVisibilityAssertions.assertDisplayed
+import com.schibsted.spain.barista.interaction.BaristaClickInteractions.clickOn
 import org.hamcrest.Description
 import org.hamcrest.Matcher
 import org.junit.After
@@ -51,7 +53,7 @@ class MainActivityTests {
     @Test
     fun canNavigateToAnimeView() {
         activityRule.launchActivity(null)
-        onView(withId(R.id.menu_main_navigation_anime)).perform(click())
+        clickOn(R.id.menu_main_navigation_anime)
 
         onView(withId(R.id.menu_main_navigation_anime)).check(
             matches(withBottomNavItemCheckedStatus(true))
@@ -62,13 +64,13 @@ class MainActivityTests {
         onView(withId(R.id.menu_main_navigation_search)).check(
             matches(withBottomNavItemCheckedStatus(false))
         )
-        onView(withId(R.id.maldisplay_layout)).check(matches(ViewMatchers.isDisplayed()))
+        assertDisplayed(R.id.maldisplay_layout)
     }
 
     @Test
     fun canNavigateToMangaView() {
         activityRule.launchActivity(null)
-        onView(withId(R.id.menu_main_navigation_manga)).perform(click())
+        clickOn(R.id.menu_main_navigation_manga)
 
         onView(withId(R.id.menu_main_navigation_anime)).check(
             matches(withBottomNavItemCheckedStatus(false))
@@ -79,13 +81,13 @@ class MainActivityTests {
         onView(withId(R.id.menu_main_navigation_search)).check(
             matches(withBottomNavItemCheckedStatus(false))
         )
-        onView(withId(R.id.maldisplay_layout)).check(matches(ViewMatchers.isDisplayed()))
+        assertDisplayed(R.id.maldisplay_layout)
     }
 
     @Test
     fun canNavigateToSearchView() {
         activityRule.launchActivity(null)
-        onView(withId(R.id.menu_main_navigation_search)).perform(click())
+        clickOn(R.id.menu_main_navigation_search)
 
         onView(withId(R.id.menu_main_navigation_anime)).check(
             matches(withBottomNavItemCheckedStatus(false))
@@ -96,7 +98,7 @@ class MainActivityTests {
         onView(withId(R.id.menu_main_navigation_search)).check(
             matches(withBottomNavItemCheckedStatus(true))
         )
-        onView(withId(R.id.search_layout)).check(matches(ViewMatchers.isDisplayed()))
+        assertDisplayed(R.id.search_layout)
     }
 
     @Test
@@ -110,9 +112,9 @@ class MainActivityTests {
     @Ignore("Settings is no longer displayed")
     fun canLaunchPreferencesFromMalDisplay() {
         activityRule.launchActivity(null)
-        onView(withId(R.id.menu_main_navigation_anime)).perform(click())
+        clickOn(R.id.menu_main_navigation_anime)
         openActionBarOverflowOrOptionsMenu(activityRule.activity)
-        onView(withText(R.string.options_settings)).perform(click())
+        clickOn(R.string.options_settings)
 
         Intents.intended(IntentMatchers.hasComponent(PrefActivity::class.java.name))
     }
@@ -121,9 +123,9 @@ class MainActivityTests {
     @Ignore("Settings is no longer displayed")
     fun canLaunchPreferencesFromSearch() {
         activityRule.launchActivity(null)
-        onView(withId(R.id.menu_main_navigation_search)).perform(click())
+        clickOn(R.id.menu_main_navigation_search)
         openActionBarOverflowOrOptionsMenu(activityRule.activity)
-        onView(withText(R.string.options_settings)).perform(click())
+        clickOn(R.string.options_settings)
 
         Intents.intended(IntentMatchers.hasComponent(PrefActivity::class.java.name))
     }
@@ -131,15 +133,15 @@ class MainActivityTests {
     @Test
     fun executingLogoutGoesBackToLogin() {
         activityRule.launchActivity(null)
-        onView(withId(R.id.menu_main_navigation_anime)).perform(click())
+        clickOn(R.id.menu_main_navigation_anime)
         openActionBarOverflowOrOptionsMenu(activityRule.activity)
-        onView(withText(R.string.options_log_out)).perform(click())
+        clickOn(R.string.options_log_out)
         onView(withText(android.R.string.yes))
             .inRoot(isDialog())
             .check(matches(isDisplayed()))
             .perform(click())
 
-        Intents.intended(IntentMatchers.hasComponent(LoginActivity::class.java.name))
+        intended(IntentMatchers.hasComponent(LoginActivity::class.java.name))
     }
 
     private fun withBottomNavItemCheckedStatus(isChecked: Boolean): Matcher<View> {
