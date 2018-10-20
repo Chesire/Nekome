@@ -29,15 +29,15 @@ class MockServerModule {
     fun providesAuthApi(): AuthApi {
         return (object : AuthApi {
             override fun login(username: String, password: String): Single<AuthModel> {
-                TODO("not implemented")
+                TODO("injected mock should be used")
             }
 
             override fun getNewAuthToken(refreshToken: String): Single<AuthModel> {
-                TODO("not implemented")
+                TODO("injected mock should be used")
             }
 
             override fun getUserId(): Single<Int> {
-                TODO("not implemented")
+                TODO("injected mock should be used")
             }
         })
     }
@@ -52,30 +52,30 @@ class MockServerModule {
     fun providesAuthorizer(): Authorizer<*> {
         return (object : Authorizer<Int> {
             override fun storeAuthDetails(model: AuthModel) {
-                TODO("not implemented")
+                TODO("injected mock should be used")
             }
 
             override fun retrieveAuthDetails(): AuthModel {
-                TODO("not implemented")
                 // return AuthModel("", "", 0, "")
+                TODO("injected mock should be used")
             }
 
             override fun isDefaultUser(user: Any?): Boolean {
-                TODO("not implemented")
                 // return if (user is Int) user == -1 else false
+                TODO("injected mock should be used")
             }
 
             override fun storeUser(user: Int) {
-                TODO("not implemented")
+                TODO("injected mock should be used")
             }
 
             override fun retrieveUser(): Int {
-                TODO("not implemented")
                 // return 1
+                TODO("injected mock should be used")
             }
 
             override fun clear() {
-                TODO("not implemented")
+                TODO("injected mock should be used")
             }
         })
     }

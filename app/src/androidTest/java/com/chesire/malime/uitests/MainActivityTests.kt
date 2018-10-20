@@ -7,7 +7,7 @@ import android.support.test.espresso.action.ViewActions.click
 import android.support.test.espresso.assertion.ViewAssertions.matches
 import android.support.test.espresso.intent.Intents
 import android.support.test.espresso.intent.Intents.intended
-import android.support.test.espresso.intent.matcher.IntentMatchers
+import android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent
 import android.support.test.espresso.matcher.BoundedMatcher
 import android.support.test.espresso.matcher.RootMatchers.isDialog
 import android.support.test.espresso.matcher.ViewMatchers.isDisplayed
@@ -17,6 +17,8 @@ import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
 import android.view.View
 import com.chesire.malime.R
+import com.chesire.malime.core.repositories.Authorization
+import com.chesire.malime.core.room.MalimeDatabase
 import com.chesire.malime.injection.espressoDaggerMockRule
 import com.chesire.malime.view.MainActivity
 import com.chesire.malime.view.login.LoginActivity
@@ -31,6 +33,7 @@ import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mockito.Mock
 
 @RunWith(AndroidJUnit4::class)
 class MainActivityTests {
@@ -39,6 +42,11 @@ class MainActivityTests {
 
     @get:Rule
     val activityRule = ActivityTestRule(MainActivity::class.java, false, false)
+
+    @Mock
+    lateinit var authorization: Authorization
+    @Mock
+    lateinit var db: MalimeDatabase
 
     @Before
     fun setUp() {
@@ -116,7 +124,7 @@ class MainActivityTests {
         openActionBarOverflowOrOptionsMenu(activityRule.activity)
         clickOn(R.string.options_settings)
 
-        Intents.intended(IntentMatchers.hasComponent(PrefActivity::class.java.name))
+        Intents.intended(hasComponent(PrefActivity::class.java.name))
     }
 
     @Test
@@ -127,12 +135,13 @@ class MainActivityTests {
         openActionBarOverflowOrOptionsMenu(activityRule.activity)
         clickOn(R.string.options_settings)
 
-        Intents.intended(IntentMatchers.hasComponent(PrefActivity::class.java.name))
+        Intents.intended(hasComponent(PrefActivity::class.java.name))
     }
 
     @Test
     fun executingLogoutGoesBackToLogin() {
         activityRule.launchActivity(null)
+
         clickOn(R.id.menu_main_navigation_anime)
         openActionBarOverflowOrOptionsMenu(activityRule.activity)
         clickOn(R.string.options_log_out)
@@ -141,7 +150,7 @@ class MainActivityTests {
             .check(matches(isDisplayed()))
             .perform(click())
 
-        intended(IntentMatchers.hasComponent(LoginActivity::class.java.name))
+        intended(hasComponent(LoginActivity::class.java.name))
     }
 
     private fun withBottomNavItemCheckedStatus(isChecked: Boolean): Matcher<View> {
