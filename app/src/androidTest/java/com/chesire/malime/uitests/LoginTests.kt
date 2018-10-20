@@ -2,7 +2,6 @@ package com.chesire.malime.uitests
 
 import android.support.test.espresso.Espresso.onView
 import android.support.test.espresso.action.ViewActions.clearText
-import android.support.test.espresso.action.ViewActions.click
 import android.support.test.espresso.action.ViewActions.closeSoftKeyboard
 import android.support.test.espresso.action.ViewActions.pressImeActionButton
 import android.support.test.espresso.action.ViewActions.typeText
@@ -21,10 +20,14 @@ import com.chesire.malime.INVALID_USERNAME
 import com.chesire.malime.R
 import com.chesire.malime.VALID_PASSWORD
 import com.chesire.malime.VALID_USERNAME
+import com.chesire.malime.injection.espressoDaggerMockRule
 import com.chesire.malime.view.MainActivity
 import com.chesire.malime.view.login.LoginActivity
+import com.schibsted.spain.barista.interaction.BaristaClickInteractions.clickOn
 import com.schibsted.spain.barista.interaction.BaristaSleepInteractions.sleep
 import org.hamcrest.CoreMatchers.not
+import org.junit.After
+import org.junit.Before
 import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test
@@ -33,17 +36,31 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class LoginTests {
     @get:Rule
-    val activityRule = ActivityTestRule(LoginActivity::class.java)
+    var daggerRule = espressoDaggerMockRule()
+
+    @get:Rule
+    val activityRule = ActivityTestRule(LoginActivity::class.java, false, false)
+
+    @Before
+    fun setUp() {
+        Intents.init()
+    }
+
+    @After
+    fun tearDown() {
+        Intents.release()
+    }
 
     @Test
     fun displayErrorForBlankUsername() {
+        activityRule.launchActivity(null)
         onView(withId(R.id.login_username_edit_text)).perform(clearText())
         onView(withId(R.id.login_password_edit_text)).perform(
             typeText(VALID_PASSWORD),
             closeSoftKeyboard()
         )
 
-        onView(withId(R.id.login_button)).perform(click())
+        clickOn(R.id.login_button)
 
         onView(withText(R.string.login_failure_email))
             .inRoot(withDecorView(not(activityRule.activity.window.decorView)))
@@ -52,10 +69,11 @@ class LoginTests {
 
     @Test
     fun displayErrorForBlankPassword() {
+        activityRule.launchActivity(null)
         onView(withId(R.id.login_username_edit_text)).perform(typeText(VALID_USERNAME))
         onView(withId(R.id.login_password_edit_text)).perform(clearText(), closeSoftKeyboard())
 
-        onView(withId(R.id.login_button)).perform(click())
+        clickOn(R.id.login_button)
 
         onView(withText(R.string.login_failure_password))
             .inRoot(withDecorView(not(activityRule.activity.window.decorView)))
@@ -64,13 +82,14 @@ class LoginTests {
 
     @Test
     fun displayErrorForInvalidUsername() {
+        activityRule.launchActivity(null)
         onView(withId(R.id.login_username_edit_text)).perform(typeText(INVALID_USERNAME))
         onView(withId(R.id.login_password_edit_text)).perform(
             typeText(VALID_PASSWORD),
             closeSoftKeyboard()
         )
 
-        onView(withId(R.id.login_button)).perform(click())
+        clickOn(R.id.login_button)
 
         onView(withText(R.string.login_failure))
             .inRoot(withDecorView(not(activityRule.activity.window.decorView)))
@@ -79,13 +98,14 @@ class LoginTests {
 
     @Test
     fun displayErrorForInvalidPassword() {
+        activityRule.launchActivity(null)
         onView(withId(R.id.login_username_edit_text)).perform(typeText(VALID_USERNAME))
         onView(withId(R.id.login_password_edit_text)).perform(
             typeText(INVALID_PASSWORD),
             closeSoftKeyboard()
         )
 
-        onView(withId(R.id.login_button)).perform(click())
+        clickOn(R.id.login_button)
 
         onView(withText(R.string.login_failure))
             .inRoot(withDecorView(not(activityRule.activity.window.decorView)))
@@ -94,6 +114,7 @@ class LoginTests {
 
     @Test
     fun canNavigateFieldsWithIMEButton() {
+        activityRule.launchActivity(null)
         onView(withId(R.id.login_username_edit_text)).perform(clearText(), pressImeActionButton())
         onView(withId(R.id.login_password_edit_text)).perform(clearText(), pressImeActionButton())
 
@@ -104,7 +125,7 @@ class LoginTests {
 
     @Test
     fun correctDetailsLaunchesMainActivity() {
-        Intents.init()
+        activityRule.launchActivity(null)
 
         onView(withId(R.id.login_username_edit_text)).perform(
             typeText(VALID_USERNAME),
@@ -117,7 +138,6 @@ class LoginTests {
 
         sleep(300)
         intended(hasComponent(MainActivity::class.java.name))
-        Intents.release()
     }
 
     @Test
