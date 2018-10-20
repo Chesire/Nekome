@@ -8,7 +8,6 @@ import com.chesire.malime.core.api.SearchApi
 import com.chesire.malime.core.flags.SupportedService
 import com.chesire.malime.core.models.AuthModel
 import com.chesire.malime.core.repositories.Authorization
-import com.chesire.malime.mocks.MockAuthorizer
 import com.chesire.malime.mocks.MockLibraryApi
 import com.chesire.malime.mocks.MockSearchApi
 import dagger.Module
@@ -22,7 +21,7 @@ import javax.inject.Singleton
 class MockServerModule {
     @Singleton
     @Provides
-    fun providesAuthorization(authorizer: MockAuthorizer): Authorization {
+    fun providesAuthorization(authorizer: Authorizer<*>): Authorization {
         return Authorization(mapOf(SupportedService.Unknown to authorizer))
     }
 
@@ -50,5 +49,34 @@ class MockServerModule {
     fun providesSearchApi(mockApi: MockSearchApi): SearchApi = mockApi
 
     @Provides
-    fun providesAuthorizer(authorizer: MockAuthorizer): Authorizer<*> = authorizer
+    fun providesAuthorizer(): Authorizer<*> {
+        return (object : Authorizer<Int> {
+            override fun storeAuthDetails(model: AuthModel) {
+                TODO("not implemented")
+            }
+
+            override fun retrieveAuthDetails(): AuthModel {
+                TODO("not implemented")
+                // return AuthModel("", "", 0, "")
+            }
+
+            override fun isDefaultUser(user: Any?): Boolean {
+                TODO("not implemented")
+                // return if (user is Int) user == -1 else false
+            }
+
+            override fun storeUser(user: Int) {
+                TODO("not implemented")
+            }
+
+            override fun retrieveUser(): Int {
+                TODO("not implemented")
+                // return 1
+            }
+
+            override fun clear() {
+                TODO("not implemented")
+            }
+        })
+    }
 }
