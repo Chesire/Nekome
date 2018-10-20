@@ -20,11 +20,14 @@ import com.chesire.malime.INVALID_USERNAME
 import com.chesire.malime.R
 import com.chesire.malime.VALID_PASSWORD
 import com.chesire.malime.VALID_USERNAME
+import com.chesire.malime.core.api.AuthApi
+import com.chesire.malime.core.models.AuthModel
 import com.chesire.malime.injection.espressoDaggerMockRule
 import com.chesire.malime.view.MainActivity
 import com.chesire.malime.view.login.LoginActivity
 import com.schibsted.spain.barista.interaction.BaristaClickInteractions.clickOn
 import com.schibsted.spain.barista.interaction.BaristaSleepInteractions.sleep
+import io.reactivex.Single
 import org.hamcrest.CoreMatchers.not
 import org.junit.After
 import org.junit.Before
@@ -32,6 +35,8 @@ import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mockito.Mock
+import org.mockito.Mockito.`when`
 
 @RunWith(AndroidJUnit4::class)
 class LoginTests {
@@ -40,6 +45,9 @@ class LoginTests {
 
     @get:Rule
     val activityRule = ActivityTestRule(LoginActivity::class.java, false, false)
+
+    @Mock
+    private lateinit var auth: AuthApi
 
     @Before
     fun setUp() {
@@ -82,7 +90,15 @@ class LoginTests {
 
     @Test
     fun displayErrorForInvalidUsername() {
+        `when`(
+            auth.login(
+                INVALID_USERNAME,
+                VALID_PASSWORD
+            )
+        ).thenReturn(Single.error { Throwable("displayErrorForInvalidUsername") })
+
         activityRule.launchActivity(null)
+
         onView(withId(R.id.login_username_edit_text)).perform(typeText(INVALID_USERNAME))
         onView(withId(R.id.login_password_edit_text)).perform(
             typeText(VALID_PASSWORD),
@@ -98,7 +114,15 @@ class LoginTests {
 
     @Test
     fun displayErrorForInvalidPassword() {
+        `when`(
+            auth.login(
+                VALID_USERNAME,
+                INVALID_PASSWORD
+            )
+        ).thenReturn(Single.error { Throwable("displayErrorForInvalidPassword") })
+
         activityRule.launchActivity(null)
+
         onView(withId(R.id.login_username_edit_text)).perform(typeText(VALID_USERNAME))
         onView(withId(R.id.login_password_edit_text)).perform(
             typeText(INVALID_PASSWORD),
@@ -125,6 +149,14 @@ class LoginTests {
 
     @Test
     fun correctDetailsLaunchesMainActivity() {
+        `when`(
+            auth.login(
+                VALID_USERNAME,
+                VALID_PASSWORD
+            )
+        ).thenReturn(Single.just(AuthModel("", "", 0, "")))
+        `when`(auth.getUserId()).thenReturn(Single.just(1))
+
         activityRule.launchActivity(null)
 
         onView(withId(R.id.login_username_edit_text)).perform(
