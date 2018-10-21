@@ -1,4 +1,4 @@
-package com.chesire.malime.uitests
+package com.chesire.malime.view
 
 import android.support.test.espresso.Espresso.onView
 import android.support.test.espresso.action.ViewActions.clearText
@@ -23,7 +23,6 @@ import com.chesire.malime.VALID_USERNAME
 import com.chesire.malime.core.api.AuthApi
 import com.chesire.malime.core.models.AuthModel
 import com.chesire.malime.injection.espressoDaggerMockRule
-import com.chesire.malime.view.MainActivity
 import com.chesire.malime.view.login.LoginActivity
 import com.schibsted.spain.barista.interaction.BaristaClickInteractions.clickOn
 import com.schibsted.spain.barista.interaction.BaristaSleepInteractions.sleep

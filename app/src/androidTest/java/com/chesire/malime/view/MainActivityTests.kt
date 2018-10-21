@@ -1,4 +1,4 @@
-package com.chesire.malime.uitests
+package com.chesire.malime.view
 
 import android.support.design.internal.BottomNavigationItemView
 import android.support.test.espresso.Espresso.onView
@@ -20,7 +20,6 @@ import com.chesire.malime.R
 import com.chesire.malime.core.repositories.Authorization
 import com.chesire.malime.core.room.MalimeDatabase
 import com.chesire.malime.injection.espressoDaggerMockRule
-import com.chesire.malime.view.MainActivity
 import com.chesire.malime.view.login.LoginActivity
 import com.chesire.malime.view.preferences.PrefActivity
 import com.schibsted.spain.barista.assertion.BaristaVisibilityAssertions.assertDisplayed

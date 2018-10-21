@@ -1,4 +1,4 @@
-package com.chesire.malime.uitests
+package com.chesire.malime.view
 
 import android.support.test.espresso.intent.Intents
 import android.support.test.espresso.intent.Intents.intended
@@ -8,7 +8,6 @@ import android.support.test.runner.AndroidJUnit4
 import com.chesire.malime.LaunchActivity
 import com.chesire.malime.core.repositories.Authorization
 import com.chesire.malime.injection.espressoDaggerMockRule
-import com.chesire.malime.view.MainActivity
 import com.chesire.malime.view.login.LoginActivity
 import org.junit.After
 import org.junit.Before
