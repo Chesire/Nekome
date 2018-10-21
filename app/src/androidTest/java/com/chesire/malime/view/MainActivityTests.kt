@@ -44,8 +44,6 @@ class MainActivityTests {
 
     @Mock
     lateinit var authorization: Authorization
-    @Mock
-    lateinit var db: MalimeDatabase
 
     @Before
     fun setUp() {

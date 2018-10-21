@@ -6,7 +6,6 @@ import android.content.ComponentName
 import android.content.Context
 import com.chesire.malime.core.flags.SupportedService
 import com.chesire.malime.util.SharedPref
-import com.chesire.malime.util.isRunningTest
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
@@ -40,7 +39,7 @@ class PeriodicUpdateHelper {
         // If there is no primary service, we haven't logged in yet
         return if (
             sharedPref.getPrimaryService() == SupportedService.Unknown ||
-            isRunningTest
+            sharedPref.getForceBlockServices()
         ) {
             false
         } else {

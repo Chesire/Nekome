@@ -13,6 +13,7 @@ class SharedPref @Inject constructor(context: Context) {
     private val allowCrashReporting = context.getString(R.string.key_allow_crash_reporting)
     private val updateSchedulerEnabled = context.getString(R.string.key_update_scheduler_enabled)
     private val refreshSchedulerEnabled = context.getString(R.string.key_refresh_scheduler_enabled)
+    private val forceBlockServices = context.getString(R.string.key_force_block_services)
     private val animeFilterLength = context.getString(R.string.key_anime_filter_length)
     private val primaryService = context.getString(R.string.key_primary_service)
     private val filter = context.getString(R.string.key_filter)
@@ -102,6 +103,16 @@ class SharedPref @Inject constructor(context: Context) {
     fun setRefreshTokenSchedulerEnabled(state: Boolean): SharedPref {
         sharedPreferences.edit()
             .putBoolean(refreshSchedulerEnabled, state)
+            .apply()
+
+        return this
+    }
+
+    fun getForceBlockServices() = sharedPreferences.getBoolean(forceBlockServices, false)
+
+    fun setForceBlockServices(state: Boolean): SharedPref {
+        sharedPreferences.edit()
+            .putBoolean(forceBlockServices, state)
             .apply()
 
         return this

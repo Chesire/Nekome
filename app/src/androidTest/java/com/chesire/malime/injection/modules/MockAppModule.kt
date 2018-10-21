@@ -20,7 +20,13 @@ class MockAppModule {
 
     @Provides
     @Singleton
-    fun provideSharedPref(context: Context): SharedPref = SharedPref(context)
+    fun provideSharedPref(context: Context): SharedPref {
+        return SharedPref(context).apply {
+            // Disable the schedulers during ui tests
+            // These can be re-enabled in the specific tests that need them
+            setForceBlockServices(true)
+        }
+    }
 
     @Singleton
     @Provides

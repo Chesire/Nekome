@@ -453,4 +453,6 @@ class SearchAddingTests {
         // Couldn't find anything that says how this could be tested...
         // Leaving this here as it will need to be done at some point
     }
+
+    // TODO: Add test for making sure can't add multiple times
 }
