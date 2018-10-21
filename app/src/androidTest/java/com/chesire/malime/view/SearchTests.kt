@@ -1,4 +1,4 @@
-package com.chesire.malime.uitests
+package com.chesire.malime.view
 
 import android.support.test.espresso.Espresso.onView
 import android.support.test.espresso.action.ViewActions.clearText
@@ -23,13 +23,9 @@ import com.chesire.malime.VALID_SEARCH_SINGLE_ITEM
 import com.chesire.malime.core.api.LibraryApi
 import com.chesire.malime.core.api.SearchApi
 import com.chesire.malime.core.flags.ItemType
-import com.chesire.malime.core.flags.SeriesStatus
-import com.chesire.malime.core.flags.Subtype
-import com.chesire.malime.core.flags.UserSeriesStatus
-import com.chesire.malime.core.models.MalimeModel
+import com.chesire.malime.getMalimeModel
 import com.chesire.malime.injection.espressoDaggerMockRule
 import com.chesire.malime.tools.ToastMatcher.Companion.onToast
-import com.chesire.malime.view.MainActivity
 import com.schibsted.spain.barista.assertion.BaristaRecyclerViewAssertions.assertRecyclerViewItemCount
 import com.schibsted.spain.barista.assertion.BaristaVisibilityAssertions.assertNotExist
 import com.schibsted.spain.barista.interaction.BaristaClickInteractions.clickOn
@@ -193,7 +189,7 @@ class SearchTests {
                 VALID_SEARCH_SINGLE_ITEM,
                 ItemType.Anime
             )
-        ).thenReturn(Single.just(listOf(getMalimeModel())))
+        ).thenReturn(Single.just(listOf(getMalimeModel(0))))
 
         activityRule.launchActivity(null)
         clickOn(R.id.menu_main_navigation_search)
@@ -214,7 +210,7 @@ class SearchTests {
                 VALID_SEARCH_SINGLE_ITEM,
                 ItemType.Manga
             )
-        ).thenReturn(Single.just(listOf(getMalimeModel())))
+        ).thenReturn(Single.just(listOf(getMalimeModel(0))))
 
         activityRule.launchActivity(null)
         clickOn(R.id.menu_main_navigation_search)
@@ -304,7 +300,7 @@ class SearchTests {
 
     @Test
     fun failureToAddAnimeProducesError() {
-        val model = getMalimeModel(title = INVALID_SEARCH_ADD_TITLE)
+        val model = getMalimeModel(0, title = INVALID_SEARCH_ADD_TITLE)
         `when`(
             searchApi.searchForSeriesWith(
                 VALID_SEARCH_SINGLE_ITEM,
@@ -336,7 +332,7 @@ class SearchTests {
 
     @Test
     fun failureToAddMangaProducesError() {
-        val model = getMalimeModel(title = INVALID_SEARCH_ADD_TITLE)
+        val model = getMalimeModel(0, title = INVALID_SEARCH_ADD_TITLE)
         `when`(
             searchApi.searchForSeriesWith(
                 VALID_SEARCH_SINGLE_ITEM,
@@ -368,7 +364,7 @@ class SearchTests {
 
     @Test
     fun canAddAnimeItemWithCompletedStatus() {
-        val model = getMalimeModel(title = VALID_SEARCH_ADD_TITLE)
+        val model = getMalimeModel(0, title = VALID_SEARCH_ADD_TITLE)
         `when`(
             searchApi.searchForSeriesWith(
                 VALID_SEARCH_SINGLE_ITEM,
@@ -400,7 +396,7 @@ class SearchTests {
 
     @Test
     fun canAddAnimeItemWithCurrentStatus() {
-        val model = getMalimeModel(title = VALID_SEARCH_ADD_TITLE)
+        val model = getMalimeModel(0, title = VALID_SEARCH_ADD_TITLE)
         `when`(
             searchApi.searchForSeriesWith(
                 VALID_SEARCH_SINGLE_ITEM,
@@ -432,7 +428,7 @@ class SearchTests {
 
     @Test
     fun canAddAnimeItemWithDroppedStatus() {
-        val model = getMalimeModel(title = VALID_SEARCH_ADD_TITLE)
+        val model = getMalimeModel(0, title = VALID_SEARCH_ADD_TITLE)
         `when`(
             searchApi.searchForSeriesWith(
                 VALID_SEARCH_SINGLE_ITEM,
@@ -464,7 +460,7 @@ class SearchTests {
 
     @Test
     fun canAddAnimeItemWithOnHoldStatus() {
-        val model = getMalimeModel(title = VALID_SEARCH_ADD_TITLE)
+        val model = getMalimeModel(0, title = VALID_SEARCH_ADD_TITLE)
         `when`(
             searchApi.searchForSeriesWith(
                 VALID_SEARCH_SINGLE_ITEM,
@@ -496,7 +492,7 @@ class SearchTests {
 
     @Test
     fun canAddAnimeItemWithPlannedStatus() {
-        val model = getMalimeModel(title = VALID_SEARCH_ADD_TITLE)
+        val model = getMalimeModel(0, title = VALID_SEARCH_ADD_TITLE)
         `when`(
             searchApi.searchForSeriesWith(
                 VALID_SEARCH_SINGLE_ITEM,
@@ -528,7 +524,7 @@ class SearchTests {
 
     @Test
     fun canAddMangaItemWithCompletedStatus() {
-        val model = getMalimeModel(title = VALID_SEARCH_ADD_TITLE)
+        val model = getMalimeModel(0, title = VALID_SEARCH_ADD_TITLE)
         `when`(
             searchApi.searchForSeriesWith(
                 VALID_SEARCH_SINGLE_ITEM,
@@ -560,7 +556,7 @@ class SearchTests {
 
     @Test
     fun canAddMangaItemWithCurrentStatus() {
-        val model = getMalimeModel(title = VALID_SEARCH_ADD_TITLE)
+        val model = getMalimeModel(0, title = VALID_SEARCH_ADD_TITLE)
         `when`(
             searchApi.searchForSeriesWith(
                 VALID_SEARCH_SINGLE_ITEM,
@@ -592,7 +588,7 @@ class SearchTests {
 
     @Test
     fun canAddMangaItemWithDroppedStatus() {
-        val model = getMalimeModel(title = VALID_SEARCH_ADD_TITLE)
+        val model = getMalimeModel(0, title = VALID_SEARCH_ADD_TITLE)
         `when`(
             searchApi.searchForSeriesWith(
                 VALID_SEARCH_SINGLE_ITEM,
@@ -624,7 +620,7 @@ class SearchTests {
 
     @Test
     fun canAddMangaItemWithOnHoldStatus() {
-        val model = getMalimeModel(title = VALID_SEARCH_ADD_TITLE)
+        val model = getMalimeModel(0, title = VALID_SEARCH_ADD_TITLE)
         `when`(
             searchApi.searchForSeriesWith(
                 VALID_SEARCH_SINGLE_ITEM,
@@ -656,7 +652,7 @@ class SearchTests {
 
     @Test
     fun canAddMangaItemWithPlannedStatus() {
-        val model = getMalimeModel(title = VALID_SEARCH_ADD_TITLE)
+        val model = getMalimeModel(0, title = VALID_SEARCH_ADD_TITLE)
         `when`(
             searchApi.searchForSeriesWith(
                 VALID_SEARCH_SINGLE_ITEM,
@@ -691,41 +687,5 @@ class SearchTests {
     fun canLaunchSeriesProfile() {
         // Couldn't find anything that says how this could be tested...
         // Leaving this here as it will need to be done at some point
-    }
-
-    private fun getMalimeModel(
-        seriesId: Int = 0,
-        userSeriesId: Int = 0,
-        type: ItemType = ItemType.Unknown,
-        subtype: Subtype = Subtype.Unknown,
-        slug: String = "SERIES-SLUG",
-        title: String = VALID_SEARCH_ADD_TITLE,
-        seriesStatus: SeriesStatus = SeriesStatus.Unknown,
-        userSeriesStatus: UserSeriesStatus = UserSeriesStatus.Unknown,
-        progress: Int = 0,
-        totalLength: Int = 0,
-        posterImage: String = "",
-        coverImage: String = "",
-        nsfw: Boolean = false,
-        startDate: String = "0000-00-00",
-        endDate: String = "0000-00-00"
-    ): MalimeModel {
-        return MalimeModel(
-            seriesId = seriesId,
-            userSeriesId = userSeriesId,
-            type = type,
-            subtype = subtype,
-            slug = slug,
-            title = title,
-            seriesStatus = seriesStatus,
-            userSeriesStatus = userSeriesStatus,
-            progress = progress,
-            totalLength = totalLength,
-            posterImage = posterImage,
-            coverImage = coverImage,
-            nsfw = nsfw,
-            startDate = startDate,
-            endDate = endDate
-        )
     }
 }
