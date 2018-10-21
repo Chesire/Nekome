@@ -32,6 +32,7 @@ interface MockComponent : AndroidInjector<MockApplication> {
     @Component.Builder
     interface Builder {
         fun mockAppModule(mockAppModule: MockAppModule): Builder
+        fun mockDatabaseModule(mockDatabaseModule: MockDatabaseModule): Builder
         fun mockServerModule(mockServerModule: MockServerModule): Builder
 
         @BindsInstance
