@@ -1,4 +1,4 @@
-package com.chesire.malime.uitests
+package com.chesire.malime.view.maldisplay
 
 import android.support.test.espresso.Espresso.onView
 import android.support.test.espresso.action.ViewActions.click
@@ -10,13 +10,9 @@ import android.support.test.espresso.matcher.ViewMatchers.withText
 import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
 import com.chesire.malime.R
-import com.chesire.malime.VALID_SEARCH_ADD_TITLE
 import com.chesire.malime.core.flags.ItemType
-import com.chesire.malime.core.flags.SeriesStatus
-import com.chesire.malime.core.flags.Subtype
-import com.chesire.malime.core.flags.UserSeriesStatus
-import com.chesire.malime.core.models.MalimeModel
 import com.chesire.malime.core.room.MalimeDao
+import com.chesire.malime.getMalimeModel
 import com.chesire.malime.injection.espressoDaggerMockRule
 import com.chesire.malime.view.MainActivity
 import com.schibsted.spain.barista.interaction.BaristaClickInteractions.clickOn
@@ -33,7 +29,7 @@ import org.mockito.Mock
 import org.mockito.Mockito.`when`
 
 @RunWith(AndroidJUnit4::class)
-class MalDisplayTests {
+class MalDisplaySortTests {
     @get:Rule
     var daggerRule = espressoDaggerMockRule()
 
@@ -95,36 +91,6 @@ class MalDisplayTests {
     }
 
     @Test
-    fun filterByCurrent() {
-
-    }
-
-    @Test
-    fun filterByCompleted() {
-
-    }
-
-    @Test
-    fun filterByOnHold() {
-
-    }
-
-    @Test
-    fun filterByDropped() {
-
-    }
-
-    @Test
-    fun filterByPlanned() {
-
-    }
-
-    @Test
-    fun filterByMultiple() {
-
-    }
-
-    @Test
     fun animeViewOnlyShowsAnimeItemType() {
 
     }
@@ -132,41 +98,5 @@ class MalDisplayTests {
     @Test
     fun mangaViewOnlyShowsMangaItemType() {
 
-    }
-
-    private fun getMalimeModel(
-        seriesId: Int = 0,
-        userSeriesId: Int = 0,
-        type: ItemType = ItemType.Unknown,
-        subtype: Subtype = Subtype.Unknown,
-        slug: String = "SERIES-SLUG",
-        title: String = VALID_SEARCH_ADD_TITLE,
-        seriesStatus: SeriesStatus = SeriesStatus.Unknown,
-        userSeriesStatus: UserSeriesStatus = UserSeriesStatus.Unknown,
-        progress: Int = 0,
-        totalLength: Int = 0,
-        posterImage: String = "",
-        coverImage: String = "",
-        nsfw: Boolean = false,
-        startDate: String = "0000-00-00",
-        endDate: String = "0000-00-00"
-    ): MalimeModel {
-        return MalimeModel(
-            seriesId = seriesId,
-            userSeriesId = userSeriesId,
-            type = type,
-            subtype = subtype,
-            slug = slug,
-            title = title,
-            seriesStatus = seriesStatus,
-            userSeriesStatus = userSeriesStatus,
-            progress = progress,
-            totalLength = totalLength,
-            posterImage = posterImage,
-            coverImage = coverImage,
-            nsfw = nsfw,
-            startDate = startDate,
-            endDate = endDate
-        )
     }
 }
