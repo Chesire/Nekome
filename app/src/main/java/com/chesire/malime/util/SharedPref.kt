@@ -16,7 +16,7 @@ class SharedPref @Inject constructor(context: Context) {
     private val animeFilterLength = context.getString(R.string.key_anime_filter_length)
     private val _primaryService = context.getString(R.string.key_primary_service)
     private val filter = context.getString(R.string.key_filter)
-    private val sort = context.getString(R.string.key_sort)
+    private val _sortOption = context.getString(R.string.key_sort)
 
     private val sharedPreferences =
         context.getSharedPreferences(
@@ -61,22 +61,11 @@ class SharedPref @Inject constructor(context: Context) {
         return this
     }
 
-    fun getSortOption(): SortOption {
-        return SortOption.getOptionFor(
-            sharedPreferences.getInt(
-                sort,
-                SortOption.Title.id
-            )
-        )
-    }
-
-    fun setSortOption(sortOption: SortOption): SharedPref {
-        sharedPreferences.edit()
-            .putInt(sort, sortOption.id)
-            .apply()
-
-        return this
-    }
+    var sortOption: SortOption
+        get() = SortOption.getOptionFor(sharedPreferences.getInt(_sortOption, SortOption.Title.id))
+        set(option) {
+            sharedPreferences.edit { it.put(_sortOption to option.id) }
+        }
 
     fun getSeriesUpdateSchedulerEnabled() =
         sharedPreferences.getBoolean(updateSchedulerEnabled, false)
@@ -144,6 +133,7 @@ class SharedPref @Inject constructor(context: Context) {
 
         when (value) {
             is Boolean -> putBoolean(key, value)
+            is Int -> putInt(key, value)
             is String -> putString(key, value)
             else -> error("Invalid type ${value.javaClass} attempted to be passed into SharedPreferences")
         }

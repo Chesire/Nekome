@@ -275,7 +275,7 @@ class MalDisplayViewAdapter(
         override fun performFiltering(constraint: CharSequence?): FilterResults {
             val results = FilterResults()
             val filterOption = sharedPref.getFilter()
-            val sortOption = sharedPref.getSortOption()
+            val sortOption = sharedPref.sortOption
 
             val tempList = items
                 .filter {
