@@ -17,7 +17,7 @@ class PeriodicUpdateHelper {
             Timber.v("Periodic update service will not activate")
             return
         }
-        sharedPref.setSeriesUpdateSchedulerEnabled(true)
+        sharedPref.seriesUpdateSchedulerEnabled = true
 
         val serviceComponent = ComponentName(context, PeriodicUpdateService::class.java)
         val builder = JobInfo.Builder(SCHEDULER_ID, serviceComponent)
@@ -29,7 +29,7 @@ class PeriodicUpdateHelper {
     }
 
     fun cancel(context: Context, sharedPref: SharedPref) {
-        sharedPref.setSeriesUpdateSchedulerEnabled(false)
+        sharedPref.seriesUpdateSchedulerEnabled = false
 
         val jobScheduler = context.getSystemService(Context.JOB_SCHEDULER_SERVICE) as? JobScheduler
         jobScheduler?.cancel(SCHEDULER_ID)
@@ -43,7 +43,7 @@ class PeriodicUpdateHelper {
         ) {
             false
         } else {
-            !(sharedPref.getSeriesUpdateSchedulerEnabled() && !force)
+            !(sharedPref.seriesUpdateSchedulerEnabled && !force)
         }
     }
 }

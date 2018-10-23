@@ -10,8 +10,8 @@ import javax.inject.Inject
 @Suppress("TooManyFunctions")
 class SharedPref @Inject constructor(context: Context) {
     //private val allowCrashReporting = context.getString(R.string.key_allow_crash_reporting)
-    private val updateSchedulerEnabled = context.getString(R.string.key_update_scheduler_enabled)
-    private val refreshSchedulerEnabled = context.getString(R.string.key_refresh_scheduler_enabled)
+    private val _updateSchedulerEnabled = context.getString(R.string.key_update_scheduler_enabled)
+    private val _refreshSchedulerEnabled = context.getString(R.string.key_refresh_scheduler_enabled)
     private val forceBlockServices = context.getString(R.string.key_force_block_services)
     private val animeFilterLength = context.getString(R.string.key_anime_filter_length)
     private val _primaryService = context.getString(R.string.key_primary_service)
@@ -29,10 +29,7 @@ class SharedPref @Inject constructor(context: Context) {
             val pref = sharedPreferences.getString(_primaryService, SupportedService.Unknown.name)
             return SupportedService.valueOf(pref)
         }
-        set(service) {
-            sharedPreferences.edit { it.put(_primaryService to service.name) }
-        }
-
+        set(service) = sharedPreferences.edit { it.put(_primaryService to service.name) }
 
     fun getFilter(): BooleanArray {
         if (!hasStoredFilter()) {
@@ -63,31 +60,15 @@ class SharedPref @Inject constructor(context: Context) {
 
     var sortOption: SortOption
         get() = SortOption.getOptionFor(sharedPreferences.getInt(_sortOption, SortOption.Title.id))
-        set(option) {
-            sharedPreferences.edit { it.put(_sortOption to option.id) }
-        }
+        set(option) = sharedPreferences.edit { it.put(_sortOption to option.id) }
 
-    fun getSeriesUpdateSchedulerEnabled() =
-        sharedPreferences.getBoolean(updateSchedulerEnabled, false)
+    var seriesUpdateSchedulerEnabled: Boolean
+        get() = sharedPreferences.getBoolean(_updateSchedulerEnabled, false)
+        set(enabled) = sharedPreferences.edit { it.put(_updateSchedulerEnabled to enabled) }
 
-    fun setSeriesUpdateSchedulerEnabled(state: Boolean): SharedPref {
-        sharedPreferences.edit()
-            .putBoolean(updateSchedulerEnabled, state)
-            .apply()
-
-        return this
-    }
-
-    fun getRefreshTokenSchedulerEnabled() =
-        sharedPreferences.getBoolean(refreshSchedulerEnabled, false)
-
-    fun setRefreshTokenSchedulerEnabled(state: Boolean): SharedPref {
-        sharedPreferences.edit()
-            .putBoolean(refreshSchedulerEnabled, state)
-            .apply()
-
-        return this
-    }
+    var refreshTokenSchedulerEnabled: Boolean
+        get() = sharedPreferences.getBoolean(_refreshSchedulerEnabled, false)
+        set(enabled) = sharedPreferences.edit { it.put(_refreshSchedulerEnabled to enabled) }
 
     fun getForceBlockServices() = sharedPreferences.getBoolean(forceBlockServices, false)
 
