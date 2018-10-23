@@ -8,7 +8,7 @@ import com.chesire.malime.view.preferences.SortOption
 import javax.inject.Inject
 
 class SharedPref @Inject constructor(context: Context) {
-    //private val allowCrashReporting = context.getString(R.string.key_allow_crash_reporting)
+    // private val allowCrashReporting = context.getString(R.string.key_allow_crash_reporting)
     private val _updateSchedulerEnabled = context.getString(R.string.key_update_scheduler_enabled)
     private val _refreshSchedulerEnabled = context.getString(R.string.key_refresh_scheduler_enabled)
     private val _forceBlockServices = context.getString(R.string.key_force_block_services)
