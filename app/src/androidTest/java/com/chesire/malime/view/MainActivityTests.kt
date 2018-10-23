@@ -18,7 +18,6 @@ import android.support.test.runner.AndroidJUnit4
 import android.view.View
 import com.chesire.malime.R
 import com.chesire.malime.core.repositories.Authorization
-import com.chesire.malime.core.room.MalimeDatabase
 import com.chesire.malime.injection.espressoDaggerMockRule
 import com.chesire.malime.view.login.LoginActivity
 import com.chesire.malime.view.preferences.PrefActivity

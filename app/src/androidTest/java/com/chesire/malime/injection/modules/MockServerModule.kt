@@ -48,15 +48,15 @@ class MockServerModule {
     fun providesLibraryApi(): LibraryApi {
         return object : LibraryApi {
             override fun addItem(item: MalimeModel): Single<MalimeModel> {
-                TODO("injected mock should be used") //To change body of created functions use File | Settings | File Templates.
+                TODO("injected mock should be used")
             }
 
             override fun deleteItem(item: MalimeModel): Single<MalimeModel> {
-                TODO("injected mock should be used") //To change body of created functions use File | Settings | File Templates.
+                TODO("injected mock should be used")
             }
 
             override fun getUserLibrary(): Observable<List<MalimeModel>> {
-                TODO("injected mock should be used") //To change body of created functions use File | Settings | File Templates.
+                TODO("injected mock should be used")
             }
 
             override fun updateItem(
@@ -64,7 +64,7 @@ class MockServerModule {
                 newProgress: Int,
                 newStatus: UserSeriesStatus
             ): Single<MalimeModel> {
-                TODO("injected mock should be used") //To change body of created functions use File | Settings | File Templates.
+                TODO("injected mock should be used")
             }
         }
     }

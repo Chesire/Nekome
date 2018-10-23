@@ -52,7 +52,6 @@ class MalDisplaySortTests {
     @Test
     @Ignore
     fun sortByDefault() {
-
     }
 
     @Test
@@ -77,31 +76,25 @@ class MalDisplaySortTests {
             .perform(click())
 
         clickDialogPositiveButton()
-
-
     }
 
     @Test
     @Ignore
     fun sortByStartDate() {
-
     }
 
     @Test
     @Ignore
     fun sortByEndDate() {
-
     }
 
     @Test
     @Ignore
     fun animeViewOnlyShowsAnimeItemType() {
-
     }
 
     @Test
     @Ignore
     fun mangaViewOnlyShowsMangaItemType() {
-
     }
 }

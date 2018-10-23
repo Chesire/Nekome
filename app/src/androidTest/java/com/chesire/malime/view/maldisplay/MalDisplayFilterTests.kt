@@ -38,36 +38,30 @@ class MalDisplayFilterTests {
     @Test
     @Ignore
     fun filterByCurrent() {
-
     }
 
     @Test
     @Ignore
     fun filterByCompleted() {
-
     }
 
     @Test
     @Ignore
     fun filterByOnHold() {
-
     }
 
     @Test
     @Ignore
     fun filterByDropped() {
-
     }
 
     @Test
     @Ignore
     fun filterByPlanned() {
-
     }
 
     @Test
     @Ignore
     fun filterByMultiple() {
-
     }
 }
