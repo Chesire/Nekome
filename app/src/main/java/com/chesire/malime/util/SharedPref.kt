@@ -12,7 +12,7 @@ class SharedPref @Inject constructor(context: Context) {
     //private val allowCrashReporting = context.getString(R.string.key_allow_crash_reporting)
     private val _updateSchedulerEnabled = context.getString(R.string.key_update_scheduler_enabled)
     private val _refreshSchedulerEnabled = context.getString(R.string.key_refresh_scheduler_enabled)
-    private val forceBlockServices = context.getString(R.string.key_force_block_services)
+    private val _forceBlockServices = context.getString(R.string.key_force_block_services)
     private val animeFilterLength = context.getString(R.string.key_anime_filter_length)
     private val _primaryService = context.getString(R.string.key_primary_service)
     private val filter = context.getString(R.string.key_filter)
@@ -70,15 +70,9 @@ class SharedPref @Inject constructor(context: Context) {
         get() = sharedPreferences.getBoolean(_refreshSchedulerEnabled, false)
         set(enabled) = sharedPreferences.edit { it.put(_refreshSchedulerEnabled to enabled) }
 
-    fun getForceBlockServices() = sharedPreferences.getBoolean(forceBlockServices, false)
-
-    fun setForceBlockServices(state: Boolean): SharedPref {
-        sharedPreferences.edit()
-            .putBoolean(forceBlockServices, state)
-            .apply()
-
-        return this
-    }
+    var forceBlockServices: Boolean
+        get() = sharedPreferences.getBoolean(_forceBlockServices, false)
+        set(block) = sharedPreferences.edit { it.put(_forceBlockServices to block) }
 
     fun registerOnChangeListener(listener: SharedPreferences.OnSharedPreferenceChangeListener) {
         sharedPreferences.registerOnSharedPreferenceChangeListener(listener)

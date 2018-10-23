@@ -39,7 +39,7 @@ class PeriodicUpdateHelper {
         // If there is no primary service, we haven't logged in yet
         return if (
             sharedPref.primaryService == SupportedService.Unknown ||
-            sharedPref.getForceBlockServices()
+            sharedPref.forceBlockServices
         ) {
             false
         } else {
