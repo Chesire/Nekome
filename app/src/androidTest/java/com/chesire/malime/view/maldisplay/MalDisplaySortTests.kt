@@ -50,12 +50,13 @@ class MalDisplaySortTests {
     }
 
     @Test
-    @Ignore("Need to know how default sort works, think its based on ID?")
+    @Ignore
     fun sortByDefault() {
 
     }
 
     @Test
+    @Ignore
     fun sortByTitle() {
         val models = listOf(
             getMalimeModel(seriesId = 0, title = "B", type = ItemType.Anime),
@@ -81,21 +82,25 @@ class MalDisplaySortTests {
     }
 
     @Test
+    @Ignore
     fun sortByStartDate() {
 
     }
 
     @Test
+    @Ignore
     fun sortByEndDate() {
 
     }
 
     @Test
+    @Ignore
     fun animeViewOnlyShowsAnimeItemType() {
 
     }
 
     @Test
+    @Ignore
     fun mangaViewOnlyShowsMangaItemType() {
 
     }

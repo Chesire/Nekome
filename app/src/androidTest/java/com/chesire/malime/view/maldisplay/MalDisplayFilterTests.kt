@@ -8,6 +8,7 @@ import com.chesire.malime.injection.espressoDaggerMockRule
 import com.chesire.malime.view.MainActivity
 import org.junit.After
 import org.junit.Before
+import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -35,31 +36,37 @@ class MalDisplayFilterTests {
     }
 
     @Test
+    @Ignore
     fun filterByCurrent() {
 
     }
 
     @Test
+    @Ignore
     fun filterByCompleted() {
 
     }
 
     @Test
+    @Ignore
     fun filterByOnHold() {
 
     }
 
     @Test
+    @Ignore
     fun filterByDropped() {
 
     }
 
     @Test
+    @Ignore
     fun filterByPlanned() {
 
     }
 
     @Test
+    @Ignore
     fun filterByMultiple() {
 
     }
