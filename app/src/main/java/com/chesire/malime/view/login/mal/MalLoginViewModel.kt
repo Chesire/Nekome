@@ -57,7 +57,7 @@ class MalLoginViewModel @Inject constructor(
                 {
                     loginResponse.value = LoginStatus.SUCCESS
 
-                    sharedPref.putPrimaryService(SupportedService.MyAnimeList)
+                    sharedPref.primaryService = SupportedService.MyAnimeList
                     authorizer.storeAuthDetails(it)
                     authorizer.storeUser(loginModel.userName)
                 },
