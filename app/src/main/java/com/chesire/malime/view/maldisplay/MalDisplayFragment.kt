@@ -127,7 +127,7 @@ class MalDisplayFragment : DaggerFragment(), ModelInteractionListener {
     }
 
     private fun spawnFilterDialog() {
-        val states = sharedPref.getFilter()
+        val states = sharedPref.filter
 
         AlertDialog.Builder(requireContext())
             .setTitle(R.string.filter_dialog_title)
@@ -146,7 +146,7 @@ class MalDisplayFragment : DaggerFragment(), ModelInteractionListener {
                         Snackbar.LENGTH_LONG
                     ).show()
                 } else {
-                    sharedPref.setFilter(states)
+                    sharedPref.filter = states
                 }
             }
             .setNegativeButton(android.R.string.cancel, null)
@@ -171,7 +171,7 @@ class MalDisplayFragment : DaggerFragment(), ModelInteractionListener {
     }
 
     override fun showSeriesProfile(model: MalimeModel) {
-        urlLoader.loadSeries(requireContext(), sharedPref.getPrimaryService(), model)
+        urlLoader.loadSeries(requireContext(), sharedPref.primaryService, model)
     }
 
     override fun deleteSeries(model: MalimeModel, callback: (success: Boolean) -> Unit) {

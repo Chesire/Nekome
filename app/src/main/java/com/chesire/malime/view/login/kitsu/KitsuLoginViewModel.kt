@@ -65,7 +65,7 @@ class KitsuLoginViewModel @Inject constructor(
                 onSuccess = {
                     loginResponse.value = LoginStatus.SUCCESS
 
-                    sharedPref.putPrimaryService(SupportedService.Kitsu)
+                    sharedPref.primaryService = SupportedService.Kitsu
                     authorizer.storeUser(it)
                 }
             )

@@ -17,7 +17,7 @@ class RefreshTokenHelper {
             Timber.v("Refresh token service will not activate")
             return
         }
-        sharedPref.setRefreshTokenSchedulerEnabled(true)
+        sharedPref.refreshTokenSchedulerEnabled = true
 
         val serviceComponent = ComponentName(context, RefreshTokenService::class.java)
         val builder = JobInfo.Builder(SCHEDULER_ID, serviceComponent)
@@ -29,7 +29,7 @@ class RefreshTokenHelper {
     }
 
     fun cancel(context: Context, sharedPref: SharedPref) {
-        sharedPref.setRefreshTokenSchedulerEnabled(false)
+        sharedPref.refreshTokenSchedulerEnabled = false
 
         val jobScheduler = context.getSystemService(Context.JOB_SCHEDULER_SERVICE) as? JobScheduler
         jobScheduler?.cancel(SCHEDULER_ID)
@@ -38,12 +38,12 @@ class RefreshTokenHelper {
     private fun isScheduleValid(sharedPref: SharedPref, force: Boolean): Boolean {
         // If there is no primary service, we haven't logged in yet
         return if (
-            sharedPref.getPrimaryService() == SupportedService.Unknown ||
-            sharedPref.getForceBlockServices()
+            sharedPref.primaryService == SupportedService.Unknown ||
+            sharedPref.forceBlockServices
         ) {
             false
         } else {
-            !(sharedPref.getRefreshTokenSchedulerEnabled() && !force)
+            !(sharedPref.refreshTokenSchedulerEnabled && !force)
         }
     }
 }
