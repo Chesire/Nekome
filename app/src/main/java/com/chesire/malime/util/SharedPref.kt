@@ -1,6 +1,5 @@
 package com.chesire.malime.util
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
 import com.chesire.malime.R
@@ -15,7 +14,7 @@ class SharedPref @Inject constructor(context: Context) {
     private val refreshSchedulerEnabled = context.getString(R.string.key_refresh_scheduler_enabled)
     private val forceBlockServices = context.getString(R.string.key_force_block_services)
     private val animeFilterLength = context.getString(R.string.key_anime_filter_length)
-    private val primaryService = context.getString(R.string.key_primary_service)
+    private val _primaryService = context.getString(R.string.key_primary_service)
     private val filter = context.getString(R.string.key_filter)
     private val sort = context.getString(R.string.key_sort)
 
@@ -25,20 +24,14 @@ class SharedPref @Inject constructor(context: Context) {
             Context.MODE_PRIVATE
         )
 
-    fun getPrimaryService() =
-        SupportedService.valueOf(
-            sharedPreferences.getString(primaryService, SupportedService.Unknown.name)
-        )
-
-    @SuppressLint("ApplySharedPref")
-    fun putPrimaryService(service: SupportedService): SharedPref {
-        // Push this into shared preferences straight away, instead of waiting in the background
-        sharedPreferences.edit()
-            .putString(primaryService, service.name)
-            .commit()
-
-        return this
-    }
+    var primaryService: SupportedService
+        get() {
+            val pref = sharedPreferences.getString(_primaryService, SupportedService.Unknown.name)
+            return SupportedService.valueOf(pref)
+        }
+        set(service) {
+            sharedPreferences.edit { it.put(_primaryService to service.name) }
+        }
 
     fun getAllowCrashReporting() = sharedPreferences.getBoolean(allowCrashReporting, true)
 
@@ -142,4 +135,18 @@ class SharedPref @Inject constructor(context: Context) {
     }
 
     private fun getDefaultFilter() = booleanArrayOf(true, false, false, false, false)
+
+    private inline fun SharedPreferences.edit(operation: (SharedPreferences.Editor) -> Unit) {
+        edit().apply { operation(this) }.apply()
+    }
+
+    private fun SharedPreferences.Editor.put(pair: Pair<String, Any>) {
+        val (key, value) = pair
+
+        when (value) {
+            is Boolean -> putBoolean(key, value)
+            is String -> putString(key, value)
+            else -> error("Invalid type ${value.javaClass} attempted to be passed into SharedPreferences")
+        }
+    }
 }

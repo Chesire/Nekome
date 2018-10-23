@@ -159,7 +159,7 @@ class MainActivity : DaggerAppCompatActivity() {
     }
 
     private fun launchProfile() {
-        val primaryService = sharedPref.getPrimaryService()
+        val primaryService = sharedPref.primaryService
         authorization.getUser<Int?>(primaryService)?.let {
             urlLoader.loadProfile(this, primaryService, it)
         }

@@ -171,7 +171,7 @@ class MalDisplayFragment : DaggerFragment(), ModelInteractionListener {
     }
 
     override fun showSeriesProfile(model: MalimeModel) {
-        urlLoader.loadSeries(requireContext(), sharedPref.getPrimaryService(), model)
+        urlLoader.loadSeries(requireContext(), sharedPref.primaryService, model)
     }
 
     override fun deleteSeries(model: MalimeModel, callback: (success: Boolean) -> Unit) {
