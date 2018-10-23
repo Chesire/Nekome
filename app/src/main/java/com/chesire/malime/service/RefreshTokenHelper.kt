@@ -37,7 +37,10 @@ class RefreshTokenHelper {
 
     private fun isScheduleValid(sharedPref: SharedPref, force: Boolean): Boolean {
         // If there is no primary service, we haven't logged in yet
-        return if (sharedPref.getPrimaryService() == SupportedService.Unknown) {
+        return if (
+            sharedPref.getPrimaryService() == SupportedService.Unknown ||
+            sharedPref.getForceBlockServices()
+        ) {
             false
         } else {
             !(sharedPref.getRefreshTokenSchedulerEnabled() && !force)

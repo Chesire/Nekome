@@ -2,14 +2,16 @@ package com.chesire.malime.injection.modules
 
 import android.arch.persistence.room.Room
 import android.content.Context
+import com.chesire.malime.OpenForTesting
 import com.chesire.malime.core.room.MalimeDatabase
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
 
 @Suppress("unused")
+@OpenForTesting
 @Module
-internal class MockDatabaseModule {
+class MockDatabaseModule {
     @Provides
     fun provideDatabase(context: Context): MalimeDatabase {
         return Room
