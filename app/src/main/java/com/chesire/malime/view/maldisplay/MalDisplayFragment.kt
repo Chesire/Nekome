@@ -127,7 +127,7 @@ class MalDisplayFragment : DaggerFragment(), ModelInteractionListener {
     }
 
     private fun spawnFilterDialog() {
-        val states = sharedPref.getFilter()
+        val states = sharedPref.filter
 
         AlertDialog.Builder(requireContext())
             .setTitle(R.string.filter_dialog_title)
@@ -146,7 +146,7 @@ class MalDisplayFragment : DaggerFragment(), ModelInteractionListener {
                         Snackbar.LENGTH_LONG
                     ).show()
                 } else {
-                    sharedPref.setFilter(states)
+                    sharedPref.filter = states
                 }
             }
             .setNegativeButton(android.R.string.cancel, null)

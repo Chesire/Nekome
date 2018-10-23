@@ -7,15 +7,14 @@ import com.chesire.malime.core.flags.SupportedService
 import com.chesire.malime.view.preferences.SortOption
 import javax.inject.Inject
 
-@Suppress("TooManyFunctions")
 class SharedPref @Inject constructor(context: Context) {
     //private val allowCrashReporting = context.getString(R.string.key_allow_crash_reporting)
     private val _updateSchedulerEnabled = context.getString(R.string.key_update_scheduler_enabled)
     private val _refreshSchedulerEnabled = context.getString(R.string.key_refresh_scheduler_enabled)
     private val _forceBlockServices = context.getString(R.string.key_force_block_services)
-    private val animeFilterLength = context.getString(R.string.key_anime_filter_length)
     private val _primaryService = context.getString(R.string.key_primary_service)
-    private val filter = context.getString(R.string.key_filter)
+    private val _animeFilterLength = context.getString(R.string.key_anime_filter_length)
+    private val _filter = context.getString(R.string.key_filter)
     private val _sortOption = context.getString(R.string.key_sort)
 
     private val sharedPreferences =
@@ -31,32 +30,30 @@ class SharedPref @Inject constructor(context: Context) {
         }
         set(service) = sharedPreferences.edit { it.put(_primaryService to service.name) }
 
-    fun getFilter(): BooleanArray {
-        if (!hasStoredFilter()) {
-            val defaultFilter = getDefaultFilter()
-            setFilter(defaultFilter)
-            return defaultFilter
+    var filter: BooleanArray
+        get() {
+            if (!hasStoredFilter()) {
+                val defaultFilter = getDefaultFilter()
+                filter = defaultFilter
+                return defaultFilter
+            }
+
+            val filterLength = sharedPreferences.getInt(_animeFilterLength, 0)
+            val returnArray = BooleanArray(filterLength)
+            for (i in 0 until filterLength) {
+                returnArray[i] = sharedPreferences.getBoolean(_filter + i, false)
+            }
+
+            return returnArray
         }
-
-        val filterLength = sharedPreferences.getInt(animeFilterLength, 0)
-        val returnArray = BooleanArray(filterLength)
-        for (i in 0 until filterLength) {
-            returnArray[i] = sharedPreferences.getBoolean(filter + i, false)
+        set(value) {
+            sharedPreferences.edit {
+                it.put(_animeFilterLength to value.count())
+                for (i in value.indices) {
+                    it.put(_filter + i to value[i])
+                }
+            }
         }
-
-        return returnArray
-    }
-
-    fun setFilter(input: BooleanArray): SharedPref {
-        val editor = sharedPreferences.edit()
-        editor.putInt(animeFilterLength, input.count())
-        for (i in input.indices) {
-            editor.putBoolean(filter + i, input[i])
-        }
-        editor.apply()
-
-        return this
-    }
 
     var sortOption: SortOption
         get() = SortOption.getOptionFor(sharedPreferences.getInt(_sortOption, SortOption.Title.id))
@@ -83,13 +80,13 @@ class SharedPref @Inject constructor(context: Context) {
     }
 
     private fun hasStoredFilter(): Boolean {
-        if (!sharedPreferences.contains(animeFilterLength)) {
+        if (!sharedPreferences.contains(_animeFilterLength)) {
             return false
         }
 
-        val filterLength = sharedPreferences.getInt(animeFilterLength, 0)
+        val filterLength = sharedPreferences.getInt(_animeFilterLength, 0)
         for (i in 0 until filterLength) {
-            if (!sharedPreferences.contains(filter + i)) {
+            if (!sharedPreferences.contains(_filter + i)) {
                 return false
             }
         }
