@@ -9,7 +9,7 @@ import javax.inject.Inject
 
 @Suppress("TooManyFunctions")
 class SharedPref @Inject constructor(context: Context) {
-    private val allowCrashReporting = context.getString(R.string.key_allow_crash_reporting)
+    //private val allowCrashReporting = context.getString(R.string.key_allow_crash_reporting)
     private val updateSchedulerEnabled = context.getString(R.string.key_update_scheduler_enabled)
     private val refreshSchedulerEnabled = context.getString(R.string.key_refresh_scheduler_enabled)
     private val forceBlockServices = context.getString(R.string.key_force_block_services)
@@ -33,7 +33,6 @@ class SharedPref @Inject constructor(context: Context) {
             sharedPreferences.edit { it.put(_primaryService to service.name) }
         }
 
-    fun getAllowCrashReporting() = sharedPreferences.getBoolean(allowCrashReporting, true)
 
     fun getFilter(): BooleanArray {
         if (!hasStoredFilter()) {
