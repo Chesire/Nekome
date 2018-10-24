@@ -17,13 +17,13 @@ import javax.inject.Singleton
 @Singleton
 @Component(
     modules = [
-        (ActivityModule::class),
-        (AndroidSupportInjectionModule::class),
-        (AppModule::class),
-        (DatabaseModule::class),
-        (ServerModule::class),
-        (ServiceModule::class),
-        (UiModule::class)
+        ActivityModule::class,
+        AndroidSupportInjectionModule::class,
+        AppModule::class,
+        DatabaseModule::class,
+        ServerModule::class,
+        ServiceModule::class,
+        UiModule::class
     ]
 )
 interface AppComponent : AndroidInjector<MalimeApplication> {
