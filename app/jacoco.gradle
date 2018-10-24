@@ -1,0 +1,43 @@
+apply plugin: 'jacoco'
+
+jacoco {
+    toolVersion = "$jacoco_version"
+}
+
+tasks.withType(Test) {
+    jacoco.includeNoLocationClasses = true
+}
+
+task jacocoTestReport(
+        type: JacocoReport,
+        group: 'verification',
+        dependsOn: ['testDebugUnitTest']
+        //dependsOn: ['testDebugUnitTest', 'createDebugCoverageReport']
+) {
+    reports {
+        xml.enabled = true
+        html.enabled = true
+    }
+
+    def coverageExcludes = ['**/R.class',
+                            '**/R$*.class',
+                            '**/BuildConfig.*',
+                            '**/Manifest*.*',
+                            '**/*Test*.*',
+                            '**/*$$ViewBinder*.*',
+                            '**/inject/*',
+                            '**/*$InjectAdapter.*',
+                            '**/Dagger*.*',
+                            '**/*_Provide*Factory.*',
+                            '**/*_Member*Injector.*',
+                            '**/*_Factory.*',
+                            'android/**/*.*']
+    def debugTree = fileTree(dir: "$project.buildDir/tmp/kotlin-classes/debug", excludes: coverageExcludes)
+    def mainSrc = "$project.projectDir/src/main/java"
+
+    sourceDirectories = files([mainSrc])
+    classDirectories = files([debugTree])
+    executionData = fileTree(dir: project.buildDir, includes: [
+            'jacoco/testDebugUnitTest.exec', 'outputs/code-coverage/connected/*coverage.ec'
+    ])
+}
