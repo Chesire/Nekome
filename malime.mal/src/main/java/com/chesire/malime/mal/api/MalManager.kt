@@ -24,6 +24,7 @@ import java.util.Locale
 /**
  * Provides a manager to interact with the MyAnimeList API.
  */
+@Suppress("TooManyFunctions")
 class MalManager(
     private val api: MalApi,
     private val username: String
@@ -181,7 +182,7 @@ class MalManager(
         }
     }
 
-    @Suppress("UnsafeCast")
+    @Suppress("ComplexMethod", "UnsafeCast")
     override fun searchForSeriesWith(
         title: String,
         type: ItemType

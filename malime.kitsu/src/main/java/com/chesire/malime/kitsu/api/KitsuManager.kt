@@ -23,6 +23,7 @@ import javax.inject.Inject
 
 private const val MAX_RETRIES = 3
 
+@Suppress("TooManyFunctions")
 class KitsuManager @Inject constructor(
     private val api: KitsuApi,
     authorizer: KitsuAuthorizer

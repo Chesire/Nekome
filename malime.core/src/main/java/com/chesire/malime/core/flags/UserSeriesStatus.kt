@@ -1,5 +1,6 @@
 package com.chesire.malime.core.flags
 
+@Suppress("ExpressionBodySyntax")
 enum class UserSeriesStatus(
     val internalId: Int,
     val malId: Int,

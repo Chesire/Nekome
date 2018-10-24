@@ -1,5 +1,6 @@
 package com.chesire.malime.core.flags
 
+@Suppress("ExpressionBodySyntax")
 enum class Subtype(
     val internalId: Int,
     val malId: Int, // this might be a string in MAL?

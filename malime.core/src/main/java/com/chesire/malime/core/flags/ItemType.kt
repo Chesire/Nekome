@@ -1,5 +1,6 @@
 package com.chesire.malime.core.flags
 
+@Suppress("ExpressionBodySyntax")
 enum class ItemType(
     val internalId: Int,
     val text: String
