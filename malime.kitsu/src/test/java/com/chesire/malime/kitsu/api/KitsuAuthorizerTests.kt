@@ -22,7 +22,7 @@ import org.mockito.Mockito.verify
 
 class KitsuAuthorizerTests {
     private lateinit var testObject: KitsuAuthorizer
-    private val context: Context = MockApplication()
+    private val context: Context = customMock()
     private val prefProvider: PreferenceProvider = customMock()
     private val encryptor: Encryptor = customMock()
     private val decryptor: Decryptor = customMock()
