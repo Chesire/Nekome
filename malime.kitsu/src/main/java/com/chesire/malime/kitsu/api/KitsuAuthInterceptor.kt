@@ -44,6 +44,7 @@ class KitsuAuthInterceptor(private val authorizer: KitsuAuthorizer) : Intercepto
         return chain.proceed(authenticatedRequest)
     }
 
+    @Suppress("UnsafeCast")
     private fun updateAuthToken(authModel: AuthModel) {
         // The auth token has expired, update it using the refresh token
         // hopefully the service in the app will handle this so this won't often be called

@@ -287,11 +287,11 @@ class KitsuManager @Inject constructor(
         if (map == null) {
             return ""
         }
-        return map["large"] as String?
-            ?: map["medium"] as String?
-            ?: map["original"] as String?
-            ?: map["small"] as String?
-            ?: map["tiny"] as String?
+        return map["large"] as? String?
+            ?: map["medium"] as? String?
+            ?: map["original"] as? String?
+            ?: map["small"] as? String?
+            ?: map["tiny"] as? String?
             ?: ""
     }
 

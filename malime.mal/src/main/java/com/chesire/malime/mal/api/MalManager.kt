@@ -181,6 +181,7 @@ class MalManager(
         }
     }
 
+    @Suppress("UnsafeCast")
     override fun searchForSeriesWith(
         title: String,
         type: ItemType

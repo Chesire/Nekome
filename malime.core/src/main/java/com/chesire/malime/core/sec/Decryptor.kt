@@ -25,5 +25,5 @@ class Decryptor @Inject constructor() {
         return String(cipher.doFinal(encryptedData), StandardCharsets.UTF_8)
     }
 
-    private fun getSecretKey(alias: String) = keyStore.getKey(alias, null) as PrivateKey?
+    private fun getSecretKey(alias: String) = keyStore.getKey(alias, null) as? PrivateKey?
 }
