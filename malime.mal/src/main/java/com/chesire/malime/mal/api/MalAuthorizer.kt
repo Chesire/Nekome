@@ -10,53 +10,49 @@ import com.google.gson.Gson
 import javax.inject.Inject
 import javax.inject.Singleton
 
-private const val authPrefFile: String = "malime_mal_auth_pref"
-private const val authAlias: String = "mal_private_auth"
-private const val preferenceAuth: String = "pref_auth"
-private const val preferenceUser: String = "pref_user"
+private const val AUTH_PREF_FILE = "malime_mal_auth_pref"
+private const val AUTH_ALIAS = "mal_private_auth"
+private const val PREFERENCE_AUTH = "pref_auth"
+private const val PREFERENCE_USER = "pref_user"
 
 // TODO: this should perform some caching on the credentials
 @Singleton
 class MalAuthorizer @Inject constructor(context: Context) : Authorizer<String> {
-    private val pref = context.getSharedPreferences(authPrefFile, Context.MODE_PRIVATE)
+    private val pref = context.getSharedPreferences(AUTH_PREF_FILE, Context.MODE_PRIVATE)
     private val encryptor by lazy { Encryptor(context.applicationContext) }
     private val decryptor by lazy { Decryptor() }
 
     override fun storeAuthDetails(model: AuthModel) {
-        val encrypted = encryptor.encryptText(authAlias, Gson().toJson(model))
+        val encrypted = encryptor.encryptText(AUTH_ALIAS, Gson().toJson(model))
         pref.edit()
-            .putString(preferenceAuth, Base64.encodeToString(encrypted, Base64.DEFAULT))
+            .putString(PREFERENCE_AUTH, Base64.encodeToString(encrypted, Base64.DEFAULT))
             .apply()
     }
 
     override fun retrieveAuthDetails(): AuthModel {
-        val auth = pref.getString(preferenceAuth, "")
+        val auth = pref.getString(PREFERENCE_AUTH, "")
         return if (auth.isNotBlank()) {
-            val decrypted = decryptor.decryptData(authAlias, Base64.decode(auth, Base64.DEFAULT))
+            val decrypted = decryptor.decryptData(AUTH_ALIAS, Base64.decode(auth, Base64.DEFAULT))
             Gson().fromJson(decrypted, AuthModel::class.java)
         } else {
             AuthModel("", "", 0, "")
         }
     }
 
-    override fun isDefaultUser(user: Any?): Boolean {
-        return (user as? String)?.isBlank() ?: false
-    }
+    override fun isDefaultUser(user: Any?) = (user as? String)?.isBlank() ?: false
 
     override fun storeUser(user: String) {
         pref.edit()
-            .putString(preferenceUser, user)
+            .putString(PREFERENCE_USER, user)
             .apply()
     }
 
-    override fun retrieveUser(): String {
-        return pref.getString(preferenceUser, "")
-    }
+    override fun retrieveUser() = pref.getString(PREFERENCE_USER, "")
 
     override fun clear() {
         pref.edit()
-            .remove(preferenceAuth)
-            .remove(preferenceUser)
+            .remove(PREFERENCE_AUTH)
+            .remove(PREFERENCE_USER)
             .apply()
     }
 }

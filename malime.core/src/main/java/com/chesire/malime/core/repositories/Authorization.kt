@@ -4,14 +4,10 @@ import com.chesire.malime.core.api.Authorizer
 import com.chesire.malime.core.flags.SupportedService
 
 class Authorization(private val authorizers: Map<SupportedService, Authorizer<*>>) {
-    fun hasLoggedIn(): Boolean {
-        return authorizers.any { !it.value.isDefaultUser(it.value.retrieveUser()) }
-    }
+    fun hasLoggedIn() = authorizers.any { !it.value.isDefaultUser(it.value.retrieveUser()) }
 
     @Suppress("UNCHECKED_CAST")
-    fun <T> getUser(service: SupportedService): T? {
-        return authorizers[service]?.retrieveUser() as? T
-    }
+    fun <T> getUser(service: SupportedService): T? = authorizers[service]?.retrieveUser() as? T
 
     fun logoutAll() {
         SupportedService.values().forEach {

@@ -8,42 +8,26 @@ import com.chesire.malime.core.flags.UserSeriesStatus
 
 class Converters {
     @TypeConverter
-    fun fromItemType(type: ItemType): Int {
-        return type.internalId
-    }
+    fun fromItemType(type: ItemType) = type.internalId
 
     @TypeConverter
-    fun toItemType(id: Int): ItemType {
-        return ItemType.getTypeForInternalId(id)
-    }
+    fun toItemType(id: Int) = ItemType.getTypeForInternalId(id)
 
     @TypeConverter
-    fun fromSubtype(subtype: Subtype): Int {
-        return subtype.internalId
-    }
+    fun fromSubtype(subtype: Subtype) = subtype.internalId
 
     @TypeConverter
-    fun toSubtype(id: Int): Subtype {
-        return Subtype.getSubtypeForInternalId(id)
-    }
+    fun toSubtype(id: Int) = Subtype.getSubtypeForInternalId(id)
 
     @TypeConverter
-    fun fromSeriesStatus(status: SeriesStatus): Int {
-        return status.internalId
-    }
+    fun fromSeriesStatus(status: SeriesStatus) = status.internalId
 
     @TypeConverter
-    fun toSeriesStatus(id: Int): SeriesStatus {
-        return SeriesStatus.getStatusForInternalId(id)
-    }
+    fun toSeriesStatus(id: Int) = SeriesStatus.getStatusForInternalId(id)
 
     @TypeConverter
-    fun fromUserSeriesStatus(status: UserSeriesStatus): Int {
-        return status.internalId
-    }
+    fun fromUserSeriesStatus(status: UserSeriesStatus) = status.internalId
 
     @TypeConverter
-    fun toUserSeriesStatus(id: Int): UserSeriesStatus {
-        return UserSeriesStatus.getStatusForInternalId(id)
-    }
+    fun toUserSeriesStatus(id: Int) = UserSeriesStatus.getStatusForInternalId(id)
 }

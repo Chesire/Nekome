@@ -22,7 +22,7 @@ buildscript {
 }
 
 plugins {
-    id "io.gitlab.arturbosch.detekt" version "1.0.0.RC7-3"
+    id "io.gitlab.arturbosch.detekt" version "1.0.0.RC9.2"
 }
 
 allprojects {
@@ -34,13 +34,25 @@ allprojects {
 }
 
 detekt {
-    version = "1.0.0.RC7-3"
-    defaultProfile {
-        config = file("default-detekt-config.yml")
-        filters = ".*/resources/.*,.*/build/.*"
-        input = file("app/src/main/java")
-        output = file("app/build/reports/detekt")
-        outputName = "detekt-results"
+    toolVersion = "1.0.0.RC9.2"
+    config = files("detekt-config.yml")
+    input = files(
+            "app/src/main/java",
+            "malime.core/src/main/java",
+            "malime.kitsu/src/main/java",
+            "malime.mal/src/main/java"
+    )
+    filters = ".*/resources/.*,.*/build/.*"
+
+    reports {
+        xml {
+            enabled = true
+            destination = file("app/build/reports/detekt/detekt.xml")
+        }
+        html {
+            enabled = true
+            destination = file("app/build/reports/detekt/detekt.html")
+        }
     }
 }
 

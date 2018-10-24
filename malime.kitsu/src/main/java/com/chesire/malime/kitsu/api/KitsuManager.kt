@@ -23,6 +23,7 @@ import javax.inject.Inject
 
 private const val MAX_RETRIES = 3
 
+@Suppress("TooManyFunctions")
 class KitsuManager @Inject constructor(
     private val api: KitsuApi,
     authorizer: KitsuAuthorizer
@@ -287,11 +288,11 @@ class KitsuManager @Inject constructor(
         if (map == null) {
             return ""
         }
-        return map["large"] as String?
-            ?: map["medium"] as String?
-            ?: map["original"] as String?
-            ?: map["small"] as String?
-            ?: map["tiny"] as String?
+        return map["large"] as? String?
+            ?: map["medium"] as? String?
+            ?: map["original"] as? String?
+            ?: map["small"] as? String?
+            ?: map["tiny"] as? String?
             ?: ""
     }
 

@@ -14,29 +14,19 @@ class Library @Inject constructor(
     private val libraryApi: LibraryApi,
     private val dao: MalimeDao
 ) {
-    fun observeLibrary(): Observable<List<MalimeModel>> {
-        return getLibraryFromDb()
-    }
+    fun observeLibrary(): Observable<List<MalimeModel>> = getLibraryFromDb()
 
-    fun updateLibraryFromApi(): Observable<List<MalimeModel>> {
-        return libraryApi.getUserLibrary()
-    }
+    fun updateLibraryFromApi(): Observable<List<MalimeModel>> = libraryApi.getUserLibrary()
 
-    fun sendNewToApi(item: MalimeModel): Single<MalimeModel> {
-        return libraryApi.addItem(item)
-    }
+    fun sendNewToApi(item: MalimeModel): Single<MalimeModel> = libraryApi.addItem(item)
 
     fun sendUpdateToApi(
         item: MalimeModel,
         newProgress: Int,
         newStatus: UserSeriesStatus
-    ): Single<MalimeModel> {
-        return libraryApi.updateItem(item, newProgress, newStatus)
-    }
+    ): Single<MalimeModel> = libraryApi.updateItem(item, newProgress, newStatus)
 
-    fun sendDeleteToApi(item: MalimeModel): Single<MalimeModel> {
-        return libraryApi.deleteItem(item)
-    }
+    fun sendDeleteToApi(item: MalimeModel): Single<MalimeModel> = libraryApi.deleteItem(item)
 
     fun deleteFromLocalLibrary(item: MalimeModel) {
         Completable
@@ -66,7 +56,5 @@ class Library @Inject constructor(
             .subscribe()
     }
 
-    private fun getLibraryFromDb(): Observable<List<MalimeModel>> {
-        return dao.getAll().toObservable()
-    }
+    private fun getLibraryFromDb(): Observable<List<MalimeModel>> = dao.getAll().toObservable()
 }

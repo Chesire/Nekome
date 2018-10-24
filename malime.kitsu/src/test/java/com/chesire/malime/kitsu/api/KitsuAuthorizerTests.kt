@@ -2,7 +2,6 @@ package com.chesire.malime.kitsu.api
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.test.mock.MockApplication
 import com.chesire.malime.core.PreferenceProvider
 import com.chesire.malime.core.models.AuthModel
 import com.chesire.malime.core.sec.Decryptor
@@ -23,7 +22,7 @@ import org.mockito.Mockito.verify
 
 class KitsuAuthorizerTests {
     private lateinit var testObject: KitsuAuthorizer
-    private val context: Context = MockApplication()
+    private val context: Context = customMock()
     private val prefProvider: PreferenceProvider = customMock()
     private val encryptor: Encryptor = customMock()
     private val decryptor: Decryptor = customMock()

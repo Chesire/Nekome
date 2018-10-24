@@ -20,9 +20,7 @@ class KitsuApi @Inject constructor(private val kitsuService: KitsuService) {
         return kitsuService.refreshAuth(RefreshAuthRequest(refreshToken))
     }
 
-    fun getUser(): Call<LibraryResponse> {
-        return kitsuService.getUser()
-    }
+    fun getUser(): Call<LibraryResponse> = kitsuService.getUser()
 
     fun getUserLibrary(userId: Int, offset: Int, type: ItemType): Call<LibraryResponse> {
         // Ideally wanted to keep the api without logic, but this is nicer than in the manager
@@ -33,17 +31,11 @@ class KitsuApi @Inject constructor(private val kitsuService: KitsuService) {
         }
     }
 
-    fun search(title: String, type: ItemType): Call<LibraryResponse> {
-        return kitsuService.search(type.text, title)
-    }
+    fun search(title: String, type: ItemType) = kitsuService.search(type.text, title)
 
-    fun addItem(data: RequestBody): Call<AddItemResponse> {
-        return kitsuService.addItem(data)
-    }
+    fun addItem(data: RequestBody): Call<AddItemResponse> = kitsuService.addItem(data)
 
-    fun deleteItem(seriesId: Int): Call<Any> {
-        return kitsuService.deleteItem(seriesId)
-    }
+    fun deleteItem(seriesId: Int): Call<Any> = kitsuService.deleteItem(seriesId)
 
     fun updateItem(seriesId: Int, updateModel: RequestBody): Call<UpdateItemResponse> {
         return kitsuService.updateItem(seriesId, updateModel)

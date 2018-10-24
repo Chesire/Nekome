@@ -7,7 +7,7 @@ import dagger.Module
 import dagger.Provides
 
 @Suppress("unused")
-@Module(includes = [(ViewModelModule::class)])
+@Module(includes = [ViewModelModule::class])
 internal class AppModule {
     @Provides
     fun provideApplicationContext(app: Application): Context = app.applicationContext
