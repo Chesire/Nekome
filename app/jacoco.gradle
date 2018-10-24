@@ -12,7 +12,6 @@ task jacocoTestReport(
         type: JacocoReport,
         group: 'verification',
         dependsOn: ['testDebugUnitTest']
-        //dependsOn: ['testDebugUnitTest', 'createDebugCoverageReport']
 ) {
     reports {
         xml.enabled = true
