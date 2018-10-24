@@ -129,7 +129,7 @@ class SearchFragment : DaggerFragment(), SearchInteractionListener {
     }
 
     override fun showSeriesProfile(selectedSeries: MalimeModel) {
-        urlLoader.loadSeries(requireContext(), sharedPref.getPrimaryService(), selectedSeries)
+        urlLoader.loadSeries(requireContext(), sharedPref.primaryService, selectedSeries)
     }
 
     companion object {

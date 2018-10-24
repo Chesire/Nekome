@@ -3,7 +3,6 @@ package com.chesire.malime.view.login.mal
 import android.arch.core.executor.testing.InstantTaskExecutorRule
 import android.arch.lifecycle.Observer
 import com.chesire.malime.R
-import com.chesire.malime.core.flags.SupportedService
 import com.chesire.malime.core.models.AuthModel
 import com.chesire.malime.customMock
 import com.chesire.malime.mal.api.MalAuthorizer
@@ -135,7 +134,6 @@ class MalLoginViewModelTests {
         testObject.executeLogin("dummyString")
         testScheduler.triggerActions()
 
-        verify(sharedPref).putPrimaryService(SupportedService.MyAnimeList)
         verify(authorizer).storeAuthDetails(returnedModel)
         verify(authorizer).storeUser(testObject.loginModel.userName)
     }

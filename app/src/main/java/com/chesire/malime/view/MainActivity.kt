@@ -141,7 +141,7 @@ class MainActivity : DaggerAppCompatActivity() {
     }
 
     private fun spawnSortDialog() {
-        var sortOption = sharedPref.getSortOption().id
+        var sortOption = sharedPref.sortOption.id
 
         AlertDialog.Builder(this)
             .setTitle(R.string.sort_dialog_title)
@@ -152,14 +152,14 @@ class MainActivity : DaggerAppCompatActivity() {
                 sortOption = which
             }
             .setPositiveButton(android.R.string.ok) { _, _ ->
-                sharedPref.setSortOption(SortOption.getOptionFor(sortOption))
+                sharedPref.sortOption = SortOption.getOptionFor(sortOption)
             }
             .setNegativeButton(android.R.string.cancel, null)
             .show()
     }
 
     private fun launchProfile() {
-        val primaryService = sharedPref.getPrimaryService()
+        val primaryService = sharedPref.primaryService
         authorization.getUser<Int?>(primaryService)?.let {
             urlLoader.loadProfile(this, primaryService, it)
         }

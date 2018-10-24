@@ -1,6 +1,5 @@
 package com.chesire.malime.util
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
 import com.chesire.malime.R
@@ -8,16 +7,15 @@ import com.chesire.malime.core.flags.SupportedService
 import com.chesire.malime.view.preferences.SortOption
 import javax.inject.Inject
 
-@Suppress("TooManyFunctions")
 class SharedPref @Inject constructor(context: Context) {
-    private val allowCrashReporting = context.getString(R.string.key_allow_crash_reporting)
-    private val updateSchedulerEnabled = context.getString(R.string.key_update_scheduler_enabled)
-    private val refreshSchedulerEnabled = context.getString(R.string.key_refresh_scheduler_enabled)
-    private val forceBlockServices = context.getString(R.string.key_force_block_services)
-    private val animeFilterLength = context.getString(R.string.key_anime_filter_length)
-    private val primaryService = context.getString(R.string.key_primary_service)
-    private val filter = context.getString(R.string.key_filter)
-    private val sort = context.getString(R.string.key_sort)
+    // private val allowCrashReporting = context.getString(R.string.key_allow_crash_reporting)
+    private val _updateSchedulerEnabled = context.getString(R.string.key_update_scheduler_enabled)
+    private val _refreshSchedulerEnabled = context.getString(R.string.key_refresh_scheduler_enabled)
+    private val _forceBlockServices = context.getString(R.string.key_force_block_services)
+    private val _primaryService = context.getString(R.string.key_primary_service)
+    private val _animeFilterLength = context.getString(R.string.key_anime_filter_length)
+    private val _filter = context.getString(R.string.key_filter)
+    private val _sortOption = context.getString(R.string.key_sort)
 
     private val sharedPreferences =
         context.getSharedPreferences(
@@ -25,98 +23,53 @@ class SharedPref @Inject constructor(context: Context) {
             Context.MODE_PRIVATE
         )
 
-    fun getPrimaryService() =
-        SupportedService.valueOf(
-            sharedPreferences.getString(primaryService, SupportedService.Unknown.name)
-        )
+    var primaryService: SupportedService
+        get() {
+            val pref = sharedPreferences.getString(_primaryService, SupportedService.Unknown.name)
+            return SupportedService.valueOf(pref)
+        }
+        set(service) = sharedPreferences.edit { it.put(_primaryService to service.name) }
 
-    @SuppressLint("ApplySharedPref")
-    fun putPrimaryService(service: SupportedService): SharedPref {
-        // Push this into shared preferences straight away, instead of waiting in the background
-        sharedPreferences.edit()
-            .putString(primaryService, service.name)
-            .commit()
+    var filter: BooleanArray
+        get() {
+            if (!hasStoredFilter()) {
+                val defaultFilter = getDefaultFilter()
+                filter = defaultFilter
+                return defaultFilter
+            }
 
-        return this
-    }
+            val filterLength = sharedPreferences.getInt(_animeFilterLength, 0)
+            val returnArray = BooleanArray(filterLength)
+            for (i in 0 until filterLength) {
+                returnArray[i] = sharedPreferences.getBoolean(_filter + i, false)
+            }
 
-    fun getAllowCrashReporting() = sharedPreferences.getBoolean(allowCrashReporting, true)
-
-    fun getFilter(): BooleanArray {
-        if (!hasStoredFilter()) {
-            val defaultFilter = getDefaultFilter()
-            setFilter(defaultFilter)
-            return defaultFilter
+            return returnArray
+        }
+        set(value) {
+            sharedPreferences.edit {
+                it.put(_animeFilterLength to value.count())
+                for (i in value.indices) {
+                    it.put(_filter + i to value[i])
+                }
+            }
         }
 
-        val filterLength = sharedPreferences.getInt(animeFilterLength, 0)
-        val returnArray = BooleanArray(filterLength)
-        for (i in 0 until filterLength) {
-            returnArray[i] = sharedPreferences.getBoolean(filter + i, false)
-        }
+    var sortOption: SortOption
+        get() = SortOption.getOptionFor(sharedPreferences.getInt(_sortOption, SortOption.Title.id))
+        set(option) = sharedPreferences.edit { it.put(_sortOption to option.id) }
 
-        return returnArray
-    }
+    var seriesUpdateSchedulerEnabled: Boolean
+        get() = sharedPreferences.getBoolean(_updateSchedulerEnabled, false)
+        set(enabled) = sharedPreferences.edit { it.put(_updateSchedulerEnabled to enabled) }
 
-    fun setFilter(input: BooleanArray): SharedPref {
-        val editor = sharedPreferences.edit()
-        editor.putInt(animeFilterLength, input.count())
-        for (i in input.indices) {
-            editor.putBoolean(filter + i, input[i])
-        }
-        editor.apply()
+    var refreshTokenSchedulerEnabled: Boolean
+        get() = sharedPreferences.getBoolean(_refreshSchedulerEnabled, false)
+        set(enabled) = sharedPreferences.edit { it.put(_refreshSchedulerEnabled to enabled) }
 
-        return this
-    }
-
-    fun getSortOption(): SortOption {
-        return SortOption.getOptionFor(
-            sharedPreferences.getInt(
-                sort,
-                SortOption.Title.id
-            )
-        )
-    }
-
-    fun setSortOption(sortOption: SortOption): SharedPref {
-        sharedPreferences.edit()
-            .putInt(sort, sortOption.id)
-            .apply()
-
-        return this
-    }
-
-    fun getSeriesUpdateSchedulerEnabled() =
-        sharedPreferences.getBoolean(updateSchedulerEnabled, false)
-
-    fun setSeriesUpdateSchedulerEnabled(state: Boolean): SharedPref {
-        sharedPreferences.edit()
-            .putBoolean(updateSchedulerEnabled, state)
-            .apply()
-
-        return this
-    }
-
-    fun getRefreshTokenSchedulerEnabled() =
-        sharedPreferences.getBoolean(refreshSchedulerEnabled, false)
-
-    fun setRefreshTokenSchedulerEnabled(state: Boolean): SharedPref {
-        sharedPreferences.edit()
-            .putBoolean(refreshSchedulerEnabled, state)
-            .apply()
-
-        return this
-    }
-
-    fun getForceBlockServices() = sharedPreferences.getBoolean(forceBlockServices, false)
-
-    fun setForceBlockServices(state: Boolean): SharedPref {
-        sharedPreferences.edit()
-            .putBoolean(forceBlockServices, state)
-            .apply()
-
-        return this
-    }
+    var forceBlockServices: Boolean
+        get() = sharedPreferences.getBoolean(_forceBlockServices, false)
+        set(block) = sharedPreferences.edit { it.put(_forceBlockServices to block) }
 
     fun registerOnChangeListener(listener: SharedPreferences.OnSharedPreferenceChangeListener) {
         sharedPreferences.registerOnSharedPreferenceChangeListener(listener)
@@ -127,13 +80,13 @@ class SharedPref @Inject constructor(context: Context) {
     }
 
     private fun hasStoredFilter(): Boolean {
-        if (!sharedPreferences.contains(animeFilterLength)) {
+        if (!sharedPreferences.contains(_animeFilterLength)) {
             return false
         }
 
-        val filterLength = sharedPreferences.getInt(animeFilterLength, 0)
+        val filterLength = sharedPreferences.getInt(_animeFilterLength, 0)
         for (i in 0 until filterLength) {
-            if (!sharedPreferences.contains(filter + i)) {
+            if (!sharedPreferences.contains(_filter + i)) {
                 return false
             }
         }
@@ -142,4 +95,19 @@ class SharedPref @Inject constructor(context: Context) {
     }
 
     private fun getDefaultFilter() = booleanArrayOf(true, false, false, false, false)
+
+    private inline fun SharedPreferences.edit(operation: (SharedPreferences.Editor) -> Unit) {
+        edit().apply { operation(this) }.apply()
+    }
+
+    private fun SharedPreferences.Editor.put(pair: Pair<String, Any>) {
+        val (key, value) = pair
+
+        when (value) {
+            is Boolean -> putBoolean(key, value)
+            is Int -> putInt(key, value)
+            is String -> putString(key, value)
+            else -> error("Invalid type ${value.javaClass} attempted to be passed into SharedPreferences")
+        }
+    }
 }
