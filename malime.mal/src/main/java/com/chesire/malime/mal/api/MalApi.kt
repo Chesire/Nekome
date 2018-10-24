@@ -15,7 +15,7 @@ import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.simplexml.SimpleXmlConverterFactory
 
-private const val MyAnimeListEndpoint = "https://myanimelist.net/"
+private const val MY_ANIME_LIST_ENDPOINT = "https://myanimelist.net/"
 
 /**
  * Provides the layer between the [MalService] and the [MalManager].
@@ -40,7 +40,7 @@ class MalApi(authorizer: MalAuthorizer) {
         }
 
         val retrofit = Retrofit.Builder()
-            .baseUrl(MyAnimeListEndpoint)
+            .baseUrl(MY_ANIME_LIST_ENDPOINT)
             .client(httpClient.build())
             .addConverterFactory(SimpleXmlConverterFactory.create())
             .build()

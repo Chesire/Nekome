@@ -16,12 +16,12 @@ import javax.crypto.Cipher
 import javax.inject.Inject
 import javax.security.auth.x500.X500Principal
 
-private const val transformation = "RSA/ECB/PKCS1Padding"
-private const val algorithm = "RSA"
-private const val androidKeyStore = "AndroidKeyStore"
+private const val TRANSFORMATION = "RSA/ECB/PKCS1Padding"
+private const val ALGORITHM = "RSA"
+private const val ANDROID_KEY_STORE = "AndroidKeyStore"
 
 class Encryptor @Inject constructor(private val context: Context) {
-    private val keyStore = KeyStore.getInstance(androidKeyStore)
+    private val keyStore = KeyStore.getInstance(ANDROID_KEY_STORE)
 
     init {
         keyStore.load(null)
@@ -34,7 +34,7 @@ class Encryptor @Inject constructor(private val context: Context) {
      */
     fun encryptText(alias: String, text: String): ByteArray {
         val keyPair = createAndroidKeyStoreAsymmetricKey(alias)
-        val cipher = Cipher.getInstance(transformation).apply {
+        val cipher = Cipher.getInstance(TRANSFORMATION).apply {
             init(Cipher.ENCRYPT_MODE, keyPair.public)
         }
 
@@ -42,7 +42,7 @@ class Encryptor @Inject constructor(private val context: Context) {
     }
 
     private fun createAndroidKeyStoreAsymmetricKey(alias: String): KeyPair {
-        val generator = KeyPairGenerator.getInstance(algorithm, androidKeyStore)
+        val generator = KeyPairGenerator.getInstance(ALGORITHM, ANDROID_KEY_STORE)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             initGeneratorWithKeyGenParameterSpec(generator, alias)

@@ -6,11 +6,11 @@ import java.security.PrivateKey
 import javax.crypto.Cipher
 import javax.inject.Inject
 
-private const val transformation = "RSA/ECB/PKCS1Padding"
-private const val androidKeyStore = "AndroidKeyStore"
+private const val TRANSFORMATION = "RSA/ECB/PKCS1Padding"
+private const val ANDROID_KEY_STORE = "AndroidKeyStore"
 
 class Decryptor @Inject constructor() {
-    private val keyStore = KeyStore.getInstance(androidKeyStore)
+    private val keyStore = KeyStore.getInstance(ANDROID_KEY_STORE)
 
     init {
         keyStore.load(null)
@@ -18,7 +18,7 @@ class Decryptor @Inject constructor() {
 
     fun decryptData(alias: String, encryptedData: ByteArray): String {
         val secretKey = getSecretKey(alias) ?: return ""
-        val cipher = Cipher.getInstance(transformation).apply {
+        val cipher = Cipher.getInstance(TRANSFORMATION).apply {
             init(Cipher.DECRYPT_MODE, secretKey)
         }
 
