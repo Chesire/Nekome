@@ -51,65 +51,47 @@ class MalApi(authorizer: MalAuthorizer) {
     /**
      * Wraps [MalService.addAnime] method.
      */
-    fun addAnime(id: Int, addAnimeXml: String): Call<Void> {
-        return malService.addAnime(id, addAnimeXml)
-    }
+    fun addAnime(id: Int, addAnimeXml: String): Call<Void> = malService.addAnime(id, addAnimeXml)
 
     /**
      * Wraps [MalService.addManga] method.
      */
-    fun addManga(id: Int, addMangaXml: String): Call<Void> {
-        return malService.addManga(id, addMangaXml)
-    }
+    fun addManga(id: Int, addMangaXml: String): Call<Void> = malService.addManga(id, addMangaXml)
 
     /**
      * Wraps the [MalService.getAllAnime] method.
      */
-    fun getAllAnime(username: String): Call<GetAllAnimeResponse> {
-        return malService.getAllAnime(username)
-    }
+    fun getAllAnime(username: String): Call<GetAllAnimeResponse> = malService.getAllAnime(username)
 
     /**
      * Wraps the [MalService.getAllManga] method.
      */
-    fun getAllManga(username: String): Call<GetAllMangaResponse> {
-        return malService.getAllManga(username)
-    }
+    fun getAllManga(username: String): Call<GetAllMangaResponse> = malService.getAllManga(username)
 
     /**
      * Wraps the [MalService.loginToAccount] method.
      */
-    fun loginToAccount(): Call<LoginToAccountResponse> {
-        return malService.loginToAccount()
-    }
+    fun loginToAccount(): Call<LoginToAccountResponse> = malService.loginToAccount()
 
     /**
      * Wraps the [MalService.searchForAnime] method.
      */
-    fun searchForAnime(name: String): Call<SearchForAnimeResponse> {
-        return malService.searchForAnime(name)
-    }
+    fun searchForAnime(name: String): Call<SearchForAnimeResponse> = malService.searchForAnime(name)
 
     /**
      * Wraps the [MalService.searchForManga] method.
      */
-    fun searchForManga(name: String): Call<SearchForMangaResponse> {
-        return malService.searchForManga(name)
-    }
+    fun searchForManga(name: String): Call<SearchForMangaResponse> = malService.searchForManga(name)
 
     /**
      * Wraps the [MalService.updateAnime] method.
      */
-    fun updateAnime(id: Int, updateAnimeXml: String): Call<Void> {
-        return malService.updateAnime(id, updateAnimeXml)
-    }
+    fun updateAnime(id: Int, updateAnimeXml: String) = malService.updateAnime(id, updateAnimeXml)
 
     /**
      * Wraps the [MalService.updateManga] method.
      */
-    fun updateManga(id: Int, updateMangaXml: String): Call<Void> {
-        return malService.updateManga(id, updateMangaXml)
-    }
+    fun updateManga(id: Int, updateMangaXml: String) = malService.updateManga(id, updateMangaXml)
 
     /**
      * Provides an interceptor that handles the basic auth.
@@ -117,7 +99,6 @@ class MalApi(authorizer: MalAuthorizer) {
     class BasicAuthInterceptor(
         private val auth: AuthModel
     ) : Interceptor {
-
         override fun intercept(chain: Interceptor.Chain): Response {
             val request = chain.request()
             val authenticatedRequest = request.newBuilder()

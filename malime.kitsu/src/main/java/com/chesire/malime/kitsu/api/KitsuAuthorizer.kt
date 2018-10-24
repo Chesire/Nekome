@@ -55,9 +55,7 @@ class KitsuAuthorizer @Inject constructor(
         return cachedModel
     }
 
-    override fun isDefaultUser(user: Any?): Boolean {
-        return if (user is Int) user == -1 else false
-    }
+    override fun isDefaultUser(user: Any?) = if (user is Int) user == -1 else false
 
     override fun storeUser(user: Int) {
         cachedUser = user
@@ -85,7 +83,5 @@ class KitsuAuthorizer @Inject constructor(
             .apply()
     }
 
-    private fun getEmptyAuthModel(): AuthModel {
-        return AuthModel("", "", 0, "")
-    }
+    private fun getEmptyAuthModel() = AuthModel("", "", 0, "")
 }

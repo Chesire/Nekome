@@ -39,9 +39,7 @@ class MalAuthorizer @Inject constructor(context: Context) : Authorizer<String> {
         }
     }
 
-    override fun isDefaultUser(user: Any?): Boolean {
-        return (user as? String)?.isBlank() ?: false
-    }
+    override fun isDefaultUser(user: Any?) = (user as? String)?.isBlank() ?: false
 
     override fun storeUser(user: String) {
         pref.edit()
@@ -49,9 +47,7 @@ class MalAuthorizer @Inject constructor(context: Context) : Authorizer<String> {
             .apply()
     }
 
-    override fun retrieveUser(): String {
-        return pref.getString(preferenceUser, "")
-    }
+    override fun retrieveUser() = pref.getString(preferenceUser, "")
 
     override fun clear() {
         pref.edit()

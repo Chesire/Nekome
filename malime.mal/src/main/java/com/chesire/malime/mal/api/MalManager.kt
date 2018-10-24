@@ -51,10 +51,8 @@ class MalManager(
         }
     }
 
-    override fun getNewAuthToken(refreshToken: String): Single<AuthModel> {
-        // MyAnimeList does not support auth tokens currently
-        return Single.never()
-    }
+    // MyAnimeList does not support auth tokens currently
+    override fun getNewAuthToken(refreshToken: String): Single<AuthModel> = Single.never()
 
     override fun getUserId(): Single<Int> {
         return Single.create {
