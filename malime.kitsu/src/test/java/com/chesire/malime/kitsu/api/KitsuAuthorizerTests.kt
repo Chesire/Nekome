@@ -2,7 +2,6 @@ package com.chesire.malime.kitsu.api
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.test.mock.MockApplication
 import com.chesire.malime.core.PreferenceProvider
 import com.chesire.malime.core.models.AuthModel
 import com.chesire.malime.core.sec.Decryptor
