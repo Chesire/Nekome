@@ -5,6 +5,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply from: 'dokka.gradle'
+apply from: 'jacoco.gradle'
 apply from: 'ktlint.gradle'
 
 android {
@@ -40,6 +41,7 @@ android {
             applicationIdSuffix = ".debug"
             versionNameSuffix '-DEBUG'
             resValue "string", "app_name", "@string/app_name_debug"
+            testCoverageEnabled true
         }
     }
     dataBinding {
