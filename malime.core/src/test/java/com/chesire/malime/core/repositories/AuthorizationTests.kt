@@ -1,8 +1,8 @@
 package com.chesire.malime.core.repositories
 
 import com.chesire.malime.core.api.Authorizer
-import com.chesire.malime.core.customMock
 import com.chesire.malime.core.flags.SupportedService
+import com.nhaarman.mockitokotlin2.mock
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNull
@@ -13,8 +13,8 @@ import org.mockito.Mockito.`when`
 import org.mockito.Mockito.verify
 
 class AuthorizationTests {
-    private val mockStringAuthorizer: Authorizer<String> = customMock()
-    private val mockIntAuthorizer: Authorizer<Int> = customMock()
+    private val mockStringAuthorizer: Authorizer<String> = mock { }
+    private val mockIntAuthorizer: Authorizer<Int> = mock { }
 
     @Test
     fun `no authorizers returns false for hasLoggedIn`() {
@@ -128,12 +128,14 @@ class AuthorizationTests {
 
     @Test
     fun `attempting to getUser with multiple same type authorizers, returns expected one`() {
-        val mockStringAuth1: Authorizer<String> = customMock()
-        val mockStringAuth2: Authorizer<String> = customMock()
         val expectedString1 = "test1"
         val expectedString2 = "test2"
-        `when`(mockStringAuth1.retrieveUser()).thenReturn(expectedString1)
-        `when`(mockStringAuth2.retrieveUser()).thenReturn(expectedString2)
+        val mockStringAuth1: Authorizer<String> = mock {
+            on { retrieveUser() }.thenReturn(expectedString1)
+        }
+        val mockStringAuth2: Authorizer<String> = mock {
+            on { retrieveUser() }.thenReturn(expectedString2)
+        }
 
         val testObject = Authorization(
             mapOf(
