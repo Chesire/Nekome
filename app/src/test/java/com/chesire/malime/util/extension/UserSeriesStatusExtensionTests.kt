@@ -15,7 +15,7 @@ private const val PLANNED = "Planned"
 private const val UNKNOWN = "Unknown"
 
 class UserSeriesStatusExtensionTests {
-    private val mockContext: Context = mock {
+    private val mockContext = mock<Context> {
         on { getString(R.string.filter_state_completed) }.thenReturn(COMPLETED)
         on { getString(R.string.filter_state_current) }.thenReturn(CURRENT)
         on { getString(R.string.filter_state_dropped) }.thenReturn(DROPPED)

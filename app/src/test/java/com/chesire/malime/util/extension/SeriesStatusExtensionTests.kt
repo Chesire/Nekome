@@ -15,7 +15,7 @@ private const val UPCOMING = "Upcoming"
 private const val UNKNOWN = "Unknown"
 
 class SeriesStatusExtensionTests {
-    private val mockContext: Context = mock {
+    private val mockContext = mock<Context> {
         on { getString(R.string.series_state_current) }.thenReturn(CURRENT)
         on { getString(R.string.series_state_finished) }.thenReturn(FINISHED)
         on { getString(R.string.series_state_tba) }.thenReturn(TBA)

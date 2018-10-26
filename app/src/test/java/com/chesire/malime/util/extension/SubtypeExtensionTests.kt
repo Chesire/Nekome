@@ -23,7 +23,7 @@ private const val ONESHOT = "Oneshot"
 private const val UNKNOWN = "Unknown"
 
 class SubtypeExtensionTests {
-    private val mockContext: Context = mock {
+    private val mockContext = mock<Context> {
         on { getString(R.string.series_subtype_ona) }.thenReturn(ONA)
         on { getString(R.string.series_subtype_ova) }.thenReturn(OVA)
         on { getString(R.string.series_subtype_tv) }.thenReturn(TV)
