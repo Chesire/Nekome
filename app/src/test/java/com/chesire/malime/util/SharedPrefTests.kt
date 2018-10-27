@@ -7,6 +7,7 @@ import com.chesire.malime.core.flags.SupportedService
 import com.chesire.malime.view.preferences.SortOption
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
+import org.junit.Assert.assertArrayEquals
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
@@ -76,10 +77,147 @@ class SharedPrefTests {
         verify(mockPrefEditor).putString(PRIMARY_SERVICE, SupportedService.MyAnimeList.name)
     }
 
-    // TODO add tests for the filter
-    // TODO refactor the filter method after tests
-    fun filterTests() {}
+    @Test
+    fun `filter get() no stored filter length uses default filter`() {
+        val mockPrefEditor = mock<SharedPreferences.Editor>(defaultAnswer = RETURNS_SELF) { }
+        val mockPreferences = mock<SharedPreferences> {
+            on { edit() }.thenReturn(mockPrefEditor)
+            on { contains(ANIME_FILTER_LENGTH) }.thenReturn(false)
+        }
+        `when`(
+            mockContext.getSharedPreferences(
+                SHARED_PREF_FILE_NAME,
+                Context.MODE_PRIVATE
+            )
+        ).thenReturn(mockPreferences)
 
+        val classUnderTest = SharedPref(mockContext)
+
+        assertArrayEquals(booleanArrayOf(true, false, false, false, false), classUnderTest.filter)
+    }
+
+    @Test
+    fun `filter get() missing filter data uses default filter`() {
+        val mockPrefEditor = mock<SharedPreferences.Editor>(defaultAnswer = RETURNS_SELF) { }
+        val mockPreferences = mock<SharedPreferences> {
+            on { edit() }.thenReturn(mockPrefEditor)
+            on { contains(ANIME_FILTER_LENGTH) }.thenReturn(true)
+            on { getInt(ANIME_FILTER_LENGTH, 0) }.thenReturn(5)
+            on { contains(FILTER + 0) }.thenReturn(true)
+            on { contains(FILTER + 1) }.thenReturn(true)
+            on { contains(FILTER + 2) }.thenReturn(false)
+        }
+        `when`(
+            mockContext.getSharedPreferences(
+                SHARED_PREF_FILE_NAME,
+                Context.MODE_PRIVATE
+            )
+        ).thenReturn(mockPreferences)
+
+        val classUnderTest = SharedPref(mockContext)
+
+        assertArrayEquals(booleanArrayOf(true, false, false, false, false), classUnderTest.filter)
+    }
+
+    @Test
+    fun `filter get() when default filter sets the default values`() {
+        val mockPrefEditor = mock<SharedPreferences.Editor>(defaultAnswer = RETURNS_SELF) { }
+        val mockPreferences = mock<SharedPreferences> {
+            on { edit() }.thenReturn(mockPrefEditor)
+            on { contains(ANIME_FILTER_LENGTH) }.thenReturn(true)
+            on { getInt(ANIME_FILTER_LENGTH, 0) }.thenReturn(5)
+            on { contains(FILTER + 0) }.thenReturn(true)
+            on { contains(FILTER + 1) }.thenReturn(true)
+            on { contains(FILTER + 2) }.thenReturn(true)
+            on { contains(FILTER + 3) }.thenReturn(true)
+            on { contains(FILTER + 4) }.thenReturn(false)
+        }
+        `when`(
+            mockContext.getSharedPreferences(
+                SHARED_PREF_FILE_NAME,
+                Context.MODE_PRIVATE
+            )
+        ).thenReturn(mockPreferences)
+
+        val classUnderTest = SharedPref(mockContext)
+        classUnderTest.filter
+
+        verify(mockPrefEditor).putInt(ANIME_FILTER_LENGTH, 5)
+        verify(mockPrefEditor).putBoolean(FILTER + 0, true)
+        verify(mockPrefEditor).putBoolean(FILTER + 1, false)
+        verify(mockPrefEditor).putBoolean(FILTER + 2, false)
+        verify(mockPrefEditor).putBoolean(FILTER + 3, false)
+        verify(mockPrefEditor).putBoolean(FILTER + 4, false)
+    }
+
+    @Test
+    fun `filter get() returns BooleanArray`() {
+        val mockPrefEditor = mock<SharedPreferences.Editor>(defaultAnswer = RETURNS_SELF) { }
+        val mockPreferences = mock<SharedPreferences> {
+            on { edit() }.thenReturn(mockPrefEditor)
+            on { contains(ANIME_FILTER_LENGTH) }.thenReturn(true)
+            on { getInt(ANIME_FILTER_LENGTH, 0) }.thenReturn(5)
+            on { contains(FILTER + 0) }.thenReturn(true)
+            on { contains(FILTER + 1) }.thenReturn(true)
+            on { contains(FILTER + 2) }.thenReturn(true)
+            on { contains(FILTER + 3) }.thenReturn(true)
+            on { contains(FILTER + 4) }.thenReturn(true)
+            on { getBoolean(FILTER + 0, false) }.thenReturn(true)
+            on { getBoolean(FILTER + 1, false) }.thenReturn(true)
+            on { getBoolean(FILTER + 2, false) }.thenReturn(true)
+            on { getBoolean(FILTER + 3, false) }.thenReturn(true)
+            on { getBoolean(FILTER + 4, false) }.thenReturn(true)
+        }
+        `when`(
+            mockContext.getSharedPreferences(
+                SHARED_PREF_FILE_NAME,
+                Context.MODE_PRIVATE
+            )
+        ).thenReturn(mockPreferences)
+
+        val classUnderTest = SharedPref(mockContext)
+        assertArrayEquals(booleanArrayOf(true, true, true, true, true), classUnderTest.filter)
+    }
+
+    @Test
+    fun `filter set() sets in filter length`() {
+        val mockPrefEditor = mock<SharedPreferences.Editor>(defaultAnswer = RETURNS_SELF) { }
+        val mockPreferences = mock<SharedPreferences> {
+            on { edit() }.thenReturn(mockPrefEditor)
+        }
+        `when`(
+            mockContext.getSharedPreferences(
+                SHARED_PREF_FILE_NAME,
+                Context.MODE_PRIVATE
+            )
+        ).thenReturn(mockPreferences)
+
+        val classUnderTest = SharedPref(mockContext)
+        classUnderTest.filter = booleanArrayOf(false, false, true)
+
+        verify(mockPrefEditor).putInt(ANIME_FILTER_LENGTH, 3)
+    }
+
+    @Test
+    fun `filter set() sets in filter data`() {
+        val mockPrefEditor = mock<SharedPreferences.Editor>(defaultAnswer = RETURNS_SELF) { }
+        val mockPreferences = mock<SharedPreferences> {
+            on { edit() }.thenReturn(mockPrefEditor)
+        }
+        `when`(
+            mockContext.getSharedPreferences(
+                SHARED_PREF_FILE_NAME,
+                Context.MODE_PRIVATE
+            )
+        ).thenReturn(mockPreferences)
+
+        val classUnderTest = SharedPref(mockContext)
+        classUnderTest.filter = booleanArrayOf(false, false, true)
+
+        verify(mockPrefEditor).putBoolean(FILTER + 0, false)
+        verify(mockPrefEditor).putBoolean(FILTER + 1, false)
+        verify(mockPrefEditor).putBoolean(FILTER + 2, true)
+    }
 
     @Test
     fun `sortOption get() returns SortOption`() {
