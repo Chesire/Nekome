@@ -37,7 +37,7 @@ allprojects {
 
 detekt {
     toolVersion = "1.0.0.RC9.2"
-    config = files("detekt-config.yml")
+    config = files("detekt.yml")
     input = files(
             "app/src/main/java",
             "malime.core/src/main/java",
