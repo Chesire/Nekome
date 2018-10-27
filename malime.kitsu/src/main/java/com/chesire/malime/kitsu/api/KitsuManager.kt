@@ -10,6 +10,8 @@ import com.chesire.malime.core.flags.UserSeriesStatus
 import com.chesire.malime.core.models.AuthModel
 import com.chesire.malime.core.models.MalimeModel
 import com.chesire.malime.kitsu.models.LibraryItem
+import com.chesire.malime.kitsu.models.request.LoginRequest
+import com.chesire.malime.kitsu.models.request.RefreshAuthRequest
 import com.chesire.malime.kitsu.models.response.UpdateItemResponse
 import io.reactivex.Observable
 import io.reactivex.Single
@@ -25,7 +27,7 @@ private const val MAX_RETRIES = 3
 
 @Suppress("TooManyFunctions")
 class KitsuManager @Inject constructor(
-    private val api: KitsuApi,
+    private val service: KitsuService,
     authorizer: KitsuAuthorizer
 ) : AuthApi, LibraryApi, SearchApi {
     private val userId = authorizer.retrieveUser()
@@ -33,7 +35,7 @@ class KitsuManager @Inject constructor(
     override fun login(username: String, password: String): Single<AuthModel> {
         // The api mentions it wants the username, but it seems it wants the email address instead
         return Single.create {
-            val callResponse = api.login(username, password)
+            val callResponse = service.login(LoginRequest(username, password))
             val response = callResponse.execute()
 
             if (response.isSuccessful && response.body() != null) {
@@ -58,7 +60,7 @@ class KitsuManager @Inject constructor(
 
     override fun getNewAuthToken(refreshToken: String): Single<AuthModel> {
         return Single.create {
-            val callResponse = api.refreshAuthToken(refreshToken)
+            val callResponse = service.refreshAuth(RefreshAuthRequest(refreshToken))
             val response = callResponse.execute()
 
             if (response.isSuccessful && response.body() != null) {
@@ -83,7 +85,7 @@ class KitsuManager @Inject constructor(
 
     override fun getUserId(): Single<Int> {
         return Single.create {
-            val callResponse = api.getUser()
+            val callResponse = service.getUser()
             val response = callResponse.execute()
             val body = response.body()
 
@@ -118,7 +120,11 @@ class KitsuManager @Inject constructor(
             while (true) {
                 Timber.i("Getting user $type from offset $offset")
 
-                val callResponse = api.getUserLibrary(userId, offset, type)
+                val callResponse = if (type == ItemType.Anime) {
+                    service.getUserAnime(userId, offset)
+                } else {
+                    service.getUserManga(userId, offset)
+                }
                 val response = callResponse.execute()
                 val body = response.body()
 
@@ -167,7 +173,7 @@ class KitsuManager @Inject constructor(
             val json = createNewModel(item)
             val requestBody = RequestBody.create(MediaType.parse("application/vnd.api+json"), json)
 
-            val callResponse = api.addItem(requestBody)
+            val callResponse = service.addItem(requestBody)
             val response = callResponse.execute()
             val body = response.body()
 
@@ -183,7 +189,7 @@ class KitsuManager @Inject constructor(
 
     override fun deleteItem(item: MalimeModel): Single<MalimeModel> {
         return Single.create {
-            val callResponse = api.deleteItem(item.userSeriesId)
+            val callResponse = service.deleteItem(item.userSeriesId)
             val response = callResponse.execute()
 
             // If the series is not found, its likely already deleted
@@ -206,7 +212,7 @@ class KitsuManager @Inject constructor(
             val json = createUpdateModel(item, newProgress, newStatus)
             val requestBody = RequestBody.create(MediaType.parse("application/vnd.api+json"), json)
 
-            val callResponse = api.updateItem(item.userSeriesId, requestBody)
+            val callResponse = service.updateItem(item.userSeriesId, requestBody)
             val response = callResponse.execute()
             val body = response.body()
 
@@ -222,7 +228,7 @@ class KitsuManager @Inject constructor(
 
     override fun searchForSeriesWith(title: String, type: ItemType): Single<List<MalimeModel>> {
         return Single.create {
-            val callResponse = api.search(title, type)
+            val callResponse = service.search(type.text, title)
             val response = callResponse.execute()
             val body = response.body()
 

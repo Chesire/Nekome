@@ -5,10 +5,10 @@ import android.arch.lifecycle.Observer
 import com.chesire.malime.R
 import com.chesire.malime.core.api.AuthApi
 import com.chesire.malime.core.models.AuthModel
-import com.chesire.malime.customMock
 import com.chesire.malime.kitsu.api.KitsuAuthorizer
 import com.chesire.malime.util.SharedPref
 import com.chesire.malime.view.login.LoginStatus
+import com.nhaarman.mockitokotlin2.mock
 import io.reactivex.Single
 import io.reactivex.schedulers.TestScheduler
 import org.junit.After
@@ -25,11 +25,11 @@ class KitsuLoginViewModelTests {
     val rule: TestRule = InstantTaskExecutorRule()
 
     private lateinit var testObject: KitsuLoginViewModel
-    private val sharedPref: SharedPref = customMock()
-    private val auth: AuthApi = customMock()
-    private val authorizer: KitsuAuthorizer = customMock()
-    private val errorObserver: Observer<Int> = customMock()
-    private val loginObserver: Observer<LoginStatus> = customMock()
+    private val sharedPref = mock<SharedPref> { }
+    private val auth = mock<AuthApi> { }
+    private val authorizer = mock<KitsuAuthorizer> { }
+    private val errorObserver = mock<Observer<Int>> { }
+    private val loginObserver = mock<Observer<LoginStatus>> { }
     private val testScheduler = TestScheduler()
 
     @Before

@@ -14,7 +14,7 @@ import kotlin.reflect.KProperty
 /**
  * A lazy property that gets cleaned up when the fragment is destroyed.
  *
- * Accessing this variable in a destroyed fragment will throw NPE.
+ * Accessing this variable in a destroyed fragment will throw [NullPointerException].
  */
 class AutoClearedValue<T : Any>(val fragment: Fragment) : ReadWriteProperty<Fragment, T> {
     private var _value: T? = null

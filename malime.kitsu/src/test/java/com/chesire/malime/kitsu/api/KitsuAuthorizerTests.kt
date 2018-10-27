@@ -6,7 +6,7 @@ import com.chesire.malime.core.PreferenceProvider
 import com.chesire.malime.core.models.AuthModel
 import com.chesire.malime.core.sec.Decryptor
 import com.chesire.malime.core.sec.Encryptor
-import com.chesire.malime.kitsu.customMock
+import com.nhaarman.mockitokotlin2.mock
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
@@ -22,12 +22,12 @@ import org.mockito.Mockito.verify
 
 class KitsuAuthorizerTests {
     private lateinit var testObject: KitsuAuthorizer
-    private val context: Context = customMock()
-    private val prefProvider: PreferenceProvider = customMock()
-    private val encryptor: Encryptor = customMock()
-    private val decryptor: Decryptor = customMock()
-    private val pref: SharedPreferences = customMock()
-    private val prefEditor: SharedPreferences.Editor = customMock()
+    private val context = mock<Context> { }
+    private val prefProvider = mock<PreferenceProvider> { }
+    private val encryptor = mock<Encryptor> { }
+    private val decryptor = mock<Decryptor> { }
+    private val pref = mock<SharedPreferences> { }
+    private val prefEditor = mock<SharedPreferences.Editor> { }
     private val authModel = AuthModel("abcdef", "ghijk", 123456, "test")
 
     @Before
