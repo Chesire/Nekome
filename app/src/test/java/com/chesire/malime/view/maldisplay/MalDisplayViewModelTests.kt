@@ -5,7 +5,7 @@ import android.arch.lifecycle.Observer
 import com.chesire.malime.core.flags.UserSeriesStatus
 import com.chesire.malime.core.models.MalimeModel
 import com.chesire.malime.core.repositories.Library
-import com.chesire.malime.customMock
+import com.nhaarman.mockitokotlin2.mock
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
 import io.reactivex.Observable
@@ -26,15 +26,15 @@ class MalDisplayViewModelTests {
     val rule: TestRule = InstantTaskExecutorRule()
 
     private lateinit var testObject: MalDisplayViewModel
-    private val library: Library = customMock()
-    private val seriesObserver: Observer<List<MalimeModel>> = customMock()
-    private val updateObserver: Observer<UpdatingSeriesStatus> = customMock()
+    private val library = mock<Library> { }
+    private val seriesObserver = mock<Observer<List<MalimeModel>>> { }
+    private val updateObserver = mock<Observer<UpdatingSeriesStatus>> { }
     private val testScheduler = TestScheduler()
 
     @Before
     fun setup() {
-        val mockItems: Observable<List<MalimeModel>> = customMock()
-        val flowableItems: Flowable<List<MalimeModel>> = customMock()
+        val mockItems = mock<Observable<List<MalimeModel>>> { }
+        val flowableItems = mock<Flowable<List<MalimeModel>>> { }
         `when`(mockItems.toFlowable(BackpressureStrategy.ERROR)).thenReturn(flowableItems)
         `when`(library.observeLibrary()).thenReturn(mockItems)
 
@@ -101,7 +101,7 @@ class MalDisplayViewModelTests {
 
     @Test
     fun `update series fires callback on failure`() {
-        val malimeModel: MalimeModel = customMock()
+        val malimeModel = mock<MalimeModel> { }
         var callbackResult = false
 
         `when`(
@@ -120,8 +120,8 @@ class MalDisplayViewModelTests {
 
     @Test
     fun `update series fires callback on success`() {
-        val malimeModel: MalimeModel = customMock()
-        val returnedModel: MalimeModel = customMock()
+        val malimeModel = mock<MalimeModel> { }
+        val returnedModel = mock<MalimeModel> { }
         var callbackResult = false
 
         `when`(
@@ -140,8 +140,8 @@ class MalDisplayViewModelTests {
 
     @Test
     fun `update series updates local library on success`() {
-        val malimeModel: MalimeModel = customMock()
-        val returnedModel: MalimeModel = customMock()
+        val malimeModel = mock<MalimeModel> { }
+        val returnedModel = mock<MalimeModel> { }
 
         `when`(
             library.sendUpdateToApi(malimeModel, 5, UserSeriesStatus.Completed)
@@ -159,7 +159,7 @@ class MalDisplayViewModelTests {
 
     @Test
     fun `delete series fires callback on failure`() {
-        val malimeModel: MalimeModel = customMock()
+        val malimeModel = mock<MalimeModel> { }
         var callbackResult = false
 
         `when`(library.sendDeleteToApi(malimeModel))
@@ -173,8 +173,8 @@ class MalDisplayViewModelTests {
 
     @Test
     fun `delete series fires callback on success`() {
-        val malimeModel: MalimeModel = customMock()
-        val returnedModel: MalimeModel = customMock()
+        val malimeModel = mock<MalimeModel> { }
+        val returnedModel = mock<MalimeModel> { }
         var callbackResult = false
 
         `when`(library.sendDeleteToApi(malimeModel))
@@ -188,8 +188,8 @@ class MalDisplayViewModelTests {
 
     @Test
     fun `delete series fires updates library success`() {
-        val malimeModel: MalimeModel = customMock()
-        val returnedModel: MalimeModel = customMock()
+        val malimeModel = mock<MalimeModel> { }
+        val returnedModel = mock<MalimeModel> { }
 
         `when`(library.sendDeleteToApi(malimeModel))
             .thenReturn(Single.just(returnedModel))

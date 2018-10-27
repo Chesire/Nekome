@@ -4,11 +4,11 @@ import android.arch.core.executor.testing.InstantTaskExecutorRule
 import android.arch.lifecycle.Observer
 import com.chesire.malime.R
 import com.chesire.malime.core.models.AuthModel
-import com.chesire.malime.customMock
 import com.chesire.malime.mal.api.MalAuthorizer
 import com.chesire.malime.mal.api.MalManager
 import com.chesire.malime.util.SharedPref
 import com.chesire.malime.view.login.LoginStatus
+import com.nhaarman.mockitokotlin2.mock
 import io.reactivex.Single
 import io.reactivex.schedulers.TestScheduler
 import org.junit.After
@@ -25,11 +25,11 @@ class MalLoginViewModelTests {
     val rule: TestRule = InstantTaskExecutorRule()
 
     private lateinit var testObject: MalLoginViewModel
-    private val sharedPref: SharedPref = customMock()
-    private val malManager: MalManager = customMock()
-    private val authorizer: MalAuthorizer = customMock()
-    private val errorObserver: Observer<Int> = customMock()
-    private val loginObserver: Observer<LoginStatus> = customMock()
+    private val sharedPref = mock<SharedPref> { }
+    private val malManager = mock<MalManager> { }
+    private val authorizer = mock<MalAuthorizer> { }
+    private val errorObserver = mock<Observer<Int>> { }
+    private val loginObserver = mock<Observer<LoginStatus>> { }
     private val testScheduler = TestScheduler()
 
     @Before

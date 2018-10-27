@@ -7,7 +7,7 @@ import com.chesire.malime.core.api.SearchApi
 import com.chesire.malime.core.flags.ItemType
 import com.chesire.malime.core.models.MalimeModel
 import com.chesire.malime.core.repositories.Library
-import com.chesire.malime.customMock
+import com.nhaarman.mockitokotlin2.mock
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
 import io.reactivex.Observable
@@ -30,16 +30,16 @@ class SearchViewModelTests {
     val rule: TestRule = InstantTaskExecutorRule()
 
     private lateinit var testObject: SearchViewModel
-    private val searchApi: SearchApi = customMock()
-    private val library: Library = customMock()
-    private val seriesObserver: Observer<List<MalimeModel>> = customMock()
-    private val searchObserver: Observer<List<MalimeModel>> = customMock()
+    private val searchApi = mock<SearchApi> { }
+    private val library = mock<Library> { }
+    private val seriesObserver = mock<Observer<List<MalimeModel>>> { }
+    private val searchObserver = mock<Observer<List<MalimeModel>>> { }
     private val testScheduler = TestScheduler()
 
     @Before
     fun setup() {
-        val mockItems: Observable<List<MalimeModel>> = customMock()
-        val flowableItems: Flowable<List<MalimeModel>> = customMock()
+        val mockItems = mock<Observable<List<MalimeModel>>> { }
+        val flowableItems = mock<Flowable<List<MalimeModel>>> { }
         `when`(mockItems.toFlowable(BackpressureStrategy.ERROR)).thenReturn(flowableItems)
         `when`(library.observeLibrary()).thenReturn(mockItems)
 
@@ -153,7 +153,7 @@ class SearchViewModelTests {
 
     @Test
     fun `on successful search, no error callback is invoked`() {
-        val expectedList = listOf<MalimeModel>(customMock())
+        val expectedList = listOf<MalimeModel>(mock { })
         var invoked = false
         testObject.params.searchText = "Some series"
 
@@ -172,7 +172,7 @@ class SearchViewModelTests {
 
     @Test
     fun `add new series fires callback on failure`() {
-        val malimeModel: MalimeModel = customMock()
+        val malimeModel = mock<MalimeModel> { }
         var callbackResult = false
 
         `when`(
@@ -191,8 +191,8 @@ class SearchViewModelTests {
 
     @Test
     fun `add new series fires callback on success`() {
-        val malimeModel: MalimeModel = customMock()
-        val returnedModel: MalimeModel = customMock()
+        val malimeModel = mock<MalimeModel> { }
+        val returnedModel = mock<MalimeModel> { }
         var callbackResult = false
 
         `when`(
@@ -211,8 +211,8 @@ class SearchViewModelTests {
 
     @Test
     fun `add new series updates local library on success`() {
-        val malimeModel: MalimeModel = customMock()
-        val returnedModel: MalimeModel = customMock()
+        val malimeModel = mock<MalimeModel> { }
+        val returnedModel = mock<MalimeModel> { }
 
         `when`(
             library.sendNewToApi(malimeModel)
