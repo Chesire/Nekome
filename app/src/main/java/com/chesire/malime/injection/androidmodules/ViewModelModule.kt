@@ -1,7 +1,7 @@
 package com.chesire.malime.injection.androidmodules
 
-import android.arch.lifecycle.ViewModel
-import android.arch.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.chesire.malime.view.ViewModelFactory
 import com.chesire.malime.view.login.kitsu.KitsuLoginViewModel
 import com.chesire.malime.view.maldisplay.MalDisplayViewModel

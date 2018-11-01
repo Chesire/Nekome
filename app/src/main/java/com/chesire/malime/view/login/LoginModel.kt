@@ -1,7 +1,7 @@
 package com.chesire.malime.view.login
 
-import android.databinding.BaseObservable
-import android.databinding.Bindable
+import androidx.databinding.BaseObservable
+import androidx.databinding.Bindable
 
 class LoginModel : BaseObservable() {
     @Bindable

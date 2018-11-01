@@ -1,9 +1,9 @@
 package com.chesire.malime.util
 
-import android.arch.lifecycle.Lifecycle
-import android.arch.lifecycle.LifecycleObserver
-import android.arch.lifecycle.OnLifecycleEvent
-import android.support.v4.app.Fragment
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.OnLifecycleEvent
+import androidx.fragment.app.Fragment
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
@@ -16,7 +16,7 @@ import kotlin.reflect.KProperty
  *
  * Accessing this variable in a destroyed fragment will throw [NullPointerException].
  */
-class AutoClearedValue<T : Any>(val fragment: Fragment) : ReadWriteProperty<Fragment, T> {
+class AutoClearedValue<T : Any>(val fragment: androidx.fragment.app.Fragment) : ReadWriteProperty<androidx.fragment.app.Fragment, T> {
     private var _value: T? = null
 
     init {
@@ -28,13 +28,13 @@ class AutoClearedValue<T : Any>(val fragment: Fragment) : ReadWriteProperty<Frag
         })
     }
 
-    override fun getValue(thisRef: Fragment, property: KProperty<*>): T {
+    override fun getValue(thisRef: androidx.fragment.app.Fragment, property: KProperty<*>): T {
         return _value ?: throw IllegalStateException(
             "should never call auto-cleared-value get when it might not be available"
         )
     }
 
-    override fun setValue(thisRef: Fragment, property: KProperty<*>, value: T) {
+    override fun setValue(thisRef: androidx.fragment.app.Fragment, property: KProperty<*>, value: T) {
         _value = value
     }
 }
@@ -42,4 +42,4 @@ class AutoClearedValue<T : Any>(val fragment: Fragment) : ReadWriteProperty<Frag
 /**
  * Creates an [AutoClearedValue] associated with this fragment.
  */
-fun <T : Any> Fragment.autoCleared() = AutoClearedValue<T>(this)
+fun <T : Any> androidx.fragment.app.Fragment.autoCleared() = AutoClearedValue<T>(this)

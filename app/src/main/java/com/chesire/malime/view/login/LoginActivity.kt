@@ -2,7 +2,7 @@ package com.chesire.malime.view.login
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import com.chesire.malime.R
 import com.chesire.malime.core.flags.SupportedService
 import com.chesire.malime.view.MainActivity
@@ -32,7 +32,7 @@ class LoginActivity : DaggerAppCompatActivity(), LoginInteractor {
     }
 
     override fun serviceSelected(service: SupportedService) {
-        val fragment: Fragment
+        val fragment: androidx.fragment.app.Fragment
         val tag: String
 
         when (service) {

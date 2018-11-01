@@ -1,17 +1,17 @@
 package com.chesire.malime.view.maldisplay
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProvider
-import android.arch.lifecycle.ViewModelProviders
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import android.content.res.Configuration
-import android.databinding.DataBindingUtil
+import androidx.databinding.DataBindingUtil
 import android.os.Bundle
-import android.support.design.widget.Snackbar
-import android.support.v7.app.AlertDialog
-import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.OrientationHelper
-import android.support.v7.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
+import androidx.appcompat.app.AlertDialog
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.OrientationHelper
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -39,7 +39,7 @@ class MalDisplayFragment : DaggerFragment(), ModelInteractionListener {
     private var viewAdapter by autoCleared<MalDisplayViewAdapter>()
     private lateinit var viewModel: MalDisplayViewModel
     private lateinit var type: ItemType
-    private lateinit var recyclerView: RecyclerView
+    private lateinit var recyclerView: androidx.recyclerview.widget.RecyclerView
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -73,14 +73,14 @@ class MalDisplayFragment : DaggerFragment(), ModelInteractionListener {
                 setHasFixedSize(true)
                 layoutManager =
                         if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                            GridLayoutManager(
+                            androidx.recyclerview.widget.GridLayoutManager(
                                 requireContext(),
                                 2,
-                                OrientationHelper.VERTICAL,
+                                androidx.recyclerview.widget.OrientationHelper.VERTICAL,
                                 false
                             )
                         } else {
-                            LinearLayoutManager(requireContext())
+                            androidx.recyclerview.widget.LinearLayoutManager(requireContext())
                         }
             }
         }.root

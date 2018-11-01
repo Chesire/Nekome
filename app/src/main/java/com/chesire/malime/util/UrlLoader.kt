@@ -2,7 +2,7 @@ package com.chesire.malime.util
 
 import android.content.Context
 import android.net.Uri
-import android.support.customtabs.CustomTabsIntent
+import androidx.browser.customtabs.CustomTabsIntent
 import com.chesire.malime.R
 import com.chesire.malime.core.flags.SupportedService
 import com.chesire.malime.core.models.MalimeModel

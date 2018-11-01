@@ -1,10 +1,10 @@
 package com.chesire.malime.view.search
 
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.LiveDataReactiveStreams
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
-import android.support.annotation.StringRes
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.LiveDataReactiveStreams
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.annotation.StringRes
 import com.chesire.malime.R
 import com.chesire.malime.core.api.SearchApi
 import com.chesire.malime.core.flags.ItemType

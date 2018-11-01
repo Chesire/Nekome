@@ -4,9 +4,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.HandlerThread
-import android.support.design.widget.BottomNavigationView
-import android.support.v4.app.Fragment
-import android.support.v7.app.AlertDialog
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import androidx.fragment.app.Fragment
+import androidx.appcompat.app.AlertDialog
 import android.view.MenuItem
 import com.chesire.malime.R
 import com.chesire.malime.core.flags.ItemType
@@ -43,7 +43,7 @@ class MainActivity : DaggerAppCompatActivity() {
 
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.activity_main_navigation)
         bottomNavigationView.setOnNavigationItemSelectedListener { item: MenuItem ->
-            val fragment: Fragment
+            val fragment: androidx.fragment.app.Fragment
             val tag: String
 
             when (item.itemId) {
@@ -165,7 +165,7 @@ class MainActivity : DaggerAppCompatActivity() {
         }
     }
 
-    private fun setFragment(fragment: Fragment, fragmentTag: String) {
+    private fun setFragment(fragment: androidx.fragment.app.Fragment, fragmentTag: String) {
         // We have to set the title first, or on rotation it doesn't refresh
         title = when (fragmentTag) {
             MalDisplayFragment.malDisplayAnime -> getString(R.string.main_nav_anime)

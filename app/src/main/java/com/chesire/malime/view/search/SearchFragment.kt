@@ -1,16 +1,16 @@
 package com.chesire.malime.view.search
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProvider
-import android.arch.lifecycle.ViewModelProviders
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import android.content.res.Configuration
-import android.databinding.DataBindingUtil
+import androidx.databinding.DataBindingUtil
 import android.os.Bundle
-import android.support.design.widget.Snackbar
-import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.OrientationHelper
-import android.support.v7.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.OrientationHelper
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -33,7 +33,7 @@ class SearchFragment : DaggerFragment(), SearchInteractionListener {
     private var binding by autoCleared<FragmentSearchBinding>()
     private lateinit var viewModel: SearchViewModel
     private lateinit var viewAdapter: SearchViewAdapter
-    private lateinit var recyclerView: RecyclerView
+    private lateinit var recyclerView: androidx.recyclerview.widget.RecyclerView
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -64,14 +64,14 @@ class SearchFragment : DaggerFragment(), SearchInteractionListener {
                 setHasFixedSize(true)
                 layoutManager =
                         if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                            GridLayoutManager(
+                            androidx.recyclerview.widget.GridLayoutManager(
                                 requireContext(),
                                 2,
-                                OrientationHelper.VERTICAL,
+                                androidx.recyclerview.widget.OrientationHelper.VERTICAL,
                                 false
                             )
                         } else {
-                            LinearLayoutManager(requireContext())
+                            androidx.recyclerview.widget.LinearLayoutManager(requireContext())
                         }
             }
             searchOptionChoices.setOnCheckedChangeListener { _, checkedId ->

@@ -1,7 +1,7 @@
 package com.chesire.malime.kitsu.api
 
-import android.support.test.InstrumentationRegistry
-import android.support.test.runner.AndroidJUnit4
+import androidx.test.InstrumentationRegistry
+import androidx.test.runner.AndroidJUnit4
 import com.chesire.malime.core.PreferenceProvider
 import com.chesire.malime.core.models.AuthModel
 import com.chesire.malime.core.sec.Decryptor

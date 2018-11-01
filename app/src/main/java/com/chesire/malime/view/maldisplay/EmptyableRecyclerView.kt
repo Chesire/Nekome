@@ -1,7 +1,7 @@
 package com.chesire.malime.view.maldisplay
 
 import android.content.Context
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.util.AttributeSet
 import android.view.View
 
@@ -14,7 +14,7 @@ class EmptyableRecyclerView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyle: Int = 0
-) : RecyclerView(context, attrs, defStyle) {
+) : androidx.recyclerview.widget.RecyclerView(context, attrs, defStyle) {
 
     private lateinit var emptyView: View
     private val observer: AdapterDataObserver = object : AdapterDataObserver() {

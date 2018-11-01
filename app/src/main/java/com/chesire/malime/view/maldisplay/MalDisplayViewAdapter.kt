@@ -3,9 +3,9 @@ package com.chesire.malime.view.maldisplay
 import android.app.AlertDialog
 import android.content.Context
 import android.content.SharedPreferences
-import android.databinding.ViewDataBinding
-import android.support.design.widget.Snackbar
-import android.support.v7.widget.RecyclerView
+import androidx.databinding.ViewDataBinding
+import com.google.android.material.snackbar.Snackbar
+import androidx.recyclerview.widget.RecyclerView
 import android.text.InputType
 import android.view.LayoutInflater
 import android.view.MenuItem
@@ -36,7 +36,7 @@ class MalDisplayViewAdapter(
     context: Context,
     private val listener: ModelInteractionListener,
     private val sharedPref: SharedPref
-) : RecyclerView.Adapter<MalDisplayViewAdapter.ViewHolder>(), Filterable,
+) : androidx.recyclerview.widget.RecyclerView.Adapter<MalDisplayViewAdapter.ViewHolder>(), Filterable,
     SharedPreferences.OnSharedPreferenceChangeListener {
     private val sortPref = context.getString(R.string.key_sort)
     private val filterPref = context.getString(R.string.key_filter)
@@ -83,7 +83,7 @@ class MalDisplayViewAdapter(
 
     inner class ViewHolder(
         private val binding: ViewDataBinding
-    ) : RecyclerView.ViewHolder(binding.root), PopupMenu.OnMenuItemClickListener {
+    ) : androidx.recyclerview.widget.RecyclerView.ViewHolder(binding.root), PopupMenu.OnMenuItemClickListener {
         private val loadingLayout = binding.root.item_malmodel_loading_layout
         private val contentLayout = binding.root.item_malmodel_content_layout
         private lateinit var malItem: MalimeModel
