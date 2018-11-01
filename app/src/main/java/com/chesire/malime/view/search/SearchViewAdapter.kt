@@ -1,12 +1,11 @@
 package com.chesire.malime.view.search
 
-import com.google.android.material.snackbar.Snackbar
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
+import androidx.recyclerview.widget.RecyclerView
 import com.chesire.malime.BR
 import com.chesire.malime.R
 import com.chesire.malime.core.flags.UserSeriesStatus
@@ -14,6 +13,7 @@ import com.chesire.malime.core.models.MalimeModel
 import com.chesire.malime.databinding.ItemSearchBinding
 import com.chesire.malime.util.GlideApp
 import com.chesire.malime.util.extension.getString
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.item_search.view.item_search_content_layout
 import kotlinx.android.synthetic.main.item_search.view.item_search_image
 import kotlinx.android.synthetic.main.item_search.view.item_search_loading_layout
@@ -23,7 +23,7 @@ import kotlinx.android.synthetic.main.item_search.view.search_image_add_button
 
 class SearchViewAdapter(
     private val interactor: SearchInteractionListener
-) : androidx.recyclerview.widget.RecyclerView.Adapter<SearchViewAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<SearchViewAdapter.ViewHolder>() {
     private val searchItems = ArrayList<MalimeModel>()
     private val currentItems = ArrayList<MalimeModel>()
 
@@ -57,7 +57,7 @@ class SearchViewAdapter(
 
     inner class ViewHolder(
         private val searchView: ItemSearchBinding
-    ) : androidx.recyclerview.widget.RecyclerView.ViewHolder(searchView.root), PopupMenu.OnMenuItemClickListener {
+    ) : RecyclerView.ViewHolder(searchView.root), PopupMenu.OnMenuItemClickListener {
         private val loadingLayout = searchView.root.item_search_loading_layout
         private val contentLayout = searchView.root.item_search_content_layout
         private lateinit var malItem: MalimeModel

@@ -1,21 +1,18 @@
 package com.chesire.malime.view.search
 
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import android.content.res.Configuration
-import androidx.databinding.DataBindingUtil
 import android.os.Bundle
-import com.google.android.material.snackbar.Snackbar
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.OrientationHelper
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.chesire.malime.R
 import com.chesire.malime.core.flags.ItemType
 import com.chesire.malime.core.models.MalimeModel
@@ -24,6 +21,7 @@ import com.chesire.malime.util.SharedPref
 import com.chesire.malime.util.UrlLoader
 import com.chesire.malime.util.autoCleared
 import com.chesire.malime.util.extension.hideSystemKeyboard
+import com.google.android.material.snackbar.Snackbar
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_search.search_search_term_edit_text
 import javax.inject.Inject
@@ -33,7 +31,7 @@ class SearchFragment : DaggerFragment(), SearchInteractionListener {
     private var binding by autoCleared<FragmentSearchBinding>()
     private lateinit var viewModel: SearchViewModel
     private lateinit var viewAdapter: SearchViewAdapter
-    private lateinit var recyclerView: androidx.recyclerview.widget.RecyclerView
+    private lateinit var recyclerView: RecyclerView
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -67,11 +65,11 @@ class SearchFragment : DaggerFragment(), SearchInteractionListener {
                             androidx.recyclerview.widget.GridLayoutManager(
                                 requireContext(),
                                 2,
-                                androidx.recyclerview.widget.OrientationHelper.VERTICAL,
+                                RecyclerView.VERTICAL,
                                 false
                             )
                         } else {
-                            androidx.recyclerview.widget.LinearLayoutManager(requireContext())
+                            LinearLayoutManager(requireContext())
                         }
             }
             searchOptionChoices.setOnCheckedChangeListener { _, checkedId ->

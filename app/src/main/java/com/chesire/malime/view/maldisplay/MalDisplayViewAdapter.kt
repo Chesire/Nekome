@@ -36,7 +36,7 @@ class MalDisplayViewAdapter(
     context: Context,
     private val listener: ModelInteractionListener,
     private val sharedPref: SharedPref
-) : androidx.recyclerview.widget.RecyclerView.Adapter<MalDisplayViewAdapter.ViewHolder>(), Filterable,
+) : RecyclerView.Adapter<MalDisplayViewAdapter.ViewHolder>(), Filterable,
     SharedPreferences.OnSharedPreferenceChangeListener {
     private val sortPref = context.getString(R.string.key_sort)
     private val filterPref = context.getString(R.string.key_filter)
@@ -83,7 +83,7 @@ class MalDisplayViewAdapter(
 
     inner class ViewHolder(
         private val binding: ViewDataBinding
-    ) : androidx.recyclerview.widget.RecyclerView.ViewHolder(binding.root), PopupMenu.OnMenuItemClickListener {
+    ) : RecyclerView.ViewHolder(binding.root), PopupMenu.OnMenuItemClickListener {
         private val loadingLayout = binding.root.item_malmodel_loading_layout
         private val contentLayout = binding.root.item_malmodel_content_layout
         private lateinit var malItem: MalimeModel

@@ -1,12 +1,12 @@
 package com.chesire.malime.util
 
 import android.content.Context
-import androidx.coordinatorlayout.widget.CoordinatorLayout
-import com.google.android.material.snackbar.Snackbar
-import androidx.core.view.ViewCompat
 import android.util.AttributeSet
 import android.view.Gravity
 import android.view.View
+import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.core.view.ViewCompat
+import com.google.android.material.snackbar.Snackbar
 import kotlin.math.max
 import kotlin.math.min
 
@@ -17,9 +17,9 @@ import kotlin.math.min
 class BottomNavigationBehavior<V : View>(
     context: Context,
     attrs: AttributeSet
-) : androidx.coordinatorlayout.widget.CoordinatorLayout.Behavior<V>(context, attrs) {
+) : CoordinatorLayout.Behavior<V>(context, attrs) {
     override fun onStartNestedScroll(
-        coordinatorLayout: androidx.coordinatorlayout.widget.CoordinatorLayout,
+        coordinatorLayout: CoordinatorLayout,
         child: V,
         directTargetChild: View,
         target: View,
@@ -27,7 +27,7 @@ class BottomNavigationBehavior<V : View>(
         type: Int
     ): Boolean = axes == ViewCompat.SCROLL_AXIS_VERTICAL
 
-    override fun layoutDependsOn(parent: androidx.coordinatorlayout.widget.CoordinatorLayout, child: V, dependency: View): Boolean {
+    override fun layoutDependsOn(parent: CoordinatorLayout, child: V, dependency: View): Boolean {
         if (dependency is Snackbar.SnackbarLayout) {
             updateSnackbar(child, dependency)
         }
@@ -35,7 +35,7 @@ class BottomNavigationBehavior<V : View>(
     }
 
     override fun onNestedPreScroll(
-        coordinatorLayout: androidx.coordinatorlayout.widget.CoordinatorLayout,
+        coordinatorLayout: CoordinatorLayout,
         child: V,
         target: View,
         dx: Int,
@@ -48,7 +48,7 @@ class BottomNavigationBehavior<V : View>(
     }
 
     private fun updateSnackbar(child: View, snackbarLayout: Snackbar.SnackbarLayout) {
-        (snackbarLayout.layoutParams as? androidx.coordinatorlayout.widget.CoordinatorLayout.LayoutParams)?.apply {
+        (snackbarLayout.layoutParams as? CoordinatorLayout.LayoutParams)?.apply {
             anchorId = child.id
             anchorGravity = Gravity.TOP
             gravity = Gravity.TOP

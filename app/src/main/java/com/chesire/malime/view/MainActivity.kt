@@ -4,10 +4,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.HandlerThread
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import androidx.fragment.app.Fragment
-import androidx.appcompat.app.AlertDialog
 import android.view.MenuItem
+import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.Fragment
 import com.chesire.malime.R
 import com.chesire.malime.core.flags.ItemType
 import com.chesire.malime.core.repositories.Authorization
@@ -20,6 +19,7 @@ import com.chesire.malime.view.login.LoginActivity
 import com.chesire.malime.view.maldisplay.MalDisplayFragment
 import com.chesire.malime.view.preferences.SortOption
 import com.chesire.malime.view.search.SearchFragment
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.android.support.DaggerAppCompatActivity
 import timber.log.Timber
 import javax.inject.Inject
@@ -43,7 +43,7 @@ class MainActivity : DaggerAppCompatActivity() {
 
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.activity_main_navigation)
         bottomNavigationView.setOnNavigationItemSelectedListener { item: MenuItem ->
-            val fragment: androidx.fragment.app.Fragment
+            val fragment: Fragment
             val tag: String
 
             when (item.itemId) {
@@ -165,7 +165,7 @@ class MainActivity : DaggerAppCompatActivity() {
         }
     }
 
-    private fun setFragment(fragment: androidx.fragment.app.Fragment, fragmentTag: String) {
+    private fun setFragment(fragment: Fragment, fragmentTag: String) {
         // We have to set the title first, or on rotation it doesn't refresh
         title = when (fragmentTag) {
             MalDisplayFragment.malDisplayAnime -> getString(R.string.main_nav_anime)

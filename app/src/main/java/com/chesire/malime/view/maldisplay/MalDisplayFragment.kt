@@ -1,23 +1,21 @@
 package com.chesire.malime.view.maldisplay
 
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import android.content.res.Configuration
-import androidx.databinding.DataBindingUtil
 import android.os.Bundle
-import com.google.android.material.snackbar.Snackbar
-import androidx.appcompat.app.AlertDialog
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.OrientationHelper
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
+import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.chesire.malime.R
 import com.chesire.malime.core.flags.ItemType
 import com.chesire.malime.core.flags.UserSeriesStatus
@@ -27,6 +25,7 @@ import com.chesire.malime.util.SharedPref
 import com.chesire.malime.util.UrlLoader
 import com.chesire.malime.util.autoCleared
 import com.chesire.malime.util.extension.getSeriesStatusStrings
+import com.google.android.material.snackbar.Snackbar
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_maldisplay.maldisplay_swipe_refresh
 import timber.log.Timber
@@ -39,7 +38,7 @@ class MalDisplayFragment : DaggerFragment(), ModelInteractionListener {
     private var viewAdapter by autoCleared<MalDisplayViewAdapter>()
     private lateinit var viewModel: MalDisplayViewModel
     private lateinit var type: ItemType
-    private lateinit var recyclerView: androidx.recyclerview.widget.RecyclerView
+    private lateinit var recyclerView: RecyclerView
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -73,14 +72,14 @@ class MalDisplayFragment : DaggerFragment(), ModelInteractionListener {
                 setHasFixedSize(true)
                 layoutManager =
                         if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                            androidx.recyclerview.widget.GridLayoutManager(
+                            GridLayoutManager(
                                 requireContext(),
                                 2,
-                                androidx.recyclerview.widget.OrientationHelper.VERTICAL,
+                                RecyclerView.VERTICAL,
                                 false
                             )
                         } else {
-                            androidx.recyclerview.widget.LinearLayoutManager(requireContext())
+                            LinearLayoutManager(requireContext())
                         }
             }
         }.root

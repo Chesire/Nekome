@@ -32,7 +32,7 @@ class LoginActivity : DaggerAppCompatActivity(), LoginInteractor {
     }
 
     override fun serviceSelected(service: SupportedService) {
-        val fragment: androidx.fragment.app.Fragment
+        val fragment: Fragment
         val tag: String
 
         when (service) {
