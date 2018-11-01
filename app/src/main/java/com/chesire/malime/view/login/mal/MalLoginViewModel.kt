@@ -1,8 +1,8 @@
 package com.chesire.malime.view.login.mal
 
+import androidx.databinding.ObservableBoolean
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.databinding.ObservableBoolean
 import com.chesire.malime.R
 import com.chesire.malime.core.flags.SupportedService
 import com.chesire.malime.mal.api.MalAuthorizer

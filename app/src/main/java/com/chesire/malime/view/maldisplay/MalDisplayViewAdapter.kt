@@ -3,9 +3,6 @@ package com.chesire.malime.view.maldisplay
 import android.app.AlertDialog
 import android.content.Context
 import android.content.SharedPreferences
-import androidx.databinding.ViewDataBinding
-import com.google.android.material.snackbar.Snackbar
-import androidx.recyclerview.widget.RecyclerView
 import android.text.InputType
 import android.view.LayoutInflater
 import android.view.MenuItem
@@ -15,6 +12,8 @@ import android.widget.EditText
 import android.widget.Filter
 import android.widget.Filterable
 import android.widget.PopupMenu
+import androidx.databinding.ViewDataBinding
+import androidx.recyclerview.widget.RecyclerView
 import com.chesire.malime.BR
 import com.chesire.malime.R
 import com.chesire.malime.core.flags.UserSeriesStatus
@@ -24,6 +23,7 @@ import com.chesire.malime.util.GlideApp
 import com.chesire.malime.util.SharedPref
 import com.chesire.malime.util.extension.getString
 import com.chesire.malime.view.preferences.SortOption
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.item_malmodel.view.item_malmodel_content_layout
 import kotlinx.android.synthetic.main.item_malmodel.view.item_malmodel_image
 import kotlinx.android.synthetic.main.item_malmodel.view.item_malmodel_loading_layout

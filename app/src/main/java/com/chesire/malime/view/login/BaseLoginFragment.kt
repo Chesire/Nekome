@@ -3,8 +3,8 @@ package com.chesire.malime.view.login
 import android.app.ProgressDialog
 import android.content.Context
 import android.os.Bundle
-import androidx.annotation.StringRes
 import android.widget.Toast
+import androidx.annotation.StringRes
 import com.chesire.malime.R
 import dagger.android.support.DaggerFragment
 
