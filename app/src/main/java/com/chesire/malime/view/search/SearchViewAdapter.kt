@@ -1,12 +1,11 @@
 package com.chesire.malime.view.search
 
-import android.support.design.widget.Snackbar
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
+import androidx.recyclerview.widget.RecyclerView
 import com.chesire.malime.BR
 import com.chesire.malime.R
 import com.chesire.malime.core.flags.UserSeriesStatus
@@ -14,6 +13,7 @@ import com.chesire.malime.core.models.MalimeModel
 import com.chesire.malime.databinding.ItemSearchBinding
 import com.chesire.malime.util.GlideApp
 import com.chesire.malime.util.extension.getString
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.item_search.view.item_search_content_layout
 import kotlinx.android.synthetic.main.item_search.view.item_search_image
 import kotlinx.android.synthetic.main.item_search.view.item_search_loading_layout

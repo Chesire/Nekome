@@ -1,7 +1,7 @@
 package com.chesire.malime.view.login.kitsu
 
-import android.arch.core.executor.testing.InstantTaskExecutorRule
-import android.arch.lifecycle.Observer
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.lifecycle.Observer
 import com.chesire.malime.R
 import com.chesire.malime.core.api.AuthApi
 import com.chesire.malime.core.models.AuthModel

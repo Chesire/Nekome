@@ -1,7 +1,7 @@
 package com.chesire.malime.view.search
 
-import android.databinding.BaseObservable
-import android.databinding.Bindable
+import androidx.databinding.BaseObservable
+import androidx.databinding.Bindable
 import com.chesire.malime.BR
 
 class SearchParams : BaseObservable() {

@@ -1,8 +1,8 @@
 package com.chesire.malime.view.maldisplay
 
-import android.support.test.espresso.intent.Intents
-import android.support.test.rule.ActivityTestRule
-import android.support.test.runner.AndroidJUnit4
+import androidx.test.espresso.intent.Intents
+import androidx.test.rule.ActivityTestRule
+import androidx.test.runner.AndroidJUnit4
 import com.chesire.malime.core.room.MalimeDao
 import com.chesire.malime.injection.espressoDaggerMockRule
 import com.chesire.malime.view.MainActivity

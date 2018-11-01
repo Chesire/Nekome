@@ -1,7 +1,7 @@
 package com.chesire.malime.injection.modules
 
-import android.arch.persistence.room.Room
 import android.content.Context
+import androidx.room.Room
 import com.chesire.malime.OpenForTesting
 import com.chesire.malime.core.room.MalimeDatabase
 import dagger.Module

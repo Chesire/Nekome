@@ -1,7 +1,7 @@
 package com.chesire.malime.view.preferences
 
 import android.content.Context
-import android.support.annotation.StringRes
+import androidx.annotation.StringRes
 import com.chesire.malime.R
 
 enum class SortOption(

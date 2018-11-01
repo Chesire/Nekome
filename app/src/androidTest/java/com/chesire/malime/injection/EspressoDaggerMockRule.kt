@@ -1,6 +1,6 @@
 package com.chesire.malime.injection
 
-import android.support.test.InstrumentationRegistry.getInstrumentation
+import androidx.test.InstrumentationRegistry.getInstrumentation
 import com.chesire.malime.MockApplication
 import com.chesire.malime.injection.modules.MockAppModule
 import com.chesire.malime.injection.modules.MockDatabaseModule

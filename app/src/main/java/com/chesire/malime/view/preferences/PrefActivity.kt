@@ -1,7 +1,7 @@
 package com.chesire.malime.view.preferences
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import com.chesire.malime.R
 
 class PrefActivity : AppCompatActivity() {

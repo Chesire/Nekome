@@ -1,6 +1,6 @@
 package com.chesire.malime.core.room
 
-import android.arch.persistence.room.TypeConverter
+import androidx.room.TypeConverter
 import com.chesire.malime.core.flags.ItemType
 import com.chesire.malime.core.flags.SeriesStatus
 import com.chesire.malime.core.flags.Subtype

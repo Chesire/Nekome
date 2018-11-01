@@ -15,7 +15,7 @@ android {
         versionCode 1
         versionName "1.0"
 
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
@@ -31,9 +31,9 @@ dependencies {
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
-    api 'android.arch.persistence.room:runtime:1.1.1'
-    api 'android.arch.persistence.room:rxjava2:1.1.1'
-    implementation "com.android.support:appcompat-v7:$support_lib_version"
+    api 'androidx.room:room-runtime:2.1.0-alpha02'
+    api 'androidx.room:room-rxjava2:2.1.0-alpha02'
+    implementation 'androidx.appcompat:appcompat:1.0.0'
     implementation "com.jakewharton.timber:timber:$timber_version"
     implementation "io.reactivex.rxjava2:rxandroid:$rxandroid_version"
     implementation "io.reactivex.rxjava2:rxjava:$rxjava_version"
@@ -46,11 +46,11 @@ dependencies {
     testImplementation 'org.mockito:mockito-core:2.22.0'
     testImplementation 'com.nhaarman.mockitokotlin2:mockito-kotlin:2.0.0-RC2'
 
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    androidTestImplementation 'androidx.test:runner:1.1.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
 
-    kapt 'android.arch.lifecycle:compiler:1.1.1'
-    kapt 'android.arch.persistence.room:compiler:1.1.1'
+    kapt 'androidx.lifecycle:lifecycle-compiler:2.0.0'
+    kapt 'androidx.room:room-compiler:2.1.0-alpha02'
     kapt "com.google.dagger:dagger-compiler:$dagger_version"
     kapt "com.google.dagger:dagger-android-processor:$dagger_version"
 }

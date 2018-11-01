@@ -1,10 +1,10 @@
 package com.chesire.malime.tools
 
-import android.support.test.espresso.Espresso.onView
-import android.support.test.espresso.Root
-import android.support.test.espresso.matcher.ViewMatchers.withText
 import android.view.WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
 import android.view.WindowManager.LayoutParams.TYPE_TOAST
+import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.Root
+import androidx.test.espresso.matcher.ViewMatchers.withText
 import org.hamcrest.Description
 import org.hamcrest.Matcher
 import org.hamcrest.TypeSafeMatcher
