@@ -11,6 +11,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.chesire.malime.R
@@ -62,7 +63,7 @@ class SearchFragment : DaggerFragment(), SearchInteractionListener {
                 setHasFixedSize(true)
                 layoutManager =
                         if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                            androidx.recyclerview.widget.GridLayoutManager(
+                            GridLayoutManager(
                                 requireContext(),
                                 2,
                                 RecyclerView.VERTICAL,
