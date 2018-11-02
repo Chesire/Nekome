@@ -58,6 +58,10 @@ All other areas should be tested as much as possible, but currently are lacking 
 To run tests:  
 ```sh
 ./gradlew test
+```  
+To run the UI tests:
+```sh
+./gradlew connectedDebugAndroidTest
 ```
 
 ## Why
