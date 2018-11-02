@@ -1,10 +1,12 @@
 # Malime
-> Malime is an open source Android application to track your Anime & Manga progress, through the use of Kitsu.io.
-
-[//]: # (Add the link to the Play store)
 
 [![Build Status](https://app.bitrise.io/app/b9a83a0271f20f47/status.svg?token=5iXkOtZfs29XH4IaFFwYSQ&branch=master)](https://app.bitrise.io/app/b9a83a0271f20f47)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/faca56bb0a8b42c7ba155c32397a4708)](https://www.codacy.com/app/Chesire/Malime?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Chesire/Malime&amp;utm_campaign=Badge_Grade)
+
+Malime is an open source Android application to track your Anime & Manga progress, through the use of Kitsu.io.
+[<img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png"
+      alt="Download from Google Play"
+      height="80">](https://play.google.com/store/apps/details?id=com.chesire.malime)
 
 [//]: # (Add pictures of the app 1 - 3)
 
