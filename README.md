@@ -36,7 +36,7 @@ To run ktlint:
 All code should be run through [detekt](https://github.com/arturbosch/detekt) to minimize any style issues or potential bugs.  
 To run detekt:  
 ```sh
-./gradlew detektCheck
+./gradlew detekt
 ```  
 Any issues that are purposely not fixed in detekt should be suppressed using the `@Suppress("")` annotation.  
 If any items raised by detekt conflict with ktlint, the ktlint rules should be followed.  
