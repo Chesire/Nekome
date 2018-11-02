@@ -25,12 +25,6 @@ Note: MyAnimeList currently has a broken API, so it has been disabled and not ac
 Clone the project down and run it from Android studio, all dependencies will be handled by gradle.  
 If there is an issue with the google-services.json missing, then a dummy one will need to be provided in the directory for whichever flavour is being built `app/src/debug` or `app/src/release`.
 
-## Documentation
-To generate documentation of the application, run the [Dokka](https://github.com/Kotlin/dokka) task.  
-```sh
-./gradlew dokka
-```
-
 ### Lint
 All code should be run through [ktlint](https://ktlint.github.io/) to keep a consistent style throughout the code base. All issues must be fixed.  
 To run ktlint:   
