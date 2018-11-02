@@ -60,6 +60,6 @@ To run tests:
 ./gradlew test
 ```
 
-## Why?
+## Why
 There are already some really great Android tracking apps for Anime tracking portals, so why make another one?  
 Originally this was a testing area to mess around with a bunch of Kotlin tools and mess around with the MyAnimeList API, but after a while it made sense to just make it into a proper application.
