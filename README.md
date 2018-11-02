@@ -13,11 +13,11 @@ Malime is an open source Android application to track your Anime & Manga progres
 ## Features
 Features include:
 
-  - Track Anime and Manga series progress
-  - Change your series state
-  - Add new series to your lists
-  - Quick access to your lists with minimal navigation
-  - [Kitsu](https://kitsu.io) and [MyAnimeList](https://myanimelist.net/)* support
+-    Track Anime and Manga series progress
+-    Change your series state
+-    Add new series to your lists
+-    Quick access to your lists with minimal navigation
+-    [Kitsu](https://kitsu.io) and [MyAnimeList](https://myanimelist.net/)* support
 
 Note: MyAnimeList currently has a broken API, so it has been disabled and not actively developed in the application.
 
