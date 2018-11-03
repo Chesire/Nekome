@@ -10,7 +10,5 @@ import dagger.Provides
 @Module(includes = [ViewModelModule::class])
 internal class AppModule {
     @Provides
-    fun provideApplicationContext(app: Application): Context {
-        return app.applicationContext
-    }
+    fun provideApplicationContext(app: Application): Context = app.applicationContext
 }
