@@ -35,19 +35,20 @@ class MalLoginFragment : BaseLoginFragment() {
             .get(MalLoginViewModel::class.java)
             .apply {
                 loginResponse.observe(
-                    this@MalLoginFragment,
+                    viewLifecycleOwner,
                     Observer {
                         processLoginResponse(it)
                     }
                 )
                 errorResponse.observe(
-                    this@MalLoginFragment,
+                    viewLifecycleOwner,
                     Observer {
                         processErrorResponse(it)
                     }
                 )
             }
         binding.vm = viewModel
+        binding.setLifecycleOwner(viewLifecycleOwner)
     }
 
     override fun onCreateView(
