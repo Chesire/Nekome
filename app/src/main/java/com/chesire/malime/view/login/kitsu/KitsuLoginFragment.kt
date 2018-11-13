@@ -34,19 +34,20 @@ class KitsuLoginFragment : BaseLoginFragment() {
             .get(KitsuLoginViewModel::class.java)
             .apply {
                 loginResponse.observe(
-                    this@KitsuLoginFragment,
+                    viewLifecycleOwner,
                     Observer {
                         processLoginResponse(it)
                     }
                 )
                 errorResponse.observe(
-                    this@KitsuLoginFragment,
+                    viewLifecycleOwner,
                     Observer {
                         processErrorResponse(it)
                     }
                 )
             }
         binding.vm = viewModel
+        binding.setLifecycleOwner(viewLifecycleOwner)
     }
 
     override fun onCreateView(

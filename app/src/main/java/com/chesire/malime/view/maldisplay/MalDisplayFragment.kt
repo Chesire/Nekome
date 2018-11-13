@@ -92,13 +92,15 @@ class MalDisplayFragment : DaggerFragment(), ModelInteractionListener {
             .of(this, viewModelFactory)
             .get(MalDisplayViewModel::class.java)
             .apply {
-                series.observe(this@MalDisplayFragment,
+                series.observe(
+                    viewLifecycleOwner,
                     Observer {
                         it?.let {
                             viewAdapter.addAll(it.filter { it.type == type })
                         }
                     })
-                updateAllStatus.observe(this@MalDisplayFragment,
+                updateAllStatus.observe(
+                    viewLifecycleOwner,
                     Observer {
                         it?.let {
                             onUpdateAllStatusChange(it)
@@ -109,6 +111,7 @@ class MalDisplayFragment : DaggerFragment(), ModelInteractionListener {
         viewAdapter = MalDisplayViewAdapter(requireContext(), this, sharedPref)
         recyclerView.adapter = viewAdapter
         binding.vm = viewModel
+        binding.setLifecycleOwner(viewLifecycleOwner)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {

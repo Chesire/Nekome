@@ -86,13 +86,15 @@ class SearchFragment : DaggerFragment(), SearchInteractionListener {
             .of(this, viewModelFactory)
             .get(SearchViewModel::class.java)
             .apply {
-                series.observe(this@SearchFragment,
+                series.observe(
+                    viewLifecycleOwner,
                     Observer {
                         it?.let {
                             viewAdapter.setCurrentItems(it)
                         }
                     })
-                searchItems.observe(this@SearchFragment,
+                searchItems.observe(
+                    viewLifecycleOwner,
                     Observer {
                         it?.let {
                             viewAdapter.addSearchItems(it)
@@ -116,6 +118,7 @@ class SearchFragment : DaggerFragment(), SearchInteractionListener {
         viewAdapter = SearchViewAdapter(this)
         recyclerView.adapter = viewAdapter
         binding.vm = viewModel
+        binding.setLifecycleOwner(viewLifecycleOwner)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
