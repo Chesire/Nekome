@@ -17,7 +17,6 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
-
     buildTypes {
         release {
             minifyEnabled false
@@ -26,6 +25,14 @@ android {
     }
     testOptions {
         unitTests.returnDefaultValues = true
+    }
+    lintOptions {
+        disable 'ColorCasing',
+                'InvalidImport',
+                'InvalidSingleLineComment',
+                'NamingPattern',
+                'ShouldUseStaticImport',
+                'XmlSpacing'
     }
 }
 
