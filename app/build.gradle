@@ -86,6 +86,8 @@ dependencies {
 
     implementation 'com.google.android.gms:play-services-oss-licenses:16.0.1'
 
+    implementation 'nl.littlerobots.rxlint:rxlint:1.0'
+
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.6.1'
     debugImplementation 'com.squareup.leakcanary:leakcanary-support-fragment:1.6.1'
     releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.6.1'
