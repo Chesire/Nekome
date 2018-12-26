@@ -2,9 +2,11 @@ package com.chesire.malime
 
 import android.os.StrictMode
 import com.chesire.malime.injection.DaggerAppComponent
+import com.squareup.leakcanary.LeakCanary
 import dagger.android.AndroidInjector
 import dagger.android.DaggerApplication
 import io.reactivex.plugins.RxJavaPlugins
+import timber.log.Timber
 
 class MalimeApplication : DaggerApplication() {
 
