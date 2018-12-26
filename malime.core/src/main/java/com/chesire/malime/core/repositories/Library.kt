@@ -7,6 +7,7 @@ import com.chesire.malime.core.room.MalimeDao
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
+import io.reactivex.annotations.CheckReturnValue
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
@@ -20,14 +21,17 @@ class Library @Inject constructor(
 
     fun updateLibraryFromApi(): Observable<List<MalimeModel>> = libraryApi.getUserLibrary()
 
+    @CheckReturnValue
     fun sendNewToApi(item: MalimeModel): Single<MalimeModel> = libraryApi.addItem(item)
 
+    @CheckReturnValue
     fun sendUpdateToApi(
         item: MalimeModel,
         newProgress: Int,
         newStatus: UserSeriesStatus
     ): Single<MalimeModel> = libraryApi.updateItem(item, newProgress, newStatus)
 
+    @CheckReturnValue
     fun sendDeleteToApi(item: MalimeModel): Single<MalimeModel> = libraryApi.deleteItem(item)
 
     fun deleteFromLocalLibrary(item: MalimeModel) {
