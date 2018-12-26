@@ -7,7 +7,9 @@ import com.chesire.malime.core.room.MalimeDao
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
+import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
+import timber.log.Timber
 import javax.inject.Inject
 
 class Library @Inject constructor(
@@ -32,28 +34,44 @@ class Library @Inject constructor(
         Completable
             .fromAction { dao.delete(item) }
             .subscribeOn(Schedulers.io())
-            .subscribe()
+            .subscribeBy(
+                onError = {
+                    Timber.e(it, "Failure to delete $item from library")
+                }
+            )
     }
 
     fun insertIntoLocalLibrary(item: MalimeModel) {
         Completable
             .fromAction { dao.insert(item) }
             .subscribeOn(Schedulers.io())
-            .subscribe()
+            .subscribeBy(
+                onError = {
+                    Timber.e(it, "Failure to insert $item into library")
+                }
+            )
     }
 
     fun insertIntoLocalLibrary(items: List<MalimeModel>) {
         Completable
             .fromAction { dao.insertAll(items) }
             .subscribeOn(Schedulers.io())
-            .subscribe()
+            .subscribeBy(
+                onError = {
+                    Timber.e(it, "Failure to insert items into library")
+                }
+            )
     }
 
     fun updateInLocalLibrary(item: MalimeModel) {
         Completable
             .fromAction { dao.update(item) }
             .subscribeOn(Schedulers.io())
-            .subscribe()
+            .subscribeBy(
+                onError = {
+                    Timber.e(it, "Failure to update $item in library")
+                }
+            )
     }
 
     private fun getLibraryFromDb(): Observable<List<MalimeModel>> = dao.getAll().toObservable()
