@@ -29,6 +29,7 @@ android {
                 'InvalidSingleLineComment',
                 'NamingPattern',
                 'ShouldUseStaticImport',
+                'WrongAnnotationOrder',
                 'XmlSpacing'
     }
 }
