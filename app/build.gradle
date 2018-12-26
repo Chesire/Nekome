@@ -48,7 +48,7 @@ android {
         enabled = true
     }
     lintOptions {
-        disable 'ColorCasing','InvalidSingleLineComment','NamingPattern','XmlSpacing'
+        disable 'ColorCasing','InvalidImport','InvalidSingleLineComment','NamingPattern','XmlSpacing'
     }
 }
 
