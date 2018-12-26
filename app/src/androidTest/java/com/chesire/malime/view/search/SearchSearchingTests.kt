@@ -21,10 +21,6 @@ import com.chesire.malime.getMalimeModel
 import com.chesire.malime.injection.espressoDaggerMockRule
 import com.chesire.malime.tools.ToastMatcher.Companion.onToast
 import com.chesire.malime.view.MainActivity
-import com.schibsted.spain.barista.assertion.BaristaRecyclerViewAssertions.assertRecyclerViewItemCount
-import com.schibsted.spain.barista.interaction.BaristaClickInteractions.clickOn
-import com.schibsted.spain.barista.interaction.BaristaRadioButtonInteractions.clickRadioButtonItem
-import com.schibsted.spain.barista.internal.viewaction.SleepViewAction.sleep
 import io.reactivex.Single
 import org.junit.Rule
 import org.junit.Test
@@ -303,5 +299,5 @@ class SearchSearchingTests {
         assertRecyclerViewItemCount(R.id.search_all_items, 11)
     }
 
-    // TODO: Add test for if item is already saved, that UI is different on search
+    // Need to add test for if item is already saved, that UI is different on search
 }

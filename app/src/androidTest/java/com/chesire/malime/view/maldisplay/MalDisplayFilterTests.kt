@@ -36,32 +36,32 @@ class MalDisplayFilterTests {
     }
 
     @Test
-    @Ignore
+    @Ignore("Not yet implemented")
     fun filterByCurrent() {
     }
 
     @Test
-    @Ignore
+    @Ignore("Not yet implemented")
     fun filterByCompleted() {
     }
 
     @Test
-    @Ignore
+    @Ignore("Not yet implemented")
     fun filterByOnHold() {
     }
 
     @Test
-    @Ignore
+    @Ignore("Not yet implemented")
     fun filterByDropped() {
     }
 
     @Test
-    @Ignore
+    @Ignore("Not yet implemented")
     fun filterByPlanned() {
     }
 
     @Test
-    @Ignore
+    @Ignore("Not yet implemented")
     fun filterByMultiple() {
     }
 }

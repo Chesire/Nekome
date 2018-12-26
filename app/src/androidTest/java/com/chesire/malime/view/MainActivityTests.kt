@@ -21,8 +21,6 @@ import com.chesire.malime.injection.espressoDaggerMockRule
 import com.chesire.malime.view.login.LoginActivity
 import com.chesire.malime.view.preferences.PrefActivity
 import com.google.android.material.bottomnavigation.BottomNavigationItemView
-import com.schibsted.spain.barista.assertion.BaristaVisibilityAssertions.assertDisplayed
-import com.schibsted.spain.barista.interaction.BaristaClickInteractions.clickOn
 import org.hamcrest.Description
 import org.hamcrest.Matcher
 import org.junit.After
@@ -106,10 +104,8 @@ class MainActivityTests {
     }
 
     @Test
-    @Ignore
+    @Ignore("Couldn't find anything that says how this could be tested, will need to at some point")
     fun canLaunchProfile() {
-        // Couldn't find anything that says how this could be tested...
-        // Leaving this here as it will need to be done at some point
     }
 
     @Test

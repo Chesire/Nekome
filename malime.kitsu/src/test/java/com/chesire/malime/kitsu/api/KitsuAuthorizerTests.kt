@@ -67,9 +67,8 @@ class KitsuAuthorizerTests {
     }
 
     @Test
-    @Ignore
+    @Ignore("Unit testing with Base64 being used doesn't seem to work")
     fun `retrieving auth details gets the stored model`() {
-        // Unit testing with Base64 being used doesn't seem to work
     }
 
     @Test

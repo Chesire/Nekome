@@ -22,11 +22,6 @@ import com.chesire.malime.getMalimeModel
 import com.chesire.malime.injection.espressoDaggerMockRule
 import com.chesire.malime.tools.ToastMatcher.Companion.onToast
 import com.chesire.malime.view.MainActivity
-import com.schibsted.spain.barista.assertion.BaristaVisibilityAssertions.assertNotExist
-import com.schibsted.spain.barista.interaction.BaristaClickInteractions.clickOn
-import com.schibsted.spain.barista.interaction.BaristaListInteractions.clickListItemChild
-import com.schibsted.spain.barista.interaction.BaristaRadioButtonInteractions.clickRadioButtonItem
-import com.schibsted.spain.barista.interaction.BaristaSleepInteractions.sleep
 import io.reactivex.Single
 import org.junit.Ignore
 import org.junit.Rule
@@ -448,11 +443,9 @@ class SearchAddingTests {
     }
 
     @Test
-    @Ignore
+    @Ignore("Couldn't find anything that says how this could be tested, will need to at some point")
     fun canLaunchSeriesProfile() {
-        // Couldn't find anything that says how this could be tested...
-        // Leaving this here as it will need to be done at some point
     }
 
-    // TODO: Add test for making sure can't add multiple times
+    // Need to add test for making sure can't add multiple times
 }

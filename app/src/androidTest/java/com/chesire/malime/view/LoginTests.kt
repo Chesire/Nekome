@@ -24,8 +24,6 @@ import com.chesire.malime.core.api.AuthApi
 import com.chesire.malime.core.models.AuthModel
 import com.chesire.malime.injection.espressoDaggerMockRule
 import com.chesire.malime.view.login.LoginActivity
-import com.schibsted.spain.barista.interaction.BaristaClickInteractions.clickOn
-import com.schibsted.spain.barista.interaction.BaristaSleepInteractions.sleep
 import io.reactivex.Single
 import org.hamcrest.CoreMatchers.not
 import org.junit.After
@@ -172,9 +170,7 @@ class LoginTests {
     }
 
     @Test
-    @Ignore
+    @Ignore("Couldn't find anything that says how this could be tested, will need to at some point")
     fun pressingTheCreateAccountLinkOpensPage() {
-        // Couldn't find anything that says how this could be tested...
-        // Leaving this here as it will need to be done at some point
     }
 }
