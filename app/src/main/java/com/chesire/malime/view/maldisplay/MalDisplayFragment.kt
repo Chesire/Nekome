@@ -120,7 +120,7 @@ class MalDisplayFragment : DaggerFragment(), ModelInteractionListener {
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        return if (item?.itemId == R.id.menu_options_filter) {
+        return if (item?.itemId == R.id.menuOptionsFilter) {
             spawnFilterDialog()
             true
         } else {

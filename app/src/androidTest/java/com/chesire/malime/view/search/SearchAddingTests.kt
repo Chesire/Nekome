@@ -47,15 +47,15 @@ class SearchAddingTests {
     @Test
     fun sortOptionShouldNotBeAvailable() {
         activityRule.launchActivity(null)
-        clickOn(R.id.menu_main_navigation_search)
-        assertNotExist(R.id.menu_options_sort)
+        clickOn(R.id.menuMainNavigationSearch)
+        assertNotExist(R.id.menuOptionsSort)
     }
 
     @Test
     fun filterOptionShouldNotBeAvailable() {
         activityRule.launchActivity(null)
-        clickOn(R.id.menu_main_navigation_search)
-        assertNotExist(R.id.menu_options_filter)
+        clickOn(R.id.menuMainNavigationSearch)
+        assertNotExist(R.id.menuOptionsFilter)
     }
 
     @Test
@@ -70,7 +70,7 @@ class SearchAddingTests {
         `when`(libraryApi.addItem(model)).thenReturn(Single.error { Throwable("failureToAddAnimeProducesError") })
 
         activityRule.launchActivity(null)
-        clickOn(R.id.menu_main_navigation_search)
+        clickOn(R.id.menuMainNavigationSearch)
         clickRadioButtonItem(R.id.search_option_choices, R.id.search_option_anime_choice)
         onView(withId(R.id.search_search_term_edit_text)).perform(
             typeText(VALID_SEARCH_SINGLE_ITEM),
@@ -102,7 +102,7 @@ class SearchAddingTests {
         `when`(libraryApi.addItem(model)).thenReturn(Single.error { Throwable("failureToAddMangaProducesError") })
 
         activityRule.launchActivity(null)
-        clickOn(R.id.menu_main_navigation_search)
+        clickOn(R.id.menuMainNavigationSearch)
         clickRadioButtonItem(R.id.search_option_choices, R.id.search_option_manga_choice)
         onView(withId(R.id.search_search_term_edit_text)).perform(
             typeText(VALID_SEARCH_SINGLE_ITEM),
@@ -134,7 +134,7 @@ class SearchAddingTests {
         `when`(libraryApi.addItem(model)).thenReturn(Single.just(model))
 
         activityRule.launchActivity(null)
-        clickOn(R.id.menu_main_navigation_search)
+        clickOn(R.id.menuMainNavigationSearch)
         clickRadioButtonItem(R.id.search_option_choices, R.id.search_option_anime_choice)
         onView(withId(R.id.search_search_term_edit_text)).perform(
             typeText(VALID_SEARCH_SINGLE_ITEM),
@@ -166,7 +166,7 @@ class SearchAddingTests {
         `when`(libraryApi.addItem(model)).thenReturn(Single.just(model))
 
         activityRule.launchActivity(null)
-        clickOn(R.id.menu_main_navigation_search)
+        clickOn(R.id.menuMainNavigationSearch)
         clickRadioButtonItem(R.id.search_option_choices, R.id.search_option_anime_choice)
         onView(withId(R.id.search_search_term_edit_text)).perform(
             typeText(VALID_SEARCH_SINGLE_ITEM),
@@ -198,7 +198,7 @@ class SearchAddingTests {
         `when`(libraryApi.addItem(model)).thenReturn(Single.just(model))
 
         activityRule.launchActivity(null)
-        clickOn(R.id.menu_main_navigation_search)
+        clickOn(R.id.menuMainNavigationSearch)
         clickRadioButtonItem(R.id.search_option_choices, R.id.search_option_anime_choice)
         onView(withId(R.id.search_search_term_edit_text)).perform(
             typeText(VALID_SEARCH_SINGLE_ITEM),
@@ -230,7 +230,7 @@ class SearchAddingTests {
         `when`(libraryApi.addItem(model)).thenReturn(Single.just(model))
 
         activityRule.launchActivity(null)
-        clickOn(R.id.menu_main_navigation_search)
+        clickOn(R.id.menuMainNavigationSearch)
         clickRadioButtonItem(R.id.search_option_choices, R.id.search_option_anime_choice)
         onView(withId(R.id.search_search_term_edit_text)).perform(
             typeText(VALID_SEARCH_SINGLE_ITEM),
@@ -262,7 +262,7 @@ class SearchAddingTests {
         `when`(libraryApi.addItem(model)).thenReturn(Single.just(model))
 
         activityRule.launchActivity(null)
-        clickOn(R.id.menu_main_navigation_search)
+        clickOn(R.id.menuMainNavigationSearch)
         clickRadioButtonItem(R.id.search_option_choices, R.id.search_option_anime_choice)
         onView(withId(R.id.search_search_term_edit_text)).perform(
             typeText(VALID_SEARCH_SINGLE_ITEM),
@@ -294,7 +294,7 @@ class SearchAddingTests {
         `when`(libraryApi.addItem(model)).thenReturn(Single.just(model))
 
         activityRule.launchActivity(null)
-        clickOn(R.id.menu_main_navigation_search)
+        clickOn(R.id.menuMainNavigationSearch)
         clickRadioButtonItem(R.id.search_option_choices, R.id.search_option_manga_choice)
         onView(withId(R.id.search_search_term_edit_text)).perform(
             typeText(VALID_SEARCH_SINGLE_ITEM),
@@ -326,7 +326,7 @@ class SearchAddingTests {
         `when`(libraryApi.addItem(model)).thenReturn(Single.just(model))
 
         activityRule.launchActivity(null)
-        clickOn(R.id.menu_main_navigation_search)
+        clickOn(R.id.menuMainNavigationSearch)
         clickRadioButtonItem(R.id.search_option_choices, R.id.search_option_manga_choice)
         onView(withId(R.id.search_search_term_edit_text)).perform(
             typeText(VALID_SEARCH_SINGLE_ITEM),
@@ -358,7 +358,7 @@ class SearchAddingTests {
         `when`(libraryApi.addItem(model)).thenReturn(Single.just(model))
 
         activityRule.launchActivity(null)
-        clickOn(R.id.menu_main_navigation_search)
+        clickOn(R.id.menuMainNavigationSearch)
         clickRadioButtonItem(R.id.search_option_choices, R.id.search_option_manga_choice)
         onView(withId(R.id.search_search_term_edit_text)).perform(
             typeText(VALID_SEARCH_SINGLE_ITEM),
@@ -390,7 +390,7 @@ class SearchAddingTests {
         `when`(libraryApi.addItem(model)).thenReturn(Single.just(model))
 
         activityRule.launchActivity(null)
-        clickOn(R.id.menu_main_navigation_search)
+        clickOn(R.id.menuMainNavigationSearch)
         clickRadioButtonItem(R.id.search_option_choices, R.id.search_option_manga_choice)
         onView(withId(R.id.search_search_term_edit_text)).perform(
             typeText(VALID_SEARCH_SINGLE_ITEM),
@@ -422,7 +422,7 @@ class SearchAddingTests {
         `when`(libraryApi.addItem(model)).thenReturn(Single.just(model))
 
         activityRule.launchActivity(null)
-        clickOn(R.id.menu_main_navigation_search)
+        clickOn(R.id.menuMainNavigationSearch)
         clickRadioButtonItem(R.id.search_option_choices, R.id.search_option_manga_choice)
         onView(withId(R.id.search_search_term_edit_text)).perform(
             typeText(VALID_SEARCH_SINGLE_ITEM),

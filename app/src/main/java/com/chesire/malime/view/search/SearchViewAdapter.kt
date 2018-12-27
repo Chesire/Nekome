@@ -99,11 +99,11 @@ class SearchViewAdapter(
 
         override fun onMenuItemClick(item: MenuItem?): Boolean {
             when (item?.itemId) {
-                R.id.menu_maldisplay_state_complete -> addSeries(UserSeriesStatus.Completed)
-                R.id.menu_maldisplay_state_current -> addSeries(UserSeriesStatus.Current)
-                R.id.menu_maldisplay_state_dropped -> addSeries(UserSeriesStatus.Dropped)
-                R.id.menu_maldisplay_state_on_hold -> addSeries(UserSeriesStatus.OnHold)
-                R.id.menu_maldisplay_state_planned -> addSeries(UserSeriesStatus.Planned)
+                R.id.menuMaldisplayStateComplete -> addSeries(UserSeriesStatus.Completed)
+                R.id.menuMaldisplayStateCurrent -> addSeries(UserSeriesStatus.Current)
+                R.id.menuMaldisplayStateDropped -> addSeries(UserSeriesStatus.Dropped)
+                R.id.menuMaldisplayStateOnHold -> addSeries(UserSeriesStatus.OnHold)
+                R.id.menuMaldisplayStatePlanned -> addSeries(UserSeriesStatus.Planned)
                 else -> return false
             }
             return true

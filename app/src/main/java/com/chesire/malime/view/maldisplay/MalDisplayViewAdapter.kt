@@ -114,7 +114,7 @@ class MalDisplayViewAdapter(
 
         private fun showPopupMenu() {
             val popup = PopupMenu(binding.root.context, binding.root.item_malmodel_more)
-            popup.inflate(R.menu.menu_maldisplay_item)
+            popup.inflate(R.menu.menu_maldisplay)
             popup.setOnMenuItemClickListener(this)
             popup.show()
         }
@@ -122,14 +122,14 @@ class MalDisplayViewAdapter(
         @Suppress("ComplexMethod")
         override fun onMenuItemClick(item: MenuItem?): Boolean {
             when (item?.itemId) {
-                R.id.menu_maldisplay_series_profile -> listener.showSeriesProfile(malItem)
-                R.id.menu_maldisplay_series_progress -> showProgressDialog()
-                R.id.menu_maldisplay_series_delete -> confirmDelete()
-                R.id.menu_maldisplay_state_complete -> confirmStateChange(UserSeriesStatus.Completed)
-                R.id.menu_maldisplay_state_current -> confirmStateChange(UserSeriesStatus.Current)
-                R.id.menu_maldisplay_state_dropped -> confirmStateChange(UserSeriesStatus.Dropped)
-                R.id.menu_maldisplay_state_on_hold -> confirmStateChange(UserSeriesStatus.OnHold)
-                R.id.menu_maldisplay_state_planned -> confirmStateChange(UserSeriesStatus.Planned)
+                R.id.menuMaldisplaySeriesProfile -> listener.showSeriesProfile(malItem)
+                R.id.menuMaldisplaySeriesProgress -> showProgressDialog()
+                R.id.menuMaldisplaySeriesDelete -> confirmDelete()
+                R.id.menuMaldisplayStateComplete -> confirmStateChange(UserSeriesStatus.Completed)
+                R.id.menuMaldisplayStateCurrent -> confirmStateChange(UserSeriesStatus.Current)
+                R.id.menuMaldisplayStateDropped -> confirmStateChange(UserSeriesStatus.Dropped)
+                R.id.menuMaldisplayStateOnHold -> confirmStateChange(UserSeriesStatus.OnHold)
+                R.id.menuMaldisplayStatePlanned -> confirmStateChange(UserSeriesStatus.Planned)
                 else -> return false
             }
             return true

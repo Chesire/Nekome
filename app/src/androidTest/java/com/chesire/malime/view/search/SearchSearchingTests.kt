@@ -42,7 +42,7 @@ class SearchSearchingTests {
     @Test
     fun noAnimeSearchIsPerformedWithEmptySearchText() {
         activityRule.launchActivity(null)
-        clickOn(R.id.menu_main_navigation_search)
+        clickOn(R.id.menuMainNavigationSearch)
         clickRadioButtonItem(
             R.id.search_option_choices,
             R.id.search_option_anime_choice
@@ -60,7 +60,7 @@ class SearchSearchingTests {
     @Test
     fun noMangaSearchIsPerformedWithEmptySearchText() {
         activityRule.launchActivity(null)
-        clickOn(R.id.menu_main_navigation_search)
+        clickOn(R.id.menuMainNavigationSearch)
         clickRadioButtonItem(
             R.id.search_option_choices,
             R.id.search_option_manga_choice
@@ -85,7 +85,7 @@ class SearchSearchingTests {
         ).thenReturn(Single.error { Throwable("failedAnimeSearchProducesError") })
 
         activityRule.launchActivity(null)
-        clickOn(R.id.menu_main_navigation_search)
+        clickOn(R.id.menuMainNavigationSearch)
         clickRadioButtonItem(
             R.id.search_option_choices,
             R.id.search_option_anime_choice
@@ -109,7 +109,7 @@ class SearchSearchingTests {
         ).thenReturn(Single.error { Throwable("failedAnimeSearchProducesError") })
 
         activityRule.launchActivity(null)
-        clickOn(R.id.menu_main_navigation_search)
+        clickOn(R.id.menuMainNavigationSearch)
         clickRadioButtonItem(
             R.id.search_option_choices,
             R.id.search_option_manga_choice
@@ -133,7 +133,7 @@ class SearchSearchingTests {
         ).thenReturn(Single.just(listOf()))
 
         activityRule.launchActivity(null)
-        clickOn(R.id.menu_main_navigation_search)
+        clickOn(R.id.menuMainNavigationSearch)
         clickRadioButtonItem(
             R.id.search_option_choices,
             R.id.search_option_anime_choice
@@ -157,7 +157,7 @@ class SearchSearchingTests {
         ).thenReturn(Single.just(listOf()))
 
         activityRule.launchActivity(null)
-        clickOn(R.id.menu_main_navigation_search)
+        clickOn(R.id.menuMainNavigationSearch)
         clickRadioButtonItem(
             R.id.search_option_choices,
             R.id.search_option_manga_choice
@@ -181,7 +181,7 @@ class SearchSearchingTests {
         ).thenReturn(Single.just(listOf(getMalimeModel(0))))
 
         activityRule.launchActivity(null)
-        clickOn(R.id.menu_main_navigation_search)
+        clickOn(R.id.menuMainNavigationSearch)
         clickRadioButtonItem(
             R.id.search_option_choices,
             R.id.search_option_anime_choice
@@ -205,7 +205,7 @@ class SearchSearchingTests {
         ).thenReturn(Single.just(listOf(getMalimeModel(0))))
 
         activityRule.launchActivity(null)
-        clickOn(R.id.menu_main_navigation_search)
+        clickOn(R.id.menuMainNavigationSearch)
         clickRadioButtonItem(
             R.id.search_option_choices,
             R.id.search_option_manga_choice
@@ -245,7 +245,7 @@ class SearchSearchingTests {
         )
 
         activityRule.launchActivity(null)
-        clickOn(R.id.menu_main_navigation_search)
+        clickOn(R.id.menuMainNavigationSearch)
         clickRadioButtonItem(
             R.id.search_option_choices,
             R.id.search_option_anime_choice
@@ -285,7 +285,7 @@ class SearchSearchingTests {
         )
 
         activityRule.launchActivity(null)
-        clickOn(R.id.menu_main_navigation_search)
+        clickOn(R.id.menuMainNavigationSearch)
         clickRadioButtonItem(
             R.id.search_option_choices,
             R.id.search_option_manga_choice

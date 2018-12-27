@@ -55,15 +55,15 @@ class MainActivityTests {
     @Test
     fun canNavigateToAnimeView() {
         activityRule.launchActivity(null)
-        clickOn(R.id.menu_main_navigation_anime)
+        clickOn(R.id.menuMainNavigationAnime)
 
-        onView(withId(R.id.menu_main_navigation_anime)).check(
+        onView(withId(R.id.menuMainNavigationAnime)).check(
             matches(withBottomNavItemCheckedStatus(true))
         )
-        onView(withId(R.id.menu_main_navigation_manga)).check(
+        onView(withId(R.id.menuMainNavigationManga)).check(
             matches(withBottomNavItemCheckedStatus(false))
         )
-        onView(withId(R.id.menu_main_navigation_search)).check(
+        onView(withId(R.id.menuMainNavigationSearch)).check(
             matches(withBottomNavItemCheckedStatus(false))
         )
         assertDisplayed(R.id.maldisplay_layout)
@@ -72,15 +72,15 @@ class MainActivityTests {
     @Test
     fun canNavigateToMangaView() {
         activityRule.launchActivity(null)
-        clickOn(R.id.menu_main_navigation_manga)
+        clickOn(R.id.menuMainNavigationManga)
 
-        onView(withId(R.id.menu_main_navigation_anime)).check(
+        onView(withId(R.id.menuMainNavigationAnime)).check(
             matches(withBottomNavItemCheckedStatus(false))
         )
-        onView(withId(R.id.menu_main_navigation_manga)).check(
+        onView(withId(R.id.menuMainNavigationManga)).check(
             matches(withBottomNavItemCheckedStatus(true))
         )
-        onView(withId(R.id.menu_main_navigation_search)).check(
+        onView(withId(R.id.menuMainNavigationSearch)).check(
             matches(withBottomNavItemCheckedStatus(false))
         )
         assertDisplayed(R.id.maldisplay_layout)
@@ -89,15 +89,15 @@ class MainActivityTests {
     @Test
     fun canNavigateToSearchView() {
         activityRule.launchActivity(null)
-        clickOn(R.id.menu_main_navigation_search)
+        clickOn(R.id.menuMainNavigationSearch)
 
-        onView(withId(R.id.menu_main_navigation_anime)).check(
+        onView(withId(R.id.menuMainNavigationAnime)).check(
             matches(withBottomNavItemCheckedStatus(false))
         )
-        onView(withId(R.id.menu_main_navigation_manga)).check(
+        onView(withId(R.id.menuMainNavigationManga)).check(
             matches(withBottomNavItemCheckedStatus(false))
         )
-        onView(withId(R.id.menu_main_navigation_search)).check(
+        onView(withId(R.id.menuMainNavigationSearch)).check(
             matches(withBottomNavItemCheckedStatus(true))
         )
         assertDisplayed(R.id.search_layout)
@@ -112,7 +112,7 @@ class MainActivityTests {
     @Ignore("Settings is no longer displayed")
     fun canLaunchPreferencesFromMalDisplay() {
         activityRule.launchActivity(null)
-        clickOn(R.id.menu_main_navigation_anime)
+        clickOn(R.id.menuMainNavigationAnime)
         openActionBarOverflowOrOptionsMenu(activityRule.activity)
         clickOn(R.string.options_settings)
 
@@ -123,7 +123,7 @@ class MainActivityTests {
     @Ignore("Settings is no longer displayed")
     fun canLaunchPreferencesFromSearch() {
         activityRule.launchActivity(null)
-        clickOn(R.id.menu_main_navigation_search)
+        clickOn(R.id.menuMainNavigationSearch)
         openActionBarOverflowOrOptionsMenu(activityRule.activity)
         clickOn(R.string.options_settings)
 
@@ -134,7 +134,7 @@ class MainActivityTests {
     fun executingLogoutGoesBackToLogin() {
         activityRule.launchActivity(null)
 
-        clickOn(R.id.menu_main_navigation_anime)
+        clickOn(R.id.menuMainNavigationAnime)
         openActionBarOverflowOrOptionsMenu(activityRule.activity)
         clickOn(R.string.options_log_out)
         onView(withText(android.R.string.yes))
