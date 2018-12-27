@@ -18,17 +18,17 @@ import com.chesire.malime.BR
 import com.chesire.malime.R
 import com.chesire.malime.core.flags.UserSeriesStatus
 import com.chesire.malime.core.models.MalimeModel
-import com.chesire.malime.databinding.ItemMalmodelBinding
+import com.chesire.malime.databinding.AdapterItemMalmodelBinding
 import com.chesire.malime.util.GlideApp
 import com.chesire.malime.util.SharedPref
 import com.chesire.malime.util.extension.getString
 import com.chesire.malime.view.preferences.SortOption
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.item_malmodel.view.item_malmodel_content_layout
-import kotlinx.android.synthetic.main.item_malmodel.view.item_malmodel_image
-import kotlinx.android.synthetic.main.item_malmodel.view.item_malmodel_loading_layout
-import kotlinx.android.synthetic.main.item_malmodel.view.item_malmodel_more
-import kotlinx.android.synthetic.main.item_malmodel.view.item_malmodel_plus_one
+import kotlinx.android.synthetic.main.adapter_item_malmodel.view.item_malmodel_content_layout
+import kotlinx.android.synthetic.main.adapter_item_malmodel.view.item_malmodel_image
+import kotlinx.android.synthetic.main.adapter_item_malmodel.view.item_malmodel_loading_layout
+import kotlinx.android.synthetic.main.adapter_item_malmodel.view.item_malmodel_more
+import kotlinx.android.synthetic.main.adapter_item_malmodel.view.item_malmodel_plus_one
 import timber.log.Timber
 import java.util.Locale
 
@@ -57,7 +57,7 @@ class MalDisplayViewAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
-            ItemMalmodelBinding.inflate(
+            AdapterItemMalmodelBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false

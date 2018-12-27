@@ -10,16 +10,16 @@ import com.chesire.malime.BR
 import com.chesire.malime.R
 import com.chesire.malime.core.flags.UserSeriesStatus
 import com.chesire.malime.core.models.MalimeModel
-import com.chesire.malime.databinding.ItemSearchBinding
+import com.chesire.malime.databinding.AdapterItemSearchBinding
 import com.chesire.malime.util.GlideApp
 import com.chesire.malime.util.extension.getString
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.item_search.view.item_search_content_layout
-import kotlinx.android.synthetic.main.item_search.view.item_search_image
-import kotlinx.android.synthetic.main.item_search.view.item_search_loading_layout
-import kotlinx.android.synthetic.main.item_search.view.item_search_status_text
-import kotlinx.android.synthetic.main.item_search.view.item_search_type_text
-import kotlinx.android.synthetic.main.item_search.view.search_image_add_button
+import kotlinx.android.synthetic.main.adapter_item_search.view.item_search_content_layout
+import kotlinx.android.synthetic.main.adapter_item_search.view.item_search_image
+import kotlinx.android.synthetic.main.adapter_item_search.view.item_search_loading_layout
+import kotlinx.android.synthetic.main.adapter_item_search.view.item_search_status_text
+import kotlinx.android.synthetic.main.adapter_item_search.view.item_search_type_text
+import kotlinx.android.synthetic.main.adapter_item_search.view.search_image_add_button
 
 class SearchViewAdapter(
     private val interactor: SearchInteractionListener
@@ -41,7 +41,7 @@ class SearchViewAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
-            ItemSearchBinding.inflate(
+            AdapterItemSearchBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
@@ -56,7 +56,7 @@ class SearchViewAdapter(
     }
 
     inner class ViewHolder(
-        private val searchView: ItemSearchBinding
+        private val searchView: AdapterItemSearchBinding
     ) : RecyclerView.ViewHolder(searchView.root), PopupMenu.OnMenuItemClickListener {
         private val loadingLayout = searchView.root.item_search_loading_layout
         private val contentLayout = searchView.root.item_search_content_layout
