@@ -51,6 +51,7 @@ android {
         disable 'ColorCasing',
                 'InvalidImport',
                 'InvalidSingleLineComment',
+                'MissingXmlHeader',
                 'NamingPattern',
                 'ShouldUseStaticImport',
                 'WrongAnnotationOrder',
