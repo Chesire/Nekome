@@ -16,7 +16,7 @@
         android:fitsSystemWindows="true">
 
         <LinearLayout
-            android:id="@+id/mal_login_layout"
+            android:id="@+id/fragmentMalLoginLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -42,14 +42,14 @@
                 android:textSize="16sp" />
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/login_username_layout"
+                android:id="@+id/fragmentMalLoginUsernameLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:layout_marginTop="8dp">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/login_username_edit_text"
+                    android:id="@+id/fragmentMalLoginUsernameEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/login_username"
@@ -60,7 +60,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/login_password_layout"
+                android:id="@+id/fragmentMalLoginPasswordLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
@@ -68,7 +68,7 @@
                 app:passwordToggleEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/login_password_edit_text"
+                    android:id="@+id/fragmentMalLoginPasswordEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/login_password"
@@ -79,7 +79,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/login_button"
+                android:id="@+id/fragmentMalLoginButton"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="24dp"
@@ -89,7 +89,7 @@
                 android:text="@string/login_button" />
 
             <TextView
-                android:id="@+id/login_create_account"
+                android:id="@+id/fragmentMalLoginCreateAccountText"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="24dp"

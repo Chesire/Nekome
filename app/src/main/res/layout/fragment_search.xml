@@ -11,12 +11,12 @@
     </data>
 
     <RelativeLayout
-        android:id="@+id/search_layout"
+        android:id="@+id/fragmentSearchLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/search_search_term_layout"
+            android:id="@+id/fragmentSearchSearchTextLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
@@ -24,7 +24,7 @@
             android:layout_margin="8dp">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/search_search_term_edit_text"
+                android:id="@+id/fragmentSearchSearchEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/search_text_hint"
@@ -35,22 +35,22 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <RadioGroup
-            android:id="@+id/search_option_choices"
+            android:id="@+id/fragmentSearchOptionChoices"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/search_search_term_layout"
-            android:checkedButton="@+id/search_option_anime_choice"
+            android:layout_below="@+id/fragmentSearchSearchTextLayout"
+            android:checkedButton="@+id/fragmentSearchOptionAnimeChoice"
             android:orientation="horizontal">
 
             <RadioButton
-                android:id="@+id/search_option_anime_choice"
+                android:id="@+id/fragmentSearchOptionAnimeChoice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
                 android:text="@string/main_nav_anime" />
 
             <RadioButton
-                android:id="@+id/search_option_manga_choice"
+                android:id="@+id/fragmentSearchOptionMangaChoice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
@@ -59,24 +59,24 @@
 
         <!-- Need to find some way for this item to work -->
         <CheckBox
-            android:id="@+id/search_option_nsfw_allowed"
+            android:id="@+id/fragmentSearchOptionNsfwAllowed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/search_option_choices"
+            android:layout_below="@+id/fragmentSearchOptionChoices"
             android:layout_margin="8dp"
             android:checked="@{vm.params.nsfwEnabled}"
             android:text="@string/search_nsfw_allowed"
             android:visibility="gone" />
 
         <View
-            android:id="@+id/search_divider"
+            android:id="@+id/fragmentSearchHeaderDivider"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_below="@+id/search_option_nsfw_allowed"
+            android:layout_below="@+id/fragmentSearchOptionNsfwAllowed"
             android:background="@android:color/darker_gray" />
 
         <ProgressBar
-            android:id="@+id/search_loading_indicator"
+            android:id="@+id/fragmentSearchLoadingIndicator"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
@@ -84,9 +84,9 @@
             android:visibility="@{vm.params.searching ? View.VISIBLE : View.INVISIBLE}" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/search_all_items"
+            android:id="@+id/fragmentSearchRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/search_divider" />
+            android:layout_below="@+id/fragmentSearchHeaderDivider" />
     </RelativeLayout>
 </layout>

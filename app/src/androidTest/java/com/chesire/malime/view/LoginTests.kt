@@ -61,13 +61,13 @@ class LoginTests {
     @Test
     fun displayErrorForBlankUsername() {
         activityRule.launchActivity(null)
-        onView(withId(R.id.login_username_edit_text)).perform(clearText())
-        onView(withId(R.id.login_password_edit_text)).perform(
+        onView(withId(R.id.fragmentKitsuLoginUsernameEditText)).perform(clearText())
+        onView(withId(R.id.fragmentKitsuLoginPasswordEditText)).perform(
             typeText(VALID_PASSWORD),
             closeSoftKeyboard()
         )
 
-        clickOn(R.id.login_button)
+        clickOn(R.id.fragmentKitsuLoginButton)
 
         onView(withText(R.string.login_failure_email))
             .inRoot(withDecorView(not(activityRule.activity.window.decorView)))
@@ -77,10 +77,10 @@ class LoginTests {
     @Test
     fun displayErrorForBlankPassword() {
         activityRule.launchActivity(null)
-        onView(withId(R.id.login_username_edit_text)).perform(typeText(VALID_USERNAME))
-        onView(withId(R.id.login_password_edit_text)).perform(clearText(), closeSoftKeyboard())
+        onView(withId(R.id.fragmentKitsuLoginUsernameEditText)).perform(typeText(VALID_USERNAME))
+        onView(withId(R.id.fragmentKitsuLoginPasswordEditText)).perform(clearText(), closeSoftKeyboard())
 
-        clickOn(R.id.login_button)
+        clickOn(R.id.fragmentKitsuLoginButton)
 
         onView(withText(R.string.login_failure_password))
             .inRoot(withDecorView(not(activityRule.activity.window.decorView)))
@@ -98,13 +98,13 @@ class LoginTests {
 
         activityRule.launchActivity(null)
 
-        onView(withId(R.id.login_username_edit_text)).perform(typeText(INVALID_USERNAME))
-        onView(withId(R.id.login_password_edit_text)).perform(
+        onView(withId(R.id.fragmentKitsuLoginUsernameEditText)).perform(typeText(INVALID_USERNAME))
+        onView(withId(R.id.fragmentKitsuLoginPasswordEditText)).perform(
             typeText(VALID_PASSWORD),
             closeSoftKeyboard()
         )
 
-        clickOn(R.id.login_button)
+        clickOn(R.id.fragmentKitsuLoginButton)
 
         onView(withText(R.string.login_failure))
             .inRoot(withDecorView(not(activityRule.activity.window.decorView)))
@@ -122,13 +122,13 @@ class LoginTests {
 
         activityRule.launchActivity(null)
 
-        onView(withId(R.id.login_username_edit_text)).perform(typeText(VALID_USERNAME))
-        onView(withId(R.id.login_password_edit_text)).perform(
+        onView(withId(R.id.fragmentKitsuLoginUsernameEditText)).perform(typeText(VALID_USERNAME))
+        onView(withId(R.id.fragmentKitsuLoginPasswordEditText)).perform(
             typeText(INVALID_PASSWORD),
             closeSoftKeyboard()
         )
 
-        clickOn(R.id.login_button)
+        clickOn(R.id.fragmentKitsuLoginButton)
 
         onView(withText(R.string.login_failure))
             .inRoot(withDecorView(not(activityRule.activity.window.decorView)))
@@ -138,8 +138,8 @@ class LoginTests {
     @Test
     fun canNavigateFieldsWithIMEButton() {
         activityRule.launchActivity(null)
-        onView(withId(R.id.login_username_edit_text)).perform(clearText(), pressImeActionButton())
-        onView(withId(R.id.login_password_edit_text)).perform(clearText(), pressImeActionButton())
+        onView(withId(R.id.fragmentKitsuLoginUsernameEditText)).perform(clearText(), pressImeActionButton())
+        onView(withId(R.id.fragmentKitsuLoginPasswordEditText)).perform(clearText(), pressImeActionButton())
 
         onView(withText(R.string.login_failure_email))
             .inRoot(withDecorView(not(activityRule.activity.window.decorView)))
@@ -158,11 +158,11 @@ class LoginTests {
 
         activityRule.launchActivity(null)
 
-        onView(withId(R.id.login_username_edit_text)).perform(
+        onView(withId(R.id.fragmentKitsuLoginUsernameEditText)).perform(
             typeText(VALID_USERNAME),
             pressImeActionButton()
         )
-        onView(withId(R.id.login_password_edit_text)).perform(
+        onView(withId(R.id.fragmentKitsuLoginPasswordEditText)).perform(
             typeText(VALID_PASSWORD),
             pressImeActionButton()
         )

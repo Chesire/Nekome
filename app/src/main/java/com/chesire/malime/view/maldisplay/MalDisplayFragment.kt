@@ -27,7 +27,7 @@ import com.chesire.malime.util.autoCleared
 import com.chesire.malime.util.extension.getSeriesStatusStrings
 import com.google.android.material.snackbar.Snackbar
 import dagger.android.support.DaggerFragment
-import kotlinx.android.synthetic.main.fragment_maldisplay.maldisplay_swipe_refresh
+import kotlinx.android.synthetic.main.fragment_maldisplay.fragmentMaldisplaySwipeRefreshLayout
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -66,9 +66,9 @@ class MalDisplayFragment : DaggerFragment(), ModelInteractionListener {
             false
         ).apply {
             binding = this
-            maldisplayRecyclerView.apply {
+            fragmentMaldisplayRecyclerView.apply {
                 recyclerView = this
-                setEmptyView(maldisplayEmptyView)
+                setEmptyView(fragmentMaldisplayEmptyView)
                 setHasFixedSize(true)
                 layoutManager =
                         if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
@@ -143,7 +143,7 @@ class MalDisplayFragment : DaggerFragment(), ModelInteractionListener {
                 if (states.all { !it }) {
                     Timber.w("User tried to set all filter states to false")
                     Snackbar.make(
-                        view!!.findViewById(R.id.maldisplay_layout),
+                        view!!.findViewById(R.id.fragmentMaldisplayLayout),
                         R.string.filter_must_select,
                         Snackbar.LENGTH_LONG
                     ).show()
@@ -157,11 +157,12 @@ class MalDisplayFragment : DaggerFragment(), ModelInteractionListener {
 
     private fun onUpdateAllStatusChange(status: UpdatingSeriesStatus) {
         when (status) {
-            UpdatingSeriesStatus.Finished -> maldisplay_swipe_refresh.isRefreshing = false
+            UpdatingSeriesStatus.Finished -> fragmentMaldisplaySwipeRefreshLayout.isRefreshing =
+                    false
             UpdatingSeriesStatus.Error -> {
-                maldisplay_swipe_refresh.isRefreshing = false
+                fragmentMaldisplaySwipeRefreshLayout.isRefreshing = false
                 Snackbar.make(
-                    maldisplay_swipe_refresh,
+                    fragmentMaldisplaySwipeRefreshLayout,
                     R.string.list_update_failure,
                     Snackbar.LENGTH_LONG
                 ).show()

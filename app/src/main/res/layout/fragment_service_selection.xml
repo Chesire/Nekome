@@ -5,7 +5,7 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/service_selection_header_text"
+        android:id="@+id/fragmentServiceSelectionHeaderText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/service_selection_header"
@@ -14,17 +14,17 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/service_selection_mal_button"
+        android:id="@+id/fragmentServiceSelectionMalButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="16dp"
         android:text="@string/service_selection_mal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/service_selection_header_text" />
+        app:layout_constraintTop_toBottomOf="@id/fragmentServiceSelectionHeaderText" />
 
     <Button
-        android:id="@+id/service_selection_kitsu_button"
+        android:id="@+id/fragmentServiceSelectionKitsuButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="16dp"
@@ -32,7 +32,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_chainStyle="spread"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/service_selection_mal_button"
+        app:layout_constraintTop_toBottomOf="@id/fragmentServiceSelectionMalButton"
         app:layout_constraintVertical_chainStyle="spread" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

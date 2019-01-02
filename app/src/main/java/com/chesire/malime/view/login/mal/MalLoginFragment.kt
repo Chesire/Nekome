@@ -64,9 +64,9 @@ class MalLoginFragment : BaseLoginFragment() {
                 false
             ).apply {
                 binding = this
-                loginButton.setOnClickListener { executeLoginMethod() }
-                loginCreateAccount.setOnClickListener { createAccount() }
-                loginPasswordEditText.setOnEditorActionListener { _, actionId, _ ->
+                fragmentMalLoginButton.setOnClickListener { executeLoginMethod() }
+                fragmentMalLoginCreateAccountText.setOnClickListener { createAccount() }
+                fragmentMalLoginPasswordEditText.setOnEditorActionListener { _, actionId, _ ->
                     if (actionId == EditorInfo.IME_ACTION_DONE) {
                         executeLoginMethod()
                     }

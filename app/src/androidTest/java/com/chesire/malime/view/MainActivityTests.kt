@@ -68,7 +68,7 @@ class MainActivityTests {
         onView(withId(R.id.menuMainNavigationSearch)).check(
             matches(withBottomNavItemCheckedStatus(false))
         )
-        assertDisplayed(R.id.maldisplay_layout)
+        assertDisplayed(R.id.fragmentMaldisplayLayout)
     }
 
     @Test
@@ -85,7 +85,7 @@ class MainActivityTests {
         onView(withId(R.id.menuMainNavigationSearch)).check(
             matches(withBottomNavItemCheckedStatus(false))
         )
-        assertDisplayed(R.id.maldisplay_layout)
+        assertDisplayed(R.id.fragmentMaldisplayLayout)
     }
 
     @Test
@@ -102,7 +102,7 @@ class MainActivityTests {
         onView(withId(R.id.menuMainNavigationSearch)).check(
             matches(withBottomNavItemCheckedStatus(true))
         )
-        assertDisplayed(R.id.search_layout)
+        assertDisplayed(R.id.fragmentSearchLayout)
     }
 
     @Test
