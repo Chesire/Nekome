@@ -41,7 +41,7 @@ class MainActivity : DaggerAppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.activity_main_navigation)
+        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.activityMainNavigation)
         bottomNavigationView.setOnNavigationItemSelectedListener { item: MenuItem ->
             val fragment: Fragment
             val tag: String
@@ -187,7 +187,7 @@ class MainActivity : DaggerAppCompatActivity() {
         var taggedFragment = supportFragmentManager.findFragmentByTag(fragmentTag)
         if (taggedFragment == null) {
             taggedFragment = fragment
-            transaction.add(R.id.activity_main_frame, taggedFragment, fragmentTag)
+            transaction.add(R.id.activityMainFrame, taggedFragment, fragmentTag)
         } else {
             transaction.attach(taggedFragment)
         }

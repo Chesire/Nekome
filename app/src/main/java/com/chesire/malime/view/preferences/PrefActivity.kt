@@ -10,7 +10,7 @@ class PrefActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_pref)
         supportFragmentManager.beginTransaction()
-            .replace(R.id.activity_pref_frame, PrefFragment.newInstance(), PrefFragment.tag)
+            .replace(R.id.activityPrefFrame, PrefFragment.newInstance(), PrefFragment.tag)
             .commit()
     }
 }
