@@ -24,11 +24,11 @@ import com.chesire.malime.util.SharedPref
 import com.chesire.malime.util.extension.getString
 import com.chesire.malime.view.preferences.SortOption
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.adapter_item_malmodel.view.item_malmodel_content_layout
-import kotlinx.android.synthetic.main.adapter_item_malmodel.view.item_malmodel_image
-import kotlinx.android.synthetic.main.adapter_item_malmodel.view.item_malmodel_loading_layout
-import kotlinx.android.synthetic.main.adapter_item_malmodel.view.item_malmodel_more
-import kotlinx.android.synthetic.main.adapter_item_malmodel.view.item_malmodel_plus_one
+import kotlinx.android.synthetic.main.adapter_item_malmodel.view.adapterItemMalmodelImage
+import kotlinx.android.synthetic.main.adapter_item_malmodel.view.adapterItemMalmodelLayout
+import kotlinx.android.synthetic.main.adapter_item_malmodel.view.adapterItemMalmodelLoadingLayout
+import kotlinx.android.synthetic.main.adapter_item_malmodel.view.adapterItemMalmodelMoreImage
+import kotlinx.android.synthetic.main.adapter_item_malmodel.view.adapterItemMalmodelPlusOneImage
 import timber.log.Timber
 import java.util.Locale
 
@@ -84,8 +84,8 @@ class MalDisplayViewAdapter(
     inner class ViewHolder(
         private val binding: ViewDataBinding
     ) : RecyclerView.ViewHolder(binding.root), PopupMenu.OnMenuItemClickListener {
-        private val loadingLayout = binding.root.item_malmodel_loading_layout
-        private val contentLayout = binding.root.item_malmodel_content_layout
+        private val loadingLayout = binding.root.adapterItemMalmodelLoadingLayout
+        private val contentLayout = binding.root.adapterItemMalmodelLayout
         private lateinit var malItem: MalimeModel
 
         fun bind(item: MalimeModel?) {
@@ -102,18 +102,18 @@ class MalDisplayViewAdapter(
                 .load(if (item.posterImage.isEmpty()) item.coverImage else item.posterImage)
                 .placeholder(R.drawable.ic_image_black)
                 .error(R.drawable.ic_broken_image_black)
-                .into(binding.root.item_malmodel_image)
+                .into(binding.root.adapterItemMalmodelImage)
 
             binding.root.apply {
-                item_malmodel_plus_one.setOnClickListener {
+                adapterItemMalmodelPlusOneImage.setOnClickListener {
                     updateSeries(item, item.progress + 1, item.userSeriesStatus)
                 }
-                item_malmodel_more.setOnClickListener { showPopupMenu() }
+                adapterItemMalmodelMoreImage.setOnClickListener { showPopupMenu() }
             }
         }
 
         private fun showPopupMenu() {
-            val popup = PopupMenu(binding.root.context, binding.root.item_malmodel_more)
+            val popup = PopupMenu(binding.root.context, binding.root.adapterItemMalmodelMoreImage)
             popup.inflate(R.menu.menu_maldisplay)
             popup.setOnMenuItemClickListener(this)
             popup.show()

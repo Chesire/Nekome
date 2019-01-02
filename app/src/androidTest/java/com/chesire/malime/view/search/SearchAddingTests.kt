@@ -83,7 +83,7 @@ class SearchAddingTests {
         )
 
         sleep(100)
-        clickListItemChild(R.id.search_all_items, 0, R.id.search_image_add_button)
+        clickListItemChild(R.id.search_all_items, 0, R.id.adapterItemSearchAddImage)
         onView(withText(R.string.filter_state_completed)).inRoot(isPlatformPopup()).perform(click())
 
         onToast(
@@ -115,7 +115,7 @@ class SearchAddingTests {
         )
 
         sleep(100)
-        clickListItemChild(R.id.search_all_items, 0, R.id.search_image_add_button)
+        clickListItemChild(R.id.search_all_items, 0, R.id.adapterItemSearchAddImage)
         onView(withText(R.string.filter_state_completed)).inRoot(isPlatformPopup()).perform(click())
 
         onToast(
@@ -147,7 +147,7 @@ class SearchAddingTests {
         )
 
         sleep(100)
-        clickListItemChild(R.id.search_all_items, 0, R.id.search_image_add_button)
+        clickListItemChild(R.id.search_all_items, 0, R.id.adapterItemSearchAddImage)
         onView(withText(R.string.filter_state_completed)).inRoot(isPlatformPopup()).perform(click())
 
         onToast(
@@ -179,7 +179,7 @@ class SearchAddingTests {
         )
 
         sleep(100)
-        clickListItemChild(R.id.search_all_items, 0, R.id.search_image_add_button)
+        clickListItemChild(R.id.search_all_items, 0, R.id.adapterItemSearchAddImage)
         onView(withText(R.string.filter_state_current)).inRoot(isPlatformPopup()).perform(click())
 
         onToast(
@@ -211,7 +211,7 @@ class SearchAddingTests {
         )
 
         sleep(100)
-        clickListItemChild(R.id.search_all_items, 0, R.id.search_image_add_button)
+        clickListItemChild(R.id.search_all_items, 0, R.id.adapterItemSearchAddImage)
         onView(withText(R.string.filter_state_dropped)).inRoot(isPlatformPopup()).perform(click())
 
         onToast(
@@ -243,7 +243,7 @@ class SearchAddingTests {
         )
 
         sleep(100)
-        clickListItemChild(R.id.search_all_items, 0, R.id.search_image_add_button)
+        clickListItemChild(R.id.search_all_items, 0, R.id.adapterItemSearchAddImage)
         onView(withText(R.string.filter_state_on_hold)).inRoot(isPlatformPopup()).perform(click())
 
         onToast(
@@ -275,7 +275,7 @@ class SearchAddingTests {
         )
 
         sleep(100)
-        clickListItemChild(R.id.search_all_items, 0, R.id.search_image_add_button)
+        clickListItemChild(R.id.search_all_items, 0, R.id.adapterItemSearchAddImage)
         onView(withText(R.string.filter_state_planned)).inRoot(isPlatformPopup()).perform(click())
 
         onToast(
@@ -307,7 +307,7 @@ class SearchAddingTests {
         )
 
         sleep(100)
-        clickListItemChild(R.id.search_all_items, 0, R.id.search_image_add_button)
+        clickListItemChild(R.id.search_all_items, 0, R.id.adapterItemSearchAddImage)
         onView(withText(R.string.filter_state_completed)).inRoot(isPlatformPopup()).perform(click())
 
         onToast(
@@ -339,7 +339,7 @@ class SearchAddingTests {
         )
 
         sleep(100)
-        clickListItemChild(R.id.search_all_items, 0, R.id.search_image_add_button)
+        clickListItemChild(R.id.search_all_items, 0, R.id.adapterItemSearchAddImage)
         onView(withText(R.string.filter_state_current)).inRoot(isPlatformPopup()).perform(click())
 
         onToast(
@@ -371,7 +371,7 @@ class SearchAddingTests {
         )
 
         sleep(100)
-        clickListItemChild(R.id.search_all_items, 0, R.id.search_image_add_button)
+        clickListItemChild(R.id.search_all_items, 0, R.id.adapterItemSearchAddImage)
         onView(withText(R.string.filter_state_dropped)).inRoot(isPlatformPopup()).perform(click())
 
         onToast(
@@ -403,7 +403,7 @@ class SearchAddingTests {
         )
 
         sleep(100)
-        clickListItemChild(R.id.search_all_items, 0, R.id.search_image_add_button)
+        clickListItemChild(R.id.search_all_items, 0, R.id.adapterItemSearchAddImage)
         onView(withText(R.string.filter_state_on_hold)).inRoot(isPlatformPopup()).perform(click())
 
         onToast(
@@ -435,7 +435,7 @@ class SearchAddingTests {
         )
 
         sleep(100)
-        clickListItemChild(R.id.search_all_items, 0, R.id.search_image_add_button)
+        clickListItemChild(R.id.search_all_items, 0, R.id.adapterItemSearchAddImage)
         onView(withText(R.string.filter_state_planned)).inRoot(isPlatformPopup()).perform(click())
 
         onToast(

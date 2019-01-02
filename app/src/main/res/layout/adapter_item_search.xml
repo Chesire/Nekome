@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
@@ -14,7 +13,7 @@
     </data>
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/item_search_card_view"
+        android:id="@+id/adapterItemSearchCardView"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:layout_gravity="center"
@@ -22,49 +21,49 @@
         app:cardCornerRadius="2dp">
 
         <RelativeLayout
-            android:id="@+id/item_search_content_layout"
+            android:id="@+id/adapterItemSearchLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <ImageView
-                android:id="@+id/item_search_image"
+                android:id="@+id/adapterItemSearchImage"
                 style="@style/malitem_image_style"
                 android:layout_alignParentStart="true" />
 
             <TextView
-                android:id="@+id/item_search_title"
+                android:id="@+id/adapterItemSearchTitle"
                 style="@style/malitem_heading_text_style"
                 android:layout_width="wrap_content"
-                android:layout_toEndOf="@+id/item_search_image"
-                android:layout_toStartOf="@+id/search_image_add_button"
+                android:layout_toEndOf="@+id/adapterItemSearchImage"
+                android:layout_toStartOf="@+id/adapterItemSearchAddImage"
                 android:maxLines="2"
                 android:text="@{model.title}"
                 tools:text="Really Long Anime Title That Spans Two Lines" />
 
             <TextView
-                android:id="@+id/item_search_type_text"
+                android:id="@+id/adapterItemSearchTypeText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/item_search_title"
+                android:layout_below="@+id/adapterItemSearchTitle"
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
-                android:layout_toEndOf="@+id/item_search_image"
-                android:layout_toStartOf="@+id/search_image_add_button"
+                android:layout_toEndOf="@+id/adapterItemSearchImage"
+                android:layout_toStartOf="@+id/adapterItemSearchAddImage"
                 tools:text="OVA" />
 
             <TextView
-                android:id="@+id/item_search_status_text"
+                android:id="@+id/adapterItemSearchStatusText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/item_search_type_text"
+                android:layout_below="@+id/adapterItemSearchTypeText"
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
-                android:layout_toEndOf="@+id/item_search_image"
-                android:layout_toStartOf="@+id/search_image_add_button"
+                android:layout_toEndOf="@+id/adapterItemSearchImage"
+                android:layout_toStartOf="@+id/adapterItemSearchAddImage"
                 tools:text="Finished" />
 
             <ImageButton
-                android:id="@+id/search_image_add_button"
+                android:id="@+id/adapterItemSearchAddImage"
                 style="@style/search_image_add_button_style"
                 android:layout_alignParentEnd="true"
                 android:layout_margin="8dp"
@@ -72,7 +71,7 @@
         </RelativeLayout>
 
         <RelativeLayout
-            android:id="@+id/item_search_loading_layout"
+            android:id="@+id/adapterItemSearchLoadingLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="gone">
