@@ -16,9 +16,7 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-
     }
-
     buildTypes {
         release {
             minifyEnabled false
@@ -28,6 +26,16 @@ android {
     testOptions {
         unitTests.returnDefaultValues = true
     }
+    lintOptions {
+        disable 'ColorCasing',
+                'InvalidImport',
+                'InvalidSingleLineComment',
+                'MissingXmlHeader',
+                'NamingPattern',
+                'ShouldUseStaticImport',
+                'WrongAnnotationOrder',
+                'XmlSpacing'
+    }
 }
 
 dependencies {
@@ -36,7 +44,7 @@ dependencies {
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
-    implementation 'androidx.appcompat:appcompat:1.0.0'
+    implementation 'androidx.appcompat:appcompat:1.0.2'
     api 'com.google.code.gson:gson:2.8.5'
     implementation "com.jakewharton.timber:timber:$timber_version"
     api 'com.squareup.retrofit2:retrofit:2.4.0'
@@ -44,17 +52,22 @@ dependencies {
     api 'com.squareup.okhttp3:logging-interceptor:3.11.0'
     implementation "io.reactivex.rxjava2:rxandroid:$rxandroid_version"
     implementation "io.reactivex.rxjava2:rxjava:$rxjava_version"
+    implementation "io.reactivex.rxjava2:rxkotlin:$rxjava_version"
 
     implementation "com.google.dagger:dagger:$dagger_version"
     implementation "com.google.dagger:dagger-android:$dagger_version"
     implementation "com.google.dagger:dagger-android-support:$dagger_version"
 
-    testImplementation 'junit:junit:4.12'
-    testImplementation 'org.mockito:mockito-core:2.22.0'
-    testImplementation 'com.nhaarman.mockitokotlin2:mockito-kotlin:2.0.0-RC2'
+    implementation 'com.vanniktech:lint-rules-android:0.8.0'
+    implementation 'com.vanniktech:lint-rules-rxjava2:0.8.0'
+    implementation 'nl.littlerobots.rxlint:rxlint:1.0'
 
-    androidTestImplementation 'androidx.test:runner:1.1.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
+    testImplementation 'junit:junit:4.12'
+    testImplementation 'org.mockito:mockito-core:2.23.0'
+    testImplementation 'com.nhaarman.mockitokotlin2:mockito-kotlin:2.0.0'
+
+    androidTestImplementation 'androidx.test:runner:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
 
     kapt "com.google.dagger:dagger-compiler:$dagger_version"
     kapt "com.google.dagger:dagger-android-processor:$dagger_version"

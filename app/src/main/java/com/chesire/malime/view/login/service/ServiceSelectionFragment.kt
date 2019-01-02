@@ -19,11 +19,11 @@ class ServiceSelectionFragment : DaggerFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_serviceselection, container, false)
-        view.findViewById<Button>(R.id.service_selection_mal_button).setOnClickListener {
+        val view = inflater.inflate(R.layout.fragment_service_selection, container, false)
+        view.findViewById<Button>(R.id.fragmentServiceSelectionMalButton).setOnClickListener {
             loginInteractor.serviceSelected(SupportedService.MyAnimeList)
         }
-        view.findViewById<Button>(R.id.service_selection_kitsu_button).setOnClickListener {
+        view.findViewById<Button>(R.id.fragmentServiceSelectionKitsuButton).setOnClickListener {
             loginInteractor.serviceSelected(SupportedService.Kitsu)
         }
 

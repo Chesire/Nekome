@@ -23,7 +23,7 @@ class LoginActivity : DaggerAppCompatActivity(), LoginInteractor {
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
                 .replace(
-                    R.id.activity_login_layout,
+                    R.id.activityLoginLayout,
                     KitsuLoginFragment.newInstance(),
                     KitsuLoginFragment.tag
                 )
@@ -49,7 +49,7 @@ class LoginActivity : DaggerAppCompatActivity(), LoginInteractor {
 
         supportFragmentManager.beginTransaction()
             .replace(
-                R.id.activity_login_layout,
+                R.id.activityLoginLayout,
                 fragment,
                 tag
             )

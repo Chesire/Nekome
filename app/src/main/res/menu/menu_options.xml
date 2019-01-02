@@ -2,19 +2,19 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/menu_options_filter"
+        android:id="@+id/menuOptionsFilter"
         android:icon="@drawable/ic_filter_list_black"
         android:title="@string/options_filter"
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/menu_options_sort"
+        android:id="@+id/menuOptionsSort"
         android:icon="@drawable/ic_sort_black"
         android:title="@string/options_sort"
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/menu_options_view_profile"
+        android:id="@+id/menuOptionsViewProfile"
         android:title="@string/options_view_profile" />
     <item
-        android:id="@+id/menu_options_log_out"
+        android:id="@+id/menuOptionsLogOut"
         android:title="@string/options_log_out" />
 </menu>

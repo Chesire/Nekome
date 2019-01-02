@@ -10,16 +10,16 @@ import com.chesire.malime.BR
 import com.chesire.malime.R
 import com.chesire.malime.core.flags.UserSeriesStatus
 import com.chesire.malime.core.models.MalimeModel
-import com.chesire.malime.databinding.ItemSearchBinding
+import com.chesire.malime.databinding.AdapterItemSearchBinding
 import com.chesire.malime.util.GlideApp
 import com.chesire.malime.util.extension.getString
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.item_search.view.item_search_content_layout
-import kotlinx.android.synthetic.main.item_search.view.item_search_image
-import kotlinx.android.synthetic.main.item_search.view.item_search_loading_layout
-import kotlinx.android.synthetic.main.item_search.view.item_search_status_text
-import kotlinx.android.synthetic.main.item_search.view.item_search_type_text
-import kotlinx.android.synthetic.main.item_search.view.search_image_add_button
+import kotlinx.android.synthetic.main.adapter_item_search.view.adapterItemSearchAddImage
+import kotlinx.android.synthetic.main.adapter_item_search.view.adapterItemSearchImage
+import kotlinx.android.synthetic.main.adapter_item_search.view.adapterItemSearchLayout
+import kotlinx.android.synthetic.main.adapter_item_search.view.adapterItemSearchLoadingLayout
+import kotlinx.android.synthetic.main.adapter_item_search.view.adapterItemSearchStatusText
+import kotlinx.android.synthetic.main.adapter_item_search.view.adapterItemSearchTypeText
 
 class SearchViewAdapter(
     private val interactor: SearchInteractionListener
@@ -41,7 +41,7 @@ class SearchViewAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
-            ItemSearchBinding.inflate(
+            AdapterItemSearchBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
@@ -56,10 +56,10 @@ class SearchViewAdapter(
     }
 
     inner class ViewHolder(
-        private val searchView: ItemSearchBinding
+        private val searchView: AdapterItemSearchBinding
     ) : RecyclerView.ViewHolder(searchView.root), PopupMenu.OnMenuItemClickListener {
-        private val loadingLayout = searchView.root.item_search_loading_layout
-        private val contentLayout = searchView.root.item_search_content_layout
+        private val loadingLayout = searchView.root.adapterItemSearchLoadingLayout
+        private val contentLayout = searchView.root.adapterItemSearchLayout
         private lateinit var malItem: MalimeModel
 
         fun bind(item: MalimeModel) {
@@ -72,38 +72,39 @@ class SearchViewAdapter(
                 .load(if (item.posterImage.isEmpty()) item.coverImage else item.posterImage)
                 .placeholder(R.drawable.ic_image_black)
                 .error(R.drawable.ic_broken_image_black)
-                .into(searchView.itemSearchImage)
+                .into(searchView.adapterItemSearchImage)
 
             if (currentItems.find { it.seriesId == item.seriesId } == null) {
-                searchView.searchImageAddButton.visibility = View.VISIBLE
+                searchView.adapterItemSearchAddImage.visibility = View.VISIBLE
                 contentLayout.alpha = 1f
             } else {
-                searchView.searchImageAddButton.visibility = View.INVISIBLE
+                searchView.adapterItemSearchAddImage.visibility = View.INVISIBLE
                 contentLayout.alpha = 0.3f
             }
 
             searchView.root.apply {
-                item_search_type_text.text = item.subtype.getString(context)
-                item_search_status_text.text = item.seriesStatus.getString(context)
-                item_search_image.setOnClickListener { interactor.showSeriesProfile(item) }
-                search_image_add_button.setOnClickListener { showAddMenu() }
+                adapterItemSearchTypeText.text = item.subtype.getString(context)
+                adapterItemSearchStatusText.text = item.seriesStatus.getString(context)
+                adapterItemSearchImage.setOnClickListener { interactor.showSeriesProfile(item) }
+                adapterItemSearchAddImage.setOnClickListener { showAddMenu() }
             }
         }
 
         private fun showAddMenu() {
-            val popup = PopupMenu(searchView.root.context, searchView.root.search_image_add_button)
-            popup.inflate(R.menu.menu_possible_states)
-            popup.setOnMenuItemClickListener(this)
-            popup.show()
+            PopupMenu(searchView.root.context, searchView.root.adapterItemSearchAddImage).apply {
+                inflate(R.menu.menu_possible_states)
+                setOnMenuItemClickListener(this@ViewHolder)
+                show()
+            }
         }
 
         override fun onMenuItemClick(item: MenuItem?): Boolean {
             when (item?.itemId) {
-                R.id.menu_maldisplay_state_complete -> addSeries(UserSeriesStatus.Completed)
-                R.id.menu_maldisplay_state_current -> addSeries(UserSeriesStatus.Current)
-                R.id.menu_maldisplay_state_dropped -> addSeries(UserSeriesStatus.Dropped)
-                R.id.menu_maldisplay_state_on_hold -> addSeries(UserSeriesStatus.OnHold)
-                R.id.menu_maldisplay_state_planned -> addSeries(UserSeriesStatus.Planned)
+                R.id.menuPossibleStatesComplete -> addSeries(UserSeriesStatus.Completed)
+                R.id.menuPossibleStatesCurrent -> addSeries(UserSeriesStatus.Current)
+                R.id.menuPossibleStatesDropped -> addSeries(UserSeriesStatus.Dropped)
+                R.id.menuPossibleStatesOnHold -> addSeries(UserSeriesStatus.OnHold)
+                R.id.menuPossibleStatesPlanned -> addSeries(UserSeriesStatus.Planned)
                 else -> return false
             }
             return true

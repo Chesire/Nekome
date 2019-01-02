@@ -41,18 +41,18 @@ class MainActivity : DaggerAppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.activity_main_navigation)
+        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.activityMainNavigation)
         bottomNavigationView.setOnNavigationItemSelectedListener { item: MenuItem ->
             val fragment: Fragment
             val tag: String
 
             when (item.itemId) {
-                R.id.menu_main_navigation_anime -> {
+                R.id.menuMainNavigationAnime -> {
                     tag = MalDisplayFragment.malDisplayAnime
                     fragment = supportFragmentManager.findFragmentByTag(tag)
                             ?: MalDisplayFragment.newInstance(ItemType.Anime)
                 }
-                R.id.menu_main_navigation_manga -> {
+                R.id.menuMainNavigationManga -> {
                     tag = MalDisplayFragment.malDisplayManga
                     fragment = supportFragmentManager.findFragmentByTag(tag)
                             ?: MalDisplayFragment.newInstance(ItemType.Manga)
@@ -93,11 +93,11 @@ class MainActivity : DaggerAppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when {
-            item?.itemId == R.id.menu_options_view_profile -> {
+            item?.itemId == R.id.menuOptionsViewProfile || item?.itemId == R.id.menuSearchViewProfile -> {
                 launchProfile()
                 return true
             }
-            item?.itemId == R.id.menu_options_log_out -> {
+            item?.itemId == R.id.menuOptionsLogOut || item?.itemId == R.id.menuSearchLogOut -> {
                 AlertDialog.Builder(this)
                     .setTitle(R.string.options_log_out)
                     .setMessage(R.string.log_out_confirmation)
@@ -109,7 +109,7 @@ class MainActivity : DaggerAppCompatActivity() {
 
                 return true
             }
-            item?.itemId == R.id.menu_options_sort -> {
+            item?.itemId == R.id.menuOptionsSort -> {
                 spawnSortDialog()
                 return true
             }
@@ -187,7 +187,7 @@ class MainActivity : DaggerAppCompatActivity() {
         var taggedFragment = supportFragmentManager.findFragmentByTag(fragmentTag)
         if (taggedFragment == null) {
             taggedFragment = fragment
-            transaction.add(R.id.activity_main_frame, taggedFragment, fragmentTag)
+            transaction.add(R.id.activityMainFrame, taggedFragment, fragmentTag)
         } else {
             transaction.attach(taggedFragment)
         }

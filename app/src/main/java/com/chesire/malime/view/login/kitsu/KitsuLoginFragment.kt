@@ -63,9 +63,9 @@ class KitsuLoginFragment : BaseLoginFragment() {
                 false
             ).apply {
                 binding = this
-                loginButton.setOnClickListener { executeLoginMethod() }
-                loginCreateAccount.setOnClickListener { createAccount() }
-                loginPasswordEditText.setOnEditorActionListener { _, actionId, _ ->
+                fragmentKitsuLoginButton.setOnClickListener { executeLoginMethod() }
+                fragmentKitsuLoginCreateAccountText.setOnClickListener { createAccount() }
+                fragmentKitsuLoginPasswordEditText.setOnEditorActionListener { _, actionId, _ ->
                     if (actionId == EditorInfo.IME_ACTION_DONE) {
                         executeLoginMethod()
                     }

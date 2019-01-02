@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/menu_maldisplay_state_complete"
+        android:id="@+id/menuPossibleStatesComplete"
         android:title="@string/filter_state_completed" />
     <item
-        android:id="@+id/menu_maldisplay_state_current"
+        android:id="@+id/menuPossibleStatesCurrent"
         android:title="@string/filter_state_current" />
     <item
-        android:id="@+id/menu_maldisplay_state_dropped"
+        android:id="@+id/menuPossibleStatesDropped"
         android:title="@string/filter_state_dropped" />
     <item
-        android:id="@+id/menu_maldisplay_state_on_hold"
+        android:id="@+id/menuPossibleStatesOnHold"
         android:title="@string/filter_state_on_hold" />
     <item
-        android:id="@+id/menu_maldisplay_state_planned"
+        android:id="@+id/menuPossibleStatesPlanned"
         android:title="@string/filter_state_planned" />
 </menu>

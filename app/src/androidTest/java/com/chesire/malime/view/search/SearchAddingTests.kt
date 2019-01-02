@@ -52,15 +52,15 @@ class SearchAddingTests {
     @Test
     fun sortOptionShouldNotBeAvailable() {
         activityRule.launchActivity(null)
-        clickOn(R.id.menu_main_navigation_search)
-        assertNotExist(R.id.menu_options_sort)
+        clickOn(R.id.menuMainNavigationSearch)
+        assertNotExist(R.id.menuOptionsSort)
     }
 
     @Test
     fun filterOptionShouldNotBeAvailable() {
         activityRule.launchActivity(null)
-        clickOn(R.id.menu_main_navigation_search)
-        assertNotExist(R.id.menu_options_filter)
+        clickOn(R.id.menuMainNavigationSearch)
+        assertNotExist(R.id.menuOptionsFilter)
     }
 
     @Test
@@ -75,15 +75,15 @@ class SearchAddingTests {
         `when`(libraryApi.addItem(model)).thenReturn(Single.error { Throwable("failureToAddAnimeProducesError") })
 
         activityRule.launchActivity(null)
-        clickOn(R.id.menu_main_navigation_search)
-        clickRadioButtonItem(R.id.search_option_choices, R.id.search_option_anime_choice)
-        onView(withId(R.id.search_search_term_edit_text)).perform(
+        clickOn(R.id.menuMainNavigationSearch)
+        clickRadioButtonItem(R.id.fragmentSearchOptionChoices, R.id.fragmentSearchOptionAnimeChoice)
+        onView(withId(R.id.fragmentSearchSearchEditText)).perform(
             typeText(VALID_SEARCH_SINGLE_ITEM),
             pressImeActionButton()
         )
 
         sleep(100)
-        clickListItemChild(R.id.search_all_items, 0, R.id.search_image_add_button)
+        clickListItemChild(R.id.fragmentSearchRecyclerView, 0, R.id.adapterItemSearchAddImage)
         onView(withText(R.string.filter_state_completed)).inRoot(isPlatformPopup()).perform(click())
 
         onToast(
@@ -107,15 +107,15 @@ class SearchAddingTests {
         `when`(libraryApi.addItem(model)).thenReturn(Single.error { Throwable("failureToAddMangaProducesError") })
 
         activityRule.launchActivity(null)
-        clickOn(R.id.menu_main_navigation_search)
-        clickRadioButtonItem(R.id.search_option_choices, R.id.search_option_manga_choice)
-        onView(withId(R.id.search_search_term_edit_text)).perform(
+        clickOn(R.id.menuMainNavigationSearch)
+        clickRadioButtonItem(R.id.fragmentSearchOptionChoices, R.id.fragmentSearchOptionMangaChoice)
+        onView(withId(R.id.fragmentSearchSearchEditText)).perform(
             typeText(VALID_SEARCH_SINGLE_ITEM),
             pressImeActionButton()
         )
 
         sleep(100)
-        clickListItemChild(R.id.search_all_items, 0, R.id.search_image_add_button)
+        clickListItemChild(R.id.fragmentSearchRecyclerView, 0, R.id.adapterItemSearchAddImage)
         onView(withText(R.string.filter_state_completed)).inRoot(isPlatformPopup()).perform(click())
 
         onToast(
@@ -139,15 +139,15 @@ class SearchAddingTests {
         `when`(libraryApi.addItem(model)).thenReturn(Single.just(model))
 
         activityRule.launchActivity(null)
-        clickOn(R.id.menu_main_navigation_search)
-        clickRadioButtonItem(R.id.search_option_choices, R.id.search_option_anime_choice)
-        onView(withId(R.id.search_search_term_edit_text)).perform(
+        clickOn(R.id.menuMainNavigationSearch)
+        clickRadioButtonItem(R.id.fragmentSearchOptionChoices, R.id.fragmentSearchOptionAnimeChoice)
+        onView(withId(R.id.fragmentSearchSearchEditText)).perform(
             typeText(VALID_SEARCH_SINGLE_ITEM),
             pressImeActionButton()
         )
 
         sleep(100)
-        clickListItemChild(R.id.search_all_items, 0, R.id.search_image_add_button)
+        clickListItemChild(R.id.fragmentSearchRecyclerView, 0, R.id.adapterItemSearchAddImage)
         onView(withText(R.string.filter_state_completed)).inRoot(isPlatformPopup()).perform(click())
 
         onToast(
@@ -171,15 +171,15 @@ class SearchAddingTests {
         `when`(libraryApi.addItem(model)).thenReturn(Single.just(model))
 
         activityRule.launchActivity(null)
-        clickOn(R.id.menu_main_navigation_search)
-        clickRadioButtonItem(R.id.search_option_choices, R.id.search_option_anime_choice)
-        onView(withId(R.id.search_search_term_edit_text)).perform(
+        clickOn(R.id.menuMainNavigationSearch)
+        clickRadioButtonItem(R.id.fragmentSearchOptionChoices, R.id.fragmentSearchOptionAnimeChoice)
+        onView(withId(R.id.fragmentSearchSearchEditText)).perform(
             typeText(VALID_SEARCH_SINGLE_ITEM),
             pressImeActionButton()
         )
 
         sleep(100)
-        clickListItemChild(R.id.search_all_items, 0, R.id.search_image_add_button)
+        clickListItemChild(R.id.fragmentSearchRecyclerView, 0, R.id.adapterItemSearchAddImage)
         onView(withText(R.string.filter_state_current)).inRoot(isPlatformPopup()).perform(click())
 
         onToast(
@@ -203,15 +203,15 @@ class SearchAddingTests {
         `when`(libraryApi.addItem(model)).thenReturn(Single.just(model))
 
         activityRule.launchActivity(null)
-        clickOn(R.id.menu_main_navigation_search)
-        clickRadioButtonItem(R.id.search_option_choices, R.id.search_option_anime_choice)
-        onView(withId(R.id.search_search_term_edit_text)).perform(
+        clickOn(R.id.menuMainNavigationSearch)
+        clickRadioButtonItem(R.id.fragmentSearchOptionChoices, R.id.fragmentSearchOptionAnimeChoice)
+        onView(withId(R.id.fragmentSearchSearchEditText)).perform(
             typeText(VALID_SEARCH_SINGLE_ITEM),
             pressImeActionButton()
         )
 
         sleep(100)
-        clickListItemChild(R.id.search_all_items, 0, R.id.search_image_add_button)
+        clickListItemChild(R.id.fragmentSearchRecyclerView, 0, R.id.adapterItemSearchAddImage)
         onView(withText(R.string.filter_state_dropped)).inRoot(isPlatformPopup()).perform(click())
 
         onToast(
@@ -235,15 +235,15 @@ class SearchAddingTests {
         `when`(libraryApi.addItem(model)).thenReturn(Single.just(model))
 
         activityRule.launchActivity(null)
-        clickOn(R.id.menu_main_navigation_search)
-        clickRadioButtonItem(R.id.search_option_choices, R.id.search_option_anime_choice)
-        onView(withId(R.id.search_search_term_edit_text)).perform(
+        clickOn(R.id.menuMainNavigationSearch)
+        clickRadioButtonItem(R.id.fragmentSearchOptionChoices, R.id.fragmentSearchOptionAnimeChoice)
+        onView(withId(R.id.fragmentSearchSearchEditText)).perform(
             typeText(VALID_SEARCH_SINGLE_ITEM),
             pressImeActionButton()
         )
 
         sleep(100)
-        clickListItemChild(R.id.search_all_items, 0, R.id.search_image_add_button)
+        clickListItemChild(R.id.fragmentSearchRecyclerView, 0, R.id.adapterItemSearchAddImage)
         onView(withText(R.string.filter_state_on_hold)).inRoot(isPlatformPopup()).perform(click())
 
         onToast(
@@ -267,15 +267,15 @@ class SearchAddingTests {
         `when`(libraryApi.addItem(model)).thenReturn(Single.just(model))
 
         activityRule.launchActivity(null)
-        clickOn(R.id.menu_main_navigation_search)
-        clickRadioButtonItem(R.id.search_option_choices, R.id.search_option_anime_choice)
-        onView(withId(R.id.search_search_term_edit_text)).perform(
+        clickOn(R.id.menuMainNavigationSearch)
+        clickRadioButtonItem(R.id.fragmentSearchOptionChoices, R.id.fragmentSearchOptionAnimeChoice)
+        onView(withId(R.id.fragmentSearchSearchEditText)).perform(
             typeText(VALID_SEARCH_SINGLE_ITEM),
             pressImeActionButton()
         )
 
         sleep(100)
-        clickListItemChild(R.id.search_all_items, 0, R.id.search_image_add_button)
+        clickListItemChild(R.id.fragmentSearchRecyclerView, 0, R.id.adapterItemSearchAddImage)
         onView(withText(R.string.filter_state_planned)).inRoot(isPlatformPopup()).perform(click())
 
         onToast(
@@ -299,15 +299,15 @@ class SearchAddingTests {
         `when`(libraryApi.addItem(model)).thenReturn(Single.just(model))
 
         activityRule.launchActivity(null)
-        clickOn(R.id.menu_main_navigation_search)
-        clickRadioButtonItem(R.id.search_option_choices, R.id.search_option_manga_choice)
-        onView(withId(R.id.search_search_term_edit_text)).perform(
+        clickOn(R.id.menuMainNavigationSearch)
+        clickRadioButtonItem(R.id.fragmentSearchOptionChoices, R.id.fragmentSearchOptionMangaChoice)
+        onView(withId(R.id.fragmentSearchSearchEditText)).perform(
             typeText(VALID_SEARCH_SINGLE_ITEM),
             pressImeActionButton()
         )
 
         sleep(100)
-        clickListItemChild(R.id.search_all_items, 0, R.id.search_image_add_button)
+        clickListItemChild(R.id.fragmentSearchRecyclerView, 0, R.id.adapterItemSearchAddImage)
         onView(withText(R.string.filter_state_completed)).inRoot(isPlatformPopup()).perform(click())
 
         onToast(
@@ -331,15 +331,15 @@ class SearchAddingTests {
         `when`(libraryApi.addItem(model)).thenReturn(Single.just(model))
 
         activityRule.launchActivity(null)
-        clickOn(R.id.menu_main_navigation_search)
-        clickRadioButtonItem(R.id.search_option_choices, R.id.search_option_manga_choice)
-        onView(withId(R.id.search_search_term_edit_text)).perform(
+        clickOn(R.id.menuMainNavigationSearch)
+        clickRadioButtonItem(R.id.fragmentSearchOptionChoices, R.id.fragmentSearchOptionMangaChoice)
+        onView(withId(R.id.fragmentSearchSearchEditText)).perform(
             typeText(VALID_SEARCH_SINGLE_ITEM),
             pressImeActionButton()
         )
 
         sleep(100)
-        clickListItemChild(R.id.search_all_items, 0, R.id.search_image_add_button)
+        clickListItemChild(R.id.fragmentSearchRecyclerView, 0, R.id.adapterItemSearchAddImage)
         onView(withText(R.string.filter_state_current)).inRoot(isPlatformPopup()).perform(click())
 
         onToast(
@@ -363,15 +363,15 @@ class SearchAddingTests {
         `when`(libraryApi.addItem(model)).thenReturn(Single.just(model))
 
         activityRule.launchActivity(null)
-        clickOn(R.id.menu_main_navigation_search)
-        clickRadioButtonItem(R.id.search_option_choices, R.id.search_option_manga_choice)
-        onView(withId(R.id.search_search_term_edit_text)).perform(
+        clickOn(R.id.menuMainNavigationSearch)
+        clickRadioButtonItem(R.id.fragmentSearchOptionChoices, R.id.fragmentSearchOptionMangaChoice)
+        onView(withId(R.id.fragmentSearchSearchEditText)).perform(
             typeText(VALID_SEARCH_SINGLE_ITEM),
             pressImeActionButton()
         )
 
         sleep(100)
-        clickListItemChild(R.id.search_all_items, 0, R.id.search_image_add_button)
+        clickListItemChild(R.id.fragmentSearchRecyclerView, 0, R.id.adapterItemSearchAddImage)
         onView(withText(R.string.filter_state_dropped)).inRoot(isPlatformPopup()).perform(click())
 
         onToast(
@@ -395,15 +395,15 @@ class SearchAddingTests {
         `when`(libraryApi.addItem(model)).thenReturn(Single.just(model))
 
         activityRule.launchActivity(null)
-        clickOn(R.id.menu_main_navigation_search)
-        clickRadioButtonItem(R.id.search_option_choices, R.id.search_option_manga_choice)
-        onView(withId(R.id.search_search_term_edit_text)).perform(
+        clickOn(R.id.menuMainNavigationSearch)
+        clickRadioButtonItem(R.id.fragmentSearchOptionChoices, R.id.fragmentSearchOptionMangaChoice)
+        onView(withId(R.id.fragmentSearchSearchEditText)).perform(
             typeText(VALID_SEARCH_SINGLE_ITEM),
             pressImeActionButton()
         )
 
         sleep(100)
-        clickListItemChild(R.id.search_all_items, 0, R.id.search_image_add_button)
+        clickListItemChild(R.id.fragmentSearchRecyclerView, 0, R.id.adapterItemSearchAddImage)
         onView(withText(R.string.filter_state_on_hold)).inRoot(isPlatformPopup()).perform(click())
 
         onToast(
@@ -427,15 +427,15 @@ class SearchAddingTests {
         `when`(libraryApi.addItem(model)).thenReturn(Single.just(model))
 
         activityRule.launchActivity(null)
-        clickOn(R.id.menu_main_navigation_search)
-        clickRadioButtonItem(R.id.search_option_choices, R.id.search_option_manga_choice)
-        onView(withId(R.id.search_search_term_edit_text)).perform(
+        clickOn(R.id.menuMainNavigationSearch)
+        clickRadioButtonItem(R.id.fragmentSearchOptionChoices, R.id.fragmentSearchOptionMangaChoice)
+        onView(withId(R.id.fragmentSearchSearchEditText)).perform(
             typeText(VALID_SEARCH_SINGLE_ITEM),
             pressImeActionButton()
         )
 
         sleep(100)
-        clickListItemChild(R.id.search_all_items, 0, R.id.search_image_add_button)
+        clickListItemChild(R.id.fragmentSearchRecyclerView, 0, R.id.adapterItemSearchAddImage)
         onView(withText(R.string.filter_state_planned)).inRoot(isPlatformPopup()).perform(click())
 
         onToast(
@@ -448,11 +448,9 @@ class SearchAddingTests {
     }
 
     @Test
-    @Ignore
+    @Ignore("Couldn't find anything that says how this could be tested, will need to at some point")
     fun canLaunchSeriesProfile() {
-        // Couldn't find anything that says how this could be tested...
-        // Leaving this here as it will need to be done at some point
     }
 
-    // TODO: Add test for making sure can't add multiple times
+    // Need to add test for making sure can't add multiple times
 }

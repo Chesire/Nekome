@@ -24,11 +24,11 @@ import com.chesire.malime.util.autoCleared
 import com.chesire.malime.util.extension.hideSystemKeyboard
 import com.google.android.material.snackbar.Snackbar
 import dagger.android.support.DaggerFragment
-import kotlinx.android.synthetic.main.fragment_search.search_search_term_edit_text
+import kotlinx.android.synthetic.main.fragment_search.fragmentSearchSearchEditText
 import javax.inject.Inject
 
 class SearchFragment : DaggerFragment(), SearchInteractionListener {
-    private var checkedOption = R.id.search_option_anime_choice
+    private var checkedOption = R.id.fragmentSearchOptionAnimeChoice
     private var binding by autoCleared<FragmentSearchBinding>()
     private lateinit var viewModel: SearchViewModel
     private lateinit var viewAdapter: SearchViewAdapter
@@ -58,7 +58,7 @@ class SearchFragment : DaggerFragment(), SearchInteractionListener {
             false
         ).apply {
             binding = this
-            searchAllItems.apply {
+            fragmentSearchRecyclerView.apply {
                 recyclerView = this
                 setHasFixedSize(true)
                 layoutManager =
@@ -73,7 +73,7 @@ class SearchFragment : DaggerFragment(), SearchInteractionListener {
                             LinearLayoutManager(requireContext())
                         }
             }
-            searchOptionChoices.setOnCheckedChangeListener { _, checkedId ->
+            fragmentSearchOptionChoices.setOnCheckedChangeListener { _, checkedId ->
                 checkedOption = checkedId
             }
         }.root
@@ -101,12 +101,12 @@ class SearchFragment : DaggerFragment(), SearchInteractionListener {
                         }
                     })
             }
-        search_search_term_edit_text.setOnEditorActionListener { _, _, _ ->
+        fragmentSearchSearchEditText.setOnEditorActionListener { _, _, _ ->
             requireActivity().hideSystemKeyboard(requireContext())
             viewModel.searchForSeries(
                 when (checkedOption) {
-                    R.id.search_option_anime_choice -> ItemType.Anime
-                    R.id.search_option_manga_choice -> ItemType.Manga
+                    R.id.fragmentSearchOptionAnimeChoice -> ItemType.Anime
+                    R.id.fragmentSearchOptionMangaChoice -> ItemType.Manga
                     else -> ItemType.Unknown
                 }
             ) {

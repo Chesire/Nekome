@@ -10,25 +10,25 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/maldisplay_layout"
+        android:id="@+id/fragmentMaldisplayLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-            android:id="@+id/maldisplay_swipe_refresh"
+            android:id="@+id/fragmentMaldisplaySwipeRefreshLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:onRefreshListener="@{() -> vm.checkForLatestSeries()}">
 
             <com.chesire.malime.view.maldisplay.EmptyableRecyclerView
-                android:id="@+id/maldisplay_recycler_view"
+                android:id="@+id/fragmentMaldisplayRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
         <TextView
-            android:id="@+id/maldisplay_empty_view"
+            android:id="@+id/fragmentMaldisplayEmptyView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/maldisplay_empty_title"

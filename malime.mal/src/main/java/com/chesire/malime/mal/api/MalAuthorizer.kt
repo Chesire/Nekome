@@ -15,7 +15,7 @@ private const val AUTH_ALIAS = "mal_private_auth"
 private const val PREFERENCE_AUTH = "pref_auth"
 private const val PREFERENCE_USER = "pref_user"
 
-// TODO: this should perform some caching on the credentials
+// This should perform some caching on the credentials
 @Singleton
 class MalAuthorizer @Inject constructor(context: Context) : Authorizer<String> {
     private val pref = context.getSharedPreferences(AUTH_PREF_FILE, Context.MODE_PRIVATE)

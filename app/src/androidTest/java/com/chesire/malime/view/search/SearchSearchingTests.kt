@@ -24,7 +24,7 @@ import com.chesire.malime.view.MainActivity
 import com.schibsted.spain.barista.assertion.BaristaRecyclerViewAssertions.assertRecyclerViewItemCount
 import com.schibsted.spain.barista.interaction.BaristaClickInteractions.clickOn
 import com.schibsted.spain.barista.interaction.BaristaRadioButtonInteractions.clickRadioButtonItem
-import com.schibsted.spain.barista.internal.viewaction.SleepViewAction.sleep
+import com.schibsted.spain.barista.interaction.BaristaSleepInteractions.sleep
 import io.reactivex.Single
 import org.junit.Rule
 import org.junit.Test
@@ -46,12 +46,12 @@ class SearchSearchingTests {
     @Test
     fun noAnimeSearchIsPerformedWithEmptySearchText() {
         activityRule.launchActivity(null)
-        clickOn(R.id.menu_main_navigation_search)
+        clickOn(R.id.menuMainNavigationSearch)
         clickRadioButtonItem(
-            R.id.search_option_choices,
-            R.id.search_option_anime_choice
+            R.id.fragmentSearchOptionChoices,
+            R.id.fragmentSearchOptionAnimeChoice
         )
-        onView(withId(R.id.search_search_term_edit_text)).perform(
+        onView(withId(R.id.fragmentSearchSearchEditText)).perform(
             clearText(),
             pressImeActionButton()
         )
@@ -64,12 +64,12 @@ class SearchSearchingTests {
     @Test
     fun noMangaSearchIsPerformedWithEmptySearchText() {
         activityRule.launchActivity(null)
-        clickOn(R.id.menu_main_navigation_search)
+        clickOn(R.id.menuMainNavigationSearch)
         clickRadioButtonItem(
-            R.id.search_option_choices,
-            R.id.search_option_manga_choice
+            R.id.fragmentSearchOptionChoices,
+            R.id.fragmentSearchOptionMangaChoice
         )
-        onView(withId(R.id.search_search_term_edit_text)).perform(
+        onView(withId(R.id.fragmentSearchSearchEditText)).perform(
             clearText(),
             pressImeActionButton()
         )
@@ -89,12 +89,12 @@ class SearchSearchingTests {
         ).thenReturn(Single.error { Throwable("failedAnimeSearchProducesError") })
 
         activityRule.launchActivity(null)
-        clickOn(R.id.menu_main_navigation_search)
+        clickOn(R.id.menuMainNavigationSearch)
         clickRadioButtonItem(
-            R.id.search_option_choices,
-            R.id.search_option_anime_choice
+            R.id.fragmentSearchOptionChoices,
+            R.id.fragmentSearchOptionAnimeChoice
         )
-        onView(withId(R.id.search_search_term_edit_text)).perform(
+        onView(withId(R.id.fragmentSearchSearchEditText)).perform(
             typeText(INVALID_SEARCH),
             pressImeActionButton()
         )
@@ -113,12 +113,12 @@ class SearchSearchingTests {
         ).thenReturn(Single.error { Throwable("failedAnimeSearchProducesError") })
 
         activityRule.launchActivity(null)
-        clickOn(R.id.menu_main_navigation_search)
+        clickOn(R.id.menuMainNavigationSearch)
         clickRadioButtonItem(
-            R.id.search_option_choices,
-            R.id.search_option_manga_choice
+            R.id.fragmentSearchOptionChoices,
+            R.id.fragmentSearchOptionMangaChoice
         )
-        onView(withId(R.id.search_search_term_edit_text)).perform(
+        onView(withId(R.id.fragmentSearchSearchEditText)).perform(
             typeText(INVALID_SEARCH),
             pressImeActionButton()
         )
@@ -137,12 +137,12 @@ class SearchSearchingTests {
         ).thenReturn(Single.just(listOf()))
 
         activityRule.launchActivity(null)
-        clickOn(R.id.menu_main_navigation_search)
+        clickOn(R.id.menuMainNavigationSearch)
         clickRadioButtonItem(
-            R.id.search_option_choices,
-            R.id.search_option_anime_choice
+            R.id.fragmentSearchOptionChoices,
+            R.id.fragmentSearchOptionAnimeChoice
         )
-        onView(withId(R.id.search_search_term_edit_text)).perform(
+        onView(withId(R.id.fragmentSearchSearchEditText)).perform(
             typeText(VALID_SEARCH_NO_ITEMS),
             pressImeActionButton()
         )
@@ -161,12 +161,12 @@ class SearchSearchingTests {
         ).thenReturn(Single.just(listOf()))
 
         activityRule.launchActivity(null)
-        clickOn(R.id.menu_main_navigation_search)
+        clickOn(R.id.menuMainNavigationSearch)
         clickRadioButtonItem(
-            R.id.search_option_choices,
-            R.id.search_option_manga_choice
+            R.id.fragmentSearchOptionChoices,
+            R.id.fragmentSearchOptionMangaChoice
         )
-        onView(withId(R.id.search_search_term_edit_text)).perform(
+        onView(withId(R.id.fragmentSearchSearchEditText)).perform(
             typeText(VALID_SEARCH_NO_ITEMS),
             pressImeActionButton()
         )
@@ -185,18 +185,18 @@ class SearchSearchingTests {
         ).thenReturn(Single.just(listOf(getMalimeModel(0))))
 
         activityRule.launchActivity(null)
-        clickOn(R.id.menu_main_navigation_search)
+        clickOn(R.id.menuMainNavigationSearch)
         clickRadioButtonItem(
-            R.id.search_option_choices,
-            R.id.search_option_anime_choice
+            R.id.fragmentSearchOptionChoices,
+            R.id.fragmentSearchOptionAnimeChoice
         )
-        onView(withId(R.id.search_search_term_edit_text)).perform(
+        onView(withId(R.id.fragmentSearchSearchEditText)).perform(
             typeText(VALID_SEARCH_SINGLE_ITEM),
             pressImeActionButton()
         )
 
         sleep(100)
-        assertRecyclerViewItemCount(R.id.search_all_items, 1)
+        assertRecyclerViewItemCount(R.id.fragmentSearchRecyclerView, 1)
     }
 
     @Test
@@ -209,18 +209,18 @@ class SearchSearchingTests {
         ).thenReturn(Single.just(listOf(getMalimeModel(0))))
 
         activityRule.launchActivity(null)
-        clickOn(R.id.menu_main_navigation_search)
+        clickOn(R.id.menuMainNavigationSearch)
         clickRadioButtonItem(
-            R.id.search_option_choices,
-            R.id.search_option_manga_choice
+            R.id.fragmentSearchOptionChoices,
+            R.id.fragmentSearchOptionMangaChoice
         )
-        onView(withId(R.id.search_search_term_edit_text)).perform(
+        onView(withId(R.id.fragmentSearchSearchEditText)).perform(
             typeText(VALID_SEARCH_SINGLE_ITEM),
             pressImeActionButton()
         )
 
         sleep(100)
-        assertRecyclerViewItemCount(R.id.search_all_items, 1)
+        assertRecyclerViewItemCount(R.id.fragmentSearchRecyclerView, 1)
     }
 
     @Test
@@ -249,18 +249,18 @@ class SearchSearchingTests {
         )
 
         activityRule.launchActivity(null)
-        clickOn(R.id.menu_main_navigation_search)
+        clickOn(R.id.menuMainNavigationSearch)
         clickRadioButtonItem(
-            R.id.search_option_choices,
-            R.id.search_option_anime_choice
+            R.id.fragmentSearchOptionChoices,
+            R.id.fragmentSearchOptionAnimeChoice
         )
-        onView(withId(R.id.search_search_term_edit_text)).perform(
+        onView(withId(R.id.fragmentSearchSearchEditText)).perform(
             typeText(VALID_SEARCH_MULTIPLE_ITEMS),
             pressImeActionButton()
         )
 
         sleep(100)
-        assertRecyclerViewItemCount(R.id.search_all_items, 11)
+        assertRecyclerViewItemCount(R.id.fragmentSearchRecyclerView, 11)
     }
 
     @Test
@@ -289,19 +289,19 @@ class SearchSearchingTests {
         )
 
         activityRule.launchActivity(null)
-        clickOn(R.id.menu_main_navigation_search)
+        clickOn(R.id.menuMainNavigationSearch)
         clickRadioButtonItem(
-            R.id.search_option_choices,
-            R.id.search_option_manga_choice
+            R.id.fragmentSearchOptionChoices,
+            R.id.fragmentSearchOptionMangaChoice
         )
-        onView(withId(R.id.search_search_term_edit_text)).perform(
+        onView(withId(R.id.fragmentSearchSearchEditText)).perform(
             typeText(VALID_SEARCH_MULTIPLE_ITEMS),
             pressImeActionButton()
         )
 
         sleep(100)
-        assertRecyclerViewItemCount(R.id.search_all_items, 11)
+        assertRecyclerViewItemCount(R.id.fragmentSearchRecyclerView, 11)
     }
 
-    // TODO: Add test for if item is already saved, that UI is different on search
+    // Need to add test for if item is already saved, that UI is different on search
 }
