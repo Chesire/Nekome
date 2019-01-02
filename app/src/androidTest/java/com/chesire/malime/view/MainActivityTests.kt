@@ -21,6 +21,8 @@ import com.chesire.malime.injection.espressoDaggerMockRule
 import com.chesire.malime.view.login.LoginActivity
 import com.chesire.malime.view.preferences.PrefActivity
 import com.google.android.material.bottomnavigation.BottomNavigationItemView
+import com.schibsted.spain.barista.assertion.BaristaVisibilityAssertions.assertDisplayed
+import com.schibsted.spain.barista.interaction.BaristaClickInteractions.clickOn
 import org.hamcrest.Description
 import org.hamcrest.Matcher
 import org.junit.After

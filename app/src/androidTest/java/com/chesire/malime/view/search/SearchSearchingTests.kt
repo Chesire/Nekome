@@ -21,6 +21,10 @@ import com.chesire.malime.getMalimeModel
 import com.chesire.malime.injection.espressoDaggerMockRule
 import com.chesire.malime.tools.ToastMatcher.Companion.onToast
 import com.chesire.malime.view.MainActivity
+import com.schibsted.spain.barista.assertion.BaristaRecyclerViewAssertions.assertRecyclerViewItemCount
+import com.schibsted.spain.barista.interaction.BaristaClickInteractions.clickOn
+import com.schibsted.spain.barista.interaction.BaristaRadioButtonInteractions.clickRadioButtonItem
+import com.schibsted.spain.barista.interaction.BaristaSleepInteractions.sleep
 import io.reactivex.Single
 import org.junit.Rule
 import org.junit.Test
