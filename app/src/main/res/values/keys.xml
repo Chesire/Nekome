@@ -6,6 +6,7 @@
     <string name="key_allow_crash_reporting">allowCrashReporting</string>
     <string name="key_update_scheduler_enabled">seriesUpdateSchedulerEnabled</string>
     <string name="key_refresh_scheduler_enabled">refreshTokenSchedulerEnabled</string>
+    <string name="key_app_starting_screen">appStartingScreen</string>
     <string name="key_force_block_services">forceBlockServices</string>
     <string name="key_anime_filter_length">animeFilterLength</string>
     <string name="key_primary_service">primaryService</string>

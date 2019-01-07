@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="applicationStartingScreens">
+        <item>@string/main_nav_anime</item>
+        <item>@string/main_nav_manga</item>
+        <item>@string/main_nav_search</item>
+    </array>
+</resources>

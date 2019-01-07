@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <androidx.preference.DropDownPreference
+        android:entries="@array/applicationStartingScreens"
+        android:entryValues="@array/applicationStartingScreens"
+        android:key="@string/key_app_starting_screen"
+        android:summary="Choose the screen to first display when application starts"
+        android:title="Application starting screen" />
 
     <androidx.preference.CheckBoxPreference
         android:defaultValue="true"
