@@ -17,6 +17,7 @@ import com.chesire.malime.util.SharedPref
 import com.chesire.malime.util.UrlLoader
 import com.chesire.malime.view.login.LoginActivity
 import com.chesire.malime.view.maldisplay.MalDisplayFragment
+import com.chesire.malime.view.preferences.PrefActivity
 import com.chesire.malime.view.preferences.SortOption
 import com.chesire.malime.view.search.SearchFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -95,6 +96,10 @@ class MainActivity : DaggerAppCompatActivity() {
         when {
             item?.itemId == R.id.menuOptionsViewProfile || item?.itemId == R.id.menuSearchViewProfile -> {
                 launchProfile()
+                return true
+            }
+            item?.itemId == R.id.menuOptionsSettings -> {
+                startActivity(Intent(this, PrefActivity::class.java))
                 return true
             }
             item?.itemId == R.id.menuOptionsLogOut || item?.itemId == R.id.menuSearchLogOut -> {
