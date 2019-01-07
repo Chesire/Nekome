@@ -72,8 +72,8 @@ class SharedPref @Inject constructor(context: Context) {
     @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
     val appStartingScreen: NavigationScreen
         get() {
-            val string = sharedPreferences.getString(_appStartingScreen, "Anime")
-            return NavigationScreen.valueOf(string)
+            val s = sharedPreferences.getString(_appStartingScreen, NavigationScreen.Anime.name)
+            return NavigationScreen.valueOf(s)
         }
 
     var forceBlockServices: Boolean
