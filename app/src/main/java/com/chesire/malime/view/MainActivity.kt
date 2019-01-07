@@ -20,14 +20,13 @@ import com.chesire.malime.view.maldisplay.MalDisplayFragment
 import com.chesire.malime.view.preferences.PrefActivity
 import com.chesire.malime.view.preferences.SortOption
 import com.chesire.malime.view.search.SearchFragment
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.activityMainNavigation
 import timber.log.Timber
 import javax.inject.Inject
 
 class MainActivity : DaggerAppCompatActivity() {
-    private var currentDisplayedFragmentTagBundleId = "currentFragment"
+    private val currentDisplayedFragmentTagBundleId = "currentFragment"
     private var currentDisplayedFragmentTag = ""
 
     @Inject
