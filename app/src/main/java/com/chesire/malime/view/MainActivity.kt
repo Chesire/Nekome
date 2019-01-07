@@ -22,6 +22,7 @@ import com.chesire.malime.view.preferences.SortOption
 import com.chesire.malime.view.search.SearchFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.android.support.DaggerAppCompatActivity
+import kotlinx.android.synthetic.main.activity_main.activityMainNavigation
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -42,19 +43,18 @@ class MainActivity : DaggerAppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.activityMainNavigation)
-        bottomNavigationView.setOnNavigationItemSelectedListener { item: MenuItem ->
+        activityMainNavigation.setOnNavigationItemSelectedListener { item: MenuItem ->
             when (item.itemId) {
-                R.id.menuMainNavigationAnime -> chooseNavigationScreen(NavigationScreen.Anime)
-                R.id.menuMainNavigationManga -> chooseNavigationScreen(NavigationScreen.Manga)
-                R.id.menuMainNavigationSearch -> chooseNavigationScreen(NavigationScreen.Search)
+                R.id.menuMainNavigationAnime -> navigateTo(NavigationScreen.Anime)
+                R.id.menuMainNavigationManga -> navigateTo(NavigationScreen.Manga)
+                R.id.menuMainNavigationSearch -> navigateTo(NavigationScreen.Search)
             }
 
             true
         }
 
         if (savedInstanceState == null) {
-            chooseNavigationScreen(sharedPref.appStartingScreen)
+            navigateTo(sharedPref.appStartingScreen)
         } else {
             currentDisplayedFragmentTag =
                     savedInstanceState.getString(currentDisplayedFragmentTagBundleId)
@@ -151,7 +151,7 @@ class MainActivity : DaggerAppCompatActivity() {
         }
     }
 
-    private fun chooseNavigationScreen(screen: NavigationScreen) {
+    private fun navigateTo(screen: NavigationScreen) {
         val fragment: Fragment
         val tag: String
 
