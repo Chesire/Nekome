@@ -22,11 +22,6 @@ class PrefFragment : PreferenceFragmentCompat() {
 
     companion object {
         const val tag = "PrefFragment"
-        fun newInstance(): PrefFragment {
-            val prefFragment = PrefFragment()
-            val args = Bundle()
-            prefFragment.arguments = args
-            return prefFragment
-        }
+        fun newInstance() = PrefFragment().apply { arguments = Bundle() }
     }
 }
