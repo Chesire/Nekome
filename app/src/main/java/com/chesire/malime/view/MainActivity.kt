@@ -44,36 +44,17 @@ class MainActivity : DaggerAppCompatActivity() {
 
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.activityMainNavigation)
         bottomNavigationView.setOnNavigationItemSelectedListener { item: MenuItem ->
-            val fragment: Fragment
-            val tag: String
-
             when (item.itemId) {
-                R.id.menuMainNavigationAnime -> {
-                    tag = MalDisplayFragment.malDisplayAnime
-                    fragment = supportFragmentManager.findFragmentByTag(tag)
-                            ?: MalDisplayFragment.newInstance(ItemType.Anime)
-                }
-                R.id.menuMainNavigationManga -> {
-                    tag = MalDisplayFragment.malDisplayManga
-                    fragment = supportFragmentManager.findFragmentByTag(tag)
-                            ?: MalDisplayFragment.newInstance(ItemType.Manga)
-                }
-                else -> {
-                    tag = SearchFragment.tag
-                    fragment = supportFragmentManager.findFragmentByTag(tag)
-                            ?: SearchFragment.newInstance()
-                }
+                R.id.menuMainNavigationAnime -> chooseNavigationScreen(NavigationScreen.Anime)
+                R.id.menuMainNavigationManga -> chooseNavigationScreen(NavigationScreen.Manga)
+                R.id.menuMainNavigationSearch -> chooseNavigationScreen(NavigationScreen.Search)
             }
 
-            setFragment(fragment, tag)
             true
         }
 
         if (savedInstanceState == null) {
-            setFragment(
-                MalDisplayFragment.newInstance(ItemType.Anime),
-                MalDisplayFragment.malDisplayAnime
-            )
+            chooseNavigationScreen(sharedPref.appStartingScreen)
         } else {
             currentDisplayedFragmentTag =
                     savedInstanceState.getString(currentDisplayedFragmentTagBundleId)
@@ -168,6 +149,31 @@ class MainActivity : DaggerAppCompatActivity() {
         authorization.getUser<Int?>(primaryService)?.let {
             urlLoader.loadProfile(this, primaryService, it)
         }
+    }
+
+    private fun chooseNavigationScreen(screen: NavigationScreen) {
+        val fragment: Fragment
+        val tag: String
+
+        when (screen) {
+            NavigationScreen.Anime -> {
+                tag = MalDisplayFragment.malDisplayAnime
+                fragment = supportFragmentManager.findFragmentByTag(tag)
+                        ?: MalDisplayFragment.newInstance(ItemType.Anime)
+            }
+            NavigationScreen.Manga -> {
+                tag = MalDisplayFragment.malDisplayManga
+                fragment = supportFragmentManager.findFragmentByTag(tag)
+                        ?: MalDisplayFragment.newInstance(ItemType.Manga)
+            }
+            NavigationScreen.Search -> {
+                tag = SearchFragment.tag
+                fragment = supportFragmentManager.findFragmentByTag(tag)
+                        ?: SearchFragment.newInstance()
+            }
+        }
+
+        setFragment(fragment, tag)
     }
 
     private fun setFragment(fragment: Fragment, fragmentTag: String) {

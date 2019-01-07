@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import com.chesire.malime.R
 import com.chesire.malime.core.flags.SupportedService
+import com.chesire.malime.view.NavigationScreen
 import com.chesire.malime.view.preferences.SortOption
 import javax.inject.Inject
 
@@ -11,6 +12,7 @@ class SharedPref @Inject constructor(context: Context) {
     // private val allowCrashReporting = context.getString(R.string.key_allow_crash_reporting)
     private val _updateSchedulerEnabled = context.getString(R.string.key_update_scheduler_enabled)
     private val _refreshSchedulerEnabled = context.getString(R.string.key_refresh_scheduler_enabled)
+    private val _appStartingScreen = context.getString(R.string.key_app_starting_screen)
     private val _forceBlockServices = context.getString(R.string.key_force_block_services)
     private val _primaryService = context.getString(R.string.key_primary_service)
     private val _animeFilterLength = context.getString(R.string.key_anime_filter_length)
@@ -66,6 +68,13 @@ class SharedPref @Inject constructor(context: Context) {
     var refreshTokenSchedulerEnabled: Boolean
         get() = sharedPreferences.getBoolean(_refreshSchedulerEnabled, false)
         set(enabled) = sharedPreferences.edit { it.put(_refreshSchedulerEnabled to enabled) }
+
+    @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
+    val appStartingScreen: NavigationScreen
+        get() {
+            val string = sharedPreferences.getString(_appStartingScreen, "Anime")
+            return NavigationScreen.valueOf(string)
+        }
 
     var forceBlockServices: Boolean
         get() = sharedPreferences.getBoolean(_forceBlockServices, false)
