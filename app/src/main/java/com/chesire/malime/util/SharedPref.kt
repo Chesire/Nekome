@@ -25,12 +25,20 @@ class SharedPref @Inject constructor(context: Context) {
             Context.MODE_PRIVATE
         )
 
+    @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
     var primaryService: SupportedService
         get() {
             val pref = sharedPreferences.getString(_primaryService, SupportedService.Unknown.name)
             return SupportedService.valueOf(pref)
         }
         set(service) = sharedPreferences.edit { it.put(_primaryService to service.name) }
+
+    @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
+    val appStartingScreen: NavigationScreen
+        get() {
+            val pref = sharedPreferences.getString(_appStartingScreen, NavigationScreen.Anime.name)
+            return NavigationScreen.valueOf(pref)
+        }
 
     var filter: BooleanArray
         get() {
@@ -68,13 +76,6 @@ class SharedPref @Inject constructor(context: Context) {
     var refreshTokenSchedulerEnabled: Boolean
         get() = sharedPreferences.getBoolean(_refreshSchedulerEnabled, false)
         set(enabled) = sharedPreferences.edit { it.put(_refreshSchedulerEnabled to enabled) }
-
-    @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
-    val appStartingScreen: NavigationScreen
-        get() {
-            val s = sharedPreferences.getString(_appStartingScreen, NavigationScreen.Anime.name)
-            return NavigationScreen.valueOf(s)
-        }
 
     var forceBlockServices: Boolean
         get() = sharedPreferences.getBoolean(_forceBlockServices, false)
