@@ -50,12 +50,12 @@ class MalDisplaySortTests {
     }
 
     @Test
-    @Ignore
+    @Ignore("Not yet implemented")
     fun sortByDefault() {
     }
 
     @Test
-    @Ignore
+    @Ignore("Not yet implemented")
     fun sortByTitle() {
         val models = listOf(
             getMalimeModel(seriesId = 0, title = "B", type = ItemType.Anime),
@@ -67,34 +67,36 @@ class MalDisplaySortTests {
         `when`(mockDao.getAll()).thenReturn(Flowable.just(models))
 
         activityRule.launchActivity(null)
-        clickOn(R.id.menu_main_navigation_anime)
+        clickOn(R.id.menuMainNavigationAnime)
 
-        clickMenu(R.id.menu_options_sort)
+        clickMenu(R.id.menuOptionsSort)
         onView(withText(R.string.sort_choice_title))
             .inRoot(isDialog())
             .check(matches(isDisplayed()))
             .perform(click())
 
         clickDialogPositiveButton()
+
+        // check order of the view items now
     }
 
     @Test
-    @Ignore
+    @Ignore("Not yet implemented")
     fun sortByStartDate() {
     }
 
     @Test
-    @Ignore
+    @Ignore("Not yet implemented")
     fun sortByEndDate() {
     }
 
     @Test
-    @Ignore
+    @Ignore("Not yet implemented")
     fun animeViewOnlyShowsAnimeItemType() {
     }
 
     @Test
-    @Ignore
+    @Ignore("Not yet implemented")
     fun mangaViewOnlyShowsMangaItemType() {
     }
 }
