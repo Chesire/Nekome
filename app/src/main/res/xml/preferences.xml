@@ -7,6 +7,7 @@
         android:summary="@string/preference_title_app_start"
         android:title="@string/preference_summary_app_start" />
 
+    <!--
     <androidx.preference.CheckBoxPreference
         android:defaultValue="true"
         android:key="@string/key_allow_crash_reporting"
@@ -17,5 +18,6 @@
         android:key="@string/key_view_licenses"
         android:summary="@string/preference_summary_view_licenses"
         android:title="@string/preference_title_view_licenses" />
+    -->
 
 </androidx.preference.PreferenceScreen>
