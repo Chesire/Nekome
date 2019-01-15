@@ -34,11 +34,12 @@ class SharedPref @Inject constructor(context: Context) {
         set(service) = sharedPreferences.edit { it.put(_primaryService to service.name) }
 
     @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
-    val appStartingScreen: NavigationScreen
+    var appStartingScreen: NavigationScreen
         get() {
             val pref = sharedPreferences.getString(_appStartingScreen, NavigationScreen.Anime.name)
             return NavigationScreen.valueOf(pref)
         }
+        set(screen) = sharedPreferences.edit { it.put(_appStartingScreen to screen.name) }
 
     var filter: BooleanArray
         get() {
