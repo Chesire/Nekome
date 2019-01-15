@@ -4,6 +4,9 @@
         android:id="@+id/menuSearchViewProfile"
         android:title="@string/options_view_profile" />
     <item
+        android:id="@+id/menuSearchSettings"
+        android:title="@string/options_settings" />
+    <item
         android:id="@+id/menuSearchLogOut"
         android:title="@string/options_log_out" />
 </menu>

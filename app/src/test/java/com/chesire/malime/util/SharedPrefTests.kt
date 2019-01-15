@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import com.chesire.malime.R
 import com.chesire.malime.core.flags.SupportedService
+import com.chesire.malime.view.NavigationScreen
 import com.chesire.malime.view.preferences.SortOption
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
@@ -19,6 +20,7 @@ private const val UPDATE_SCHEDULER_ENABLED = "updateschedulerenabled"
 private const val REFRESH_SCHEDULER_ENABLED = "refreshschedulerenabled"
 private const val FORCE_BLOCK_SERVICES = "forceblockservices"
 private const val PRIMARY_SERVICE = "primaryservice"
+private const val APP_STARTING_SCREEN = "appstartingscreen"
 private const val ANIME_FILTER_LENGTH = "animefilterlength"
 private const val FILTER = "filter"
 private const val SORT_OPTION = "sortoption"
@@ -32,6 +34,7 @@ class SharedPrefTests {
         }.thenReturn(REFRESH_SCHEDULER_ENABLED)
         on { getString(R.string.key_force_block_services) }.thenReturn(FORCE_BLOCK_SERVICES)
         on { getString(R.string.key_primary_service) }.thenReturn(PRIMARY_SERVICE)
+        on { getString(R.string.key_app_starting_screen) }.thenReturn(APP_STARTING_SCREEN)
         on { getString(R.string.key_anime_filter_length) }.thenReturn(ANIME_FILTER_LENGTH)
         on { getString(R.string.key_filter) }.thenReturn(FILTER)
         on { getString(R.string.key_sort) }.thenReturn(SORT_OPTION)
@@ -59,6 +62,27 @@ class SharedPrefTests {
     }
 
     @Test
+    fun `appStartingScreen get() returns NavigationScreen`() {
+        val mockPrefEditor = mock<SharedPreferences.Editor>(defaultAnswer = RETURNS_SELF) { }
+        val mockPreferences = mock<SharedPreferences> {
+            on { edit() }.thenReturn(mockPrefEditor)
+            on {
+                getString(APP_STARTING_SCREEN, NavigationScreen.Anime.name)
+            }.thenReturn(NavigationScreen.Manga.name)
+        }
+        `when`(
+            mockContext.getSharedPreferences(
+                SHARED_PREF_FILE_NAME,
+                Context.MODE_PRIVATE
+            )
+        ).thenReturn(mockPreferences)
+
+        val classUnderTest = SharedPref(mockContext)
+
+        assertEquals(NavigationScreen.Manga, classUnderTest.appStartingScreen)
+    }
+
+    @Test
     fun `primaryService set() changes sharedPreferences value`() {
         val mockPrefEditor = mock<SharedPreferences.Editor>(defaultAnswer = RETURNS_SELF) { }
         val mockPreferences = mock<SharedPreferences> {
@@ -75,6 +99,25 @@ class SharedPrefTests {
 
         classUnderTest.primaryService = SupportedService.MyAnimeList
         verify(mockPrefEditor).putString(PRIMARY_SERVICE, SupportedService.MyAnimeList.name)
+    }
+
+    @Test
+    fun `appStartingScreen set() changes sharedPreferences value`() {
+        val mockPrefEditor = mock<SharedPreferences.Editor>(defaultAnswer = RETURNS_SELF) { }
+        val mockPreferences = mock<SharedPreferences> {
+            on { edit() }.thenReturn(mockPrefEditor)
+        }
+        `when`(
+            mockContext.getSharedPreferences(
+                SHARED_PREF_FILE_NAME,
+                Context.MODE_PRIVATE
+            )
+        ).thenReturn(mockPreferences)
+
+        val classUnderTest = SharedPref(mockContext)
+
+        classUnderTest.appStartingScreen = NavigationScreen.Manga
+        verify(mockPrefEditor).putString(APP_STARTING_SCREEN, NavigationScreen.Manga.name)
     }
 
     @Test

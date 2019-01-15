@@ -18,6 +18,7 @@ import androidx.test.runner.AndroidJUnit4
 import com.chesire.malime.R
 import com.chesire.malime.core.repositories.Authorization
 import com.chesire.malime.injection.espressoDaggerMockRule
+import com.chesire.malime.util.SharedPref
 import com.chesire.malime.view.login.LoginActivity
 import com.chesire.malime.view.preferences.PrefActivity
 import com.google.android.material.bottomnavigation.BottomNavigationItemView
@@ -32,6 +33,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
+import org.mockito.Mockito.`when`
 
 @RunWith(AndroidJUnit4::class)
 class MainActivityTests {
@@ -43,6 +45,9 @@ class MainActivityTests {
 
     @Mock
     lateinit var authorization: Authorization
+
+    @Mock
+    lateinit var sharedPref: SharedPref
 
     @Before
     fun setUp() {
@@ -56,6 +61,7 @@ class MainActivityTests {
 
     @Test
     fun canNavigateToAnimeView() {
+        `when`(sharedPref.appStartingScreen).thenReturn(NavigationScreen.Anime)
         activityRule.launchActivity(null)
         clickOn(R.id.menuMainNavigationAnime)
 
@@ -73,6 +79,7 @@ class MainActivityTests {
 
     @Test
     fun canNavigateToMangaView() {
+        `when`(sharedPref.appStartingScreen).thenReturn(NavigationScreen.Anime)
         activityRule.launchActivity(null)
         clickOn(R.id.menuMainNavigationManga)
 
@@ -90,8 +97,60 @@ class MainActivityTests {
 
     @Test
     fun canNavigateToSearchView() {
+        `when`(sharedPref.appStartingScreen).thenReturn(NavigationScreen.Anime)
         activityRule.launchActivity(null)
         clickOn(R.id.menuMainNavigationSearch)
+
+        onView(withId(R.id.menuMainNavigationAnime)).check(
+            matches(withBottomNavItemCheckedStatus(false))
+        )
+        onView(withId(R.id.menuMainNavigationManga)).check(
+            matches(withBottomNavItemCheckedStatus(false))
+        )
+        onView(withId(R.id.menuMainNavigationSearch)).check(
+            matches(withBottomNavItemCheckedStatus(true))
+        )
+        assertDisplayed(R.id.fragmentSearchLayout)
+    }
+
+    @Test
+    fun activityCanStartInAnimeView() {
+        `when`(sharedPref.appStartingScreen).thenReturn(NavigationScreen.Anime)
+        activityRule.launchActivity(null)
+
+        onView(withId(R.id.menuMainNavigationAnime)).check(
+            matches(withBottomNavItemCheckedStatus(true))
+        )
+        onView(withId(R.id.menuMainNavigationManga)).check(
+            matches(withBottomNavItemCheckedStatus(false))
+        )
+        onView(withId(R.id.menuMainNavigationSearch)).check(
+            matches(withBottomNavItemCheckedStatus(false))
+        )
+        assertDisplayed(R.id.fragmentMaldisplayLayout)
+    }
+
+    @Test
+    fun activityCanStartInMangaView() {
+        `when`(sharedPref.appStartingScreen).thenReturn(NavigationScreen.Manga)
+        activityRule.launchActivity(null)
+
+        onView(withId(R.id.menuMainNavigationAnime)).check(
+            matches(withBottomNavItemCheckedStatus(false))
+        )
+        onView(withId(R.id.menuMainNavigationManga)).check(
+            matches(withBottomNavItemCheckedStatus(true))
+        )
+        onView(withId(R.id.menuMainNavigationSearch)).check(
+            matches(withBottomNavItemCheckedStatus(false))
+        )
+        assertDisplayed(R.id.fragmentMaldisplayLayout)
+    }
+
+    @Test
+    fun activityCanStartInSearchView() {
+        `when`(sharedPref.appStartingScreen).thenReturn(NavigationScreen.Search)
+        activityRule.launchActivity(null)
 
         onView(withId(R.id.menuMainNavigationAnime)).check(
             matches(withBottomNavItemCheckedStatus(false))
@@ -111,8 +170,8 @@ class MainActivityTests {
     }
 
     @Test
-    @Ignore("Settings is no longer displayed")
     fun canLaunchPreferencesFromMalDisplay() {
+        `when`(sharedPref.appStartingScreen).thenReturn(NavigationScreen.Anime)
         activityRule.launchActivity(null)
         clickOn(R.id.menuMainNavigationAnime)
         openActionBarOverflowOrOptionsMenu(activityRule.activity)
@@ -122,8 +181,8 @@ class MainActivityTests {
     }
 
     @Test
-    @Ignore("Settings is no longer displayed")
     fun canLaunchPreferencesFromSearch() {
+        `when`(sharedPref.appStartingScreen).thenReturn(NavigationScreen.Anime)
         activityRule.launchActivity(null)
         clickOn(R.id.menuMainNavigationSearch)
         openActionBarOverflowOrOptionsMenu(activityRule.activity)
@@ -134,6 +193,7 @@ class MainActivityTests {
 
     @Test
     fun executingLogoutGoesBackToLogin() {
+        `when`(sharedPref.appStartingScreen).thenReturn(NavigationScreen.Anime)
         activityRule.launchActivity(null)
 
         clickOn(R.id.menuMainNavigationAnime)

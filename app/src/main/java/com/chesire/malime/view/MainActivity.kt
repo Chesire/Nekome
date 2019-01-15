@@ -17,15 +17,16 @@ import com.chesire.malime.util.SharedPref
 import com.chesire.malime.util.UrlLoader
 import com.chesire.malime.view.login.LoginActivity
 import com.chesire.malime.view.maldisplay.MalDisplayFragment
+import com.chesire.malime.view.preferences.PrefActivity
 import com.chesire.malime.view.preferences.SortOption
 import com.chesire.malime.view.search.SearchFragment
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.android.support.DaggerAppCompatActivity
+import kotlinx.android.synthetic.main.activity_main.activityMainNavigation
 import timber.log.Timber
 import javax.inject.Inject
 
 class MainActivity : DaggerAppCompatActivity() {
-    private var currentDisplayedFragmentTagBundleId = "currentFragment"
+    private val currentDisplayedFragmentTagBundleId = "currentFragment"
     private var currentDisplayedFragmentTag = ""
 
     @Inject
@@ -41,38 +42,23 @@ class MainActivity : DaggerAppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.activityMainNavigation)
-        bottomNavigationView.setOnNavigationItemSelectedListener { item: MenuItem ->
-            val fragment: Fragment
-            val tag: String
-
+        activityMainNavigation.setOnNavigationItemSelectedListener { item: MenuItem ->
             when (item.itemId) {
-                R.id.menuMainNavigationAnime -> {
-                    tag = MalDisplayFragment.malDisplayAnime
-                    fragment = supportFragmentManager.findFragmentByTag(tag)
-                            ?: MalDisplayFragment.newInstance(ItemType.Anime)
-                }
-                R.id.menuMainNavigationManga -> {
-                    tag = MalDisplayFragment.malDisplayManga
-                    fragment = supportFragmentManager.findFragmentByTag(tag)
-                            ?: MalDisplayFragment.newInstance(ItemType.Manga)
-                }
-                else -> {
-                    tag = SearchFragment.tag
-                    fragment = supportFragmentManager.findFragmentByTag(tag)
-                            ?: SearchFragment.newInstance()
-                }
+                R.id.menuMainNavigationAnime -> navigateTo(NavigationScreen.Anime)
+                R.id.menuMainNavigationManga -> navigateTo(NavigationScreen.Manga)
+                R.id.menuMainNavigationSearch -> navigateTo(NavigationScreen.Search)
             }
 
-            setFragment(fragment, tag)
             true
         }
 
         if (savedInstanceState == null) {
-            setFragment(
-                MalDisplayFragment.newInstance(ItemType.Anime),
-                MalDisplayFragment.malDisplayAnime
-            )
+            // This fires the navigation item selected listener to perform navigation logic
+            activityMainNavigation.selectedItemId = when (sharedPref.appStartingScreen) {
+                NavigationScreen.Anime -> R.id.menuMainNavigationAnime
+                NavigationScreen.Manga -> R.id.menuMainNavigationManga
+                NavigationScreen.Search -> R.id.menuMainNavigationSearch
+            }
         } else {
             currentDisplayedFragmentTag =
                     savedInstanceState.getString(currentDisplayedFragmentTagBundleId)
@@ -95,6 +81,10 @@ class MainActivity : DaggerAppCompatActivity() {
         when {
             item?.itemId == R.id.menuOptionsViewProfile || item?.itemId == R.id.menuSearchViewProfile -> {
                 launchProfile()
+                return true
+            }
+            item?.itemId == R.id.menuOptionsSettings || item?.itemId == R.id.menuSearchSettings -> {
+                startActivity(Intent(this, PrefActivity::class.java))
                 return true
             }
             item?.itemId == R.id.menuOptionsLogOut || item?.itemId == R.id.menuSearchLogOut -> {
@@ -163,6 +153,31 @@ class MainActivity : DaggerAppCompatActivity() {
         authorization.getUser<Int?>(primaryService)?.let {
             urlLoader.loadProfile(this, primaryService, it)
         }
+    }
+
+    private fun navigateTo(screen: NavigationScreen) {
+        val fragment: Fragment
+        val tag: String
+
+        when (screen) {
+            NavigationScreen.Anime -> {
+                tag = MalDisplayFragment.malDisplayAnime
+                fragment = supportFragmentManager.findFragmentByTag(tag)
+                        ?: MalDisplayFragment.newInstance(ItemType.Anime)
+            }
+            NavigationScreen.Manga -> {
+                tag = MalDisplayFragment.malDisplayManga
+                fragment = supportFragmentManager.findFragmentByTag(tag)
+                        ?: MalDisplayFragment.newInstance(ItemType.Manga)
+            }
+            NavigationScreen.Search -> {
+                tag = SearchFragment.tag
+                fragment = supportFragmentManager.findFragmentByTag(tag)
+                        ?: SearchFragment.newInstance()
+            }
+        }
+
+        setFragment(fragment, tag)
     }
 
     private fun setFragment(fragment: Fragment, fragmentTag: String) {
