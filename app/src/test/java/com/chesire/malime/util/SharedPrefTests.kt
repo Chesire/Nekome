@@ -102,6 +102,25 @@ class SharedPrefTests {
     }
 
     @Test
+    fun `appStartingScreen set() changes sharedPreferences value`() {
+        val mockPrefEditor = mock<SharedPreferences.Editor>(defaultAnswer = RETURNS_SELF) { }
+        val mockPreferences = mock<SharedPreferences> {
+            on { edit() }.thenReturn(mockPrefEditor)
+        }
+        `when`(
+            mockContext.getSharedPreferences(
+                SHARED_PREF_FILE_NAME,
+                Context.MODE_PRIVATE
+            )
+        ).thenReturn(mockPreferences)
+
+        val classUnderTest = SharedPref(mockContext)
+
+        classUnderTest.appStartingScreen = NavigationScreen.Manga
+        verify(mockPrefEditor).putString(APP_STARTING_SCREEN, NavigationScreen.Manga.name)
+    }
+
+    @Test
     fun `filter get() no stored filter length uses default filter`() {
         val mockPrefEditor = mock<SharedPreferences.Editor>(defaultAnswer = RETURNS_SELF) { }
         val mockPreferences = mock<SharedPreferences> {
