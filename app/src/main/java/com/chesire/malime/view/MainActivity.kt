@@ -53,7 +53,12 @@ class MainActivity : DaggerAppCompatActivity() {
         }
 
         if (savedInstanceState == null) {
-            navigateTo(sharedPref.appStartingScreen)
+            // This fires the navigation item selected listener to perform navigation logic
+            activityMainNavigation.selectedItemId = when (sharedPref.appStartingScreen) {
+                NavigationScreen.Anime -> R.id.menuMainNavigationAnime
+                NavigationScreen.Manga -> R.id.menuMainNavigationManga
+                NavigationScreen.Search -> R.id.menuMainNavigationSearch
+            }
         } else {
             currentDisplayedFragmentTag =
                     savedInstanceState.getString(currentDisplayedFragmentTagBundleId)
@@ -78,7 +83,7 @@ class MainActivity : DaggerAppCompatActivity() {
                 launchProfile()
                 return true
             }
-            item?.itemId == R.id.menuOptionsSettings -> {
+            item?.itemId == R.id.menuOptionsSettings || item?.itemId == R.id.menuSearchSettings -> {
                 startActivity(Intent(this, PrefActivity::class.java))
                 return true
             }
