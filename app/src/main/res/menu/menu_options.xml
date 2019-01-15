@@ -15,6 +15,9 @@
         android:id="@+id/menuOptionsViewProfile"
         android:title="@string/options_view_profile" />
     <item
+        android:id="@+id/menuOptionsSettings"
+        android:title="@string/options_settings" />
+    <item
         android:id="@+id/menuOptionsLogOut"
         android:title="@string/options_log_out" />
 </menu>

@@ -9,6 +9,7 @@
     <string name="key_force_block_services">forceBlockServices</string>
     <string name="key_anime_filter_length">animeFilterLength</string>
     <string name="key_primary_service">primaryService</string>
+    <string name="key_app_starting_screen">appStartingScreen</string>
     <string name="key_filter">filter</string>
     <string name="key_sort">sort</string>
 </resources>

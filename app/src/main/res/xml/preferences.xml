@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <androidx.preference.DropDownPreference
+        android:entries="@array/applicationStartingScreens"
+        android:entryValues="@array/applicationStartingScreens"
+        android:key="@string/key_app_starting_screen"
+        android:summary="@string/preference_summary_app_start"
+        android:title="@string/preference_title_app_start" />
 
+    <!--
     <androidx.preference.CheckBoxPreference
         android:defaultValue="true"
         android:key="@string/key_allow_crash_reporting"
@@ -11,5 +18,6 @@
         android:key="@string/key_view_licenses"
         android:summary="@string/preference_summary_view_licenses"
         android:title="@string/preference_title_view_licenses" />
+    -->
 
 </androidx.preference.PreferenceScreen>

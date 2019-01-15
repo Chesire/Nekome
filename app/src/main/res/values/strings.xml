@@ -8,6 +8,8 @@
     <string name="preference_summary_crash_reporting">Allow anonymous crash reporting?</string>
     <string name="preference_title_view_licenses">View License Information</string>
     <string name="preference_summary_view_licenses">View license information of open source libraries used</string>
+    <string name="preference_title_app_start">Application Starting Screen</string>
+    <string name="preference_summary_app_start">Choose the screen to first display when application starts</string>
 
     <string name="service_selection_header">Select your primary tracking service</string>
     <string name="service_selection_mal">MyAnimeList</string>

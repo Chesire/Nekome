@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import com.chesire.malime.R
 import com.chesire.malime.core.flags.SupportedService
+import com.chesire.malime.view.NavigationScreen
 import com.chesire.malime.view.preferences.SortOption
 import javax.inject.Inject
 
@@ -11,6 +12,7 @@ class SharedPref @Inject constructor(context: Context) {
     // private val allowCrashReporting = context.getString(R.string.key_allow_crash_reporting)
     private val _updateSchedulerEnabled = context.getString(R.string.key_update_scheduler_enabled)
     private val _refreshSchedulerEnabled = context.getString(R.string.key_refresh_scheduler_enabled)
+    private val _appStartingScreen = context.getString(R.string.key_app_starting_screen)
     private val _forceBlockServices = context.getString(R.string.key_force_block_services)
     private val _primaryService = context.getString(R.string.key_primary_service)
     private val _animeFilterLength = context.getString(R.string.key_anime_filter_length)
@@ -23,12 +25,21 @@ class SharedPref @Inject constructor(context: Context) {
             Context.MODE_PRIVATE
         )
 
+    @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
     var primaryService: SupportedService
         get() {
             val pref = sharedPreferences.getString(_primaryService, SupportedService.Unknown.name)
             return SupportedService.valueOf(pref)
         }
         set(service) = sharedPreferences.edit { it.put(_primaryService to service.name) }
+
+    @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
+    var appStartingScreen: NavigationScreen
+        get() {
+            val pref = sharedPreferences.getString(_appStartingScreen, NavigationScreen.Anime.name)
+            return NavigationScreen.valueOf(pref)
+        }
+        set(screen) = sharedPreferences.edit { it.put(_appStartingScreen to screen.name) }
 
     var filter: BooleanArray
         get() {
