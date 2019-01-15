@@ -4,8 +4,8 @@
         android:entries="@array/applicationStartingScreens"
         android:entryValues="@array/applicationStartingScreens"
         android:key="@string/key_app_starting_screen"
-        android:summary="@string/preference_title_app_start"
-        android:title="@string/preference_summary_app_start" />
+        android:summary="@string/preference_summary_app_start"
+        android:title="@string/preference_title_app_start" />
 
     <!--
     <androidx.preference.CheckBoxPreference
