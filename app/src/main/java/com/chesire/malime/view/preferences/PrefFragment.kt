@@ -11,15 +11,6 @@ class PrefFragment : PreferenceFragmentCompat() {
         addPreferencesFromResource(R.xml.preferences)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        //findPreference(getString(R.string.key_view_licenses)).setOnPreferenceClickListener {
-        //    startActivity(Intent(requireActivity(), OssLicensesMenuActivity::class.java))
-        //    true
-        //}
-    }
-
     companion object {
         const val tag = "PrefFragment"
         fun newInstance() = PrefFragment().apply { arguments = Bundle() }
