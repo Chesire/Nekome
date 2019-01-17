@@ -6,8 +6,8 @@
 
     <string name="preference_title_crash_reporting">Crash Reporting</string>
     <string name="preference_summary_crash_reporting">Allow anonymous crash reporting?</string>
-    <string name="preference_title_view_licenses">View License Information</string>
-    <string name="preference_summary_view_licenses">View license information of open source libraries used</string>
+    <string name="preference_title_about_app">About App</string>
+    <string name="preference_summary_about_app">View information of open source libraries used</string>
     <string name="preference_title_app_start">Application Starting Screen</string>
     <string name="preference_summary_app_start">Choose the screen to first display when application starts</string>
 
@@ -101,4 +101,9 @@
     <string name="search_add_failed">Failed to add %s, please try again</string>
     <string name="search_failed_general_error">Search failed, please try again</string>
     <string name="search_failed_no_items">No items found</string>
+
+    <string name="aboutLibraries_description_title">Malime licenses</string>
+    <string name="aboutLibraries_description_showIcon">true</string>
+    <string name="aboutLibraries_description_showVersion">true</string>
+    <string name="aboutLibraries_description_text">Malime was created using many popular third party open source libraries, and is open source itself. The source code is available at https://github.com/Chesire/Malime</string>
 </resources>

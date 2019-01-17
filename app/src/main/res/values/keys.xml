@@ -2,7 +2,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <string name="key_shared_pref_file_name">malime_shared_pref</string>
 
-    <string name="key_view_licenses">viewLicenses</string>
+    <string name="key_about_app">aboutApp</string>
     <string name="key_allow_crash_reporting">allowCrashReporting</string>
     <string name="key_update_scheduler_enabled">seriesUpdateSchedulerEnabled</string>
     <string name="key_refresh_scheduler_enabled">refreshTokenSchedulerEnabled</string>
