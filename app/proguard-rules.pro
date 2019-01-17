@@ -56,5 +56,12 @@
     @org.simpleframework.xml.* <init>(...);
 }
 
+# AboutLibraries
+# Exclude R from ProGuard to enable the libraries auto detection
+-keep class .R
+-keep class **.R$* {
+    <fields>;
+}
+
 # Other
 -dontwarn javax.annotation.**
