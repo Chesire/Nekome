@@ -1,1 +1,5 @@
-<manifest package="com.chesire.malime.kitsu" />
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.chesire.malime.kitsu">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+</manifest>
