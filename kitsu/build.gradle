@@ -41,7 +41,6 @@ dependencies {
 
     implementation 'androidx.appcompat:appcompat:1.0.2'
     implementation 'com.squareup.moshi:moshi:1.8.0'
-    implementation 'com.squareup.moshi:moshi-kotlin:1.8.0'
     implementation "com.squareup.retrofit2:converter-moshi:2.4.0"
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'
     implementation 'com.vanniktech:lint-rules-android:0.8.0'

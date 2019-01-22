@@ -1,7 +1,9 @@
 package com.chesire.malime.kitsu.models.response
 
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
+@JsonClass(generateAdapter = true)
 data class LoginResponse(
     @Json(name = "access_token")
     val accessToken: String,

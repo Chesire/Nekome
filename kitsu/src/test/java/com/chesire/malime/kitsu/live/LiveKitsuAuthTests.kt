@@ -3,7 +3,6 @@ package com.chesire.malime.kitsu.live
 import com.chesire.malime.kitsu.api.KitsuAuthService
 import com.chesire.malime.kitsu.models.request.LoginRequest
 import com.squareup.moshi.Moshi
-import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okhttp3.OkHttpClient
 import org.junit.Ignore
 import org.junit.Test
@@ -15,7 +14,6 @@ class LiveKitsuAuthTests {
     @Test
     fun `attempt login`() {
         val moshi = Moshi.Builder()
-            .add(KotlinJsonAdapterFactory())
             .build()
         val service = Retrofit.Builder()
             .baseUrl("https://kitsu.io/")
