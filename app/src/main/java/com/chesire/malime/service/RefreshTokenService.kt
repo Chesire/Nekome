@@ -5,6 +5,7 @@ import android.app.job.JobService
 import com.chesire.malime.core.api.AuthApi
 import com.chesire.malime.core.api.Authorizer
 import com.chesire.malime.util.ComputationScheduler
+import com.chesire.malime.util.SharedPref
 import dagger.android.AndroidInjection
 import io.reactivex.Scheduler
 import timber.log.Timber
@@ -20,6 +21,8 @@ class RefreshTokenService : JobService() {
     @Inject
     @field:ComputationScheduler
     lateinit var subscribeScheduler: Scheduler
+    @Inject
+    lateinit var sharedPref: SharedPref
 
     override fun onCreate() {
         super.onCreate()
@@ -50,6 +53,11 @@ class RefreshTokenService : JobService() {
     }
 
     private fun refreshAuthTokens(params: JobParameters?, refreshToken: String) {
+        if (sharedPref.forceBlockServices) {
+            Timber.w("Refresh token was cancelled, due to force block of services")
+            return
+        }
+
         authApi.getNewAuthToken(refreshToken)
             .subscribeOn(subscribeScheduler)
             .subscribe({
