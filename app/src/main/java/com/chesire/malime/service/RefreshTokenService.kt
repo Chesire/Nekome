@@ -58,7 +58,7 @@ class RefreshTokenService : JobService() {
             return
         }
 
-        authApi.getNewAuthToken(refreshToken)
+        val disposable = authApi.getNewAuthToken(refreshToken)
             .subscribeOn(subscribeScheduler)
             .subscribe({
                 Timber.d("Refresh token service has received new auth token")

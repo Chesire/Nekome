@@ -38,7 +38,7 @@ class PeriodicUpdateService : JobService() {
             return
         }
 
-        library.updateLibraryFromApi()
+        val disposable = library.updateLibraryFromApi()
             .subscribeOn(subscribeScheduler)
             .subscribe({
                 Timber.d("Periodic update service has received new library")
