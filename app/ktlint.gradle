@@ -3,7 +3,7 @@ project.configurations {
 }
 
 project.dependencies {
-    ktlint "com.github.shyiko:ktlint:0.26.0"
+    ktlint "com.github.shyiko:ktlint:0.30.0"
 }
 
 task ktlint(type: JavaExec, group: "verification") {
