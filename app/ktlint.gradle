@@ -16,10 +16,3 @@ task ktlint(type: JavaExec, group: "verification") {
     // see https://github.com/shyiko/ktlint#usage for more
 }
 check.dependsOn ktlint
-
-task ktlintFormat(type: JavaExec, group: "formatting") {
-    description = "Fix Kotlin code style deviations."
-    classpath = configurations.ktlint
-    main = "com.github.shyiko.ktlint.Main"
-    args "-F", "src/**/*.kt"
-}
