@@ -20,6 +20,7 @@ import retrofit2.http.Query
 /**
  * Provides a Retrofit service to interact with the Kitsu API.
  */
+@Suppress("ComplexInterface")
 interface KitsuService {
     @POST("api/oauth/token")
     fun login(@Body body: LoginRequest): Call<LoginResponse>
