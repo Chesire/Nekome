@@ -93,20 +93,20 @@ dependencies {
     implementation "com.google.dagger:dagger-android:$dagger_version"
     implementation "com.google.dagger:dagger-android-support:$dagger_version"
 
-    implementation 'com.mikepenz:aboutlibraries:6.2.0'
+    implementation 'com.mikepenz:aboutlibraries:6.2.3'
 
-    implementation 'com.vanniktech:lint-rules-android:0.8.0'
-    implementation 'com.vanniktech:lint-rules-rxjava2:0.8.0'
-    implementation 'nl.littlerobots.rxlint:rxlint:1.0'
+    implementation 'com.vanniktech:lint-rules-android:0.9.0'
+    implementation 'com.vanniktech:lint-rules-rxjava2:0.9.0'
+    implementation 'nl.littlerobots.rxlint:rxlint:1.7.3'
 
-    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.6.1'
-    debugImplementation 'com.squareup.leakcanary:leakcanary-support-fragment:1.6.1'
-    releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.6.1'
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.6.3'
+    debugImplementation 'com.squareup.leakcanary:leakcanary-support-fragment:1.6.3'
+    releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.6.3'
 
-    testImplementation 'androidx.room:room-testing:2.1.0-alpha03'
+    testImplementation 'androidx.room:room-testing:2.1.0-alpha04'
     testImplementation 'androidx.arch.core:core-testing:2.0.0'
-    testImplementation 'org.mockito:mockito-core:2.23.0'
-    testImplementation 'com.nhaarman.mockitokotlin2:mockito-kotlin:2.0.0'
+    testImplementation 'org.mockito:mockito-core:2.24.0'
+    testImplementation 'com.nhaarman.mockitokotlin2:mockito-kotlin:2.1.0'
     androidTestImplementation 'androidx.test.ext:junit:1.1.0'
     androidTestImplementation 'androidx.test:rules:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
@@ -114,7 +114,7 @@ dependencies {
     androidTestImplementation 'com.github.fabioCollini.daggermock:daggermock:0.8.4'
     androidTestImplementation 'com.github.fabioCollini.daggermock:daggermock-kotlin:0.8.4'
     androidTestImplementation 'com.github.tmurakami:dexopener:1.0.4'
-    androidTestImplementation 'org.mockito:mockito-android:2.22.0'
+    androidTestImplementation 'org.mockito:mockito-android:2.24.0'
     androidTestImplementation('com.schibsted.spain:barista:2.5.0') {
         exclude group: 'com.android.support'
         exclude group: 'org.jetbrains.kotlin'
