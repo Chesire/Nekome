@@ -3,7 +3,7 @@ buildscript {
     ext.dokka_version = '0.9.16'
     ext.glide_version = "4.8.0"
     ext.jacoco_version = '0.8.2'
-    ext.kotlin_version = '1.3.11'
+    ext.kotlin_version = '1.3.21'
     ext.rxandroid_version = '2.1.0'
     ext.rxjava_version = '2.2.0'
     ext.timber_version = '4.7.1'
@@ -12,7 +12,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.3.0'
+        classpath 'com.android.tools.build:gradle:3.3.1'
         classpath "org.jacoco:org.jacoco.core:$jacoco_version"
         classpath "org.jetbrains.dokka:dokka-android-gradle-plugin:$dokka_version"
         classpath "org.jetbrains.kotlin:kotlin-allopen:$kotlin_version"
@@ -21,7 +21,7 @@ buildscript {
 }
 
 plugins {
-    id "io.gitlab.arturbosch.detekt" version "1.0.0.RC9.2"
+    id "io.gitlab.arturbosch.detekt" version "1.0.0-RC12"
 }
 
 allprojects {
@@ -33,7 +33,7 @@ allprojects {
 }
 
 detekt {
-    toolVersion = "1.0.0.RC9.2"
+    toolVersion = "1.0.0-RC12"
     config = files("detekt.yml")
     input = files(
             "app/src/main/java",

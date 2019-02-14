@@ -111,6 +111,7 @@ class KitsuManager @Inject constructor(
             }
     }
 
+    @Suppress("ComplexMethod", "LoopWithTooManyJumpStatements")
     private fun getUserEntriesForType(type: ItemType): Observable<List<MalimeModel>> {
         return Observable.create {
             var page = 0
@@ -356,7 +357,7 @@ class KitsuManager @Inject constructor(
         return originalItem.copy().apply {
             progress = updateItem.data.attributes.progress
             userSeriesStatus =
-                    UserSeriesStatus.getStatusForKitsuString(updateItem.data.attributes.status)
+                UserSeriesStatus.getStatusForKitsuString(updateItem.data.attributes.status)
         }
     }
 }

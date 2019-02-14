@@ -27,6 +27,7 @@ android {
         unitTests.returnDefaultValues = true
     }
     lintOptions {
+        abortOnError false // remove this later on
         disable 'ColorCasing',
                 'InvalidImport',
                 'InvalidSingleLineComment',
@@ -35,6 +36,10 @@ android {
                 'ShouldUseStaticImport',
                 'WrongAnnotationOrder',
                 'XmlSpacing'
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 
@@ -47,9 +52,9 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.0.2'
     api 'com.google.code.gson:gson:2.8.5'
     implementation "com.jakewharton.timber:timber:$timber_version"
-    api 'com.squareup.retrofit2:retrofit:2.4.0'
-    api 'com.squareup.retrofit2:converter-gson:2.4.0'
-    api 'com.squareup.okhttp3:logging-interceptor:3.11.0'
+    api 'com.squareup.retrofit2:retrofit:2.5.0'
+    api 'com.squareup.retrofit2:converter-gson:2.5.0'
+    api 'com.squareup.okhttp3:logging-interceptor:3.13.1'
     implementation "io.reactivex.rxjava2:rxandroid:$rxandroid_version"
     implementation "io.reactivex.rxjava2:rxjava:$rxjava_version"
     implementation "io.reactivex.rxjava2:rxkotlin:$rxjava_version"
@@ -58,13 +63,13 @@ dependencies {
     implementation "com.google.dagger:dagger-android:$dagger_version"
     implementation "com.google.dagger:dagger-android-support:$dagger_version"
 
-    implementation 'com.vanniktech:lint-rules-android:0.8.0'
-    implementation 'com.vanniktech:lint-rules-rxjava2:0.8.0'
-    implementation 'nl.littlerobots.rxlint:rxlint:1.0'
+    implementation 'com.vanniktech:lint-rules-android:0.9.0'
+    implementation 'com.vanniktech:lint-rules-rxjava2:0.9.0'
+    implementation 'nl.littlerobots.rxlint:rxlint:1.7.3'
 
     testImplementation 'junit:junit:4.12'
-    testImplementation 'org.mockito:mockito-core:2.23.0'
-    testImplementation 'com.nhaarman.mockitokotlin2:mockito-kotlin:2.0.0'
+    testImplementation 'org.mockito:mockito-core:2.24.0'
+    testImplementation 'com.nhaarman.mockitokotlin2:mockito-kotlin:2.1.0'
 
     androidTestImplementation 'androidx.test:runner:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
