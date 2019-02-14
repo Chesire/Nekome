@@ -52,6 +52,7 @@ class MainActivityTests {
     @Before
     fun setUp() {
         Intents.init()
+        `when`(sharedPref.forceBlockServices).thenReturn(true)
     }
 
     @After

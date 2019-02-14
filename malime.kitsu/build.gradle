@@ -27,6 +27,7 @@ android {
         unitTests.returnDefaultValues = true
     }
     lintOptions {
+        abortOnError false // remove this later on
         disable 'ColorCasing',
                 'InvalidImport',
                 'InvalidSingleLineComment',
@@ -35,6 +36,10 @@ android {
                 'ShouldUseStaticImport',
                 'WrongAnnotationOrder',
                 'XmlSpacing'
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 
