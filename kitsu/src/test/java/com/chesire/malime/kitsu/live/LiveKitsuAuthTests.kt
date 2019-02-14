@@ -27,7 +27,7 @@ class LiveKitsuAuthTests {
             .create(KitsuAuthService::class.java)
 
         val job = launch {
-            val result = service.login(LoginRequest("Test", "Test")).await()
+            val result = service.loginAsync(LoginRequest("Test", "Test")).await()
 
             if (result.isSuccessful) {
                 val body = result.body()
