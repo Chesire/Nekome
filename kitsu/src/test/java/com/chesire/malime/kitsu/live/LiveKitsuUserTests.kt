@@ -1,5 +1,6 @@
 package com.chesire.malime.kitsu.live
 
+import com.chesire.malime.kitsu.adapters.ParsingImageToImageAdapter
 import com.chesire.malime.kitsu.adapters.RatingSystemAdapter
 import com.chesire.malime.kitsu.api.KitsuUserService
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
@@ -20,6 +21,7 @@ class LiveKitsuUserTests {
     fun `attempt getUserDetails`() = runBlocking {
         val moshi = Moshi.Builder()
             .add(RatingSystemAdapter())
+            .add(ParsingImageToImageAdapter())
             .build()
 
         val httpClient = OkHttpClient()
@@ -53,7 +55,7 @@ class KitsuAuthInterceptor : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request()
 
-        // DO NOT COMMIT
+        // DO NOT COMMIT THE AUTH VALUE
         val authenticatedRequest = request.newBuilder()
             .header(
                 "Authorization",

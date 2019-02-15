@@ -8,6 +8,7 @@ private const val ADVANCED = "advanced"
 private const val REGULAR = "regular"
 private const val SIMPLE = "simple"
 
+@Suppress("unused")
 class RatingSystemAdapter {
     @FromJson
     fun ratingFromString(ratingString: String): RatingSystem {
