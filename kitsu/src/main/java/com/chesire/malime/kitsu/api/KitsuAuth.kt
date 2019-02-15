@@ -11,7 +11,6 @@ import retrofit2.Response
 class KitsuAuth(
     private val authService: KitsuAuthService
 ) : AuthApi {
-
     override suspend fun login(username: String, password: String): Resource<AuthModel> {
         val callResponse = authService.loginAsync(LoginRequest(username, password))
         return handleResponse(callResponse.await())

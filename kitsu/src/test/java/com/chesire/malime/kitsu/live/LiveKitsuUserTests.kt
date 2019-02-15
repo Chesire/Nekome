@@ -1,7 +1,8 @@
 package com.chesire.malime.kitsu.live
 
-import com.chesire.malime.kitsu.adapters.ParsingImageToImageAdapter
+import com.chesire.malime.kitsu.adapters.ImageModelAdapter
 import com.chesire.malime.kitsu.adapters.RatingSystemAdapter
+import com.chesire.malime.kitsu.adapters.UserModelAdapter
 import com.chesire.malime.kitsu.api.KitsuUserService
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.squareup.moshi.Moshi
@@ -21,7 +22,8 @@ class LiveKitsuUserTests {
     fun `attempt getUserDetails`() = runBlocking {
         val moshi = Moshi.Builder()
             .add(RatingSystemAdapter())
-            .add(ParsingImageToImageAdapter())
+            .add(ImageModelAdapter())
+            .add(UserModelAdapter())
             .build()
 
         val httpClient = OkHttpClient()
@@ -59,7 +61,7 @@ class KitsuAuthInterceptor : Interceptor {
         val authenticatedRequest = request.newBuilder()
             .header(
                 "Authorization",
-                "Bearer SECRET"
+                "Bearer "
             )
             .build()
 

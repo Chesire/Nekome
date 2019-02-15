@@ -6,7 +6,7 @@ import com.chesire.malime.kitsu.models.response.parsing.ParsingImageModel
 import com.squareup.moshi.FromJson
 
 @Suppress("unused")
-class ParsingImageToImageAdapter {
+class ImageModelAdapter {
     @FromJson
     fun imageFromParsingImage(parsingImage: ParsingImageModel): ImageModel {
         return ImageModel(
