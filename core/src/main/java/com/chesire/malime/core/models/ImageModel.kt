@@ -15,15 +15,15 @@ data class ImageModel(
                 large = ImageData.empty
             )
     }
-}
 
-data class ImageData(
-    val url: String,
-    val width: Int,
-    val height: Int
-) {
-    companion object {
-        val empty
-            get() = ImageData("", 0, 0)
+    data class ImageData(
+        val url: String,
+        val width: Int,
+        val height: Int
+    ) {
+        companion object {
+            val empty
+                get() = ImageData("", 0, 0)
+        }
     }
 }
