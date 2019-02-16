@@ -6,7 +6,6 @@ import com.chesire.malime.kitsu.adapters.SeriesTypeAdapter
 import com.chesire.malime.kitsu.adapters.SubtypeAdapter
 import com.chesire.malime.kitsu.api.library.KitsuLibrary
 import com.chesire.malime.kitsu.api.library.KitsuLibraryService
-import com.chesire.malime.kitsu.api.search.SearchSeriesModelAdapter
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.squareup.moshi.Moshi
 import kotlinx.coroutines.launch

@@ -7,5 +7,5 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class SearchResponse(
     @Json(name = "data")
-    val data: Array<SeriesItem>
+    val data: List<SeriesItem>
 )

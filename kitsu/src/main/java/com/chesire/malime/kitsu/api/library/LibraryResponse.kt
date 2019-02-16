@@ -7,9 +7,9 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 class LibraryResponse(
     @Json(name = "data")
-    val data: Array<LibraryEntry>,
+    val data: List<LibraryEntry>,
     @Json(name = "included")
-    val series: Array<SeriesItem>
+    val series: List<SeriesItem>
 ) {
     @JsonClass(generateAdapter = true)
     data class LibraryEntry(
