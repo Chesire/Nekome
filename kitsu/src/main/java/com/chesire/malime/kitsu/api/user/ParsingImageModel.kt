@@ -1,4 +1,4 @@
-package com.chesire.malime.kitsu.models.response.parsing
+package com.chesire.malime.kitsu.api.user
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass

@@ -1,7 +1,7 @@
 package com.chesire.malime.kitsu.live
 
-import com.chesire.malime.kitsu.api.KitsuAuthService
-import com.chesire.malime.kitsu.models.request.LoginRequest
+import com.chesire.malime.kitsu.api.auth.KitsuAuthService
+import com.chesire.malime.kitsu.api.auth.LoginRequest
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.squareup.moshi.Moshi
 import kotlinx.coroutines.launch
@@ -27,7 +27,12 @@ class LiveKitsuAuthTests {
             .create(KitsuAuthService::class.java)
 
         val job = launch {
-            val result = service.loginAsync(LoginRequest("Test", "Test")).await()
+            val result = service.loginAsync(
+                LoginRequest(
+                    "Test",
+                    "Test"
+                )
+            ).await()
 
             if (result.isSuccessful) {
                 val body = result.body()

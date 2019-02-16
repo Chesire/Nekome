@@ -1,4 +1,4 @@
-package com.chesire.malime.kitsu.models.response
+package com.chesire.malime.kitsu.api.user
 
 import com.chesire.malime.core.flags.RatingSystem
 import com.chesire.malime.core.models.ImageModel

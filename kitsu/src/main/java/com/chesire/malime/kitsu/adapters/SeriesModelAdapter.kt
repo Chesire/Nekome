@@ -12,7 +12,7 @@ class SeriesModelAdapter {
             SeriesModel(
                 id = it.id,
                 type = it.type,
-                // sub type
+                subtype = it.attributes.subtype,
                 slug = it.attributes.slug,
                 title = it.attributes.canonicalTitle,
                 // series status

@@ -2,8 +2,10 @@ package com.chesire.malime.kitsu.live
 
 import com.chesire.malime.kitsu.adapters.ImageModelAdapter
 import com.chesire.malime.kitsu.adapters.RatingSystemAdapter
+import com.chesire.malime.kitsu.adapters.SeriesModelAdapter
+import com.chesire.malime.kitsu.adapters.SeriesTypeAdapter
 import com.chesire.malime.kitsu.adapters.UserModelAdapter
-import com.chesire.malime.kitsu.api.KitsuUserService
+import com.chesire.malime.kitsu.api.user.KitsuUserService
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.squareup.moshi.Moshi
 import kotlinx.coroutines.launch
@@ -24,6 +26,8 @@ class LiveKitsuUserTests {
             .add(RatingSystemAdapter())
             .add(ImageModelAdapter())
             .add(UserModelAdapter())
+            .add(SeriesTypeAdapter())
+            .add(SeriesModelAdapter())
             .build()
 
         val httpClient = OkHttpClient()
@@ -61,7 +65,7 @@ class KitsuAuthInterceptor : Interceptor {
         val authenticatedRequest = request.newBuilder()
             .header(
                 "Authorization",
-                "Bearer "
+                "Bearer d4b979d312fd6cfcfa8286cfcb75436c6253f0471588e7453fe5ae074b3c654c"
             )
             .build()
 

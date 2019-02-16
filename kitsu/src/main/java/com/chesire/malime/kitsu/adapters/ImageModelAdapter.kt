@@ -2,7 +2,7 @@ package com.chesire.malime.kitsu.adapters
 
 import com.chesire.malime.core.models.ImageData
 import com.chesire.malime.core.models.ImageModel
-import com.chesire.malime.kitsu.models.response.parsing.ParsingImageModel
+import com.chesire.malime.kitsu.api.user.ParsingImageModel
 import com.squareup.moshi.FromJson
 
 @Suppress("unused")

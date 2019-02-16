@@ -1,20 +1,13 @@
-package com.chesire.malime.kitsu.api
+package com.chesire.malime.kitsu.api.user
 
 import com.chesire.malime.core.Resource
 import com.chesire.malime.core.api.UserApi
 import com.chesire.malime.core.models.UserModel
+import com.chesire.malime.kitsu.api.ResponseParser
 
-class KitsuUser(
-    private val userService: KitsuUserService
-) : UserApi {
+class KitsuUser(private val userService: KitsuUserService) : ResponseParser, UserApi {
     override suspend fun getUserDetails(): Resource<UserModel> {
-        val callResponse = userService.getUserDetailsAsync().await()
-        return if (callResponse.isSuccessful) {
-            callResponse.body()?.let {
-                Resource.Success(it)
-            } ?: Resource.Error("Response body is null")
-        } else {
-            Resource.Error(callResponse.message())
-        }
+        val response = userService.getUserDetailsAsync().await()
+        return parseResponse(response)
     }
 }

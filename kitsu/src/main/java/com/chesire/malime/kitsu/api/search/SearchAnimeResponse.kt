@@ -1,6 +1,7 @@
 package com.chesire.malime.kitsu.api.search
 
 import com.chesire.malime.core.flags.SeriesType
+import com.chesire.malime.core.flags.Subtype
 import com.chesire.malime.core.models.ImageModel
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
@@ -29,8 +30,8 @@ data class SearchAnimeResponse(
             val status: String,
             @Json(name = "progress")
             val progress: Int,
-            // @Json(name = "subtype")
-            // val subtype: String,
+            @Json(name = "subtype")
+            val subtype: Subtype,
             @Json(name = "posterImage")
             val posterImage: ImageModel,
             @Json(name = "coverImage")

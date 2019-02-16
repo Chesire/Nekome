@@ -7,8 +7,8 @@ import com.squareup.moshi.FromJson
 @Suppress("unused")
 class UserModelAdapter {
     @FromJson
-    fun userModelFromUserDetails(userDetailsResponse: GetUserDetailsResponse): UserModel {
-        val details = userDetailsResponse.data.first()
+    fun userModelFromUserDetails(response: GetUserDetailsResponse): UserModel {
+        val details = response.data.first()
         return UserModel(
             details.id,
             details.attributes.name,
