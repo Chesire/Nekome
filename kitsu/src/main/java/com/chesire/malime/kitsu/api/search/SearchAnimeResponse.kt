@@ -29,8 +29,6 @@ data class SearchAnimeResponse(
             val canonicalTitle: String,
             @Json(name = "status")
             val status: SeriesStatus,
-            @Json(name = "progress")
-            val progress: Int = 0,
             @Json(name = "subtype")
             val subtype: Subtype,
             @Json(name = "posterImage")
@@ -41,10 +39,10 @@ data class SearchAnimeResponse(
             val episodeCount: Int,
             @Json(name = "nsfw")
             val nsfw: Boolean,
-            @Json(name = "startedAt")
-            val startedAt: String = "",
-            @Json(name = "finishedAt")
-            val finishedAt: String = ""
+            @Json(name = "startDate")
+            val startDate: String?,
+            @Json(name = "endDate")
+            val endDate: String?
         )
     }
 }

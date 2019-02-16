@@ -1,22 +1,16 @@
 package com.chesire.malime.kitsu.live
 
 import com.chesire.malime.kitsu.adapters.ImageModelAdapter
-import com.chesire.malime.kitsu.adapters.RatingSystemAdapter
 import com.chesire.malime.kitsu.adapters.SeriesModelAdapter
 import com.chesire.malime.kitsu.adapters.SeriesStatusAdapter
 import com.chesire.malime.kitsu.adapters.SeriesTypeAdapter
 import com.chesire.malime.kitsu.adapters.SubtypeAdapter
-import com.chesire.malime.kitsu.adapters.UserModelAdapter
-import com.chesire.malime.kitsu.api.search.KitsuSearch
 import com.chesire.malime.kitsu.api.search.KitsuSearchService
-import com.chesire.malime.kitsu.api.user.KitsuUserService
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.squareup.moshi.Moshi
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
-import okhttp3.Interceptor
 import okhttp3.OkHttpClient
-import okhttp3.Response
 import org.junit.Ignore
 import org.junit.Test
 import retrofit2.Retrofit
@@ -49,7 +43,7 @@ class LiveKitsuSearchTests {
             .create(KitsuSearchService::class.java)
 
         val job = launch {
-            val result = service.searchForAnimeAsync("No Game No Life").await()
+            val result = service.searchForAnimeAsync("Radiant").await()
 
             if (result.isSuccessful) {
                 val body = result.body()

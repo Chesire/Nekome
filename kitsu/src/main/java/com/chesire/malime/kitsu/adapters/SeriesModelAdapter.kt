@@ -17,13 +17,13 @@ class SeriesModelAdapter {
                 slug = it.attributes.slug,
                 title = it.attributes.canonicalTitle,
                 seriesStatus = it.attributes.status,
-                progress = it.attributes.progress,
+                progress = 0,
                 totalLength = it.attributes.episodeCount,
                 posterImage = it.attributes.posterImage ?: ImageModel.empty,
                 coverImage = it.attributes.coverImage ?: ImageModel.empty,
                 nsfw = it.attributes.nsfw,
-                startDate = it.attributes.startedAt,
-                endDate = it.attributes.finishedAt
+                startDate = it.attributes.startDate ?: "",
+                endDate = it.attributes.endDate ?: ""
             )
         }
     }
