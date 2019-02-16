@@ -1,4 +1,4 @@
-package com.chesire.malime.kitsu.api.user
+package com.chesire.malime.kitsu.api.intermediaries
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
@@ -35,9 +35,9 @@ data class ParsingImageModel(
             @JsonClass(generateAdapter = true)
             data class DimensionsData(
                 @Json(name = "width")
-                val width: Int = 0,
+                val width: Int? = 0,
                 @Json(name = "height")
-                val height: Int = 0
+                val height: Int? = 0
             )
         }
     }

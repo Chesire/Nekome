@@ -2,7 +2,7 @@ package com.chesire.malime.kitsu.adapters
 
 import com.chesire.malime.core.models.ImageData
 import com.chesire.malime.core.models.ImageModel
-import com.chesire.malime.kitsu.api.user.ParsingImageModel
+import com.chesire.malime.kitsu.api.intermediaries.ParsingImageModel
 import com.squareup.moshi.FromJson
 
 @Suppress("unused")
@@ -20,9 +20,9 @@ class ImageModelAdapter {
     private fun constructImageData(
         sizeUrl: String,
         dimensionsData: ParsingImageModel.ImageMeta.DimensionsMeta.DimensionsData?
-    ) = if (sizeUrl.isEmpty() || dimensionsData == null) {
-        ImageData("", 0, 0)
+    ) = if (sizeUrl.isEmpty()) {
+        ImageData.empty
     } else {
-        ImageData(sizeUrl, dimensionsData.width, dimensionsData.height)
+        ImageData(sizeUrl, dimensionsData?.width ?: 0, dimensionsData?.height ?: 0)
     }
 }

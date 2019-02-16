@@ -7,6 +7,8 @@ import com.chesire.malime.kitsu.adapters.SeriesStatusAdapter
 import com.chesire.malime.kitsu.adapters.SeriesTypeAdapter
 import com.chesire.malime.kitsu.adapters.SubtypeAdapter
 import com.chesire.malime.kitsu.adapters.UserModelAdapter
+import com.chesire.malime.kitsu.api.search.KitsuSearch
+import com.chesire.malime.kitsu.api.search.KitsuSearchService
 import com.chesire.malime.kitsu.api.user.KitsuUserService
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.squareup.moshi.Moshi
@@ -20,14 +22,17 @@ import org.junit.Test
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
+
 @Ignore("Don't run these tests as part of any suite, they are for testing the apis")
-class LiveKitsuUserTests {
+class LiveKitsuSearchTests {
     @Test
-    fun `attempt getUserDetails`() = runBlocking {
+    fun `attempt searchForAnime`() = runBlocking {
         val moshi = Moshi.Builder()
-            .add(RatingSystemAdapter())
             .add(ImageModelAdapter())
-            .add(UserModelAdapter())
+            .add(SeriesStatusAdapter())
+            .add(SeriesTypeAdapter())
+            .add(SeriesModelAdapter())
+            .add(SubtypeAdapter())
             .build()
 
         val httpClient = OkHttpClient()
@@ -41,10 +46,10 @@ class LiveKitsuUserTests {
             .addCallAdapterFactory(CoroutineCallAdapterFactory())
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .build()
-            .create(KitsuUserService::class.java)
+            .create(KitsuSearchService::class.java)
 
         val job = launch {
-            val result = service.getUserDetailsAsync().await()
+            val result = service.searchForAnimeAsync("No Game No Life").await()
 
             if (result.isSuccessful) {
                 val body = result.body()
@@ -56,4 +61,3 @@ class LiveKitsuUserTests {
         }
     }
 }
-

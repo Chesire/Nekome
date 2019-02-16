@@ -26,9 +26,9 @@ data class GetUserDetailsResponse(
             @Json(name = "ratingSystem")
             val ratingSystem: RatingSystem,
             @Json(name = "avatar")
-            val avatar: ImageModel,
+            val avatar: ImageModel?,
             @Json(name = "coverImage")
-            val coverImage: ImageModel
+            val coverImage: ImageModel?
         )
     }
 }

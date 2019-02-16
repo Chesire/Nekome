@@ -1,5 +1,6 @@
 package com.chesire.malime.kitsu.api.search
 
+import com.chesire.malime.core.flags.SeriesStatus
 import com.chesire.malime.core.flags.SeriesType
 import com.chesire.malime.core.flags.Subtype
 import com.chesire.malime.core.models.ImageModel
@@ -27,19 +28,17 @@ data class SearchAnimeResponse(
             @Json(name = "canonicalTitle")
             val canonicalTitle: String,
             @Json(name = "status")
-            val status: String,
+            val status: SeriesStatus,
             @Json(name = "progress")
-            val progress: Int,
+            val progress: Int = 0,
             @Json(name = "subtype")
             val subtype: Subtype,
             @Json(name = "posterImage")
-            val posterImage: ImageModel,
+            val posterImage: ImageModel?,
             @Json(name = "coverImage")
-            val coverImage: ImageModel,
+            val coverImage: ImageModel?,
             @Json(name = "episodeCount")
             val episodeCount: Int,
-            @Json(name = "chapterCount")
-            val chapterCount: Int,
             @Json(name = "nsfw")
             val nsfw: Boolean,
             @Json(name = "startedAt")

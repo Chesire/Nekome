@@ -1,5 +1,6 @@
 package com.chesire.malime.kitsu.adapters
 
+import com.chesire.malime.core.models.ImageModel
 import com.chesire.malime.core.models.UserModel
 import com.chesire.malime.kitsu.api.user.GetUserDetailsResponse
 import com.squareup.moshi.FromJson
@@ -12,8 +13,8 @@ class UserModelAdapter {
         return UserModel(
             details.id,
             details.attributes.name,
-            details.attributes.avatar,
-            details.attributes.coverImage
+            details.attributes.avatar ?: ImageModel.empty,
+            details.attributes.coverImage ?: ImageModel.empty
         )
     }
 }
