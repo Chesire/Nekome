@@ -1,8 +1,7 @@
 package com.chesire.malime.kitsu.models.response
 
-import com.chesire.malime.core.RatingSystem
+import com.chesire.malime.core.flags.RatingSystem
 import com.chesire.malime.core.models.ImageModel
-import com.chesire.malime.kitsu.models.response.parsing.ParsingImageModel
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 

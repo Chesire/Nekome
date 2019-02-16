@@ -1,4 +1,4 @@
-package com.chesire.malime.kitsu.api
+package com.chesire.malime.kitsu.api.user
 
 import com.chesire.malime.core.models.UserModel
 import kotlinx.coroutines.Deferred

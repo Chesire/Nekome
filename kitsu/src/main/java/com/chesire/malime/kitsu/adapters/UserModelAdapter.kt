@@ -1,13 +1,13 @@
 package com.chesire.malime.kitsu.adapters
 
 import com.chesire.malime.core.models.UserModel
-import com.chesire.malime.kitsu.models.response.GetUserDetailsResponse
+import com.chesire.malime.kitsu.api.user.GetUserDetailsResponse
 import com.squareup.moshi.FromJson
 
 @Suppress("unused")
 class UserModelAdapter {
     @FromJson
-    fun userDetailsToUserModel(userDetailsResponse: GetUserDetailsResponse): UserModel {
+    fun userModelFromUserDetails(userDetailsResponse: GetUserDetailsResponse): UserModel {
         val details = userDetailsResponse.data.first()
         return UserModel(
             details.id,
