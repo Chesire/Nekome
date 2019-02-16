@@ -1,8 +1,7 @@
-package com.chesire.malime.kitsu.adapters
+package com.chesire.malime.kitsu.api.user
 
 import com.chesire.malime.core.models.ImageModel
 import com.chesire.malime.core.models.UserModel
-import com.chesire.malime.kitsu.api.user.GetUserDetailsResponse
 import com.squareup.moshi.FromJson
 
 @Suppress("unused")

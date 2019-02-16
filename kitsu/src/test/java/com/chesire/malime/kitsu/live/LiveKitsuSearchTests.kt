@@ -2,7 +2,7 @@ package com.chesire.malime.kitsu.live
 
 import com.chesire.malime.core.Resource
 import com.chesire.malime.kitsu.adapters.ImageModelAdapter
-import com.chesire.malime.kitsu.adapters.SeriesModelAdapter
+import com.chesire.malime.kitsu.api.search.SeriesModelAdapter
 import com.chesire.malime.kitsu.adapters.SeriesStatusAdapter
 import com.chesire.malime.kitsu.adapters.SeriesTypeAdapter
 import com.chesire.malime.kitsu.adapters.SubtypeAdapter
