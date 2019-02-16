@@ -3,7 +3,9 @@ package com.chesire.malime.kitsu.live
 import com.chesire.malime.kitsu.adapters.ImageModelAdapter
 import com.chesire.malime.kitsu.adapters.RatingSystemAdapter
 import com.chesire.malime.kitsu.adapters.SeriesModelAdapter
+import com.chesire.malime.kitsu.adapters.SeriesStatusAdapter
 import com.chesire.malime.kitsu.adapters.SeriesTypeAdapter
+import com.chesire.malime.kitsu.adapters.SubtypeAdapter
 import com.chesire.malime.kitsu.adapters.UserModelAdapter
 import com.chesire.malime.kitsu.api.user.KitsuUserService
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
@@ -26,13 +28,15 @@ class LiveKitsuUserTests {
             .add(RatingSystemAdapter())
             .add(ImageModelAdapter())
             .add(UserModelAdapter())
+            .add(SeriesStatusAdapter())
             .add(SeriesTypeAdapter())
             .add(SeriesModelAdapter())
+            .add(SubtypeAdapter())
             .build()
 
         val httpClient = OkHttpClient()
             .newBuilder()
-            .addInterceptor(KitsuAuthInterceptor())
+            .addInterceptor(LiveTestAuthInterceptor())
             .build()
 
         val service = Retrofit.Builder()
@@ -57,18 +61,3 @@ class LiveKitsuUserTests {
     }
 }
 
-class KitsuAuthInterceptor : Interceptor {
-    override fun intercept(chain: Interceptor.Chain): Response {
-        val request = chain.request()
-
-        // DO NOT COMMIT THE AUTH VALUE
-        val authenticatedRequest = request.newBuilder()
-            .header(
-                "Authorization",
-                "Bearer d4b979d312fd6cfcfa8286cfcb75436c6253f0471588e7453fe5ae074b3c654c"
-            )
-            .build()
-
-        return chain.proceed(authenticatedRequest)
-    }
-}
