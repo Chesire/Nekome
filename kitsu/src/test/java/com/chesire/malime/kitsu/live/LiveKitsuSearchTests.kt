@@ -19,31 +19,46 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 
 @Ignore("Don't run these tests as part of any suite, they are for testing the apis")
 class LiveKitsuSearchTests {
+    private val moshi = Moshi.Builder()
+        .add(ImageModelAdapter())
+        .add(SeriesStatusAdapter())
+        .add(SeriesTypeAdapter())
+        .add(SeriesModelAdapter())
+        .add(SubtypeAdapter())
+        .build()
+
+    private val httpClient = OkHttpClient()
+        .newBuilder()
+        .addInterceptor(LiveTestAuthInterceptor())
+        .build()
+
+    private val service = Retrofit.Builder()
+        .baseUrl("https://kitsu.io/")
+        .client(httpClient)
+        .addCallAdapterFactory(CoroutineCallAdapterFactory())
+        .addConverterFactory(MoshiConverterFactory.create(moshi))
+        .build()
+        .create(KitsuSearchService::class.java)
+
     @Test
     fun `attempt searchForAnime`() = runBlocking {
-        val moshi = Moshi.Builder()
-            .add(ImageModelAdapter())
-            .add(SeriesStatusAdapter())
-            .add(SeriesTypeAdapter())
-            .add(SeriesModelAdapter())
-            .add(SubtypeAdapter())
-            .build()
-
-        val httpClient = OkHttpClient()
-            .newBuilder()
-            .addInterceptor(LiveTestAuthInterceptor())
-            .build()
-
-        val service = Retrofit.Builder()
-            .baseUrl("https://kitsu.io/")
-            .client(httpClient)
-            .addCallAdapterFactory(CoroutineCallAdapterFactory())
-            .addConverterFactory(MoshiConverterFactory.create(moshi))
-            .build()
-            .create(KitsuSearchService::class.java)
-
         val job = launch {
             val result = service.searchForAnimeAsync("Radiant").await()
+
+            if (result.isSuccessful) {
+                val body = result.body()
+                val s = "Test"
+            } else {
+                val error = result.errorBody()?.string()
+                val s = "Test"
+            }
+        }
+    }
+
+    @Test
+    fun `attempt searchForManga`() = runBlocking {
+        val job = launch {
+            val result = service.searchForMangaAsync("No Game No Life").await()
 
             if (result.isSuccessful) {
                 val body = result.body()

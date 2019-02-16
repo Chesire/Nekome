@@ -8,9 +8,9 @@ import retrofit2.http.Query
 
 interface KitsuSearchService {
     // Search is limited to 20 items at once
-    @GET("api/edge/anime?fields[anime]=slug,canonicalTitle,startDate,endDate,status,subtype,posterImage,coverImage,episodeCount,nsfw")
+    @GET("api/edge/anime?fields[anime]=slug,canonicalTitle,startDate,endDate,subtype,status,posterImage,coverImage,episodeCount,nsfw")
     fun searchForAnimeAsync(@Query("filter[text]") title: String): Deferred<Response<List<SeriesModel>>>
 
-    @GET("api/edge/manga?fields[manga]=slug,canonicalTitle,status,subtype,posterImage,chapterCount")
+    @GET("api/edge/manga?fields[manga]=slug,canonicalTitle,startDate,endDate,subtype,status,posterImage,coverImage,chapterCount")
     fun searchForMangaAsync(@Query("filter[text]") title: String): Deferred<Response<List<SeriesModel>>>
 }

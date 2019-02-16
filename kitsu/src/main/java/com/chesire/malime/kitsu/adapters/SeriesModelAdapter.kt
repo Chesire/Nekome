@@ -2,13 +2,13 @@ package com.chesire.malime.kitsu.adapters
 
 import com.chesire.malime.core.models.ImageModel
 import com.chesire.malime.core.models.SeriesModel
-import com.chesire.malime.kitsu.api.search.SearchAnimeResponse
+import com.chesire.malime.kitsu.api.search.SearchResponse
 import com.squareup.moshi.FromJson
 
 @Suppress("unused")
 class SeriesModelAdapter {
     @FromJson
-    fun seriesModelsFromSearchAnimeResponse(response: SearchAnimeResponse): List<SeriesModel> {
+    fun seriesModelsFromSearchResponse(response: SearchResponse): List<SeriesModel> {
         return response.data.map {
             SeriesModel(
                 id = it.id,
@@ -18,7 +18,7 @@ class SeriesModelAdapter {
                 title = it.attributes.canonicalTitle,
                 seriesStatus = it.attributes.status,
                 progress = 0,
-                totalLength = it.attributes.episodeCount,
+                totalLength = it.attributes.episodeCount ?: it.attributes.chapterCount ?: 0,
                 posterImage = it.attributes.posterImage ?: ImageModel.empty,
                 coverImage = it.attributes.coverImage ?: ImageModel.empty,
                 nsfw = it.attributes.nsfw,
