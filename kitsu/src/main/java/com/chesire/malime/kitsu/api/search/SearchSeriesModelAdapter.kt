@@ -5,7 +5,7 @@ import com.chesire.malime.core.models.SeriesModel
 import com.squareup.moshi.FromJson
 
 @Suppress("unused")
-class SeriesModelAdapter {
+class SearchSeriesModelAdapter {
     @FromJson
     fun seriesModelsFromSearchResponse(response: SearchResponse): List<SeriesModel> {
         return response.data.map {

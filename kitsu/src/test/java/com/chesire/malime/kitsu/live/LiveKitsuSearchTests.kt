@@ -2,7 +2,7 @@ package com.chesire.malime.kitsu.live
 
 import com.chesire.malime.core.Resource
 import com.chesire.malime.kitsu.adapters.ImageModelAdapter
-import com.chesire.malime.kitsu.api.search.SeriesModelAdapter
+import com.chesire.malime.kitsu.api.search.SearchSeriesModelAdapter
 import com.chesire.malime.kitsu.adapters.SeriesStatusAdapter
 import com.chesire.malime.kitsu.adapters.SeriesTypeAdapter
 import com.chesire.malime.kitsu.adapters.SubtypeAdapter
@@ -24,7 +24,7 @@ class LiveKitsuSearchTests {
         .add(ImageModelAdapter())
         .add(SeriesStatusAdapter())
         .add(SeriesTypeAdapter())
-        .add(SeriesModelAdapter())
+        .add(SearchSeriesModelAdapter())
         .add(SubtypeAdapter())
         .build()
 
