@@ -1,7 +1,7 @@
 package com.chesire.malime.kitsu.api.library
 
-import com.chesire.malime.core.Resource
-import com.chesire.malime.core.models.SeriesModel
+import kotlinx.coroutines.Deferred
+import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -20,5 +20,5 @@ interface KitsuLibraryService {
     fun retrieveAnime(
         @Path("userId") userId: Int,
         @Query("page[offset]") offset: Int
-    ): Resource<List<SeriesModel>>
+    ): Deferred<Response<LibraryResponse>>
 }

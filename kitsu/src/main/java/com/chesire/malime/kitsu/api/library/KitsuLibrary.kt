@@ -8,6 +8,7 @@ class KitsuLibrary(
     private val userId: Int
 ) : LibraryApi {
     override suspend fun retrieveLibrary(): List<SeriesModel> {
-        libraryService.retrieveAnime(userId, 0)
+        return emptyList()
+        //libraryService.retrieveAnime(userId, 0)
     }
 }
