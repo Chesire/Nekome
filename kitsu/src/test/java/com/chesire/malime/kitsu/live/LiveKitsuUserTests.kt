@@ -3,9 +3,9 @@ package com.chesire.malime.kitsu.live
 import com.chesire.malime.core.Resource
 import com.chesire.malime.kitsu.adapters.ImageModelAdapter
 import com.chesire.malime.kitsu.adapters.RatingSystemAdapter
-import com.chesire.malime.kitsu.api.user.UserModelAdapter
 import com.chesire.malime.kitsu.api.user.KitsuUser
 import com.chesire.malime.kitsu.api.user.KitsuUserService
+import com.chesire.malime.kitsu.api.user.UserModelAdapter
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.squareup.moshi.Moshi
 import kotlinx.coroutines.launch
@@ -55,4 +55,3 @@ class LiveKitsuUserTests {
         }
     }
 }
-

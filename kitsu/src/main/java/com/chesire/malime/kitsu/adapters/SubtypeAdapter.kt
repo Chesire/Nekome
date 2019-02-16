@@ -19,6 +19,7 @@ private const val ONESHOT = "oneshot"
 
 @Suppress("unused")
 class SubtypeAdapter {
+    @Suppress("ComplexMethod")
     @FromJson
     fun subtypeFromString(subString: String): Subtype {
         return when (subString) {

@@ -6,6 +6,7 @@ import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
 
+@Suppress("MaxLineLength")
 interface KitsuSearchService {
     // Search is limited to 20 items at once
     @GET("api/edge/anime?fields[anime]=slug,canonicalTitle,startDate,endDate,subtype,status,posterImage,coverImage,episodeCount,nsfw")
