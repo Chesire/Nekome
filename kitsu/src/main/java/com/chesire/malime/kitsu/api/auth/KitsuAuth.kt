@@ -5,26 +5,15 @@ import com.chesire.malime.core.api.AuthApi
 import com.chesire.malime.core.models.AuthModel
 import retrofit2.Response
 
-class KitsuAuth(
-    private val authService: KitsuAuthService
-) : AuthApi {
+class KitsuAuth(private val authService: KitsuAuthService) : AuthApi {
     override suspend fun login(username: String, password: String): Resource<AuthModel> {
-        val callResponse = authService.loginAsync(
-            LoginRequest(
-                username,
-                password
-            )
-        )
-        return handleResponse(callResponse.await())
+        val response = authService.loginAsync(LoginRequest(username, password))
+        return handleResponse(response.await())
     }
 
     override suspend fun refreshAccessToken(refreshToken: String): Resource<AuthModel> {
-        val callResponse = authService.refreshAccessTokenAsync(
-            RefreshTokenRequest(
-                refreshToken
-            )
-        )
-        return handleResponse(callResponse.await())
+        val response = authService.refreshAccessTokenAsync(RefreshTokenRequest(refreshToken))
+        return handleResponse(response.await())
     }
 
     private fun handleResponse(response: Response<LoginResponse>): Resource<AuthModel> {
