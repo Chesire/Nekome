@@ -10,7 +10,6 @@ interface KitsuLibraryService {
     @GET(
         "api/edge/users/{userId}/library-entries" +
                 "?include=anime" +
-                "&page[limit]=500" +
                 "&fields[libraryEntries]=status,progress,anime,startedAt,finishedAt" +
                 "&fields[anime]=slug,canonicalTitle,startDate,endDate,subtype,status,posterImage,coverImage,episodeCount,nsfw" +
                 "&filter[kind]=anime" +
@@ -18,13 +17,13 @@ interface KitsuLibraryService {
     )
     fun retrieveAnimeAsync(
         @Path("userId") userId: Int,
-        @Query("page[offset]") offset: Int
+        @Query("page[offset]") offset: Int,
+        @Query("page[limit]") limit: Int
     ): Deferred<Response<ParsedLibraryResponse>>
 
     @GET(
         "api/edge/users/{userId}/library-entries" +
                 "?include=manga" +
-                "&page[limit]=500" +
                 "&fields[libraryEntries]=status,progress,manga,startedAt,finishedAt" +
                 "&fields[manga]=slug,canonicalTitle,startDate,endDate,subtype,status,posterImage,coverImage,chapterCount" +
                 "&filter[kind]=manga" +
@@ -32,6 +31,7 @@ interface KitsuLibraryService {
     )
     fun retrieveMangaAsync(
         @Path("userId") userId: Int,
-        @Query("page[offset]") offset: Int
+        @Query("page[offset]") offset: Int,
+        @Query("page[limit]") limit: Int
     ): Deferred<Response<ParsedLibraryResponse>>
 }

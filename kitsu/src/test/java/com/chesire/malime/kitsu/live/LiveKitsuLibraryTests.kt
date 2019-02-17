@@ -1,5 +1,6 @@
 package com.chesire.malime.kitsu.live
 
+import com.chesire.malime.core.Resource
 import com.chesire.malime.kitsu.adapters.ImageModelAdapter
 import com.chesire.malime.kitsu.adapters.SeriesStatusAdapter
 import com.chesire.malime.kitsu.adapters.SeriesTypeAdapter
@@ -45,30 +46,18 @@ class LiveKitsuLibraryTests {
     private val handler = KitsuLibrary(service, 294558)
 
     @Test
-    fun `attempt retrieveLibrary`() = runBlocking {
+    fun `attempt retrieveAnime`() = runBlocking {
         val job = launch {
-            val animeCall = service.retrieveAnimeAsync(294558, 0)
-            val mangaCall = service.retrieveMangaAsync(294558, 0)
+            val result = handler.retrieveAnime()
 
-            val animeResult = animeCall.await()
-            val mangaResult = mangaCall.await()
-
-            if (animeResult.isSuccessful) {
-                val body = animeResult.body()
-                val s = ""
-            } else {
-                val errorBody = animeResult.errorBody()
-                val s = ""
+            when (result) {
+                is Resource.Success -> {
+                    val data = result.data
+                }
+                is Resource.Error -> {
+                    val error = result.msg
+                }
             }
-            if (mangaResult.isSuccessful) {
-                val body = mangaResult.body()
-                val s = ""
-            } else {
-                val errorBody = mangaResult.errorBody()
-                val s = ""
-            }
-
-            // Need to check pulling from the offset
         }
     }
 }
