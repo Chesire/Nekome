@@ -11,7 +11,8 @@ interface KitsuLibraryService {
         "api/edge/users/{userId}/library-entries" +
                 "?include=anime" +
                 "&fields[libraryEntries]=status,progress,anime,startedAt,finishedAt" +
-                "&fields[anime]=slug,canonicalTitle,startDate,endDate,subtype,status,posterImage,coverImage,episodeCount,nsfw" +
+                "&fields[anime]=slug,canonicalTitle,startDate,endDate," +
+                "subtype,status,posterImage,coverImage,episodeCount,nsfw" +
                 "&filter[kind]=anime" +
                 "&sort=anime.titles.canonical"
     )
@@ -25,7 +26,8 @@ interface KitsuLibraryService {
         "api/edge/users/{userId}/library-entries" +
                 "?include=manga" +
                 "&fields[libraryEntries]=status,progress,manga,startedAt,finishedAt" +
-                "&fields[manga]=slug,canonicalTitle,startDate,endDate,subtype,status,posterImage,coverImage,chapterCount" +
+                "&fields[manga]=slug,canonicalTitle,startDate,endDate," +
+                "subtype,status,posterImage,coverImage,chapterCount" +
                 "&filter[kind]=manga" +
                 "&sort=manga.titles.canonical"
     )

@@ -13,13 +13,8 @@ class KitsuLibrary(
     private val libraryService: KitsuLibraryService,
     private val userId: Int
 ) : LibraryApi {
-    override suspend fun retrieveAnime(): Resource<List<SeriesModel>> {
-        return performRetrieveCall(libraryService::retrieveAnimeAsync)
-    }
-
-    override suspend fun retrieveManga(): Resource<List<SeriesModel>> {
-        return performRetrieveCall(libraryService::retrieveMangaAsync)
-    }
+    override suspend fun retrieveAnime() = performRetrieveCall(libraryService::retrieveAnimeAsync)
+    override suspend fun retrieveManga() = performRetrieveCall(libraryService::retrieveMangaAsync)
 
     private suspend fun performRetrieveCall(
         execute: (Int, Int, Int) -> Deferred<Response<ParsedLibraryResponse>>
@@ -30,8 +25,11 @@ class KitsuLibrary(
         var page = 0
         var retries = 0
         var errorMessage = ""
+        var executeAgain: Boolean
 
-        while (true) {
+        do {
+            executeAgain = false
+
             val result = execute(userId, offset, LIMIT).await()
             if (result.isSuccessful && result.body() != null) {
                 val body = result.body()!!
@@ -41,19 +39,17 @@ class KitsuLibrary(
                 if (!body.links.next.isEmpty()) {
                     page++
                     offset = LIMIT * page
-                    continue
+                    executeAgain = true
                 }
             } else {
                 if (retries < MAX_RETRIES) {
                     retries++
-                    continue
+                    executeAgain = true
                 } else {
                     errorMessage = result.message()
                 }
             }
-
-            break
-        }
+        } while (executeAgain)
 
         return if (retries == MAX_RETRIES && models.count() == 0) {
             Resource.Error(errorMessage)
