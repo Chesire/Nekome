@@ -60,4 +60,20 @@ class LiveKitsuLibraryTests {
             }
         }
     }
+
+    @Test
+    fun `attempt retrieveManga`() = runBlocking {
+        val job = launch {
+            val result = handler.retrieveManga()
+
+            when (result) {
+                is Resource.Success -> {
+                    val data = result.data
+                }
+                is Resource.Error -> {
+                    val error = result.msg
+                }
+            }
+        }
+    }
 }
