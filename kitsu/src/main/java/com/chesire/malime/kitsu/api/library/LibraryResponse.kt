@@ -1,5 +1,6 @@
 package com.chesire.malime.kitsu.api.library
 
+import com.chesire.malime.core.flags.UserSeriesStatus
 import com.chesire.malime.kitsu.api.intermediaries.Links
 import com.chesire.malime.kitsu.api.intermediaries.SeriesItem
 import com.squareup.moshi.Json
@@ -26,7 +27,7 @@ class LibraryResponse(
         @JsonClass(generateAdapter = true)
         data class LibraryAttributes(
             @Json(name = "status")
-            val status: String,
+            val status: UserSeriesStatus,
             @Json(name = "progress")
             val progress: Int,
             @Json(name = "startedAt")
