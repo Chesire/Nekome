@@ -7,7 +7,6 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface KitsuLibraryService {
-    // for testing purposes might want to lower the limit to 50 or something
     @GET(
         "api/edge/users/{userId}/library-entries" +
                 "?include=anime" +
@@ -18,6 +17,20 @@ interface KitsuLibraryService {
                 "&sort=anime.titles.canonical"
     )
     fun retrieveAnime(
+        @Path("userId") userId: Int,
+        @Query("page[offset]") offset: Int
+    ): Deferred<Response<ParsedLibraryResponse>>
+
+    @GET(
+        "api/edge/users/{userId}/library-entries" +
+                "?include=manga" +
+                "&page[limit]=500" +
+                "&fields[libraryEntries]=status,progress,manga,startedAt,finishedAt" +
+                "&fields[manga]=slug,canonicalTitle,startDate,endDate,subtype,status,posterImage,coverImage,chapterCount" +
+                "&filter[kind]=manga" +
+                "&sort=manga.titles.canonical"
+    )
+    fun retrieveManga(
         @Path("userId") userId: Int,
         @Query("page[offset]") offset: Int
     ): Deferred<Response<ParsedLibraryResponse>>

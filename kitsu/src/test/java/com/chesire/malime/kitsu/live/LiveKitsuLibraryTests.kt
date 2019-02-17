@@ -47,14 +47,28 @@ class LiveKitsuLibraryTests {
     @Test
     fun `attempt retrieveLibrary`() = runBlocking {
         val job = launch {
-            val callResult = service.retrieveAnime(294558, 0).await()
-            if (callResult.isSuccessful) {
-                val body = callResult.body()
+            val animeCall = service.retrieveAnime(294558, 0)
+            val mangaCall = service.retrieveManga(294558, 0)
+
+            val animeResult = animeCall.await()
+            val mangaResult = mangaCall.await()
+
+            if (animeResult.isSuccessful) {
+                val body = animeResult.body()
                 val s = ""
             } else {
-                val errorBody = callResult.errorBody()
+                val errorBody = animeResult.errorBody()
                 val s = ""
             }
+            if (mangaResult.isSuccessful) {
+                val body = mangaResult.body()
+                val s = ""
+            } else {
+                val errorBody = mangaResult.errorBody()
+                val s = ""
+            }
+
+            // Need to check pulling from the offset
         }
     }
 }
