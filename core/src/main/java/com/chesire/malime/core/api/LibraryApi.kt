@@ -9,4 +9,5 @@ interface LibraryApi {
     suspend fun retrieveManga(): Resource<List<SeriesModel>>
     suspend fun addAnime(seriesId: Int, startingStatus: UserSeriesStatus): Resource<SeriesModel>
     suspend fun addManga(seriesId: Int, startingStatus: UserSeriesStatus): Resource<SeriesModel>
+    suspend fun delete(userSeriesId: Int): Resource<Any>
 }

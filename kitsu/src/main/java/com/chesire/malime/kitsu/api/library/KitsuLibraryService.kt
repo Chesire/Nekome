@@ -5,6 +5,7 @@ import kotlinx.coroutines.Deferred
 import okhttp3.RequestBody
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
@@ -57,4 +58,7 @@ interface KitsuLibraryService {
                 "&fields[manga]=$MANGA_FIELDS"
     )
     fun addMangaAsync(@Body data: RequestBody): Deferred<Response<SeriesModel>>
+
+    @DELETE("api/edge/library-entries/{id}")
+    fun deleteItemAsync(@Path("id") userSeriesId: Int): Deferred<Response<Any>>
 }

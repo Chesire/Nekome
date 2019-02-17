@@ -96,7 +96,21 @@ class LiveKitsuLibraryTests {
 
     @Test
     fun `attempt addManga`() = runBlocking {
-        val result = handler.addManga(557, UserSeriesStatus.Current)
+        val result = handler.addManga(26999, UserSeriesStatus.Current)
+
+        when (result) {
+            is Resource.Success -> {
+                val data = result.data
+            }
+            is Resource.Error -> {
+                val error = result.msg
+            }
+        }
+    }
+
+    @Test
+    fun `attempt delete`() = runBlocking {
+        val result = handler.delete(29461572)
 
         when (result) {
             is Resource.Success -> {

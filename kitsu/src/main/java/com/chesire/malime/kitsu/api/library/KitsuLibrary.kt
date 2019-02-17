@@ -49,6 +49,15 @@ class KitsuLibrary(
         return parseResponse(response)
     }
 
+    override suspend fun delete(userSeriesId: Int): Resource<Any> {
+        val response = libraryService.deleteItemAsync(userSeriesId).await()
+        return if (response.isSuccessful) {
+            Resource.Success(Any())
+        } else {
+            Resource.Error(response.errorBody()?.string() ?: response.message())
+        }
+    }
+
     private suspend fun performRetrieveCall(
         execute: (Int, Int, Int) -> Deferred<Response<ParsedRetrieveResponse>>
     ): Resource<List<SeriesModel>> {
