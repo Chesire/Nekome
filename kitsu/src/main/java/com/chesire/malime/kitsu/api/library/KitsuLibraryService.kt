@@ -20,5 +20,5 @@ interface KitsuLibraryService {
     fun retrieveAnime(
         @Path("userId") userId: Int,
         @Query("page[offset]") offset: Int
-    ): Deferred<Response<LibraryResponse>>
+    ): Deferred<Response<ParsedLibraryResponse>>
 }

@@ -6,6 +6,7 @@ import com.chesire.malime.kitsu.adapters.SeriesTypeAdapter
 import com.chesire.malime.kitsu.adapters.SubtypeAdapter
 import com.chesire.malime.kitsu.api.library.KitsuLibrary
 import com.chesire.malime.kitsu.api.library.KitsuLibraryService
+import com.chesire.malime.kitsu.api.library.ParsedLibraryResponseAdapter
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.squareup.moshi.Moshi
 import kotlinx.coroutines.launch
@@ -23,6 +24,7 @@ class LiveKitsuLibraryTests {
         .add(SeriesStatusAdapter())
         .add(SeriesTypeAdapter())
         .add(SubtypeAdapter())
+        .add(ParsedLibraryResponseAdapter())
         .build()
 
     private val httpClient = OkHttpClient()
