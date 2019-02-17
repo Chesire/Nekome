@@ -93,4 +93,18 @@ class LiveKitsuLibraryTests {
             }
         }
     }
+
+    @Test
+    fun `attempt addManga`() = runBlocking {
+        val result = handler.addManga(557, UserSeriesStatus.Current)
+
+        when (result) {
+            is Resource.Success -> {
+                val data = result.data
+            }
+            is Resource.Error -> {
+                val error = result.msg
+            }
+        }
+    }
 }

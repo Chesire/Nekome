@@ -38,6 +38,17 @@ class KitsuLibrary(
         return parseResponse(response)
     }
 
+    override suspend fun addManga(
+        seriesId: Int,
+        startingStatus: UserSeriesStatus
+    ): Resource<SeriesModel> {
+        val addModelJson = createNewAddModel(userId, seriesId, startingStatus, MANGA_TYPE)
+        val body = RequestBody.create(MediaType.parse("application/vnd.api+json"), addModelJson)
+        val response = libraryService.addMangaAsync(body).await()
+
+        return parseResponse(response)
+    }
+
     private suspend fun performRetrieveCall(
         execute: (Int, Int, Int) -> Deferred<Response<ParsedRetrieveResponse>>
     ): Resource<List<SeriesModel>> {

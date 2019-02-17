@@ -12,6 +12,8 @@ import retrofit2.http.Query
 
 private const val ANIME_FIELDS =
     "slug,canonicalTitle,startDate,endDate,subtype,status,posterImage,coverImage,episodeCount,nsfw"
+private const val MANGA_FIELDS =
+    "slug,canonicalTitle,startDate,endDate,subtype,status,posterImage,coverImage,chapterCount"
 
 interface KitsuLibraryService {
     @GET(
@@ -32,8 +34,7 @@ interface KitsuLibraryService {
         "api/edge/users/{userId}/library-entries" +
                 "?include=manga" +
                 "&fields[libraryEntries]=status,progress,manga,startedAt,finishedAt" +
-                "&fields[manga]=slug,canonicalTitle,startDate,endDate," +
-                "subtype,status,posterImage,coverImage,chapterCount" +
+                "&fields[manga]=$MANGA_FIELDS" +
                 "&filter[kind]=manga" +
                 "&sort=manga.titles.canonical"
     )
@@ -49,4 +50,11 @@ interface KitsuLibraryService {
                 "&fields[anime]=$ANIME_FIELDS"
     )
     fun addAnimeAsync(@Body data: RequestBody): Deferred<Response<SeriesModel>>
+
+    @POST(
+        "api/edge/library-entries" +
+                "?include=manga" +
+                "&fields[manga]=$MANGA_FIELDS"
+    )
+    fun addMangaAsync(@Body data: RequestBody): Deferred<Response<SeriesModel>>
 }
