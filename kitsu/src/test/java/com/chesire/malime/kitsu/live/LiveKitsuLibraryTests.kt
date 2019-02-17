@@ -4,6 +4,7 @@ import com.chesire.malime.kitsu.adapters.ImageModelAdapter
 import com.chesire.malime.kitsu.adapters.SeriesStatusAdapter
 import com.chesire.malime.kitsu.adapters.SeriesTypeAdapter
 import com.chesire.malime.kitsu.adapters.SubtypeAdapter
+import com.chesire.malime.kitsu.adapters.UserSeriesStatusAdapter
 import com.chesire.malime.kitsu.api.library.KitsuLibrary
 import com.chesire.malime.kitsu.api.library.KitsuLibraryService
 import com.chesire.malime.kitsu.api.library.ParsedLibraryResponseAdapter
@@ -24,6 +25,7 @@ class LiveKitsuLibraryTests {
         .add(SeriesStatusAdapter())
         .add(SeriesTypeAdapter())
         .add(SubtypeAdapter())
+        .add(UserSeriesStatusAdapter())
         .add(ParsedLibraryResponseAdapter())
         .build()
 

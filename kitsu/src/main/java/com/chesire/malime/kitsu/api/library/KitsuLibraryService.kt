@@ -13,7 +13,7 @@ interface KitsuLibraryService {
                 "?include=anime" +
                 "&page[limit]=500" +
                 "&fields[libraryEntries]=status,progress,anime,startedAt,finishedAt" +
-                "&fields[anime]=slug,canonicalTitle,status,subtype,posterImage,coverImage,episodeCount,nsfw" +
+                "&fields[anime]=slug,canonicalTitle,startDate,endDate,subtype,status,posterImage,coverImage,episodeCount,nsfw" +
                 "&filter[kind]=anime" +
                 "&sort=anime.titles.canonical"
     )
