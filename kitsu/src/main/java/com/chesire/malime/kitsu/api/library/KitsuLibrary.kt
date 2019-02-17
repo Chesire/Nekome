@@ -31,7 +31,7 @@ class KitsuLibrary(
         seriesId: Int,
         startingStatus: UserSeriesStatus
     ): Resource<SeriesModel> {
-        val addModelJson = createNewAddModel(userId, seriesId, startingStatus, ANIME_TYPE)
+        val addModelJson = createNewAddModel(seriesId, startingStatus, ANIME_TYPE)
         val body = RequestBody.create(MediaType.parse("application/vnd.api+json"), addModelJson)
         val response = libraryService.addAnimeAsync(body).await()
 
@@ -42,7 +42,7 @@ class KitsuLibrary(
         seriesId: Int,
         startingStatus: UserSeriesStatus
     ): Resource<SeriesModel> {
-        val addModelJson = createNewAddModel(userId, seriesId, startingStatus, MANGA_TYPE)
+        val addModelJson = createNewAddModel(seriesId, startingStatus, MANGA_TYPE)
         val body = RequestBody.create(MediaType.parse("application/vnd.api+json"), addModelJson)
         val response = libraryService.addMangaAsync(body).await()
 
@@ -92,7 +92,6 @@ class KitsuLibrary(
     }
 
     private fun createNewAddModel(
-        userId: Int,
         seriesId: Int,
         startingStatus: UserSeriesStatus,
         seriesType: String
