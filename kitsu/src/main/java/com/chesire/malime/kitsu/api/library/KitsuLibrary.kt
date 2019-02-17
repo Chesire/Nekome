@@ -3,6 +3,8 @@ package com.chesire.malime.kitsu.api.library
 import com.chesire.malime.core.Resource
 import com.chesire.malime.core.api.LibraryApi
 import com.chesire.malime.core.models.SeriesModel
+import kotlinx.coroutines.Deferred
+import retrofit2.Response
 
 private const val LIMIT = 500
 private const val MAX_RETRIES = 3
@@ -12,6 +14,16 @@ class KitsuLibrary(
     private val userId: Int
 ) : LibraryApi {
     override suspend fun retrieveAnime(): Resource<List<SeriesModel>> {
+        return performRetrieveCall(libraryService::retrieveAnimeAsync)
+    }
+
+    override suspend fun retrieveManga(): Resource<List<SeriesModel>> {
+        return performRetrieveCall(libraryService::retrieveMangaAsync)
+    }
+
+    private suspend fun performRetrieveCall(
+        execute: (Int, Int, Int) -> Deferred<Response<ParsedLibraryResponse>>
+    ): Resource<List<SeriesModel>> {
         val models = mutableListOf<SeriesModel>()
 
         var offset = 0
@@ -20,7 +32,7 @@ class KitsuLibrary(
         var errorMessage = ""
 
         while (true) {
-            val result = libraryService.retrieveAnimeAsync(userId, offset, LIMIT).await()
+            val result = execute(userId, offset, LIMIT).await()
             if (result.isSuccessful && result.body() != null) {
                 val body = result.body()!!
                 models.addAll(body.series)
@@ -48,9 +60,5 @@ class KitsuLibrary(
         } else {
             Resource.Success(models)
         }
-    }
-
-    override suspend fun retrieveManga(): Resource<List<SeriesModel>> {
-        return Resource.Error("")
     }
 }
