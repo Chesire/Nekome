@@ -17,6 +17,7 @@ class KitsuLibrary(
         var offset = 0
         var page = 0
         var retries = 0
+        var errorMessage = ""
 
         while (true) {
             val result = libraryService.retrieveAnimeAsync(userId, offset, LIMIT).await()
@@ -34,6 +35,8 @@ class KitsuLibrary(
                 if (retries < MAX_RETRIES) {
                     retries++
                     continue
+                } else {
+                    errorMessage = result.message()
                 }
             }
 
@@ -41,7 +44,7 @@ class KitsuLibrary(
         }
 
         return if (retries == MAX_RETRIES && models.count() == 0) {
-            Resource.Error("")
+            Resource.Error(errorMessage)
         } else {
             Resource.Success(models)
         }
