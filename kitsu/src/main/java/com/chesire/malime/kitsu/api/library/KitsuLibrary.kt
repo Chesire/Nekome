@@ -2,9 +2,10 @@ package com.chesire.malime.kitsu.api.library
 
 import com.chesire.malime.core.Resource
 import com.chesire.malime.core.api.LibraryApi
-import com.chesire.malime.core.flags.SeriesType
 import com.chesire.malime.core.flags.UserSeriesStatus
 import com.chesire.malime.core.models.SeriesModel
+import com.chesire.malime.kitsu.adapters.UserSeriesStatusAdapter
+import com.chesire.malime.kitsu.api.ResponseParser
 import kotlinx.coroutines.Deferred
 import okhttp3.MediaType
 import okhttp3.RequestBody
@@ -12,24 +13,29 @@ import retrofit2.Response
 
 private const val LIMIT = 500
 private const val MAX_RETRIES = 3
+private const val ANIME_TYPE = "anime"
+private const val MANGA_TYPE = "manga"
 
 class KitsuLibrary(
     private val libraryService: KitsuLibraryService,
     private val userId: Int
-) : LibraryApi {
+) : ResponseParser,
+    LibraryApi {
+
+    private val userSeriesStatusAdapter = UserSeriesStatusAdapter()
+
     override suspend fun retrieveAnime() = performRetrieveCall(libraryService::retrieveAnimeAsync)
     override suspend fun retrieveManga() = performRetrieveCall(libraryService::retrieveMangaAsync)
 
-    override suspend fun addAnime(model: SeriesModel): Resource<SeriesModel> {
-        val addModelJson = createNewAddModel(userId, model.id, model.type)
+    override suspend fun addAnime(
+        seriesId: Int,
+        startingStatus: UserSeriesStatus
+    ): Resource<SeriesModel> {
+        val addModelJson = createNewAddModel(userId, seriesId, startingStatus, ANIME_TYPE)
         val body = RequestBody.create(MediaType.parse("application/vnd.api+json"), addModelJson)
-        val response = libraryService.addAnime(body).await()
+        val response = libraryService.addAnimeAsync(body).await()
 
-        if (response.isSuccessful && response.body() != null) {
-            // create the SeriesModel
-        }
-
-        return Resource.Error("Working on it")
+        return parseResponse(response)
     }
 
     private suspend fun performRetrieveCall(
@@ -73,21 +79,25 @@ class KitsuLibrary(
             Resource.Success(models)
         }
     }
-}
 
-private fun createNewAddModel(userId: Int, seriesId: Int, seriesType: SeriesType): String {
-    return """
+    private fun createNewAddModel(
+        userId: Int,
+        seriesId: Int,
+        startingStatus: UserSeriesStatus,
+        seriesType: String
+    ): String {
+        return """
 {
   "data": {
     "type": "libraryEntries",
     "attributes": {
       "progress": 0,
-      "status": ${UserSeriesStatus.Current}
+      "status": "${userSeriesStatusAdapter.userSeriesStatusToString(startingStatus)}"
     },
     "relationships": {
       "$seriesType": {
         "data": {
-          "type": $seriesType,
+          "type": "$seriesType",
           "id": $seriesId
         }
       },
@@ -100,4 +110,6 @@ private fun createNewAddModel(userId: Int, seriesId: Int, seriesType: SeriesType
     }
   }
 }""".trimIndent()
+    }
 }
+

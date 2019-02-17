@@ -1,5 +1,6 @@
 package com.chesire.malime.kitsu.api.library
 
+import com.chesire.malime.core.models.SeriesModel
 import kotlinx.coroutines.Deferred
 import okhttp3.RequestBody
 import retrofit2.Response
@@ -47,5 +48,5 @@ interface KitsuLibraryService {
                 "?include=anime" +
                 "&fields[anime]=$ANIME_FIELDS"
     )
-    fun addAnime(@Body data: RequestBody): Deferred<Response<AddResponse>>
+    fun addAnimeAsync(@Body data: RequestBody): Deferred<Response<SeriesModel>>
 }

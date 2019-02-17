@@ -1,7 +1,6 @@
 package com.chesire.malime.kitsu.live
 
 import com.chesire.malime.core.Resource
-import com.chesire.malime.core.flags.SeriesType
 import com.chesire.malime.core.flags.UserSeriesStatus
 import com.chesire.malime.kitsu.adapters.ImageModelAdapter
 import com.chesire.malime.kitsu.adapters.SeriesStatusAdapter
@@ -10,14 +9,13 @@ import com.chesire.malime.kitsu.adapters.SubtypeAdapter
 import com.chesire.malime.kitsu.adapters.UserSeriesStatusAdapter
 import com.chesire.malime.kitsu.api.library.KitsuLibrary
 import com.chesire.malime.kitsu.api.library.KitsuLibraryService
+import com.chesire.malime.kitsu.api.library.LibrarySeriesModelAdapter
 import com.chesire.malime.kitsu.api.library.ParsedRetrieveResponseAdapter
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.squareup.moshi.Moshi
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
-import okhttp3.MediaType
 import okhttp3.OkHttpClient
-import okhttp3.RequestBody
 import org.junit.Ignore
 import org.junit.Test
 import retrofit2.Retrofit
@@ -32,6 +30,7 @@ class LiveKitsuLibraryTests {
         .add(SubtypeAdapter())
         .add(UserSeriesStatusAdapter())
         .add(ParsedRetrieveResponseAdapter())
+        .add(LibrarySeriesModelAdapter())
         .build()
 
     private val httpClient = OkHttpClient()
@@ -83,43 +82,15 @@ class LiveKitsuLibraryTests {
 
     @Test
     fun `attempt addAnime`() = runBlocking {
-        val json = createNewAddModel(294558, 550, SeriesType.Anime)
-        val body = RequestBody.create(MediaType.parse("application/vnd.api+json"), json)
-        val result = service.addAnime(body).await()
+        val result = handler.addAnime(556, UserSeriesStatus.Current)
 
-        if (result.isSuccessful) {
-            val body = result.body()
-            val s = ""
-        } else {
-            val error = result.errorBody()?.string()
-            val s = ""
+        when (result) {
+            is Resource.Success -> {
+                val data = result.data
+            }
+            is Resource.Error -> {
+                val error = result.msg
+            }
         }
     }
-}
-
-private fun createNewAddModel(userId: Int, seriesId: Int, seriesType: SeriesType): String {
-    return """
-{
-  "data": {
-    "type": "libraryEntries",
-    "attributes": {
-      "progress": 0,
-      "status": ${UserSeriesStatus.Current}
-    },
-    "relationships": {
-      "$seriesType": {
-        "data": {
-          "type": $seriesType,
-          "id": $seriesId
-        }
-      },
-      "user": {
-        "data": {
-          "type": "users",
-          "id": $userId
-        }
-      }
-    }
-  }
-}""".trimIndent()
 }
