@@ -47,8 +47,8 @@ class LiveKitsuLibraryTests {
     @Test
     fun `attempt retrieveLibrary`() = runBlocking {
         val job = launch {
-            val animeCall = service.retrieveAnime(294558, 0)
-            val mangaCall = service.retrieveManga(294558, 0)
+            val animeCall = service.retrieveAnimeAsync(294558, 0)
+            val mangaCall = service.retrieveMangaAsync(294558, 0)
 
             val animeResult = animeCall.await()
             val mangaResult = mangaCall.await()

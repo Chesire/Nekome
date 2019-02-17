@@ -16,7 +16,7 @@ interface KitsuLibraryService {
                 "&filter[kind]=anime" +
                 "&sort=anime.titles.canonical"
     )
-    fun retrieveAnime(
+    fun retrieveAnimeAsync(
         @Path("userId") userId: Int,
         @Query("page[offset]") offset: Int
     ): Deferred<Response<ParsedLibraryResponse>>
@@ -30,7 +30,7 @@ interface KitsuLibraryService {
                 "&filter[kind]=manga" +
                 "&sort=manga.titles.canonical"
     )
-    fun retrieveManga(
+    fun retrieveMangaAsync(
         @Path("userId") userId: Int,
         @Query("page[offset]") offset: Int
     ): Deferred<Response<ParsedLibraryResponse>>
