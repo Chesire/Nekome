@@ -1,18 +1,23 @@
 package com.chesire.malime.kitsu.api.library
 
 import kotlinx.coroutines.Deferred
+import okhttp3.RequestBody
 import retrofit2.Response
+import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.POST
 import retrofit2.http.Path
 import retrofit2.http.Query
+
+private const val ANIME_FIELDS =
+    "slug,canonicalTitle,startDate,endDate,subtype,status,posterImage,coverImage,episodeCount,nsfw"
 
 interface KitsuLibraryService {
     @GET(
         "api/edge/users/{userId}/library-entries" +
                 "?include=anime" +
                 "&fields[libraryEntries]=status,progress,anime,startedAt,finishedAt" +
-                "&fields[anime]=slug,canonicalTitle,startDate,endDate," +
-                "subtype,status,posterImage,coverImage,episodeCount,nsfw" +
+                "&fields[anime]=$ANIME_FIELDS" +
                 "&filter[kind]=anime" +
                 "&sort=anime.titles.canonical"
     )
@@ -20,7 +25,7 @@ interface KitsuLibraryService {
         @Path("userId") userId: Int,
         @Query("page[offset]") offset: Int,
         @Query("page[limit]") limit: Int
-    ): Deferred<Response<ParsedLibraryResponse>>
+    ): Deferred<Response<ParsedRetrieveResponse>>
 
     @GET(
         "api/edge/users/{userId}/library-entries" +
@@ -35,5 +40,12 @@ interface KitsuLibraryService {
         @Path("userId") userId: Int,
         @Query("page[offset]") offset: Int,
         @Query("page[limit]") limit: Int
-    ): Deferred<Response<ParsedLibraryResponse>>
+    ): Deferred<Response<ParsedRetrieveResponse>>
+
+    @POST(
+        "api/edge/library-entries" +
+                "?include=anime" +
+                "&fields[anime]=$ANIME_FIELDS"
+    )
+    fun addAnime(@Body data: RequestBody): Deferred<Response<AddResponse>>
 }

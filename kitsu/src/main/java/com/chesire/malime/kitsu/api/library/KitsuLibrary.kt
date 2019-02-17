@@ -2,8 +2,12 @@ package com.chesire.malime.kitsu.api.library
 
 import com.chesire.malime.core.Resource
 import com.chesire.malime.core.api.LibraryApi
+import com.chesire.malime.core.flags.SeriesType
+import com.chesire.malime.core.flags.UserSeriesStatus
 import com.chesire.malime.core.models.SeriesModel
 import kotlinx.coroutines.Deferred
+import okhttp3.MediaType
+import okhttp3.RequestBody
 import retrofit2.Response
 
 private const val LIMIT = 500
@@ -16,8 +20,20 @@ class KitsuLibrary(
     override suspend fun retrieveAnime() = performRetrieveCall(libraryService::retrieveAnimeAsync)
     override suspend fun retrieveManga() = performRetrieveCall(libraryService::retrieveMangaAsync)
 
+    override suspend fun addAnime(model: SeriesModel): Resource<SeriesModel> {
+        val addModelJson = createNewAddModel(userId, model.id, model.type)
+        val body = RequestBody.create(MediaType.parse("application/vnd.api+json"), addModelJson)
+        val response = libraryService.addAnime(body).await()
+
+        if (response.isSuccessful && response.body() != null) {
+            // create the SeriesModel
+        }
+
+        return Resource.Error("Working on it")
+    }
+
     private suspend fun performRetrieveCall(
-        execute: (Int, Int, Int) -> Deferred<Response<ParsedLibraryResponse>>
+        execute: (Int, Int, Int) -> Deferred<Response<ParsedRetrieveResponse>>
     ): Resource<List<SeriesModel>> {
         val models = mutableListOf<SeriesModel>()
 
@@ -30,9 +46,9 @@ class KitsuLibrary(
         do {
             executeAgain = false
 
-            val result = execute(userId, offset, LIMIT).await()
-            if (result.isSuccessful && result.body() != null) {
-                val body = result.body()!!
+            val response = execute(userId, offset, LIMIT).await()
+            if (response.isSuccessful && response.body() != null) {
+                val body = response.body()!!
                 models.addAll(body.series)
                 retries = 0
 
@@ -46,7 +62,7 @@ class KitsuLibrary(
                     retries++
                     executeAgain = true
                 } else {
-                    errorMessage = result.message()
+                    errorMessage = response.message()
                 }
             }
         } while (executeAgain)
@@ -57,4 +73,31 @@ class KitsuLibrary(
             Resource.Success(models)
         }
     }
+}
+
+private fun createNewAddModel(userId: Int, seriesId: Int, seriesType: SeriesType): String {
+    return """
+{
+  "data": {
+    "type": "libraryEntries",
+    "attributes": {
+      "progress": 0,
+      "status": ${UserSeriesStatus.Current}
+    },
+    "relationships": {
+      "$seriesType": {
+        "data": {
+          "type": $seriesType,
+          "id": $seriesId
+        }
+      },
+      "user": {
+        "data": {
+          "type": "users",
+          "id": $userId
+        }
+      }
+    }
+  }
+}""".trimIndent()
 }

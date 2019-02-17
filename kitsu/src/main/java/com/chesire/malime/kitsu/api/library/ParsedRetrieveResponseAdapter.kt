@@ -5,9 +5,9 @@ import com.chesire.malime.core.models.SeriesModel
 import com.squareup.moshi.FromJson
 
 @Suppress("unused")
-class ParsedLibraryResponseAdapter {
+class ParsedRetrieveResponseAdapter {
     @FromJson
-    fun parsedLibraryResponseFromLibraryResponse(response: LibraryResponse): ParsedLibraryResponse {
+    fun parsedRetrieveResponseFromRetrieveResponse(response: RetrieveResponse): ParsedRetrieveResponse {
         val seriesModels = response
             .data
             .mapNotNull { library ->
@@ -39,6 +39,6 @@ class ParsedLibraryResponseAdapter {
                     }
             }
 
-        return ParsedLibraryResponse(seriesModels, response.links)
+        return ParsedRetrieveResponse(seriesModels, response.links)
     }
 }

@@ -6,4 +6,5 @@ import com.chesire.malime.core.models.SeriesModel
 interface LibraryApi {
     suspend fun retrieveAnime(): Resource<List<SeriesModel>>
     suspend fun retrieveManga(): Resource<List<SeriesModel>>
+    suspend fun addAnime(model: SeriesModel): Resource<SeriesModel>
 }
