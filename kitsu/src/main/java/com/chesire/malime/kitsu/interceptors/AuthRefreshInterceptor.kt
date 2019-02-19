@@ -21,15 +21,14 @@ class AuthRefreshInterceptor(
             val authResponse = runBlocking { getNewAuth(provider.refreshToken) }
             if (authResponse.isSuccessful && authResponse.body() != null) {
                 authResponse.body()?.let {
-                    provider.accessToken = it.accessToken
-                    provider.refreshToken = it.refreshToken
+                    provider.apply {
+                        accessToken = it.accessToken
+                        refreshToken = it.refreshToken
+                    }
 
                     chain.proceed(
                         originRequest.newBuilder()
-                            .header(
-                                "Authorization",
-                                "Bearer ${it.accessToken}"
-                            )
+                            .header("Authorization", "Bearer ${it.accessToken}")
                             .build()
                     )
                 } ?: generateFailureResponse()
