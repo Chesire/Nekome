@@ -2,7 +2,6 @@ package com.chesire.malime.kitsu.interceptors
 
 import com.chesire.malime.kitsu.AuthProvider
 import com.chesire.malime.kitsu.api.auth.KitsuAuthService
-import com.chesire.malime.kitsu.api.auth.LoginResponse
 import com.chesire.malime.kitsu.api.auth.RefreshTokenRequest
 import kotlinx.coroutines.runBlocking
 import okhttp3.Interceptor
@@ -21,10 +20,8 @@ class AuthRefreshInterceptor(
             val authResponse = runBlocking { getNewAuth(provider.refreshToken) }
             if (authResponse.isSuccessful && authResponse.body() != null) {
                 authResponse.body()?.let {
-                    provider.apply {
-                        accessToken = it.accessToken
-                        refreshToken = it.refreshToken
-                    }
+                    provider.accessToken = it.accessToken
+                    provider.refreshToken = it.refreshToken
 
                     chain.proceed(
                         originRequest.newBuilder()
@@ -40,9 +37,8 @@ class AuthRefreshInterceptor(
         }
     }
 
-    private suspend fun getNewAuth(refreshToken: String): retrofit2.Response<LoginResponse> {
-        return auth.refreshAccessTokenAsync(RefreshTokenRequest(refreshToken)).await()
-    }
+    private suspend fun getNewAuth(refreshToken: String) =
+        auth.refreshAccessTokenAsync(RefreshTokenRequest(refreshToken)).await()
 
     private fun generateFailureResponse(): Response {
         // If there is an auth failure report a 401 error for the app to logout with
