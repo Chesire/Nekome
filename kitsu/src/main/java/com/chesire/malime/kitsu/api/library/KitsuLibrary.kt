@@ -27,27 +27,11 @@ class KitsuLibrary(
     override suspend fun retrieveAnime() = performRetrieveCall(libraryService::retrieveAnimeAsync)
     override suspend fun retrieveManga() = performRetrieveCall(libraryService::retrieveMangaAsync)
 
-    override suspend fun addAnime(
-        seriesId: Int,
-        startingStatus: UserSeriesStatus
-    ): Resource<SeriesModel> {
-        val addModelJson = createNewAddModel(seriesId, startingStatus, ANIME_TYPE)
-        val body = RequestBody.create(MediaType.parse("application/vnd.api+json"), addModelJson)
-        val response = libraryService.addAnimeAsync(body).await()
+    override suspend fun addAnime(seriesId: Int, startingStatus: UserSeriesStatus) =
+        performAddCall(seriesId, startingStatus, ANIME_TYPE, libraryService::addAnimeAsync)
 
-        return parseResponse(response)
-    }
-
-    override suspend fun addManga(
-        seriesId: Int,
-        startingStatus: UserSeriesStatus
-    ): Resource<SeriesModel> {
-        val addModelJson = createNewAddModel(seriesId, startingStatus, MANGA_TYPE)
-        val body = RequestBody.create(MediaType.parse("application/vnd.api+json"), addModelJson)
-        val response = libraryService.addMangaAsync(body).await()
-
-        return parseResponse(response)
-    }
+    override suspend fun addManga(seriesId: Int, startingStatus: UserSeriesStatus) =
+        performAddCall(seriesId, startingStatus, MANGA_TYPE, libraryService::addMangaAsync)
 
     override suspend fun delete(userSeriesId: Int): Resource<Any> {
         val response = libraryService.deleteItemAsync(userSeriesId).await()
@@ -98,6 +82,19 @@ class KitsuLibrary(
         } else {
             Resource.Success(models)
         }
+    }
+
+    private suspend fun performAddCall(
+        seriesId: Int,
+        startingStatus: UserSeriesStatus,
+        type: String,
+        execute: (RequestBody) -> Deferred<Response<SeriesModel>>
+    ): Resource<SeriesModel> {
+        val addModelJson = createNewAddModel(seriesId, startingStatus, type)
+        val body = RequestBody.create(MediaType.parse("application/vnd.api+json"), addModelJson)
+        val response = execute(body).await()
+
+        return parseResponse(response)
     }
 
     private fun createNewAddModel(
