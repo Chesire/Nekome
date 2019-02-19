@@ -109,6 +109,20 @@ class LiveKitsuLibraryTests {
     }
 
     @Test
+    fun `attempt updateSeries`() = runBlocking {
+        val result = handler.update(30261187, 1, UserSeriesStatus.Current)
+
+        when (result) {
+            is Resource.Success -> {
+                val data = result.data
+            }
+            is Resource.Error -> {
+                val error = result.msg
+            }
+        }
+    }
+
+    @Test
     fun `attempt delete`() = runBlocking {
         val result = handler.delete(29461572)
 

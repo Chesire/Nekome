@@ -33,6 +33,18 @@ class KitsuLibrary(
     override suspend fun addManga(seriesId: Int, startingStatus: UserSeriesStatus) =
         performAddCall(seriesId, startingStatus, MANGA_TYPE, libraryService::addMangaAsync)
 
+    override suspend fun update(
+        userSeriesId: Int,
+        progress: Int,
+        newStatus: UserSeriesStatus
+    ): Resource<SeriesModel> {
+        val updateModelJson = createUpdateModel(userSeriesId, progress, newStatus)
+        val body = RequestBody.create(MediaType.parse("application/vnd.api+json"), updateModelJson)
+
+        val response = libraryService.updateItemAsync(userSeriesId, body).await()
+        return parseResponse(response)
+    }
+
     override suspend fun delete(userSeriesId: Int): Resource<Any> {
         val response = libraryService.deleteItemAsync(userSeriesId).await()
         return if (response.isSuccessful) {
@@ -123,6 +135,24 @@ class KitsuLibrary(
           "id": $userId
         }
       }
+    }
+  }
+}""".trimIndent()
+    }
+
+    private fun createUpdateModel(
+        userSeriesId: Int,
+        newProgress: Int,
+        newStatus: UserSeriesStatus
+    ): String {
+        return """
+{
+  "data": {
+    "id": $userSeriesId,
+    "type": "libraryEntries",
+    "attributes": {
+      "progress": $newProgress,
+      "status": "${userSeriesStatusAdapter.userSeriesStatusToString(newStatus)}"
     }
   }
 }""".trimIndent()

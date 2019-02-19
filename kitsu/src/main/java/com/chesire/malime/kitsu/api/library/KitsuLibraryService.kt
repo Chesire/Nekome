@@ -7,6 +7,7 @@ import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
+import retrofit2.http.PATCH
 import retrofit2.http.POST
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -58,6 +59,17 @@ interface KitsuLibraryService {
                 "&fields[manga]=$MANGA_FIELDS"
     )
     fun addMangaAsync(@Body data: RequestBody): Deferred<Response<SeriesModel>>
+
+    @PATCH(
+        "api/edge/library-entries/{id}" +
+                "?include=anime,manga" +
+                "&fields[anime]=$ANIME_FIELDS" +
+                "&fields[manga]=$MANGA_FIELDS"
+    )
+    fun updateItemAsync(
+        @Path("id") userSeriesId: Int,
+        @Body data: RequestBody
+    ): Deferred<Response<SeriesModel>>
 
     @DELETE("api/edge/library-entries/{id}")
     fun deleteItemAsync(@Path("id") userSeriesId: Int): Deferred<Response<Any>>
