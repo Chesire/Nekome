@@ -8,7 +8,6 @@ private const val ANIME = "anime"
 private const val MANGA = "manga"
 private const val UNKNOWN = "unknown"
 
-@Suppress("unused")
 class SeriesTypeAdapter {
     @FromJson
     fun seriesTypeFromString(type: String): SeriesType {
