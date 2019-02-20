@@ -4,7 +4,6 @@ import com.chesire.malime.core.models.ImageModel
 import com.chesire.malime.kitsu.api.intermediaries.ParsingImageModel
 import com.squareup.moshi.FromJson
 
-@Suppress("unused")
 class ImageModelAdapter {
     @FromJson
     fun imageFromParsingImage(parsingImage: ParsingImageModel): ImageModel {
