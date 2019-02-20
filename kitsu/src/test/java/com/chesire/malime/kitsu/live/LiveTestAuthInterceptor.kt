@@ -11,7 +11,7 @@ class LiveTestAuthInterceptor : Interceptor {
         val authenticatedRequest = request.newBuilder()
             .header(
                 "Authorization",
-                "Bearer "
+                "Bearer INSERT AUTH TOKEN"
             )
             .build()
 

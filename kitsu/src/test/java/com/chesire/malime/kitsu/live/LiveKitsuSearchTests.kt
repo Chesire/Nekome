@@ -2,12 +2,12 @@ package com.chesire.malime.kitsu.live
 
 import com.chesire.malime.core.Resource
 import com.chesire.malime.kitsu.adapters.ImageModelAdapter
-import com.chesire.malime.kitsu.api.search.SearchSeriesModelAdapter
 import com.chesire.malime.kitsu.adapters.SeriesStatusAdapter
 import com.chesire.malime.kitsu.adapters.SeriesTypeAdapter
 import com.chesire.malime.kitsu.adapters.SubtypeAdapter
 import com.chesire.malime.kitsu.api.search.KitsuSearch
 import com.chesire.malime.kitsu.api.search.KitsuSearchService
+import com.chesire.malime.kitsu.api.search.SearchSeriesModelAdapter
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.squareup.moshi.Moshi
 import kotlinx.coroutines.launch

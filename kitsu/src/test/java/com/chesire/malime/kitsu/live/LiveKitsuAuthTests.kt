@@ -5,6 +5,7 @@ import com.chesire.malime.kitsu.api.auth.KitsuAuth
 import com.chesire.malime.kitsu.api.auth.KitsuAuthService
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.squareup.moshi.Moshi
+import io.mockk.mockk
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import okhttp3.OkHttpClient
@@ -26,7 +27,7 @@ class LiveKitsuAuthTests {
         .build()
         .create(KitsuAuthService::class.java)
 
-    private val handler = KitsuAuth(service)
+    private val handler = KitsuAuth(service, mockk())
 
     @Test
     fun `attempt login`() = runBlocking {
