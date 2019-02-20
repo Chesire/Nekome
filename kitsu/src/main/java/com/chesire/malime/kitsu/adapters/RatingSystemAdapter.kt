@@ -7,8 +7,8 @@ import com.squareup.moshi.ToJson
 private const val ADVANCED = "advanced"
 private const val REGULAR = "regular"
 private const val SIMPLE = "simple"
+private const val UNKNOWN = "unknown"
 
-@Suppress("unused")
 class RatingSystemAdapter {
     @FromJson
     fun ratingFromString(ratingString: String): RatingSystem {
@@ -21,12 +21,12 @@ class RatingSystemAdapter {
     }
 
     @ToJson
-    fun ratingToJson(ratingSystem: RatingSystem): String {
+    fun ratingToString(ratingSystem: RatingSystem): String {
         return when (ratingSystem) {
             RatingSystem.Advanced -> ADVANCED
             RatingSystem.Regular -> REGULAR
             RatingSystem.Simple -> SIMPLE
-            else -> "unknown"
+            else -> UNKNOWN
         }
     }
 }
