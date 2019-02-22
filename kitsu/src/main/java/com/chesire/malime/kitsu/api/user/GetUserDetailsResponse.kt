@@ -8,7 +8,7 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class GetUserDetailsResponse(
     @Json(name = "data")
-    val data: Array<UserDetailsData>
+    val data: List<UserDetailsData>
 ) {
     @JsonClass(generateAdapter = true)
     data class UserDetailsData(
