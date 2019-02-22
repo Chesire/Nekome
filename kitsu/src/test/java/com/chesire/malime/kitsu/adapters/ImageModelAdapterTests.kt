@@ -1,6 +1,5 @@
 package com.chesire.malime.kitsu.adapters
 
-import com.chesire.malime.kitsu.adapters.ImageModelAdapter
 import com.chesire.malime.kitsu.api.intermediaries.ParsingImageModel
 import org.junit.Assert.assertEquals
 import org.junit.Test

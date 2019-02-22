@@ -2,6 +2,7 @@ package com.chesire.malime.kitsu.adapters
 
 import com.chesire.malime.core.flags.Subtype
 import com.squareup.moshi.FromJson
+import com.squareup.moshi.ToJson
 
 private const val ONA = "ONA"
 private const val OVA = "OVA"
@@ -16,8 +17,8 @@ private const val MANHWA = "manhwa"
 private const val NOVEL = "novel"
 private const val OEL = "oel"
 private const val ONESHOT = "oneshot"
+private const val UNKNOWN = "unknown"
 
-@Suppress("unused")
 class SubtypeAdapter {
     @Suppress("ComplexMethod")
     @FromJson
@@ -37,6 +38,27 @@ class SubtypeAdapter {
             OEL -> Subtype.OEL
             ONESHOT -> Subtype.Oneshot
             else -> Subtype.Unknown
+        }
+    }
+
+    @Suppress("ComplexMethod")
+    @ToJson
+    fun subtypeToString(subtype: Subtype): String {
+        return when (subtype) {
+            Subtype.ONA -> ONA
+            Subtype.OVA -> OVA
+            Subtype.TV -> TV
+            Subtype.Movie -> MOVIE
+            Subtype.Music -> MUSIC
+            Subtype.Special -> SPECIAL
+            Subtype.Doujin -> DOUJIN
+            Subtype.Manga -> MANGA
+            Subtype.Manhua -> MANHUA
+            Subtype.Manhwa -> MANHWA
+            Subtype.Novel -> NOVEL
+            Subtype.OEL -> OEL
+            Subtype.Oneshot -> ONESHOT
+            else -> UNKNOWN
         }
     }
 }
