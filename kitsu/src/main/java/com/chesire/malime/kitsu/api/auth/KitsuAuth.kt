@@ -19,7 +19,7 @@ class KitsuAuth(
                 Resource.Success(Any())
             } ?: Resource.Error("Response body is null")
         } else {
-            Resource.Error(response.message())
+            Resource.Error(response.errorBody()?.string() ?: response.message())
         }
     }
 }
