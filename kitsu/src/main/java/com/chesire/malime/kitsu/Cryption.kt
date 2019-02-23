@@ -6,6 +6,7 @@ import android.os.Build
 import android.security.KeyPairGeneratorSpec
 import android.security.keystore.KeyGenParameterSpec
 import android.security.keystore.KeyProperties
+import android.util.Base64
 import java.math.BigInteger
 import java.nio.charset.StandardCharsets
 import java.security.KeyPair
@@ -58,6 +59,14 @@ class Cryption(context: Context) {
         }
 
         return String(cipher.doFinal(encryptedData), StandardCharsets.UTF_8)
+    }
+
+    fun base64Encrypt(input: ByteArray): String {
+        return Base64.encodeToString(input, Base64.DEFAULT)
+    }
+
+    fun base64Decrypt(input: String): ByteArray {
+        return Base64.decode(input, Base64.DEFAULT)
     }
 
     private fun createAndroidKeyStoreAsymmetricKey(): KeyPair {
