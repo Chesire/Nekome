@@ -61,13 +61,9 @@ class Cryption(context: Context) {
         return String(cipher.doFinal(encryptedData), StandardCharsets.UTF_8)
     }
 
-    fun base64Encrypt(input: ByteArray): String {
-        return Base64.encodeToString(input, Base64.DEFAULT)
-    }
+    fun base64Encrypt(input: ByteArray): String = Base64.encodeToString(input, Base64.DEFAULT)
 
-    fun base64Decrypt(input: String): ByteArray {
-        return Base64.decode(input, Base64.DEFAULT)
-    }
+    fun base64Decrypt(input: String): ByteArray = Base64.decode(input, Base64.DEFAULT)
 
     private fun createAndroidKeyStoreAsymmetricKey(): KeyPair {
         val generator = KeyPairGenerator.getInstance(ALGORITHM, ANDROID_KEY_STORE)
