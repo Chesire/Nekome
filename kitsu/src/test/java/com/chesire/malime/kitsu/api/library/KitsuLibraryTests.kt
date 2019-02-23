@@ -19,13 +19,11 @@ class KitsuLibraryTests {
     @Test
     @Ignore("Add these later")
     fun `retrieveAnime`() {
-
     }
 
     @Test
     @Ignore("Add these later")
     fun `retrieveManga`() {
-
     }
 
     @Test
