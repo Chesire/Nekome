@@ -97,8 +97,8 @@ class SharedPrefTests {
 
         val classUnderTest = SharedPref(mockContext)
 
-        classUnderTest.primaryService = SupportedService.MyAnimeList
-        verify(mockPrefEditor).putString(PRIMARY_SERVICE, SupportedService.MyAnimeList.name)
+        classUnderTest.primaryService = SupportedService.Kitsu
+        verify(mockPrefEditor).putString(PRIMARY_SERVICE, SupportedService.Kitsu.name)
     }
 
     @Test
