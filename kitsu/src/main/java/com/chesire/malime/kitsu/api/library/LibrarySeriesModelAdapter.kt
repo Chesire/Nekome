@@ -4,7 +4,6 @@ import com.chesire.malime.core.models.ImageModel
 import com.chesire.malime.core.models.SeriesModel
 import com.squareup.moshi.FromJson
 
-@Suppress("unused")
 class LibrarySeriesModelAdapter {
     @FromJson
     fun seriesModelFromAddResponse(response: AddResponse): SeriesModel {
