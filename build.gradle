@@ -39,7 +39,6 @@ detekt {
             "app/src/main/java",
             "malime.core/src/main/java",
             "malime.kitsu/src/main/java",
-            "malime.mal/src/main/java",
             "core/src/main/java",
             "kitsu/src/main/java"
     )
