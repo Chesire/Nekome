@@ -3,27 +3,238 @@ package com.chesire.malime.kitsu.api.library
 import com.chesire.malime.core.Resource
 import com.chesire.malime.core.flags.UserSeriesStatus
 import com.chesire.malime.core.models.SeriesModel
+import com.chesire.malime.kitsu.api.intermediaries.Links
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.verify
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
 import okhttp3.ResponseBody
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertSame
 import org.junit.Assert.assertTrue
-import org.junit.Ignore
 import org.junit.Test
 import retrofit2.Response
 
 class KitsuLibraryTests {
     @Test
-    @Ignore("Add these later")
-    fun `retrieveAnime`() {
+    fun `retrieveAnime on success returns the retrieved models`() = runBlocking {
+        val expected = listOf(mockk<SeriesModel>())
+        val links = Links()
+        val mockService = mockk<KitsuLibraryService> {
+            every {
+                retrieveAnimeAsync(1, 0, 500)
+            } returns async {
+                mockk<Response<ParsedRetrieveResponse>> {
+                    every { isSuccessful } returns true
+                    every { body() } returns ParsedRetrieveResponse(expected, links)
+                }
+            }
+        }
+        val classUnderTest = KitsuLibrary(mockService, 1)
+        val actual = classUnderTest.retrieveAnime()
+
+        verify(exactly = 1) { mockService.retrieveAnimeAsync(1, 0, 500) }
+        when (actual) {
+            is Resource.Success -> assertEquals(expected, actual.data)
+            is Resource.Error -> error("Test has failed")
+        }
     }
 
     @Test
-    @Ignore("Add these later")
-    fun `retrieveManga`() {
+    fun `retrieveAnime more items to retrieve executes again with new offset`() = runBlocking {
+        val expected = listOf(mockk<SeriesModel>())
+        val mockService = mockk<KitsuLibraryService> {
+            every {
+                retrieveAnimeAsync(1, 0, 500)
+            } returns async {
+                mockk<Response<ParsedRetrieveResponse>> {
+                    every { isSuccessful } returns true
+                    every { body() } returns ParsedRetrieveResponse(expected, Links(next = "next"))
+                }
+            }
+            every {
+                retrieveAnimeAsync(1, 500, 500)
+            } returns async {
+                mockk<Response<ParsedRetrieveResponse>> {
+                    every { isSuccessful } returns true
+                    every { body() } returns ParsedRetrieveResponse(expected, Links())
+                }
+            }
+        }
+        val classUnderTest = KitsuLibrary(mockService, 1)
+        classUnderTest.retrieveAnime()
+
+        verify(exactly = 2) { mockService.retrieveAnimeAsync(any(), any(), any()) }
+    }
+
+    @Test
+    fun `retrieveAnime on error retries up to 4 times`() = runBlocking {
+        val mockService = mockk<KitsuLibraryService> {
+            every {
+                retrieveAnimeAsync(1, 0, 500)
+            } returns async {
+                mockk<Response<ParsedRetrieveResponse>> {
+                    every { isSuccessful } returns false
+                    every { errorBody() } returns mockk {
+                        every { string() } returns ""
+                    }
+                }
+            }
+        }
+        val classUnderTest = KitsuLibrary(mockService, 1)
+        val actual = classUnderTest.retrieveAnime()
+
+        verify(exactly = 4) { mockService.retrieveAnimeAsync(1, 0, 500) }
+        when (actual) {
+            is Resource.Success -> error("Test has failed")
+            is Resource.Error -> assertTrue(true)
+        }
+    }
+
+    @Test
+    fun `retrieveAnime error is produced only if no models are found`() = runBlocking {
+        val mockService = mockk<KitsuLibraryService> {
+            every {
+                retrieveAnimeAsync(1, 0, 500)
+            } returns async {
+                mockk<Response<ParsedRetrieveResponse>> {
+                    every { isSuccessful } returns true
+                    every { body() } returns ParsedRetrieveResponse(
+                        listOf(mockk()),
+                        Links(next = "next")
+                    )
+                }
+            }
+            every {
+                retrieveAnimeAsync(1, 500, 500)
+            } returns async {
+                mockk<Response<ParsedRetrieveResponse>> {
+                    every { isSuccessful } returns false
+                    every { errorBody() } returns mockk {
+                        every { string() } returns ""
+                    }
+                }
+            }
+        }
+        val classUnderTest = KitsuLibrary(mockService, 1)
+        val actual = classUnderTest.retrieveAnime()
+
+        verify { mockService.retrieveAnimeAsync(1, 0, 500) }
+        verify(exactly = 4) { mockService.retrieveAnimeAsync(1, 500, 500) }
+        when (actual) {
+            is Resource.Success -> assertTrue(true)
+            is Resource.Error -> error("Test has failed")
+        }
+    }
+
+    @Test
+    fun `retrieveManga on success returns the retrieved models`() = runBlocking {
+        val expected = listOf(mockk<SeriesModel>())
+        val mockService = mockk<KitsuLibraryService> {
+            every {
+                retrieveMangaAsync(1, 0, 500)
+            } returns async {
+                mockk<Response<ParsedRetrieveResponse>> {
+                    every { isSuccessful } returns true
+                    every { body() } returns ParsedRetrieveResponse(expected, Links())
+                }
+            }
+        }
+        val classUnderTest = KitsuLibrary(mockService, 1)
+        val actual = classUnderTest.retrieveManga()
+
+        when (actual) {
+            is Resource.Success -> assertEquals(expected, actual.data)
+            is Resource.Error -> error("Test has failed")
+        }
+    }
+
+    @Test
+    fun `retrieveManga more items to retrieve executes again with new offset`() = runBlocking {
+        val expected = listOf(mockk<SeriesModel>())
+        val mockService = mockk<KitsuLibraryService> {
+            every {
+                retrieveMangaAsync(1, 0, 500)
+            } returns async {
+                mockk<Response<ParsedRetrieveResponse>> {
+                    every { isSuccessful } returns true
+                    every { body() } returns ParsedRetrieveResponse(expected, Links(next = "next"))
+                }
+            }
+            every {
+                retrieveMangaAsync(1, 500, 500)
+            } returns async {
+                mockk<Response<ParsedRetrieveResponse>> {
+                    every { isSuccessful } returns true
+                    every { body() } returns ParsedRetrieveResponse(expected, Links())
+                }
+            }
+        }
+        val classUnderTest = KitsuLibrary(mockService, 1)
+        classUnderTest.retrieveManga()
+
+        verify(exactly = 2) { mockService.retrieveMangaAsync(any(), any(), any()) }
+    }
+
+    @Test
+    fun `retrieveManga on error retries up to 4 times`() = runBlocking {
+        val mockService = mockk<KitsuLibraryService> {
+            every {
+                retrieveMangaAsync(1, 0, 500)
+            } returns async {
+                mockk<Response<ParsedRetrieveResponse>> {
+                    every { isSuccessful } returns false
+                    every { errorBody() } returns mockk {
+                        every { string() } returns ""
+                    }
+                }
+            }
+        }
+        val classUnderTest = KitsuLibrary(mockService, 1)
+        val actual = classUnderTest.retrieveManga()
+
+        verify(exactly = 4) { mockService.retrieveMangaAsync(1, 0, 500) }
+        when (actual) {
+            is Resource.Success -> error("Test has failed")
+            is Resource.Error -> assertTrue(true)
+        }
+    }
+
+    @Test
+    fun `retrieveManga error is produced only if no models are found`() = runBlocking {
+        val mockService = mockk<KitsuLibraryService> {
+            every {
+                retrieveMangaAsync(1, 0, 500)
+            } returns async {
+                mockk<Response<ParsedRetrieveResponse>> {
+                    every { isSuccessful } returns true
+                    every { body() } returns ParsedRetrieveResponse(
+                        listOf(mockk()),
+                        Links(next = "next")
+                    )
+                }
+            }
+            every {
+                retrieveMangaAsync(1, 500, 500)
+            } returns async {
+                mockk<Response<ParsedRetrieveResponse>> {
+                    every { isSuccessful } returns false
+                    every { errorBody() } returns mockk {
+                        every { string() } returns ""
+                    }
+                }
+            }
+        }
+        val classUnderTest = KitsuLibrary(mockService, 1)
+        val actual = classUnderTest.retrieveManga()
+
+        verify { mockService.retrieveMangaAsync(1, 0, 500) }
+        verify(exactly = 4) { mockService.retrieveMangaAsync(1, 500, 500) }
+        when (actual) {
+            is Resource.Success -> assertTrue(true)
+            is Resource.Error -> error("Test has failed")
+        }
     }
 
     @Test
