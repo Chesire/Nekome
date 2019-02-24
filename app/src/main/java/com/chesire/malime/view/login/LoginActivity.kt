@@ -7,7 +7,6 @@ import com.chesire.malime.R
 import com.chesire.malime.core.flags.SupportedService
 import com.chesire.malime.view.MainActivity
 import com.chesire.malime.view.login.kitsu.KitsuLoginFragment
-import com.chesire.malime.view.login.mal.MalLoginFragment
 import dagger.android.support.DaggerAppCompatActivity
 
 class LoginActivity : DaggerAppCompatActivity(), LoginInteractor {
@@ -36,10 +35,6 @@ class LoginActivity : DaggerAppCompatActivity(), LoginInteractor {
         val tag: String
 
         when (service) {
-            SupportedService.MyAnimeList -> {
-                fragment = MalLoginFragment.newInstance()
-                tag = MalLoginFragment.tag
-            }
             SupportedService.Kitsu -> {
                 fragment = KitsuLoginFragment.newInstance()
                 tag = KitsuLoginFragment.tag

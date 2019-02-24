@@ -18,11 +18,6 @@ class UrlLoader @Inject constructor() {
                 context.getString(R.string.view_profile_kitsu),
                 userId
             )
-            SupportedService.MyAnimeList -> String.format(
-                Locale.ROOT,
-                context.getString(R.string.view_profile_mal),
-                userId
-            )
             else -> ""
         }
 
@@ -41,12 +36,6 @@ class UrlLoader @Inject constructor() {
                 context.getString(R.string.view_series_kitsu),
                 item.type.text,
                 item.slug
-            )
-            SupportedService.MyAnimeList -> String.format(
-                Locale.ROOT,
-                context.getString(R.string.view_series_mal),
-                item.type.text,
-                item.seriesId
             )
             else -> ""
         }

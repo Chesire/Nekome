@@ -72,7 +72,6 @@ dependencies {
 
     implementation project(path: ':malime.core')
     implementation project(path: ':malime.kitsu')
-    implementation project(path: ':malime.mal')
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
