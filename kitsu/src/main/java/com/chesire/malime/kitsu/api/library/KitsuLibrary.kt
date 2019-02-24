@@ -84,7 +84,7 @@ class KitsuLibrary(
                     retries++
                     executeAgain = true
                 } else {
-                    errorMessage = response.message()
+                    errorMessage = response.errorBody()?.string() ?: response.message()
                 }
             }
         } while (executeAgain)
