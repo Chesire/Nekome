@@ -8,7 +8,7 @@ import okhttp3.Interceptor
 import okhttp3.Response
 import javax.inject.Inject
 
-// we must use an interceptor as Kitsu doesn't return a 401, only 403.
+// We must use an interceptor as Kitsu doesn't return a 401, only 403.
 class AuthRefreshInterceptor @Inject constructor(
     private val provider: AuthProvider,
     private val auth: KitsuAuthService
