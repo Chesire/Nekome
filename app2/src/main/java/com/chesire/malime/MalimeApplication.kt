@@ -1,6 +1,7 @@
 package com.chesire.malime
 
 import android.os.StrictMode
+import com.chesire.malime.injection.components.DaggerAppComponent
 import dagger.android.AndroidInjector
 import dagger.android.support.DaggerApplication
 import timber.log.Timber
@@ -16,7 +17,10 @@ class MalimeApplication : DaggerApplication() {
     }
 
     override fun applicationInjector(): AndroidInjector<out DaggerApplication> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return DaggerAppComponent
+            .builder()
+            .applicationContext(this)
+            .build()
     }
 
     private fun startStrictMode() {
