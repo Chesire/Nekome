@@ -1,6 +1,7 @@
 package com.chesire.malime.injection.modules
 
 import com.chesire.malime.kitsu.AuthProvider
+import com.chesire.malime.kitsu.BuildConfig
 import com.chesire.malime.kitsu.KITSU_URL
 import com.chesire.malime.kitsu.adapters.ImageModelAdapter
 import com.chesire.malime.kitsu.adapters.RatingSystemAdapter
@@ -24,6 +25,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.Reusable
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
@@ -45,6 +47,13 @@ object ServerModule {
             .newBuilder()
             .addInterceptor(AuthInjectionInterceptor(authProvider))
             .addInterceptor(AuthRefreshInterceptor(authProvider, kitsuAuth))
+            .also { httpClient ->
+                if (BuildConfig.DEBUG) {
+                    httpClient.addInterceptor(HttpLoggingInterceptor().apply {
+                        level = HttpLoggingInterceptor.Level.BODY
+                    })
+                }
+            }
             .build()
     }
 
