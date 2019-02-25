@@ -1,4 +1,6 @@
-include ':app', ':core',
+include ':app',
+        ':core',
+        ':app2',
         ':kitsu',
         ':malime.core',
         ':malime.kitsu'
