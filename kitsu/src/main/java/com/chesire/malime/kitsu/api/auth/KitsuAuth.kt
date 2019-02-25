@@ -3,8 +3,9 @@ package com.chesire.malime.kitsu.api.auth
 import com.chesire.malime.core.Resource
 import com.chesire.malime.core.api.AuthApi
 import com.chesire.malime.kitsu.AuthProvider
+import javax.inject.Inject
 
-class KitsuAuth(
+class KitsuAuth @Inject constructor(
     private val authService: KitsuAuthService,
     private val authProvider: AuthProvider
 ) : AuthApi {

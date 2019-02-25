@@ -1,11 +1,12 @@
 package com.chesire.malime.kitsu
 
 import android.content.SharedPreferences
+import javax.inject.Inject
 
 private const val ACCESS_TOKEN = "KEY_ACCESS_TOKEN"
 private const val REFRESH_TOKEN = "KEY_REFRESH_TOKEN"
 
-class AuthProvider(
+class AuthProvider @Inject constructor(
     private val preferences: SharedPreferences,
     private val cryption: Cryption
 ) {
