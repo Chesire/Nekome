@@ -1,19 +1,23 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-allopen'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+apply from: '../app/dokka.gradle'
+apply from: '../app/jacoco.gradle'
+apply from: '../app/ktlint.gradle'
 
 android {
     compileSdkVersion 28
 
-
-
     defaultConfig {
-        applicationId "com.chesire.app"
+        applicationId "com.chesire.malime.v2" // for now leave v2 on, will remove later
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
-
+        versionCode 12
+        versionName "2.0.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
+        resConfigs "en"
     }
 
     buildTypes {
@@ -21,15 +25,45 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+        debug {
+            applicationIdSuffix = ".debug"
+            versionNameSuffix '-DEBUG'
+        }
     }
-
+    lintOptions {
+        disable 'ColorCasing',
+                'InvalidImport',
+                'InvalidSingleLineComment',
+                'MissingXmlHeader',
+                'NamingPattern',
+                'ShouldUseStaticImport',
+                'WrongAnnotationOrder',
+                'XmlSpacing'
+    }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation 'com.android.support:appcompat-v7:28.0.0'
+    implementation project(path: ':core')
+    implementation project(path: ':kitsu')
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation "com.google.dagger:dagger:2.21"
+    implementation "com.google.dagger:dagger-android:2.21"
+    implementation "com.google.dagger:dagger-android-support:2.21"
+    implementation "com.jakewharton.timber:timber:4.7.1"
+    implementation 'com.vanniktech:lint-rules-android:0.9.0'
+
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+
+    androidTestImplementation 'androidx.test.ext:junit:1.1.0'
+    androidTestImplementation 'androidx.test:rules:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-intents:3.1.1'
+
+    kapt "com.google.dagger:dagger-compiler:2.21"
+    kapt "com.google.dagger:dagger-android-processor:2.21"
 }
