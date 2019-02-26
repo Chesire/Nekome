@@ -13,6 +13,9 @@ interface UserDao {
     @Delete
     suspend fun delete(user: UserModel)
 
+    @Query("delete from usermodel where service == :service")
+    suspend fun delete(service: Service)
+
     @Query("select * from usermodel where service == :service")
     suspend fun get(service: Service): UserModel?
 
