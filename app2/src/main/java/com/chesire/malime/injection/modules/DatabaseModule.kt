@@ -20,5 +20,9 @@ object DatabaseModule {
 
     @Provides
     @JvmStatic
+    fun provideSeries(db: RoomDB) = db.series()
+
+    @Provides
+    @JvmStatic
     fun provideUser(db: RoomDB) = db.user()
 }

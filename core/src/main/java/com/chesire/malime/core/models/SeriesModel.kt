@@ -1,11 +1,15 @@
 package com.chesire.malime.core.models
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.chesire.malime.core.flags.SeriesStatus
 import com.chesire.malime.core.flags.SeriesType
 import com.chesire.malime.core.flags.Subtype
 import com.chesire.malime.core.flags.UserSeriesStatus
 
+@Entity
 data class SeriesModel(
+    @PrimaryKey
     val id: Int,
     val userId: Int,
     val type: SeriesType,
