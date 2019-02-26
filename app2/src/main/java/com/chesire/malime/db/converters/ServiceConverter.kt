@@ -3,7 +3,7 @@ package com.chesire.malime.db.converters
 import androidx.room.TypeConverter
 import com.chesire.malime.core.flags.Service
 
-class FlagConverters {
+class ServiceConverter {
     @TypeConverter
     fun fromService(service: Service): String = service.name
 
