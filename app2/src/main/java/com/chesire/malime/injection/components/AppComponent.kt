@@ -4,6 +4,7 @@ import android.content.Context
 import com.chesire.malime.MalimeApplication
 import com.chesire.malime.injection.androidmodules.ActivityModule
 import com.chesire.malime.injection.modules.AppModule
+import com.chesire.malime.injection.modules.DatabaseModule
 import com.chesire.malime.injection.modules.ServerModule
 import dagger.BindsInstance
 import dagger.Component
@@ -17,6 +18,7 @@ import javax.inject.Singleton
         ActivityModule::class,
         AndroidSupportInjectionModule::class,
         AppModule::class,
+        DatabaseModule::class,
         ServerModule::class
     ]
 )
