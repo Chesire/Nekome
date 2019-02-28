@@ -1,6 +1,5 @@
 package com.chesire.malime.injection.modules
 
-import com.chesire.malime.kitsu.AuthProvider
 import com.chesire.malime.kitsu.BuildConfig
 import com.chesire.malime.kitsu.KITSU_URL
 import com.chesire.malime.kitsu.adapters.ImageModelAdapter
@@ -40,13 +39,13 @@ object ServerModule {
     @Reusable
     @JvmStatic
     fun providesAuthenticatedOkHttpClient(
-        authProvider: AuthProvider,
-        kitsuAuth: KitsuAuthService
+        authInjection: AuthInjectionInterceptor,
+        authRefresh: AuthRefreshInterceptor
     ): OkHttpClient {
         return OkHttpClient()
             .newBuilder()
-            .addInterceptor(AuthInjectionInterceptor(authProvider))
-            .addInterceptor(AuthRefreshInterceptor(authProvider, kitsuAuth))
+            .addInterceptor(authInjection)
+            .addInterceptor(authRefresh)
             .also { httpClient ->
                 if (BuildConfig.DEBUG) {
                     httpClient.addInterceptor(HttpLoggingInterceptor().apply {
