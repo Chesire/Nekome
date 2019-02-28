@@ -42,13 +42,13 @@ class UserDaoTests {
 
     @Test
     fun noUserDetailsReturnsNull() = runBlocking {
-        assertNull(userDao.get(Service.Kitsu))
+        assertNull(userDao.retrieve(Service.Kitsu))
     }
 
     @Test
     fun canRetrieveKitsuUser() = runBlocking {
         userDao.insert(createUserModel(service = Service.Kitsu))
-        assertNotNull(userDao.get(Service.Kitsu))
+        assertNotNull(userDao.retrieve(Service.Kitsu))
     }
 
     @Test
@@ -61,7 +61,7 @@ class UserDaoTests {
         )
         userDao.insert(createUserModel(avatar = expected, service = Service.Kitsu))
 
-        assertEquals(expected, userDao.get(Service.Kitsu)?.avatar)
+        assertEquals(expected, userDao.retrieve(Service.Kitsu)?.avatar)
     }
 
     @Test
@@ -70,9 +70,9 @@ class UserDaoTests {
         val second = createUserModel(id = 2, name = "Model2", service = Service.Kitsu)
 
         userDao.insert(first)
-        assertEquals(first, userDao.get(Service.Kitsu))
+        assertEquals(first, userDao.retrieve(Service.Kitsu))
         userDao.insert(second)
-        assertEquals(second, userDao.get(Service.Kitsu))
+        assertEquals(second, userDao.retrieve(Service.Kitsu))
     }
 
     @Test
@@ -82,26 +82,26 @@ class UserDaoTests {
 
         userDao.insert(first)
         userDao.insert(second)
-        assertEquals(first, userDao.get(Service.Kitsu))
-        assertEquals(second, userDao.get(Service.Unknown))
+        assertEquals(first, userDao.retrieve(Service.Kitsu))
+        assertEquals(second, userDao.retrieve(Service.Unknown))
     }
 
     @Test
     fun deletingUsingUserModelRemoves() = runBlocking {
         val model = createUserModel(service = Service.Kitsu)
         userDao.insert(model)
-        assertEquals(model, userDao.get(Service.Kitsu))
+        assertEquals(model, userDao.retrieve(Service.Kitsu))
         userDao.delete(model)
-        assertNull(userDao.get(Service.Kitsu))
+        assertNull(userDao.retrieve(Service.Kitsu))
     }
 
     @Test
     fun deletingUsingServiceRemoves() = runBlocking {
         val model = createUserModel(service = Service.Kitsu)
         userDao.insert(model)
-        assertEquals(model, userDao.get(Service.Kitsu))
+        assertEquals(model, userDao.retrieve(Service.Kitsu))
         userDao.delete(Service.Kitsu)
-        assertNull(userDao.get(Service.Kitsu))
+        assertNull(userDao.retrieve(Service.Kitsu))
     }
 
     private fun createUserModel(

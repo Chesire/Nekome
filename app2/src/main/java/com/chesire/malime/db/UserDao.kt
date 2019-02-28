@@ -16,9 +16,9 @@ interface UserDao {
     @Query("DELETE FROM usermodel WHERE service == :service")
     suspend fun delete(service: Service)
 
-    @Query("SELECT * FROM usermodel WHERE service == :service")
-    suspend fun get(service: Service): UserModel?
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(user: UserModel)
+
+    @Query("SELECT * FROM usermodel WHERE service == :service")
+    suspend fun retrieve(service: Service): UserModel?
 }
