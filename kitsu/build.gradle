@@ -44,7 +44,7 @@ dependencies {
     implementation 'com.squareup.moshi:moshi:1.8.0'
     implementation "com.squareup.retrofit2:converter-moshi:2.5.0"
     implementation 'com.squareup.retrofit2:retrofit:2.5.0'
-    implementation 'com.vanniktech:lint-rules-android:0.9.0'
+    implementation 'com.vanniktech:lint-rules-android:0.10.0'
     implementation 'com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2'
     implementation "com.jakewharton.timber:timber:4.7.1"
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.1.1'
