@@ -10,12 +10,15 @@ import io.mockk.verify
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
+private const val KITSU_ACCESS_TOKEN_KEY = "KEY_KITSU_ACCESS_TOKEN"
+private const val KITSU_REFRESH_TOKEN_KEY = "KEY_KITSU_REFRESH_TOKEN"
+
 class AuthProviderTests {
     @Test
     fun `accessToken#get returns the decrypted token`() {
         val expected = "accessToken"
         val mockPreferences = mockk<SharedPreferences> {
-            every { getString("KEY_ACCESS_TOKEN", "") } returns "token"
+            every { getString(KITSU_ACCESS_TOKEN_KEY, "") } returns "token"
         }
         val mockCryption = mockk<Cryption> {
             every { base64Decrypt("token") } returns byteArrayOf()
@@ -31,7 +34,7 @@ class AuthProviderTests {
     fun `accessToken#get with empty token returns empty String`() {
         val expected = ""
         val mockPreferences = mockk<SharedPreferences> {
-            every { getString("KEY_ACCESS_TOKEN", "") } returns ""
+            every { getString(KITSU_ACCESS_TOKEN_KEY, "") } returns ""
         }
         val mockCryption = mockk<Cryption> {
             every { base64Decrypt("token") } returns byteArrayOf()
@@ -48,7 +51,7 @@ class AuthProviderTests {
         val slot = CapturingSlot<String>()
         val expected = "encryptedToken"
         val mockEditor = mockk<SharedPreferences.Editor> {
-            every { putString("KEY_ACCESS_TOKEN", capture(slot)) } returns this
+            every { putString(KITSU_ACCESS_TOKEN_KEY, capture(slot)) } returns this
             every { apply() } just Runs
         }
         val mockPreferences = mockk<SharedPreferences> {
@@ -62,7 +65,7 @@ class AuthProviderTests {
         val classUnderTest = AuthProvider(mockPreferences, mockCryption)
         classUnderTest.accessToken = "newToken"
 
-        verify { mockEditor.putString("KEY_ACCESS_TOKEN", expected) }
+        verify { mockEditor.putString(KITSU_ACCESS_TOKEN_KEY, expected) }
         assertEquals(expected, slot.captured)
     }
 
@@ -70,7 +73,7 @@ class AuthProviderTests {
     fun `refreshToken#get returns the decrypted token`() {
         val expected = "refreshToken"
         val mockPreferences = mockk<SharedPreferences> {
-            every { getString("KEY_REFRESH_TOKEN", "") } returns "token"
+            every { getString(KITSU_REFRESH_TOKEN_KEY, "") } returns "token"
         }
         val mockCryption = mockk<Cryption> {
             every { base64Decrypt("token") } returns byteArrayOf()
@@ -86,7 +89,7 @@ class AuthProviderTests {
     fun `refreshToken#get with empty token returns empty String`() {
         val expected = ""
         val mockPreferences = mockk<SharedPreferences> {
-            every { getString("KEY_REFRESH_TOKEN", "") } returns ""
+            every { getString(KITSU_REFRESH_TOKEN_KEY, "") } returns ""
         }
         val mockCryption = mockk<Cryption> {
             every { base64Decrypt("token") } returns byteArrayOf()
@@ -103,7 +106,7 @@ class AuthProviderTests {
         val slot = CapturingSlot<String>()
         val expected = "encryptedToken"
         val mockEditor = mockk<SharedPreferences.Editor> {
-            every { putString("KEY_REFRESH_TOKEN", capture(slot)) } returns this
+            every { putString(KITSU_REFRESH_TOKEN_KEY, capture(slot)) } returns this
             every { apply() } just Runs
         }
         val mockPreferences = mockk<SharedPreferences> {
@@ -117,7 +120,7 @@ class AuthProviderTests {
         val classUnderTest = AuthProvider(mockPreferences, mockCryption)
         classUnderTest.refreshToken = "newToken"
 
-        verify { mockEditor.putString("KEY_REFRESH_TOKEN", expected) }
+        verify { mockEditor.putString(KITSU_REFRESH_TOKEN_KEY, expected) }
         assertEquals(expected, slot.captured)
     }
 }
