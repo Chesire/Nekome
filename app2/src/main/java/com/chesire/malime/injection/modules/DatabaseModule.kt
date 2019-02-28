@@ -5,6 +5,7 @@ import androidx.room.Room
 import com.chesire.malime.db.RoomDB
 import dagger.Module
 import dagger.Provides
+import dagger.Reusable
 
 @Suppress("unused")
 @Module
@@ -19,10 +20,12 @@ object DatabaseModule {
     }
 
     @Provides
+    @Reusable
     @JvmStatic
     fun provideSeries(db: RoomDB) = db.series()
 
     @Provides
+    @Reusable
     @JvmStatic
     fun provideUser(db: RoomDB) = db.user()
 }
