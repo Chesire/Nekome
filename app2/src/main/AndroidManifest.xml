@@ -33,7 +33,7 @@
             android:value="598.0dip" />
 
         <activity
-            android:name=".LaunchActivity"
+            android:name=".flow.LaunchActivity"
             android:theme="@android:style/Theme.NoDisplay">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

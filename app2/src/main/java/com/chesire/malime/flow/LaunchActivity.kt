@@ -1,4 +1,4 @@
-package com.chesire.malime
+package com.chesire.malime.flow
 
 import android.os.Bundle
 import dagger.android.DaggerActivity
