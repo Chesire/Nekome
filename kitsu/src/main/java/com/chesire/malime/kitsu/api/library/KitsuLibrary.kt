@@ -45,7 +45,6 @@ class KitsuLibrary @Inject constructor(
         return response.parse()
     }
 
-
     override suspend fun delete(userSeriesId: Int): Resource<Any> {
         val response = libraryService.deleteItemAsync(userSeriesId).await()
         return if (response.isSuccessful) {
