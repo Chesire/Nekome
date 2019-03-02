@@ -5,7 +5,8 @@ import com.chesire.malime.core.api.LibraryApi
 import com.chesire.malime.core.flags.UserSeriesStatus
 import com.chesire.malime.core.models.SeriesModel
 import com.chesire.malime.kitsu.adapters.UserSeriesStatusAdapter
-import com.chesire.malime.kitsu.api.ResponseParser
+import com.chesire.malime.kitsu.parse
+import com.chesire.malime.kitsu.parseError
 import kotlinx.coroutines.Deferred
 import okhttp3.MediaType
 import okhttp3.RequestBody
@@ -20,9 +21,7 @@ private const val MANGA_TYPE = "manga"
 class KitsuLibrary @Inject constructor(
     private val libraryService: KitsuLibraryService,
     private val userId: Int
-) : ResponseParser,
-    LibraryApi {
-
+) : LibraryApi {
     private val userSeriesStatusAdapter = UserSeriesStatusAdapter()
 
     override suspend fun retrieveAnime() = performRetrieveCall(libraryService::retrieveAnimeAsync)
@@ -43,15 +42,16 @@ class KitsuLibrary @Inject constructor(
         val body = RequestBody.create(MediaType.parse("application/vnd.api+json"), updateModelJson)
 
         val response = libraryService.updateItemAsync(userSeriesId, body).await()
-        return parseResponse(response)
+        return response.parse()
     }
+
 
     override suspend fun delete(userSeriesId: Int): Resource<Any> {
         val response = libraryService.deleteItemAsync(userSeriesId).await()
         return if (response.isSuccessful) {
             Resource.Success(Any())
         } else {
-            Resource.Error(response.errorBody()?.string() ?: response.message())
+            response.parseError()
         }
     }
 
@@ -109,7 +109,7 @@ class KitsuLibrary @Inject constructor(
         val body = RequestBody.create(MediaType.parse("application/vnd.api+json"), addModelJson)
         val response = execute(body).await()
 
-        return parseResponse(response)
+        return response.parse()
     }
 
     private fun createNewAddModel(
