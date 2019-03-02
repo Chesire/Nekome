@@ -5,10 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.chesire.malime.databinding.FragmentLoginBinding
 import com.chesire.malime.flow.ViewModelFactory
 import dagger.android.support.DaggerFragment
+import timber.log.Timber
 import javax.inject.Inject
 
 /**
@@ -21,7 +23,9 @@ class LoginFragment : DaggerFragment() {
     lateinit var viewModelFactory: ViewModelFactory
 
     private val viewModel: LoginViewModel by lazy {
-        ViewModelProviders.of(this, viewModelFactory).get(LoginViewModel::class.java)
+        ViewModelProviders
+            .of(this, viewModelFactory)
+            .get(LoginViewModel::class.java)
     }
 
     override fun onCreateView(
@@ -36,6 +40,23 @@ class LoginFragment : DaggerFragment() {
                 lifecycleOwner = viewLifecycleOwner
             }
             .root
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        viewModel.loginStatus.observe(
+            viewLifecycleOwner,
+            Observer { loginStatus ->
+                when (loginStatus) {
+                    LoginViewModel.LoginStatus.EmptyUsername -> Timber.i("LoginStatus returned empty username")
+                    LoginViewModel.LoginStatus.EmptyPassword -> Timber.i("LoginStatus returned empty password")
+                    LoginViewModel.LoginStatus.Error -> Timber.i("LoginStatus returned error")
+                    LoginViewModel.LoginStatus.Success -> Timber.i("LoginStatus returned success")
+                    null -> Timber.w("LoginStatus returned as null")
+                }
+            }
+        )
     }
 
     companion object {
