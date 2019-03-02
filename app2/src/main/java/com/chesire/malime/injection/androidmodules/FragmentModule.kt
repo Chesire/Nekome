@@ -1,12 +1,12 @@
 package com.chesire.malime.injection.androidmodules
 
-import com.chesire.malime.flow.LaunchActivity
+import com.chesire.malime.flow.login.LoginFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
 @Suppress("unused")
 @Module
-abstract class ActivityModule {
+abstract class FragmentModule {
     @ContributesAndroidInjector
-    abstract fun contributeLaunchActivity(): LaunchActivity
+    abstract fun contributeLoginFragment(): LoginFragment
 }

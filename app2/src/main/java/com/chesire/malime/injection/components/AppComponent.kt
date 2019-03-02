@@ -3,8 +3,11 @@ package com.chesire.malime.injection.components
 import android.content.Context
 import com.chesire.malime.MalimeApplication
 import com.chesire.malime.injection.androidmodules.ActivityModule
+import com.chesire.malime.injection.androidmodules.FragmentModule
+import com.chesire.malime.injection.androidmodules.ViewModelModule
 import com.chesire.malime.injection.modules.AppModule
 import com.chesire.malime.injection.modules.DatabaseModule
+import com.chesire.malime.injection.modules.KitsuModule
 import com.chesire.malime.injection.modules.ServerModule
 import dagger.BindsInstance
 import dagger.Component
@@ -19,7 +22,10 @@ import javax.inject.Singleton
         AndroidSupportInjectionModule::class,
         AppModule::class,
         DatabaseModule::class,
-        ServerModule::class
+        FragmentModule::class,
+        KitsuModule::class,
+        ServerModule::class,
+        ViewModelModule::class
     ]
 )
 interface AppComponent : AndroidInjector<MalimeApplication> {

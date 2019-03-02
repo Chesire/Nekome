@@ -1,5 +1,6 @@
 package com.chesire.malime.injection.modules
 
+import com.chesire.malime.core.api.AuthApi
 import com.chesire.malime.kitsu.BuildConfig
 import com.chesire.malime.kitsu.KITSU_URL
 import com.chesire.malime.kitsu.adapters.ImageModelAdapter
@@ -8,6 +9,7 @@ import com.chesire.malime.kitsu.adapters.SeriesStatusAdapter
 import com.chesire.malime.kitsu.adapters.SeriesTypeAdapter
 import com.chesire.malime.kitsu.adapters.SubtypeAdapter
 import com.chesire.malime.kitsu.adapters.UserSeriesStatusAdapter
+import com.chesire.malime.kitsu.api.auth.KitsuAuth
 import com.chesire.malime.kitsu.api.auth.KitsuAuthService
 import com.chesire.malime.kitsu.api.library.KitsuLibraryService
 import com.chesire.malime.kitsu.api.library.LibrarySeriesModelAdapter
@@ -20,6 +22,7 @@ import com.chesire.malime.kitsu.interceptors.AuthInjectionInterceptor
 import com.chesire.malime.kitsu.interceptors.AuthRefreshInterceptor
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.squareup.moshi.Moshi
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.Reusable
