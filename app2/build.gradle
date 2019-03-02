@@ -36,6 +36,9 @@ android {
             versionNameSuffix '-DEBUG'
         }
     }
+    dataBinding {
+        enabled true
+    }
     lintOptions {
         disable 'ColorCasing',
                 'InvalidImport',

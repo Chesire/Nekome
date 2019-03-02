@@ -1,13 +1,12 @@
 package com.chesire.malime.flow.login
 
-import android.app.Activity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
-import com.chesire.malime.R
+import com.chesire.malime.databinding.FragmentLoginBinding
 import com.chesire.malime.flow.ViewModelFactory
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
@@ -26,9 +25,18 @@ class LoginFragment : DaggerFragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.fragment_login, container, false)
+    ): View {
+        return FragmentLoginBinding
+            .inflate(inflater, container, false)
+            .apply {
+                vm = viewModel
+                lifecycleOwner = viewLifecycleOwner
+            }
+            .root
+    }
 
     companion object {
         /**
