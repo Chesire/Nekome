@@ -7,6 +7,7 @@ import android.security.KeyPairGeneratorSpec
 import android.security.keystore.KeyGenParameterSpec
 import android.security.keystore.KeyProperties
 import android.util.Base64
+import dagger.Reusable
 import java.math.BigInteger
 import java.nio.charset.StandardCharsets
 import java.security.KeyPair
@@ -15,6 +16,7 @@ import java.security.KeyStore
 import java.security.PrivateKey
 import java.util.Calendar
 import javax.crypto.Cipher
+import javax.inject.Inject
 import javax.security.auth.x500.X500Principal
 
 private const val TRANSFORMATION = "RSA/ECB/PKCS1Padding"
@@ -22,7 +24,8 @@ private const val ALGORITHM = "RSA"
 private const val ANDROID_KEY_STORE = "AndroidKeyStore"
 private const val ALIAS = "kitsuPrivateAuth"
 
-class Cryption(context: Context) {
+@Reusable
+class Cryption @Inject constructor(context: Context) {
     private val keyStore = KeyStore.getInstance(ANDROID_KEY_STORE)
     private val keySpec: KeyPairGeneratorSpec
 

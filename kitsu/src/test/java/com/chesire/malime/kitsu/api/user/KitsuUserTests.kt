@@ -1,6 +1,7 @@
 package com.chesire.malime.kitsu.api.user
 
 import com.chesire.malime.core.Resource
+import com.chesire.malime.core.flags.Service
 import com.chesire.malime.core.models.ImageModel
 import com.chesire.malime.core.models.UserModel
 import io.mockk.every
@@ -96,7 +97,7 @@ class KitsuUserTests {
 
     @Test
     fun `getUserDetails successful response with body returns Resource#Success`() = runBlocking {
-        val expected = UserModel(0, "name", ImageModel.empty, ImageModel.empty)
+        val expected = UserModel(0, "name", ImageModel.empty, ImageModel.empty, Service.Kitsu)
 
         val mockResponse = mockk<Response<UserModel>> {
             every { isSuccessful } returns true

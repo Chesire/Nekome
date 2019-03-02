@@ -1,14 +1,6 @@
 ignore:
     - "app/src/main/java/com/chesire/malime/injection/*"
     - "app/src/main/java/com/chesire/malime/injection/**/*"
-coverage:
-  notify:
-    slack:
-      default:
-        secret: zPZxz/iaHgny+6G9TKg7XAdX4NwGnfpDXsdKo1Sm7rIAB9Pejzz1LlPvhSlw6DApExNwwl4ZCY/C8tiqd6jYjclPtISNa+cx7FXm6sTsijMmkHAMKz3GLV8hqWhyuJDHr2G8ZQ01GQGubSYtaWrnBoUwqQSBzKiLSEel2Yumojs=
-        threshold: 1%
-        only_pulls: false
-        branches: null
-        flags: null
-        paths: null
-        
+    - "app2/src/main/java/com/chesire/malime/injection/*"
+    - "app2/src/main/java/com/chesire/malime/injection/**/*"
+	
