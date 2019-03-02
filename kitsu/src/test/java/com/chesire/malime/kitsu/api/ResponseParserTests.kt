@@ -18,6 +18,7 @@ class ResponseParserTests {
         val mockResponse = mockk<Response<Any>> {
             every { isSuccessful } returns false
             every { errorBody() } returns mockResponseBody
+            every { code() } returns 0
         }
 
         val responseParser = TestResponseParser()
@@ -33,6 +34,7 @@ class ResponseParserTests {
             every { isSuccessful } returns false
             every { errorBody() } returns null
             every { message() } returns expected
+            every { code() } returns 0
         }
 
         val responseParser = TestResponseParser()

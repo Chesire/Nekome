@@ -29,6 +29,7 @@ class KitsuAuthTests {
         val mockResponse = mockk<Response<LoginResponse>> {
             every { isSuccessful } returns false
             every { errorBody() } returns mockResponseBody
+            every { code() } returns 0
         }
         val mockService = mockk<KitsuAuthService> {
             every {
@@ -58,6 +59,7 @@ class KitsuAuthTests {
             every { isSuccessful } returns false
             every { errorBody() } returns null
             every { message() } returns expected
+            every { code() } returns 0
         }
         val mockService = mockk<KitsuAuthService> {
             every {

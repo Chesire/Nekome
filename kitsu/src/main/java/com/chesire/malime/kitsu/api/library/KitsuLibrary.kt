@@ -64,6 +64,7 @@ class KitsuLibrary @Inject constructor(
         var page = 0
         var retries = 0
         var errorMessage = ""
+        var errorCode = 200
         var executeAgain: Boolean
 
         do {
@@ -86,12 +87,13 @@ class KitsuLibrary @Inject constructor(
                     executeAgain = true
                 } else {
                     errorMessage = response.errorBody()?.string() ?: response.message()
+                    errorCode = response.code()
                 }
             }
         } while (executeAgain)
 
         return if (retries == MAX_RETRIES && models.count() == 0) {
-            Resource.Error(errorMessage)
+            Resource.Error(errorMessage, errorCode)
         } else {
             Resource.Success(models)
         }

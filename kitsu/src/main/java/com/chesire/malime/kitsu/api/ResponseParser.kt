@@ -8,9 +8,9 @@ interface ResponseParser {
         return if (response.isSuccessful) {
             response.body()?.let {
                 Resource.Success(it)
-            } ?: Resource.Error("Response body is null")
+            } ?: Resource.Error("Response body is null", 204)
         } else {
-            Resource.Error(response.errorBody()?.string() ?: response.message())
+            Resource.Error(response.errorBody()?.string() ?: response.message(), response.code())
         }
     }
 }

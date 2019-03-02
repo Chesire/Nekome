@@ -76,6 +76,7 @@ class KitsuLibraryTests {
             } returns async {
                 mockk<Response<ParsedRetrieveResponse>> {
                     every { isSuccessful } returns false
+                    every { code() } returns 0
                     every { errorBody() } returns mockk {
                         every { string() } returns ""
                     }
@@ -111,6 +112,7 @@ class KitsuLibraryTests {
             } returns async {
                 mockk<Response<ParsedRetrieveResponse>> {
                     every { isSuccessful } returns false
+                    every { code() } returns 0
                     every { errorBody() } returns mockk {
                         every { string() } returns ""
                     }
@@ -185,6 +187,7 @@ class KitsuLibraryTests {
             } returns async {
                 mockk<Response<ParsedRetrieveResponse>> {
                     every { isSuccessful } returns false
+                    every { code() } returns 0
                     every { errorBody() } returns mockk {
                         every { string() } returns ""
                     }
@@ -220,6 +223,7 @@ class KitsuLibraryTests {
             } returns async {
                 mockk<Response<ParsedRetrieveResponse>> {
                     every { isSuccessful } returns false
+                    every { code() } returns 0
                     every { errorBody() } returns mockk {
                         every { string() } returns ""
                     }
@@ -343,6 +347,7 @@ class KitsuLibraryTests {
         val mockResponse = mockk<Response<SeriesModel>> {
             every { isSuccessful } returns false
             every { errorBody() } returns mockResponseBody
+            every { code() } returns 0
         }
         val mockService = mockk<KitsuLibraryService> {
             every {
@@ -369,6 +374,7 @@ class KitsuLibraryTests {
             every { isSuccessful } returns false
             every { errorBody() } returns null
             every { message() } returns expected
+            every { code() } returns 0
         }
         val mockService = mockk<KitsuLibraryService> {
             every {

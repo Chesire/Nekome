@@ -18,9 +18,9 @@ class KitsuAuth @Inject constructor(
                     refreshToken = responseObject.refreshToken
                 }
                 Resource.Success(Any())
-            } ?: Resource.Error("Response body is null")
+            } ?: Resource.Error("Response body is null", 204)
         } else {
-            Resource.Error(response.errorBody()?.string() ?: response.message())
+            Resource.Error(response.errorBody()?.string() ?: response.message(), response.code())
         }
     }
 }

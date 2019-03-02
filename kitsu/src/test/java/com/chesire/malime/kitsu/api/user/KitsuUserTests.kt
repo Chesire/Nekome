@@ -24,6 +24,7 @@ class KitsuUserTests {
         val mockResponse = mockk<Response<UserModel>> {
             every { isSuccessful } returns false
             every { errorBody() } returns mockResponseBody
+            every { code() } returns 0
         }
         val mockService = mockk<KitsuUserService> {
             every {
@@ -51,6 +52,7 @@ class KitsuUserTests {
                 every { isSuccessful } returns false
                 every { errorBody() } returns null
                 every { message() } returns expected
+                every { code() } returns 0
             }
             val mockService = mockk<KitsuUserService> {
                 every {
