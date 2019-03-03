@@ -41,16 +41,23 @@ class KitsuLibrary @Inject constructor(
         val updateModelJson = createUpdateModel(userSeriesId, progress, newStatus)
         val body = RequestBody.create(MediaType.parse("application/vnd.api+json"), updateModelJson)
 
-        val response = libraryService.updateItemAsync(userSeriesId, body).await()
-        return response.parse()
+        return try {
+            libraryService.updateItemAsync(userSeriesId, body).await().parse()
+        } catch (ex: Exception) {
+            ex.parse()
+        }
     }
 
     override suspend fun delete(userSeriesId: Int): Resource<Any> {
-        val response = libraryService.deleteItemAsync(userSeriesId).await()
-        return if (response.isSuccessful) {
-            Resource.Success(Any())
-        } else {
-            response.parseError()
+        return try {
+            val response = libraryService.deleteItemAsync(userSeriesId).await()
+            return if (response.isSuccessful) {
+                Resource.Success(Any())
+            } else {
+                response.parseError()
+            }
+        } catch (ex: Exception) {
+            ex.parse()
         }
     }
 
@@ -69,7 +76,13 @@ class KitsuLibrary @Inject constructor(
         do {
             executeAgain = false
 
-            val response = execute(userId, offset, LIMIT).await()
+            val response: Response<ParsedRetrieveResponse>
+            try {
+                response = execute(userId, offset, LIMIT).await()
+            } catch (ex: Exception) {
+                return ex.parse()
+            }
+
             if (response.isSuccessful && response.body() != null) {
                 val body = response.body()!!
                 models.addAll(body.series)
@@ -106,9 +119,11 @@ class KitsuLibrary @Inject constructor(
     ): Resource<SeriesModel> {
         val addModelJson = createNewAddModel(seriesId, startingStatus, type)
         val body = RequestBody.create(MediaType.parse("application/vnd.api+json"), addModelJson)
-        val response = execute(body).await()
-
-        return response.parse()
+        return try {
+            execute(body).await().parse()
+        } catch (ex: Exception) {
+            ex.parse()
+        }
     }
 
     private fun createNewAddModel(

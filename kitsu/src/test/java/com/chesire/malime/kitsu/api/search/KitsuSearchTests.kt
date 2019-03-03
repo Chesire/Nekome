@@ -8,8 +8,10 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
 import okhttp3.ResponseBody
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Test
 import retrofit2.Response
+import java.net.UnknownHostException
 
 class KitsuSearchTests {
     @Test
@@ -121,6 +123,23 @@ class KitsuSearchTests {
     }
 
     @Test
+    fun `searchForAnime on thrown exception return Resource#Error`() = runBlocking {
+        val mockService = mockk<KitsuSearchService> {
+            every {
+                searchForAnimeAsync(any())
+            } throws UnknownHostException()
+        }
+
+        val classUnderTest = KitsuSearch(mockService)
+        val result = classUnderTest.searchForAnime("")
+
+        when (result) {
+            is Resource.Success -> error("Test has failed")
+            is Resource.Error -> assertTrue(true)
+        }
+    }
+
+    @Test
     fun `searchForManga failure response returns Resource#Error with errorBody`() = runBlocking {
         val expected = "errorBodyString"
 
@@ -225,6 +244,23 @@ class KitsuSearchTests {
         when (actual) {
             is Resource.Success -> assertEquals(expected, actual.data)
             is Resource.Error -> error("Test has failed")
+        }
+    }
+
+    @Test
+    fun `searchForManga on thrown exception return Resource#Error`() = runBlocking {
+        val mockService = mockk<KitsuSearchService> {
+            every {
+                searchForMangaAsync(any())
+            } throws UnknownHostException()
+        }
+
+        val classUnderTest = KitsuSearch(mockService)
+        val result = classUnderTest.searchForManga("")
+
+        when (result) {
+            is Resource.Success -> error("Test has failed")
+            is Resource.Error -> assertTrue(true)
         }
     }
 }

@@ -9,9 +9,11 @@ import io.mockk.mockk
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
 import okhttp3.ResponseBody
-import org.junit.Assert
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Test
 import retrofit2.Response
+import java.net.UnknownHostException
 
 class KitsuUserTests {
     @Test
@@ -39,7 +41,7 @@ class KitsuUserTests {
 
         when (actual) {
             is Resource.Success -> error("Test has failed")
-            is Resource.Error -> Assert.assertEquals(expected, actual.msg)
+            is Resource.Error -> assertEquals(expected, actual.msg)
         }
     }
 
@@ -67,7 +69,7 @@ class KitsuUserTests {
 
             when (actual) {
                 is Resource.Success -> error("Test has failed")
-                is Resource.Error -> Assert.assertEquals(expected, actual.msg)
+                is Resource.Error -> assertEquals(expected, actual.msg)
             }
         }
 
@@ -93,7 +95,7 @@ class KitsuUserTests {
 
         when (actual) {
             is Resource.Success -> error("Test has failed")
-            is Resource.Error -> Assert.assertEquals(expected, actual.msg)
+            is Resource.Error -> assertEquals(expected, actual.msg)
         }
     }
 
@@ -117,8 +119,25 @@ class KitsuUserTests {
         val actual = classUnderTest.getUserDetails()
 
         when (actual) {
-            is Resource.Success -> Assert.assertEquals(expected, actual.data)
+            is Resource.Success -> assertEquals(expected, actual.data)
             is Resource.Error -> error("Test has failed")
+        }
+    }
+
+    @Test
+    fun `on thrown exception return Resource#Error`() = runBlocking {
+        val mockService = mockk<KitsuUserService> {
+            every {
+                getUserDetailsAsync()
+            } throws UnknownHostException()
+        }
+
+        val classUnderTest = KitsuUser(mockService)
+        val result = classUnderTest.getUserDetails()
+
+        when (result) {
+            is Resource.Success -> error("Test has failed")
+            is Resource.Error -> assertTrue(true)
         }
     }
 }
