@@ -61,6 +61,7 @@ class KitsuLibrary @Inject constructor(
         }
     }
 
+    @Suppress("ComplexMethod")
     private suspend fun performRetrieveCall(
         execute: (Int, Int, Int) -> Deferred<Response<ParsedRetrieveResponse>>
     ): Resource<List<SeriesModel>> {
@@ -69,9 +70,8 @@ class KitsuLibrary @Inject constructor(
         var offset = 0
         var page = 0
         var retries = 0
-        var errorMessage = ""
-        var errorCode = 200
         var executeAgain: Boolean
+        var errorResponse = Resource.Error<ParsedRetrieveResponse>("", 200)
 
         do {
             executeAgain = false
@@ -98,14 +98,13 @@ class KitsuLibrary @Inject constructor(
                     retries++
                     executeAgain = true
                 } else {
-                    errorMessage = response.errorBody()?.string() ?: response.message()
-                    errorCode = response.code()
+                    errorResponse = response.parseError()
                 }
             }
         } while (executeAgain)
 
         return if (retries == MAX_RETRIES && models.count() == 0) {
-            Resource.Error(errorMessage, errorCode)
+            Resource.Error(errorResponse.msg, errorResponse.code)
         } else {
             Resource.Success(models)
         }

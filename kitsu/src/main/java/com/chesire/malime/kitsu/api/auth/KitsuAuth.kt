@@ -21,9 +21,7 @@ class KitsuAuth @Inject constructor(
                     }
                     Resource.Success(Any())
                 }
-                is Resource.Error -> {
-                    Resource.Error(response.msg, response.code)
-                }
+                is Resource.Error -> Resource.Error(response.msg, response.code)
             }
         } catch (ex: Exception) {
             ex.parse()
