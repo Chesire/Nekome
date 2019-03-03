@@ -14,6 +14,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import retrofit2.Response
+import java.net.UnknownHostException
 
 class KitsuAuthTests {
     @Test
@@ -29,6 +30,7 @@ class KitsuAuthTests {
         val mockResponse = mockk<Response<LoginResponse>> {
             every { isSuccessful } returns false
             every { errorBody() } returns mockResponseBody
+            every { code() } returns 0
         }
         val mockService = mockk<KitsuAuthService> {
             every {
@@ -58,6 +60,7 @@ class KitsuAuthTests {
             every { isSuccessful } returns false
             every { errorBody() } returns null
             every { message() } returns expected
+            every { code() } returns 0
         }
         val mockService = mockk<KitsuAuthService> {
             every {
@@ -194,5 +197,26 @@ class KitsuAuthTests {
         classUnderTest.login(usernameInput, passwordInput)
 
         assertEquals(expected, slot.captured)
+    }
+
+    @Test
+    fun `on thrown exception return Resource#Error`() = runBlocking {
+        val usernameInput = "username"
+        val passwordInput = "password"
+
+        val mockService = mockk<KitsuAuthService> {
+            every {
+                loginAsync(LoginRequest(usernameInput, passwordInput))
+            } throws UnknownHostException()
+        }
+        val mockProvider = mockk<AuthProvider>()
+
+        val classUnderTest = KitsuAuth(mockService, mockProvider)
+        val result = classUnderTest.login(usernameInput, passwordInput)
+
+        when (result) {
+            is Resource.Success -> error("Test has failed")
+            is Resource.Error -> assertTrue(true)
+        }
     }
 }

@@ -5,7 +5,8 @@ import com.chesire.malime.core.api.LibraryApi
 import com.chesire.malime.core.flags.UserSeriesStatus
 import com.chesire.malime.core.models.SeriesModel
 import com.chesire.malime.kitsu.adapters.UserSeriesStatusAdapter
-import com.chesire.malime.kitsu.api.ResponseParser
+import com.chesire.malime.kitsu.parse
+import com.chesire.malime.kitsu.parseError
 import kotlinx.coroutines.Deferred
 import okhttp3.MediaType
 import okhttp3.RequestBody
@@ -20,9 +21,7 @@ private const val MANGA_TYPE = "manga"
 class KitsuLibrary @Inject constructor(
     private val libraryService: KitsuLibraryService,
     private val userId: Int
-) : ResponseParser,
-    LibraryApi {
-
+) : LibraryApi {
     private val userSeriesStatusAdapter = UserSeriesStatusAdapter()
 
     override suspend fun retrieveAnime() = performRetrieveCall(libraryService::retrieveAnimeAsync)
@@ -42,19 +41,27 @@ class KitsuLibrary @Inject constructor(
         val updateModelJson = createUpdateModel(userSeriesId, progress, newStatus)
         val body = RequestBody.create(MediaType.parse("application/vnd.api+json"), updateModelJson)
 
-        val response = libraryService.updateItemAsync(userSeriesId, body).await()
-        return parseResponse(response)
-    }
-
-    override suspend fun delete(userSeriesId: Int): Resource<Any> {
-        val response = libraryService.deleteItemAsync(userSeriesId).await()
-        return if (response.isSuccessful) {
-            Resource.Success(Any())
-        } else {
-            Resource.Error(response.errorBody()?.string() ?: response.message())
+        return try {
+            libraryService.updateItemAsync(userSeriesId, body).await().parse()
+        } catch (ex: Exception) {
+            ex.parse()
         }
     }
 
+    override suspend fun delete(userSeriesId: Int): Resource<Any> {
+        return try {
+            val response = libraryService.deleteItemAsync(userSeriesId).await()
+            return if (response.isSuccessful) {
+                Resource.Success(Any())
+            } else {
+                response.parseError()
+            }
+        } catch (ex: Exception) {
+            ex.parse()
+        }
+    }
+
+    @Suppress("ComplexMethod")
     private suspend fun performRetrieveCall(
         execute: (Int, Int, Int) -> Deferred<Response<ParsedRetrieveResponse>>
     ): Resource<List<SeriesModel>> {
@@ -63,13 +70,19 @@ class KitsuLibrary @Inject constructor(
         var offset = 0
         var page = 0
         var retries = 0
-        var errorMessage = ""
         var executeAgain: Boolean
+        var errorResponse = Resource.Error<ParsedRetrieveResponse>("", 200)
 
         do {
             executeAgain = false
 
-            val response = execute(userId, offset, LIMIT).await()
+            val response: Response<ParsedRetrieveResponse>
+            try {
+                response = execute(userId, offset, LIMIT).await()
+            } catch (ex: Exception) {
+                return ex.parse()
+            }
+
             if (response.isSuccessful && response.body() != null) {
                 val body = response.body()!!
                 models.addAll(body.series)
@@ -85,13 +98,13 @@ class KitsuLibrary @Inject constructor(
                     retries++
                     executeAgain = true
                 } else {
-                    errorMessage = response.errorBody()?.string() ?: response.message()
+                    errorResponse = response.parseError()
                 }
             }
         } while (executeAgain)
 
         return if (retries == MAX_RETRIES && models.count() == 0) {
-            Resource.Error(errorMessage)
+            Resource.Error(errorResponse.msg, errorResponse.code)
         } else {
             Resource.Success(models)
         }
@@ -105,9 +118,11 @@ class KitsuLibrary @Inject constructor(
     ): Resource<SeriesModel> {
         val addModelJson = createNewAddModel(seriesId, startingStatus, type)
         val body = RequestBody.create(MediaType.parse("application/vnd.api+json"), addModelJson)
-        val response = execute(body).await()
-
-        return parseResponse(response)
+        return try {
+            execute(body).await().parse()
+        } catch (ex: Exception) {
+            ex.parse()
+        }
     }
 
     private fun createNewAddModel(

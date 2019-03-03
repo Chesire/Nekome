@@ -15,6 +15,7 @@ import org.junit.Assert.assertSame
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import retrofit2.Response
+import java.net.UnknownHostException
 
 class KitsuLibraryTests {
     @Test
@@ -76,6 +77,7 @@ class KitsuLibraryTests {
             } returns async {
                 mockk<Response<ParsedRetrieveResponse>> {
                     every { isSuccessful } returns false
+                    every { code() } returns 0
                     every { errorBody() } returns mockk {
                         every { string() } returns ""
                     }
@@ -111,6 +113,7 @@ class KitsuLibraryTests {
             } returns async {
                 mockk<Response<ParsedRetrieveResponse>> {
                     every { isSuccessful } returns false
+                    every { code() } returns 0
                     every { errorBody() } returns mockk {
                         every { string() } returns ""
                     }
@@ -125,6 +128,23 @@ class KitsuLibraryTests {
         when (actual) {
             is Resource.Success -> assertTrue(true)
             is Resource.Error -> error("Test has failed")
+        }
+    }
+
+    @Test
+    fun `retrieveAnime on thrown exception return Resource#Error`() = runBlocking {
+        val mockService = mockk<KitsuLibraryService> {
+            every {
+                retrieveAnimeAsync(any(), any(), any())
+            } throws UnknownHostException()
+        }
+
+        val classUnderTest = KitsuLibrary(mockService, 0)
+        val result = classUnderTest.retrieveAnime()
+
+        when (result) {
+            is Resource.Success -> error("Test has failed")
+            is Resource.Error -> assertTrue(true)
         }
     }
 
@@ -185,6 +205,7 @@ class KitsuLibraryTests {
             } returns async {
                 mockk<Response<ParsedRetrieveResponse>> {
                     every { isSuccessful } returns false
+                    every { code() } returns 0
                     every { errorBody() } returns mockk {
                         every { string() } returns ""
                     }
@@ -220,6 +241,7 @@ class KitsuLibraryTests {
             } returns async {
                 mockk<Response<ParsedRetrieveResponse>> {
                     every { isSuccessful } returns false
+                    every { code() } returns 0
                     every { errorBody() } returns mockk {
                         every { string() } returns ""
                     }
@@ -234,6 +256,23 @@ class KitsuLibraryTests {
         when (actual) {
             is Resource.Success -> assertTrue(true)
             is Resource.Error -> error("Test has failed")
+        }
+    }
+
+    @Test
+    fun `retrieveManga on thrown exception return Resource#Error`() = runBlocking {
+        val mockService = mockk<KitsuLibraryService> {
+            every {
+                retrieveMangaAsync(any(), any(), any())
+            } throws UnknownHostException()
+        }
+
+        val classUnderTest = KitsuLibrary(mockService, 0)
+        val result = classUnderTest.retrieveManga()
+
+        when (result) {
+            is Resource.Success -> error("Test has failed")
+            is Resource.Error -> assertTrue(true)
         }
     }
 
@@ -262,6 +301,23 @@ class KitsuLibraryTests {
     }
 
     @Test
+    fun `addAnime on thrown exception return Resource#Error`() = runBlocking {
+        val mockService = mockk<KitsuLibraryService> {
+            every {
+                addAnimeAsync(any())
+            } throws UnknownHostException()
+        }
+
+        val classUnderTest = KitsuLibrary(mockService, 0)
+        val result = classUnderTest.addAnime(0, UserSeriesStatus.Dropped)
+
+        when (result) {
+            is Resource.Success -> error("Test has failed")
+            is Resource.Error -> assertTrue(true)
+        }
+    }
+
+    @Test
     fun `addManga returns the added SeriesModel`() = runBlocking {
         val mockModel = mockk<SeriesModel>()
         val mockResponse = mockk<Response<SeriesModel>> {
@@ -282,6 +338,23 @@ class KitsuLibraryTests {
         when (actual) {
             is Resource.Success -> assertSame(mockModel, actual.data)
             is Resource.Error -> error("Test has failed")
+        }
+    }
+
+    @Test
+    fun `addManga on thrown exception return Resource#Error`() = runBlocking {
+        val mockService = mockk<KitsuLibraryService> {
+            every {
+                addMangaAsync(any())
+            } throws UnknownHostException()
+        }
+
+        val classUnderTest = KitsuLibrary(mockService, 0)
+        val result = classUnderTest.addManga(0, UserSeriesStatus.Dropped)
+
+        when (result) {
+            is Resource.Success -> error("Test has failed")
+            is Resource.Error -> assertTrue(true)
         }
     }
 
@@ -343,6 +416,7 @@ class KitsuLibraryTests {
         val mockResponse = mockk<Response<SeriesModel>> {
             every { isSuccessful } returns false
             every { errorBody() } returns mockResponseBody
+            every { code() } returns 0
         }
         val mockService = mockk<KitsuLibraryService> {
             every {
@@ -369,6 +443,7 @@ class KitsuLibraryTests {
             every { isSuccessful } returns false
             every { errorBody() } returns null
             every { message() } returns expected
+            every { code() } returns 0
         }
         val mockService = mockk<KitsuLibraryService> {
             every {
@@ -384,6 +459,23 @@ class KitsuLibraryTests {
         when (actual) {
             is Resource.Success -> error("Test has failed")
             is Resource.Error -> assertSame(expected, actual.msg)
+        }
+    }
+
+    @Test
+    fun `update on thrown exception return Resource#Error`() = runBlocking {
+        val mockService = mockk<KitsuLibraryService> {
+            every {
+                updateItemAsync(any(), any())
+            } throws UnknownHostException()
+        }
+
+        val classUnderTest = KitsuLibrary(mockService, 0)
+        val result = classUnderTest.update(0, 0, UserSeriesStatus.Current)
+
+        when (result) {
+            is Resource.Success -> error("Test has failed")
+            is Resource.Error -> assertTrue(true)
         }
     }
 
@@ -419,6 +511,7 @@ class KitsuLibraryTests {
         val mockResponse = mockk<Response<Any>> {
             every { isSuccessful } returns false
             every { errorBody() } returns mockResponseBody
+            every { code() } returns 0
         }
         val mockService = mockk<KitsuLibraryService> {
             every {
@@ -445,6 +538,7 @@ class KitsuLibraryTests {
             every { isSuccessful } returns false
             every { errorBody() } returns null
             every { message() } returns expected
+            every { code() } returns 0
         }
         val mockService = mockk<KitsuLibraryService> {
             every {
@@ -460,6 +554,23 @@ class KitsuLibraryTests {
         when (actual) {
             is Resource.Success -> error("Test has failed")
             is Resource.Error -> assertEquals(expected, actual.msg)
+        }
+    }
+
+    @Test
+    fun `delete on thrown exception return Resource#Error`() = runBlocking {
+        val mockService = mockk<KitsuLibraryService> {
+            every {
+                deleteItemAsync(any())
+            } throws UnknownHostException()
+        }
+
+        val classUnderTest = KitsuLibrary(mockService, 0)
+        val result = classUnderTest.delete(0)
+
+        when (result) {
+            is Resource.Success -> error("Test has failed")
+            is Resource.Error -> assertTrue(true)
         }
     }
 }

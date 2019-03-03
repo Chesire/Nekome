@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.chesire.malime">
 
@@ -11,10 +12,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".flow.login.LoginActivity" />
+
         <uses-library
             android:name="com.sec.android.app.multiwindow"
             android:required="false" />
-
         <!-- Samsung Multiwindow -->
         <meta-data
             android:name="com.sec.android.support.multiwindow"
@@ -33,7 +35,7 @@
             android:value="598.0dip" />
 
         <activity
-            android:name=".LaunchActivity"
+            android:name=".flow.LaunchActivity"
             android:theme="@android:style/Theme.NoDisplay">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -42,4 +44,5 @@
             </intent-filter>
         </activity>
     </application>
+
 </manifest>
