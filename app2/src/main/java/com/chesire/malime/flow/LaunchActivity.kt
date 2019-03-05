@@ -2,7 +2,6 @@ package com.chesire.malime.flow
 
 import android.content.Intent
 import android.os.Bundle
-import com.chesire.malime.flow.login.LoginActivity
 import com.chesire.malime.flow.overview.OverviewActivity
 import dagger.android.DaggerActivity
 
