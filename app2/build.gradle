@@ -92,6 +92,10 @@ dependencies {
     androidTestImplementation 'androidx.test:rules:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-intents:3.1.1'
+    androidTestImplementation('com.schibsted.spain:barista:2.8.0') {
+        exclude group: 'com.android.support'
+        exclude group: 'org.jetbrains.kotlin'
+    }
     androidTestImplementation "io.mockk:mockk-android:1.9.1"
 
     kapt 'androidx.room:room-compiler:2.1.0-alpha04'
