@@ -3,8 +3,7 @@ apply plugin: 'kotlin-allopen'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
-apply from: '../app/dokka.gradle'
-apply from: '../app/jacoco.gradle'
+apply from: 'jacoco.gradle'
 apply from: '../app/ktlint.gradle'
 
 android {
