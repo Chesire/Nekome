@@ -1,8 +1,17 @@
 package com.chesire.malime.flow.overview.anime
 
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import com.chesire.malime.databinding.FragmentAnimeBinding
 import dagger.android.support.DaggerFragment
 
 class AnimeFragment : DaggerFragment() {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ) = FragmentAnimeBinding.inflate(inflater, container, false).root
 
     companion object {
         const val TAG = "AnimeFragment"
