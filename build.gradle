@@ -14,7 +14,6 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:3.3.2'
         classpath "org.jacoco:org.jacoco.core:$jacoco_version"
-        classpath "org.jetbrains.dokka:dokka-android-gradle-plugin:$dokka_version"
         classpath "org.jetbrains.kotlin:kotlin-allopen:$kotlin_version"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
@@ -36,10 +35,7 @@ detekt {
     toolVersion = "1.0.0-RC12"
     config = files("detekt.yml")
     input = files(
-            "app/src/main/java",
             "app2/src/main/java",
-            "malime.core/src/main/java",
-            "malime.kitsu/src/main/java",
             "core/src/main/java",
             "kitsu/src/main/java"
     )
