@@ -2,7 +2,6 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
-apply from: '../app/dokka.gradle'
 apply from: '../app/jacoco.gradle'
 apply from: '../app/ktlint.gradle'
 

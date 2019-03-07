@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/overviewNavAnime"
+        android:icon="@drawable/ic_home_black_24dp"
+        android:title="@string/nav_anime" />
+    <item
+        android:id="@+id/overviewNavManga"
+        android:icon="@drawable/ic_home_black_24dp"
+        android:title="@string/nav_manga" />
+    <item
+        android:id="@+id/overviewNavProfile"
+        android:icon="@drawable/ic_home_black_24dp"
+        android:title="@string/nav_profile" />
+    <item
+        android:id="@+id/overviewNavActivity"
+        android:icon="@drawable/ic_home_black_24dp"
+        android:title="@string/nav_activity" />
+    <item
+        android:id="@+id/overviewNavSettings"
+        android:icon="@drawable/ic_home_black_24dp"
+        android:title="@string/nav_settings" />
+
+</menu>
