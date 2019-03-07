@@ -29,7 +29,7 @@ detekt {
     toolVersion = "1.0.0-RC12"
     config = files("detekt.yml")
     input = files(
-            "app2/src/main/java",
+            "app/src/main/java",
             "core/src/main/java",
             "kitsu/src/main/java"
     )
@@ -38,11 +38,11 @@ detekt {
     reports {
         xml {
             enabled = true
-            destination = file("app2/build/reports/detekt/detekt.xml")
+            destination = file("app/build/reports/detekt/detekt.xml")
         }
         html {
             enabled = true
-            destination = file("app2/build/reports/detekt/detekt.html")
+            destination = file("app/build/reports/detekt/detekt.html")
         }
     }
 }
