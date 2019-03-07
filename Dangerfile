@@ -18,8 +18,6 @@ android_lint.gradle_task = "lintDebug"
 android_lint.filtering = true
 android_lint.lint(inline_mode: true)
 
-# Kotlin_Detekt
-kotlin_detekt.skip_gradle_task = true
-kotlin_detekt.severity = "warning"
-kotlin_detekt.report_file 'app2/build/reports/detekt/detekt.xml'
-kotlin_detekt.filtering = true
+# CheckstyleFormat
+checkstyle_format.base_path = Dir.pwd
+checkstyle_format.report 'app2/build/reports/detekt/detekt.xml' 	
