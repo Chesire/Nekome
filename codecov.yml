@@ -1,6 +1,9 @@
 ignore:
+	- "app/src/*"
 	- "app/src/**/*"
+	- "malime.core/*"
 	- "malime.core/**/*"
+	- "malime.kitsu/*"
 	- "malime.kitsu/**/*"
     - "app2/src/main/java/com/chesire/malime/injection/*"
     - "app2/src/main/java/com/chesire/malime/injection/**/*"
