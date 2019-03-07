@@ -1,4 +1,3 @@
-include ':app',
-        ':app2',
+include ':app2',
         ':core',
         ':kitsu'
