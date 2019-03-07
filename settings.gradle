@@ -1,5 +1,4 @@
 include ':app',
         ':app2',
         ':core',
-        ':kitsu',
-        ':malime.core'
+        ':kitsu'
