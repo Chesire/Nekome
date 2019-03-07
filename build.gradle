@@ -37,6 +37,7 @@ detekt {
     config = files("detekt.yml")
     input = files(
             "app/src/main/java",
+            "app2/src/main/java",
             "malime.core/src/main/java",
             "malime.kitsu/src/main/java",
             "core/src/main/java",
@@ -47,11 +48,11 @@ detekt {
     reports {
         xml {
             enabled = true
-            destination = file("app/build/reports/detekt/detekt.xml")
+            destination = file("app2/build/reports/detekt/detekt.xml")
         }
         html {
             enabled = true
-            destination = file("app/build/reports/detekt/detekt.html")
+            destination = file("app2/build/reports/detekt/detekt.html")
         }
     }
 }
