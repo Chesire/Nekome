@@ -1,8 +1,11 @@
 package com.chesire.malime.injection.androidmodules
 
-import com.chesire.malime.view.login.kitsu.KitsuLoginFragment
-import com.chesire.malime.view.maldisplay.MalDisplayFragment
-import com.chesire.malime.view.search.SearchFragment
+import com.chesire.malime.flow.login.LoginFragment
+import com.chesire.malime.flow.overview.activity.ActivityFragment
+import com.chesire.malime.flow.overview.anime.AnimeFragment
+import com.chesire.malime.flow.overview.manga.MangaFragment
+import com.chesire.malime.flow.overview.profile.ProfileFragment
+import com.chesire.malime.flow.overview.settings.SettingsFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -10,11 +13,20 @@ import dagger.android.ContributesAndroidInjector
 @Module
 abstract class FragmentModule {
     @ContributesAndroidInjector
-    internal abstract fun contributeKitsuLoginFragment(): KitsuLoginFragment
+    abstract fun contributeActivityFragment(): ActivityFragment
 
     @ContributesAndroidInjector
-    internal abstract fun contributeMalDisplayFragment(): MalDisplayFragment
+    abstract fun contributeAnimeFragment(): AnimeFragment
 
     @ContributesAndroidInjector
-    internal abstract fun contributeSearchFragment(): SearchFragment
+    abstract fun contributeLoginFragment(): LoginFragment
+
+    @ContributesAndroidInjector
+    abstract fun contributeMangaFragment(): MangaFragment
+
+    @ContributesAndroidInjector
+    abstract fun contributeProfileFragment(): ProfileFragment
+
+    @ContributesAndroidInjector
+    abstract fun contributeSettingsFragment(): SettingsFragment
 }

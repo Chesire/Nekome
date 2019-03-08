@@ -1,9 +1,0 @@
-<resources>
-    <string name="app_name">Malime</string>
-
-    <string name="nav_anime">Anime</string>
-    <string name="nav_manga">Manga</string>
-    <string name="nav_profile">Profile</string>
-    <string name="nav_activity">Activity</string>
-    <string name="nav_settings">Settings</string>
-</resources>

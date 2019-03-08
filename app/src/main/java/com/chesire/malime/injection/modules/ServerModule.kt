@@ -1,78 +1,145 @@
 package com.chesire.malime.injection.modules
 
-import com.chesire.malime.core.api.AuthApi
-import com.chesire.malime.core.api.Authorizer
-import com.chesire.malime.core.api.LibraryApi
-import com.chesire.malime.core.api.SearchApi
-import com.chesire.malime.core.flags.SupportedService
-import com.chesire.malime.core.repositories.Authorization
 import com.chesire.malime.kitsu.BuildConfig
-import com.chesire.malime.kitsu.KITSU_ENDPOINT
-import com.chesire.malime.kitsu.api.KitsuAuthInterceptor
-import com.chesire.malime.kitsu.api.KitsuAuthorizer
-import com.chesire.malime.kitsu.api.KitsuManager
-import com.chesire.malime.kitsu.api.KitsuService
+import com.chesire.malime.kitsu.KITSU_URL
+import com.chesire.malime.kitsu.adapters.ImageModelAdapter
+import com.chesire.malime.kitsu.adapters.RatingSystemAdapter
+import com.chesire.malime.kitsu.adapters.SeriesStatusAdapter
+import com.chesire.malime.kitsu.adapters.SeriesTypeAdapter
+import com.chesire.malime.kitsu.adapters.SubtypeAdapter
+import com.chesire.malime.kitsu.adapters.UserSeriesStatusAdapter
+import com.chesire.malime.kitsu.api.auth.KitsuAuthService
+import com.chesire.malime.kitsu.api.library.KitsuLibraryService
+import com.chesire.malime.kitsu.api.library.LibrarySeriesModelAdapter
+import com.chesire.malime.kitsu.api.library.ParsedRetrieveResponseAdapter
+import com.chesire.malime.kitsu.api.search.KitsuSearchService
+import com.chesire.malime.kitsu.api.search.SearchSeriesModelAdapter
+import com.chesire.malime.kitsu.api.user.KitsuUserService
+import com.chesire.malime.kitsu.api.user.UserModelAdapter
+import com.chesire.malime.kitsu.interceptors.AuthInjectionInterceptor
+import com.chesire.malime.kitsu.interceptors.AuthRefreshInterceptor
+import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
+import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
+import dagger.Reusable
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-import javax.inject.Singleton
+import retrofit2.converter.moshi.MoshiConverterFactory
 
 @Suppress("unused")
 @Module
-internal class ServerModule {
-    @Singleton
+object ServerModule {
     @Provides
-    fun providesAuthorization(
-        kitsuAuthorizer: KitsuAuthorizer
-        // malAuthorizer: MalAuthorizer
-    ): Authorization {
-        return Authorization(
-            mapOf(
-                SupportedService.Kitsu to kitsuAuthorizer
-                // Pair(SupportedService.MyAnimeList, malAuthorizer)
-            )
-        )
+    @JvmStatic
+    fun providesCoroutineCallAdapterFactory() = CoroutineCallAdapterFactory()
+
+    @Provides
+    @Reusable
+    @JvmStatic
+    fun providesAuthenticatedOkHttpClient(
+        authInjection: AuthInjectionInterceptor,
+        authRefresh: AuthRefreshInterceptor
+    ): OkHttpClient {
+        return OkHttpClient()
+            .newBuilder()
+            .addInterceptor(authInjection)
+            .addInterceptor(authRefresh)
+            .also { httpClient ->
+                if (BuildConfig.DEBUG) {
+                    httpClient.addInterceptor(HttpLoggingInterceptor().apply {
+                        level = HttpLoggingInterceptor.Level.BODY
+                    })
+                }
+            }
+            .build()
     }
 
-    // for now we can just return the KitsuManager, as we don't support anything else yet
     @Provides
-    fun providesAuthApi(manager: KitsuManager): AuthApi = manager
+    @Reusable
+    @JvmStatic
+    fun providesAuthService(callAdapterFactory: CoroutineCallAdapterFactory): KitsuAuthService {
+        return Retrofit.Builder()
+            .baseUrl(KITSU_URL)
+            .client(OkHttpClient())
+            .addCallAdapterFactory(callAdapterFactory)
+            .addConverterFactory(
+                MoshiConverterFactory.create(Moshi.Builder().build())
+            )
+            .build()
+            .create(KitsuAuthService::class.java)
+    }
 
-    // for now we can just return the KitsuManager, as we don't support anything else yet
     @Provides
-    fun providesMalimeApi(manager: KitsuManager): LibraryApi = manager
-
-    // for now we can just return the KitsuManager, as we don't support anything else yet
-    @Provides
-    fun providesSearchApi(manager: KitsuManager): SearchApi = manager
-
-    // for now we can just return the KitsuAuthorizer, as we don't support anything else yet
-    @Provides
-    fun providesAuthorizer(authorizer: KitsuAuthorizer): Authorizer<*> = authorizer
-
-    @Singleton
-    @Provides
-    fun providesKitsuService(kitsuAuthorizer: KitsuAuthorizer): KitsuService {
-        val httpClient = OkHttpClient()
-            .newBuilder()
-            .addInterceptor(KitsuAuthInterceptor(kitsuAuthorizer))
-
-        if (BuildConfig.DEBUG) {
-            val interceptor: HttpLoggingInterceptor = HttpLoggingInterceptor().apply {
-                this.level = HttpLoggingInterceptor.Level.BODY
-            }
-
-            httpClient.addInterceptor(interceptor)
-        }
+    @Reusable
+    @JvmStatic
+    fun providesLibraryService(
+        httpClient: OkHttpClient,
+        callAdapterFactory: CoroutineCallAdapterFactory
+    ): KitsuLibraryService {
+        val moshi = Moshi.Builder()
+            .add(ImageModelAdapter())
+            .add(SeriesStatusAdapter())
+            .add(SeriesTypeAdapter())
+            .add(SubtypeAdapter())
+            .add(UserSeriesStatusAdapter())
+            .add(ParsedRetrieveResponseAdapter())
+            .add(LibrarySeriesModelAdapter())
+            .build()
 
         return Retrofit.Builder()
-            .baseUrl(KITSU_ENDPOINT)
-            .client(httpClient.build())
-            .addConverterFactory(GsonConverterFactory.create())
+            .baseUrl(KITSU_URL)
+            .client(httpClient)
+            .addCallAdapterFactory(callAdapterFactory)
+            .addConverterFactory(MoshiConverterFactory.create(moshi))
             .build()
-            .create(KitsuService::class.java)
+            .create(KitsuLibraryService::class.java)
+    }
+
+    @Provides
+    @Reusable
+    @JvmStatic
+    fun providesSearchService(
+        httpClient: OkHttpClient,
+        callAdapterFactory: CoroutineCallAdapterFactory
+    ): KitsuSearchService {
+        val moshi = Moshi.Builder()
+            .add(ImageModelAdapter())
+            .add(SeriesStatusAdapter())
+            .add(SeriesTypeAdapter())
+            .add(SearchSeriesModelAdapter())
+            .add(SubtypeAdapter())
+            .build()
+
+        return Retrofit.Builder()
+            .baseUrl(KITSU_URL)
+            .client(httpClient)
+            .addCallAdapterFactory(callAdapterFactory)
+            .addConverterFactory(MoshiConverterFactory.create(moshi))
+            .build()
+            .create(KitsuSearchService::class.java)
+    }
+
+    @Provides
+    @Reusable
+    @JvmStatic
+    fun providesUserService(
+        httpClient: OkHttpClient,
+        callAdapterFactory: CoroutineCallAdapterFactory
+    ): KitsuUserService {
+        val moshi = Moshi.Builder()
+            .add(RatingSystemAdapter())
+            .add(ImageModelAdapter())
+            .add(UserModelAdapter())
+            .build()
+
+        return Retrofit.Builder()
+            .baseUrl(KITSU_URL)
+            .client(httpClient)
+            .addCallAdapterFactory(callAdapterFactory)
+            .addConverterFactory(MoshiConverterFactory.create(moshi))
+            .build()
+            .create(KitsuUserService::class.java)
     }
 }

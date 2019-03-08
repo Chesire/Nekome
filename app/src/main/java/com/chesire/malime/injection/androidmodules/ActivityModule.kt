@@ -1,8 +1,6 @@
 package com.chesire.malime.injection.androidmodules
 
-import com.chesire.malime.LaunchActivity
-import com.chesire.malime.view.MainActivity
-import com.chesire.malime.view.login.LoginActivity
+import com.chesire.malime.flow.LaunchActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -10,11 +8,5 @@ import dagger.android.ContributesAndroidInjector
 @Module
 abstract class ActivityModule {
     @ContributesAndroidInjector
-    internal abstract fun contributeLaunchActivity(): LaunchActivity
-
-    @ContributesAndroidInjector(modules = [FragmentModule::class])
-    internal abstract fun contributeLoginActivity(): LoginActivity
-
-    @ContributesAndroidInjector(modules = [FragmentModule::class])
-    internal abstract fun contributeMainActivity(): MainActivity
+    abstract fun contributeLaunchActivity(): LaunchActivity
 }

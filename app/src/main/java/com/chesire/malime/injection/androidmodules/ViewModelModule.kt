@@ -2,32 +2,30 @@ package com.chesire.malime.injection.androidmodules
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.chesire.malime.view.ViewModelFactory
-import com.chesire.malime.view.login.kitsu.KitsuLoginViewModel
-import com.chesire.malime.view.maldisplay.MalDisplayViewModel
-import com.chesire.malime.view.search.SearchViewModel
+import com.chesire.malime.flow.ViewModelFactory
+import com.chesire.malime.flow.login.LoginViewModel
 import dagger.Binds
+import dagger.MapKey
 import dagger.Module
 import dagger.multibindings.IntoMap
+import kotlin.reflect.KClass
 
 @Suppress("unused")
 @Module
 abstract class ViewModelModule {
     @Binds
-    @IntoMap
-    @ViewModelKey(KitsuLoginViewModel::class)
-    internal abstract fun bindKitsuLoginViewModel(viewModel: KitsuLoginViewModel): ViewModel
+    abstract fun bindViewModelFactory(viewModelFactory: ViewModelFactory): ViewModelProvider.Factory
 
     @Binds
     @IntoMap
-    @ViewModelKey(MalDisplayViewModel::class)
-    internal abstract fun bindMalDisplayViewModel(viewModel: MalDisplayViewModel): ViewModel
+    @ViewModelKey(LoginViewModel::class)
+    abstract fun bindMyViewModel(viewModel: LoginViewModel): ViewModel
 
-    @Binds
-    @IntoMap
-    @ViewModelKey(SearchViewModel::class)
-    internal abstract fun bindSearchViewModel(viewModel: SearchViewModel): ViewModel
-
-    @Binds
-    internal abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
+    @Target(
+        AnnotationTarget.FUNCTION,
+        AnnotationTarget.PROPERTY_GETTER,
+        AnnotationTarget.PROPERTY_SETTER
+    )
+    @MapKey
+    private annotation class ViewModelKey(val value: KClass<out ViewModel>)
 }

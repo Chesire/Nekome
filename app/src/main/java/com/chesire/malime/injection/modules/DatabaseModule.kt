@@ -2,23 +2,30 @@ package com.chesire.malime.injection.modules
 
 import android.content.Context
 import androidx.room.Room
-import com.chesire.malime.core.room.MalimeDatabase
+import com.chesire.malime.db.RoomDB
 import dagger.Module
 import dagger.Provides
-import javax.inject.Singleton
+import dagger.Reusable
 
 @Suppress("unused")
 @Module
-internal class DatabaseModule {
+object DatabaseModule {
     @Provides
-    fun provideDatabase(context: Context): MalimeDatabase {
+    @JvmStatic
+    fun provideDB(context: Context): RoomDB {
         return Room
-            .databaseBuilder(context, MalimeDatabase::class.java, "malimedatabase.db")
+            .databaseBuilder(context, RoomDB::class.java, "malime_database.db")
             .fallbackToDestructiveMigration()
             .build()
     }
 
-    @Singleton
     @Provides
-    fun provideDao(db: MalimeDatabase) = db.malimeDao()
+    @Reusable
+    @JvmStatic
+    fun provideSeries(db: RoomDB) = db.series()
+
+    @Provides
+    @Reusable
+    @JvmStatic
+    fun provideUser(db: RoomDB) = db.user()
 }

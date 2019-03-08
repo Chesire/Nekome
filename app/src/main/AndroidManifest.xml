@@ -12,11 +12,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <uses-library
             android:name="com.sec.android.app.multiwindow"
             android:required="false" />
 
-        <!-- Samsung Multiwindow -->
         <meta-data
             android:name="com.sec.android.support.multiwindow"
             android:value="true" />
@@ -34,7 +34,7 @@
             android:value="598.0dip" />
 
         <activity
-            android:name=".LaunchActivity"
+            android:name=".flow.LaunchActivity"
             android:theme="@android:style/Theme.NoDisplay">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -42,28 +42,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".view.login.LoginActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".view.MainActivity"
-            android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".view.preferences.PrefActivity" />
 
-        <service
-            android:name="com.chesire.malime.service.PeriodicUpdateService"
-            android:label="@string/update_service_name"
-            android:permission="android.permission.BIND_JOB_SERVICE" />
-        <service
-            android:name="com.chesire.malime.service.RefreshTokenService"
-            android:label="@string/refresh_service_name"
-            android:permission="android.permission.BIND_JOB_SERVICE" />
-
-        <receiver android:name="com.chesire.malime.service.Receiver">
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-            </intent-filter>
-        </receiver>
+        <activity android:name=".flow.overview.OverviewActivity" />
+        <activity android:name=".flow.login.LoginActivity" />
     </application>
 
 </manifest>
