@@ -31,6 +31,7 @@ object DatabaseModule {
     fun provideUser(db: RoomDB) = db.user()
 
     // use dummy value for now
+    @Suppress("FunctionOnlyReturningConstant")
     @Provides
     @Named("userId")
     @JvmStatic
