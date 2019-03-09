@@ -12,14 +12,14 @@ import timber.log.Timber
 import javax.inject.Inject
 
 class AnimeFragment : DaggerFragment() {
-    @Inject
-    lateinit var viewModelFactory: ViewModelFactory
+    // @Inject
+    // lateinit var viewModelFactory: ViewModelFactory
 
-    private val viewModel by lazy {
-        ViewModelProviders
-            .of(this, viewModelFactory)
-            .get(AnimeViewModel::class.java)
-    }
+    // private val viewModel by lazy {
+    //     ViewModelProviders
+    //         .of(this, viewModelFactory)
+    //         .get(AnimeViewModel::class.java)
+    // }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -29,15 +29,15 @@ class AnimeFragment : DaggerFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel.animeSeries.observe(
-            viewLifecycleOwner,
-            Observer {
-                val s = it
-                Timber.d("New series found")
-            }
-        )
+        // viewModel.animeSeries.observe(
+        //     viewLifecycleOwner,
+        //     Observer {
+        //         val s = it
+        //         Timber.d("New series found")
+        //     }
+        // )
 
-        viewModel.refresh()
+        // viewModel.refresh()
     }
 
     companion object {
