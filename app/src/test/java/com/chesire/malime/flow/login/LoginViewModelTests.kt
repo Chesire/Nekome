@@ -4,6 +4,8 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.chesire.malime.core.Resource
 import com.chesire.malime.core.api.AuthApi
+import com.chesire.malime.core.models.UserModel
+import com.chesire.malime.repo.UserRepository
 import io.mockk.Runs
 import io.mockk.coEvery
 import io.mockk.every
@@ -20,15 +22,17 @@ import org.junit.Test
 class LoginViewModelTests {
     @get:Rule
     val rule = InstantTaskExecutorRule()
+    private val testDispatcher = Dispatchers.Unconfined
 
     @Test
-    fun `empty username produces error`() = runBlocking {
+    fun `empty username produces LoginStatus#EmptyUsername`() = runBlocking {
         val mockAuth = mockk<AuthApi>()
+        val mockRepo = mockk<UserRepository>()
         val mockObserver = mockk<Observer<LoginViewModel.LoginStatus>> {
             every { onChanged(any()) } just Runs
         }
 
-        with(LoginViewModel(mockAuth, Dispatchers.Unconfined)) {
+        with(LoginViewModel(mockAuth, mockRepo, testDispatcher)) {
             username.value = ""
             password.value = "password"
             loginStatus.observeForever(mockObserver)
@@ -40,13 +44,14 @@ class LoginViewModelTests {
     }
 
     @Test
-    fun `empty password produces error`() = runBlocking {
+    fun `empty password produces LoginStatus#EmptyPassword`() = runBlocking {
         val mockAuth = mockk<AuthApi>()
+        val mockRepo = mockk<UserRepository>()
         val mockObserver = mockk<Observer<LoginViewModel.LoginStatus>> {
             every { onChanged(any()) } just Runs
         }
 
-        with(LoginViewModel(mockAuth, Dispatchers.Unconfined)) {
+        with(LoginViewModel(mockAuth, mockRepo, testDispatcher)) {
             username.value = "username"
             password.value = ""
             loginStatus.observeForever(mockObserver)
@@ -58,17 +63,18 @@ class LoginViewModelTests {
     }
 
     @Test
-    fun `login failure produces error`() = runBlocking {
+    fun `login failure produces LoginStatus#Error`() = runBlocking {
         val mockAuth = mockk<AuthApi> {
             coEvery { login(any(), any()) } coAnswers {
                 Resource.Error("", 0)
             }
         }
+        val mockRepo = mockk<UserRepository>()
         val mockObserver = mockk<Observer<LoginViewModel.LoginStatus>> {
             every { onChanged(any()) } just Runs
         }
 
-        with(LoginViewModel(mockAuth, Dispatchers.Unconfined)) {
+        with(LoginViewModel(mockAuth, mockRepo, testDispatcher)) {
             username.value = "username"
             password.value = "password"
             loginStatus.observeForever(mockObserver)
@@ -80,17 +86,76 @@ class LoginViewModelTests {
     }
 
     @Test
-    fun `login success produces success`() = runBlocking {
+    fun `login success begins to getUser`() = runBlocking {
+        val mockAuth = mockk<AuthApi> {
+            coEvery { login(any(), any()) } coAnswers {
+                Resource.Success(Any())
+            }
+            coEvery { clearAuth() } coAnswers { }
+        }
+        val mockRepo = mockk<UserRepository> {
+            coEvery { getUser() } coAnswers {
+                Resource.Error("", 0)
+            }
+        }
+
+        with(LoginViewModel(mockAuth, mockRepo, testDispatcher)) {
+            username.value = "username"
+            password.value = "password"
+
+            login()
+        }
+
+        verify {
+            runBlocking {
+                mockRepo.getUser()
+            }
+        }
+    }
+
+    @Test
+    fun `getUser success inserts user into dao`() = runBlocking {
+        val expectedModel = mockk<UserModel>()
         val mockAuth = mockk<AuthApi> {
             coEvery { login(any(), any()) } coAnswers {
                 Resource.Success(Any())
             }
         }
+        val mockRepo = mockk<UserRepository> {
+            coEvery { getUser() } coAnswers { Resource.Success(expectedModel) }
+        }
+
+        with(LoginViewModel(mockAuth, mockRepo, testDispatcher)) {
+            username.value = "username"
+            password.value = "password"
+
+            login()
+        }
+
+        verify {
+            runBlocking {
+                mockRepo.insertUser(expectedModel)
+            }
+        }
+    }
+
+    @Test
+    fun `getUser success produces LoginStatus#Success`() = runBlocking {
+        val expectedModel = mockk<UserModel>()
+        val mockAuth = mockk<AuthApi> {
+            coEvery { login(any(), any()) } coAnswers {
+                Resource.Success(Any())
+            }
+        }
+        val mockRepo = mockk<UserRepository> {
+            coEvery { getUser() } coAnswers { Resource.Success(expectedModel) }
+            coEvery { insertUser(any()) } coAnswers { }
+        }
         val mockObserver = mockk<Observer<LoginViewModel.LoginStatus>> {
             every { onChanged(any()) } just Runs
         }
 
-        with(LoginViewModel(mockAuth, Dispatchers.Unconfined)) {
+        with(LoginViewModel(mockAuth, mockRepo, testDispatcher)) {
             username.value = "username"
             password.value = "password"
             loginStatus.observeForever(mockObserver)
@@ -99,5 +164,61 @@ class LoginViewModelTests {
         }
 
         verify { mockObserver.onChanged(LoginViewModel.LoginStatus.Success) }
+    }
+
+    @Test
+    fun `getUser failure clears stored auth`() = runBlocking {
+        val mockAuth = mockk<AuthApi> {
+            coEvery { login(any(), any()) } coAnswers {
+                Resource.Success(Any())
+            }
+            coEvery { clearAuth() } coAnswers { }
+        }
+        val mockRepo = mockk<UserRepository> {
+            coEvery { getUser() } coAnswers { Resource.Error("") }
+        }
+        val mockObserver = mockk<Observer<LoginViewModel.LoginStatus>> {
+            every { onChanged(any()) } just Runs
+        }
+
+        with(LoginViewModel(mockAuth, mockRepo, testDispatcher)) {
+            username.value = "username"
+            password.value = "password"
+            loginStatus.observeForever(mockObserver)
+
+            login()
+        }
+
+        verify {
+            runBlocking {
+                mockAuth.clearAuth()
+            }
+        }
+    }
+
+    @Test
+    fun `getUser failure produces LoginStatus#Error`() = runBlocking {
+        val mockAuth = mockk<AuthApi> {
+            coEvery { login(any(), any()) } coAnswers {
+                Resource.Success(Any())
+            }
+            coEvery { clearAuth() } coAnswers { }
+        }
+        val mockRepo = mockk<UserRepository> {
+            coEvery { getUser() } coAnswers { Resource.Error("") }
+        }
+        val mockObserver = mockk<Observer<LoginViewModel.LoginStatus>> {
+            every { onChanged(any()) } just Runs
+        }
+
+        with(LoginViewModel(mockAuth, mockRepo, testDispatcher)) {
+            username.value = "username"
+            password.value = "password"
+            loginStatus.observeForever(mockObserver)
+
+            login()
+        }
+
+        verify { mockObserver.onChanged(LoginViewModel.LoginStatus.Error) }
     }
 }
