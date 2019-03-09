@@ -7,11 +7,33 @@ import com.chesire.malime.databinding.FragmentAnimeBinding
 import dagger.android.support.DaggerFragment
 
 class AnimeFragment : DaggerFragment() {
+    // @Inject
+    // lateinit var viewModelFactory: ViewModelFactory
+
+    // private val viewModel by lazy {
+    //     ViewModelProviders
+    //         .of(this, viewModelFactory)
+    //         .get(AnimeViewModel::class.java)
+    // }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ) = FragmentAnimeBinding.inflate(inflater, container, false).root
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        // viewModel.animeSeries.observe(
+        //     viewLifecycleOwner,
+        //     Observer {
+        //         val s = it
+        //         Timber.d("New series found")
+        //     }
+        // )
+
+        // viewModel.refresh()
+    }
 
     companion object {
         const val TAG = "AnimeFragment"

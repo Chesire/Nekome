@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.chesire.malime.flow.ViewModelFactory
 import com.chesire.malime.flow.login.LoginViewModel
+import com.chesire.malime.flow.overview.anime.AnimeViewModel
 import dagger.Binds
 import dagger.MapKey
 import dagger.Module
@@ -19,7 +20,12 @@ abstract class ViewModelModule {
     @Binds
     @IntoMap
     @ViewModelKey(LoginViewModel::class)
-    abstract fun bindMyViewModel(viewModel: LoginViewModel): ViewModel
+    abstract fun bindLoginViewModel(viewModel: LoginViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(AnimeViewModel::class)
+    abstract fun bindAnimeViewModel(viewModel: AnimeViewModel): ViewModel
 
     @Target(
         AnnotationTarget.FUNCTION,

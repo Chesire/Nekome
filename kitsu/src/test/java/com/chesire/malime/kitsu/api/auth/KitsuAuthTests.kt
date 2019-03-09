@@ -7,6 +7,7 @@ import io.mockk.Runs
 import io.mockk.every
 import io.mockk.just
 import io.mockk.mockk
+import io.mockk.verify
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
 import okhttp3.ResponseBody
@@ -218,5 +219,18 @@ class KitsuAuthTests {
             is Resource.Success -> error("Test has failed")
             is Resource.Error -> assertTrue(true)
         }
+    }
+
+    @Test
+    fun `clearAuth clears auth in the provider`() = runBlocking {
+        val mockService = mockk<KitsuAuthService>()
+        val mockProvider = mockk<AuthProvider> {
+            every { clearAuth() } just Runs
+        }
+
+        val classUnderTest = KitsuAuth(mockService, mockProvider)
+        classUnderTest.clearAuth()
+
+        verify { mockProvider.clearAuth() }
     }
 }

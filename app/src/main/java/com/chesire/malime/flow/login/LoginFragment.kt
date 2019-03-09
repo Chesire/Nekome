@@ -1,5 +1,6 @@
 package com.chesire.malime.flow.login
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -21,11 +22,21 @@ import javax.inject.Inject
 class LoginFragment : DaggerFragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
+    private lateinit var loginListener: LoginListener
 
     private val viewModel: LoginViewModel by lazy {
         ViewModelProviders
             .of(this, viewModelFactory)
             .get(LoginViewModel::class.java)
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+        if (context !is LoginListener) {
+            throw ClassCastException("Activity must implement LoginListener")
+        }
+        loginListener = context
     }
 
     override fun onCreateView(
@@ -52,7 +63,10 @@ class LoginFragment : DaggerFragment() {
                     LoginViewModel.LoginStatus.EmptyUsername -> Timber.i("LoginStatus returned empty username")
                     LoginViewModel.LoginStatus.EmptyPassword -> Timber.i("LoginStatus returned empty password")
                     LoginViewModel.LoginStatus.Error -> Timber.i("LoginStatus returned error")
-                    LoginViewModel.LoginStatus.Success -> Timber.i("LoginStatus returned success")
+                    LoginViewModel.LoginStatus.Success -> {
+                        Timber.i("LoginStatus returned success")
+                        loginListener.onLoginSuccess()
+                    }
                     null -> Timber.w("LoginStatus returned as null")
                 }
             }
@@ -67,5 +81,9 @@ class LoginFragment : DaggerFragment() {
          * @return A new instance of fragment LoginFragment.
          */
         fun newInstance() = LoginFragment()
+    }
+
+    interface LoginListener {
+        fun onLoginSuccess()
     }
 }

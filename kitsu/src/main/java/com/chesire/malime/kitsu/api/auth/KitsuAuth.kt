@@ -27,4 +27,6 @@ class KitsuAuth @Inject constructor(
             ex.parse()
         }
     }
+
+    override suspend fun clearAuth() = authProvider.clearAuth()
 }
