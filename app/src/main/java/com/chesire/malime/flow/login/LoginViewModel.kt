@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.chesire.malime.IOContext
 import com.chesire.malime.core.Resource
 import com.chesire.malime.core.api.AuthApi
+import com.chesire.malime.repo.UserRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -15,6 +16,7 @@ import kotlin.coroutines.CoroutineContext
 
 class LoginViewModel @Inject constructor(
     private val auth: AuthApi,
+    private val user: UserRepository,
     @IOContext private val ioContext: CoroutineContext
 ) : ViewModel() {
     private val job = Job()
@@ -26,19 +28,48 @@ class LoginViewModel @Inject constructor(
         get() = _loginStatus
 
     fun login() = ioScope.launch {
-        if (username.value.isNullOrEmpty()) {
-            _loginStatus.postValue(LoginStatus.EmptyUsername)
-            return@launch
-        } else if (password.value.isNullOrEmpty()) {
-            _loginStatus.postValue(LoginStatus.EmptyPassword)
+        if (!validParams()) {
             return@launch
         }
 
-        val result = auth.login(username.value!!, password.value!!)
-        when (result) {
-            is Resource.Success -> _loginStatus.postValue(LoginStatus.Success)
+        executeLogin(username.value!!, password.value!!)
+    }
+
+    private fun validParams(): Boolean {
+        return when {
+            username.value.isNullOrEmpty() -> {
+                _loginStatus.postValue(LoginStatus.EmptyUsername)
+                false
+            }
+            password.value.isNullOrEmpty() -> {
+                _loginStatus.postValue(LoginStatus.EmptyPassword)
+                false
+            }
+            else -> true
+        }
+    }
+
+    private suspend fun executeLogin(name: String, pw: String) {
+        val result = auth.login(name, pw)
+        return when (result) {
+            is Resource.Success -> executeGetUser()
             is Resource.Error -> {
                 Timber.e("Error logging in - [${result.code}] ${result.msg}")
+                _loginStatus.postValue(LoginStatus.Error)
+            }
+        }
+    }
+
+    private suspend fun executeGetUser() {
+        val result = user.getUser()
+        when (result) {
+            is Resource.Success -> {
+                user.insertUser(result.data)
+                _loginStatus.postValue(LoginStatus.Success)
+            }
+            is Resource.Error -> {
+                Timber.e("Error getting user - [${result.code}] ${result.msg}")
+                auth.clearAuth()
                 _loginStatus.postValue(LoginStatus.Error)
             }
         }
