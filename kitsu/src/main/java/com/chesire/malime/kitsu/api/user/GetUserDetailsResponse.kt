@@ -22,7 +22,7 @@ data class GetUserDetailsResponse(
             @Json(name = "name")
             val name: String,
             @Json(name = "slug")
-            val slug: String,
+            val slug: String?,
             @Json(name = "ratingSystem")
             val ratingSystem: RatingSystem,
             @Json(name = "avatar")
