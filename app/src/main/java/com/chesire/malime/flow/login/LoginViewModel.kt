@@ -9,6 +9,7 @@ import com.chesire.malime.core.api.AuthApi
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
@@ -36,7 +37,10 @@ class LoginViewModel @Inject constructor(
         val result = auth.login(username.value!!, password.value!!)
         when (result) {
             is Resource.Success -> _loginStatus.postValue(LoginStatus.Success)
-            is Resource.Error -> _loginStatus.postValue(LoginStatus.Error)
+            is Resource.Error -> {
+                Timber.e("Error logging in - [${result.code}] ${result.msg}")
+                _loginStatus.postValue(LoginStatus.Error)
+            }
         }
     }
 
