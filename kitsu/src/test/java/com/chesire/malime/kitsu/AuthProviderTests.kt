@@ -117,4 +117,40 @@ class AuthProviderTests {
         verify { mockEditor.putString(KITSU_REFRESH_TOKEN_KEY, expected) }
         assertEquals(expected, slot.captured)
     }
+
+    @Test
+    fun `clearAuth clears access token`() {
+        val mockEditor = mockk<SharedPreferences.Editor> {
+            every { remove(KITSU_ACCESS_TOKEN_KEY) } returns this
+            every { remove(KITSU_REFRESH_TOKEN_KEY) } returns this
+            every { apply() } just Runs
+        }
+        val mockPreferences = mockk<SharedPreferences> {
+            every { edit() } returns mockEditor
+        }
+        val mockCryption = mockk<Cryption>()
+
+        val classUnderTest = AuthProvider(mockPreferences, mockCryption)
+        classUnderTest.clearAuth()
+
+        verify { mockEditor.remove(KITSU_ACCESS_TOKEN_KEY) }
+    }
+
+    @Test
+    fun `clearAuth clears refresh token`() {
+        val mockEditor = mockk<SharedPreferences.Editor> {
+            every { remove(KITSU_ACCESS_TOKEN_KEY) } returns this
+            every { remove(KITSU_REFRESH_TOKEN_KEY) } returns this
+            every { apply() } just Runs
+        }
+        val mockPreferences = mockk<SharedPreferences> {
+            every { edit() } returns mockEditor
+        }
+        val mockCryption = mockk<Cryption>()
+
+        val classUnderTest = AuthProvider(mockPreferences, mockCryption)
+        classUnderTest.clearAuth()
+
+        verify { mockEditor.remove(KITSU_REFRESH_TOKEN_KEY) }
+    }
 }

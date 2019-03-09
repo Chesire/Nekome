@@ -31,7 +31,7 @@ class SeriesRepository @Inject constructor(
         val response = libraryApi.retrieveManga()
         when (response) {
             is Resource.Success -> seriesDao.insert(response.data)
-            is Resource.Error -> Timber.e("Error refreshing anime")
+            is Resource.Error -> Timber.e("Error refreshing manga")
         }
     }
 }
