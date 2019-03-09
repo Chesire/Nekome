@@ -51,7 +51,7 @@ class LoginViewModel @Inject constructor(
 
     private suspend fun executeLogin(name: String, pw: String) {
         val result = auth.login(name, pw)
-        return when (result) {
+        when (result) {
             is Resource.Success -> executeGetUser()
             is Resource.Error -> {
                 Timber.e("Error logging in - [${result.code}] ${result.msg}")
