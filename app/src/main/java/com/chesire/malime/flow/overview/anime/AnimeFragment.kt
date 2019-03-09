@@ -3,10 +3,12 @@ package com.chesire.malime.flow.overview.anime
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.chesire.malime.databinding.FragmentAnimeBinding
 import com.chesire.malime.flow.ViewModelFactory
 import dagger.android.support.DaggerFragment
+import timber.log.Timber
 import javax.inject.Inject
 
 class AnimeFragment : DaggerFragment() {
@@ -24,6 +26,19 @@ class AnimeFragment : DaggerFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ) = FragmentAnimeBinding.inflate(inflater, container, false).root
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        viewModel.animeSeries.observe(
+            viewLifecycleOwner,
+            Observer {
+                val s = it
+                Timber.d("New series found")
+            }
+        )
+
+        viewModel.refresh()
+    }
 
     companion object {
         const val TAG = "AnimeFragment"
