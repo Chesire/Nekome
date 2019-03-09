@@ -3,13 +3,8 @@ package com.chesire.malime.flow.overview.anime
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import com.chesire.malime.databinding.FragmentAnimeBinding
-import com.chesire.malime.flow.ViewModelFactory
 import dagger.android.support.DaggerFragment
-import timber.log.Timber
-import javax.inject.Inject
 
 class AnimeFragment : DaggerFragment() {
     // @Inject
