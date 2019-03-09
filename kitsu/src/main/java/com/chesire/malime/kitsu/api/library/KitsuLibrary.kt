@@ -12,6 +12,7 @@ import okhttp3.MediaType
 import okhttp3.RequestBody
 import retrofit2.Response
 import javax.inject.Inject
+import javax.inject.Named
 
 private const val LIMIT = 500
 private const val MAX_RETRIES = 3
@@ -20,6 +21,7 @@ private const val MANGA_TYPE = "manga"
 
 class KitsuLibrary @Inject constructor(
     private val libraryService: KitsuLibraryService,
+    @Named("userId")
     private val userId: Int
 ) : LibraryApi {
     private val userSeriesStatusAdapter = UserSeriesStatusAdapter()
