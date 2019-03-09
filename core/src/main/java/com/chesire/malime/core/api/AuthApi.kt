@@ -7,4 +7,5 @@ import com.chesire.malime.core.Resource
  */
 interface AuthApi {
     suspend fun login(username: String, password: String): Resource<Any>
+    suspend fun clearAuth()
 }
