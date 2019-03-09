@@ -1,6 +1,7 @@
 package com.chesire.malime.kitsu
 
 import android.content.SharedPreferences
+import androidx.core.content.edit
 import javax.inject.Inject
 
 private const val ACCESS_TOKEN = "KEY_KITSU_ACCESS_TOKEN"
@@ -13,18 +14,25 @@ class AuthProvider @Inject constructor(
     var accessToken: String
         get() = decryptData(preferences.getString(ACCESS_TOKEN, "") ?: "")
         set(newAccessToken) {
-            preferences.edit()
-                .putString(ACCESS_TOKEN, encryptData(newAccessToken))
-                .apply()
+            preferences.edit {
+                putString(ACCESS_TOKEN, encryptData(newAccessToken))
+            }
         }
 
     var refreshToken: String
         get() = decryptData(preferences.getString(REFRESH_TOKEN, "") ?: "")
         set(newRefreshToken) {
-            preferences.edit()
-                .putString(REFRESH_TOKEN, encryptData(newRefreshToken))
-                .apply()
+            preferences.edit {
+                putString(REFRESH_TOKEN, encryptData(newRefreshToken))
+            }
         }
+
+    fun clearAuth() {
+        preferences.edit {
+            remove(ACCESS_TOKEN)
+            remove(REFRESH_TOKEN)
+        }
+    }
 
     private fun decryptData(data: String) = if (data.isEmpty()) {
         ""
