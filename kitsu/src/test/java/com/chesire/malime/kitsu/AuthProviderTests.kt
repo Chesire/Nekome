@@ -21,8 +21,7 @@ class AuthProviderTests {
             every { getString(KITSU_ACCESS_TOKEN_KEY, "") } returns "token"
         }
         val mockCryption = mockk<Cryption> {
-            every { base64Decrypt("token") } returns byteArrayOf()
-            every { decryptData(any()) } returns expected
+            every { decrypt("token") } returns expected
         }
 
         val classUnderTest = AuthProvider(mockPreferences, mockCryption)
@@ -37,8 +36,7 @@ class AuthProviderTests {
             every { getString(KITSU_ACCESS_TOKEN_KEY, "") } returns ""
         }
         val mockCryption = mockk<Cryption> {
-            every { base64Decrypt("token") } returns byteArrayOf()
-            every { decryptData(any()) } returns expected
+            every { decrypt("") } returns expected
         }
 
         val classUnderTest = AuthProvider(mockPreferences, mockCryption)
@@ -58,8 +56,7 @@ class AuthProviderTests {
             every { edit() } returns mockEditor
         }
         val mockCryption = mockk<Cryption> {
-            every { base64Encrypt(any()) } returns expected
-            every { encryptText("newToken") } returns byteArrayOf()
+            every { encrypt("newToken") } returns expected
         }
 
         val classUnderTest = AuthProvider(mockPreferences, mockCryption)
@@ -76,8 +73,7 @@ class AuthProviderTests {
             every { getString(KITSU_REFRESH_TOKEN_KEY, "") } returns "token"
         }
         val mockCryption = mockk<Cryption> {
-            every { base64Decrypt("token") } returns byteArrayOf()
-            every { decryptData(any()) } returns expected
+            every { decrypt("token") } returns expected
         }
 
         val classUnderTest = AuthProvider(mockPreferences, mockCryption)
@@ -92,8 +88,7 @@ class AuthProviderTests {
             every { getString(KITSU_REFRESH_TOKEN_KEY, "") } returns ""
         }
         val mockCryption = mockk<Cryption> {
-            every { base64Decrypt("token") } returns byteArrayOf()
-            every { decryptData(any()) } returns expected
+            every { decrypt("") } returns expected
         }
 
         val classUnderTest = AuthProvider(mockPreferences, mockCryption)
@@ -113,8 +108,7 @@ class AuthProviderTests {
             every { edit() } returns mockEditor
         }
         val mockCryption = mockk<Cryption> {
-            every { base64Encrypt(any()) } returns expected
-            every { encryptText("newToken") } returns byteArrayOf()
+            every { encrypt("newToken") } returns expected
         }
 
         val classUnderTest = AuthProvider(mockPreferences, mockCryption)
