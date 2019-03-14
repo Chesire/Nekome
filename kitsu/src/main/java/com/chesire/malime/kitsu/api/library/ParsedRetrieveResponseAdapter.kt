@@ -5,6 +5,7 @@ import com.chesire.malime.core.models.SeriesModel
 import com.squareup.moshi.FromJson
 
 class ParsedRetrieveResponseAdapter {
+    @Suppress("LongMethod")
     @FromJson
     fun parsedRetrieveResponseFromRetrieveResponse(response: RetrieveResponse): ParsedRetrieveResponse {
         val seriesModels = response

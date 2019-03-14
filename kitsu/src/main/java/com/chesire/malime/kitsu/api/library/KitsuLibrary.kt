@@ -63,7 +63,7 @@ class KitsuLibrary @Inject constructor(
         }
     }
 
-    @Suppress("ComplexMethod")
+    @Suppress("ComplexMethod", "LongMethod")
     private suspend fun performRetrieveCall(
         execute: (Int, Int, Int) -> Deferred<Response<ParsedRetrieveResponse>>
     ): Resource<List<SeriesModel>> {
@@ -127,6 +127,7 @@ class KitsuLibrary @Inject constructor(
         }
     }
 
+    @Suppress("LongMethod")
     private fun createNewAddModel(
         seriesId: Int,
         startingStatus: UserSeriesStatus,

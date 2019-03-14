@@ -1,6 +1,3 @@
-autoCorrect: true
-failFast: false
-
 test-pattern: # Configure exclusions for test sources
   active: true
   patterns: # Test file regexes
@@ -93,7 +90,7 @@ complexity:
     threshold: 150
   LongMethod:
     active: true
-    threshold: 20
+    threshold: 30
   LongParameterList:
     active: true
     threshold: 6
