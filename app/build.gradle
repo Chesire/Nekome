@@ -14,7 +14,7 @@ android {
         targetSdkVersion 28
         versionCode 12
         versionName "2.0.0"
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "com.chesire.malime.TestRunner"
         resConfigs "en"
 
         kapt {
@@ -106,4 +106,6 @@ dependencies {
     kapt 'com.github.bumptech.glide:compiler:4.9.0'
     kapt 'com.google.dagger:dagger-compiler:2.21'
     kapt 'com.google.dagger:dagger-android-processor:2.21'
+    kaptAndroidTest 'com.google.dagger:dagger-compiler:2.21'
+    kaptAndroidTest 'com.google.dagger:dagger-android-processor:2.21'
 }

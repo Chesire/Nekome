@@ -9,12 +9,12 @@ import dagger.Reusable
 
 @Suppress("unused")
 @Module
-object DatabaseModule {
+object MemoryDatabaseModule {
     @Provides
     @JvmStatic
     fun provideDB(context: Context): RoomDB {
         return Room
-            .databaseBuilder(context, RoomDB::class.java, "malime_database.db")
+            .inMemoryDatabaseBuilder(context, RoomDB::class.java)
             .fallbackToDestructiveMigration()
             .build()
     }
