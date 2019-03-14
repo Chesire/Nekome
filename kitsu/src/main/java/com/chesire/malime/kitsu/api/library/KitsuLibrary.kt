@@ -12,7 +12,6 @@ import okhttp3.MediaType
 import okhttp3.RequestBody
 import retrofit2.Response
 import javax.inject.Inject
-import javax.inject.Named
 
 private const val LIMIT = 500
 private const val MAX_RETRIES = 3
@@ -20,20 +19,21 @@ private const val ANIME_TYPE = "anime"
 private const val MANGA_TYPE = "manga"
 
 class KitsuLibrary @Inject constructor(
-    private val libraryService: KitsuLibraryService,
-    @Named("userId")
-    private val userId: Int
+    private val libraryService: KitsuLibraryService
 ) : LibraryApi {
     private val userSeriesStatusAdapter = UserSeriesStatusAdapter()
 
-    override suspend fun retrieveAnime() = performRetrieveCall(libraryService::retrieveAnimeAsync)
-    override suspend fun retrieveManga() = performRetrieveCall(libraryService::retrieveMangaAsync)
+    override suspend fun retrieveAnime(userId: Int) =
+        performRetrieveCall(userId, libraryService::retrieveAnimeAsync)
 
-    override suspend fun addAnime(seriesId: Int, startingStatus: UserSeriesStatus) =
-        performAddCall(seriesId, startingStatus, ANIME_TYPE, libraryService::addAnimeAsync)
+    override suspend fun retrieveManga(userId: Int) =
+        performRetrieveCall(userId, libraryService::retrieveMangaAsync)
 
-    override suspend fun addManga(seriesId: Int, startingStatus: UserSeriesStatus) =
-        performAddCall(seriesId, startingStatus, MANGA_TYPE, libraryService::addMangaAsync)
+    override suspend fun addAnime(userId: Int, seriesId: Int, startingStatus: UserSeriesStatus) =
+        performAddCall(userId, seriesId, startingStatus, ANIME_TYPE, libraryService::addAnimeAsync)
+
+    override suspend fun addManga(userId: Int, seriesId: Int, startingStatus: UserSeriesStatus) =
+        performAddCall(userId, seriesId, startingStatus, MANGA_TYPE, libraryService::addMangaAsync)
 
     override suspend fun update(
         userSeriesId: Int,
@@ -65,6 +65,7 @@ class KitsuLibrary @Inject constructor(
 
     @Suppress("ComplexMethod", "LongMethod")
     private suspend fun performRetrieveCall(
+        userId: Int,
         execute: (Int, Int, Int) -> Deferred<Response<ParsedRetrieveResponse>>
     ): Resource<List<SeriesModel>> {
         val models = mutableListOf<SeriesModel>()
@@ -113,12 +114,13 @@ class KitsuLibrary @Inject constructor(
     }
 
     private suspend fun performAddCall(
+        userId: Int,
         seriesId: Int,
         startingStatus: UserSeriesStatus,
         type: String,
         execute: (RequestBody) -> Deferred<Response<SeriesModel>>
     ): Resource<SeriesModel> {
-        val addModelJson = createNewAddModel(seriesId, startingStatus, type)
+        val addModelJson = createNewAddModel(userId, seriesId, startingStatus, type)
         val body = RequestBody.create(MediaType.parse("application/vnd.api+json"), addModelJson)
         return try {
             execute(body).await().parse()
@@ -129,6 +131,7 @@ class KitsuLibrary @Inject constructor(
 
     @Suppress("LongMethod")
     private fun createNewAddModel(
+        userId: Int,
         seriesId: Int,
         startingStatus: UserSeriesStatus,
         seriesType: String

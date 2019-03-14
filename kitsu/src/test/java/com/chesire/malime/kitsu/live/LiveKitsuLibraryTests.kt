@@ -46,12 +46,12 @@ class LiveKitsuLibraryTests {
         .build()
         .create(KitsuLibraryService::class.java)
 
-    private val handler = KitsuLibrary(service, 294558)
+    private val handler = KitsuLibrary(service)
 
     @Test
     fun `attempt retrieveAnime`() = runBlocking {
         val job = launch {
-            val result = handler.retrieveAnime()
+            val result = handler.retrieveAnime(294558)
 
             when (result) {
                 is Resource.Success -> {
@@ -67,7 +67,7 @@ class LiveKitsuLibraryTests {
     @Test
     fun `attempt retrieveManga`() = runBlocking {
         val job = launch {
-            val result = handler.retrieveManga()
+            val result = handler.retrieveManga(294558)
 
             when (result) {
                 is Resource.Success -> {
@@ -82,7 +82,7 @@ class LiveKitsuLibraryTests {
 
     @Test
     fun `attempt addAnime`() = runBlocking {
-        val result = handler.addAnime(556, UserSeriesStatus.Current)
+        val result = handler.addAnime(294558, 556, UserSeriesStatus.Current)
 
         when (result) {
             is Resource.Success -> {
@@ -96,7 +96,7 @@ class LiveKitsuLibraryTests {
 
     @Test
     fun `attempt addManga`() = runBlocking {
-        val result = handler.addManga(26999, UserSeriesStatus.Current)
+        val result = handler.addManga(294558, 26999, UserSeriesStatus.Current)
 
         when (result) {
             is Resource.Success -> {

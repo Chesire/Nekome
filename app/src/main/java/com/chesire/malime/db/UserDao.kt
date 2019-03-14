@@ -21,4 +21,7 @@ interface UserDao {
 
     @Query("SELECT * FROM usermodel WHERE service == :service")
     suspend fun retrieve(service: Service): UserModel?
+
+    @Query("SELECT userId FROM usermodel WHERE service == :service")
+    suspend fun retrieveUserId(service: Service): Int?
 }

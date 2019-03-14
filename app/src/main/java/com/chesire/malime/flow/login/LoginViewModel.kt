@@ -61,7 +61,7 @@ class LoginViewModel @Inject constructor(
     }
 
     private suspend fun executeGetUser() {
-        val result = user.getUser()
+        val result = user.retrieveRemoteUser()
         when (result) {
             is Resource.Success -> {
                 user.insertUser(result.data)

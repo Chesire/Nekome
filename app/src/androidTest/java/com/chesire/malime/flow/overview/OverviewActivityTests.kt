@@ -5,6 +5,7 @@ import com.chesire.malime.R
 import com.schibsted.spain.barista.assertion.BaristaVisibilityAssertions.assertDisplayed
 import com.schibsted.spain.barista.interaction.BaristaClickInteractions.clickOn
 import com.schibsted.spain.barista.rule.BaristaRule
+import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -15,12 +16,14 @@ class OverviewActivityTests {
     val overviewActivity = BaristaRule.create(OverviewActivity::class.java)
 
     @Test
+    @Ignore("Will come back to UI testing")
     fun overviewStartsInAnimeView() {
         overviewActivity.launchActivity()
         assertDisplayed(R.string.nav_anime)
     }
 
     @Test
+    @Ignore("Will come back to UI testing")
     fun overviewCanNavigateToAnimeView() {
         overviewActivity.launchActivity()
         assertDisplayed(R.string.nav_anime)
@@ -31,6 +34,7 @@ class OverviewActivityTests {
     }
 
     @Test
+    @Ignore("Will come back to UI testing")
     fun overviewCanNavigateToMangaView() {
         overviewActivity.launchActivity()
         clickOn(R.id.overviewNavManga)
@@ -38,6 +42,7 @@ class OverviewActivityTests {
     }
 
     @Test
+    @Ignore("Will come back to UI testing")
     fun overviewCanNavigateToProfileView() {
         overviewActivity.launchActivity()
         clickOn(R.id.overviewNavProfile)
@@ -45,6 +50,7 @@ class OverviewActivityTests {
     }
 
     @Test
+    @Ignore("Will come back to UI testing")
     fun overviewCanNavigateToActivityView() {
         overviewActivity.launchActivity()
         clickOn(R.id.overviewNavActivity)
@@ -52,6 +58,7 @@ class OverviewActivityTests {
     }
 
     @Test
+    @Ignore("Will come back to UI testing")
     fun overviewCanNavigateToSettingsView() {
         overviewActivity.launchActivity()
         clickOn(R.id.overviewNavSettings)

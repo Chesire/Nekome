@@ -12,7 +12,7 @@ class AuthProvider @Inject constructor(
     private val cryption: Cryption
 ) {
     var accessToken: String
-        get() = cryption.decrypt(preferences.getString(ACCESS_TOKEN, "") ?: "")
+        get() = decryptedToken(preferences.getString(ACCESS_TOKEN, "") ?: "")
         set(newAccessToken) {
             preferences.edit {
                 putString(ACCESS_TOKEN, cryption.encrypt(newAccessToken))
@@ -20,12 +20,20 @@ class AuthProvider @Inject constructor(
         }
 
     var refreshToken: String
-        get() = cryption.decrypt(preferences.getString(REFRESH_TOKEN, "") ?: "")
+        get() = decryptedToken(preferences.getString(REFRESH_TOKEN, "") ?: "")
         set(newRefreshToken) {
             preferences.edit {
                 putString(REFRESH_TOKEN, cryption.encrypt(newRefreshToken))
             }
         }
+
+    private fun decryptedToken(preferenceValue: String): String {
+        return if (preferenceValue.isNotEmpty()) {
+            cryption.decrypt(preferenceValue)
+        } else {
+            ""
+        }
+    }
 
     fun clearAuth() {
         preferences.edit {

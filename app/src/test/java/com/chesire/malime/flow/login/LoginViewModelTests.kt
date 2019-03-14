@@ -94,7 +94,7 @@ class LoginViewModelTests {
             coEvery { clearAuth() } coAnswers { }
         }
         val mockRepo = mockk<UserRepository> {
-            coEvery { getUser() } coAnswers {
+            coEvery { retrieveRemoteUser() } coAnswers {
                 Resource.Error("", 0)
             }
         }
@@ -108,7 +108,7 @@ class LoginViewModelTests {
 
         verify {
             runBlocking {
-                mockRepo.getUser()
+                mockRepo.retrieveRemoteUser()
             }
         }
     }
@@ -122,7 +122,7 @@ class LoginViewModelTests {
             }
         }
         val mockRepo = mockk<UserRepository> {
-            coEvery { getUser() } coAnswers { Resource.Success(expectedModel) }
+            coEvery { retrieveRemoteUser() } coAnswers { Resource.Success(expectedModel) }
         }
 
         with(LoginViewModel(mockAuth, mockRepo, testDispatcher)) {
@@ -148,7 +148,7 @@ class LoginViewModelTests {
             }
         }
         val mockRepo = mockk<UserRepository> {
-            coEvery { getUser() } coAnswers { Resource.Success(expectedModel) }
+            coEvery { retrieveRemoteUser() } coAnswers { Resource.Success(expectedModel) }
             coEvery { insertUser(any()) } coAnswers { }
         }
         val mockObserver = mockk<Observer<LoginViewModel.LoginStatus>> {
@@ -175,7 +175,7 @@ class LoginViewModelTests {
             coEvery { clearAuth() } coAnswers { }
         }
         val mockRepo = mockk<UserRepository> {
-            coEvery { getUser() } coAnswers { Resource.Error("") }
+            coEvery { retrieveRemoteUser() } coAnswers { Resource.Error("") }
         }
         val mockObserver = mockk<Observer<LoginViewModel.LoginStatus>> {
             every { onChanged(any()) } just Runs
@@ -205,7 +205,7 @@ class LoginViewModelTests {
             coEvery { clearAuth() } coAnswers { }
         }
         val mockRepo = mockk<UserRepository> {
-            coEvery { getUser() } coAnswers { Resource.Error("") }
+            coEvery { retrieveRemoteUser() } coAnswers { Resource.Error("") }
         }
         val mockObserver = mockk<Observer<LoginViewModel.LoginStatus>> {
             every { onChanged(any()) } just Runs

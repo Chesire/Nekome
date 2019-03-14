@@ -32,8 +32,8 @@ class KitsuLibraryTests {
                 }
             }
         }
-        val classUnderTest = KitsuLibrary(mockService, 1)
-        val actual = classUnderTest.retrieveAnime()
+        val classUnderTest = KitsuLibrary(mockService)
+        val actual = classUnderTest.retrieveAnime(1)
 
         verify(exactly = 1) { mockService.retrieveAnimeAsync(1, 0, 500) }
         when (actual) {
@@ -63,8 +63,8 @@ class KitsuLibraryTests {
                 }
             }
         }
-        val classUnderTest = KitsuLibrary(mockService, 1)
-        classUnderTest.retrieveAnime()
+        val classUnderTest = KitsuLibrary(mockService)
+        classUnderTest.retrieveAnime(1)
 
         verify(exactly = 2) { mockService.retrieveAnimeAsync(any(), any(), any()) }
     }
@@ -84,8 +84,8 @@ class KitsuLibraryTests {
                 }
             }
         }
-        val classUnderTest = KitsuLibrary(mockService, 1)
-        val actual = classUnderTest.retrieveAnime()
+        val classUnderTest = KitsuLibrary(mockService)
+        val actual = classUnderTest.retrieveAnime(1)
 
         verify(exactly = 4) { mockService.retrieveAnimeAsync(1, 0, 500) }
         when (actual) {
@@ -120,8 +120,8 @@ class KitsuLibraryTests {
                 }
             }
         }
-        val classUnderTest = KitsuLibrary(mockService, 1)
-        val actual = classUnderTest.retrieveAnime()
+        val classUnderTest = KitsuLibrary(mockService)
+        val actual = classUnderTest.retrieveAnime(1)
 
         verify { mockService.retrieveAnimeAsync(1, 0, 500) }
         verify(exactly = 4) { mockService.retrieveAnimeAsync(1, 500, 500) }
@@ -139,8 +139,8 @@ class KitsuLibraryTests {
             } throws UnknownHostException()
         }
 
-        val classUnderTest = KitsuLibrary(mockService, 0)
-        val result = classUnderTest.retrieveAnime()
+        val classUnderTest = KitsuLibrary(mockService)
+        val result = classUnderTest.retrieveAnime(0)
 
         when (result) {
             is Resource.Success -> error("Test has failed")
@@ -153,7 +153,7 @@ class KitsuLibraryTests {
         val expected = listOf(mockk<SeriesModel>())
         val mockService = mockk<KitsuLibraryService> {
             every {
-                retrieveMangaAsync(1, 0, 500)
+                retrieveMangaAsync(0, 0, 500)
             } returns async {
                 mockk<Response<ParsedRetrieveResponse>> {
                     every { isSuccessful } returns true
@@ -161,8 +161,8 @@ class KitsuLibraryTests {
                 }
             }
         }
-        val classUnderTest = KitsuLibrary(mockService, 1)
-        val actual = classUnderTest.retrieveManga()
+        val classUnderTest = KitsuLibrary(mockService)
+        val actual = classUnderTest.retrieveManga(0)
 
         when (actual) {
             is Resource.Success -> assertEquals(expected, actual.data)
@@ -191,8 +191,8 @@ class KitsuLibraryTests {
                 }
             }
         }
-        val classUnderTest = KitsuLibrary(mockService, 1)
-        classUnderTest.retrieveManga()
+        val classUnderTest = KitsuLibrary(mockService)
+        classUnderTest.retrieveManga(1)
 
         verify(exactly = 2) { mockService.retrieveMangaAsync(any(), any(), any()) }
     }
@@ -212,8 +212,8 @@ class KitsuLibraryTests {
                 }
             }
         }
-        val classUnderTest = KitsuLibrary(mockService, 1)
-        val actual = classUnderTest.retrieveManga()
+        val classUnderTest = KitsuLibrary(mockService)
+        val actual = classUnderTest.retrieveManga(1)
 
         verify(exactly = 4) { mockService.retrieveMangaAsync(1, 0, 500) }
         when (actual) {
@@ -248,8 +248,8 @@ class KitsuLibraryTests {
                 }
             }
         }
-        val classUnderTest = KitsuLibrary(mockService, 1)
-        val actual = classUnderTest.retrieveManga()
+        val classUnderTest = KitsuLibrary(mockService)
+        val actual = classUnderTest.retrieveManga(1)
 
         verify { mockService.retrieveMangaAsync(1, 0, 500) }
         verify(exactly = 4) { mockService.retrieveMangaAsync(1, 500, 500) }
@@ -267,8 +267,8 @@ class KitsuLibraryTests {
             } throws UnknownHostException()
         }
 
-        val classUnderTest = KitsuLibrary(mockService, 0)
-        val result = classUnderTest.retrieveManga()
+        val classUnderTest = KitsuLibrary(mockService)
+        val result = classUnderTest.retrieveManga(0)
 
         when (result) {
             is Resource.Success -> error("Test has failed")
@@ -291,8 +291,8 @@ class KitsuLibraryTests {
             }
         }
 
-        val classUnderTest = KitsuLibrary(mockService, 1)
-        val actual = classUnderTest.addAnime(10, UserSeriesStatus.Planned)
+        val classUnderTest = KitsuLibrary(mockService)
+        val actual = classUnderTest.addAnime(1, 10, UserSeriesStatus.Planned)
 
         when (actual) {
             is Resource.Success -> assertSame(mockModel, actual.data)
@@ -308,8 +308,8 @@ class KitsuLibraryTests {
             } throws UnknownHostException()
         }
 
-        val classUnderTest = KitsuLibrary(mockService, 0)
-        val result = classUnderTest.addAnime(0, UserSeriesStatus.Dropped)
+        val classUnderTest = KitsuLibrary(mockService)
+        val result = classUnderTest.addAnime(0, 0, UserSeriesStatus.Dropped)
 
         when (result) {
             is Resource.Success -> error("Test has failed")
@@ -332,8 +332,8 @@ class KitsuLibraryTests {
             }
         }
 
-        val classUnderTest = KitsuLibrary(mockService, 1)
-        val actual = classUnderTest.addManga(10, UserSeriesStatus.Planned)
+        val classUnderTest = KitsuLibrary(mockService)
+        val actual = classUnderTest.addManga(1, 10, UserSeriesStatus.Planned)
 
         when (actual) {
             is Resource.Success -> assertSame(mockModel, actual.data)
@@ -349,8 +349,8 @@ class KitsuLibraryTests {
             } throws UnknownHostException()
         }
 
-        val classUnderTest = KitsuLibrary(mockService, 0)
-        val result = classUnderTest.addManga(0, UserSeriesStatus.Dropped)
+        val classUnderTest = KitsuLibrary(mockService)
+        val result = classUnderTest.addManga(0, 0, UserSeriesStatus.Dropped)
 
         when (result) {
             is Resource.Success -> error("Test has failed")
@@ -373,7 +373,7 @@ class KitsuLibraryTests {
             }
         }
 
-        val classUnderTest = KitsuLibrary(mockService, 1)
+        val classUnderTest = KitsuLibrary(mockService)
         val actual = classUnderTest.update(10, 0, UserSeriesStatus.OnHold)
 
         when (actual) {
@@ -397,7 +397,7 @@ class KitsuLibraryTests {
             }
         }
 
-        val classUnderTest = KitsuLibrary(mockService, 1)
+        val classUnderTest = KitsuLibrary(mockService)
         val actual = classUnderTest.update(10, 0, UserSeriesStatus.OnHold)
 
         when (actual) {
@@ -426,7 +426,7 @@ class KitsuLibraryTests {
             }
         }
 
-        val classUnderTest = KitsuLibrary(mockService, 1)
+        val classUnderTest = KitsuLibrary(mockService)
         val actual = classUnderTest.update(10, 0, UserSeriesStatus.OnHold)
 
         when (actual) {
@@ -453,7 +453,7 @@ class KitsuLibraryTests {
             }
         }
 
-        val classUnderTest = KitsuLibrary(mockService, 1)
+        val classUnderTest = KitsuLibrary(mockService)
         val actual = classUnderTest.update(10, 0, UserSeriesStatus.OnHold)
 
         when (actual) {
@@ -470,7 +470,7 @@ class KitsuLibraryTests {
             } throws UnknownHostException()
         }
 
-        val classUnderTest = KitsuLibrary(mockService, 0)
+        val classUnderTest = KitsuLibrary(mockService)
         val result = classUnderTest.update(0, 0, UserSeriesStatus.Current)
 
         when (result) {
@@ -492,7 +492,7 @@ class KitsuLibraryTests {
             }
         }
 
-        val classUnderTest = KitsuLibrary(mockService, 1)
+        val classUnderTest = KitsuLibrary(mockService)
         val actual = classUnderTest.delete(10)
 
         when (actual) {
@@ -521,7 +521,7 @@ class KitsuLibraryTests {
             }
         }
 
-        val classUnderTest = KitsuLibrary(mockService, 1)
+        val classUnderTest = KitsuLibrary(mockService)
         val actual = classUnderTest.delete(10)
 
         when (actual) {
@@ -548,7 +548,7 @@ class KitsuLibraryTests {
             }
         }
 
-        val classUnderTest = KitsuLibrary(mockService, 1)
+        val classUnderTest = KitsuLibrary(mockService)
         val actual = classUnderTest.delete(10)
 
         when (actual) {
@@ -565,7 +565,7 @@ class KitsuLibraryTests {
             } throws UnknownHostException()
         }
 
-        val classUnderTest = KitsuLibrary(mockService, 0)
+        val classUnderTest = KitsuLibrary(mockService)
         val result = classUnderTest.delete(0)
 
         when (result) {

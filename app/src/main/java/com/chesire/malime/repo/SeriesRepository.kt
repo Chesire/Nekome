@@ -11,7 +11,8 @@ import javax.inject.Inject
 
 class SeriesRepository @Inject constructor(
     private val seriesDao: SeriesDao,
-    private val libraryApi: LibraryApi
+    private val libraryApi: LibraryApi,
+    private val userRepository: UserRepository
 ) {
     val anime: LiveData<List<SeriesModel>>
         get() = seriesDao.observe(SeriesType.Anime)
@@ -20,7 +21,7 @@ class SeriesRepository @Inject constructor(
         get() = seriesDao.observe(SeriesType.Manga)
 
     suspend fun refreshAnime() {
-        val response = libraryApi.retrieveAnime()
+        val response = libraryApi.retrieveAnime(retrieveUserId())
         when (response) {
             is Resource.Success -> seriesDao.insert(response.data)
             is Resource.Error -> Timber.e("Error refreshing anime")
@@ -28,10 +29,13 @@ class SeriesRepository @Inject constructor(
     }
 
     suspend fun refreshManga() {
-        val response = libraryApi.retrieveManga()
+        val response = libraryApi.retrieveManga(retrieveUserId())
         when (response) {
             is Resource.Success -> seriesDao.insert(response.data)
             is Resource.Error -> Timber.e("Error refreshing manga")
         }
     }
+
+    // Force (!!) the userId, it should not be null at this point
+    private suspend fun retrieveUserId() = userRepository.retrieveUserId()!!
 }

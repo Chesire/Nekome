@@ -104,6 +104,18 @@ class UserDaoTests {
         assertNull(userDao.retrieve(Service.Kitsu))
     }
 
+    @Test
+    fun retrievingUserIdGetsNullIfNotExist() = runBlocking {
+        assertNull(userDao.retrieveUserId(Service.Kitsu))
+    }
+
+    @Test
+    fun retrievingUserIdGetsIdIfExists() = runBlocking {
+        val model = createUserModel(id = 133, service = Service.Kitsu)
+        userDao.insert(model)
+        assertEquals(133, userDao.retrieveUserId(Service.Kitsu))
+    }
+
     private fun createUserModel(
         id: Int = 0,
         name: String = "test",
