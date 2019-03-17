@@ -1,4 +1,4 @@
-package com.chesire.malime.flow.overview.anime
+package com.chesire.malime.flow.series.list.anime
 
 import com.chesire.malime.core.models.SeriesModel
 

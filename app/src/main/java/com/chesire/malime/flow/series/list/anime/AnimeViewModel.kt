@@ -1,4 +1,4 @@
-package com.chesire.malime.flow.overview.anime
+package com.chesire.malime.flow.series.list.anime
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel

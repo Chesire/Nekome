@@ -2,7 +2,7 @@ package com.chesire.malime.injection.components
 
 import android.content.Context
 import com.chesire.malime.TestApplication
-import com.chesire.malime.flow.overview.OverviewActivityTests
+import com.chesire.malime.flow.OverviewActivityTests
 import com.chesire.malime.harness.FakeAuthApi
 import com.chesire.malime.harness.FakeLibraryApi
 import com.chesire.malime.harness.FakeUserApi

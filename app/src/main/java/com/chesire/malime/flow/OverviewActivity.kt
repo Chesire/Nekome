@@ -1,4 +1,4 @@
-package com.chesire.malime.flow.overview
+package com.chesire.malime.flow
 
 import android.os.Bundle
 import android.view.MenuItem
@@ -6,11 +6,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.transaction
 import com.chesire.malime.R
-import com.chesire.malime.flow.overview.activity.ActivityFragment
-import com.chesire.malime.flow.overview.anime.AnimeFragment
-import com.chesire.malime.flow.overview.manga.MangaFragment
-import com.chesire.malime.flow.overview.profile.ProfileFragment
-import com.chesire.malime.flow.overview.settings.SettingsFragment
+import com.chesire.malime.flow.activity.ActivityFragment
+import com.chesire.malime.flow.series.list.anime.AnimeFragment
+import com.chesire.malime.flow.series.list.manga.MangaFragment
+import com.chesire.malime.flow.profile.ProfileFragment
+import com.chesire.malime.flow.settings.SettingsFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_overview.activityOverviewNavigation
 

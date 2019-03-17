@@ -49,7 +49,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".flow.overview.OverviewActivity" />
+        <activity android:name=".flow.OverviewActivity" />
         <activity android:name=".flow.login.LoginActivity" />
     </application>
 

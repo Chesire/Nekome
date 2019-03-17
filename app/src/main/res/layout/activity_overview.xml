@@ -5,7 +5,7 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.chesire.malime.flow.overview.OverviewActivity">
+    tools:context="com.chesire.malime.flow.OverviewActivity">
 
     <FrameLayout
         android:id="@+id/activityOverviewContent"

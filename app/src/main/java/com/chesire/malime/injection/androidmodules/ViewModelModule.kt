@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.chesire.malime.flow.ViewModelFactory
 import com.chesire.malime.flow.login.LoginViewModel
-import com.chesire.malime.flow.overview.anime.AnimeViewModel
+import com.chesire.malime.flow.series.list.anime.AnimeViewModel
 import dagger.Binds
 import dagger.MapKey
 import dagger.Module

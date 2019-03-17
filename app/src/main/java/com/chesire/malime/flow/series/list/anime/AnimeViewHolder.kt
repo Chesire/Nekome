@@ -1,4 +1,4 @@
-package com.chesire.malime.flow.overview.anime
+package com.chesire.malime.flow.series.list.anime
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView

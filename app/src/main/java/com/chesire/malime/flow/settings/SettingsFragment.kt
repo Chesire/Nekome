@@ -1,4 +1,4 @@
-package com.chesire.malime.flow.overview.settings
+package com.chesire.malime.flow.settings
 
 import android.os.Bundle
 import android.view.LayoutInflater

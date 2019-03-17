@@ -1,11 +1,11 @@
 package com.chesire.malime.injection.androidmodules
 
 import com.chesire.malime.flow.login.LoginFragment
-import com.chesire.malime.flow.overview.activity.ActivityFragment
-import com.chesire.malime.flow.overview.anime.AnimeFragment
-import com.chesire.malime.flow.overview.manga.MangaFragment
-import com.chesire.malime.flow.overview.profile.ProfileFragment
-import com.chesire.malime.flow.overview.settings.SettingsFragment
+import com.chesire.malime.flow.activity.ActivityFragment
+import com.chesire.malime.flow.series.list.anime.AnimeFragment
+import com.chesire.malime.flow.series.list.manga.MangaFragment
+import com.chesire.malime.flow.profile.ProfileFragment
+import com.chesire.malime.flow.settings.SettingsFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
