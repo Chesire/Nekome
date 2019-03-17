@@ -32,6 +32,9 @@ android {
                 'WrongAnnotationOrder',
                 'XmlSpacing'
     }
+    androidExtensions {
+        experimental true
+    }
 }
 
 dependencies {

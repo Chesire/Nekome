@@ -6,17 +6,21 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.transaction
 import com.chesire.malime.R
+import com.chesire.malime.core.models.SeriesModel
 import com.chesire.malime.flow.activity.ActivityFragment
+import com.chesire.malime.flow.profile.ProfileFragment
+import com.chesire.malime.flow.series.detail.SeriesDetailFragment
+import com.chesire.malime.flow.series.list.SeriesListener
 import com.chesire.malime.flow.series.list.anime.AnimeFragment
 import com.chesire.malime.flow.series.list.manga.MangaFragment
-import com.chesire.malime.flow.profile.ProfileFragment
 import com.chesire.malime.flow.settings.SettingsFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_overview.activityOverviewNavigation
 
 class OverviewActivity :
     AppCompatActivity(),
-    BottomNavigationView.OnNavigationItemSelectedListener {
+    BottomNavigationView.OnNavigationItemSelectedListener,
+    SeriesListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,6 +56,16 @@ class OverviewActivity :
         }
         supportFragmentManager.transaction {
             replace(R.id.activityOverviewContent, fragment, tag)
+        }
+    }
+
+    override fun loadDetailFragment(seriesModel: SeriesModel) {
+        supportFragmentManager.transaction {
+            replace(
+                R.id.activityOverviewContent,
+                SeriesDetailFragment.newInstance(seriesModel),
+                SeriesDetailFragment.TAG
+            ).addToBackStack(SeriesDetailFragment.TAG)
         }
     }
 }

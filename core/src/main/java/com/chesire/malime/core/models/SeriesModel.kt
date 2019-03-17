@@ -1,12 +1,15 @@
 package com.chesire.malime.core.models
 
+import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.chesire.malime.core.flags.SeriesStatus
 import com.chesire.malime.core.flags.SeriesType
 import com.chesire.malime.core.flags.Subtype
 import com.chesire.malime.core.flags.UserSeriesStatus
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 @Entity
 data class SeriesModel(
     @PrimaryKey
@@ -25,4 +28,4 @@ data class SeriesModel(
     val nsfw: Boolean,
     val startDate: String,
     val endDate: String
-)
+) : Parcelable

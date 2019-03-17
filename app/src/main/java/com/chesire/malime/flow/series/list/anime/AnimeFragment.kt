@@ -1,5 +1,6 @@
 package com.chesire.malime.flow.series.list.anime
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.chesire.malime.core.models.SeriesModel
 import com.chesire.malime.databinding.FragmentAnimeBinding
 import com.chesire.malime.flow.ViewModelFactory
+import com.chesire.malime.flow.series.list.SeriesListener
 import dagger.android.support.DaggerFragment
 import timber.log.Timber
 import javax.inject.Inject
@@ -18,11 +20,21 @@ class AnimeFragment : DaggerFragment(), AnimeInteractionListener {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
     private lateinit var animeAdapter: AnimeAdapter
+    private lateinit var seriesListener: SeriesListener
 
     private val viewModel by lazy {
         ViewModelProviders
             .of(this, viewModelFactory)
             .get(AnimeViewModel::class.java)
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+        if (context !is SeriesListener) {
+            throw ClassCastException("Activity must implement SeriesListener")
+        }
+        seriesListener = context
     }
 
     override fun onCreateView(
@@ -56,6 +68,7 @@ class AnimeFragment : DaggerFragment(), AnimeInteractionListener {
 
     override fun animeSelected(model: SeriesModel) {
         Timber.i("Model ${model.slug} animeSelected called")
+        seriesListener.loadDetailFragment(model)
     }
 
     override fun onPlusOne(model: SeriesModel) {

@@ -1,11 +1,15 @@
 package com.chesire.malime.core.models
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+@Parcelize
 data class ImageModel(
     val tiny: ImageData,
     val small: ImageData,
     val medium: ImageData,
     val large: ImageData
-) {
+) : Parcelable {
     /**
      * The largest ImageData that contains a URL, returns null if no URL is valid.
      */
@@ -44,11 +48,12 @@ data class ImageModel(
             )
     }
 
+    @Parcelize
     data class ImageData(
         val url: String,
         val width: Int,
         val height: Int
-    ) {
+    ) : Parcelable {
         companion object {
             val empty
                 get() = ImageData("", 0, 0)
