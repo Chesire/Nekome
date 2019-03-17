@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import com.chesire.malime.core.Resource
 import com.chesire.malime.core.api.LibraryApi
 import com.chesire.malime.core.flags.SeriesType
+import com.chesire.malime.core.flags.UserSeriesStatus
 import com.chesire.malime.core.models.SeriesModel
 import com.chesire.malime.db.SeriesDao
 import timber.log.Timber
@@ -38,4 +39,18 @@ class SeriesRepository @Inject constructor(
 
     // Force (!!) the userId, it should not be null at this point
     private suspend fun retrieveUserId() = userRepository.retrieveUserId()!!
+
+    suspend fun updateSeries(
+        userSeriesId: Int,
+        progress: Int,
+        status: UserSeriesStatus
+    ): Resource<SeriesModel> {
+        val response = libraryApi.update(userSeriesId, progress, status)
+        when (response) {
+            is Resource.Success -> seriesDao.update(response.data)
+            is Resource.Error -> Timber.e("Error updating series [$userSeriesId], ${response.msg}")
+        }
+
+        return response
+    }
 }

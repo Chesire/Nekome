@@ -60,6 +60,7 @@ class AnimeFragment : DaggerFragment(), AnimeInteractionListener {
 
     override fun onPlusOne(model: SeriesModel) {
         Timber.i("Model ${model.slug} onPlusOne called")
+        viewModel.updateSeries(model.userId, model.progress.inc(), model.userSeriesStatus)
     }
 
     companion object {

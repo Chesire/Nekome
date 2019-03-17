@@ -7,7 +7,7 @@
 
     <ImageView
         android:id="@+id/adapterItemAnimeImage"
-        android:layout_width="wrap_content"
+        android:layout_width="48dp"
         android:layout_height="match_parent"
         android:layout_margin="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -20,8 +20,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:maxLines="2"
         android:ellipsize="end"
+        android:maxLines="2"
         android:textAlignment="center"
         app:layout_constraintBottom_toTopOf="@+id/adapterItemAnimePlusOne"
         app:layout_constraintEnd_toStartOf="@+id/adapterItemAnimePlusOne"
@@ -29,6 +29,17 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0"
         tools:text="Anime Series Title" />
+
+    <TextView
+        android:id="@+id/adapterItemAnimeProgress"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toStartOf="@id/adapterItemAnimePlusOne"
+        app:layout_constraintStart_toEndOf="@id/adapterItemAnimeImage"
+        app:layout_constraintTop_toBottomOf="@+id/adapterItemAnimeTitle"
+        tools:text="101 / 250" />
 
     <ImageButton
         android:id="@+id/adapterItemAnimePlusOne"
