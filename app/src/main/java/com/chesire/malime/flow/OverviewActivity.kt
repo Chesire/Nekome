@@ -13,6 +13,7 @@ import com.chesire.malime.flow.series.detail.SeriesDetailFragment
 import com.chesire.malime.flow.series.list.SeriesListener
 import com.chesire.malime.flow.series.list.anime.AnimeFragment
 import com.chesire.malime.flow.series.list.manga.MangaFragment
+import com.chesire.malime.flow.series.search.SearchFragment
 import com.chesire.malime.flow.settings.SettingsFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_overview.activityOverviewNavigation
@@ -66,6 +67,16 @@ class OverviewActivity :
                 SeriesDetailFragment.newInstance(seriesModel),
                 SeriesDetailFragment.TAG
             ).addToBackStack(SeriesDetailFragment.TAG)
+        }
+    }
+
+    override fun loadSearchFragment() {
+        supportFragmentManager.transaction {
+            replace(
+                R.id.activityOverviewContent,
+                SearchFragment.newInstance(),
+                SearchFragment.TAG
+            ).addToBackStack(SearchFragment.TAG)
         }
     }
 }

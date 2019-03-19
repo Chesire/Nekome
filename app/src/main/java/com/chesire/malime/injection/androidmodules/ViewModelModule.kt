@@ -6,6 +6,7 @@ import com.chesire.malime.flow.ViewModelFactory
 import com.chesire.malime.flow.login.LoginViewModel
 import com.chesire.malime.flow.series.detail.SeriesDetailViewModel
 import com.chesire.malime.flow.series.list.anime.AnimeViewModel
+import com.chesire.malime.flow.series.search.SearchViewModel
 import dagger.Binds
 import dagger.MapKey
 import dagger.Module
@@ -32,6 +33,11 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(SeriesDetailViewModel::class)
     abstract fun bindSeriesDetailViewModel(viewModel: SeriesDetailViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(SearchViewModel::class)
+    abstract fun bindSearchViewModel(viewModel: SearchViewModel): ViewModel
 
     @Target(
         AnnotationTarget.FUNCTION,

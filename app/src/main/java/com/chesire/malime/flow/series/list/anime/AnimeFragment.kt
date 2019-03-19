@@ -13,6 +13,7 @@ import com.chesire.malime.databinding.FragmentAnimeBinding
 import com.chesire.malime.flow.ViewModelFactory
 import com.chesire.malime.flow.series.list.SeriesListener
 import dagger.android.support.DaggerFragment
+import kotlinx.android.synthetic.main.fragment_anime.fragmentAnimeFab
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -50,6 +51,9 @@ class AnimeFragment : DaggerFragment(), AnimeInteractionListener {
                     adapter = animeAdapter
                     layoutManager = LinearLayoutManager(requireContext())
                     setHasFixedSize(true)
+                }
+                fragmentAnimeFab.setOnClickListener {
+                    seriesListener.loadSearchFragment()
                 }
             }
             .root
