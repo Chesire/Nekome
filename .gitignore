@@ -231,4 +231,8 @@ $RECYCLE.BIN/
 google-services.json
 Fastlane/report.xml
 .idea/caches/
+# this has been ignored as its only for some non-vital development tools
+node_modules
+# this has been ignored as its only for some non-vital development tools
+package-lock.json
 # End of custom
