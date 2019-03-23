@@ -5,14 +5,15 @@ import com.chesire.malime.TestApplication
 import com.chesire.malime.flow.OverviewActivityTests
 import com.chesire.malime.harness.FakeAuthApi
 import com.chesire.malime.harness.FakeLibraryApi
+import com.chesire.malime.harness.FakeSearchApi
 import com.chesire.malime.harness.FakeUserApi
 import com.chesire.malime.injection.androidmodules.ActivityModule
 import com.chesire.malime.injection.androidmodules.FragmentModule
 import com.chesire.malime.injection.androidmodules.ViewModelModule
 import com.chesire.malime.injection.modules.AppModule
 import com.chesire.malime.injection.modules.CoroutinesModule
-import com.chesire.malime.injection.modules.MemoryDatabaseModule
 import com.chesire.malime.injection.modules.FakeKitsuModule
+import com.chesire.malime.injection.modules.MemoryDatabaseModule
 import com.chesire.malime.injection.modules.ServerModule
 import dagger.BindsInstance
 import dagger.Component
@@ -45,6 +46,9 @@ interface TestComponent : AndroidInjector<TestApplication> {
 
         @BindsInstance
         fun libraryApi(libraryApi: FakeLibraryApi): Builder
+
+        @BindsInstance
+        fun searchApi(searchApi: FakeSearchApi): Builder
 
         @BindsInstance
         fun userApi(userApi: FakeUserApi): Builder

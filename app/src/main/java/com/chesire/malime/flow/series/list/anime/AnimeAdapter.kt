@@ -9,7 +9,7 @@ import com.chesire.malime.core.models.SeriesModel
 class AnimeAdapter(
     private val listener: AnimeInteractionListener
 ) : RecyclerView.Adapter<AnimeViewHolder>() {
-    var animeItems = emptyList<SeriesModel>()
+    private var animeItems = emptyList<SeriesModel>()
 
     fun loadItems(items: List<SeriesModel>) {
         animeItems = items
