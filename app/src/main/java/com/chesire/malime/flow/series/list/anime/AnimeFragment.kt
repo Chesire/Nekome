@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.chesire.lifecyklelog.LogLifecykle
 import com.chesire.malime.core.models.SeriesModel
 import com.chesire.malime.databinding.FragmentAnimeBinding
 import com.chesire.malime.flow.ViewModelFactory
@@ -17,6 +18,7 @@ import kotlinx.android.synthetic.main.fragment_anime.fragmentAnimeFab
 import timber.log.Timber
 import javax.inject.Inject
 
+@LogLifecykle
 class AnimeFragment : DaggerFragment(), AnimeInteractionListener {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory

@@ -1,6 +1,8 @@
 package com.chesire.malime
 
 import android.os.StrictMode
+import com.chesire.lifecyklelog.LifecykleLog
+import com.chesire.lifecyklelog.LogHandler
 import com.chesire.malime.injection.components.DaggerAppComponent
 import dagger.android.AndroidInjector
 import dagger.android.support.DaggerApplication
@@ -12,6 +14,13 @@ class MalimeApplication : DaggerApplication() {
 
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
+            LifecykleLog.apply {
+                initialize(this@MalimeApplication)
+                logHandler = LogHandler { clazz, lifecycleEvent ->
+                    Timber.tag(clazz)
+                    Timber.d("-> $lifecycleEvent")
+                }
+            }
             startStrictMode()
         }
     }

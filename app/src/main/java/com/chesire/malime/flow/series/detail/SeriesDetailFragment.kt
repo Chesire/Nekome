@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProviders
+import com.chesire.lifecyklelog.LogLifecykle
 import com.chesire.malime.core.models.SeriesModel
 import com.chesire.malime.databinding.FragmentSeriesDetailBinding
 import com.chesire.malime.extensions.extraNotNull
@@ -13,6 +14,7 @@ import com.chesire.malime.flow.ViewModelFactory
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
+@LogLifecykle
 class SeriesDetailFragment : DaggerFragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory

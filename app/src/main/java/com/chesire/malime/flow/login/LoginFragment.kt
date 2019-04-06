@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.chesire.lifecyklelog.LogLifecykle
 import com.chesire.malime.databinding.FragmentLoginBinding
 import com.chesire.malime.flow.ViewModelFactory
 import dagger.android.support.DaggerFragment
@@ -19,6 +20,7 @@ import javax.inject.Inject
  * Use the [LoginFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
+@LogLifecykle
 class LoginFragment : DaggerFragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
