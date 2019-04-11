@@ -231,6 +231,7 @@ $RECYCLE.BIN/
 google-services.json
 Fastlane/report.xml
 .idea/caches/
+.idea/sonarlint/
 # this has been ignored as its only for some non-vital development tools
 node_modules
 # this has been ignored as its only for some non-vital development tools
