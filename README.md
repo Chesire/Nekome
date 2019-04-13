@@ -17,9 +17,7 @@ Features include:
 -    Change your series state
 -    Add new series to your lists
 -    Quick access to your lists with minimal navigation
--    [Kitsu](https://kitsu.io) and [MyAnimeList](https://myanimelist.net/)* support
-
-Note: MyAnimeList currently has a broken API, so it has been disabled and not actively developed in the application.
+-    [Kitsu](https://kitsu.io)
 
 ## Development setup
 Clone the project down and run it from Android studio, all dependencies will be handled by gradle.  
@@ -61,3 +59,6 @@ To run the UI tests:
 ## Why
 There are already some really great Android tracking apps for Anime tracking portals, so why make another one?  
 Originally this was a testing area to mess around with a bunch of Kotlin tools and mess around with the MyAnimeList API, but after a while it made sense to just make it into a proper application.
+
+## Note
+All work is now done on the V2 branch.
