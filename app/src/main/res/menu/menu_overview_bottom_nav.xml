@@ -2,23 +2,23 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/overviewNavAnime"
+        android:id="@+id/animeFragment"
         android:icon="@drawable/ic_home_black_24dp"
         android:title="@string/nav_anime" />
     <item
-        android:id="@+id/overviewNavManga"
+        android:id="@+id/mangaFragment"
         android:icon="@drawable/ic_home_black_24dp"
         android:title="@string/nav_manga" />
     <item
-        android:id="@+id/overviewNavProfile"
+        android:id="@+id/profileFragment"
         android:icon="@drawable/ic_home_black_24dp"
         android:title="@string/nav_profile" />
     <item
-        android:id="@+id/overviewNavActivity"
+        android:id="@+id/activityFragment"
         android:icon="@drawable/ic_home_black_24dp"
         android:title="@string/nav_activity" />
     <item
-        android:id="@+id/overviewNavSettings"
+        android:id="@+id/settingsFragment"
         android:icon="@drawable/ic_home_black_24dp"
         android:title="@string/nav_settings" />
 

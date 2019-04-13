@@ -14,16 +14,4 @@ class ActivityFragment : DaggerFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ) = FragmentActivityBinding.inflate(inflater, container, false).root
-
-    companion object {
-        const val TAG = "ActivityFragment"
-
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @return A new instance of fragment ActivityFragment.
-         */
-        fun newInstance() = ActivityFragment()
-    }
 }

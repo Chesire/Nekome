@@ -42,7 +42,7 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.0.2'
     implementation 'androidx.core:core-ktx:1.0.1'
     implementation 'com.github.talhahasanzia:android-encryption-helper:0.3.1'
-    implementation "com.google.dagger:dagger:2.21"
+    implementation "com.google.dagger:dagger:2.22.1"
     implementation 'com.squareup.moshi:moshi:1.8.0'
     implementation "com.squareup.retrofit2:converter-moshi:2.5.0"
     implementation 'com.squareup.retrofit2:retrofit:2.5.0'
@@ -53,13 +53,13 @@ dependencies {
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.1.1'
 
     testImplementation 'com.squareup.okhttp3:mockwebserver:3.13.1'
-    testImplementation 'io.mockk:mockk:1.9.1'
+    testImplementation 'io.mockk:mockk:1.9.3'
     testImplementation 'junit:junit:4.12'
 
     androidTestImplementation 'androidx.test.ext:junit:1.1.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
 
-    kapt "com.google.dagger:dagger-compiler:2.21"
-    kapt "com.google.dagger:dagger-android-processor:2.21"
+    kapt "com.google.dagger:dagger-compiler:2.22.1"
+    kapt "com.google.dagger:dagger-android-processor:2.22.1"
     kapt 'com.squareup.moshi:moshi-kotlin-codegen:1.8.0'
 }

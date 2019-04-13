@@ -6,6 +6,7 @@ buildscript {
         jcenter()
     }
     dependencies {
+        classpath 'androidx.navigation:navigation-safe-args-gradle-plugin:2.1.0-alpha02'
         classpath 'com.android.tools.build:gradle:3.3.2'
         classpath "org.jacoco:org.jacoco.core:$jacoco_version"
         classpath "org.jetbrains.kotlin:kotlin-allopen:$kotlin_version"

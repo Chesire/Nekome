@@ -232,6 +232,7 @@ google-services.json
 Fastlane/report.xml
 .idea/caches/
 .idea/sonarlint/
+.idea/navEditor.xml
 # this has been ignored as its only for some non-vital development tools
 node_modules
 # this has been ignored as its only for some non-vital development tools

@@ -42,37 +42,37 @@ class OverviewActivityTests {
     fun overviewCanNavigateToAnimeView() {
         overviewActivity.launchActivity()
         assertDisplayed(R.string.nav_anime)
-        clickOn(R.id.overviewNavManga)
+        clickOn(R.id.mangaFragment)
         assertDisplayed(R.string.nav_manga)
-        clickOn(R.id.overviewNavAnime)
+        clickOn(R.id.animeFragment)
         assertDisplayed(R.string.nav_anime)
     }
 
     @Test
     fun overviewCanNavigateToMangaView() {
         overviewActivity.launchActivity()
-        clickOn(R.id.overviewNavManga)
+        clickOn(R.id.mangaFragment)
         assertDisplayed(R.string.nav_manga)
     }
 
     @Test
     fun overviewCanNavigateToProfileView() {
         overviewActivity.launchActivity()
-        clickOn(R.id.overviewNavProfile)
+        clickOn(R.id.profileFragment)
         assertDisplayed(R.string.nav_profile)
     }
 
     @Test
     fun overviewCanNavigateToActivityView() {
         overviewActivity.launchActivity()
-        clickOn(R.id.overviewNavActivity)
+        clickOn(R.id.activityFragment)
         assertDisplayed(R.string.nav_activity)
     }
 
     @Test
     fun overviewCanNavigateToSettingsView() {
         overviewActivity.launchActivity()
-        clickOn(R.id.overviewNavSettings)
+        clickOn(R.id.settingsFragment)
         assertDisplayed(R.string.nav_settings)
     }
 }

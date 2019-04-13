@@ -4,12 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.navArgs
 import com.chesire.lifecyklelog.LogLifecykle
-import com.chesire.malime.core.models.SeriesModel
 import com.chesire.malime.databinding.FragmentSeriesDetailBinding
-import com.chesire.malime.extensions.extraNotNull
 import com.chesire.malime.flow.ViewModelFactory
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
@@ -19,7 +17,7 @@ class SeriesDetailFragment : DaggerFragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
 
-    private val model by extraNotNull<SeriesModel>(MODEL_KEY)
+    private val args by navArgs<SeriesDetailFragmentArgs>()
     private val viewModel by lazy {
         ViewModelProviders
             .of(this, viewModelFactory)
@@ -41,21 +39,6 @@ class SeriesDetailFragment : DaggerFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel.model = model
-    }
-
-    companion object {
-        const val TAG = "SeriesDetailFragment"
-        private const val MODEL_KEY = "SeriesDetailFragment#MODEL_KEY"
-
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @return A new instance of fragment SeriesDetailFragment.
-         */
-        fun newInstance(seriesModel: SeriesModel) = SeriesDetailFragment().apply {
-            arguments = bundleOf(MODEL_KEY to seriesModel)
-        }
+        viewModel.model = args.series
     }
 }
