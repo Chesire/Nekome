@@ -44,20 +44,24 @@ class SeriesRepository @Inject constructor(
         return response
     }
 
-    suspend fun refreshAnime() {
+    suspend fun refreshAnime(): Resource<List<SeriesModel>> {
         val response = libraryApi.retrieveAnime(retrieveUserId())
         when (response) {
             is Resource.Success -> seriesDao.insert(response.data)
             is Resource.Error -> Timber.e("Error refreshing anime, ${response.msg}")
         }
+
+        return response
     }
 
-    suspend fun refreshManga() {
+    suspend fun refreshManga(): Resource<List<SeriesModel>> {
         val response = libraryApi.retrieveManga(retrieveUserId())
         when (response) {
             is Resource.Success -> seriesDao.insert(response.data)
             is Resource.Error -> Timber.e("Error refreshing manga, ${response.msg}")
         }
+
+        return response
     }
 
     // Force (!!) the userId, it should not be null at this point

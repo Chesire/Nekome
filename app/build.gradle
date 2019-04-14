@@ -75,6 +75,7 @@ dependencies {
     implementation "androidx.navigation:navigation-ui-ktx:2.1.0-alpha02"
     implementation 'androidx.room:room-runtime:2.1.0-alpha04'
     implementation 'androidx.room:room-coroutines:2.1.0-alpha04'
+    implementation 'androidx.work:work-runtime-ktx:2.0.1'
     implementation 'com.chesire:lifecyklelog:2.0.0'
     implementation 'com.github.bumptech.glide:glide:4.9.0'
     implementation 'com.google.android.material:material:1.1.0-alpha04'
@@ -100,6 +101,7 @@ dependencies {
     androidTestImplementation 'androidx.test:rules:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-intents:3.1.1'
+    // androidTestImplementation 'androidx.work:work-testing:2.0.1'
     androidTestImplementation('com.schibsted.spain:barista:2.8.0') {
         exclude group: 'com.android.support'
         exclude group: 'org.jetbrains.kotlin'
