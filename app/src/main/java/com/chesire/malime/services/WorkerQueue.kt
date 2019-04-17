@@ -22,7 +22,7 @@ class WorkerQueue @Inject constructor(private val workManager: WorkManager) {
         val constraints = Constraints.Builder()
             .setRequiredNetworkType(NetworkType.CONNECTED)
             .build()
-        val request = PeriodicWorkRequestBuilder<RefreshSeriesWorker>(1, TimeUnit.DAYS)
+        val request = PeriodicWorkRequestBuilder<RefreshSeriesWorker>(12, TimeUnit.HOURS)
             .setConstraints(constraints)
             .addTag(SERIES_REFRESH_TAG)
             .build()
