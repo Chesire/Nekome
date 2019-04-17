@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/overview_nav_graph"
     app:startDestination="@id/animeFragment">
 
@@ -8,12 +9,12 @@
         android:id="@+id/activityFragment"
         android:name="com.chesire.malime.flow.activity.ActivityFragment"
         android:label="ActivityFragment"
-        app:layout="@layout/fragment_activity" />
+        tools:layout="@layout/fragment_activity" />
     <fragment
         android:id="@+id/animeFragment"
         android:name="com.chesire.malime.flow.series.list.anime.AnimeFragment"
         android:label="AnimeFragment"
-        app:layout="@layout/fragment_anime">
+        tools:layout="@layout/fragment_anime">
         <action
             android:id="@+id/toSeriesDetailFragment"
             app:destination="@id/seriesDetailFragment" />
@@ -25,7 +26,7 @@
         android:id="@+id/mangaFragment"
         android:name="com.chesire.malime.flow.series.list.manga.MangaFragment"
         android:label="MangaFragment"
-        app:layout="@layout/fragment_manga">
+        tools:layout="@layout/fragment_manga">
         <action
             android:id="@+id/toSeriesDetailFragment"
             app:destination="@id/seriesDetailFragment" />
@@ -37,17 +38,17 @@
         android:id="@+id/profileFragment"
         android:name="com.chesire.malime.flow.profile.ProfileFragment"
         android:label="ProfileFragment"
-        app:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile" />
     <fragment
         android:id="@+id/searchFragment"
         android:name="com.chesire.malime.flow.series.search.SearchFragment"
         android:label="SearchFragment"
-        app:layout="@layout/fragment_search" />
+        tools:layout="@layout/fragment_search" />
     <fragment
         android:id="@+id/seriesDetailFragment"
         android:name="com.chesire.malime.flow.series.detail.SeriesDetailFragment"
         android:label="SeriesDetailFragment"
-        app:layout="@layout/fragment_series_detail">
+        tools:layout="@layout/fragment_series_detail">
         <argument
             android:name="series"
             app:argType="com.chesire.malime.core.models.SeriesModel" />
@@ -56,5 +57,5 @@
         android:id="@+id/settingsFragment"
         android:name="com.chesire.malime.flow.settings.SettingsFragment"
         android:label="SettingsFragment"
-        app:layout="@layout/fragment_settings" />
+        tools:layout="@layout/fragment_settings" />
 </navigation>

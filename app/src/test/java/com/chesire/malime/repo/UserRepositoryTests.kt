@@ -5,9 +5,11 @@ import com.chesire.malime.core.api.UserApi
 import com.chesire.malime.core.flags.Service
 import com.chesire.malime.core.models.UserModel
 import com.chesire.malime.db.UserDao
+import io.mockk.Runs
 import io.mockk.coEvery
+import io.mockk.coVerify
+import io.mockk.just
 import io.mockk.mockk
-import io.mockk.verify
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Assert.fail
@@ -15,20 +17,38 @@ import org.junit.Test
 
 class UserRepositoryTests {
     @Test
-    fun `insertUser pushes UserModel into Dao`() = runBlocking {
+    fun `refreshUser stores userModel on success`() = runBlocking {
         val expected = mockk<UserModel>()
         val mockDao = mockk<UserDao> {
-            coEvery { insert(expected) } coAnswers { }
+            coEvery { insert(expected) } just Runs
         }
-        val mockApi = mockk<UserApi>()
+        val mockApi = mockk<UserApi> {
+            coEvery { getUserDetails() } coAnswers { Resource.Success(expected) }
+        }
 
         val classUnderTest = UserRepository(mockDao, mockApi)
-        classUnderTest.insertUser(expected)
+        val result = classUnderTest.refreshUser()
 
-        verify {
-            runBlocking {
-                mockDao.insert(expected)
-            }
+        when (result) {
+            is Resource.Success -> coVerify { mockDao.insert(expected) }
+            is Resource.Error -> fail()
+        }
+    }
+
+    @Test
+    fun `refreshUser returns the response from api`() = runBlocking {
+        val expected = "error"
+        val mockDao = mockk<UserDao>()
+        val mockApi = mockk<UserApi> {
+            coEvery { getUserDetails() } coAnswers { Resource.Error(expected) }
+        }
+
+        val classUnderTest = UserRepository(mockDao, mockApi)
+        val result = classUnderTest.refreshUser()
+
+        when (result) {
+            is Resource.Success -> fail()
+            is Resource.Error -> assertEquals(expected, result.msg)
         }
     }
 
@@ -56,22 +76,5 @@ class UserRepositoryTests {
         val classUnderTest = UserRepository(mockDao, mockApi)
 
         assertEquals(expected, classUnderTest.retrieveUserId())
-    }
-
-    @Test
-    fun `retrieveRemoteUser returns the UserModel from api`() = runBlocking {
-        val expected = mockk<UserModel>()
-        val mockDao = mockk<UserDao>()
-        val mockApi = mockk<UserApi> {
-            coEvery { getUserDetails() } coAnswers { Resource.Success(expected) }
-        }
-
-        val classUnderTest = UserRepository(mockDao, mockApi)
-        val result = classUnderTest.retrieveRemoteUser()
-
-        when (result) {
-            is Resource.Success -> assertEquals(expected, result.data)
-            is Resource.Error -> fail()
-        }
     }
 }
