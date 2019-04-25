@@ -4,8 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chesire.lifecyklelog.LogLifecykle
@@ -60,9 +62,13 @@ class AnimeFragment : DaggerFragment(), AnimeInteractionListener {
         )
     }
 
-    override fun animeSelected(model: SeriesModel) {
+    override fun animeSelected(imageView: ImageView, model: SeriesModel) {
         Timber.i("Model ${model.slug} animeSelected called")
-        findNavController().navigate(AnimeFragmentDirections.toSeriesDetailFragment(model))
+
+        findNavController().navigate(
+            AnimeFragmentDirections.toSeriesDetailFragment(model),
+            FragmentNavigatorExtras(imageView to model.title)
+        )
     }
 
     override fun onPlusOne(model: SeriesModel) {

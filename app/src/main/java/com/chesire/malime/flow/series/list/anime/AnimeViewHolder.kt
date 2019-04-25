@@ -1,6 +1,7 @@
 package com.chesire.malime.flow.series.list.anime
 
 import android.view.View
+import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.chesire.malime.core.models.SeriesModel
@@ -25,10 +26,11 @@ class AnimeViewHolder(view: View) : RecyclerView.ViewHolder(view), LayoutContain
         adapterItemAnimeTitle.text = model.title
         adapterItemAnimeProgress.text = "${model.progress} / ${model.totalLength}"
         adapterItemAnimePlusOne.visibleIf(invisible = true) { model.progress < model.totalLength }
+        ViewCompat.setTransitionName(adapterItemAnimeImage, model.title)
     }
 
     fun bindListener(listener: AnimeInteractionListener) {
-        itemView.setOnClickListener { listener.animeSelected(seriesModel) }
+        itemView.setOnClickListener { listener.animeSelected(adapterItemAnimeImage, seriesModel) }
         adapterItemAnimePlusOne.setOnClickListener { listener.onPlusOne(seriesModel) }
     }
 }
