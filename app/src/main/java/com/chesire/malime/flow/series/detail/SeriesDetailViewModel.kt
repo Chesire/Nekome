@@ -6,4 +6,8 @@ import javax.inject.Inject
 
 class SeriesDetailViewModel @Inject constructor() : ViewModel() {
     lateinit var model: SeriesModel
+
+    fun deleteSeries() {
+        // execute delete series
+    }
 }

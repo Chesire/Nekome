@@ -7,10 +7,25 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/fragmentAnimeAppBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/fragmentAnimeToolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:title="@string/nav_anime"
+                app:layout_collapseMode="pin" />
+        </com.google.android.material.appbar.AppBarLayout>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/fragmentAnimeRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
             tools:listitem="@layout/adapter_item_anime" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -18,10 +33,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            android:src="@drawable/ic_add_black"
-            app:layout_behavior="com.chesire.malime.flow.series.list.ScrollFABBehaviour"
+            android:src="@drawable/ic_add_white"
             app:layout_anchor="@id/fragmentAnimeRecyclerView"
             app:layout_anchorGravity="bottom|right|end"
+            app:layout_behavior="com.chesire.malime.flow.series.list.ScrollFABBehaviour"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 

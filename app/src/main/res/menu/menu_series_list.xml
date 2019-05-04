@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/menuSeriesListFilter"
+        android:icon="@drawable/ic_filter_white"
+        android:title="@string/menu_filter"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/menuSeriesListSort"
+        android:icon="@drawable/ic_sort_by_alpha_white"
+        android:title="@string/menu_sort"
+        app:showAsAction="ifRoom" />
+
+</menu>

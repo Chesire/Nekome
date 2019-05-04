@@ -6,4 +6,21 @@
     <string name="nav_profile">Profile</string>
     <string name="nav_activity">Activity</string>
     <string name="nav_settings">Settings</string>
+
+    <string name="menu_delete">Delete</string>
+    <string name="menu_filter">Filter</string>
+    <string name="menu_sort">Sort</string>
+
+    <string name="sort_dialog_title">Sort by</string>
+    <string name="sort_by_default">Default</string>
+    <string name="sort_by_title">Title</string>
+    <string name="sort_by_start_date">Start date</string>
+    <string name="sort_by_end_date">End date</string>
+
+    <string name="filter_dialog_title">Filter by</string>
+    <string name="filter_by_current">Current</string>
+    <string name="filter_by_completed">Completed</string>
+    <string name="filter_by_on_hold">OnHold</string>
+    <string name="filter_by_dropped">Dropped</string>
+    <string name="filter_by_planned">Planned</string>
 </resources>

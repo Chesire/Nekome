@@ -24,7 +24,7 @@
         android:layout_margin="8dp"
         android:background="@android:color/transparent"
         android:padding="8dp"
-        android:src="@drawable/ic_add_black"
+        android:src="@drawable/ic_add_white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"

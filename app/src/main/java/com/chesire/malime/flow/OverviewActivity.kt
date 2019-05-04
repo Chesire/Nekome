@@ -5,16 +5,28 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI.setupWithNavController
 import com.chesire.malime.R
+import com.chesire.malime.extensions.hide
+import com.chesire.malime.extensions.show
 import kotlinx.android.synthetic.main.activity_overview.activityOverviewBottomNavigation
 
 class OverviewActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_overview)
+        setupNavController()
+    }
 
-        setupWithNavController(
-            activityOverviewBottomNavigation,
-            findNavController(R.id.activityOverviewNavigation)
-        )
+    private fun setupNavController() = with(findNavController(R.id.activityOverviewNavigation)) {
+        setupWithNavController(activityOverviewBottomNavigation, this)
+        addOnDestinationChangedListener { _, destination, _ ->
+            when (destination.id) {
+                R.id.animeFragment -> activityOverviewBottomNavigation.show()
+                R.id.mangaFragment -> activityOverviewBottomNavigation.show()
+                R.id.profileFragment -> activityOverviewBottomNavigation.show()
+                R.id.activityFragment -> activityOverviewBottomNavigation.show()
+                R.id.settingsFragment -> activityOverviewBottomNavigation.show()
+                else -> activityOverviewBottomNavigation.hide()
+            }
+        }
     }
 }
