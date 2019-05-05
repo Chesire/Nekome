@@ -18,6 +18,8 @@
     <string name="sort_by_end_date">End date</string>
 
     <string name="filter_dialog_title">Filter by</string>
+    <string name="filter_dialog_cancel">Cancel</string>
+    <string name="filter_dialog_confirm">Confirm</string>
     <string name="filter_by_current">Current</string>
     <string name="filter_by_completed">Completed</string>
     <string name="filter_by_on_hold">OnHold</string>
