@@ -22,7 +22,7 @@ class AnimeViewModel @Inject constructor(private val repo: SeriesRepository) : V
             val response = withContext(Dispatchers.Default) {
                 repo.updateSeries(userSeriesId, newProgress, newUserSeriesStatus)
             }
-            if (response is Resource.Error && response.code == 401) {
+            if (response is Resource.Error && response.code == Resource.Error.CouldNotRefresh) {
                 AuthCaster.issueRefreshingToken()
             }
         }

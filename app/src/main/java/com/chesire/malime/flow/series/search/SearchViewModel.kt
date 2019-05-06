@@ -63,7 +63,7 @@ class SearchViewModel @Inject constructor(
                 is Resource.Success -> {
                     // Notify back to UI
                 }
-                is Resource.Error -> if (response.code == 401) {
+                is Resource.Error -> if (response.code == Resource.Error.CouldNotRefresh) {
                     AuthCaster.issueRefreshingToken()
                 }
             }
