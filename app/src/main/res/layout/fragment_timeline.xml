@@ -14,7 +14,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:title="@string/nav_activity"
+            app:title="@string/nav_timeline"
             app:titleTextColor="@android:color/white" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

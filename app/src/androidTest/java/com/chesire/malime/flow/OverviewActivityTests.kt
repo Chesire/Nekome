@@ -65,8 +65,8 @@ class OverviewActivityTests {
     @Test
     fun overviewCanNavigateToActivityView() {
         overviewActivity.launchActivity()
-        clickOn(R.id.activityFragment)
-        assertDisplayed(R.string.nav_activity)
+        clickOn(R.id.timelineFragment)
+        assertDisplayed(R.string.nav_timeline)
     }
 
     @Test

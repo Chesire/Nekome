@@ -12,9 +12,9 @@
         android:icon="@drawable/ic_home_black_24dp"
         android:title="@string/nav_manga" />
     <item
-        android:id="@+id/activityFragment"
+        android:id="@+id/timelineFragment"
         android:icon="@drawable/ic_timeline_black"
-        android:title="@string/nav_activity" />
+        android:title="@string/nav_timeline" />
     <item
         android:id="@+id/profileFragment"
         android:icon="@drawable/ic_person_black"
