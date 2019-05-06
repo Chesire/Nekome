@@ -45,7 +45,7 @@ class AnimeViewModelTests {
             coEvery {
                 updateSeries(0, 0, UserSeriesStatus.Current)
             } coAnswers {
-                Resource.Error("error", 401)
+                Resource.Error("error", Resource.Error.CouldNotRefresh)
             }
         }
         mockkObject(AuthCaster)
