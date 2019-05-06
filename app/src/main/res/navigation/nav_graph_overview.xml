@@ -66,4 +66,12 @@
         android:name="com.chesire.malime.flow.settings.SettingsFragment"
         android:label="SettingsFragment"
         tools:layout="@layout/fragment_settings" />
+    <activity
+        android:id="@+id/loginActivity"
+        android:name="com.chesire.malime.flow.login.LoginActivity"
+        android:label="LoginActivity" />
+    <action
+        android:id="@+id/toGlobalLoginActivity"
+        app:destination="@id/loginActivity"
+        tools:layout="@layout/activity_login" />
 </navigation>

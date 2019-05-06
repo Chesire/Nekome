@@ -6,6 +6,7 @@ import androidx.navigation.ui.NavigationUI.setupWithNavController
 import com.chesire.lifecyklelog.LogLifecykle
 import com.chesire.malime.AuthCaster
 import com.chesire.malime.LogoutHandler
+import com.chesire.malime.OverviewNavGraphDirections
 import com.chesire.malime.R
 import com.chesire.malime.extensions.hide
 import com.chesire.malime.extensions.show
@@ -48,5 +49,9 @@ class OverviewActivity : DaggerAppCompatActivity(), AuthCaster.AuthCasterListene
     override fun unableToRefresh() {
         Timber.w("unableToRefresh has occurred")
         logoutHandler.executeLogout()
+        findNavController(R.id.activityOverviewNavigation).navigate(
+            OverviewNavGraphDirections.toGlobalLoginActivity()
+        )
+        finish()
     }
 }
