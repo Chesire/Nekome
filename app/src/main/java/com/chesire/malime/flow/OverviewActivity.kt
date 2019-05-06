@@ -1,6 +1,8 @@
 package com.chesire.malime.flow
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.HandlerThread
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI.setupWithNavController
 import com.chesire.lifecyklelog.LogLifecykle
@@ -48,10 +50,16 @@ class OverviewActivity : DaggerAppCompatActivity(), AuthCaster.AuthCasterListene
 
     override fun unableToRefresh() {
         Timber.w("unableToRefresh has occurred")
-        logoutHandler.executeLogout()
-        findNavController(R.id.activityOverviewNavigation).navigate(
-            OverviewNavGraphDirections.toGlobalLoginActivity()
-        )
-        finish()
+
+        val handlerThread = HandlerThread("LogoutThread")
+        handlerThread.start()
+        Handler(handlerThread.looper).post {
+            logoutHandler.executeLogout()
+            findNavController(R.id.activityOverviewNavigation).navigate(
+                OverviewNavGraphDirections.toGlobalLoginActivity()
+            )
+            finish()
+            handlerThread.quitSafely()
+        }
     }
 }
