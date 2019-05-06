@@ -12,16 +12,12 @@
         android:icon="@drawable/ic_home_black_24dp"
         android:title="@string/nav_manga" />
     <item
-        android:id="@+id/profileFragment"
-        android:icon="@drawable/ic_home_black_24dp"
-        android:title="@string/nav_profile" />
-    <item
         android:id="@+id/activityFragment"
         android:icon="@drawable/ic_home_black_24dp"
         android:title="@string/nav_activity" />
     <item
-        android:id="@+id/settingsFragment"
+        android:id="@+id/profileFragment"
         android:icon="@drawable/ic_home_black_24dp"
-        android:title="@string/nav_settings" />
+        android:title="@string/nav_profile" />
 
 </menu>
