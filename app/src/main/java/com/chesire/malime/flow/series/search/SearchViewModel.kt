@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chesire.malime.AsyncState
+import com.chesire.malime.AuthCaster
 import com.chesire.malime.core.Resource
 import com.chesire.malime.core.api.SearchApi
 import com.chesire.malime.core.flags.SeriesType
@@ -19,7 +20,8 @@ import javax.inject.Inject
 
 class SearchViewModel @Inject constructor(
     private val repo: SeriesRepository,
-    private val search: SearchApi
+    private val search: SearchApi,
+    private val authCaster: AuthCaster
 ) : ViewModel() {
     private val _searchResults = MutableLiveData<AsyncState<List<SeriesModel>, SearchError>>()
 
@@ -62,8 +64,8 @@ class SearchViewModel @Inject constructor(
                 is Resource.Success -> {
                     // Notify back to UI
                 }
-                is Resource.Error -> {
-                    // Notify error back UI
+                is Resource.Error -> if (response.code == Resource.Error.CouldNotRefresh) {
+                    authCaster.issueRefreshingToken()
                 }
             }
         }

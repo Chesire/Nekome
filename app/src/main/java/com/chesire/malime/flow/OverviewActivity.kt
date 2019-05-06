@@ -1,19 +1,39 @@
 package com.chesire.malime.flow
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
+import android.os.Handler
+import android.os.HandlerThread
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI.setupWithNavController
+import com.chesire.lifecyklelog.LogLifecykle
+import com.chesire.malime.AuthCaster
+import com.chesire.malime.LogoutHandler
+import com.chesire.malime.OverviewNavGraphDirections
 import com.chesire.malime.R
 import com.chesire.malime.extensions.hide
 import com.chesire.malime.extensions.show
+import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_overview.activityOverviewBottomNavigation
+import timber.log.Timber
+import javax.inject.Inject
 
-class OverviewActivity : AppCompatActivity() {
+@LogLifecykle
+class OverviewActivity : DaggerAppCompatActivity(), AuthCaster.AuthCasterListener {
+    @Inject
+    lateinit var logoutHandler: LogoutHandler
+    @Inject
+    lateinit var authCaster: AuthCaster
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_overview)
         setupNavController()
+        authCaster.subscribeToAuthError(this)
+    }
+
+    override fun onDestroy() {
+        authCaster.unsubscribeFromAuthError(this)
+        super.onDestroy()
     }
 
     private fun setupNavController() = with(findNavController(R.id.activityOverviewNavigation)) {
@@ -27,6 +47,21 @@ class OverviewActivity : AppCompatActivity() {
                 R.id.settingsFragment -> activityOverviewBottomNavigation.show()
                 else -> activityOverviewBottomNavigation.hide()
             }
+        }
+    }
+
+    override fun unableToRefresh() {
+        Timber.w("unableToRefresh has occurred")
+
+        val handlerThread = HandlerThread("LogoutThread")
+        handlerThread.start()
+        Handler(handlerThread.looper).post {
+            logoutHandler.executeLogout()
+            findNavController(R.id.activityOverviewNavigation).navigate(
+                OverviewNavGraphDirections.toGlobalLoginActivity()
+            )
+            finish()
+            handlerThread.quitSafely()
         }
     }
 }

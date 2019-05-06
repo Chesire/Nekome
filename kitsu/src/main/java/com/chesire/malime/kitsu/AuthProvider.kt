@@ -35,10 +35,8 @@ class AuthProvider @Inject constructor(
         }
     }
 
-    fun clearAuth() {
-        preferences.edit {
-            remove(ACCESS_TOKEN)
-            remove(REFRESH_TOKEN)
-        }
+    fun clearAuth() = preferences.edit {
+        remove(ACCESS_TOKEN)
+        remove(REFRESH_TOKEN)
     }
 }
