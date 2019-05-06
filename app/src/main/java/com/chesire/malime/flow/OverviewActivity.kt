@@ -20,11 +20,11 @@ class OverviewActivity : DaggerAppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_overview)
         setupNavController()
-        AuthCaster.subscribeToAuthError(logoutHandler)
+        logoutHandler.subscribe()
     }
 
     override fun onDestroy() {
-        AuthCaster.unsubscribeFromAuthError(logoutHandler)
+        logoutHandler.unsubscribe()
         super.onDestroy()
     }
 
