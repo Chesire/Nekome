@@ -13,7 +13,7 @@
         android:title="@string/nav_manga" />
     <item
         android:id="@+id/activityFragment"
-        android:icon="@drawable/ic_home_black_24dp"
+        android:icon="@drawable/ic_timeline_black"
         android:title="@string/nav_activity" />
     <item
         android:id="@+id/profileFragment"
