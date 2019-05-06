@@ -6,6 +6,7 @@ import com.chesire.malime.injection.androidmodules.ActivityModule
 import com.chesire.malime.injection.androidmodules.FragmentModule
 import com.chesire.malime.injection.androidmodules.ViewModelModule
 import com.chesire.malime.injection.modules.AppModule
+import com.chesire.malime.injection.modules.AuthModule
 import com.chesire.malime.injection.modules.CoroutinesModule
 import com.chesire.malime.injection.modules.DatabaseModule
 import com.chesire.malime.injection.modules.KitsuModule
@@ -24,6 +25,7 @@ import javax.inject.Singleton
         ActivityModule::class,
         AndroidSupportInjectionModule::class,
         AppModule::class,
+        AuthModule::class,
         CoroutinesModule::class,
         DatabaseModule::class,
         FragmentModule::class,
