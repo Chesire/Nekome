@@ -1,27 +1,24 @@
 package com.chesire.malime
 
+import com.chesire.malime.db.RoomDB
 import com.chesire.malime.kitsu.AuthProvider
 import timber.log.Timber
 import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
+/**
+ * Handles clearing out resources for when a log out occurs.
+ */
 class LogoutHandler @Inject constructor(
-    private val authProvider: AuthProvider
-) : AuthCaster.AuthCasterListener {
-
+    private val authProvider: AuthProvider,
+    private val db: RoomDB
+) {
     /**
-     * Subscribe to auth issues that are fired from the [AuthCaster].
+     * Executes log out, clearing anything left over and resetting the application state.
      */
-    fun subscribe() = AuthCaster.subscribeToAuthError(this)
+    fun executeLogout() {
+        Timber.d("Executing log out")
 
-    /**
-     * Unsubscribe from auth issues that are fired from the [AuthCaster].
-     */
-    fun unsubscribe() = AuthCaster.unsubscribeFromAuthError(this)
-
-    override fun unableToRefresh() {
-        Timber.w("unableToRefresh firing")
-        // perform log out method
+        db.clearAllTables()
+        authProvider.clearAuth()
     }
 }

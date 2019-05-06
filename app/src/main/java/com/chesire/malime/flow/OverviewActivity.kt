@@ -3,6 +3,7 @@ package com.chesire.malime.flow
 import android.os.Bundle
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI.setupWithNavController
+import com.chesire.lifecyklelog.LogLifecykle
 import com.chesire.malime.AuthCaster
 import com.chesire.malime.LogoutHandler
 import com.chesire.malime.R
@@ -10,9 +11,11 @@ import com.chesire.malime.extensions.hide
 import com.chesire.malime.extensions.show
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_overview.activityOverviewBottomNavigation
+import timber.log.Timber
 import javax.inject.Inject
 
-class OverviewActivity : DaggerAppCompatActivity() {
+@LogLifecykle
+class OverviewActivity : DaggerAppCompatActivity(), AuthCaster.AuthCasterListener {
     @Inject
     lateinit var logoutHandler: LogoutHandler
 
@@ -20,11 +23,11 @@ class OverviewActivity : DaggerAppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_overview)
         setupNavController()
-        logoutHandler.subscribe()
+        AuthCaster.subscribeToAuthError(this)
     }
 
     override fun onDestroy() {
-        logoutHandler.unsubscribe()
+        AuthCaster.unsubscribeFromAuthError(this)
         super.onDestroy()
     }
 
@@ -40,5 +43,10 @@ class OverviewActivity : DaggerAppCompatActivity() {
                 else -> activityOverviewBottomNavigation.hide()
             }
         }
+    }
+
+    override fun unableToRefresh() {
+        Timber.w("unableToRefresh has occurred")
+        logoutHandler.executeLogout()
     }
 }
