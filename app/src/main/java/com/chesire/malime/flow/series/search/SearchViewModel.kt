@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chesire.malime.AsyncState
+import com.chesire.malime.AuthCaster
 import com.chesire.malime.core.Resource
 import com.chesire.malime.core.api.SearchApi
 import com.chesire.malime.core.flags.SeriesType
@@ -62,8 +63,8 @@ class SearchViewModel @Inject constructor(
                 is Resource.Success -> {
                     // Notify back to UI
                 }
-                is Resource.Error -> {
-                    // Notify error back UI
+                is Resource.Error -> if (response.code == 401) {
+                    AuthCaster.issueRefreshingToken()
                 }
             }
         }
