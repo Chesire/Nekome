@@ -3,32 +3,26 @@ package com.chesire.malime.flow.login.details
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.chesire.malime.IOContext
+import androidx.lifecycle.viewModelScope
 import com.chesire.malime.core.Resource
 import com.chesire.malime.core.api.AuthApi
 import com.chesire.malime.repo.UserRepository
 import com.hadilq.liveevent.LiveEvent
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
-import kotlin.coroutines.CoroutineContext
 
 class DetailsViewModel @Inject constructor(
     private val auth: AuthApi,
-    private val user: UserRepository,
-    @IOContext private val ioContext: CoroutineContext
+    private val user: UserRepository
 ) : ViewModel() {
-    private val job = Job()
-    private val ioScope = CoroutineScope(job + ioContext)
     private val _loginStatus = LiveEvent<LoginStatus>()
     val username = MutableLiveData<String>()
     val password = MutableLiveData<String>()
     val loginStatus: LiveData<LoginStatus>
         get() = _loginStatus
 
-    fun login() = ioScope.launch {
+    fun login() = viewModelScope.launch {
         if (!validParams()) {
             return@launch
         }
@@ -69,10 +63,5 @@ class DetailsViewModel @Inject constructor(
                 _loginStatus.postValue(LoginStatus.Error)
             }
         }
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        job.cancel()
     }
 }

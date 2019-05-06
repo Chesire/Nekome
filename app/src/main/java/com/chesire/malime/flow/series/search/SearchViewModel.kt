@@ -3,8 +3,8 @@ package com.chesire.malime.flow.series.search
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.chesire.malime.AsyncState
-import com.chesire.malime.IOContext
 import com.chesire.malime.core.Resource
 import com.chesire.malime.core.api.SearchApi
 import com.chesire.malime.core.flags.SeriesType
@@ -14,20 +14,13 @@ import com.chesire.malime.extensions.postError
 import com.chesire.malime.extensions.postLoading
 import com.chesire.malime.extensions.postSuccess
 import com.chesire.malime.repo.SeriesRepository
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import kotlin.coroutines.CoroutineContext
 
 class SearchViewModel @Inject constructor(
     private val repo: SeriesRepository,
-    private val search: SearchApi,
-    @IOContext private val ioContext: CoroutineContext
+    private val search: SearchApi
 ) : ViewModel() {
-
-    private val job = SupervisorJob()
-    private val ioScope = CoroutineScope(job + ioContext)
     private val _searchResults = MutableLiveData<AsyncState<List<SeriesModel>, SearchError>>()
 
     val searchTitle = MutableLiveData<String>()
@@ -38,7 +31,7 @@ class SearchViewModel @Inject constructor(
 
     var seriesType: SeriesType = SeriesType.Anime
 
-    fun performSearch() = ioScope.launch {
+    fun performSearch() = viewModelScope.launch {
         if (searchTitle.value.isNullOrEmpty()) {
             _searchResults.postError(SearchError.MissingTitle)
             return@launch
@@ -59,7 +52,7 @@ class SearchViewModel @Inject constructor(
     }
 
     fun addSeries(model: SeriesModel, startingStatus: UserSeriesStatus) =
-        ioScope.launch {
+        viewModelScope.launch {
             val response = when (model.type) {
                 SeriesType.Anime -> repo.addAnime(model.id, startingStatus)
                 SeriesType.Manga -> repo.addManga(model.id, startingStatus)
@@ -74,9 +67,4 @@ class SearchViewModel @Inject constructor(
                 }
             }
         }
-
-    override fun onCleared() {
-        super.onCleared()
-        job.cancel()
-    }
 }
