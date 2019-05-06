@@ -12,7 +12,6 @@ import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.just
 import io.mockk.mockk
-import io.mockk.mockkObject
 import io.mockk.verify
 import org.junit.Rule
 import org.junit.Test
@@ -32,8 +31,9 @@ class AnimeViewModelTests {
                 mockk()
             }
         }
+        val mockAuthCaster = mockk<AuthCaster>()
 
-        val classUnderTest = AnimeViewModel(mockRepo)
+        val classUnderTest = AnimeViewModel(mockRepo, mockAuthCaster)
         classUnderTest.updateSeries(0, 0, UserSeriesStatus.Current)
 
         coVerify { mockRepo.updateSeries(0, 0, UserSeriesStatus.Current) }
@@ -48,12 +48,13 @@ class AnimeViewModelTests {
                 Resource.Error("error", Resource.Error.CouldNotRefresh)
             }
         }
-        mockkObject(AuthCaster)
-        every { AuthCaster.issueRefreshingToken() } just Runs
+        val mockAuthCaster = mockk<AuthCaster> {
+            every { issueRefreshingToken() } just Runs
+        }
 
-        val classUnderTest = AnimeViewModel(mockRepo)
+        val classUnderTest = AnimeViewModel(mockRepo, mockAuthCaster)
         classUnderTest.updateSeries(0, 0, UserSeriesStatus.Current)
 
-        verify { AuthCaster.issueRefreshingToken() }
+        verify { mockAuthCaster.issueRefreshingToken() }
     }
 }

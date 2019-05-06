@@ -14,7 +14,7 @@ class AuthCasterTests {
             every { unableToRefresh() } just Runs
         }
 
-        AuthCaster.run {
+        AuthCaster().run {
             subscribeToAuthError(mockListener)
             issueRefreshingToken()
         }
@@ -28,7 +28,7 @@ class AuthCasterTests {
             every { unableToRefresh() } just Runs
         }
 
-        AuthCaster.run {
+        AuthCaster().run {
             subscribeToAuthError(mockListener)
             issueRefreshingToken()
             unsubscribeFromAuthError(mockListener)
@@ -50,7 +50,7 @@ class AuthCasterTests {
             every { unableToRefresh() } just Runs
         }
 
-        AuthCaster.run {
+        AuthCaster().run {
             subscribeToAuthError(mockListener1)
             subscribeToAuthError(mockListener2)
             subscribeToAuthError(mockListener3)

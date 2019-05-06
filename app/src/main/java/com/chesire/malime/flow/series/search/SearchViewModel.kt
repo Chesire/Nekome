@@ -20,7 +20,8 @@ import javax.inject.Inject
 
 class SearchViewModel @Inject constructor(
     private val repo: SeriesRepository,
-    private val search: SearchApi
+    private val search: SearchApi,
+    private val authCaster: AuthCaster
 ) : ViewModel() {
     private val _searchResults = MutableLiveData<AsyncState<List<SeriesModel>, SearchError>>()
 
@@ -64,7 +65,7 @@ class SearchViewModel @Inject constructor(
                     // Notify back to UI
                 }
                 is Resource.Error -> if (response.code == Resource.Error.CouldNotRefresh) {
-                    AuthCaster.issueRefreshingToken()
+                    authCaster.issueRefreshingToken()
                 }
             }
         }

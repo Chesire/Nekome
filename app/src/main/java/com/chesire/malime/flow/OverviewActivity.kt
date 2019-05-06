@@ -21,16 +21,18 @@ import javax.inject.Inject
 class OverviewActivity : DaggerAppCompatActivity(), AuthCaster.AuthCasterListener {
     @Inject
     lateinit var logoutHandler: LogoutHandler
+    @Inject
+    lateinit var authCaster: AuthCaster
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_overview)
         setupNavController()
-        AuthCaster.subscribeToAuthError(this)
+        authCaster.subscribeToAuthError(this)
     }
 
     override fun onDestroy() {
-        AuthCaster.unsubscribeFromAuthError(this)
+        authCaster.unsubscribeFromAuthError(this)
         super.onDestroy()
     }
 

@@ -13,7 +13,10 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class AnimeViewModel @Inject constructor(private val repo: SeriesRepository) : ViewModel() {
+class AnimeViewModel @Inject constructor(
+    private val repo: SeriesRepository,
+    private val authCaster: AuthCaster
+) : ViewModel() {
     val animeSeries: LiveData<List<SeriesModel>>
         get() = repo.anime
 
@@ -23,7 +26,7 @@ class AnimeViewModel @Inject constructor(private val repo: SeriesRepository) : V
                 repo.updateSeries(userSeriesId, newProgress, newUserSeriesStatus)
             }
             if (response is Resource.Error && response.code == Resource.Error.CouldNotRefresh) {
-                AuthCaster.issueRefreshingToken()
+                authCaster.issueRefreshingToken()
             }
         }
     }

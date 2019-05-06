@@ -1,9 +1,13 @@
 package com.chesire.malime
 
+import javax.inject.Inject
+import javax.inject.Singleton
+
 /**
  * Handles events for authorization.
  */
-object AuthCaster {
+@Singleton
+class AuthCaster @Inject constructor() {
     private val subscriptions = mutableSetOf<AuthCasterListener>()
 
     /**
