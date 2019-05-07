@@ -5,11 +5,11 @@
 
     <item
         android:id="@+id/animeFragment"
-        android:icon="@drawable/ic_home_black_24dp"
+        android:icon="@drawable/ic_video_library_black"
         android:title="@string/nav_anime" />
     <item
         android:id="@+id/mangaFragment"
-        android:icon="@drawable/ic_home_black_24dp"
+        android:icon="@drawable/ic_collections_bookmark_black"
         android:title="@string/nav_manga" />
     <item
         android:id="@+id/timelineFragment"
