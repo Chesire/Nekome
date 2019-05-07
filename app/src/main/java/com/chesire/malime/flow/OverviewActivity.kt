@@ -43,8 +43,7 @@ class OverviewActivity : DaggerAppCompatActivity(), AuthCaster.AuthCasterListene
                 R.id.animeFragment -> activityOverviewBottomNavigation.show()
                 R.id.mangaFragment -> activityOverviewBottomNavigation.show()
                 R.id.profileFragment -> activityOverviewBottomNavigation.show()
-                R.id.activityFragment -> activityOverviewBottomNavigation.show()
-                R.id.settingsFragment -> activityOverviewBottomNavigation.show()
+                R.id.timelineFragment -> activityOverviewBottomNavigation.show()
                 else -> activityOverviewBottomNavigation.hide()
             }
         }

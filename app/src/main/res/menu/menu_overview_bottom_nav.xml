@@ -5,23 +5,19 @@
 
     <item
         android:id="@+id/animeFragment"
-        android:icon="@drawable/ic_home_black_24dp"
+        android:icon="@drawable/ic_video_library_black"
         android:title="@string/nav_anime" />
     <item
         android:id="@+id/mangaFragment"
-        android:icon="@drawable/ic_home_black_24dp"
+        android:icon="@drawable/ic_collections_bookmark_black"
         android:title="@string/nav_manga" />
     <item
+        android:id="@+id/timelineFragment"
+        android:icon="@drawable/ic_timeline_black"
+        android:title="@string/nav_timeline" />
+    <item
         android:id="@+id/profileFragment"
-        android:icon="@drawable/ic_home_black_24dp"
+        android:icon="@drawable/ic_account_circle_black"
         android:title="@string/nav_profile" />
-    <item
-        android:id="@+id/activityFragment"
-        android:icon="@drawable/ic_home_black_24dp"
-        android:title="@string/nav_activity" />
-    <item
-        android:id="@+id/settingsFragment"
-        android:icon="@drawable/ic_home_black_24dp"
-        android:title="@string/nav_settings" />
 
 </menu>

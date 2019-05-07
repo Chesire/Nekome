@@ -6,11 +6,6 @@
     app:startDestination="@id/animeFragment">
 
     <fragment
-        android:id="@+id/activityFragment"
-        android:name="com.chesire.malime.flow.activity.ActivityFragment"
-        android:label="ActivityFragment"
-        tools:layout="@layout/fragment_activity" />
-    <fragment
         android:id="@+id/animeFragment"
         android:name="com.chesire.malime.flow.series.list.anime.AnimeFragment"
         android:label="AnimeFragment"
@@ -43,6 +38,11 @@
             app:destination="@id/searchFragment" />
     </fragment>
     <fragment
+        android:id="@+id/timelineFragment"
+        android:name="com.chesire.malime.flow.timeline.TimelineFragment"
+        android:label="TimelineFragment"
+        tools:layout="@layout/fragment_timeline" />
+    <fragment
         android:id="@+id/profileFragment"
         android:name="com.chesire.malime.flow.profile.ProfileFragment"
         android:label="ProfileFragment"
@@ -61,11 +61,6 @@
             android:name="series"
             app:argType="com.chesire.malime.core.models.SeriesModel" />
     </fragment>
-    <fragment
-        android:id="@+id/settingsFragment"
-        android:name="com.chesire.malime.flow.settings.SettingsFragment"
-        android:label="SettingsFragment"
-        tools:layout="@layout/fragment_settings" />
     <activity
         android:id="@+id/loginActivity"
         android:name="com.chesire.malime.flow.login.LoginActivity"
