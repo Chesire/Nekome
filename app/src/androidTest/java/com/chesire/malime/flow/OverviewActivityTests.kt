@@ -68,11 +68,4 @@ class OverviewActivityTests {
         clickOn(R.id.timelineFragment)
         assertDisplayed(R.string.nav_timeline)
     }
-
-    @Test
-    fun overviewCanNavigateToSettingsView() {
-        overviewActivity.launchActivity()
-        clickOn(R.id.settingsFragment)
-        assertDisplayed(R.string.nav_settings)
-    }
 }
