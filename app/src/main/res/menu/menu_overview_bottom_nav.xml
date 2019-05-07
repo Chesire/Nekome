@@ -17,7 +17,7 @@
         android:title="@string/nav_timeline" />
     <item
         android:id="@+id/profileFragment"
-        android:icon="@drawable/ic_person_black"
+        android:icon="@drawable/ic_account_circle_black"
         android:title="@string/nav_profile" />
 
 </menu>
