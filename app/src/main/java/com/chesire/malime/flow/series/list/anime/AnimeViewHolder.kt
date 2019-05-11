@@ -10,6 +10,7 @@ import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.adapter_item_anime.adapterItemAnimeImage
 import kotlinx.android.synthetic.main.adapter_item_anime.adapterItemAnimePlusOne
 import kotlinx.android.synthetic.main.adapter_item_anime.adapterItemAnimeProgress
+import kotlinx.android.synthetic.main.adapter_item_anime.adapterItemAnimeSubtype
 import kotlinx.android.synthetic.main.adapter_item_anime.adapterItemAnimeTitle
 
 class AnimeViewHolder(view: View) : RecyclerView.ViewHolder(view), LayoutContainer {
@@ -24,6 +25,7 @@ class AnimeViewHolder(view: View) : RecyclerView.ViewHolder(view), LayoutContain
             .load(model.posterImage.smallest?.url)
             .into(adapterItemAnimeImage)
         adapterItemAnimeTitle.text = model.title
+        adapterItemAnimeSubtype.text = model.subtype.name
         adapterItemAnimeProgress.text = "${model.progress} / ${model.totalLength}"
         adapterItemAnimePlusOne.visibleIf(invisible = true) { model.progress < model.totalLength }
         ViewCompat.setTransitionName(adapterItemAnimeImage, model.title)
