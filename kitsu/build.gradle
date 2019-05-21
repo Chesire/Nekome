@@ -49,8 +49,8 @@ dependencies {
     implementation 'com.vanniktech:lint-rules-android:0.10.0'
     implementation 'com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2'
     implementation "com.jakewharton.timber:timber:4.7.1"
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.1.1'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.1.1'
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
 
     testImplementation 'com.squareup.okhttp3:mockwebserver:3.13.1'
     testImplementation 'io.mockk:mockk:1.9.3'

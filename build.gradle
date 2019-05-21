@@ -51,3 +51,7 @@ detekt {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+ext {
+    coroutines_version = "1.2.1"
+}
