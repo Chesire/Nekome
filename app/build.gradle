@@ -74,8 +74,8 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.1.0-alpha04'
     implementation 'androidx.navigation:navigation-fragment-ktx:2.1.0-alpha02'
     implementation 'androidx.navigation:navigation-ui-ktx:2.1.0-alpha02'
-    implementation 'androidx.room:room-runtime:2.1.0-alpha04'
-    implementation 'androidx.room:room-coroutines:2.1.0-alpha04'
+    implementation "androidx.room:room-runtime:$room_version"
+    implementation "androidx.room:room-ktx:$room_version"
     implementation 'androidx.work:work-runtime-ktx:2.0.1'
     implementation 'com.afollestad.material-dialogs:core:2.8.1'
     implementation 'com.afollestad.material-dialogs:lifecycle:2.8.1'
@@ -113,7 +113,7 @@ dependencies {
     }
     androidTestImplementation 'io.mockk:mockk-android:1.9.3'
 
-    kapt 'androidx.room:room-compiler:2.1.0-alpha04'
+    kapt "androidx.room:room-compiler:$room_version"
     kapt 'com.github.bumptech.glide:compiler:4.9.0'
     kapt "com.google.dagger:dagger-compiler:$dagger_version"
     kapt "com.google.dagger:dagger-android-processor:$dagger_version"
