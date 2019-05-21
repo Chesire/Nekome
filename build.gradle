@@ -56,4 +56,6 @@ ext {
     coroutines_version = "1.2.1"
     dagger_version = "2.22.1"
     room_version = "2.1.0-beta01"
+
+    vanniktech_version = "0.12.0"
 }

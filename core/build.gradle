@@ -43,7 +43,7 @@ dependencies {
 
     implementation 'androidx.appcompat:appcompat:1.0.2'
     implementation "androidx.room:room-runtime:$room_version"
-    implementation 'com.vanniktech:lint-rules-android:0.10.0'
+    implementation "com.vanniktech:lint-rules-android:$vanniktech_version"
 
     testImplementation 'junit:junit:4.12'
 
