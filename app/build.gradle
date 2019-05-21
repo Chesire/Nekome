@@ -83,9 +83,9 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.9.0'
     implementation 'com.github.hadilq.liveevent:liveevent:1.0.1'
     implementation 'com.google.android.material:material:1.1.0-alpha04'
-    implementation 'com.google.dagger:dagger:2.22.1'
-    implementation 'com.google.dagger:dagger-android:2.22.1'
-    implementation 'com.google.dagger:dagger-android-support:2.22.1'
+    implementation "com.google.dagger:dagger:$dagger_version"
+    implementation "com.google.dagger:dagger-android:$dagger_version"
+    implementation "com.google.dagger:dagger-android-support:$dagger_version"
     implementation 'com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2'
     implementation 'com.jakewharton.timber:timber:4.7.1'
     implementation 'com.squareup.moshi:moshi:1.8.0'
@@ -115,8 +115,8 @@ dependencies {
 
     kapt 'androidx.room:room-compiler:2.1.0-alpha04'
     kapt 'com.github.bumptech.glide:compiler:4.9.0'
-    kapt 'com.google.dagger:dagger-compiler:2.22.1'
-    kapt 'com.google.dagger:dagger-android-processor:2.22.1'
-    kaptAndroidTest 'com.google.dagger:dagger-compiler:2.22.1'
-    kaptAndroidTest 'com.google.dagger:dagger-android-processor:2.22.1'
+    kapt "com.google.dagger:dagger-compiler:$dagger_version"
+    kapt "com.google.dagger:dagger-android-processor:$dagger_version"
+    kaptAndroidTest "com.google.dagger:dagger-compiler:$dagger_version"
+    kaptAndroidTest "com.google.dagger:dagger-android-processor:$dagger_version"
 }

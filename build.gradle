@@ -54,4 +54,5 @@ task clean(type: Delete) {
 
 ext {
     coroutines_version = "1.2.1"
+    dagger_version = "2.22.1"
 }
