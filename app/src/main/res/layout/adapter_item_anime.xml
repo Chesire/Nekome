@@ -1,56 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="80dp">
+    android:layout_height="113dp"
+    android:elevation="4dp"
+    app:cardElevation="4dp"
+    android:layout_marginLeft="@dimen/mtrl_card_spacing"
+    android:layout_marginRight="@dimen/mtrl_card_spacing"
+    android:layout_marginTop="@dimen/mtrl_card_spacing"
+    android:minHeight="113dp">
 
-    <ImageView
-        android:id="@+id/adapterItemAnimeImage"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_margin="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:src="@drawable/ic_launcher_foreground" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/adapterItemAnimeTitle"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:ellipsize="end"
-        android:maxLines="2"
-        android:textAlignment="center"
-        app:layout_constraintBottom_toTopOf="@+id/adapterItemAnimePlusOne"
-        app:layout_constraintEnd_toStartOf="@+id/adapterItemAnimePlusOne"
-        app:layout_constraintStart_toEndOf="@id/adapterItemAnimeImage"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0"
-        tools:text="Anime Series Title" />
+        <ImageView
+            android:id="@+id/adapterItemAnimeImage"
+            android:layout_width="80dp"
+            android:layout_height="113dp"
+            android:adjustViewBounds="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/ic_launcher_foreground" />
 
-    <TextView
-        android:id="@+id/adapterItemAnimeProgress"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:textAlignment="center"
-        app:layout_constraintEnd_toStartOf="@id/adapterItemAnimePlusOne"
-        app:layout_constraintStart_toEndOf="@id/adapterItemAnimeImage"
-        app:layout_constraintTop_toBottomOf="@+id/adapterItemAnimeTitle"
-        tools:text="101 / 250" />
+        <TextView
+            android:id="@+id/adapterItemAnimeTitle"
+            style="@style/TextAppearance.MaterialComponents.Body1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:ellipsize="end"
+            android:maxLines="2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/adapterItemAnimeImage"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Anime Series Title" />
 
-    <ImageButton
-        android:id="@+id/adapterItemAnimePlusOne"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:background="@android:color/transparent"
-        android:padding="8dp"
-        android:src="@drawable/ic_exposure_plus_1_black"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.5" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/adapterItemAnimeSubtype"
+            style="@style/TextAppearance.MaterialComponents.Overline"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            app:layout_constraintBottom_toTopOf="@id/adapterItemAnimeDivider"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/adapterItemAnimeImage"
+            app:layout_constraintTop_toBottomOf="@id/adapterItemAnimeTitle"
+            tools:text="TV" />
+
+        <View
+            android:id="@+id/adapterItemAnimeDivider"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_margin="8dp"
+            android:alpha="0.3"
+            android:background="@android:color/darker_gray"
+            app:layout_constraintBottom_toTopOf="@id/adapterItemAnimePlusOne"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/adapterItemAnimeImage"
+            app:layout_constraintTop_toBottomOf="@id/adapterItemAnimeSubtype"
+            app:layout_constraintVertical_bias="1" />
+
+        <TextView
+            android:id="@+id/adapterItemAnimeProgress"
+            style="@style/TextAppearance.MaterialComponents.Body2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/adapterItemAnimePlusOne"
+            app:layout_constraintStart_toEndOf="@id/adapterItemAnimeImage"
+            app:layout_constraintTop_toBottomOf="@id/adapterItemAnimeDivider"
+            tools:text="101 / 250" />
+
+        <Button
+            android:id="@+id/adapterItemAnimePlusOne"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:minWidth="0dp"
+            android:paddingEnd="16dp"
+            android:paddingStart="16dp"
+            android:text="@string/list_plus_one"
+            android:textColor="@color/colorPrimary"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

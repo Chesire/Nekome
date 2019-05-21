@@ -26,4 +26,6 @@
     <string name="filter_by_on_hold">OnHold</string>
     <string name="filter_by_dropped">Dropped</string>
     <string name="filter_by_planned">Planned</string>
+
+    <string name="list_plus_one">+1</string>
 </resources>

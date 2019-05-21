@@ -4,8 +4,11 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+
+private const val SCROLL_THRESHOLD = 4
 
 /**
  * Provides scrolling for a [FloatingActionButton] by attaching to a [RecyclerView] it depends on.
@@ -21,9 +24,11 @@ class ScrollFABBehaviour(context: Context, attrs: AttributeSet) : FloatingAction
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     super.onScrolled(recyclerView, dx, dy)
 
-                    if (dy > 0 && child.isShown) {
+                    val forceVisible = (recyclerView.layoutManager as? LinearLayoutManager)
+                        ?.findFirstCompletelyVisibleItemPosition() == 0
+                    if (child.isShown && dy > SCROLL_THRESHOLD) {
                         child.hide()
-                    } else if (dy < 0 && !child.isShown) {
+                    } else if (!child.isShown && (dy < -SCROLL_THRESHOLD || forceVisible)) {
                         child.show()
                     }
                 }
