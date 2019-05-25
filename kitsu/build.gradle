@@ -35,6 +35,10 @@ android {
 }
 
 dependencies {
+    ext {
+        moshi_version = "1.8.0"
+        retrofit_version = "2.5.0"
+    }
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(path: ':core')
@@ -45,10 +49,10 @@ dependencies {
     implementation "com.google.dagger:dagger:$dagger_version"
     api 'com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2'
     implementation 'com.jakewharton.timber:timber:4.7.1'
-    implementation 'com.squareup.moshi:moshi:1.8.0'
-    api 'com.squareup.okhttp3:logging-interceptor:3.13.1'
-    api 'com.squareup.retrofit2:converter-moshi:2.5.0'
-    api 'com.squareup.retrofit2:retrofit:2.5.0'
+    implementation "com.squareup.moshi:moshi:$moshi_version"
+    api 'com.squareup.okhttp3:logging-interceptor:3.14.2'
+    api "com.squareup.retrofit2:converter-moshi:$retrofit_version"
+    api "com.squareup.retrofit2:retrofit:$retrofit_version"
     implementation "com.vanniktech:lint-rules-android:$vanniktech_version"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
@@ -60,7 +64,7 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
 
-    kapt "com.google.dagger:dagger-compiler:$dagger_version"
     kapt "com.google.dagger:dagger-android-processor:$dagger_version"
-    kapt 'com.squareup.moshi:moshi-kotlin-codegen:1.8.0'
+    kapt "com.google.dagger:dagger-compiler:$dagger_version"
+    kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshi_version"
 }
