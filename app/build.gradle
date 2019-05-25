@@ -92,18 +92,18 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
 
-    testImplementation 'androidx.arch.core:core-testing:2.0.0'
+    testImplementation 'androidx.arch.core:core-testing:2.1.0-beta01'
     testImplementation 'io.mockk:mockk:1.9.3'
     testImplementation 'junit:junit:4.12'
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_version"
 
-    androidTestImplementation 'androidx.arch.core:core-testing:2.0.0'
+    androidTestImplementation 'androidx.arch.core:core-testing:2.1.0-beta01'
     androidTestImplementation 'androidx.test.ext:junit:1.1.0'
     androidTestImplementation 'androidx.test:rules:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-intents:3.1.1'
     // androidTestImplementation 'androidx.work:work-testing:2.0.1'
-    androidTestImplementation('com.schibsted.spain:barista:2.8.0') {
+    androidTestImplementation('com.schibsted.spain:barista:3.0.0') {
         exclude group: 'com.android.support'
         exclude group: 'org.jetbrains.kotlin'
     }
