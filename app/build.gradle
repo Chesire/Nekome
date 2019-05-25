@@ -107,7 +107,9 @@ dependencies {
         exclude group: 'com.android.support'
         exclude group: 'org.jetbrains.kotlin'
     }
-    androidTestImplementation 'io.mockk:mockk-android:1.9.3'
+    // Fixes issue with mockk 1.9.3 https://github.com/mockk/mockk/issues/281
+    androidTestImplementation('io.mockk:mockk-android:1.9.3') { exclude module: 'objenesis' }
+    androidTestImplementation 'org.objenesis:objenesis:2.6'
 
     kapt "androidx.room:room-compiler:$room_version"
     kapt 'com.github.bumptech.glide:compiler:4.9.0'
