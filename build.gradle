@@ -1,13 +1,13 @@
 buildscript {
-    ext.jacoco_version = '0.8.2'
-    ext.kotlin_version = '1.3.21'
+    ext.jacoco_version = '0.8.4'
+    ext.kotlin_version = '1.3.31'
     repositories {
         google()
         jcenter()
     }
     dependencies {
-        classpath 'androidx.navigation:navigation-safe-args-gradle-plugin:2.1.0-alpha02'
-        classpath 'com.android.tools.build:gradle:3.4.0'
+        classpath 'androidx.navigation:navigation-safe-args-gradle-plugin:2.1.0-alpha04'
+        classpath 'com.android.tools.build:gradle:3.4.1'
         classpath "org.jacoco:org.jacoco.core:$jacoco_version"
         classpath "org.jetbrains.kotlin:kotlin-allopen:$kotlin_version"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
@@ -50,4 +50,14 @@ detekt {
 
 task clean(type: Delete) {
     delete rootProject.buildDir
+}
+
+ext {
+    appcompat_version = "1.1.0-alpha05"
+    corektx_version = "1.2.0-alpha01"
+    coroutines_version = "1.2.1"
+    dagger_version = "2.22.1"
+    room_version = "2.1.0-beta01"
+
+    vanniktech_version = "0.12.0"
 }
