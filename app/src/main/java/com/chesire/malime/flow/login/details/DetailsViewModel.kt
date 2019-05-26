@@ -19,8 +19,7 @@ class DetailsViewModel @Inject constructor(
     private val _loginStatus = LiveEvent<LoginStatus>()
     val username = MutableLiveData<String>()
     val password = MutableLiveData<String>()
-    val loginStatus: LiveData<LoginStatus>
-        get() = _loginStatus
+    val loginStatus: LiveData<LoginStatus> = _loginStatus
 
     fun login() = viewModelScope.launch {
         if (!validParams()) {
@@ -49,7 +48,11 @@ class DetailsViewModel @Inject constructor(
             is Resource.Success -> executeGetUser()
             is Resource.Error -> {
                 Timber.e("Error logging in - [${result.code}] ${result.msg}")
-                _loginStatus.postValue(LoginStatus.Error)
+                when (result.code) {
+                    401 -> _loginStatus.postValue(LoginStatus.InvalidCredentials)
+                    else -> _loginStatus.postValue(LoginStatus.Error)
+                }
+
             }
         }
     }

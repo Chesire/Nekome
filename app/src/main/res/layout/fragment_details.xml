@@ -12,10 +12,12 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/fragmentDetailsLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/fragmentDetailsCardView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/activity_vertical_margin"
@@ -45,7 +47,8 @@
                     style="@style/TextInputStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/activity_horizontal_margin">
+                    android:layout_margin="@dimen/activity_horizontal_margin"
+                    app:errorEnabled="true">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/fragmentDetailsUsernameText"
@@ -65,6 +68,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/activity_horizontal_margin"
                     android:autofillHints="password"
+                    app:errorEnabled="true"
                     app:passwordToggleEnabled="true">
 
                     <com.google.android.material.textfield.TextInputEditText
