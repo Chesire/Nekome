@@ -28,4 +28,8 @@
     <string name="filter_by_planned">Planned</string>
 
     <string name="list_plus_one">+1</string>
+
+    <string name="login_username">Username</string>
+    <string name="login_password">Password</string>
+    <string name="login_login">Login</string>
 </resources>
