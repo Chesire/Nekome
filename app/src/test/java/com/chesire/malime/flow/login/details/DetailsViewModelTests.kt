@@ -60,6 +60,28 @@ class DetailsViewModelTests {
     }
 
     @Test
+    fun `login failure 401 produces LoginStatus#InvalidCredentials`() {
+        val mockAuth = mockk<AuthApi> {
+            coEvery { login(any(), any()) } coAnswers {
+                Resource.Error("", 401)
+            }
+        }
+        val mockRepo = mockk<UserRepository>()
+        val mockObserver = mockk<Observer<LoginStatus>> {
+            every { onChanged(any()) } just Runs
+        }
+
+        DetailsViewModel(mockAuth, mockRepo).run {
+            username.value = "username"
+            password.value = "password"
+            loginStatus.observeForever(mockObserver)
+            login()
+        }
+
+        verify { mockObserver.onChanged(LoginStatus.InvalidCredentials) }
+    }
+
+    @Test
     fun `login failure produces LoginStatus#Error`() {
         val mockAuth = mockk<AuthApi> {
             coEvery { login(any(), any()) } coAnswers {

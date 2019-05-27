@@ -53,7 +53,6 @@ class DetailsViewModel @Inject constructor(
                     401 -> _loginStatus.postValue(LoginStatus.InvalidCredentials)
                     else -> _loginStatus.postValue(LoginStatus.Error)
                 }
-
             }
         }
     }
