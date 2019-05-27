@@ -4,13 +4,26 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.StringRes
+import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.chesire.lifecyklelog.LogLifecykle
+import com.chesire.malime.R
 import com.chesire.malime.databinding.FragmentDetailsBinding
+import com.chesire.malime.extensions.hide
+import com.chesire.malime.extensions.show
 import com.chesire.malime.flow.ViewModelFactory
+import com.google.android.material.snackbar.Snackbar
 import dagger.android.support.DaggerFragment
+import kotlinx.android.synthetic.main.fragment_details.fragmentDetailsLayout
+import kotlinx.android.synthetic.main.fragment_details.fragmentDetailsLoginButton
+import kotlinx.android.synthetic.main.fragment_details.fragmentDetailsPasswordLayout
+import kotlinx.android.synthetic.main.fragment_details.fragmentDetailsPasswordText
+import kotlinx.android.synthetic.main.fragment_details.fragmentDetailsProgressBar
+import kotlinx.android.synthetic.main.fragment_details.fragmentDetailsUsernameLayout
+import kotlinx.android.synthetic.main.fragment_details.fragmentDetailsUsernameText
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -42,20 +55,47 @@ class DetailsFragment : DaggerFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        viewModel.loginStatus.observe(
-            viewLifecycleOwner,
-            Observer { loginStatus ->
-                when (loginStatus) {
-                    LoginStatus.EmptyUsername -> Timber.i("LoginStatus returned empty username")
-                    LoginStatus.EmptyPassword -> Timber.i("LoginStatus returned empty password")
-                    LoginStatus.Error -> Timber.i("LoginStatus returned error")
-                    LoginStatus.Success -> {
-                        Timber.i("LoginStatus returned success")
-                        findNavController().navigate(DetailsFragmentDirections.toSyncingFragment())
-                    }
-                    null -> Timber.w("LoginStatus returned as null")
-                }
-            }
-        )
+        fragmentDetailsUsernameText.addTextChangedListener {
+            fragmentDetailsUsernameLayout.error = ""
+        }
+        fragmentDetailsPasswordText.addTextChangedListener {
+            fragmentDetailsPasswordLayout.error = ""
+        }
+        viewModel.loginStatus.observe(viewLifecycleOwner, Observer { loginStatusChanged(it) })
+    }
+
+    private fun loginStatusChanged(loginStatus: LoginStatus) {
+        Timber.i("LoginStatus updated with value [$loginStatus]")
+        if (loginStatus == LoginStatus.Loading) {
+            setLoading()
+            return
+        } else {
+            hideLoading()
+        }
+
+        when (loginStatus) {
+            LoginStatus.EmptyUsername ->
+                fragmentDetailsUsernameLayout.error = getString(R.string.login_error_empty_username)
+            LoginStatus.EmptyPassword ->
+                fragmentDetailsPasswordLayout.error = getString(R.string.login_error_empty_password)
+            LoginStatus.Error -> showSnackbar(R.string.login_error_generic)
+            LoginStatus.InvalidCredentials -> showSnackbar(R.string.login_error_credentials)
+            LoginStatus.Success ->
+                findNavController().navigate(DetailsFragmentDirections.toSyncingFragment())
+            else -> Timber.w("Unexpected LoginStatus [$loginStatus]")
+        }
+    }
+
+    private fun showSnackbar(@StringRes id: Int) =
+        Snackbar.make(fragmentDetailsLayout, id, Snackbar.LENGTH_LONG).show()
+
+    private fun setLoading() {
+        fragmentDetailsProgressBar.show()
+        fragmentDetailsLoginButton.isEnabled = false
+    }
+
+    private fun hideLoading() {
+        fragmentDetailsProgressBar.hide(true)
+        fragmentDetailsLoginButton.isEnabled = true
     }
 }
