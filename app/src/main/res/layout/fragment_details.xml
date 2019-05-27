@@ -97,7 +97,7 @@
                     android:id="@+id/fragmentDetailsProgressBar"
                     style="?android:attr/progressBarStyleHorizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="8dp"
+                    android:layout_height="@dimen/progress_bar_height"
                     android:indeterminate="true"
                     android:indeterminateTint="@color/colorPrimary"
                     android:visibility="invisible"
