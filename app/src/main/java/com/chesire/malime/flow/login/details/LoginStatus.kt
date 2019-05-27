@@ -5,5 +5,6 @@ enum class LoginStatus {
     EmptyPassword,
     Error,
     InvalidCredentials,
+    Loading,
     Success
 }

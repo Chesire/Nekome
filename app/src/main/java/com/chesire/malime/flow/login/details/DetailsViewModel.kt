@@ -26,6 +26,7 @@ class DetailsViewModel @Inject constructor(
             return@launch
         }
 
+        _loginStatus.postValue(LoginStatus.Loading)
         executeLogin(username.value!!, password.value!!)
     }
 

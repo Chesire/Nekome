@@ -9,7 +9,8 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="TextInputStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox"/>
-    <style name="OutlineButtonStyle" parent="Widget.MaterialComponents.Button.OutlinedButton"/>
+    <style name="TextInputStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox" />
+
+    <style name="OutlineButtonStyle" parent="Widget.MaterialComponents.Button.OutlinedButton" />
 
 </resources>
