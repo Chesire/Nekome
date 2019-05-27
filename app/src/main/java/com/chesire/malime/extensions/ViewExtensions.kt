@@ -1,35 +1,36 @@
 package com.chesire.malime.extensions
 
 import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import android.view.View
 
 /**
  * Hides the [View], animating its alpha to 0.0f.
  */
 fun View.hide(invisible: Boolean = false) {
+    animate().cancel()
+
     animate()
         .alpha(0.0f)
-        .setListener(object : Animator.AnimatorListener {
-            override fun onAnimationRepeat(animation: Animator?) {}
-
+        .setListener(object : AnimatorListenerAdapter() {
             override fun onAnimationEnd(animation: Animator?) {
                 visibility = if (invisible) View.INVISIBLE else View.GONE
             }
-
-            override fun onAnimationCancel(animation: Animator?) {}
-
-            override fun onAnimationStart(animation: Animator?) {}
         })
+        .start()
 }
 
 /**
  * Shows the [View], animating its alpha to 1.0f.
  */
 fun View.show() {
+    animate().cancel()
+
     visibility = View.VISIBLE
     animate()
         .alpha(1.0f)
         .setListener(null)
+        .start()
 }
 
 /**
