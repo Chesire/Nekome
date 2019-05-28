@@ -9,6 +9,7 @@ import com.chesire.malime.R
 import com.chesire.malime.TestApplication
 import com.chesire.malime.core.Resource
 import com.chesire.malime.core.api.AuthApi
+import com.chesire.malime.core.api.LibraryApi
 import com.chesire.malime.core.api.UserApi
 import com.chesire.malime.core.flags.Service
 import com.chesire.malime.core.models.ImageModel
@@ -34,12 +35,25 @@ class DetailsTests {
     lateinit var auth: AuthApi
     @Inject
     lateinit var user: UserApi
+    @Inject
+    lateinit var library: LibraryApi
 
     @Before
     fun setUp() {
         val app =
             InstrumentationRegistry.getInstrumentation().targetContext.applicationContext as TestApplication
         app.component.inject(this)
+
+        coEvery {
+            library.retrieveAnime(any())
+        } coAnswers {
+            Resource.Error("No need in this test file")
+        }
+        coEvery {
+            library.retrieveManga(any())
+        } coAnswers {
+            Resource.Error("No need in this test file")
+        }
     }
 
     @Test
