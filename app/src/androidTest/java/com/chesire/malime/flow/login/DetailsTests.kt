@@ -9,8 +9,13 @@ import com.chesire.malime.R
 import com.chesire.malime.TestApplication
 import com.chesire.malime.core.Resource
 import com.chesire.malime.core.api.AuthApi
+import com.chesire.malime.core.api.UserApi
+import com.chesire.malime.core.flags.Service
+import com.chesire.malime.core.models.ImageModel
+import com.chesire.malime.core.models.UserModel
 import com.chesire.malime.helpers.ToastMatcher.Companion.onToast
 import com.schibsted.spain.barista.assertion.BaristaErrorAssertions.assertError
+import com.schibsted.spain.barista.assertion.BaristaVisibilityAssertions.assertDisplayed
 import com.schibsted.spain.barista.interaction.BaristaClickInteractions.clickOn
 import com.schibsted.spain.barista.interaction.BaristaEditTextInteractions.writeTo
 import io.mockk.coEvery
@@ -21,12 +26,14 @@ import org.junit.runner.RunWith
 import javax.inject.Inject
 
 @RunWith(AndroidJUnit4::class)
-class LoginTests {
+class DetailsTests {
     @get:Rule
     val loginActivity = ActivityTestRule(LoginActivity::class.java, false, false)
 
     @Inject
     lateinit var auth: AuthApi
+    @Inject
+    lateinit var user: UserApi
 
     @Before
     fun setUp() {
@@ -89,5 +96,35 @@ class LoginTests {
         clickOn(R.id.fragmentDetailsLoginButton)
 
         onToast(R.string.login_error_generic).check(matches(isDisplayed()))
+    }
+
+    @Test
+    fun successLeadsToSyncingFragment() {
+        coEvery {
+            auth.login("Username", "Password")
+        } coAnswers {
+            Resource.Success(Any())
+        }
+        coEvery {
+            user.getUserDetails()
+        } coAnswers {
+            Resource.Success(
+                UserModel(
+                    999,
+                    "TestUser",
+                    ImageModel.empty,
+                    ImageModel.empty,
+                    Service.Kitsu
+                )
+            )
+        }
+
+        loginActivity.launchActivity(null)
+
+        writeTo(R.id.fragmentDetailsUsernameText, "Username")
+        writeTo(R.id.fragmentDetailsPasswordText, "Password")
+        clickOn(R.id.fragmentDetailsLoginButton)
+
+        assertDisplayed(R.id.fragmentSyncingText1)
     }
 }
