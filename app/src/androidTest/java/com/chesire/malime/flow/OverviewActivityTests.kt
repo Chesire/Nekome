@@ -14,15 +14,6 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class OverviewActivityTests {
-    /*
-        @Inject
-        lateinit var authApi: AuthApi
-
-        val auth = authApi
-        coEvery { auth.login("", "") } throws NullPointerException()
-        overviewActivity.launchActivity()
-     */
-
     @get:Rule
     val overviewActivity = BaristaRule.create(OverviewActivity::class.java)
 

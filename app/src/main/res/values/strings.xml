@@ -37,4 +37,8 @@
     <string name="login_error_empty_password">Empty password not allowed</string>
     <string name="login_error_credentials">Error trying to login, invalid credentials provided</string>
     <string name="login_error_generic">Error trying to login, please try again</string>
+
+    <string name="login_syncing_syncing">Syncing your Kitsu library</string>
+    <string name="login_syncing_wait">Please wait…</string>
+    <string name="login_syncing_retry">Retry</string>
 </resources>

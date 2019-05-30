@@ -10,9 +10,11 @@ import androidx.navigation.fragment.findNavController
 import com.chesire.lifecyklelog.LogLifecykle
 import com.chesire.malime.AsyncState
 import com.chesire.malime.databinding.FragmentSyncingBinding
+import com.chesire.malime.extensions.hide
+import com.chesire.malime.extensions.show
 import com.chesire.malime.flow.ViewModelFactory
 import dagger.android.support.DaggerFragment
-import kotlinx.android.synthetic.main.fragment_syncing.fragmentSyncingProgress
+import kotlinx.android.synthetic.main.fragment_syncing.fragmentSyncingAnimation
 import kotlinx.android.synthetic.main.fragment_syncing.fragmentSyncingRetryButton
 import javax.inject.Inject
 
@@ -54,17 +56,21 @@ class SyncingFragment : DaggerFragment() {
                         )
                         activity?.finish()
                     }
-                    is AsyncState.Loading -> {
-                        fragmentSyncingProgress.visibility = View.VISIBLE
-                        fragmentSyncingRetryButton.visibility = View.GONE
-                    }
-                    is AsyncState.Error -> {
-                        fragmentSyncingProgress.visibility = View.GONE
-                        fragmentSyncingRetryButton.visibility = View.VISIBLE
-                    }
+                    is AsyncState.Loading -> setLoading()
+                    is AsyncState.Error -> hideLoading()
                 }
             }
         )
         viewModel.syncLatestData()
+    }
+
+    private fun setLoading() {
+        fragmentSyncingAnimation.show()
+        fragmentSyncingRetryButton.hide()
+    }
+
+    private fun hideLoading() {
+        fragmentSyncingAnimation.hide()
+        fragmentSyncingRetryButton.show()
     }
 }

@@ -5,7 +5,7 @@ import com.chesire.malime.core.api.LibraryApi
 import com.chesire.malime.core.flags.UserSeriesStatus
 import com.chesire.malime.core.models.SeriesModel
 
-class FakeLibraryApi : LibraryApi {
+open class FakeLibraryApi : LibraryApi {
     override suspend fun retrieveAnime(userId: Int): Resource<List<SeriesModel>> {
         TODO("not implemented")
     }
