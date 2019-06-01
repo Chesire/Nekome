@@ -56,7 +56,7 @@ ext {
     appcompat_version = "1.1.0-alpha05"
     corektx_version = "1.2.0-alpha01"
     coroutines_version = "1.2.1"
-    dagger_version = "2.22.1"
+    dagger_version = "2.23.1"
     room_version = "2.1.0-beta01"
 
     vanniktech_version = "0.12.0"
