@@ -13,9 +13,9 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
-class OverviewActivityTests {
+class ActivityTests {
     @get:Rule
-    val overviewActivity = BaristaRule.create(OverviewActivity::class.java)
+    val overviewActivity = BaristaRule.create(Activity::class.java)
 
     @Before
     fun setUp() {

@@ -15,7 +15,7 @@ import com.chesire.malime.core.api.UserApi
 import com.chesire.malime.core.flags.Service
 import com.chesire.malime.core.models.ImageModel
 import com.chesire.malime.core.models.UserModel
-import com.chesire.malime.flow.OverviewActivity
+import com.chesire.malime.flow.Activity
 import com.chesire.malime.helpers.createSeriesModel
 import com.schibsted.spain.barista.assertion.BaristaVisibilityAssertions.assertDisplayed
 import com.schibsted.spain.barista.interaction.BaristaClickInteractions.clickOn
@@ -109,7 +109,7 @@ class SyncingTests {
         navigateToSyncing()
         clickOn(R.id.fragmentSyncingRetryButton)
 
-        intended(hasComponent(OverviewActivity::class.java.name))
+        intended(hasComponent(Activity::class.java.name))
     }
 
     @Test
@@ -128,7 +128,7 @@ class SyncingTests {
         loginActivity.launchActivity(null)
         navigateToSyncing()
 
-        intended(hasComponent(OverviewActivity::class.java.name))
+        intended(hasComponent(Activity::class.java.name))
     }
 
     private fun navigateToSyncing() {
