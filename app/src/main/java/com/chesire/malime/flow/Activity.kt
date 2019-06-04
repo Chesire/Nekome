@@ -93,7 +93,6 @@ class Activity : DaggerAppCompatActivity(), AuthCaster.AuthCasterListener {
             findNavController(R.id.activityNavigation).navigate(
                 OverviewNavGraphDirections.globalToDetailsFragment()
             )
-            finish()
             handlerThread.quitSafely()
         }
     }
