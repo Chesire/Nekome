@@ -66,14 +66,14 @@ class SharedPref @Inject constructor(
     /**
      * Preference value for if analytics have been enabled.
      */
-    var analyticsEnabled: Boolean
+    var isAnalyticsEnabled: Boolean
         get() = sharedPreferences.getBoolean(ANALYTICS_PREFERENCE, false)
         set(value) = sharedPreferences.edit { putBoolean(ANALYTICS_PREFERENCE, value) }
 
     /**
      * Preference value for if analytics has been completed.
      */
-    var analyticsComplete: Boolean
+    var isAnalyticsComplete: Boolean
         get() = sharedPreferences.getBoolean(ANALYTICS_COMPLETE_PREFERENCE, false)
         set(value) = sharedPreferences.edit { putBoolean(ANALYTICS_COMPLETE_PREFERENCE, value) }
 

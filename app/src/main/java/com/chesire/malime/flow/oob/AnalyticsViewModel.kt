@@ -9,7 +9,7 @@ class AnalyticsViewModel @Inject constructor(private val sharedPref: SharedPref)
     val analyticsState = MutableLiveData<Boolean>(false)
 
     fun saveAnalyticsChoice() {
-        sharedPref.analyticsEnabled = analyticsState.value ?: false
-        sharedPref.analyticsComplete = true
+        sharedPref.isAnalyticsEnabled = analyticsState.value ?: false
+        sharedPref.isAnalyticsComplete = true
     }
 }
