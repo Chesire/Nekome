@@ -63,10 +63,10 @@
     </fragment>
     <activity
         android:id="@+id/loginActivity"
-        android:name="com.chesire.malime.flow.login.LoginActivity"
+        android:name="com.chesire.malime.flow.SetupActivity"
         android:label="LoginActivity" />
     <action
         android:id="@+id/toGlobalLoginActivity"
         app:destination="@id/loginActivity"
-        tools:layout="@layout/activity_login" />
+        tools:layout="@layout/activity_setup" />
 </navigation>

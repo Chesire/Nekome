@@ -14,6 +14,7 @@ import com.chesire.malime.core.api.UserApi
 import com.chesire.malime.core.flags.Service
 import com.chesire.malime.core.models.ImageModel
 import com.chesire.malime.core.models.UserModel
+import com.chesire.malime.flow.SetupActivity
 import com.chesire.malime.helpers.ToastMatcher.Companion.onToast
 import com.schibsted.spain.barista.assertion.BaristaErrorAssertions.assertError
 import com.schibsted.spain.barista.assertion.BaristaVisibilityAssertions.assertDisplayed
@@ -29,7 +30,7 @@ import javax.inject.Inject
 @RunWith(AndroidJUnit4::class)
 class DetailsTests {
     @get:Rule
-    val loginActivity = ActivityTestRule(LoginActivity::class.java, false, false)
+    val loginActivity = ActivityTestRule(SetupActivity::class.java, false, false)
 
     @Inject
     lateinit var auth: AuthApi

@@ -2,7 +2,7 @@ package com.chesire.malime.injection.androidmodules
 
 import com.chesire.malime.flow.LaunchActivity
 import com.chesire.malime.flow.OverviewActivity
-import com.chesire.malime.flow.login.LoginActivity
+import com.chesire.malime.flow.SetupActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -16,5 +16,5 @@ abstract class ActivityModule {
     abstract fun contributeOverviewActivity(): OverviewActivity
 
     @ContributesAndroidInjector
-    abstract fun contributeLoginActivity(): LoginActivity
+    abstract fun contributeLoginActivity(): SetupActivity
 }

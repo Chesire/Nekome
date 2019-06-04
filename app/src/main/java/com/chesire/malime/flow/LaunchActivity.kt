@@ -2,7 +2,6 @@ package com.chesire.malime.flow
 
 import android.content.Intent
 import android.os.Bundle
-import com.chesire.malime.flow.login.LoginActivity
 import com.chesire.malime.kitsu.AuthProvider
 import dagger.android.DaggerActivity
 import javax.inject.Inject
@@ -17,7 +16,7 @@ class LaunchActivity : DaggerActivity() {
         // if not performed oob, go to oob flow
 
         val clazz = when {
-            authProvider.accessToken.isEmpty() -> LoginActivity::class.java
+            authProvider.accessToken.isEmpty() -> SetupActivity::class.java
             else -> OverviewActivity::class.java
         }
         startActivity(Intent(this, clazz))

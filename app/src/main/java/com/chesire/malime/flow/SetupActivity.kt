@@ -1,4 +1,4 @@
-package com.chesire.malime.flow.login
+package com.chesire.malime.flow
 
 import android.os.Bundle
 import androidx.navigation.fragment.NavHostFragment
@@ -9,13 +9,13 @@ import dagger.android.support.DaggerAppCompatActivity
 import javax.inject.Inject
 
 @LogLifecykle
-class LoginActivity : DaggerAppCompatActivity() {
+class SetupActivity : DaggerAppCompatActivity() {
     @Inject
     lateinit var sharedPref: SharedPref
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
+        setContentView(R.layout.activity_setup)
 
         val host =
             supportFragmentManager.findFragmentById(R.id.activityLoginNavigation) as NavHostFragment
