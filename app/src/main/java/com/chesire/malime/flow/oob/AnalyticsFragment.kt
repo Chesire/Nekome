@@ -8,20 +8,42 @@ import android.text.style.URLSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import com.chesire.malime.R
 import com.chesire.malime.databinding.FragmentAnalyticsBinding
+import com.chesire.malime.flow.ViewModelFactory
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_analytics.fragmentAnalyticsPrivacy
+import kotlinx.android.synthetic.main.fragment_analytics.fragmentAnalyticsSwitchText
+import javax.inject.Inject
 
 class AnalyticsFragment : DaggerFragment() {
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
+
+    private val viewModel by lazy {
+        ViewModelProviders
+            .of(this, viewModelFactory)
+            .get(AnalyticsViewModel::class.java)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ) = FragmentAnalyticsBinding.inflate(inflater).root
+    ) = FragmentAnalyticsBinding
+        .inflate(inflater)
+        .apply {
+            lifecycleOwner = viewLifecycleOwner
+            vm = viewModel
+            // setup buttons
+        }
+        .root
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         setPrivacySpan()
     }
 
@@ -42,5 +64,18 @@ class AnalyticsFragment : DaggerFragment() {
                     )
                 }
         }
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        viewModel.analyticsState.observe(viewLifecycleOwner, Observer { enabled ->
+            fragmentAnalyticsSwitchText.text = getString(
+                if (enabled)
+                    R.string.analytics_enabled
+                else
+                    R.string.analytics_disabled
+            )
+        })
     }
 }

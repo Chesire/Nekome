@@ -2,6 +2,14 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <data>
+
+        <variable
+            name="vm"
+            type="com.chesire.malime.flow.oob.AnalyticsViewModel" />
+    </data>
+
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -52,19 +60,42 @@
             android:layout_marginEnd="@dimen/activity_horizontal_margin"
             android:layout_marginStart="@dimen/activity_horizontal_margin"
             android:layout_marginTop="@dimen/half_margin"
-            app:layout_constraintBottom_toTopOf="@id/fragmentAnalyticsButton"
+            app:layout_constraintBottom_toTopOf="@id/fragmentAnalyticsContinue"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/fragmentAnalyticsBody"
             app:layout_constraintVertical_bias="0" />
 
+        <TextView
+            android:id="@+id/fragmentAnalyticsSwitchText"
+            style="@style/TextAppearance.MaterialComponents.Body2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/activity_horizontal_margin"
+            android:layout_marginEnd="@dimen/half_margin"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="@dimen/activity_horizontal_margin"
+            android:text="Some testing text"
+            android:textAlignment="textEnd"
+            app:layout_constraintBaseline_toBaselineOf="@id/fragmentAnalyticsSwitch"
+            app:layout_constraintEnd_toStartOf="@id/fragmentAnalyticsSwitch"
+            app:layout_constraintHorizontal_bias="1"
+            app:layout_constraintStart_toStartOf="parent" />
+
         <com.google.android.material.switchmaterial.SwitchMaterial
             android:id="@+id/fragmentAnalyticsSwitch"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:checked="@={vm.analyticsState}"
+            android:padding="@dimen/activity_horizontal_margin"
+            app:layout_constraintBottom_toTopOf="@id/fragmentAnalyticsContinue"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/fragmentAnalyticsPrivacy" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/fragmentAnalyticsButton"
+            android:id="@+id/fragmentAnalyticsContinue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/activity_horizontal_margin"

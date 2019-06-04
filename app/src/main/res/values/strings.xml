@@ -43,10 +43,12 @@
     <string name="login_syncing_retry">Retry</string>
 
     <string name="analytics_allow">Allow Analytics</string>
-    <string name="analytics_description">In order to make this application the best it can be we would like to collect anonymous analytics and crash reports.</string>
-    <string name="analytics_privacy_start">For more information please see the</string>
+    <string name="analytics_description">In order to make this application the best it can be, we would like to collect anonymous analytics and crash reports.</string>
+    <string name="analytics_privacy_start">For more information, please see the</string>
     <string name="analytics_privacy_end">privacy policy</string>
     <string name="analytics_continue">Continue</string>
+    <string name="analytics_disabled">Analytics are currently disabled</string>
+    <string name="analytics_enabled">Analytics are currently enabled</string>
 
     <!-- Point to a privacy policy in Github repo -->
     <string name="privacy_policy_url">http://www.google.com</string>
