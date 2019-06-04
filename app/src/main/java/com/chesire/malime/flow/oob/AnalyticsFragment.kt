@@ -1,14 +1,13 @@
 package com.chesire.malime.flow.oob
 
 import android.os.Bundle
+import android.text.SpannableString
 import android.text.Spanned
-import android.text.SpannedString
 import android.text.method.LinkMovementMethod
 import android.text.style.URLSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.text.toSpannable
 import com.chesire.malime.R
 import com.chesire.malime.databinding.FragmentAnalyticsBinding
 import dagger.android.support.DaggerFragment
@@ -33,8 +32,7 @@ class AnalyticsFragment : DaggerFragment() {
 
         fragmentAnalyticsPrivacy.apply {
             movementMethod = LinkMovementMethod.getInstance()
-            text = SpannedString(fullPrivacyString)
-                .toSpannable()
+            text = SpannableString(fullPrivacyString)
                 .apply {
                     setSpan(
                         URLSpan(getString(R.string.privacy_policy_url)),

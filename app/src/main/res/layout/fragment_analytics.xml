@@ -22,7 +22,7 @@
         <TextView
             android:id="@+id/fragmentAnalyticsTitle"
             style="@style/TextAppearance.MaterialComponents.Headline6"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/activity_horizontal_margin"
             android:text="@string/analytics_allow"
@@ -34,7 +34,7 @@
         <TextView
             android:id="@+id/fragmentAnalyticsBody"
             style="@style/TextAppearance.MaterialComponents.Body2"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/activity_horizontal_margin"
             android:text="@string/analytics_description"
@@ -46,7 +46,7 @@
         <TextView
             android:id="@+id/fragmentAnalyticsPrivacy"
             style="@style/TextAppearance.MaterialComponents.Body2"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/activity_horizontal_margin"
             android:layout_marginEnd="@dimen/activity_horizontal_margin"
