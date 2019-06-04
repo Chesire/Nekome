@@ -37,7 +37,7 @@ class AnalyticsFragment : DaggerFragment() {
                 .toSpannable()
                 .apply {
                     setSpan(
-                        URLSpan("http://www.google.com"),
+                        URLSpan(getString(R.string.privacy_policy_url)),
                         pEnd,
                         pEnd + privacyText.length,
                         Spanned.SPAN_INCLUSIVE_EXCLUSIVE
