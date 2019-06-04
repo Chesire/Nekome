@@ -15,7 +15,6 @@ import com.chesire.malime.core.api.UserApi
 import com.chesire.malime.core.flags.Service
 import com.chesire.malime.core.models.ImageModel
 import com.chesire.malime.core.models.UserModel
-import com.chesire.malime.flow.SetupActivity
 import com.chesire.malime.flow.OverviewActivity
 import com.chesire.malime.helpers.createSeriesModel
 import com.schibsted.spain.barista.assertion.BaristaVisibilityAssertions.assertDisplayed

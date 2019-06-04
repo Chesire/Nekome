@@ -51,10 +51,7 @@ class SyncingFragment : DaggerFragment() {
             Observer {
                 when (it) {
                     is AsyncState.Success -> {
-                        findNavController().navigate(
-                            SyncingFragmentDirections.actionSyncingFragmentToOverviewActivity()
-                        )
-                        activity?.finish()
+                        findNavController().navigate(SyncingFragmentDirections.toAnimeFragment())
                     }
                     is AsyncState.Loading -> setLoading()
                     is AsyncState.Error -> hideLoading()
