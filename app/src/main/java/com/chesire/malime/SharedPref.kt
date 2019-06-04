@@ -71,6 +71,13 @@ class SharedPref @Inject constructor(
         set(value) = sharedPreferences.edit { putBoolean(ANALYTICS_PREFERENCE, value) }
 
     /**
+     * Preference value for if analytics has been completed.
+     */
+    var analyticsComplete: Boolean
+        get() = sharedPreferences.getBoolean(ANALYTICS_COMPLETE_PREFERENCE, false)
+        set(value) = sharedPreferences.edit { putBoolean(ANALYTICS_COMPLETE_PREFERENCE, value) }
+
+    /**
      * Subscribe to changes in the [SharedPreferences].
      */
     fun subscribeToChanges(changeListener: SharedPreferences.OnSharedPreferenceChangeListener) {
@@ -88,5 +95,6 @@ class SharedPref @Inject constructor(
         const val SORT_PREFERENCE = "preference.sort"
         const val FILTER_PREFERENCE = "preference.filter"
         const val ANALYTICS_PREFERENCE = "preference.analytics"
+        const val ANALYTICS_COMPLETE_PREFERENCE = "preference.analytics.complete"
     }
 }

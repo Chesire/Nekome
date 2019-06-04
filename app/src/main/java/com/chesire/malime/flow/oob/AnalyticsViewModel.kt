@@ -10,5 +10,6 @@ class AnalyticsViewModel @Inject constructor(private val sharedPref: SharedPref)
 
     fun saveAnalyticsChoice() {
         sharedPref.analyticsEnabled = analyticsState.value ?: false
+        sharedPref.analyticsComplete = true
     }
 }

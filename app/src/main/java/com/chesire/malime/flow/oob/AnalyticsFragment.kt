@@ -10,6 +10,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
+import com.chesire.lifecyklelog.LogLifecykle
 import com.chesire.malime.R
 import com.chesire.malime.databinding.FragmentAnalyticsBinding
 import com.chesire.malime.flow.ViewModelFactory
@@ -19,6 +21,7 @@ import kotlinx.android.synthetic.main.fragment_analytics.fragmentAnalyticsPrivac
 import kotlinx.android.synthetic.main.fragment_analytics.fragmentAnalyticsSwitchText
 import javax.inject.Inject
 
+@LogLifecykle
 class AnalyticsFragment : DaggerFragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
@@ -47,7 +50,7 @@ class AnalyticsFragment : DaggerFragment() {
         setPrivacySpan()
         fragmentAnalyticsContinue.setOnClickListener {
             viewModel.saveAnalyticsChoice()
-            // navigate out
+            findNavController().navigate(AnalyticsFragmentDirections.toDetailsFragment())
         }
     }
 
