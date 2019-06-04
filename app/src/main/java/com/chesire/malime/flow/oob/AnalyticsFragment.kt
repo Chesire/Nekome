@@ -14,6 +14,7 @@ import com.chesire.malime.R
 import com.chesire.malime.databinding.FragmentAnalyticsBinding
 import com.chesire.malime.flow.ViewModelFactory
 import dagger.android.support.DaggerFragment
+import kotlinx.android.synthetic.main.fragment_analytics.fragmentAnalyticsContinue
 import kotlinx.android.synthetic.main.fragment_analytics.fragmentAnalyticsPrivacy
 import kotlinx.android.synthetic.main.fragment_analytics.fragmentAnalyticsSwitchText
 import javax.inject.Inject
@@ -37,7 +38,6 @@ class AnalyticsFragment : DaggerFragment() {
         .apply {
             lifecycleOwner = viewLifecycleOwner
             vm = viewModel
-            // setup buttons
         }
         .root
 
@@ -45,6 +45,10 @@ class AnalyticsFragment : DaggerFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setPrivacySpan()
+        fragmentAnalyticsContinue.setOnClickListener {
+            viewModel.saveAnalyticsChoice()
+            // navigate out
+        }
     }
 
     private fun setPrivacySpan() {

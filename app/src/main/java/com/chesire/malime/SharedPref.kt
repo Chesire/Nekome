@@ -64,6 +64,13 @@ class SharedPref @Inject constructor(
         }
 
     /**
+     * Preference value for if analytics have been enabled.
+     */
+    var analyticsEnabled: Boolean
+        get() = sharedPreferences.getBoolean(ANALYTICS_PREFERENCE, false)
+        set(value) = sharedPreferences.edit { putBoolean(ANALYTICS_PREFERENCE, value) }
+
+    /**
      * Subscribe to changes in the [SharedPreferences].
      */
     fun subscribeToChanges(changeListener: SharedPreferences.OnSharedPreferenceChangeListener) {
@@ -80,5 +87,6 @@ class SharedPref @Inject constructor(
     companion object {
         const val SORT_PREFERENCE = "preference.sort"
         const val FILTER_PREFERENCE = "preference.filter"
+        const val ANALYTICS_PREFERENCE = "preference.analytics"
     }
 }
