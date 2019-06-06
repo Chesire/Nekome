@@ -8,7 +8,6 @@ import android.text.style.URLSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.chesire.lifecyklelog.LogLifecykle
@@ -16,9 +15,9 @@ import com.chesire.malime.R
 import com.chesire.malime.databinding.FragmentAnalyticsBinding
 import com.chesire.malime.flow.ViewModelFactory
 import dagger.android.support.DaggerFragment
-import kotlinx.android.synthetic.main.fragment_analytics.fragmentAnalyticsContinue
+import kotlinx.android.synthetic.main.fragment_analytics.fragmentAnalyticsConfirm
+import kotlinx.android.synthetic.main.fragment_analytics.fragmentAnalyticsDeny
 import kotlinx.android.synthetic.main.fragment_analytics.fragmentAnalyticsPrivacy
-import kotlinx.android.synthetic.main.fragment_analytics.fragmentAnalyticsSwitchText
 import javax.inject.Inject
 
 @LogLifecykle
@@ -48,10 +47,8 @@ class AnalyticsFragment : DaggerFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setPrivacySpan()
-        fragmentAnalyticsContinue.setOnClickListener {
-            viewModel.saveAnalyticsChoice()
-            findNavController().navigate(AnalyticsFragmentDirections.toDetailsFragment())
-        }
+        fragmentAnalyticsConfirm.setOnClickListener { analyticsChoicePressed(false) }
+        fragmentAnalyticsDeny.setOnClickListener { analyticsChoicePressed(false) }
     }
 
     private fun setPrivacySpan() {
@@ -73,16 +70,8 @@ class AnalyticsFragment : DaggerFragment() {
         }
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
-        viewModel.analyticsState.observe(viewLifecycleOwner, Observer { enabled ->
-            fragmentAnalyticsSwitchText.text = getString(
-                if (enabled)
-                    R.string.analytics_enabled
-                else
-                    R.string.analytics_disabled
-            )
-        })
+    private fun analyticsChoicePressed(enable: Boolean) {
+        viewModel.saveAnalyticsChoice(enable)
+        findNavController().navigate(AnalyticsFragmentDirections.toDetailsFragment())
     }
 }
