@@ -47,7 +47,7 @@ class AnalyticsFragment : DaggerFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setPrivacySpan()
-        fragmentAnalyticsConfirm.setOnClickListener { analyticsChoicePressed(false) }
+        fragmentAnalyticsConfirm.setOnClickListener { analyticsChoicePressed(true) }
         fragmentAnalyticsDeny.setOnClickListener { analyticsChoicePressed(false) }
     }
 
