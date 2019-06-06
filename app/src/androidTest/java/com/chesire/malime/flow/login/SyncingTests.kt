@@ -4,10 +4,9 @@ import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.Intents.intended
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.ActivityTestRule
 import com.chesire.malime.R
-import com.chesire.malime.TestApplication
+import com.chesire.malime.SharedPref
 import com.chesire.malime.core.Resource
 import com.chesire.malime.core.api.AuthApi
 import com.chesire.malime.core.api.LibraryApi
@@ -17,9 +16,11 @@ import com.chesire.malime.core.models.ImageModel
 import com.chesire.malime.core.models.UserModel
 import com.chesire.malime.flow.Activity
 import com.chesire.malime.helpers.createSeriesModel
+import com.chesire.malime.helpers.injector
 import com.schibsted.spain.barista.assertion.BaristaVisibilityAssertions.assertDisplayed
 import com.schibsted.spain.barista.interaction.BaristaClickInteractions.clickOn
 import com.schibsted.spain.barista.interaction.BaristaEditTextInteractions.writeTo
+import com.schibsted.spain.barista.rule.cleardata.ClearPreferencesRule
 import io.mockk.coEvery
 import org.junit.After
 import org.junit.Before
@@ -31,7 +32,9 @@ import javax.inject.Inject
 @RunWith(AndroidJUnit4::class)
 class SyncingTests {
     @get:Rule
-    val loginActivity = ActivityTestRule(SetupActivity::class.java, false, false)
+    val activity = ActivityTestRule(Activity::class.java, false, false)
+    @get:Rule
+    val clearPreferencesRule = ClearPreferencesRule()
 
     @Inject
     lateinit var auth: AuthApi
@@ -39,12 +42,14 @@ class SyncingTests {
     lateinit var user: UserApi
     @Inject
     lateinit var library: LibraryApi
+    @Inject
+    lateinit var sharedPref: SharedPref
 
     @Before
     fun setUp() {
-        val app =
-            InstrumentationRegistry.getInstrumentation().targetContext.applicationContext as TestApplication
-        app.component.inject(this)
+        injector.inject(this)
+
+        sharedPref.isAnalyticsComplete = true
 
         coEvery {
             auth.login("Username", "Password")
@@ -84,7 +89,7 @@ class SyncingTests {
             Resource.Error("Failure")
         }
 
-        loginActivity.launchActivity(null)
+        activity.launchActivity(null)
         navigateToSyncing()
 
         assertDisplayed(R.id.fragmentSyncingRetryButton)
@@ -105,7 +110,7 @@ class SyncingTests {
             Resource.Success(listOf(createSeriesModel()))
         )
 
-        loginActivity.launchActivity(null)
+        activity.launchActivity(null)
         navigateToSyncing()
         clickOn(R.id.fragmentSyncingRetryButton)
 
@@ -125,7 +130,7 @@ class SyncingTests {
             Resource.Success(listOf(createSeriesModel()))
         }
 
-        loginActivity.launchActivity(null)
+        activity.launchActivity(null)
         navigateToSyncing()
 
         intended(hasComponent(Activity::class.java.name))
