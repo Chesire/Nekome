@@ -3,10 +3,9 @@ package com.chesire.malime.flow.login
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.ActivityTestRule
 import com.chesire.malime.R
-import com.chesire.malime.TestApplication
+import com.chesire.malime.SharedPref
 import com.chesire.malime.core.Resource
 import com.chesire.malime.core.api.AuthApi
 import com.chesire.malime.core.api.LibraryApi
@@ -14,11 +13,14 @@ import com.chesire.malime.core.api.UserApi
 import com.chesire.malime.core.flags.Service
 import com.chesire.malime.core.models.ImageModel
 import com.chesire.malime.core.models.UserModel
+import com.chesire.malime.flow.Activity
 import com.chesire.malime.helpers.ToastMatcher.Companion.onToast
+import com.chesire.malime.helpers.injector
 import com.schibsted.spain.barista.assertion.BaristaErrorAssertions.assertError
 import com.schibsted.spain.barista.assertion.BaristaVisibilityAssertions.assertDisplayed
 import com.schibsted.spain.barista.interaction.BaristaClickInteractions.clickOn
 import com.schibsted.spain.barista.interaction.BaristaEditTextInteractions.writeTo
+import com.schibsted.spain.barista.rule.cleardata.ClearPreferencesRule
 import io.mockk.coEvery
 import org.junit.Before
 import org.junit.Rule
@@ -29,7 +31,9 @@ import javax.inject.Inject
 @RunWith(AndroidJUnit4::class)
 class DetailsTests {
     @get:Rule
-    val loginActivity = ActivityTestRule(LoginActivity::class.java, false, false)
+    val activity = ActivityTestRule(Activity::class.java, false, false)
+    @get:Rule
+    val clearPreferencesRule = ClearPreferencesRule()
 
     @Inject
     lateinit var auth: AuthApi
@@ -37,12 +41,14 @@ class DetailsTests {
     lateinit var user: UserApi
     @Inject
     lateinit var library: LibraryApi
+    @Inject
+    lateinit var sharedPref: SharedPref
 
     @Before
     fun setUp() {
-        val app =
-            InstrumentationRegistry.getInstrumentation().targetContext.applicationContext as TestApplication
-        app.component.inject(this)
+        injector.inject(this)
+
+        sharedPref.isAnalyticsComplete = true
 
         coEvery {
             library.retrieveAnime(any())
@@ -58,7 +64,7 @@ class DetailsTests {
 
     @Test
     fun emptyUsernameShowsError() {
-        loginActivity.launchActivity(null)
+        activity.launchActivity(null)
 
         writeTo(R.id.fragmentDetailsUsernameText, "")
         writeTo(R.id.fragmentDetailsPasswordText, "Password")
@@ -69,7 +75,7 @@ class DetailsTests {
 
     @Test
     fun emptyPasswordShowsError() {
-        loginActivity.launchActivity(null)
+        activity.launchActivity(null)
 
         writeTo(R.id.fragmentDetailsUsernameText, "Username")
         writeTo(R.id.fragmentDetailsPasswordText, "")
@@ -86,7 +92,7 @@ class DetailsTests {
             Resource.Error("Unauthorized error", 401)
         }
 
-        loginActivity.launchActivity(null)
+        activity.launchActivity(null)
 
         writeTo(R.id.fragmentDetailsUsernameText, "Username")
         writeTo(R.id.fragmentDetailsPasswordText, "Password")
@@ -103,7 +109,7 @@ class DetailsTests {
             Resource.Error("Generic error", 0)
         }
 
-        loginActivity.launchActivity(null)
+        activity.launchActivity(null)
 
         writeTo(R.id.fragmentDetailsUsernameText, "Username")
         writeTo(R.id.fragmentDetailsPasswordText, "Password")
@@ -133,7 +139,7 @@ class DetailsTests {
             )
         }
 
-        loginActivity.launchActivity(null)
+        activity.launchActivity(null)
 
         writeTo(R.id.fragmentDetailsUsernameText, "Username")
         writeTo(R.id.fragmentDetailsPasswordText, "Password")

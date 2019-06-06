@@ -8,6 +8,7 @@ import io.mockk.just
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class SharedPrefTests {
@@ -74,6 +75,60 @@ class SharedPrefTests {
         classUnderTest.filterPreference = expectedMap
 
         verify { mockEditor.putString(SharedPref.FILTER_PREFERENCE, expectedJson) }
+    }
+
+    @Test
+    fun `isAnalyticsEnabled returns expected value`() {
+        val mockPreferences = mockk<SharedPreferences> {
+            every { getBoolean(SharedPref.ANALYTICS_PREFERENCE, false) } returns true
+        }
+
+        val classUnderTest = SharedPref(mockPreferences)
+
+        assertTrue(classUnderTest.isAnalyticsEnabled)
+    }
+
+    @Test
+    fun `isAnalyticsEnabled can set in Boolean`() {
+        val mockEditor = mockk<SharedPreferences.Editor> {
+            every { putBoolean(SharedPref.ANALYTICS_PREFERENCE, true) } returns this
+            every { apply() } just Runs
+        }
+        val mockPreferences = mockk<SharedPreferences> {
+            every { edit() } returns mockEditor
+        }
+
+        val classUnderTest = SharedPref(mockPreferences)
+        classUnderTest.isAnalyticsEnabled = true
+
+        verify { mockEditor.putBoolean(SharedPref.ANALYTICS_PREFERENCE, true) }
+    }
+
+    @Test
+    fun `isAnalyticsComplete returns expected value`() {
+        val mockPreferences = mockk<SharedPreferences> {
+            every { getBoolean(SharedPref.ANALYTICS_COMPLETE_PREFERENCE, false) } returns true
+        }
+
+        val classUnderTest = SharedPref(mockPreferences)
+
+        assertTrue(classUnderTest.isAnalyticsComplete)
+    }
+
+    @Test
+    fun `isAnalyticsComplete can set in Boolean`() {
+        val mockEditor = mockk<SharedPreferences.Editor> {
+            every { putBoolean(SharedPref.ANALYTICS_COMPLETE_PREFERENCE, true) } returns this
+            every { apply() } just Runs
+        }
+        val mockPreferences = mockk<SharedPreferences> {
+            every { edit() } returns mockEditor
+        }
+
+        val classUnderTest = SharedPref(mockPreferences)
+        classUnderTest.isAnalyticsComplete = true
+
+        verify { mockEditor.putBoolean(SharedPref.ANALYTICS_COMPLETE_PREFERENCE, true) }
     }
 
     @Test
