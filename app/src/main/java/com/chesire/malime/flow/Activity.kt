@@ -47,14 +47,13 @@ class Activity : DaggerAppCompatActivity(), AuthCaster.AuthCasterListener {
     }
 
     private fun loadGraph() {
-        val host =
-            supportFragmentManager.findFragmentById(R.id.activityNavigation) as NavHostFragment
-        val controller = host.navController
-        val graph = controller.navInflater.inflate(R.navigation.nav_graph)
-
-        graph.startDestination = chooseStartingDestination()
-
-        controller.graph = graph
+        (supportFragmentManager.findFragmentById(R.id.activityNavigation) as? NavHostFragment)
+            ?.navController
+            ?.apply {
+                graph = navInflater.inflate(R.navigation.nav_graph).also {
+                    it.startDestination = chooseStartingDestination()
+                }
+            }
     }
 
     @IdRes
