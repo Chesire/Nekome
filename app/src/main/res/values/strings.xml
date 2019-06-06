@@ -48,8 +48,6 @@
     <string name="analytics_privacy_end">privacy policy</string>
     <string name="analytics_confirm">Confirm</string>
     <string name="analytics_deny">Deny</string>
-    <string name="analytics_disabled">Analytics are currently disabled</string>
-    <string name="analytics_enabled">Analytics are currently enabled</string>
 
     <!-- Point to a privacy policy in Github repo -->
     <string name="privacy_policy_url">http://www.google.com</string>
