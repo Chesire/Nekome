@@ -8,10 +8,10 @@ import com.chesire.malime.SharedPref
 import com.chesire.malime.core.models.SeriesModel
 import com.chesire.malime.flow.series.SortOption
 
-class AnimeAdapter(
-    private val listener: AnimeInteractionListener,
+class SeriesAdapter(
+    private val listener: SeriesInteractionListener,
     private val sharedPref: SharedPref
-) : RecyclerView.Adapter<AnimeViewHolder>() {
+) : RecyclerView.Adapter<SeriesViewHolder>() {
 
     private var displayedItems = emptyList<SeriesModel>()
 
@@ -24,15 +24,15 @@ class AnimeAdapter(
             performFilter()
         }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AnimeViewHolder {
-        return AnimeViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.adapter_item_anime, parent, false)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SeriesViewHolder {
+        return SeriesViewHolder(
+            LayoutInflater.from(parent.context).inflate(R.layout.adapter_item_series, parent, false)
         )
     }
 
     override fun getItemCount() = displayedItems.size
 
-    override fun onBindViewHolder(holder: AnimeViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: SeriesViewHolder, position: Int) {
         holder.bind(displayedItems[position])
         holder.bindListener(listener)
     }

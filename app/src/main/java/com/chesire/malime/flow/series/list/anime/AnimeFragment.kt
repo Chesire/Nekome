@@ -31,7 +31,7 @@ import javax.inject.Inject
 @LogLifecykle
 class AnimeFragment :
     DaggerFragment(),
-    AnimeInteractionListener,
+    SeriesInteractionListener,
     SharedPreferences.OnSharedPreferenceChangeListener {
 
     @Inject
@@ -40,7 +40,7 @@ class AnimeFragment :
     lateinit var dialogHandler: DialogHandler
     @Inject
     lateinit var sharedPref: SharedPref
-    private lateinit var animeAdapter: AnimeAdapter
+    private lateinit var seriesAdapter: SeriesAdapter
 
     private val viewModel by lazy {
         ViewModelProviders
@@ -58,12 +58,12 @@ class AnimeFragment :
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        animeAdapter = AnimeAdapter(this, sharedPref)
+        seriesAdapter = SeriesAdapter(this, sharedPref)
 
         return FragmentAnimeBinding.inflate(inflater, container, false)
             .apply {
                 fragmentAnimeRecyclerView.apply {
-                    adapter = animeAdapter
+                    adapter = seriesAdapter
                     layoutManager = LinearLayoutManager(requireContext())
                     setHasFixedSize(true)
                 }
@@ -86,7 +86,7 @@ class AnimeFragment :
             viewLifecycleOwner,
             Observer {
                 Timber.d("Anime has been updated, new count [${it.count()}]")
-                animeAdapter.allItems = it
+                seriesAdapter.allItems = it
             }
         )
     }
@@ -116,7 +116,7 @@ class AnimeFragment :
         return super.onOptionsItemSelected(item)
     }
 
-    override fun animeSelected(imageView: ImageView, model: SeriesModel) {
+    override fun seriesSelected(imageView: ImageView, model: SeriesModel) {
         Timber.i("Model ${model.slug} animeSelected called")
 
         findNavController().navigate(
@@ -132,8 +132,8 @@ class AnimeFragment :
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
         when (key) {
-            SharedPref.FILTER_PREFERENCE -> animeAdapter.performFilter()
-            SharedPref.SORT_PREFERENCE -> animeAdapter.performSort()
+            SharedPref.FILTER_PREFERENCE -> seriesAdapter.performFilter()
+            SharedPref.SORT_PREFERENCE -> seriesAdapter.performSort()
         }
     }
 }
