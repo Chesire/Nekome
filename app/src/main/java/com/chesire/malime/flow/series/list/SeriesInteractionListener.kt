@@ -1,4 +1,4 @@
-package com.chesire.malime.flow.series.list.anime
+package com.chesire.malime.flow.series.list
 
 import android.widget.ImageView
 import com.chesire.malime.core.models.SeriesModel

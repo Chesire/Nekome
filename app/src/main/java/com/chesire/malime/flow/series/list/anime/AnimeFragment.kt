@@ -22,6 +22,8 @@ import com.chesire.malime.core.models.SeriesModel
 import com.chesire.malime.databinding.FragmentAnimeBinding
 import com.chesire.malime.flow.DialogHandler
 import com.chesire.malime.flow.ViewModelFactory
+import com.chesire.malime.flow.series.list.SeriesAdapter
+import com.chesire.malime.flow.series.list.SeriesInteractionListener
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_anime.fragmentAnimeToolbar
 import timber.log.Timber
