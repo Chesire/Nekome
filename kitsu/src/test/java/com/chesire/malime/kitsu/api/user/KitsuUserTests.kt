@@ -4,9 +4,9 @@ import com.chesire.malime.core.Resource
 import com.chesire.malime.core.flags.Service
 import com.chesire.malime.core.models.ImageModel
 import com.chesire.malime.core.models.UserModel
+import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
-import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
 import okhttp3.ResponseBody
 import org.junit.Assert.assertEquals
@@ -29,9 +29,9 @@ class KitsuUserTests {
             every { code() } returns 0
         }
         val mockService = mockk<KitsuUserService> {
-            every {
+            coEvery {
                 getUserDetailsAsync()
-            } returns async {
+            } coAnswers {
                 mockResponse
             }
         }
@@ -57,9 +57,9 @@ class KitsuUserTests {
                 every { code() } returns 0
             }
             val mockService = mockk<KitsuUserService> {
-                every {
+                coEvery {
                     getUserDetailsAsync()
-                } returns async {
+                } coAnswers {
                     mockResponse
                 }
             }
@@ -83,9 +83,9 @@ class KitsuUserTests {
             every { message() } returns expected
         }
         val mockService = mockk<KitsuUserService> {
-            every {
+            coEvery {
                 getUserDetailsAsync()
-            } returns async {
+            } coAnswers {
                 mockResponse
             }
         }
@@ -108,9 +108,9 @@ class KitsuUserTests {
             every { body() } returns expected
         }
         val mockService = mockk<KitsuUserService> {
-            every {
+            coEvery {
                 getUserDetailsAsync()
-            } returns async {
+            } coAnswers {
                 mockResponse
             }
         }
@@ -127,9 +127,7 @@ class KitsuUserTests {
     @Test
     fun `on thrown exception return Resource#Error`() = runBlocking {
         val mockService = mockk<KitsuUserService> {
-            every {
-                getUserDetailsAsync()
-            } throws UnknownHostException()
+            coEvery { getUserDetailsAsync() } throws UnknownHostException()
         }
 
         val classUnderTest = KitsuUser(mockService)

@@ -18,7 +18,6 @@ import com.chesire.malime.kitsu.api.user.KitsuUserService
 import com.chesire.malime.kitsu.api.user.UserModelAdapter
 import com.chesire.malime.kitsu.interceptors.AuthInjectionInterceptor
 import com.chesire.malime.kitsu.interceptors.AuthRefreshInterceptor
-import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
@@ -31,10 +30,6 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 @Suppress("unused")
 @Module
 object ServerModule {
-    @Provides
-    @JvmStatic
-    fun providesCoroutineCallAdapterFactory() = CoroutineCallAdapterFactory()
-
     @Provides
     @Reusable
     @JvmStatic
@@ -59,11 +54,10 @@ object ServerModule {
     @Provides
     @Reusable
     @JvmStatic
-    fun providesAuthService(callAdapterFactory: CoroutineCallAdapterFactory): KitsuAuthService {
+    fun providesAuthService(): KitsuAuthService {
         return Retrofit.Builder()
             .baseUrl(KITSU_URL)
             .client(OkHttpClient())
-            .addCallAdapterFactory(callAdapterFactory)
             .addConverterFactory(
                 MoshiConverterFactory.create(Moshi.Builder().build())
             )
@@ -74,10 +68,7 @@ object ServerModule {
     @Provides
     @Reusable
     @JvmStatic
-    fun providesLibraryService(
-        httpClient: OkHttpClient,
-        callAdapterFactory: CoroutineCallAdapterFactory
-    ): KitsuLibraryService {
+    fun providesLibraryService(httpClient: OkHttpClient): KitsuLibraryService {
         val moshi = Moshi.Builder()
             .add(ImageModelAdapter())
             .add(SeriesStatusAdapter())
@@ -91,7 +82,6 @@ object ServerModule {
         return Retrofit.Builder()
             .baseUrl(KITSU_URL)
             .client(httpClient)
-            .addCallAdapterFactory(callAdapterFactory)
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .build()
             .create(KitsuLibraryService::class.java)
@@ -100,10 +90,7 @@ object ServerModule {
     @Provides
     @Reusable
     @JvmStatic
-    fun providesSearchService(
-        httpClient: OkHttpClient,
-        callAdapterFactory: CoroutineCallAdapterFactory
-    ): KitsuSearchService {
+    fun providesSearchService(httpClient: OkHttpClient): KitsuSearchService {
         val moshi = Moshi.Builder()
             .add(ImageModelAdapter())
             .add(SeriesStatusAdapter())
@@ -115,7 +102,6 @@ object ServerModule {
         return Retrofit.Builder()
             .baseUrl(KITSU_URL)
             .client(httpClient)
-            .addCallAdapterFactory(callAdapterFactory)
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .build()
             .create(KitsuSearchService::class.java)
@@ -124,10 +110,7 @@ object ServerModule {
     @Provides
     @Reusable
     @JvmStatic
-    fun providesUserService(
-        httpClient: OkHttpClient,
-        callAdapterFactory: CoroutineCallAdapterFactory
-    ): KitsuUserService {
+    fun providesUserService(httpClient: OkHttpClient): KitsuUserService {
         val moshi = Moshi.Builder()
             .add(RatingSystemAdapter())
             .add(ImageModelAdapter())
@@ -137,7 +120,6 @@ object ServerModule {
         return Retrofit.Builder()
             .baseUrl(KITSU_URL)
             .client(httpClient)
-            .addCallAdapterFactory(callAdapterFactory)
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .build()
             .create(KitsuUserService::class.java)

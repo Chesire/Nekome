@@ -11,7 +11,6 @@ import com.chesire.malime.kitsu.api.library.KitsuLibrary
 import com.chesire.malime.kitsu.api.library.KitsuLibraryService
 import com.chesire.malime.kitsu.api.library.LibrarySeriesModelAdapter
 import com.chesire.malime.kitsu.api.library.ParsedRetrieveResponseAdapter
-import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.squareup.moshi.Moshi
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -41,7 +40,6 @@ class LiveKitsuLibraryTests {
     private val service = Retrofit.Builder()
         .baseUrl("https://kitsu.io/")
         .client(httpClient)
-        .addCallAdapterFactory(CoroutineCallAdapterFactory())
         .addConverterFactory(MoshiConverterFactory.create(moshi))
         .build()
         .create(KitsuLibraryService::class.java)

@@ -9,7 +9,7 @@ import javax.inject.Inject
 class KitsuSearch @Inject constructor(private val searchService: KitsuSearchService) : SearchApi {
     override suspend fun searchForAnime(title: String): Resource<List<SeriesModel>> {
         return try {
-            searchService.searchForAnimeAsync(title).await().parse()
+            searchService.searchForAnimeAsync(title).parse()
         } catch (ex: Exception) {
             ex.parse()
         }
@@ -17,7 +17,7 @@ class KitsuSearch @Inject constructor(private val searchService: KitsuSearchServ
 
     override suspend fun searchForManga(title: String): Resource<List<SeriesModel>> {
         return try {
-            searchService.searchForMangaAsync(title).await().parse()
+            searchService.searchForMangaAsync(title).parse()
         } catch (ex: Exception) {
             ex.parse()
         }

@@ -1,7 +1,6 @@
 package com.chesire.malime.kitsu.api.library
 
 import com.chesire.malime.core.models.SeriesModel
-import kotlinx.coroutines.Deferred
 import okhttp3.RequestBody
 import retrofit2.Response
 import retrofit2.http.Body
@@ -26,11 +25,11 @@ interface KitsuLibraryService {
                 "&filter[kind]=anime" +
                 "&sort=anime.titles.canonical"
     )
-    fun retrieveAnimeAsync(
+    suspend fun retrieveAnimeAsync(
         @Path("userId") userId: Int,
         @Query("page[offset]") offset: Int,
         @Query("page[limit]") limit: Int
-    ): Deferred<Response<ParsedRetrieveResponse>>
+    ): Response<ParsedRetrieveResponse>
 
     @GET(
         "api/edge/users/{userId}/library-entries" +
@@ -40,25 +39,25 @@ interface KitsuLibraryService {
                 "&filter[kind]=manga" +
                 "&sort=manga.titles.canonical"
     )
-    fun retrieveMangaAsync(
+    suspend fun retrieveMangaAsync(
         @Path("userId") userId: Int,
         @Query("page[offset]") offset: Int,
         @Query("page[limit]") limit: Int
-    ): Deferred<Response<ParsedRetrieveResponse>>
+    ): Response<ParsedRetrieveResponse>
 
     @POST(
         "api/edge/library-entries" +
                 "?include=anime" +
                 "&fields[anime]=$ANIME_FIELDS"
     )
-    fun addAnimeAsync(@Body data: RequestBody): Deferred<Response<SeriesModel>>
+    suspend fun addAnimeAsync(@Body data: RequestBody): Response<SeriesModel>
 
     @POST(
         "api/edge/library-entries" +
                 "?include=manga" +
                 "&fields[manga]=$MANGA_FIELDS"
     )
-    fun addMangaAsync(@Body data: RequestBody): Deferred<Response<SeriesModel>>
+    suspend fun addMangaAsync(@Body data: RequestBody): Response<SeriesModel>
 
     @PATCH(
         "api/edge/library-entries/{id}" +
@@ -66,11 +65,11 @@ interface KitsuLibraryService {
                 "&fields[anime]=$ANIME_FIELDS" +
                 "&fields[manga]=$MANGA_FIELDS"
     )
-    fun updateItemAsync(
+    suspend fun updateItemAsync(
         @Path("id") userSeriesId: Int,
         @Body data: RequestBody
-    ): Deferred<Response<SeriesModel>>
+    ): Response<SeriesModel>
 
     @DELETE("api/edge/library-entries/{id}")
-    fun deleteItemAsync(@Path("id") userSeriesId: Int): Deferred<Response<Any>>
+    suspend fun deleteItemAsync(@Path("id") userSeriesId: Int): Response<Any>
 }

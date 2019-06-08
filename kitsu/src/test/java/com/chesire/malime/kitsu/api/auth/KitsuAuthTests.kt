@@ -4,11 +4,11 @@ import com.chesire.malime.core.Resource
 import com.chesire.malime.kitsu.AuthProvider
 import io.mockk.CapturingSlot
 import io.mockk.Runs
+import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.just
 import io.mockk.mockk
 import io.mockk.verify
-import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
 import okhttp3.ResponseBody
 import org.junit.Assert.assertEquals
@@ -34,9 +34,9 @@ class KitsuAuthTests {
             every { code() } returns 0
         }
         val mockService = mockk<KitsuAuthService> {
-            every {
+            coEvery {
                 loginAsync(LoginRequest(usernameInput, passwordInput))
-            } returns async {
+            } coAnswers {
                 mockResponse
             }
         }
@@ -64,9 +64,9 @@ class KitsuAuthTests {
             every { code() } returns 0
         }
         val mockService = mockk<KitsuAuthService> {
-            every {
+            coEvery {
                 loginAsync(LoginRequest(usernameInput, passwordInput))
-            } returns async {
+            } coAnswers {
                 mockResponse
             }
         }
@@ -93,9 +93,9 @@ class KitsuAuthTests {
             every { message() } returns expected
         }
         val mockService = mockk<KitsuAuthService> {
-            every {
+            coEvery {
                 loginAsync(LoginRequest(usernameInput, passwordInput))
-            } returns async {
+            } coAnswers {
                 mockResponse
             }
         }
@@ -124,9 +124,9 @@ class KitsuAuthTests {
             every { body() } returns loginResponse
         }
         val mockService = mockk<KitsuAuthService> {
-            every {
+            coEvery {
                 loginAsync(LoginRequest(usernameInput, passwordInput))
-            } returns async {
+            } coAnswers {
                 mockResponse
             }
         }
@@ -157,9 +157,9 @@ class KitsuAuthTests {
             every { body() } returns loginResponse
         }
         val mockService = mockk<KitsuAuthService> {
-            every {
+            coEvery {
                 loginAsync(LoginRequest(usernameInput, passwordInput))
-            } returns async {
+            } coAnswers {
                 mockResponse
             }
         }
@@ -187,9 +187,9 @@ class KitsuAuthTests {
             every { body() } returns loginResponse
         }
         val mockService = mockk<KitsuAuthService> {
-            every {
+            coEvery {
                 loginAsync(LoginRequest(usernameInput, passwordInput))
-            } returns async {
+            } coAnswers {
                 mockResponse
             }
         }
@@ -206,7 +206,7 @@ class KitsuAuthTests {
         val passwordInput = "password"
 
         val mockService = mockk<KitsuAuthService> {
-            every {
+            coEvery {
                 loginAsync(LoginRequest(usernameInput, passwordInput))
             } throws UnknownHostException()
         }

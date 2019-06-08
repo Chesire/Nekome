@@ -39,7 +39,7 @@ class AuthRefreshInterceptor @Inject constructor(
     }
 
     private suspend fun getNewAuth(refreshToken: String) =
-        auth.refreshAccessTokenAsync(RefreshTokenRequest(refreshToken)).await()
+        auth.refreshAccessTokenAsync(RefreshTokenRequest(refreshToken))
 
     private fun generateFailureResponse(): Response {
         // If there is an auth failure report a 401 error for the app to logout with

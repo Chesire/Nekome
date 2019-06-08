@@ -8,7 +8,6 @@ import com.chesire.malime.kitsu.adapters.SubtypeAdapter
 import com.chesire.malime.kitsu.api.search.KitsuSearch
 import com.chesire.malime.kitsu.api.search.KitsuSearchService
 import com.chesire.malime.kitsu.api.search.SearchSeriesModelAdapter
-import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.squareup.moshi.Moshi
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -36,7 +35,6 @@ class LiveKitsuSearchTests {
     private val service = Retrofit.Builder()
         .baseUrl("https://kitsu.io/")
         .client(httpClient)
-        .addCallAdapterFactory(CoroutineCallAdapterFactory())
         .addConverterFactory(MoshiConverterFactory.create(moshi))
         .build()
         .create(KitsuSearchService::class.java)

@@ -12,7 +12,7 @@ class KitsuAuth @Inject constructor(
 ) : AuthApi {
     override suspend fun login(username: String, password: String): Resource<Any> {
         return try {
-            val response = authService.loginAsync(LoginRequest(username, password)).await().parse()
+            val response = authService.loginAsync(LoginRequest(username, password)).parse()
             when (response) {
                 is Resource.Success -> {
                     authProvider.apply {

@@ -9,7 +9,7 @@ import javax.inject.Inject
 class KitsuUser @Inject constructor(private val userService: KitsuUserService) : UserApi {
     override suspend fun getUserDetails(): Resource<UserModel> {
         return try {
-            userService.getUserDetailsAsync().await().parse()
+            userService.getUserDetailsAsync().parse()
         } catch (ex: Exception) {
             ex.parse()
         }

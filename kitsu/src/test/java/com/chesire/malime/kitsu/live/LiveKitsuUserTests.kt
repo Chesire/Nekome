@@ -6,7 +6,6 @@ import com.chesire.malime.kitsu.adapters.RatingSystemAdapter
 import com.chesire.malime.kitsu.api.user.KitsuUser
 import com.chesire.malime.kitsu.api.user.KitsuUserService
 import com.chesire.malime.kitsu.api.user.UserModelAdapter
-import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.squareup.moshi.Moshi
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -32,7 +31,6 @@ class LiveKitsuUserTests {
     private val service = Retrofit.Builder()
         .baseUrl("https://kitsu.io/")
         .client(httpClient)
-        .addCallAdapterFactory(CoroutineCallAdapterFactory())
         .addConverterFactory(MoshiConverterFactory.create(moshi))
         .build()
         .create(KitsuUserService::class.java)

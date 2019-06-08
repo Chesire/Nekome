@@ -7,11 +7,12 @@ import com.chesire.malime.core.models.SeriesModel
 import com.chesire.malime.kitsu.adapters.UserSeriesStatusAdapter
 import com.chesire.malime.kitsu.parse
 import com.chesire.malime.kitsu.parseError
-import kotlinx.coroutines.Deferred
 import okhttp3.MediaType
 import okhttp3.RequestBody
 import retrofit2.Response
 import javax.inject.Inject
+import kotlin.reflect.KSuspendFunction1
+import kotlin.reflect.KSuspendFunction3
 
 private const val LIMIT = 500
 private const val MAX_RETRIES = 3
@@ -44,7 +45,7 @@ class KitsuLibrary @Inject constructor(
         val body = RequestBody.create(MediaType.parse("application/vnd.api+json"), updateModelJson)
 
         return try {
-            libraryService.updateItemAsync(userSeriesId, body).await().parse()
+            libraryService.updateItemAsync(userSeriesId, body).parse()
         } catch (ex: Exception) {
             ex.parse()
         }
@@ -52,7 +53,7 @@ class KitsuLibrary @Inject constructor(
 
     override suspend fun delete(userSeriesId: Int): Resource<Any> {
         return try {
-            val response = libraryService.deleteItemAsync(userSeriesId).await()
+            val response = libraryService.deleteItemAsync(userSeriesId)
             return if (response.isSuccessful) {
                 Resource.Success(Any())
             } else {
@@ -66,7 +67,11 @@ class KitsuLibrary @Inject constructor(
     @Suppress("ComplexMethod", "LongMethod")
     private suspend fun performRetrieveCall(
         userId: Int,
-        execute: (Int, Int, Int) -> Deferred<Response<ParsedRetrieveResponse>>
+        execute: KSuspendFunction3<
+                @ParameterName(name = "userId") Int,
+                @ParameterName(name = "offset") Int,
+                @ParameterName(name = "limit") Int,
+                Response<ParsedRetrieveResponse>>
     ): Resource<List<SeriesModel>> {
         val models = mutableListOf<SeriesModel>()
 
@@ -81,7 +86,7 @@ class KitsuLibrary @Inject constructor(
 
             val response: Response<ParsedRetrieveResponse>
             try {
-                response = execute(userId, offset, LIMIT).await()
+                response = execute(userId, offset, LIMIT)
             } catch (ex: Exception) {
                 return ex.parse()
             }
@@ -91,7 +96,7 @@ class KitsuLibrary @Inject constructor(
                 models.addAll(body.series)
                 retries = 0
 
-                if (!body.links.next.isEmpty()) {
+                if (body.links.next.isNotEmpty()) {
                     page++
                     offset = LIMIT * page
                     executeAgain = true
@@ -118,12 +123,12 @@ class KitsuLibrary @Inject constructor(
         seriesId: Int,
         startingStatus: UserSeriesStatus,
         type: String,
-        execute: (RequestBody) -> Deferred<Response<SeriesModel>>
+        execute: KSuspendFunction1<@ParameterName(name = "data") RequestBody, Response<SeriesModel>>
     ): Resource<SeriesModel> {
         val addModelJson = createNewAddModel(userId, seriesId, startingStatus, type)
         val body = RequestBody.create(MediaType.parse("application/vnd.api+json"), addModelJson)
         return try {
-            execute(body).await().parse()
+            execute(body).parse()
         } catch (ex: Exception) {
             ex.parse()
         }

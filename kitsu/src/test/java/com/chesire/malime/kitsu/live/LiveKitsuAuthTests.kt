@@ -3,7 +3,6 @@ package com.chesire.malime.kitsu.live
 import com.chesire.malime.core.Resource
 import com.chesire.malime.kitsu.api.auth.KitsuAuth
 import com.chesire.malime.kitsu.api.auth.KitsuAuthService
-import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.squareup.moshi.Moshi
 import io.mockk.mockk
 import kotlinx.coroutines.launch
@@ -22,7 +21,6 @@ class LiveKitsuAuthTests {
     private val service = Retrofit.Builder()
         .baseUrl("https://kitsu.io/")
         .client(OkHttpClient())
-        .addCallAdapterFactory(CoroutineCallAdapterFactory())
         .addConverterFactory(MoshiConverterFactory.create(moshi))
         .build()
         .create(KitsuAuthService::class.java)

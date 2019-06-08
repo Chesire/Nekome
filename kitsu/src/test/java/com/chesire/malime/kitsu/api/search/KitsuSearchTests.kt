@@ -2,9 +2,9 @@ package com.chesire.malime.kitsu.api.search
 
 import com.chesire.malime.core.Resource
 import com.chesire.malime.core.models.SeriesModel
+import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
-import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
 import okhttp3.ResponseBody
 import org.junit.Assert.assertEquals
@@ -27,9 +27,9 @@ class KitsuSearchTests {
             every { code() } returns 0
         }
         val mockService = mockk<KitsuSearchService> {
-            every {
+            coEvery {
                 searchForAnimeAsync(any())
-            } returns async {
+            } coAnswers {
                 mockResponse
             }
         }
@@ -55,9 +55,9 @@ class KitsuSearchTests {
                 every { code() } returns 0
             }
             val mockService = mockk<KitsuSearchService> {
-                every {
+                coEvery {
                     searchForAnimeAsync(any())
-                } returns async {
+                } coAnswers {
                     mockResponse
                 }
             }
@@ -81,9 +81,9 @@ class KitsuSearchTests {
             every { message() } returns expected
         }
         val mockService = mockk<KitsuSearchService> {
-            every {
+            coEvery {
                 searchForAnimeAsync(any())
-            } returns async {
+            } coAnswers {
                 mockResponse
             }
         }
@@ -106,9 +106,9 @@ class KitsuSearchTests {
             every { body() } returns expected
         }
         val mockService = mockk<KitsuSearchService> {
-            every {
+            coEvery {
                 searchForAnimeAsync(any())
-            } returns async {
+            } coAnswers {
                 mockResponse
             }
         }
@@ -125,9 +125,7 @@ class KitsuSearchTests {
     @Test
     fun `searchForAnime on thrown exception return Resource#Error`() = runBlocking {
         val mockService = mockk<KitsuSearchService> {
-            every {
-                searchForAnimeAsync(any())
-            } throws UnknownHostException()
+            coEvery { searchForAnimeAsync(any()) } throws UnknownHostException()
         }
 
         val classUnderTest = KitsuSearch(mockService)
@@ -152,9 +150,9 @@ class KitsuSearchTests {
             every { code() } returns 0
         }
         val mockService = mockk<KitsuSearchService> {
-            every {
+            coEvery {
                 searchForMangaAsync(any())
-            } returns async {
+            } coAnswers {
                 mockResponse
             }
         }
@@ -180,9 +178,9 @@ class KitsuSearchTests {
                 every { code() } returns 0
             }
             val mockService = mockk<KitsuSearchService> {
-                every {
+                coEvery {
                     searchForMangaAsync(any())
-                } returns async {
+                } coAnswers {
                     mockResponse
                 }
             }
@@ -206,9 +204,9 @@ class KitsuSearchTests {
             every { message() } returns expected
         }
         val mockService = mockk<KitsuSearchService> {
-            every {
+            coEvery {
                 searchForMangaAsync(any())
-            } returns async {
+            } coAnswers {
                 mockResponse
             }
         }
@@ -231,9 +229,9 @@ class KitsuSearchTests {
             every { body() } returns expected
         }
         val mockService = mockk<KitsuSearchService> {
-            every {
+            coEvery {
                 searchForMangaAsync(any())
-            } returns async {
+            } coAnswers {
                 mockResponse
             }
         }
@@ -250,9 +248,7 @@ class KitsuSearchTests {
     @Test
     fun `searchForManga on thrown exception return Resource#Error`() = runBlocking {
         val mockService = mockk<KitsuSearchService> {
-            every {
-                searchForMangaAsync(any())
-            } throws UnknownHostException()
+            coEvery { searchForMangaAsync(any()) } throws UnknownHostException()
         }
 
         val classUnderTest = KitsuSearch(mockService)
