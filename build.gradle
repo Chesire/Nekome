@@ -6,7 +6,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'androidx.navigation:navigation-safe-args-gradle-plugin:2.1.0-alpha04'
+        classpath 'androidx.navigation:navigation-safe-args-gradle-plugin:2.1.0-alpha05'
         classpath 'com.android.tools.build:gradle:3.4.1'
         classpath "org.jacoco:org.jacoco.core:$jacoco_version"
         classpath "org.jetbrains.kotlin:kotlin-allopen:$kotlin_version"
@@ -57,7 +57,7 @@ ext {
     corektx_version = "1.2.0-alpha01"
     coroutines_version = "1.2.1"
     dagger_version = "2.23.1"
-    room_version = "2.1.0-beta01"
+    room_version = "2.1.0-rc01"
 
     vanniktech_version = "0.12.0"
 }
