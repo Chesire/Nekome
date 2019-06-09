@@ -35,6 +35,9 @@ android {
             versionNameSuffix '-DEBUG'
             testCoverageEnabled true
         }
+        buildTypes.each {
+            it.resValue('string', 'version', defaultConfig.versionName)
+        }
     }
     dataBinding {
         enabled true
