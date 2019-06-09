@@ -61,6 +61,8 @@ android {
 dependencies {
     ext {
         navigation_version = "2.1.0-alpha05"
+        material_dialog_version = "3.0.0-rc3"
+        preferences_version = "1.1.0-beta01"
     }
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
@@ -77,12 +79,14 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0-alpha01'
     implementation "androidx.navigation:navigation-fragment-ktx:$navigation_version"
     implementation "androidx.navigation:navigation-ui-ktx:$navigation_version"
+    implementation "androidx.preference:preference:$preferences_version"
+    implementation "androidx.preference:preference-ktx:$preferences_version"
     implementation "androidx.room:room-runtime:$room_version"
     implementation "androidx.room:room-ktx:$room_version"
     implementation 'androidx.work:work-runtime-ktx:2.1.0-alpha03'
     implementation 'com.airbnb.android:lottie:3.0.6'
-    implementation 'com.afollestad.material-dialogs:core:3.0.0-rc3'
-    implementation 'com.afollestad.material-dialogs:lifecycle:3.0.0-rc3'
+    implementation "com.afollestad.material-dialogs:core:$material_dialog_version"
+    implementation "com.afollestad.material-dialogs:lifecycle:$material_dialog_version"
     implementation 'com.chesire:lifecyklelog:2.0.0'
     implementation 'com.github.bumptech.glide:glide:4.9.0'
     implementation 'com.github.hadilq.liveevent:liveevent:1.0.1'
