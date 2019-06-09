@@ -19,11 +19,18 @@ import com.chesire.malime.core.models.SeriesModel
 import com.chesire.malime.databinding.FragmentSeriesListBinding
 import com.chesire.malime.flow.DialogHandler
 import com.chesire.malime.flow.ViewModelFactory
+import com.chesire.malime.flow.series.list.anime.AnimeFragment
+import com.chesire.malime.flow.series.list.manga.MangaFragment
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_series_list.fragmentSeriesListToolbar
 import timber.log.Timber
 import javax.inject.Inject
 
+/**
+ * Provides a base fragment for the [AnimeFragment] & [MangaFragment] to inherit from, performing
+ * most of the setup and interaction.
+ */
+@Suppress("TooManyFunctions")
 abstract class SeriesListFragment :
     DaggerFragment(),
     SeriesInteractionListener,
@@ -117,14 +124,27 @@ abstract class SeriesListFragment :
         viewModel.updateSeries(model.userId, model.progress.inc(), model.userSeriesStatus)
     }
 
+    /**
+     * Tell the current fragment to navigate to its details screen.
+     */
     abstract fun toDetails(model: SeriesModel, navigatorExtras: Pair<View, String>)
+
+    /**
+     * Tell the current fragment to navigate to its search screen.
+     */
     abstract fun toSearch()
 
+    /**
+     * Inform the adapter that a new series list has been provided.
+     */
     fun newSeriesListProvided(newList: List<SeriesModel>) {
         Timber.d("New list provided, new count [${newList.count()}]")
         seriesAdapter.allItems = newList
     }
 
+    /**
+     * Sets the toolbar title to display.
+     */
     fun setToolbarTitle(@StringRes stringRes: Int) =
         (activity as? AppCompatActivity)
             ?.supportActionBar
