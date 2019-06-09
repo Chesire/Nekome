@@ -1,12 +1,10 @@
 package com.chesire.malime.flow.series.list.anime
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chesire.malime.AuthCaster
 import com.chesire.malime.core.Resource
 import com.chesire.malime.core.flags.UserSeriesStatus
-import com.chesire.malime.core.models.SeriesModel
 import com.chesire.malime.repo.SeriesRepository
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -15,8 +13,7 @@ class AnimeViewModel @Inject constructor(
     private val repo: SeriesRepository,
     private val authCaster: AuthCaster
 ) : ViewModel() {
-    val animeSeries: LiveData<List<SeriesModel>>
-        get() = repo.anime
+    val animeSeries = repo.anime
 
     fun updateSeries(userSeriesId: Int, newProgress: Int, newUserSeriesStatus: UserSeriesStatus) =
         viewModelScope.launch {

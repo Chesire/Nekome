@@ -16,10 +16,10 @@ import dagger.android.ContributesAndroidInjector
 @Module
 abstract class FragmentModule {
     @ContributesAndroidInjector
-    abstract fun contributeAnimeFragment(): AnimeFragment
+    abstract fun contributeAnalyticsFragment(): AnalyticsFragment
 
     @ContributesAndroidInjector
-    abstract fun contributeAnalyticsFragment(): AnalyticsFragment
+    abstract fun contributeAnimeFragment(): AnimeFragment
 
     @ContributesAndroidInjector
     abstract fun contributeDetailsFragment(): DetailsFragment
