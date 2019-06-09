@@ -8,6 +8,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.fragment.findNavController
 import com.chesire.lifecyklelog.LogLifecykle
 import com.chesire.malime.R
 import com.chesire.malime.databinding.FragmentProfileBinding
@@ -39,9 +40,7 @@ class ProfileFragment : DaggerFragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.menuProfileSettings -> {
-                // show settings screen
-            }
+            R.id.menuProfileSettings -> findNavController().navigate(ProfileFragmentDirections.toSettings())
         }
         return super.onOptionsItemSelected(item)
     }
