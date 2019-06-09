@@ -5,7 +5,6 @@ import com.chesire.malime.AuthCaster
 import com.chesire.malime.CoroutinesMainDispatcherRule
 import com.chesire.malime.core.Resource
 import com.chesire.malime.core.flags.UserSeriesStatus
-import com.chesire.malime.flow.series.list.SeriesListViewModel
 import com.chesire.malime.repo.SeriesRepository
 import io.mockk.Runs
 import io.mockk.coEvery
