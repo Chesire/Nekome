@@ -61,13 +61,21 @@
         android:id="@+id/mangaFragment"
         android:name="com.chesire.malime.flow.series.list.manga.MangaFragment"
         android:label="MangaFragment"
-        tools:layout="@layout/fragment_manga">
+        tools:layout="@layout/fragment_series_list">
         <action
             android:id="@+id/toSeriesDetailFragment"
-            app:destination="@id/seriesDetailFragment" />
+            app:destination="@id/seriesDetailFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
         <action
             android:id="@+id/toSearchFragment"
-            app:destination="@id/searchFragment" />
+            app:destination="@id/searchFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
     <fragment
         android:id="@+id/timelineFragment"

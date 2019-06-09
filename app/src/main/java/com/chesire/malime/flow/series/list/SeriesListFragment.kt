@@ -9,7 +9,9 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chesire.malime.R
 import com.chesire.malime.SharedPref
@@ -34,6 +36,12 @@ abstract class SeriesListFragment :
     @Inject
     lateinit var sharedPref: SharedPref
 
+    protected val viewModel by lazy {
+        ViewModelProviders
+            .of(this, viewModelFactory)
+            .get(SeriesListViewModel::class.java)
+    }
+
     private lateinit var seriesAdapter: SeriesAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,24 +53,21 @@ abstract class SeriesListFragment :
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
-        seriesAdapter = SeriesAdapter(this, sharedPref)
-
-        return FragmentSeriesListBinding.inflate(
-            inflater,
-            container,
-            false
-        ).apply {
-            fragmentSeriesListRecyclerView.apply {
-                adapter = seriesAdapter
-                layoutManager = LinearLayoutManager(requireContext())
-                setHasFixedSize(true)
-            }
-            fragmentSeriesListFab.setOnClickListener {
-                toSearch()
-            }
-        }.root
-    }
+    ): View = FragmentSeriesListBinding.inflate(
+        inflater,
+        container,
+        false
+    ).apply {
+        seriesAdapter = SeriesAdapter(this@SeriesListFragment, sharedPref)
+        fragmentSeriesListRecyclerView.apply {
+            adapter = seriesAdapter
+            layoutManager = LinearLayoutManager(requireContext())
+            setHasFixedSize(true)
+        }
+        fragmentSeriesListFab.setOnClickListener {
+            toSearch()
+        }
+    }.root
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -107,6 +112,11 @@ abstract class SeriesListFragment :
         toDetails(model, imageView to model.title)
     }
 
+    override fun onPlusOne(model: SeriesModel) {
+        Timber.i("Model ${model.slug} onPlusOne called")
+        viewModel.updateSeries(model.userId, model.progress.inc(), model.userSeriesStatus)
+    }
+
     abstract fun toDetails(model: SeriesModel, navigatorExtras: Pair<View, String>)
     abstract fun toSearch()
 
@@ -114,4 +124,9 @@ abstract class SeriesListFragment :
         Timber.d("New list provided, new count [${newList.count()}]")
         seriesAdapter.allItems = newList
     }
+
+    fun setToolbarTitle(@StringRes stringRes: Int) =
+        (activity as? AppCompatActivity)
+            ?.supportActionBar
+            ?.setTitle(stringRes)
 }

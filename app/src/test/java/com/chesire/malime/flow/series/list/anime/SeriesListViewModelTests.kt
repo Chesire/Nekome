@@ -5,6 +5,7 @@ import com.chesire.malime.AuthCaster
 import com.chesire.malime.CoroutinesMainDispatcherRule
 import com.chesire.malime.core.Resource
 import com.chesire.malime.core.flags.UserSeriesStatus
+import com.chesire.malime.flow.series.list.SeriesListViewModel
 import com.chesire.malime.repo.SeriesRepository
 import io.mockk.Runs
 import io.mockk.coEvery
@@ -16,7 +17,7 @@ import io.mockk.verify
 import org.junit.Rule
 import org.junit.Test
 
-class AnimeViewModelTests {
+class SeriesListViewModelTests {
     @get:Rule
     val taskExecutorRule = InstantTaskExecutorRule()
     @get:Rule
@@ -33,7 +34,8 @@ class AnimeViewModelTests {
         }
         val mockAuthCaster = mockk<AuthCaster>()
 
-        val classUnderTest = AnimeViewModel(mockRepo, mockAuthCaster)
+        val classUnderTest =
+            SeriesListViewModel(mockRepo, mockAuthCaster)
         classUnderTest.updateSeries(0, 0, UserSeriesStatus.Current)
 
         coVerify { mockRepo.updateSeries(0, 0, UserSeriesStatus.Current) }
@@ -52,7 +54,8 @@ class AnimeViewModelTests {
             every { issueRefreshingToken() } just Runs
         }
 
-        val classUnderTest = AnimeViewModel(mockRepo, mockAuthCaster)
+        val classUnderTest =
+            SeriesListViewModel(mockRepo, mockAuthCaster)
         classUnderTest.updateSeries(0, 0, UserSeriesStatus.Current)
 
         verify { mockAuthCaster.issueRefreshingToken() }
