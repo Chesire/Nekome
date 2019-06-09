@@ -14,7 +14,6 @@ import com.chesire.malime.injection.androidmodules.ActivityModule
 import com.chesire.malime.injection.androidmodules.FragmentModule
 import com.chesire.malime.injection.androidmodules.ViewModelModule
 import com.chesire.malime.injection.modules.AppModule
-import com.chesire.malime.injection.modules.CoroutinesModule
 import com.chesire.malime.injection.modules.FakeKitsuModule
 import com.chesire.malime.injection.modules.MemoryDatabaseModule
 import com.chesire.malime.injection.modules.ServerModule
@@ -30,7 +29,6 @@ import javax.inject.Singleton
         ActivityModule::class,
         AndroidSupportInjectionModule::class,
         AppModule::class,
-        CoroutinesModule::class,
         MemoryDatabaseModule::class,
         FakeKitsuModule::class,
         FragmentModule::class,
