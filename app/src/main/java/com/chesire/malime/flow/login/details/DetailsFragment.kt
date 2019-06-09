@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import androidx.annotation.StringRes
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
@@ -13,6 +14,7 @@ import com.chesire.lifecyklelog.LogLifecykle
 import com.chesire.malime.R
 import com.chesire.malime.databinding.FragmentDetailsBinding
 import com.chesire.malime.extensions.hide
+import com.chesire.malime.extensions.hideSystemKeyboard
 import com.chesire.malime.extensions.show
 import com.chesire.malime.flow.ViewModelFactory
 import com.google.android.material.snackbar.Snackbar
@@ -42,15 +44,13 @@ class DetailsFragment : DaggerFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
-        return FragmentDetailsBinding
-            .inflate(inflater, container, false)
-            .apply {
-                vm = viewModel
-                lifecycleOwner = viewLifecycleOwner
-            }
-            .root
-    }
+    ): View = FragmentDetailsBinding
+        .inflate(inflater, container, false)
+        .apply {
+            vm = viewModel
+            lifecycleOwner = viewLifecycleOwner
+        }
+        .root
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -60,6 +60,17 @@ class DetailsFragment : DaggerFragment() {
         }
         fragmentDetailsPasswordText.addTextChangedListener {
             fragmentDetailsPasswordLayout.error = ""
+        }
+        fragmentDetailsPasswordText.setOnEditorActionListener { _, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                activity?.hideSystemKeyboard()
+                if (viewModel.loginStatus.value != LoginStatus.Loading) {
+                    viewModel.login()
+                    return@setOnEditorActionListener true
+                }
+            }
+
+            false
         }
         viewModel.loginStatus.observe(viewLifecycleOwner, Observer { loginStatusChanged(it) })
     }
