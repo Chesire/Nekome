@@ -41,7 +41,7 @@
         android:id="@+id/animeFragment"
         android:name="com.chesire.malime.flow.series.list.anime.AnimeFragment"
         android:label="AnimeFragment"
-        tools:layout="@layout/fragment_anime">
+        tools:layout="@layout/fragment_series_list">
         <action
             android:id="@+id/toSeriesDetailFragment"
             app:destination="@id/seriesDetailFragment"
