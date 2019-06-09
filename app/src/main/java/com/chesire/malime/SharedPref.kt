@@ -1,5 +1,6 @@
 package com.chesire.malime
 
+import android.content.Context
 import android.content.SharedPreferences
 import androidx.core.content.edit
 import com.chesire.malime.core.flags.UserSeriesStatus
@@ -12,8 +13,11 @@ import javax.inject.Inject
  * Provides a wrapper around the [SharedPreferences] to aid with getting and setting values into it.
  */
 class SharedPref @Inject constructor(
+    context: Context,
     private val sharedPreferences: SharedPreferences
 ) {
+    private val _analyticsKey = context.getString(R.string.preference_analytics_enabled)
+
     private val filterAdapter by lazy {
         Moshi.Builder()
             .build()
@@ -67,8 +71,8 @@ class SharedPref @Inject constructor(
      * Preference value for if analytics have been enabled.
      */
     var isAnalyticsEnabled: Boolean
-        get() = sharedPreferences.getBoolean(ANALYTICS_PREFERENCE, false)
-        set(value) = sharedPreferences.edit { putBoolean(ANALYTICS_PREFERENCE, value) }
+        get() = sharedPreferences.getBoolean(_analyticsKey, false)
+        set(value) = sharedPreferences.edit { putBoolean(_analyticsKey, value) }
 
     /**
      * Preference value for if analytics has been completed.
@@ -94,7 +98,6 @@ class SharedPref @Inject constructor(
     companion object {
         const val SORT_PREFERENCE = "preference.sort"
         const val FILTER_PREFERENCE = "preference.filter"
-        const val ANALYTICS_PREFERENCE = "preference.analytics"
         const val ANALYTICS_COMPLETE_PREFERENCE = "preference.analytics.complete"
     }
 }

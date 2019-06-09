@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="preference_analytics_enabled" translatable="false">preference.analytics.enabled</string>
+</resources>
