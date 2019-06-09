@@ -16,7 +16,7 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:id="@+id/adapterItemAnimeImage"
+            android:id="@+id/adapterItemSeriesImage"
             android:layout_width="80dp"
             android:layout_height="113dp"
             android:adjustViewBounds="true"
@@ -26,7 +26,7 @@
             tools:src="@drawable/ic_launcher_foreground" />
 
         <TextView
-            android:id="@+id/adapterItemAnimeTitle"
+            android:id="@+id/adapterItemSeriesTitle"
             style="@style/TextAppearance.MaterialComponents.Body1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -34,49 +34,49 @@
             android:ellipsize="end"
             android:maxLines="2"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/adapterItemAnimeImage"
+            app:layout_constraintStart_toEndOf="@id/adapterItemSeriesImage"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Anime Series Title" />
 
         <TextView
-            android:id="@+id/adapterItemAnimeSubtype"
+            android:id="@+id/adapterItemSeriesSubtype"
             style="@style/TextAppearance.MaterialComponents.Overline"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            app:layout_constraintBottom_toTopOf="@id/adapterItemAnimeDivider"
+            app:layout_constraintBottom_toTopOf="@id/adapterItemSeriesDivider"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/adapterItemAnimeImage"
-            app:layout_constraintTop_toBottomOf="@id/adapterItemAnimeTitle"
+            app:layout_constraintStart_toEndOf="@id/adapterItemSeriesImage"
+            app:layout_constraintTop_toBottomOf="@id/adapterItemSeriesTitle"
             tools:text="TV" />
 
         <View
-            android:id="@+id/adapterItemAnimeDivider"
+            android:id="@+id/adapterItemSeriesDivider"
             android:layout_width="0dp"
             android:layout_height="1dp"
             android:layout_margin="8dp"
             android:alpha="0.3"
             android:background="@android:color/darker_gray"
-            app:layout_constraintBottom_toTopOf="@id/adapterItemAnimePlusOne"
+            app:layout_constraintBottom_toTopOf="@id/adapterItemSeriesPlusOne"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/adapterItemAnimeImage"
-            app:layout_constraintTop_toBottomOf="@id/adapterItemAnimeSubtype"
+            app:layout_constraintStart_toEndOf="@+id/adapterItemSeriesImage"
+            app:layout_constraintTop_toBottomOf="@id/adapterItemSeriesSubtype"
             app:layout_constraintVertical_bias="1" />
 
         <TextView
-            android:id="@+id/adapterItemAnimeProgress"
+            android:id="@+id/adapterItemSeriesProgress"
             style="@style/TextAppearance.MaterialComponents.Body2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/adapterItemAnimePlusOne"
-            app:layout_constraintStart_toEndOf="@id/adapterItemAnimeImage"
-            app:layout_constraintTop_toBottomOf="@id/adapterItemAnimeDivider"
+            app:layout_constraintEnd_toStartOf="@id/adapterItemSeriesPlusOne"
+            app:layout_constraintStart_toEndOf="@id/adapterItemSeriesImage"
+            app:layout_constraintTop_toBottomOf="@id/adapterItemSeriesDivider"
             tools:text="101 / 250" />
 
         <Button
-            android:id="@+id/adapterItemAnimePlusOne"
+            android:id="@+id/adapterItemSeriesPlusOne"
             style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

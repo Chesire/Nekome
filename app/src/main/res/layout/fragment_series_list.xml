@@ -4,37 +4,37 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/fragmentSeriesListLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/fragmentAnimeAppBar"
+            android:id="@+id/fragmentSeriesListAppBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
             <androidx.appcompat.widget.Toolbar
-                android:id="@+id/fragmentAnimeToolbar"
+                android:id="@+id/fragmentSeriesListToolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                app:layout_scrollFlags="scroll|enterAlways"
-                app:title="@string/nav_anime" />
+                app:layout_scrollFlags="scroll|enterAlways" />
         </com.google.android.material.appbar.AppBarLayout>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/fragmentAnimeRecyclerView"
+            android:id="@+id/fragmentSeriesListRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            tools:listitem="@layout/adapter_item_anime" />
+            tools:listitem="@layout/adapter_item_series" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fragmentAnimeFab"
+            android:id="@+id/fragmentSeriesListFab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:src="@drawable/ic_add_white"
-            app:layout_anchor="@id/fragmentAnimeRecyclerView"
+            app:layout_anchor="@id/fragmentSeriesListRecyclerView"
             app:layout_anchorGravity="bottom|right|end"
             app:layout_behavior="com.chesire.malime.flow.series.list.ScrollFABBehaviour"
             app:layout_constraintBottom_toBottomOf="parent"
