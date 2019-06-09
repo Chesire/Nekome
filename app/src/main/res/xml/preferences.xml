@@ -1,4 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="@string/settings_general_category">
+        <SwitchPreference
+            android:key="@string/preference_analytics_enabled"
+            android:title="@string/analytics_allow" />
+        <Preference
+            android:summary="@string/settings_logout_summary"
+            android:title="@string/settings_logout" />
+    </PreferenceCategory>
 
+    <PreferenceCategory android:title="@string/settings_about_category">
+        <Preference
+            android:summary="@string/version"
+            android:title="@string/settings_version" />
+        <Preference android:title="@string/settings_privacy_policy" />
+        <Preference android:title="@string/settings_oss_licenses" />
+    </PreferenceCategory>
 </PreferenceScreen>

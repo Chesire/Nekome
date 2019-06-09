@@ -51,4 +51,12 @@
 
     <!-- Point to a privacy policy in Github repo -->
     <string name="privacy_policy_url">http://www.google.com</string>
+
+    <string name="settings_about_category">About</string>
+    <string name="settings_general_category">General</string>
+    <string name="settings_version">Version</string>
+    <string name="settings_oss_licenses">OSS Licenses</string>
+    <string name="settings_privacy_policy">Privacy Policy</string>
+    <string name="settings_logout">Log out</string>
+    <string name="settings_logout_summary">Log out of Kitsu account</string>
 </resources>
