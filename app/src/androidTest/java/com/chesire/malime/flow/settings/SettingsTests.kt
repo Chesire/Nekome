@@ -38,7 +38,6 @@ class SettingsTests {
         activity.launchActivity(null)
         navigateToSettings()
 
-        // If the version string is displayed, we are on the correct screen
         verifyOnSettings()
     }
 
@@ -49,6 +48,7 @@ class SettingsTests {
 
         clickOn(R.string.settings_logout)
         clickOn(R.string.settings_logout_prompt_confirm)
+
         verifyNotOnSettings()
     }
 
@@ -59,6 +59,7 @@ class SettingsTests {
 
         clickOn(R.string.settings_logout)
         clickOn(R.string.settings_logout_prompt_cancel)
+
         verifyOnSettings()
     }
 
@@ -69,6 +70,7 @@ class SettingsTests {
         navigateToSettings()
 
         clickOn(R.string.settings_privacy_policy)
+
         verifyNotOnSettings()
     }
 

@@ -44,9 +44,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
             keyAnalytics -> handleAnalyticsToggled()
             keyLogOut -> showLogoutDialog()
             keyPrivacyPolicy -> showPrivacyPolicy()
-            keyLicenses -> {
-                // load oss fragment
-            }
+            keyLicenses -> showLicenses()
             else -> {
                 Timber.w("Unexpected key for onPreferenceClick - ${preference?.key}")
                 return super.onPreferenceTreeClick(preference)
@@ -75,5 +73,9 @@ class SettingsFragment : PreferenceFragmentCompat() {
         CustomTabsIntent.Builder()
             .build()
             .launchUrl(requireContext(), Uri.parse(getString(R.string.privacy_policy_url)))
+    }
+
+    private fun showLicenses() {
+        // Load the licenses fragment
     }
 }

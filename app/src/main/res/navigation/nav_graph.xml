@@ -3,7 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/overview_nav_graph"
-    app:startDestination="@id/settingsFragment"
     tools:ignore="InvalidNavigation,UnusedNavigation">
 
     <fragment
