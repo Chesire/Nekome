@@ -4,6 +4,8 @@ import android.content.Context
 import android.os.Bundle
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
+import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
 import com.chesire.lifecyklelog.LogLifecykle
 import com.chesire.malime.R
 import com.chesire.malime.flow.Activity
@@ -35,7 +37,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
     override fun onPreferenceTreeClick(preference: Preference?): Boolean {
         when (preference?.key) {
-            keyLogOut -> parentActivity.logout()
+            keyLogOut -> showLogoutDialog()
             keyPrivacyPolicy -> {
                 // load url
             }
@@ -49,5 +51,16 @@ class SettingsFragment : PreferenceFragmentCompat() {
         }
 
         return true
+    }
+
+    private fun showLogoutDialog() {
+        MaterialDialog(requireContext()).show {
+            message(R.string.settings_logout_prompt_message)
+            positiveButton(R.string.settings_logout_prompt_confirm) {
+                parentActivity.logout()
+            }
+            negativeButton(R.string.settings_logout_prompt_cancel)
+            lifecycleOwner(viewLifecycleOwner)
+        }
     }
 }
