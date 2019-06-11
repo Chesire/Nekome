@@ -84,7 +84,14 @@ class Activity : DaggerAppCompatActivity(), AuthCaster.AuthCasterListener {
 
     override fun unableToRefresh() {
         Timber.w("unableToRefresh has occurred")
+        logout()
+    }
 
+    /**
+     * Logs the user out and returns the user back to entering the login details.
+     */
+    fun logout() {
+        Timber.w("Starting log out from Activity")
         val handlerThread = HandlerThread("LogoutThread")
         handlerThread.start()
         Handler(handlerThread.looper).post {
