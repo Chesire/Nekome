@@ -17,7 +17,7 @@ import timber.log.Timber
 class SettingsFragment : PreferenceFragmentCompat() {
     private lateinit var keyLogOut: String
     private lateinit var keyPrivacyPolicy: String
-    private lateinit var keyOss: String
+    private lateinit var keyLicenses: String
 
     // Use the activity to force log out
     private lateinit var parentActivity: Activity
@@ -34,14 +34,14 @@ class SettingsFragment : PreferenceFragmentCompat() {
         setPreferencesFromResource(R.xml.preferences, rootKey)
         keyLogOut = getString(R.string.key_log_out)
         keyPrivacyPolicy = getString(R.string.key_privacy_policy)
-        keyOss = getString(R.string.key_oss)
+        keyLicenses = getString(R.string.key_licenses)
     }
 
     override fun onPreferenceTreeClick(preference: Preference?): Boolean {
         when (preference?.key) {
             keyLogOut -> showLogoutDialog()
             keyPrivacyPolicy -> showPrivacyPolicy()
-            keyOss -> {
+            keyLicenses -> {
                 // load oss fragment
             }
             else -> {

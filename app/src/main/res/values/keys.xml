@@ -4,5 +4,5 @@
 
     <string name="key_log_out" translatable="false">keyLogOut</string>
     <string name="key_privacy_policy" translatable="false">keyPrivacyPolicy</string>
-    <string name="key_oss" translatable="false">keyOss</string>
+    <string name="key_licenses" translatable="false">keyLicenses</string>
 </resources>
