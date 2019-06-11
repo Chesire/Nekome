@@ -86,7 +86,11 @@
         android:id="@+id/profileFragment"
         android:name="com.chesire.malime.flow.profile.ProfileFragment"
         android:label="ProfileFragment"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile">
+        <action
+            android:id="@+id/toSettings"
+            app:destination="@id/settingsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/searchFragment"
         android:name="com.chesire.malime.flow.series.search.SearchFragment"
@@ -101,6 +105,10 @@
             android:name="series"
             app:argType="com.chesire.malime.core.models.SeriesModel" />
     </fragment>
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.chesire.malime.flow.settings.SettingsFragment"
+        android:label="SettingsFragment" />
     <action
         android:id="@+id/globalToDetailsFragment"
         app:destination="@id/detailsFragment"

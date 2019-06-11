@@ -58,15 +58,14 @@ class AnalyticsFragment : DaggerFragment() {
 
         fragmentAnalyticsPrivacy.apply {
             movementMethod = LinkMovementMethod.getInstance()
-            text = SpannableString(fullPrivacyString)
-                .apply {
-                    setSpan(
-                        URLSpan(getString(R.string.privacy_policy_url)),
-                        pEnd,
-                        pEnd + privacyText.length,
-                        Spanned.SPAN_INCLUSIVE_EXCLUSIVE
-                    )
-                }
+            text = SpannableString(fullPrivacyString).apply {
+                setSpan(
+                    URLSpan(getString(R.string.privacy_policy_url)),
+                    pEnd,
+                    pEnd + privacyText.length,
+                    Spanned.SPAN_INCLUSIVE_EXCLUSIVE
+                )
+            }
         }
     }
 
