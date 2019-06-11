@@ -1,7 +1,9 @@
 package com.chesire.malime.flow.settings
 
 import android.content.Context
+import android.net.Uri
 import android.os.Bundle
+import androidx.browser.customtabs.CustomTabsIntent
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.afollestad.materialdialogs.MaterialDialog
@@ -38,9 +40,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
     override fun onPreferenceTreeClick(preference: Preference?): Boolean {
         when (preference?.key) {
             keyLogOut -> showLogoutDialog()
-            keyPrivacyPolicy -> {
-                // load url
-            }
+            keyPrivacyPolicy -> showPrivacyPolicy()
             keyOss -> {
                 // load oss fragment
             }
@@ -62,5 +62,11 @@ class SettingsFragment : PreferenceFragmentCompat() {
             negativeButton(R.string.settings_logout_prompt_cancel)
             lifecycleOwner(viewLifecycleOwner)
         }
+    }
+
+    private fun showPrivacyPolicy() {
+        CustomTabsIntent.Builder()
+            .build()
+            .launchUrl(requireContext(), Uri.parse(getString(R.string.privacy_policy_url)))
     }
 }
