@@ -78,6 +78,7 @@ class KitsuLibraryTests {
                 mockk<Response<ParsedRetrieveResponse>> {
                     every { isSuccessful } returns false
                     every { code() } returns 0
+                    every { body() } returns null
                     every { errorBody() } returns mockk {
                         every { string() } returns ""
                     }
@@ -114,6 +115,7 @@ class KitsuLibraryTests {
                 mockk<Response<ParsedRetrieveResponse>> {
                     every { isSuccessful } returns false
                     every { code() } returns 0
+                    every { body() } returns null
                     every { errorBody() } returns mockk {
                         every { string() } returns ""
                     }
@@ -204,6 +206,7 @@ class KitsuLibraryTests {
                 mockk<Response<ParsedRetrieveResponse>> {
                     every { isSuccessful } returns false
                     every { code() } returns 0
+                    every { body() } returns null
                     every { errorBody() } returns mockk {
                         every { string() } returns ""
                     }
@@ -240,6 +243,7 @@ class KitsuLibraryTests {
                 mockk<Response<ParsedRetrieveResponse>> {
                     every { isSuccessful } returns false
                     every { code() } returns 0
+                    every { body() } returns null
                     every { errorBody() } returns mockk {
                         every { string() } returns ""
                     }
