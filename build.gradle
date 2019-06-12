@@ -15,7 +15,7 @@ buildscript {
 }
 
 plugins {
-    id "io.gitlab.arturbosch.detekt" version "1.0.0-RC14"
+    id "io.gitlab.arturbosch.detekt" version "1.0.0-RC15"
 }
 
 allprojects {
@@ -27,15 +27,13 @@ allprojects {
 }
 
 detekt {
-    toolVersion = "1.0.0-RC14"
+    toolVersion = "1.0.0-RC15"
     config = files("detekt.yml")
     input = files(
             "app/src/main/java",
             "core/src/main/java",
             "kitsu/src/main/java"
     )
-    filters = ".*/resources/.*,.*/build/.*"
-
     reports {
         xml {
             enabled = true
