@@ -33,7 +33,7 @@ object ServerModule {
     @Provides
     @Reusable
     @JvmStatic
-    fun providesAuthenticatedOkHttpClient(
+    fun providesAuthenticatedClient(
         authInjection: AuthInjectionInterceptor,
         authRefresh: AuthRefreshInterceptor
     ): OkHttpClient {

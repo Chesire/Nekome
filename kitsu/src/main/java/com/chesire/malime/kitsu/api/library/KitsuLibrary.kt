@@ -19,6 +19,7 @@ private const val MAX_RETRIES = 3
 private const val ANIME_TYPE = "anime"
 private const val MANGA_TYPE = "manga"
 
+@Suppress("LargeClass", "TooGenericExceptionCaught")
 class KitsuLibrary @Inject constructor(
     private val libraryService: KitsuLibraryService
 ) : LibraryApi {

@@ -6,14 +6,14 @@ import com.chesire.malime.kitsu.AuthProvider
 import com.chesire.malime.kitsu.parse
 import javax.inject.Inject
 
+@Suppress("TooGenericExceptionCaught")
 class KitsuAuth @Inject constructor(
     private val authService: KitsuAuthService,
     private val authProvider: AuthProvider
 ) : AuthApi {
     override suspend fun login(username: String, password: String): Resource<Any> {
         return try {
-            val response = authService.loginAsync(LoginRequest(username, password)).parse()
-            when (response) {
+            when (val response = authService.loginAsync(LoginRequest(username, password)).parse()) {
                 is Resource.Success -> {
                     authProvider.apply {
                         accessToken = response.data.accessToken

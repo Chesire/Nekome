@@ -7,7 +7,7 @@ import com.squareup.moshi.FromJson
 class ParsedRetrieveResponseAdapter {
     @Suppress("LongMethod")
     @FromJson
-    fun parsedRetrieveResponseFromRetrieveResponse(response: RetrieveResponse): ParsedRetrieveResponse {
+    fun parseRetrieveResponse(response: RetrieveResponse): ParsedRetrieveResponse {
         val seriesModels = response
             .data
             .mapNotNull { library ->

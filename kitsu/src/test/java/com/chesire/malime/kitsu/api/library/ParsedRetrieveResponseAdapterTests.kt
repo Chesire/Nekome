@@ -13,7 +13,7 @@ import org.junit.Test
 
 class ParsedRetrieveResponseAdapterTests {
     @Test
-    fun `parsedRetrieveResponseFromRetrieveResponse amalgamates results into ParsedRetrieveResponse`() {
+    fun `parseRetrieveResponse amalgamates results into ParsedRetrieveResponse`() {
         val responseData = listOf(
             LibraryEntry(
                 1,
@@ -52,7 +52,7 @@ class ParsedRetrieveResponseAdapterTests {
         val response = RetrieveResponse(responseData, responseIncluded, responseLinks)
 
         val classUnderTest = ParsedRetrieveResponseAdapter()
-        val result = classUnderTest.parsedRetrieveResponseFromRetrieveResponse(response)
+        val result = classUnderTest.parseRetrieveResponse(response)
         val actual = result.series.first()
 
         assertEquals(0, actual.id)
@@ -73,7 +73,7 @@ class ParsedRetrieveResponseAdapterTests {
     }
 
     @Test
-    fun `parsedRetrieveResponseFromRetrieveResponse no matching id has empty model`() {
+    fun `parseRetrieveResponse no matching id has empty model`() {
         val responseData = listOf(
             LibraryEntry(
                 1,
@@ -112,13 +112,13 @@ class ParsedRetrieveResponseAdapterTests {
         val response = RetrieveResponse(responseData, responseIncluded, responseLinks)
 
         val classUnderTest = ParsedRetrieveResponseAdapter()
-        val actual = classUnderTest.parsedRetrieveResponseFromRetrieveResponse(response)
+        val actual = classUnderTest.parseRetrieveResponse(response)
 
         assertTrue(actual.series.isEmpty())
     }
 
     @Test
-    fun `parsedRetrieveResponseFromRetrieveResponse no relationship has empty model`() {
+    fun `parseRetrieveResponse no relationship has empty model`() {
         val responseData = listOf(
             LibraryEntry(
                 1,
@@ -149,7 +149,7 @@ class ParsedRetrieveResponseAdapterTests {
         val response = RetrieveResponse(responseData, responseIncluded, responseLinks)
 
         val classUnderTest = ParsedRetrieveResponseAdapter()
-        val actual = classUnderTest.parsedRetrieveResponseFromRetrieveResponse(response)
+        val actual = classUnderTest.parseRetrieveResponse(response)
 
         assertTrue(actual.series.isEmpty())
     }
