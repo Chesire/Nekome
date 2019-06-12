@@ -91,8 +91,8 @@ class KitsuLibrary @Inject constructor(
                 return ex.parse()
             }
 
-            if (response.isSuccessful && response.body() != null) {
-                val body = response.body()!!
+            val body = response.body()
+            if (response.isSuccessful && body != null) {
                 models.addAll(body.series)
                 retries = 0
 

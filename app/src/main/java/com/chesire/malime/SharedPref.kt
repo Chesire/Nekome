@@ -60,8 +60,9 @@ class SharedPref @Inject constructor(
      */
     var filterPreference: Map<Int, Boolean>
         get() {
-            val filterJson = sharedPreferences.getString(FILTER_PREFERENCE, defaultFilter)!!
-            return filterAdapter.fromJson(filterJson) ?: emptyMap()
+            return filterAdapter.fromJson(
+                sharedPreferences.getString(FILTER_PREFERENCE, defaultFilter) ?: defaultFilter
+            ) ?: emptyMap()
         }
         set(value) = sharedPreferences.edit {
             putString(FILTER_PREFERENCE, filterAdapter.toJson(value))

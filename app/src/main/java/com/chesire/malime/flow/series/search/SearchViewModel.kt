@@ -34,20 +34,19 @@ class SearchViewModel @Inject constructor(
     var seriesType: SeriesType = SeriesType.Anime
 
     fun performSearch() = viewModelScope.launch {
-        if (searchTitle.value.isNullOrEmpty()) {
+        val title = searchTitle.value
+        if (title.isNullOrEmpty()) {
             _searchResults.postError(SearchError.MissingTitle)
             return@launch
         }
 
         _searchResults.postLoading()
 
-        val result = when (seriesType) {
-            SeriesType.Anime -> search.searchForAnime(searchTitle.value!!)
-            SeriesType.Manga -> search.searchForManga(searchTitle.value!!)
+        when (val result = when (seriesType) {
+            SeriesType.Anime -> search.searchForAnime(title)
+            SeriesType.Manga -> search.searchForManga(title)
             else -> error("Unexpected series type provided")
-        }
-
-        when (result) {
+        }) {
             is Resource.Success -> _searchResults.postSuccess(result.data)
             is Resource.Error -> _searchResults.postError(SearchError.Error)
         }
