@@ -13,6 +13,7 @@ private const val SCROLL_THRESHOLD = 4
 /**
  * Provides scrolling for a [FloatingActionButton] by attaching to a [RecyclerView] it depends on.
  */
+@Suppress("UnusedPrivateMember")
 class ScrollFABBehaviour(context: Context, attrs: AttributeSet) : FloatingActionButton.Behavior() {
     override fun layoutDependsOn(
         parent: CoordinatorLayout,

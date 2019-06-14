@@ -64,8 +64,7 @@ class SeriesRepository @Inject constructor(
         return response
     }
 
-    // Force (!!) the userId, it should not be null at this point
-    private suspend fun retrieveUserId() = userRepository.retrieveUserId()!!
+    private suspend fun retrieveUserId() = requireNotNull(userRepository.retrieveUserId())
 
     suspend fun updateSeries(
         userSeriesId: Int,

@@ -6,6 +6,7 @@ import com.chesire.malime.core.models.SeriesModel
 import com.chesire.malime.kitsu.parse
 import javax.inject.Inject
 
+@Suppress("TooGenericExceptionCaught")
 class KitsuSearch @Inject constructor(private val searchService: KitsuSearchService) : SearchApi {
     override suspend fun searchForAnime(title: String): Resource<List<SeriesModel>> {
         return try {

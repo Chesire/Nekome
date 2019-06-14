@@ -22,25 +22,15 @@ class DetailsViewModel @Inject constructor(
     val loginStatus: LiveData<LoginStatus> = _loginStatus
 
     fun login() = viewModelScope.launch {
-        if (!validParams()) {
-            return@launch
-        }
-
-        _loginStatus.postValue(LoginStatus.Loading)
-        executeLogin(username.value!!, password.value!!)
-    }
-
-    private fun validParams(): Boolean {
-        return when {
-            username.value.isNullOrEmpty() -> {
-                _loginStatus.postValue(LoginStatus.EmptyUsername)
-                false
+        val name = username.value
+        val pw = password.value
+        when {
+            name.isNullOrEmpty() -> _loginStatus.postValue(LoginStatus.EmptyUsername)
+            pw.isNullOrEmpty() -> _loginStatus.postValue(LoginStatus.EmptyPassword)
+            else -> {
+                _loginStatus.postValue(LoginStatus.Loading)
+                executeLogin(name, pw)
             }
-            password.value.isNullOrEmpty() -> {
-                _loginStatus.postValue(LoginStatus.EmptyPassword)
-                false
-            }
-            else -> true
         }
     }
 

@@ -6,6 +6,7 @@ import com.chesire.malime.core.models.UserModel
 import com.chesire.malime.kitsu.parse
 import javax.inject.Inject
 
+@Suppress("TooGenericExceptionCaught")
 class KitsuUser @Inject constructor(private val userService: KitsuUserService) : UserApi {
     override suspend fun getUserDetails(): Resource<UserModel> {
         return try {

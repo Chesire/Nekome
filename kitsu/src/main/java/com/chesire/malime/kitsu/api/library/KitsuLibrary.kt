@@ -4,7 +4,8 @@ import com.chesire.malime.core.Resource
 import com.chesire.malime.core.api.LibraryApi
 import com.chesire.malime.core.flags.UserSeriesStatus
 import com.chesire.malime.core.models.SeriesModel
-import com.chesire.malime.kitsu.adapters.UserSeriesStatusAdapter
+import com.chesire.malime.kitsu.createNewAddModel
+import com.chesire.malime.kitsu.createUpdateModel
 import com.chesire.malime.kitsu.parse
 import com.chesire.malime.kitsu.parseError
 import okhttp3.MediaType
@@ -19,10 +20,10 @@ private const val MAX_RETRIES = 3
 private const val ANIME_TYPE = "anime"
 private const val MANGA_TYPE = "manga"
 
+@Suppress("TooGenericExceptionCaught")
 class KitsuLibrary @Inject constructor(
     private val libraryService: KitsuLibraryService
 ) : LibraryApi {
-    private val userSeriesStatusAdapter = UserSeriesStatusAdapter()
 
     override suspend fun retrieveAnime(userId: Int) =
         performRetrieveCall(userId, libraryService::retrieveAnimeAsync)
@@ -91,8 +92,8 @@ class KitsuLibrary @Inject constructor(
                 return ex.parse()
             }
 
-            if (response.isSuccessful && response.body() != null) {
-                val body = response.body()!!
+            val body = response.body()
+            if (response.isSuccessful && body != null) {
                 models.addAll(body.series)
                 retries = 0
 
@@ -132,56 +133,5 @@ class KitsuLibrary @Inject constructor(
         } catch (ex: Exception) {
             ex.parse()
         }
-    }
-
-    @Suppress("LongMethod")
-    private fun createNewAddModel(
-        userId: Int,
-        seriesId: Int,
-        startingStatus: UserSeriesStatus,
-        seriesType: String
-    ): String {
-        return """
-{
-  "data": {
-    "type": "libraryEntries",
-    "attributes": {
-      "progress": 0,
-      "status": "${userSeriesStatusAdapter.userSeriesStatusToString(startingStatus)}"
-    },
-    "relationships": {
-      "$seriesType": {
-        "data": {
-          "type": "$seriesType",
-          "id": $seriesId
-        }
-      },
-      "user": {
-        "data": {
-          "type": "users",
-          "id": $userId
-        }
-      }
-    }
-  }
-}""".trimIndent()
-    }
-
-    private fun createUpdateModel(
-        userSeriesId: Int,
-        newProgress: Int,
-        newStatus: UserSeriesStatus
-    ): String {
-        return """
-{
-  "data": {
-    "id": $userSeriesId,
-    "type": "libraryEntries",
-    "attributes": {
-      "progress": $newProgress,
-      "status": "${userSeriesStatusAdapter.userSeriesStatusToString(newStatus)}"
-    }
-  }
-}""".trimIndent()
     }
 }
