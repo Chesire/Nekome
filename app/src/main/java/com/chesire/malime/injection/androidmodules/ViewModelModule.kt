@@ -6,6 +6,7 @@ import com.chesire.malime.flow.ViewModelFactory
 import com.chesire.malime.flow.login.details.DetailsViewModel
 import com.chesire.malime.flow.login.syncing.SyncingViewModel
 import com.chesire.malime.flow.oob.AnalyticsViewModel
+import com.chesire.malime.flow.profile.ProfileViewModel
 import com.chesire.malime.flow.series.detail.SeriesDetailViewModel
 import com.chesire.malime.flow.series.list.SeriesListViewModel
 import com.chesire.malime.flow.series.search.SearchViewModel
@@ -23,13 +24,23 @@ abstract class ViewModelModule {
 
     @Binds
     @IntoMap
+    @ViewModelKey(AnalyticsViewModel::class)
+    abstract fun bindAnalyticsViewModel(viewModel: AnalyticsViewModel): ViewModel
+
+    @Binds
+    @IntoMap
     @ViewModelKey(DetailsViewModel::class)
     abstract fun bindDetailsViewModel(viewModel: DetailsViewModel): ViewModel
 
     @Binds
     @IntoMap
-    @ViewModelKey(AnalyticsViewModel::class)
-    abstract fun bindAnalyticsViewModel(viewModel: AnalyticsViewModel): ViewModel
+    @ViewModelKey(ProfileViewModel::class)
+    abstract fun bindProfileViewModel(viewModel: ProfileViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(SearchViewModel::class)
+    abstract fun bindSearchViewModel(viewModel: SearchViewModel): ViewModel
 
     @Binds
     @IntoMap
@@ -40,11 +51,6 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(SeriesListViewModel::class)
     abstract fun bindSeriesListViewModel(viewModel: SeriesListViewModel): ViewModel
-
-    @Binds
-    @IntoMap
-    @ViewModelKey(SearchViewModel::class)
-    abstract fun bindSearchViewModel(viewModel: SearchViewModel): ViewModel
 
     @Binds
     @IntoMap
