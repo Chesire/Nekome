@@ -12,6 +12,8 @@ class UserRepository @Inject constructor(
     private val userDao: UserDao,
     private val userApi: UserApi
 ) {
+    val user = userDao.observe(Service.Kitsu)
+
     suspend fun refreshUser(): Resource<UserModel> {
         val response = userApi.getUserDetails()
         when (response) {
@@ -22,6 +24,5 @@ class UserRepository @Inject constructor(
         return response
     }
 
-    suspend fun retrieveUser() = userDao.retrieve(Service.Kitsu)
     suspend fun retrieveUserId() = userDao.retrieveUserId(Service.Kitsu)
 }
