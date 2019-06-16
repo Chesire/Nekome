@@ -47,6 +47,10 @@ class ProfileFragment : DaggerFragment() {
         .apply {
             vm = viewModel
             lifecycleOwner = viewLifecycleOwner
+            fragmentProfileAnimeProgress.viewSeriesProgressTitle.text =
+                getString(R.string.nav_anime)
+            fragmentProfileMangaProgress.viewSeriesProgressTitle.text =
+                getString(R.string.nav_manga)
         }
         .root
 

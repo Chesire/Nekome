@@ -58,9 +58,10 @@
             android:fillViewport="true"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
                 <ImageView
                     android:id="@+id/fragmentProfileAvatar"
@@ -70,13 +71,14 @@
                 <include
                     android:id="@+id/fragmentProfileAnimeProgress"
                     layout="@layout/view_series_progress"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
                     bind:seriesProgress="@{vm.anime}" />
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                <include
+                    android:id="@+id/fragmentProfileMangaProgress"
+                    layout="@layout/view_series_progress"
+                    bind:seriesProgress="@{vm.manga}" />
+
+            </LinearLayout>
         </androidx.core.widget.NestedScrollView>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>
