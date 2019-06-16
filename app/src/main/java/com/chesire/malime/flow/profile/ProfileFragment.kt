@@ -12,6 +12,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.chesire.lifecyklelog.LogLifecykle
 import com.chesire.malime.R
 import com.chesire.malime.core.models.UserModel
@@ -19,6 +20,7 @@ import com.chesire.malime.databinding.FragmentProfileBinding
 import com.chesire.malime.flow.ViewModelFactory
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_profile.fragmentProfileAvatar
+import kotlinx.android.synthetic.main.fragment_profile.fragmentProfileCollapsingToolbar
 import kotlinx.android.synthetic.main.fragment_profile.fragmentProfileHeaderImage
 import kotlinx.android.synthetic.main.fragment_profile.fragmentProfileToolbar
 import javax.inject.Inject
@@ -60,7 +62,7 @@ class ProfileFragment : DaggerFragment() {
 
         viewModel.user.observe(viewLifecycleOwner, Observer {
             if (it != null) {
-                fragmentProfileToolbar.title = it.name
+                fragmentProfileCollapsingToolbar.title = it.name
                 setImagery(it)
             }
         })
@@ -80,10 +82,11 @@ class ProfileFragment : DaggerFragment() {
 
     private fun setImagery(user: UserModel) {
         Glide.with(requireContext())
-            .load(user.coverImage.smallest)
+            .load(user.coverImage.smallest?.url)
             .into(fragmentProfileHeaderImage)
         Glide.with(requireContext())
-            .load(user.avatar.smallest)
+            .load(user.avatar.largest?.url)
+            .apply(RequestOptions.circleCropTransform())
             .into(fragmentProfileAvatar)
     }
 }
