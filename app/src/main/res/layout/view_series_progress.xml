@@ -101,7 +101,9 @@
             <TextView
                 android:id="@+id/viewSeriesProgressPlannedValue"
                 style="@style/SeriesProgressTextBody"
+                android:layout_marginBottom="@dimen/full_margin"
                 android:text="@{seriesProgress.planned}"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@id/viewSeriesProgressPlanned"
                 app:layout_constraintStart_toStartOf="@id/viewSeriesProgressPlanned"
                 app:layout_constraintTop_toBottomOf="@id/viewSeriesProgressPlanned"
@@ -120,7 +122,9 @@
             <TextView
                 android:id="@+id/viewSeriesProgressDroppedValue"
                 style="@style/SeriesProgressTextBody"
+                android:layout_marginBottom="@dimen/full_margin"
                 android:text="@{seriesProgress.dropped}"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@id/viewSeriesProgressDropped"
                 app:layout_constraintStart_toStartOf="@id/viewSeriesProgressDropped"
                 app:layout_constraintTop_toBottomOf="@id/viewSeriesProgressDropped"
