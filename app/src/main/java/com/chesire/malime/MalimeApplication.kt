@@ -32,6 +32,7 @@ class MalimeApplication : DaggerApplication() {
         }
 
         workerQueue.enqueueSeriesRefresh()
+        workerQueue.enqueueUserRefresh()
     }
 
     override fun applicationInjector(): AndroidInjector<out DaggerApplication> {
