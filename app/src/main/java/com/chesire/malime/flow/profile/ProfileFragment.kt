@@ -21,6 +21,7 @@ import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_profile.fragmentProfileAvatar
 import kotlinx.android.synthetic.main.fragment_profile.fragmentProfileHeaderImage
 import kotlinx.android.synthetic.main.fragment_profile.fragmentProfileToolbar
+import kotlinx.android.synthetic.main.fragment_profile.lay
 import javax.inject.Inject
 
 @LogLifecykle
