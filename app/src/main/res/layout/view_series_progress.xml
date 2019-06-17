@@ -35,7 +35,7 @@
             <TextView
                 android:id="@+id/viewSeriesProgressTotal"
                 style="@style/SeriesProgressTextTitle"
-                android:text="Total"
+                android:text="@string/profile_total"
                 app:layout_constraintBottom_toTopOf="@id/viewSeriesProgressTotalValue"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -54,7 +54,7 @@
             <TextView
                 android:id="@+id/viewSeriesProgressCurrent"
                 style="@style/SeriesProgressTextTitle"
-                android:text="Current"
+                android:text="@string/profile_current"
                 app:layout_constraintBottom_toTopOf="@id/viewSeriesProgressCurrentValue"
                 app:layout_constraintEnd_toStartOf="@+id/viewSeriesProgressGuideline"
                 app:layout_constraintStart_toStartOf="parent"
@@ -73,7 +73,7 @@
             <TextView
                 android:id="@+id/viewSeriesProgressCompleted"
                 style="@style/SeriesProgressTextTitle"
-                android:text="Completed"
+                android:text="@string/profile_completed"
                 app:layout_constraintBottom_toTopOf="@id/viewSeriesProgressCompletedValue"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/viewSeriesProgressGuideline"
@@ -92,7 +92,7 @@
             <TextView
                 android:id="@+id/viewSeriesProgressPlanned"
                 style="@style/SeriesProgressTextTitle"
-                android:text="Planned"
+                android:text="@string/profile_planned"
                 app:layout_constraintBottom_toTopOf="@id/viewSeriesProgressPlannedValue"
                 app:layout_constraintEnd_toStartOf="@+id/viewSeriesProgressGuideline"
                 app:layout_constraintStart_toStartOf="parent"
@@ -113,7 +113,7 @@
             <TextView
                 android:id="@+id/viewSeriesProgressDropped"
                 style="@style/SeriesProgressTextTitle"
-                android:text="Dropped"
+                android:text="@string/profile_dropped"
                 app:layout_constraintBottom_toTopOf="@id/viewSeriesProgressDroppedValue"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/viewSeriesProgressGuideline"

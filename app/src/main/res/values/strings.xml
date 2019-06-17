@@ -49,6 +49,13 @@
     <string name="analytics_confirm">Confirm</string>
     <string name="analytics_deny">Deny</string>
 
+    <string name="profile_total">Total</string>
+    <string name="profile_current">Current</string>
+    <string name="profile_completed">Completed</string>
+    <string name="profile_on_hold">On Hold</string>
+    <string name="profile_dropped">Dropped</string>
+    <string name="profile_planned">Planned</string>
+
     <!-- Point to a privacy policy in Github repo -->
     <string name="privacy_policy_url">http://www.google.com</string>
 
