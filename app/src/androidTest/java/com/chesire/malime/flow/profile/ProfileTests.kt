@@ -6,7 +6,7 @@ import com.chesire.malime.R
 import com.chesire.malime.flow.Activity
 import com.chesire.malime.helpers.injector
 import com.chesire.malime.kitsu.AuthProvider
-import com.schibsted.spain.barista.assertion.BaristaVisibilityAssertions.assertContains
+import com.schibsted.spain.barista.assertion.BaristaVisibilityAssertions.assertDisplayed
 import com.schibsted.spain.barista.interaction.BaristaClickInteractions.clickOn
 import com.schibsted.spain.barista.rule.cleardata.ClearPreferencesRule
 import org.junit.Before
@@ -33,7 +33,8 @@ class ProfileTests {
 
     @Test
     fun canReachProfile() {
+        activity.launchActivity(null)
         clickOn(R.id.profileFragment)
-        assertContains(R.id.fragmentProfileCoordinatorLayout)
+        assertDisplayed(R.id.fragmentProfileCoordinatorLayout)
     }
 }
