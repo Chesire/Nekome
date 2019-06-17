@@ -17,7 +17,7 @@ private const val USER_UNIQUE_NAME = "UserSync"
  * Allows starting up workers.
  */
 class WorkerQueue @Inject constructor(private val workManager: WorkManager) {
-    val constraints = Constraints.Builder()
+    private val constraints = Constraints.Builder()
         .setRequiredNetworkType(NetworkType.CONNECTED)
         .build()
 

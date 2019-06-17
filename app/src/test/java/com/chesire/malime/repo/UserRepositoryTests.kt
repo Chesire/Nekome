@@ -53,19 +53,6 @@ class UserRepositoryTests {
     }
 
     @Test
-    fun `retrieveUser returns the UserModel from dao`() = runBlocking {
-        val expected = mockk<UserModel>()
-        val mockDao = mockk<UserDao> {
-            coEvery { retrieve(Service.Kitsu) } coAnswers { expected }
-        }
-        val mockApi = mockk<UserApi>()
-
-        val classUnderTest = UserRepository(mockDao, mockApi)
-
-        assertEquals(expected, classUnderTest.retrieveUser())
-    }
-
-    @Test
     fun `retrieveUserId gets just the id of the user from dao`() = runBlocking {
         val expected = 133
         val mockDao = mockk<UserDao> {
