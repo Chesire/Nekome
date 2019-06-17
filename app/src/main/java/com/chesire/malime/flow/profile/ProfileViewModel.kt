@@ -20,12 +20,18 @@ class ProfileViewModel @Inject constructor(
         val mapped = items.groupBy { it.userSeriesStatus }
         return SeriesProgress(
             total = items.count().toString(),
-            current = mapped[UserSeriesStatus.Current].toString(),
-            completed = mapped[UserSeriesStatus.Completed].toString(),
-            onHold = mapped[UserSeriesStatus.OnHold].toString(),
-            dropped = mapped[UserSeriesStatus.Dropped].toString(),
-            planned = mapped[UserSeriesStatus.Planned].toString(),
-            unknown = mapped[UserSeriesStatus.Unknown].toString()
+            current = mapped.getCountAsString(UserSeriesStatus.Current),
+            completed = mapped.getCountAsString(UserSeriesStatus.Completed),
+            onHold = mapped.getCountAsString(UserSeriesStatus.OnHold),
+            dropped = mapped.getCountAsString(UserSeriesStatus.Dropped),
+            planned = mapped.getCountAsString(UserSeriesStatus.Planned),
+            unknown = mapped.getCountAsString(UserSeriesStatus.Unknown)
         )
+    }
+
+    private fun Map<UserSeriesStatus, List<SeriesModel>>.getCountAsString(
+        userStatus: UserSeriesStatus
+    ): String {
+        return this[userStatus]?.count()?.toString() ?: "0"
     }
 }
