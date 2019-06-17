@@ -13,18 +13,19 @@ class ProfileViewModel @Inject constructor(
     userRepository: UserRepository
 ) : ViewModel() {
     val user = userRepository.user
-    val userName = Transformations.map(user) { it.name }
     val anime = Transformations.map(seriesRepository.anime) { createSeriesProgress(it) }
     val manga = Transformations.map(seriesRepository.manga) { createSeriesProgress(it) }
 
-    // This could be a lot better... fi later
-    private fun createSeriesProgress(items: List<SeriesModel>) = SeriesProgress(
-        total = items.count().toString(),
-        current = items.count { it.userSeriesStatus == UserSeriesStatus.Current }.toString(),
-        completed = items.count { it.userSeriesStatus == UserSeriesStatus.Completed }.toString(),
-        onHold = items.count { it.userSeriesStatus == UserSeriesStatus.OnHold }.toString(),
-        dropped = items.count { it.userSeriesStatus == UserSeriesStatus.Dropped }.toString(),
-        planned = items.count { it.userSeriesStatus == UserSeriesStatus.Planned }.toString(),
-        unknown = items.count { it.userSeriesStatus == UserSeriesStatus.Unknown }.toString()
-    )
+    private fun createSeriesProgress(items: List<SeriesModel>): SeriesProgress {
+        val mapped = items.groupBy { it.userSeriesStatus }
+        return SeriesProgress(
+            total = items.count().toString(),
+            current = mapped[UserSeriesStatus.Current].toString(),
+            completed = mapped[UserSeriesStatus.Completed].toString(),
+            onHold = mapped[UserSeriesStatus.OnHold].toString(),
+            dropped = mapped[UserSeriesStatus.Dropped].toString(),
+            planned = mapped[UserSeriesStatus.Planned].toString(),
+            unknown = mapped[UserSeriesStatus.Unknown].toString()
+        )
+    }
 }
