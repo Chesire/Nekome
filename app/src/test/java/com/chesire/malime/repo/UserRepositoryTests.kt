@@ -8,6 +8,7 @@ import com.chesire.malime.db.UserDao
 import io.mockk.Runs
 import io.mockk.coEvery
 import io.mockk.coVerify
+import io.mockk.every
 import io.mockk.just
 import io.mockk.mockk
 import kotlinx.coroutines.runBlocking
@@ -21,6 +22,7 @@ class UserRepositoryTests {
         val expected = mockk<UserModel>()
         val mockDao = mockk<UserDao> {
             coEvery { insert(expected) } just Runs
+            every { observe(Service.Kitsu) } returns mockk()
         }
         val mockApi = mockk<UserApi> {
             coEvery { getUserDetails() } coAnswers { Resource.Success(expected) }
@@ -38,7 +40,9 @@ class UserRepositoryTests {
     @Test
     fun `refreshUser returns the response from api`() = runBlocking {
         val expected = "error"
-        val mockDao = mockk<UserDao>()
+        val mockDao = mockk<UserDao> {
+            every { observe(Service.Kitsu) } returns mockk()
+        }
         val mockApi = mockk<UserApi> {
             coEvery { getUserDetails() } coAnswers { Resource.Error(expected) }
         }
@@ -57,6 +61,7 @@ class UserRepositoryTests {
         val expected = 133
         val mockDao = mockk<UserDao> {
             coEvery { retrieveUserId(Service.Kitsu) } coAnswers { expected }
+            every { observe(Service.Kitsu) } returns mockk()
         }
         val mockApi = mockk<UserApi>()
 
