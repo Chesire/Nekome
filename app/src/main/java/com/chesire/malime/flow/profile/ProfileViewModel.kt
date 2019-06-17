@@ -31,7 +31,5 @@ class ProfileViewModel @Inject constructor(
 
     private fun Map<UserSeriesStatus, List<SeriesModel>>.getCountAsString(
         userStatus: UserSeriesStatus
-    ): String {
-        return this[userStatus]?.count()?.toString() ?: "0"
-    }
+    ) = this[userStatus]?.count()?.toString() ?: "0"
 }
