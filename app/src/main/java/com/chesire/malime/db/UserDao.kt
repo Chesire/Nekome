@@ -1,5 +1,6 @@
 package com.chesire.malime.db
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
@@ -20,8 +21,11 @@ interface UserDao {
     suspend fun insert(user: UserModel)
 
     @Query("SELECT * FROM usermodel WHERE service == :service")
-    suspend fun retrieve(service: Service): UserModel?
+    suspend fun retrieve(service: Service): UserModel
 
     @Query("SELECT userId FROM usermodel WHERE service == :service")
     suspend fun retrieveUserId(service: Service): Int?
+
+    @Query("SELECT * FROM usermodel WHERE service == :service")
+    fun observe(service: Service): LiveData<UserModel>
 }

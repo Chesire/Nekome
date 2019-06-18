@@ -13,4 +13,20 @@
 
     <style name="OutlineButtonStyle" parent="Widget.MaterialComponents.Button.OutlinedButton" />
 
+    <style name="SeriesProgressTextTitle" parent="TextAppearance.MaterialComponents.Headline6">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_marginStart">@dimen/full_margin</item>
+        <item name="android:layout_marginEnd">@dimen/full_margin</item>
+        <item name="android:layout_marginTop">@dimen/full_margin</item>
+    </style>
+
+    <style name="SeriesProgressTextBody" parent="TextAppearance.MaterialComponents.Body1">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">@dimen/full_margin</item>
+        <item name="android:layout_marginEnd">@dimen/full_margin</item>
+        <item name="android:layout_marginTop">@dimen/half_margin</item>
+    </style>
+
 </resources>

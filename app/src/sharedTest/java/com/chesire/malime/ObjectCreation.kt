@@ -1,4 +1,4 @@
-package com.chesire.malime.helpers
+package com.chesire.malime
 
 import com.chesire.malime.core.flags.SeriesStatus
 import com.chesire.malime.core.flags.SeriesType

@@ -39,6 +39,14 @@ android {
             it.resValue('string', 'version', defaultConfig.versionName)
         }
     }
+    sourceSets {
+        androidTest {
+            java.srcDirs += "src/sharedTest/java"
+        }
+        test {
+            java.srcDirs += "src/sharedTest/java"
+        }
+    }
     dataBinding {
         enabled true
     }

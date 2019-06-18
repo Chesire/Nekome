@@ -34,14 +34,53 @@ class WorkerQueueTests {
     }
 
     @Test
+    fun `enqueueUserRefresh enqueues the request on the manager`() {
+        val mockWorkManager = mockk<WorkManager> {
+            every {
+                enqueueUniquePeriodicWork(
+                    "UserSync",
+                    ExistingPeriodicWorkPolicy.KEEP,
+                    any()
+                )
+            } returns mockk()
+        }
+
+        WorkerQueue(mockWorkManager).run {
+            enqueueUserRefresh()
+
+            verify {
+                mockWorkManager.enqueueUniquePeriodicWork(
+                    "UserSync",
+                    ExistingPeriodicWorkPolicy.KEEP,
+                    any()
+                )
+            }
+        }
+    }
+
+    @Test
     fun `cancelEnqueued cancels the SeriesRefresh worker`() {
         val mockWorkManager = mockk<WorkManager> {
             every { cancelUniqueWork("SeriesSync") } returns mockk()
+            every { cancelUniqueWork("UserSync") } returns mockk()
         }
 
         WorkerQueue(mockWorkManager).run {
             cancelQueued()
             verify { mockWorkManager.cancelUniqueWork("SeriesSync") }
+        }
+    }
+
+    @Test
+    fun `cancelEnqueued cancels the UserRefresh worker`() {
+        val mockWorkManager = mockk<WorkManager> {
+            every { cancelUniqueWork("SeriesSync") } returns mockk()
+            every { cancelUniqueWork("UserSync") } returns mockk()
+        }
+
+        WorkerQueue(mockWorkManager).run {
+            cancelQueued()
+            verify { mockWorkManager.cancelUniqueWork("UserSync") }
         }
     }
 }

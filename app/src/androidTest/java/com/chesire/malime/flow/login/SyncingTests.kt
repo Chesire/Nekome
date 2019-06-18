@@ -15,7 +15,7 @@ import com.chesire.malime.core.flags.Service
 import com.chesire.malime.core.models.ImageModel
 import com.chesire.malime.core.models.UserModel
 import com.chesire.malime.flow.Activity
-import com.chesire.malime.helpers.createSeriesModel
+import com.chesire.malime.createSeriesModel
 import com.chesire.malime.helpers.injector
 import com.schibsted.spain.barista.assertion.BaristaVisibilityAssertions.assertDisplayed
 import com.schibsted.spain.barista.interaction.BaristaClickInteractions.clickOn

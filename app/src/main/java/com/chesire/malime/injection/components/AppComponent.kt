@@ -11,6 +11,7 @@ import com.chesire.malime.injection.modules.KitsuModule
 import com.chesire.malime.injection.modules.ServerModule
 import com.chesire.malime.injection.modules.WorkerModule
 import com.chesire.malime.services.RefreshSeriesWorker
+import com.chesire.malime.services.RefreshUserWorker
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjector
@@ -40,5 +41,6 @@ interface AppComponent : AndroidInjector<MalimeApplication> {
         fun build(): AppComponent
     }
 
-    fun inject(refreshSeriesWorker: RefreshSeriesWorker)
+    fun inject(worker: RefreshSeriesWorker)
+    fun inject(worker: RefreshUserWorker)
 }
