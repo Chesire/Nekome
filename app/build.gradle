@@ -84,7 +84,7 @@ dependencies {
 
     implementation "androidx.appcompat:appcompat:$appcompat_version"
     implementation 'androidx.browser:browser:1.0.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta2'
     implementation "androidx.core:core-ktx:$corektx_version"
     implementation 'androidx.fragment:fragment-ktx:1.1.0-beta01'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0-alpha01'
