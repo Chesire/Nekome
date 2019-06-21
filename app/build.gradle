@@ -96,7 +96,7 @@ dependencies {
     implementation "androidx.room:room-runtime:$room_version"
     implementation "androidx.room:room-ktx:$room_version"
     implementation 'androidx.work:work-runtime-ktx:2.1.0-beta01'
-    implementation 'com.airbnb.android:lottie:3.0.6'
+    implementation 'com.airbnb.android:lottie:3.0.7'
     implementation "com.afollestad.material-dialogs:core:$material_dialog_version"
     implementation "com.afollestad.material-dialogs:lifecycle:$material_dialog_version"
     implementation 'com.chesire:lifecyklelog:2.0.0'
