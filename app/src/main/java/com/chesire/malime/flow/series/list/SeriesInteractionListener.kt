@@ -10,7 +10,8 @@ interface SeriesInteractionListener {
     fun seriesSelected(imageView: ImageView, model: SeriesModel)
 
     /**
-     * Executed when the "Plus one" button has been pressed.
+     * Executed when the "Plus one" button has been pressed, the [callback] is then fired on
+     * completion.
      */
-    fun onPlusOne(model: SeriesModel)
+    fun onPlusOne(model: SeriesModel, callback: () -> Unit)
 }

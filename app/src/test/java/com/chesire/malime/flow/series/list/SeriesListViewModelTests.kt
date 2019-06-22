@@ -13,6 +13,7 @@ import io.mockk.every
 import io.mockk.just
 import io.mockk.mockk
 import io.mockk.verify
+import org.junit.Assert.assertTrue
 import org.junit.Rule
 import org.junit.Test
 
@@ -36,7 +37,7 @@ class SeriesListViewModelTests {
         val mockAuthCaster = mockk<AuthCaster>()
 
         val classUnderTest = SeriesListViewModel(mockRepo, mockAuthCaster)
-        classUnderTest.updateSeries(0, 0, UserSeriesStatus.Current)
+        classUnderTest.updateSeries(0, 0, UserSeriesStatus.Current, { })
 
         coVerify { mockRepo.updateSeries(0, 0, UserSeriesStatus.Current) }
     }
@@ -57,8 +58,48 @@ class SeriesListViewModelTests {
         }
 
         val classUnderTest = SeriesListViewModel(mockRepo, mockAuthCaster)
-        classUnderTest.updateSeries(0, 0, UserSeriesStatus.Current)
+        classUnderTest.updateSeries(0, 0, UserSeriesStatus.Current, { })
 
         verify { mockAuthCaster.issueRefreshingToken() }
+    }
+
+    @Test
+    fun `updateSeries failure not 401 invokes callback`() {
+        var condition = false
+        val mockRepo = mockk<SeriesRepository> {
+            coEvery {
+                updateSeries(0, 0, UserSeriesStatus.Current)
+            } coAnswers {
+                Resource.Error("error", Resource.Error.GenericError)
+            }
+            every { anime } returns mockk()
+            every { manga } returns mockk()
+        }
+        val mockAuthCaster = mockk<AuthCaster>()
+
+        val classUnderTest = SeriesListViewModel(mockRepo, mockAuthCaster)
+        classUnderTest.updateSeries(0, 0, UserSeriesStatus.Current) { condition = true }
+
+        assertTrue(condition)
+    }
+
+    @Test
+    fun `updateSeries success invokes callback`() {
+        var condition = false
+        val mockRepo = mockk<SeriesRepository> {
+            coEvery {
+                updateSeries(0, 0, UserSeriesStatus.Current)
+            } coAnswers {
+                Resource.Success(mockk())
+            }
+            every { anime } returns mockk()
+            every { manga } returns mockk()
+        }
+        val mockAuthCaster = mockk<AuthCaster>()
+
+        val classUnderTest = SeriesListViewModel(mockRepo, mockAuthCaster)
+        classUnderTest.updateSeries(0, 0, UserSeriesStatus.Current) { condition = true }
+
+        assertTrue(condition)
     }
 }

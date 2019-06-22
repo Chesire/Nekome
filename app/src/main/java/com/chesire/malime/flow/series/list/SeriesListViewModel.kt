@@ -5,10 +5,14 @@ import androidx.lifecycle.viewModelScope
 import com.chesire.malime.AuthCaster
 import com.chesire.malime.core.Resource
 import com.chesire.malime.core.flags.UserSeriesStatus
+import com.chesire.malime.core.models.SeriesModel
 import com.chesire.malime.repo.SeriesRepository
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+/**
+ * ViewModel to use with the [SeriesListFragment], handles sending updates for a series.
+ */
 class SeriesListViewModel @Inject constructor(
     private val repo: SeriesRepository,
     private val authCaster: AuthCaster
@@ -16,11 +20,20 @@ class SeriesListViewModel @Inject constructor(
     val animeSeries = repo.anime
     val mangaSeries = repo.manga
 
-    fun updateSeries(userSeriesId: Int, newProgress: Int, newUserSeriesStatus: UserSeriesStatus) =
-        viewModelScope.launch {
-            val response = repo.updateSeries(userSeriesId, newProgress, newUserSeriesStatus)
-            if (response is Resource.Error && response.code == Resource.Error.CouldNotRefresh) {
-                authCaster.issueRefreshingToken()
-            }
+    /**
+     * Sends an update for a series, will fire [callback] on completion.
+     */
+    fun updateSeries(
+        userSeriesId: Int,
+        newProgress: Int,
+        newUserSeriesStatus: UserSeriesStatus,
+        callback: (Resource<SeriesModel>) -> Unit
+    ) = viewModelScope.launch {
+        val response = repo.updateSeries(userSeriesId, newProgress, newUserSeriesStatus)
+        if (response is Resource.Error && response.code == Resource.Error.CouldNotRefresh) {
+            authCaster.issueRefreshingToken()
+        } else {
+            callback(response)
         }
+    }
 }

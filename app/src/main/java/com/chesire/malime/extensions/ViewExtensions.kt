@@ -43,3 +43,13 @@ fun View.visibleIf(invisible: Boolean = false, callback: () -> Boolean) {
         if (invisible) View.INVISIBLE else View.GONE
     }
 }
+
+/**
+ * Animates the views alpha value from its current to [newAlpha].
+ */
+fun View.toAlpha(newAlpha: Float) {
+    animate().cancel()
+    animate()
+        .alpha(newAlpha)
+        .start()
+}

@@ -28,6 +28,7 @@
     <string name="filter_by_planned">Planned</string>
 
     <string name="list_plus_one">+1</string>
+    <string name="list_try_again">Series %s failed to update, please try again…</string>
 
     <string name="login_enter_details">Login using Kitsu</string>
     <string name="login_username">Username</string>

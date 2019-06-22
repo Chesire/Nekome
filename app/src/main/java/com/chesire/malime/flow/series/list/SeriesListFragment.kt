@@ -15,13 +15,16 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chesire.malime.R
 import com.chesire.malime.SharedPref
+import com.chesire.malime.core.Resource
 import com.chesire.malime.core.models.SeriesModel
 import com.chesire.malime.databinding.FragmentSeriesListBinding
 import com.chesire.malime.flow.DialogHandler
 import com.chesire.malime.flow.ViewModelFactory
 import com.chesire.malime.flow.series.list.anime.AnimeFragment
 import com.chesire.malime.flow.series.list.manga.MangaFragment
+import com.google.android.material.snackbar.Snackbar
 import dagger.android.support.DaggerFragment
+import kotlinx.android.synthetic.main.fragment_series_list.fragmentSeriesListLayout
 import kotlinx.android.synthetic.main.fragment_series_list.fragmentSeriesListToolbar
 import timber.log.Timber
 import javax.inject.Inject
@@ -119,9 +122,20 @@ abstract class SeriesListFragment :
         toDetails(model, imageView to model.title)
     }
 
-    override fun onPlusOne(model: SeriesModel) {
+    override fun onPlusOne(model: SeriesModel, callback: () -> Unit) {
         Timber.i("Model ${model.slug} onPlusOne called")
-        viewModel.updateSeries(model.userId, model.progress.inc(), model.userSeriesStatus)
+        viewModel.updateSeries(model.userId, model.progress.inc(), model.userSeriesStatus) {
+            if (it is Resource.Error) {
+                Snackbar
+                    .make(
+                        fragmentSeriesListLayout,
+                        getString(R.string.list_try_again, model.title),
+                        Snackbar.LENGTH_LONG
+                    )
+                    .show()
+            }
+            callback()
+        }
     }
 
     /**
