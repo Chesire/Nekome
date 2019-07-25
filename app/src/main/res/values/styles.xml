@@ -29,4 +29,13 @@
         <item name="android:layout_marginTop">@dimen/half_margin</item>
     </style>
 
+    <style name="FabStyle">
+        <item name="android:layout_width">56dp</item>
+        <item name="android:layout_height">56dp</item>
+        <item name="android:layout_margin">16dp</item>
+        <item name="android:backgroundTint">@color/colorPrimary</item>
+        <item name="android:src">@drawable/ic_add_white</item>
+        <item name="android:tint">@color/white</item>
+    </style>
+
 </resources>
