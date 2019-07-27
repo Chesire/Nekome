@@ -18,6 +18,7 @@ import com.chesire.malime.SharedPref
 import com.chesire.malime.core.Resource
 import com.chesire.malime.core.models.SeriesModel
 import com.chesire.malime.databinding.FragmentSeriesListBinding
+import com.chesire.malime.flow.Activity
 import com.chesire.malime.flow.DialogHandler
 import com.chesire.malime.flow.ViewModelFactory
 import com.chesire.malime.flow.series.list.anime.AnimeFragment
@@ -81,8 +82,8 @@ abstract class SeriesListFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        (activity as? AppCompatActivity)?.setSupportActionBar(fragmentSeriesListToolbar)
+        // Could use an interface for this, for now just use the concrete
+        (requireActivity() as? Activity)?.setNavigationDrawerIcon(fragmentSeriesListToolbar)
     }
 
     override fun onStart() {

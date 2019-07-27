@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.HandlerThread
 import androidx.annotation.IdRes
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
@@ -85,6 +87,23 @@ class Activity : DaggerAppCompatActivity(), AuthCaster.AuthCasterListener {
     override fun unableToRefresh() {
         Timber.w("unableToRefresh has occurred")
         logout()
+    }
+
+    /**
+     * Sets the navigation drawer icon on the provided [toolbar].
+     */
+    fun setNavigationDrawerIcon(toolbar: Toolbar) {
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true);
+        val toggle = ActionBarDrawerToggle(
+            this,
+            this.findViewById(R.id.activityDrawer),
+            toolbar,
+            0,
+            0
+        )
+        toggle.isDrawerIndicatorEnabled = true;
+        toggle.syncState();
     }
 
     /**
