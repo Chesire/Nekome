@@ -70,4 +70,5 @@
     <string name="settings_logout_prompt_message">Are you sure you wish to log out of your Kitsu account?</string>
     <string name="settings_logout_prompt_confirm">Confirm</string>
     <string name="settings_logout_prompt_cancel">Cancel</string>
+
 </resources>
