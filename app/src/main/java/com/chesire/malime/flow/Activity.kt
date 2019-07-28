@@ -20,7 +20,6 @@ import com.chesire.malime.R
 import com.google.android.material.navigation.NavigationView
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity.activityDrawer
-import kotlinx.android.synthetic.main.view_nav_header.viewNavHeaderImage
 import kotlinx.android.synthetic.main.view_nav_header.viewNavHeaderSubtitle
 import kotlinx.android.synthetic.main.view_nav_header.viewNavHeaderTitle
 import timber.log.Timber
@@ -56,6 +55,10 @@ class Activity : DaggerAppCompatActivity(), AuthCaster.AuthCasterListener {
 
     private fun observeViewModel() {
         viewModel.user.observe(this, Observer { userModel ->
+            if (userModel == null) {
+                return@Observer
+            }
+
             Glide.with(this)
                 .load(userModel.avatar.medium.url)
                 .optionalCircleCrop()
