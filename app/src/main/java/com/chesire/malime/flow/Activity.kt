@@ -2,8 +2,7 @@ package com.chesire.malime.flow
 
 import android.os.Bundle
 import android.os.Handler
-import android.os.HandlerThread
-import androidx.annotation.IdRes
+import android.os.Looper
 import androidx.core.view.GravityCompat
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
@@ -14,11 +13,8 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.chesire.lifecyklelog.LogLifecykle
 import com.chesire.malime.AuthCaster
-import com.chesire.malime.LogoutHandler
 import com.chesire.malime.OverviewNavGraphDirections
 import com.chesire.malime.R
-import com.chesire.malime.SharedPref
-import com.chesire.malime.kitsu.AuthProvider
 import com.google.android.material.navigation.NavigationView
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity.activityDrawer
@@ -27,8 +23,6 @@ import javax.inject.Inject
 
 @LogLifecykle
 class Activity : DaggerAppCompatActivity(), AuthCaster.AuthCasterListener {
-    @Inject
-    lateinit var logoutHandler: LogoutHandler
     @Inject
     lateinit var authCaster: AuthCaster
     @Inject
@@ -100,22 +94,14 @@ class Activity : DaggerAppCompatActivity(), AuthCaster.AuthCasterListener {
         logout()
     }
 
-    /**
-     * Logs the user out and returns the user back to entering the login details.
-     */
     fun logout() {
-        Timber.w("Starting log out from Activity")
-        // Maybe should move this into a coroutine
-        with(HandlerThread("LogoutThread")) {
-            start()
-            Handler(looper).post {
-                logoutHandler.executeLogout()
-                quitSafely()
+        Timber.w("Logout called, now attempting")
+        viewModel.logout {
+            Handler(Looper.getMainLooper()).post {
+                findNavController(R.id.activityNavigation).navigate(
+                    OverviewNavGraphDirections.globalToDetailsFragment()
+                )
             }
         }
-
-        findNavController(R.id.activityNavigation).navigate(
-            OverviewNavGraphDirections.globalToDetailsFragment()
-        )
     }
 }

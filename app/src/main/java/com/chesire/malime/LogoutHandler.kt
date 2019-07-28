@@ -21,6 +21,5 @@ class LogoutHandler @Inject constructor(
         db.clearAllTables()
         Timber.d("Clearing auth")
         authProvider.clearAuth()
-        Timber.d("Closing the handler thread")
     }
 }
