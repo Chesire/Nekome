@@ -9,8 +9,6 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import androidx.annotation.StringRes
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chesire.malime.R
@@ -25,7 +23,6 @@ import com.chesire.malime.flow.series.list.manga.MangaFragment
 import com.google.android.material.snackbar.Snackbar
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_series_list.fragmentSeriesListLayout
-import kotlinx.android.synthetic.main.fragment_series_list.fragmentSeriesListToolbar
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -78,12 +75,6 @@ abstract class SeriesListFragment :
             toSearch()
         }
     }.root
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        (activity as? AppCompatActivity)?.setSupportActionBar(fragmentSeriesListToolbar)
-    }
 
     override fun onStart() {
         super.onStart()
@@ -155,12 +146,4 @@ abstract class SeriesListFragment :
         Timber.d("New list provided, new count [${newList.count()}]")
         seriesAdapter.allItems = newList
     }
-
-    /**
-     * Sets the toolbar title to display.
-     */
-    fun setToolbarTitle(@StringRes stringRes: Int) =
-        (activity as? AppCompatActivity)
-            ?.supportActionBar
-            ?.setTitle(stringRes)
 }

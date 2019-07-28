@@ -7,7 +7,6 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -18,10 +17,7 @@ import com.chesire.malime.R
 import com.chesire.malime.databinding.FragmentSeriesDetailBinding
 import com.chesire.malime.flow.ViewModelFactory
 import dagger.android.support.DaggerFragment
-import kotlinx.android.synthetic.main.fragment_series_detail.fragmentSeriesDetailCollapsingToolbar
-import kotlinx.android.synthetic.main.fragment_series_detail.fragmentSeriesDetailHeaderImage
 import kotlinx.android.synthetic.main.fragment_series_detail.fragmentSeriesDetailImageView
-import kotlinx.android.synthetic.main.fragment_series_detail.fragmentSeriesDetailToolbar
 import javax.inject.Inject
 
 @LogLifecykle
@@ -58,19 +54,10 @@ class SeriesDetailFragment : DaggerFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        (activity as? AppCompatActivity)?.let { activity ->
-            activity.setSupportActionBar(fragmentSeriesDetailToolbar)
-            activity.supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        }
-
-        fragmentSeriesDetailCollapsingToolbar.title = args.series.title
         fragmentSeriesDetailImageView.transitionName = args.series.title
         Glide.with(this)
             .load(args.series.posterImage.smallest?.url)
             .into(fragmentSeriesDetailImageView)
-        Glide.with(this)
-            .load(args.series.coverImage.smallest?.url)
-            .into(fragmentSeriesDetailHeaderImage)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

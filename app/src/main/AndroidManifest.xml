@@ -3,7 +3,6 @@
     package="com.chesire.malime">
 
     <uses-permission android:name="android.permission.INTERNET" />
-
     <!--
     Allows Glide to monitor connectivity status and restart failed requests if users go from a
     a disconnected to a connected network state.
@@ -39,7 +38,9 @@
             android:name="com.sec.android.multiwindow.MINIMUM_SIZE_H"
             android:value="598.0dip" />
 
-        <activity android:name=".flow.Activity">
+        <activity
+            android:name=".flow.Activity"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -7,7 +7,6 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
@@ -20,9 +19,6 @@ import com.chesire.malime.databinding.FragmentProfileBinding
 import com.chesire.malime.flow.ViewModelFactory
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_profile.fragmentProfileAvatar
-import kotlinx.android.synthetic.main.fragment_profile.fragmentProfileCollapsingToolbar
-import kotlinx.android.synthetic.main.fragment_profile.fragmentProfileHeaderImage
-import kotlinx.android.synthetic.main.fragment_profile.fragmentProfileToolbar
 import javax.inject.Inject
 
 @LogLifecykle
@@ -58,11 +54,9 @@ class ProfileFragment : DaggerFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        (activity as? AppCompatActivity)?.setSupportActionBar(fragmentProfileToolbar)
 
         viewModel.user.observe(viewLifecycleOwner, Observer {
             if (it != null) {
-                fragmentProfileCollapsingToolbar.title = it.name
                 setImagery(it)
             }
         })
@@ -81,9 +75,6 @@ class ProfileFragment : DaggerFragment() {
     }
 
     private fun setImagery(user: UserModel) {
-        Glide.with(requireContext())
-            .load(user.coverImage.smallest?.url)
-            .into(fragmentProfileHeaderImage)
         Glide.with(requireContext())
             .load(user.avatar.largest?.url)
             .apply(RequestOptions.circleCropTransform())

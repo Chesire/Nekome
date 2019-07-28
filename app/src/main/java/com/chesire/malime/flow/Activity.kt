@@ -4,20 +4,23 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.HandlerThread
 import androidx.annotation.IdRes
+import androidx.core.view.GravityCompat
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.NavigationUI.setupWithNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.navigateUp
+import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.navigation.ui.setupWithNavController
 import com.chesire.lifecyklelog.LogLifecykle
 import com.chesire.malime.AuthCaster
 import com.chesire.malime.LogoutHandler
 import com.chesire.malime.OverviewNavGraphDirections
 import com.chesire.malime.R
 import com.chesire.malime.SharedPref
-import com.chesire.malime.extensions.hide
-import com.chesire.malime.extensions.show
 import com.chesire.malime.kitsu.AuthProvider
+import com.google.android.material.navigation.NavigationView
 import dagger.android.support.DaggerAppCompatActivity
-import kotlinx.android.synthetic.main.activity.activityBottomNavigation
+import kotlinx.android.synthetic.main.activity.activityDrawer
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -32,18 +35,30 @@ class Activity : DaggerAppCompatActivity(), AuthCaster.AuthCasterListener {
     @Inject
     lateinit var sharedPref: SharedPref
 
+    private lateinit var appBarConfiguration: AppBarConfiguration
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity)
+
+        setSupportActionBar(findViewById(R.id.appBarToolbar))
+        setupNavController()
         loadGraph()
 
-        setupNavController()
         authCaster.subscribeToAuthError(this)
     }
 
     override fun onDestroy() {
         authCaster.unsubscribeFromAuthError(this)
         super.onDestroy()
+    }
+
+    override fun onBackPressed() {
+        if (activityDrawer.isDrawerOpen(GravityCompat.START)) {
+            activityDrawer.closeDrawer(GravityCompat.START)
+        } else {
+            super.onBackPressed()
+        }
     }
 
     private fun loadGraph() {
@@ -54,6 +69,22 @@ class Activity : DaggerAppCompatActivity(), AuthCaster.AuthCasterListener {
                     it.startDestination = chooseStartingDestination()
                 }
             }
+    }
+
+    private fun setupNavController() {
+        val nav = findNavController(R.id.activityNavigation)
+        findViewById<NavigationView>(R.id.activityNavigationView).setupWithNavController(nav)
+        appBarConfiguration = AppBarConfiguration(
+            setOf(
+                R.id.animeFragment,
+                R.id.mangaFragment,
+                R.id.timelineFragment,
+                R.id.profileFragment
+            ),
+            findViewById(R.id.activityDrawer)
+        )
+
+        setupActionBarWithNavController(nav, appBarConfiguration)
     }
 
     @IdRes
@@ -69,18 +100,8 @@ class Activity : DaggerAppCompatActivity(), AuthCaster.AuthCasterListener {
         }
     }
 
-    private fun setupNavController() = with(findNavController(R.id.activityNavigation)) {
-        setupWithNavController(activityBottomNavigation, this)
-        addOnDestinationChangedListener { _, destination, _ ->
-            when (destination.id) {
-                R.id.animeFragment -> activityBottomNavigation.show()
-                R.id.mangaFragment -> activityBottomNavigation.show()
-                R.id.profileFragment -> activityBottomNavigation.show()
-                R.id.timelineFragment -> activityBottomNavigation.show()
-                else -> activityBottomNavigation.hide()
-            }
-        }
-    }
+    override fun onSupportNavigateUp() =
+        findNavController(R.id.activityNavigation).navigateUp(appBarConfiguration)
 
     override fun unableToRefresh() {
         Timber.w("unableToRefresh has occurred")
@@ -92,14 +113,17 @@ class Activity : DaggerAppCompatActivity(), AuthCaster.AuthCasterListener {
      */
     fun logout() {
         Timber.w("Starting log out from Activity")
-        val handlerThread = HandlerThread("LogoutThread")
-        handlerThread.start()
-        Handler(handlerThread.looper).post {
-            logoutHandler.executeLogout()
-            findNavController(R.id.activityNavigation).navigate(
-                OverviewNavGraphDirections.globalToDetailsFragment()
-            )
-            handlerThread.quitSafely()
+        // Maybe should move this into a coroutine
+        with(HandlerThread("LogoutThread")) {
+            start()
+            Handler(looper).post {
+                logoutHandler.executeLogout()
+                quitSafely()
+            }
         }
+
+        findNavController(R.id.activityNavigation).navigate(
+            OverviewNavGraphDirections.globalToDetailsFragment()
+        )
     }
 }

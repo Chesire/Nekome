@@ -7,6 +7,7 @@ import com.chesire.malime.helpers.injector
 import com.chesire.malime.kitsu.AuthProvider
 import com.schibsted.spain.barista.assertion.BaristaVisibilityAssertions.assertDisplayed
 import com.schibsted.spain.barista.interaction.BaristaClickInteractions.clickOn
+import com.schibsted.spain.barista.interaction.BaristaDrawerInteractions.openDrawer
 import com.schibsted.spain.barista.rule.cleardata.ClearPreferencesRule
 import org.junit.Before
 import org.junit.Rule
@@ -40,30 +41,43 @@ class ActivityTests {
     fun overviewCanNavigateToAnimeView() {
         activity.launchActivity(null)
         assertDisplayed(R.string.nav_anime)
-        clickOn(R.id.mangaFragment)
+        openDrawer()
+        clickOn(R.string.nav_manga)
         assertDisplayed(R.string.nav_manga)
-        clickOn(R.id.animeFragment)
+        openDrawer()
+        clickOn(R.string.nav_anime)
         assertDisplayed(R.string.nav_anime)
     }
 
     @Test
     fun overviewCanNavigateToMangaView() {
         activity.launchActivity(null)
-        clickOn(R.id.mangaFragment)
+        openDrawer()
+        clickOn(R.string.nav_manga)
         assertDisplayed(R.string.nav_manga)
     }
 
     @Test
     fun overviewCanNavigateToProfileView() {
         activity.launchActivity(null)
-        clickOn(R.id.profileFragment)
+        openDrawer()
+        clickOn(R.string.nav_profile)
         assertDisplayed(R.string.nav_profile)
     }
 
     @Test
-    fun overviewCanNavigateToActivityView() {
+    fun overviewCanNavigateToTimelineView() {
         activity.launchActivity(null)
-        clickOn(R.id.timelineFragment)
+        openDrawer()
+        clickOn(R.string.nav_timeline)
         assertDisplayed(R.string.nav_timeline)
+    }
+
+    @Test
+    fun overviewCanNavigateToSettingsView() {
+        activity.launchActivity(null)
+        openDrawer()
+        clickOn(R.string.nav_settings)
+        assertDisplayed(R.string.settings_version)
     }
 }

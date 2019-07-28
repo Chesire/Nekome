@@ -8,6 +8,7 @@ import com.chesire.malime.helpers.injector
 import com.chesire.malime.kitsu.AuthProvider
 import com.schibsted.spain.barista.assertion.BaristaVisibilityAssertions.assertDisplayed
 import com.schibsted.spain.barista.interaction.BaristaClickInteractions.clickOn
+import com.schibsted.spain.barista.interaction.BaristaDrawerInteractions.openDrawer
 import com.schibsted.spain.barista.rule.cleardata.ClearPreferencesRule
 import org.junit.Before
 import org.junit.Rule
@@ -34,7 +35,8 @@ class ProfileTests {
     @Test
     fun canReachProfile() {
         activity.launchActivity(null)
-        clickOn(R.id.profileFragment)
-        assertDisplayed(R.id.fragmentProfileCoordinatorLayout)
+        openDrawer()
+        clickOn(R.string.nav_profile)
+        assertDisplayed(R.string.nav_profile)
     }
 }

@@ -5,10 +5,11 @@
     android:id="@+id/overview_nav_graph"
     tools:ignore="InvalidNavigation,UnusedNavigation">
 
+    <!-- OOB -->
     <fragment
         android:id="@+id/analyticsFragment"
         android:name="com.chesire.malime.flow.oob.AnalyticsFragment"
-        android:label="AnalyticsFragment"
+        android:label="@string/nav_analytics"
         tools:layout="@layout/fragment_analytics">
         <action
             android:id="@+id/toDetailsFragment"
@@ -19,7 +20,7 @@
     <fragment
         android:id="@+id/detailsFragment"
         android:name="com.chesire.malime.flow.login.details.DetailsFragment"
-        android:label="fragment_details"
+        android:label="@string/nav_details"
         tools:layout="@layout/fragment_details">
         <action
             android:id="@+id/toSyncingFragment"
@@ -28,7 +29,7 @@
     <fragment
         android:id="@+id/syncingFragment"
         android:name="com.chesire.malime.flow.login.syncing.SyncingFragment"
-        android:label="SyncingFragment"
+        android:label="@string/nav_syncing"
         tools:layout="@layout/fragment_syncing">
         <action
             android:id="@+id/toAnimeFragment"
@@ -36,11 +37,13 @@
             app:popUpTo="@+id/detailsFragment"
             app:popUpToInclusive="true" />
     </fragment>
+    <!-- End OOB -->
 
+    <!-- Main -->
     <fragment
         android:id="@+id/animeFragment"
         android:name="com.chesire.malime.flow.series.list.anime.AnimeFragment"
-        android:label="AnimeFragment"
+        android:label="@string/nav_anime"
         tools:layout="@layout/fragment_series_list">
         <action
             android:id="@+id/toSeriesDetailFragment"
@@ -60,7 +63,7 @@
     <fragment
         android:id="@+id/mangaFragment"
         android:name="com.chesire.malime.flow.series.list.manga.MangaFragment"
-        android:label="MangaFragment"
+        android:label="@string/nav_manga"
         tools:layout="@layout/fragment_series_list">
         <action
             android:id="@+id/toSeriesDetailFragment"
@@ -80,12 +83,12 @@
     <fragment
         android:id="@+id/timelineFragment"
         android:name="com.chesire.malime.flow.timeline.TimelineFragment"
-        android:label="TimelineFragment"
+        android:label="@string/nav_timeline"
         tools:layout="@layout/fragment_timeline" />
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.chesire.malime.flow.profile.ProfileFragment"
-        android:label="ProfileFragment"
+        android:label="@string/nav_profile"
         tools:layout="@layout/fragment_profile">
         <action
             android:id="@+id/toSettings"
@@ -99,7 +102,6 @@
     <fragment
         android:id="@+id/seriesDetailFragment"
         android:name="com.chesire.malime.flow.series.detail.SeriesDetailFragment"
-        android:label="SeriesDetailFragment"
         tools:layout="@layout/fragment_series_detail">
         <argument
             android:name="series"
@@ -108,10 +110,14 @@
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.chesire.malime.flow.settings.SettingsFragment"
-        android:label="SettingsFragment" />
+        android:label="@string/nav_settings" />
+    <!-- End Main -->
+
+    <!-- Global Actions -->
     <action
         android:id="@+id/globalToDetailsFragment"
         app:destination="@id/detailsFragment"
         app:popUpTo="@id/detailsFragment"
         app:popUpToInclusive="true" />
+    <!-- End Global Actions -->
 </navigation>

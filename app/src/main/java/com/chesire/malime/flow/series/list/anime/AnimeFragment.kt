@@ -6,17 +6,11 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import com.chesire.lifecyklelog.LogLifecykle
-import com.chesire.malime.R
 import com.chesire.malime.core.models.SeriesModel
 import com.chesire.malime.flow.series.list.SeriesListFragment
 
 @LogLifecykle
 class AnimeFragment : SeriesListFragment() {
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        setToolbarTitle(R.string.nav_anime)
-    }
-
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel.animeSeries.observe(
