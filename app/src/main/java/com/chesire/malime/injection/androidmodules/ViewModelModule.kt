@@ -2,6 +2,7 @@ package com.chesire.malime.injection.androidmodules
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.chesire.malime.flow.ActivityViewModel
 import com.chesire.malime.flow.ViewModelFactory
 import com.chesire.malime.flow.login.details.DetailsViewModel
 import com.chesire.malime.flow.login.syncing.SyncingViewModel
@@ -21,6 +22,11 @@ import kotlin.reflect.KClass
 abstract class ViewModelModule {
     @Binds
     abstract fun bindViewModelFactory(viewModelFactory: ViewModelFactory): ViewModelProvider.Factory
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(ActivityViewModel::class)
+    abstract fun bindActivityViewModel(viewModel: ActivityViewModel): ViewModel
 
     @Binds
     @IntoMap

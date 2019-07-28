@@ -17,9 +17,11 @@ import com.chesire.malime.core.models.UserModel
 import com.chesire.malime.flow.Activity
 import com.chesire.malime.createSeriesModel
 import com.chesire.malime.helpers.injector
+import com.chesire.malime.kitsu.AuthProvider
 import com.schibsted.spain.barista.assertion.BaristaVisibilityAssertions.assertDisplayed
 import com.schibsted.spain.barista.interaction.BaristaClickInteractions.clickOn
 import com.schibsted.spain.barista.interaction.BaristaEditTextInteractions.writeTo
+import com.schibsted.spain.barista.interaction.BaristaKeyboardInteractions.closeKeyboard
 import com.schibsted.spain.barista.rule.cleardata.ClearPreferencesRule
 import io.mockk.coEvery
 import org.junit.After
@@ -44,11 +46,14 @@ class SyncingTests {
     lateinit var library: LibraryApi
     @Inject
     lateinit var sharedPref: SharedPref
+    @Inject
+    lateinit var authProvider: AuthProvider
 
     @Before
     fun setUp() {
         injector.inject(this)
 
+        authProvider.accessToken = ""
         sharedPref.isAnalyticsComplete = true
 
         coEvery {
@@ -139,6 +144,8 @@ class SyncingTests {
     private fun navigateToSyncing() {
         writeTo(R.id.fragmentDetailsUsernameText, "Username")
         writeTo(R.id.fragmentDetailsPasswordText, "Password")
+        // For now use this, will fix it later on
+        closeKeyboard()
         clickOn(R.id.fragmentDetailsLoginButton)
     }
 }

@@ -16,10 +16,12 @@ import com.chesire.malime.core.models.UserModel
 import com.chesire.malime.flow.Activity
 import com.chesire.malime.helpers.ToastMatcher.Companion.onToast
 import com.chesire.malime.helpers.injector
+import com.chesire.malime.kitsu.AuthProvider
 import com.schibsted.spain.barista.assertion.BaristaErrorAssertions.assertError
 import com.schibsted.spain.barista.assertion.BaristaVisibilityAssertions.assertDisplayed
 import com.schibsted.spain.barista.interaction.BaristaClickInteractions.clickOn
 import com.schibsted.spain.barista.interaction.BaristaEditTextInteractions.writeTo
+import com.schibsted.spain.barista.interaction.BaristaKeyboardInteractions.closeKeyboard
 import com.schibsted.spain.barista.rule.cleardata.ClearPreferencesRule
 import io.mockk.coEvery
 import org.junit.Before
@@ -43,11 +45,14 @@ class DetailsTests {
     lateinit var library: LibraryApi
     @Inject
     lateinit var sharedPref: SharedPref
+    @Inject
+    lateinit var authProvider: AuthProvider
 
     @Before
     fun setUp() {
         injector.inject(this)
 
+        authProvider.accessToken = ""
         sharedPref.isAnalyticsComplete = true
 
         coEvery {
@@ -68,6 +73,7 @@ class DetailsTests {
 
         writeTo(R.id.fragmentDetailsUsernameText, "")
         writeTo(R.id.fragmentDetailsPasswordText, "Password")
+        closeKeyboard()
         clickOn(R.id.fragmentDetailsLoginButton)
 
         assertError(R.id.fragmentDetailsUsernameLayout, R.string.login_error_empty_username)
@@ -79,6 +85,7 @@ class DetailsTests {
 
         writeTo(R.id.fragmentDetailsUsernameText, "Username")
         writeTo(R.id.fragmentDetailsPasswordText, "")
+        closeKeyboard()
         clickOn(R.id.fragmentDetailsLoginButton)
 
         assertError(R.id.fragmentDetailsPasswordLayout, R.string.login_error_empty_password)
@@ -96,6 +103,7 @@ class DetailsTests {
 
         writeTo(R.id.fragmentDetailsUsernameText, "Username")
         writeTo(R.id.fragmentDetailsPasswordText, "Password")
+        closeKeyboard()
         clickOn(R.id.fragmentDetailsLoginButton)
 
         onToast(R.string.login_error_credentials).check(matches(isDisplayed()))
@@ -113,6 +121,7 @@ class DetailsTests {
 
         writeTo(R.id.fragmentDetailsUsernameText, "Username")
         writeTo(R.id.fragmentDetailsPasswordText, "Password")
+        closeKeyboard()
         clickOn(R.id.fragmentDetailsLoginButton)
 
         onToast(R.string.login_error_generic).check(matches(isDisplayed()))
@@ -143,6 +152,7 @@ class DetailsTests {
 
         writeTo(R.id.fragmentDetailsUsernameText, "Username")
         writeTo(R.id.fragmentDetailsPasswordText, "Password")
+        closeKeyboard()
         clickOn(R.id.fragmentDetailsLoginButton)
 
         assertDisplayed(R.id.fragmentSyncingText1)

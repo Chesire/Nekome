@@ -2,38 +2,42 @@ package com.chesire.malime.flow
 
 import android.os.Bundle
 import android.os.Handler
-import android.os.HandlerThread
-import androidx.annotation.IdRes
+import android.os.Looper
+import android.widget.ImageView
 import androidx.core.view.GravityCompat
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.bumptech.glide.Glide
 import com.chesire.lifecyklelog.LogLifecykle
 import com.chesire.malime.AuthCaster
-import com.chesire.malime.LogoutHandler
 import com.chesire.malime.OverviewNavGraphDirections
 import com.chesire.malime.R
-import com.chesire.malime.SharedPref
-import com.chesire.malime.kitsu.AuthProvider
 import com.google.android.material.navigation.NavigationView
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity.activityDrawer
+import kotlinx.android.synthetic.main.view_nav_header.viewNavHeaderSubtitle
+import kotlinx.android.synthetic.main.view_nav_header.viewNavHeaderTitle
 import timber.log.Timber
 import javax.inject.Inject
 
 @LogLifecykle
 class Activity : DaggerAppCompatActivity(), AuthCaster.AuthCasterListener {
     @Inject
-    lateinit var logoutHandler: LogoutHandler
-    @Inject
     lateinit var authCaster: AuthCaster
     @Inject
-    lateinit var authProvider: AuthProvider
-    @Inject
-    lateinit var sharedPref: SharedPref
+    lateinit var viewModelFactory: ViewModelFactory
+
+    private val viewModel by lazy {
+        ViewModelProviders
+            .of(this, viewModelFactory)
+            .get(ActivityViewModel::class.java)
+    }
 
     private lateinit var appBarConfiguration: AppBarConfiguration
 
@@ -46,6 +50,24 @@ class Activity : DaggerAppCompatActivity(), AuthCaster.AuthCasterListener {
         loadGraph()
 
         authCaster.subscribeToAuthError(this)
+
+        observeViewModel()
+    }
+
+    private fun observeViewModel() {
+        viewModel.user.observe(this, Observer { userModel ->
+            if (userModel == null) {
+                return@Observer
+            }
+            val view = findViewById<ImageView>(R.id.viewNavHeaderImage) ?: return@Observer
+
+            Glide.with(this)
+                .load(userModel.avatar.medium.url)
+                .optionalCircleCrop()
+                .into(view)
+            viewNavHeaderTitle.text = userModel.name
+            viewNavHeaderSubtitle.text = userModel.service.name
+        })
     }
 
     override fun onDestroy() {
@@ -66,7 +88,7 @@ class Activity : DaggerAppCompatActivity(), AuthCaster.AuthCasterListener {
             ?.navController
             ?.apply {
                 graph = navInflater.inflate(R.navigation.nav_graph).also {
-                    it.startDestination = chooseStartingDestination()
+                    it.startDestination = viewModel.startingFragment
                 }
             }
     }
@@ -87,19 +109,6 @@ class Activity : DaggerAppCompatActivity(), AuthCaster.AuthCasterListener {
         setupActionBarWithNavController(nav, appBarConfiguration)
     }
 
-    @IdRes
-    private fun chooseStartingDestination(): Int {
-        return if (authProvider.accessToken.isEmpty()) {
-            if (sharedPref.isAnalyticsComplete) {
-                R.id.detailsFragment
-            } else {
-                R.id.analyticsFragment
-            }
-        } else {
-            R.id.animeFragment
-        }
-    }
-
     override fun onSupportNavigateUp() =
         findNavController(R.id.activityNavigation).navigateUp(appBarConfiguration)
 
@@ -109,21 +118,16 @@ class Activity : DaggerAppCompatActivity(), AuthCaster.AuthCasterListener {
     }
 
     /**
-     * Logs the user out and returns the user back to entering the login details.
+     * Sends a logout request to the [viewModel] to handle.
      */
     fun logout() {
-        Timber.w("Starting log out from Activity")
-        // Maybe should move this into a coroutine
-        with(HandlerThread("LogoutThread")) {
-            start()
-            Handler(looper).post {
-                logoutHandler.executeLogout()
-                quitSafely()
+        Timber.w("Logout called, now attempting")
+        viewModel.logout {
+            Handler(Looper.getMainLooper()).post {
+                findNavController(R.id.activityNavigation).navigate(
+                    OverviewNavGraphDirections.globalToDetailsFragment()
+                )
             }
         }
-
-        findNavController(R.id.activityNavigation).navigate(
-            OverviewNavGraphDirections.globalToDetailsFragment()
-        )
     }
 }
