@@ -24,4 +24,11 @@
             android:title="@string/nav_profile" />
     </group>
 
+    <group android:checkableBehavior="none">
+
+        <item
+            android:id="@+id/settingsFragment"
+            android:icon="@drawable/ic_settings_white"
+            android:title="@string/nav_settings" />
+    </group>
 </menu>
