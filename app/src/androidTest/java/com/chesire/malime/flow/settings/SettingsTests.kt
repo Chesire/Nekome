@@ -9,6 +9,7 @@ import com.chesire.malime.kitsu.AuthProvider
 import com.schibsted.spain.barista.assertion.BaristaVisibilityAssertions.assertContains
 import com.schibsted.spain.barista.assertion.BaristaVisibilityAssertions.assertNotContains
 import com.schibsted.spain.barista.interaction.BaristaClickInteractions.clickOn
+import com.schibsted.spain.barista.interaction.BaristaDrawerInteractions.openDrawer
 import com.schibsted.spain.barista.rule.cleardata.ClearPreferencesRule
 import org.junit.Before
 import org.junit.Ignore
@@ -81,8 +82,8 @@ class SettingsTests {
     }
 
     private fun navigateToSettings() {
-        clickOn(R.id.profileFragment)
-        clickOn(R.id.menuProfileSettings)
+        openDrawer()
+        clickOn(R.string.nav_settings)
     }
 
     // If the version string is displayed, we are on settings
