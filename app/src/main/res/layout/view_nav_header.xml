@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="176dp"
     android:background="@drawable/side_nav_bar"
@@ -10,27 +10,28 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:theme="@style/ThemeOverlay.AppCompat.Dark">
+    android:theme="@style/ThemeOverlay.MaterialComponents.Dark">
 
     <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:contentDescription="Description"
-        android:paddingTop="8dp"
-        app:srcCompat="@mipmap/ic_launcher_round" />
+        android:id="@+id/viewNavHeaderImage"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_gravity="start"
+        tools:src="@mipmap/ic_launcher_round" />
 
     <TextView
+        android:id="@+id/viewNavHeaderTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="8dp"
-        android:text="Title"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+        android:paddingTop="16dp"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+        tools:text="Title" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/viewNavHeaderSubtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Subtitle" />
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+        tools:text="Subtitle" />
 
 </LinearLayout>

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import androidx.core.view.GravityCompat
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
@@ -11,6 +12,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.bumptech.glide.Glide
 import com.chesire.lifecyklelog.LogLifecykle
 import com.chesire.malime.AuthCaster
 import com.chesire.malime.OverviewNavGraphDirections
@@ -18,6 +20,9 @@ import com.chesire.malime.R
 import com.google.android.material.navigation.NavigationView
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity.activityDrawer
+import kotlinx.android.synthetic.main.view_nav_header.viewNavHeaderImage
+import kotlinx.android.synthetic.main.view_nav_header.viewNavHeaderSubtitle
+import kotlinx.android.synthetic.main.view_nav_header.viewNavHeaderTitle
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -45,6 +50,19 @@ class Activity : DaggerAppCompatActivity(), AuthCaster.AuthCasterListener {
         loadGraph()
 
         authCaster.subscribeToAuthError(this)
+
+        observeViewModel()
+    }
+
+    private fun observeViewModel() {
+        viewModel.user.observe(this, Observer { userModel ->
+            Glide.with(this)
+                .load(userModel.avatar.medium.url)
+                .optionalCircleCrop()
+                .into(findViewById(R.id.viewNavHeaderImage))
+            viewNavHeaderTitle.text = userModel.name
+            viewNavHeaderSubtitle.text = userModel.service.name
+        })
     }
 
     override fun onDestroy() {
@@ -94,6 +112,9 @@ class Activity : DaggerAppCompatActivity(), AuthCaster.AuthCasterListener {
         logout()
     }
 
+    /**
+     * Sends a logout request to the [viewModel] to handle.
+     */
     fun logout() {
         Timber.w("Logout called, now attempting")
         viewModel.logout {
