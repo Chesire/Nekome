@@ -2,6 +2,7 @@
 
 [![Build Status](https://app.bitrise.io/app/b9a83a0271f20f47/status.svg?token=5iXkOtZfs29XH4IaFFwYSQ&branch=v2)](https://app.bitrise.io/app/b9a83a0271f20f47)
 [![codebeat badge](https://codebeat.co/badges/165302be-dea8-41c8-9d6e-1830f59183bb)](https://codebeat.co/projects/github-com-chesire-malime-master)
+[![codecov](https://codecov.io/gh/Chesire/Malime/branch/v2/graph/badge.svg)](https://codecov.io/gh/Chesire/Malime)
 
 Malime is an open source Android application to track your Anime & Manga progress, through the use of Kitsu.io.
 [<img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png"
