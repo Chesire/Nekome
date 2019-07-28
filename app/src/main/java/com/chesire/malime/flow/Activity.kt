@@ -5,6 +5,7 @@ import android.os.Handler
 import android.os.HandlerThread
 import androidx.annotation.IdRes
 import androidx.core.view.GravityCompat
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -34,6 +35,14 @@ class Activity : DaggerAppCompatActivity(), AuthCaster.AuthCasterListener {
     lateinit var authProvider: AuthProvider
     @Inject
     lateinit var sharedPref: SharedPref
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
+
+    private val viewModel by lazy {
+        ViewModelProviders
+            .of(this, viewModelFactory)
+            .get(ActivityViewModel::class.java)
+    }
 
     private lateinit var appBarConfiguration: AppBarConfiguration
 
