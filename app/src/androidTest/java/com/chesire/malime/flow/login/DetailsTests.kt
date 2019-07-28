@@ -16,6 +16,7 @@ import com.chesire.malime.core.models.UserModel
 import com.chesire.malime.flow.Activity
 import com.chesire.malime.helpers.ToastMatcher.Companion.onToast
 import com.chesire.malime.helpers.injector
+import com.chesire.malime.kitsu.AuthProvider
 import com.schibsted.spain.barista.assertion.BaristaErrorAssertions.assertError
 import com.schibsted.spain.barista.assertion.BaristaVisibilityAssertions.assertDisplayed
 import com.schibsted.spain.barista.interaction.BaristaClickInteractions.clickOn
@@ -44,11 +45,14 @@ class DetailsTests {
     lateinit var library: LibraryApi
     @Inject
     lateinit var sharedPref: SharedPref
+    @Inject
+    lateinit var authProvider: AuthProvider
 
     @Before
     fun setUp() {
         injector.inject(this)
 
+        authProvider.accessToken = ""
         sharedPref.isAnalyticsComplete = true
 
         coEvery {
