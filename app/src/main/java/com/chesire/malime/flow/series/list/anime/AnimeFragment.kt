@@ -6,7 +6,6 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import com.chesire.lifecyklelog.LogLifecykle
-import com.chesire.malime.R
 import com.chesire.malime.core.models.SeriesModel
 import com.chesire.malime.flow.series.list.SeriesListFragment
 
