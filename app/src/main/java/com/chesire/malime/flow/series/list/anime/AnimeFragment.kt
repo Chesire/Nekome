@@ -12,11 +12,6 @@ import com.chesire.malime.flow.series.list.SeriesListFragment
 
 @LogLifecykle
 class AnimeFragment : SeriesListFragment() {
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        setToolbarTitle(R.string.nav_anime)
-    }
-
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel.animeSeries.observe(

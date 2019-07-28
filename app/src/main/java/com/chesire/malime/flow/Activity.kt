@@ -4,11 +4,12 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.HandlerThread
 import androidx.annotation.IdRes
-import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.navigateUp
+import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.chesire.lifecyklelog.LogLifecykle
 import com.chesire.malime.AuthCaster
@@ -34,12 +35,15 @@ class Activity : DaggerAppCompatActivity(), AuthCaster.AuthCasterListener {
     @Inject
     lateinit var sharedPref: SharedPref
 
+    private lateinit var appBarConfiguration: AppBarConfiguration
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity)
 
-        loadGraph()
+        setSupportActionBar(findViewById(R.id.appBarToolbar))
         setupNavController()
+        loadGraph()
 
         authCaster.subscribeToAuthError(this)
     }
@@ -67,6 +71,22 @@ class Activity : DaggerAppCompatActivity(), AuthCaster.AuthCasterListener {
             }
     }
 
+    private fun setupNavController() {
+        val nav = findNavController(R.id.activityNavigation)
+        findViewById<NavigationView>(R.id.activityNavigationView).setupWithNavController(nav)
+        appBarConfiguration = AppBarConfiguration(
+            setOf(
+                R.id.animeFragment,
+                R.id.mangaFragment,
+                R.id.timelineFragment,
+                R.id.profileFragment
+            ),
+            findViewById(R.id.activityDrawer)
+        )
+
+        setupActionBarWithNavController(nav, appBarConfiguration)
+    }
+
     @IdRes
     private fun chooseStartingDestination(): Int {
         return if (authProvider.accessToken.isEmpty()) {
@@ -80,30 +100,12 @@ class Activity : DaggerAppCompatActivity(), AuthCaster.AuthCasterListener {
         }
     }
 
-    private fun setupNavController() = with(findNavController(R.id.activityNavigation)) {
-        findViewById<NavigationView>(R.id.activityNavigationView).setupWithNavController(this)
-    }
+    override fun onSupportNavigateUp() =
+        findNavController(R.id.activityNavigation).navigateUp(appBarConfiguration)
 
     override fun unableToRefresh() {
         Timber.w("unableToRefresh has occurred")
         logout()
-    }
-
-    /**
-     * Sets the navigation drawer icon on the provided [toolbar].
-     */
-    fun setNavigationDrawerIcon(toolbar: Toolbar) {
-        setSupportActionBar(toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true);
-        val toggle = ActionBarDrawerToggle(
-            this,
-            this.findViewById(R.id.activityDrawer),
-            toolbar,
-            0,
-            0
-        )
-        toggle.isDrawerIndicatorEnabled = true;
-        toggle.syncState();
     }
 
     /**
