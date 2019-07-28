@@ -32,10 +32,6 @@ class Activity : DaggerAppCompatActivity(), AuthCaster.AuthCasterListener {
     @Inject
     lateinit var authCaster: AuthCaster
     @Inject
-    lateinit var authProvider: AuthProvider
-    @Inject
-    lateinit var sharedPref: SharedPref
-    @Inject
     lateinit var viewModelFactory: ViewModelFactory
 
     private val viewModel by lazy {
@@ -75,7 +71,7 @@ class Activity : DaggerAppCompatActivity(), AuthCaster.AuthCasterListener {
             ?.navController
             ?.apply {
                 graph = navInflater.inflate(R.navigation.nav_graph).also {
-                    it.startDestination = chooseStartingDestination()
+                    it.startDestination = viewModel.startingFragment
                 }
             }
     }
@@ -94,19 +90,6 @@ class Activity : DaggerAppCompatActivity(), AuthCaster.AuthCasterListener {
         )
 
         setupActionBarWithNavController(nav, appBarConfiguration)
-    }
-
-    @IdRes
-    private fun chooseStartingDestination(): Int {
-        return if (authProvider.accessToken.isEmpty()) {
-            if (sharedPref.isAnalyticsComplete) {
-                R.id.detailsFragment
-            } else {
-                R.id.analyticsFragment
-            }
-        } else {
-            R.id.animeFragment
-        }
     }
 
     override fun onSupportNavigateUp() =
