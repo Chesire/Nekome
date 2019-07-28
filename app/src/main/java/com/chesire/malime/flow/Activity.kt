@@ -3,6 +3,7 @@ package com.chesire.malime.flow
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.widget.ImageView
 import androidx.core.view.GravityCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -58,11 +59,12 @@ class Activity : DaggerAppCompatActivity(), AuthCaster.AuthCasterListener {
             if (userModel == null) {
                 return@Observer
             }
+            val view = findViewById<ImageView>(R.id.viewNavHeaderImage) ?: return@Observer
 
             Glide.with(this)
                 .load(userModel.avatar.medium.url)
                 .optionalCircleCrop()
-                .into(findViewById(R.id.viewNavHeaderImage))
+                .into(view)
             viewNavHeaderTitle.text = userModel.name
             viewNavHeaderSubtitle.text = userModel.service.name
         })
