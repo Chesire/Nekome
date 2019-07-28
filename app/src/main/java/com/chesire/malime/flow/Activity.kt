@@ -113,14 +113,17 @@ class Activity : DaggerAppCompatActivity(), AuthCaster.AuthCasterListener {
      */
     fun logout() {
         Timber.w("Starting log out from Activity")
-        val handlerThread = HandlerThread("LogoutThread")
-        handlerThread.start()
-        Handler(handlerThread.looper).post {
-            logoutHandler.executeLogout()
-            findNavController(R.id.activityNavigation).navigate(
-                OverviewNavGraphDirections.globalToDetailsFragment()
-            )
-            handlerThread.quitSafely()
+        // Maybe should move this into a coroutine
+        with(HandlerThread("LogoutThread")) {
+            start()
+            Handler(looper).post {
+                logoutHandler.executeLogout()
+                quitSafely()
+            }
         }
+
+        findNavController(R.id.activityNavigation).navigate(
+            OverviewNavGraphDirections.globalToDetailsFragment()
+        )
     }
 }
