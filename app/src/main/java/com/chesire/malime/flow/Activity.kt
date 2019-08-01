@@ -3,7 +3,7 @@ package com.chesire.malime.flow
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.widget.ImageView
+import android.widget.TextView
 import androidx.core.view.GravityCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -21,8 +21,6 @@ import com.chesire.malime.R
 import com.google.android.material.navigation.NavigationView
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity.activityDrawer
-import kotlinx.android.synthetic.main.view_nav_header.viewNavHeaderSubtitle
-import kotlinx.android.synthetic.main.view_nav_header.viewNavHeaderTitle
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -59,14 +57,16 @@ class Activity : DaggerAppCompatActivity(), AuthCaster.AuthCasterListener {
             if (userModel == null) {
                 return@Observer
             }
-            val view = findViewById<ImageView>(R.id.viewNavHeaderImage) ?: return@Observer
 
-            Glide.with(this)
-                .load(userModel.avatar.medium.url)
-                .optionalCircleCrop()
-                .into(view)
-            viewNavHeaderTitle.text = userModel.name
-            viewNavHeaderSubtitle.text = userModel.service.name
+            findViewById<NavigationView>(R.id.activityNavigationView)?.getHeaderView(0)?.let {
+                it.findViewById<TextView>(R.id.viewNavHeaderTitle).text = userModel.name
+                it.findViewById<TextView>(R.id.viewNavHeaderSubtitle).text = userModel.service.name
+
+                Glide.with(this)
+                    .load(userModel.avatar.medium.url)
+                    .optionalCircleCrop()
+                    .into(it.findViewById(R.id.viewNavHeaderImage))
+            }
         })
     }
 
