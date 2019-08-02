@@ -9,6 +9,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chesire.malime.R
@@ -20,9 +21,16 @@ import com.chesire.malime.flow.DialogHandler
 import com.chesire.malime.flow.ViewModelFactory
 import com.chesire.malime.flow.series.list.anime.AnimeFragment
 import com.chesire.malime.flow.series.list.manga.MangaFragment
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_COLLAPSED
+import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_HIDDEN
 import com.google.android.material.snackbar.Snackbar
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_series_list.fragmentSeriesListLayout
+import kotlinx.android.synthetic.main.view_bottom_sheet.viewBottomSheetLayout
+import kotlinx.android.synthetic.main.view_bottom_sheet.viewBottomSheetProgress
+import kotlinx.android.synthetic.main.view_bottom_sheet.viewBottomSheetSubtitle
+import kotlinx.android.synthetic.main.view_bottom_sheet.viewBottomSheetTitle
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -50,6 +58,7 @@ abstract class SeriesListFragment :
     }
 
     private lateinit var seriesAdapter: SeriesAdapter
+    private lateinit var sheetBehavior: BottomSheetBehavior<LinearLayout>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,6 +84,14 @@ abstract class SeriesListFragment :
             toSearch()
         }
     }.root
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        sheetBehavior = BottomSheetBehavior.from(viewBottomSheetLayout).also {
+            it.state = STATE_HIDDEN
+        }
+    }
 
     override fun onStart() {
         super.onStart()
@@ -110,7 +127,14 @@ abstract class SeriesListFragment :
 
     override fun seriesSelected(imageView: ImageView, model: SeriesModel) {
         Timber.i("seriesSelected called with Model ${model.slug}")
-        toDetails(model, imageView to model.title)
+        loadBottomSheet(model)
+    }
+
+    private fun loadBottomSheet(model: SeriesModel) {
+        sheetBehavior.state = STATE_COLLAPSED
+        viewBottomSheetTitle.text = model.title
+        viewBottomSheetSubtitle.text = model.userSeriesStatus.name
+        viewBottomSheetProgress.text = "${model.progress} / ${model.totalLength}"
     }
 
     override fun onPlusOne(model: SeriesModel, callback: () -> Unit) {
@@ -128,11 +152,6 @@ abstract class SeriesListFragment :
             callback()
         }
     }
-
-    /**
-     * Tell the current fragment to navigate to its details screen.
-     */
-    abstract fun toDetails(model: SeriesModel, navigatorExtras: Pair<View, String>)
 
     /**
      * Tell the current fragment to navigate to its search screen.

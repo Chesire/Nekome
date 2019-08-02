@@ -52,11 +52,7 @@
 
         <View
             android:id="@+id/adapterItemSeriesDivider"
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_margin="8dp"
-            android:alpha="0.3"
-            android:background="@android:color/darker_gray"
+            style="@style/DividerStyle"
             app:layout_constraintBottom_toTopOf="@id/adapterItemSeriesPlusOne"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/adapterItemSeriesImage"

@@ -38,6 +38,15 @@
         <item name="android:tint">@color/white</item>
     </style>
 
+    <style name="DividerStyle">
+        <item name="android:id">@+id/adapterItemSeriesDivider</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:layout_margin">8dp</item>
+        <item name="android:alpha">0.3</item>
+        <item name="android:background">@color/darkerGrey</item>
+    </style>
+
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
