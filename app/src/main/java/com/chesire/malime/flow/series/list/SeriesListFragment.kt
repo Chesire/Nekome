@@ -9,7 +9,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.LinearLayout
+import androidx.fragment.app.commit
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chesire.malime.R
@@ -19,6 +19,8 @@ import com.chesire.malime.core.models.SeriesModel
 import com.chesire.malime.databinding.FragmentSeriesListBinding
 import com.chesire.malime.flow.DialogHandler
 import com.chesire.malime.flow.ViewModelFactory
+import com.chesire.malime.flow.series.detail.SeriesDetailFragment
+import com.chesire.malime.flow.series.detail.SeriesDetailViewModel
 import com.chesire.malime.flow.series.list.anime.AnimeFragment
 import com.chesire.malime.flow.series.list.manga.MangaFragment
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -26,11 +28,8 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_COLLAPS
 import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_HIDDEN
 import com.google.android.material.snackbar.Snackbar
 import dagger.android.support.DaggerFragment
+import kotlinx.android.synthetic.main.fragment_series_list.fragmentSeriesListBottomSheet
 import kotlinx.android.synthetic.main.fragment_series_list.fragmentSeriesListLayout
-import kotlinx.android.synthetic.main.view_bottom_sheet.viewBottomSheetLayout
-import kotlinx.android.synthetic.main.view_bottom_sheet.viewBottomSheetProgress
-import kotlinx.android.synthetic.main.view_bottom_sheet.viewBottomSheetSubtitle
-import kotlinx.android.synthetic.main.view_bottom_sheet.viewBottomSheetTitle
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -56,9 +55,14 @@ abstract class SeriesListFragment :
             .of(this, viewModelFactory)
             .get(SeriesListViewModel::class.java)
     }
+    private val detailViewModel by lazy {
+        ViewModelProviders
+            .of(requireActivity(), viewModelFactory)
+            .get(SeriesDetailViewModel::class.java)
+    }
 
     private lateinit var seriesAdapter: SeriesAdapter
-    private lateinit var sheetBehavior: BottomSheetBehavior<LinearLayout>
+    private lateinit var sheetBehavior: BottomSheetBehavior<View>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -83,13 +87,26 @@ abstract class SeriesListFragment :
         fragmentSeriesListFab.setOnClickListener {
             toSearch()
         }
+
     }.root
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        sheetBehavior = BottomSheetBehavior.from(viewBottomSheetLayout).also {
+        sheetBehavior = BottomSheetBehavior.from(fragmentSeriesListBottomSheet).also {
             it.state = STATE_HIDDEN
+        }
+
+        if (savedInstanceState == null) {
+            childFragmentManager.commit {
+                childFragmentManager.findFragmentByTag(SeriesDetailFragment.TAG)?.let { previous ->
+                    show(previous)
+                } ?: replace(
+                    R.id.fragmentSeriesDetailContainer,
+                    SeriesDetailFragment.newInstance(),
+                    SeriesDetailFragment.TAG
+                )
+            }
         }
     }
 
@@ -127,14 +144,8 @@ abstract class SeriesListFragment :
 
     override fun seriesSelected(imageView: ImageView, model: SeriesModel) {
         Timber.i("seriesSelected called with Model ${model.slug}")
-        loadBottomSheet(model)
-    }
-
-    private fun loadBottomSheet(model: SeriesModel) {
         sheetBehavior.state = STATE_COLLAPSED
-        viewBottomSheetTitle.text = model.title
-        viewBottomSheetSubtitle.text = model.userSeriesStatus.name
-        viewBottomSheetProgress.text = "${model.progress} / ${model.totalLength}"
+        detailViewModel.updateModel(model)
     }
 
     override fun onPlusOne(model: SeriesModel, callback: () -> Unit) {
