@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/viewBottomSheetLayout"
     android:layout_width="match_parent"
@@ -7,29 +7,12 @@
     android:background="@drawable/bottom_sheet_background"
     android:clickable="true"
     android:elevation="8dp"
-    android:orientation="vertical"
     app:behavior_hideable="true"
     app:behavior_peekHeight="160dp"
     app:layout_behavior="@string/bottom_sheet_behavior">
 
-    <include layout="@layout/view_bottom_sheet_header" />
-
-    <LinearLayout
+    <FrameLayout
+        android:id="@+id/viewBottomSheetContainer"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:orientation="vertical">
-
-        <include layout="@layout/view_bottom_sheet_actions" />
-
-        <View
-            android:id="@+id/adapterItemSeriesDivider"
-            style="@style/DividerStyle"
-            android:layout_width="match_parent"
-            android:layout_height="1dp" />
-
-        <include layout="@layout/view_bottom_sheet_content" />
-
-    </LinearLayout>
-</LinearLayout>
-
+        android:layout_height="match_parent" />
+</FrameLayout>

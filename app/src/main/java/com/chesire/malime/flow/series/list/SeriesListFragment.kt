@@ -102,7 +102,7 @@ abstract class SeriesListFragment :
                 childFragmentManager.findFragmentByTag(SeriesDetailFragment.TAG)?.let { previous ->
                     show(previous)
                 } ?: replace(
-                    R.id.fragmentSeriesDetailContainer,
+                    R.id.viewBottomSheetContainer,
                     SeriesDetailFragment.newInstance(),
                     SeriesDetailFragment.TAG
                 )

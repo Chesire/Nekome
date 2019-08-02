@@ -17,7 +17,7 @@
 
         <include
             android:id="@+id/fragmentSeriesListBottomSheet"
-            layout="@layout/fragment_series_detail" />
+            layout="@layout/view_bottom_sheet" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fragmentSeriesListFab"
