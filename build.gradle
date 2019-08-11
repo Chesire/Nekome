@@ -16,7 +16,7 @@ buildscript {
 }
 
 plugins {
-    id "io.gitlab.arturbosch.detekt" version "1.0.0-RC15"
+    id "io.gitlab.arturbosch.detekt" version "1.0.0"
 }
 
 allprojects {
@@ -28,7 +28,7 @@ allprojects {
 }
 
 detekt {
-    toolVersion = "1.0.0-RC15"
+    toolVersion = "1.0.0"
     config = files("detekt.yml")
     input = files(
             "app/src/main/java",
