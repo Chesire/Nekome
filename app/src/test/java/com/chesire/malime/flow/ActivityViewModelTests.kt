@@ -40,6 +40,7 @@ class ActivityViewModelTests {
             mockAuthProvider,
             mockSharedPref,
             mockLogoutHandler,
+            coroutineRule.testDispatcher,
             mockUserRepository
         )
 
@@ -63,6 +64,7 @@ class ActivityViewModelTests {
             mockAuthProvider,
             mockSharedPref,
             mockLogoutHandler,
+            coroutineRule.testDispatcher,
             mockUserRepository
         )
 
@@ -86,6 +88,7 @@ class ActivityViewModelTests {
             mockAuthProvider,
             mockSharedPref,
             mockLogoutHandler,
+            coroutineRule.testDispatcher,
             mockUserRepository
         )
 
@@ -96,7 +99,9 @@ class ActivityViewModelTests {
     fun `logout tells the logoutHandler to execute`() {
         val mockAuthProvider = mockk<AuthProvider>()
         val mockSharedPref = mockk<SharedPref>()
-        val mockLogoutHandler = mockk<LogoutHandler>()
+        val mockLogoutHandler = mockk<LogoutHandler> {
+            every { executeLogout() } just Runs
+        }
         val mockUserRepository = mockk<UserRepository> {
             every { user } returns mockk()
         }
@@ -105,6 +110,7 @@ class ActivityViewModelTests {
             mockAuthProvider,
             mockSharedPref,
             mockLogoutHandler,
+            coroutineRule.testDispatcher,
             mockUserRepository
         )
 
@@ -129,6 +135,7 @@ class ActivityViewModelTests {
             mockAuthProvider,
             mockSharedPref,
             mockLogoutHandler,
+            coroutineRule.testDispatcher,
             mockUserRepository
         )
 
