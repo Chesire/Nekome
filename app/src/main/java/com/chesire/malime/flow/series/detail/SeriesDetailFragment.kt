@@ -7,7 +7,8 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.get
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.transition.TransitionInflater
@@ -27,9 +28,7 @@ class SeriesDetailFragment : DaggerFragment() {
 
     private val args by navArgs<SeriesDetailFragmentArgs>()
     private val viewModel by lazy {
-        ViewModelProviders
-            .of(this, viewModelFactory)
-            .get(SeriesDetailViewModel::class.java)
+        ViewModelProvider(this, viewModelFactory).get<SeriesDetailViewModel>()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

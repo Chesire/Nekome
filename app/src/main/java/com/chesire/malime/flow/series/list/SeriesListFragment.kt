@@ -9,7 +9,8 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.get
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chesire.malime.R
 import com.chesire.malime.SharedPref
@@ -44,9 +45,7 @@ abstract class SeriesListFragment :
     lateinit var sharedPref: SharedPref
 
     protected val viewModel by lazy {
-        ViewModelProviders
-            .of(this, viewModelFactory)
-            .get(SeriesListViewModel::class.java)
+        ViewModelProvider(this, viewModelFactory).get<SeriesListViewModel>()
     }
 
     private lateinit var seriesAdapter: SeriesAdapter

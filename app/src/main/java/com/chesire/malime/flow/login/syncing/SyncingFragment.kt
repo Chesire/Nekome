@@ -5,7 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.get
 import androidx.navigation.fragment.findNavController
 import com.chesire.lifecyklelog.LogLifecykle
 import com.chesire.malime.AsyncState
@@ -22,11 +23,8 @@ import javax.inject.Inject
 class SyncingFragment : DaggerFragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
-
     private val viewModel by lazy {
-        ViewModelProviders
-            .of(this, viewModelFactory)
-            .get(SyncingViewModel::class.java)
+        ViewModelProvider(this, viewModelFactory).get<SyncingViewModel>()
     }
 
     override fun onCreateView(

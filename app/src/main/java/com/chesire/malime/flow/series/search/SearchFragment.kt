@@ -5,7 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.get
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chesire.lifecyklelog.LogLifecykle
 import com.chesire.malime.AsyncState
@@ -22,11 +23,8 @@ class SearchFragment : DaggerFragment(), SearchInteractionListener {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
     private lateinit var searchAdapter: SearchAdapter
-
     private val viewModel by lazy {
-        ViewModelProviders
-            .of(this, viewModelFactory)
-            .get(SearchViewModel::class.java)
+        ViewModelProvider(this, viewModelFactory).get<SearchViewModel>()
     }
 
     override fun onCreateView(

@@ -74,6 +74,7 @@ android {
 
 dependencies {
     ext {
+        lifecycle_version = "2.2.0-alpha03"
         material_dialog_version = "3.1.0"
         preferences_version = "1.1.0-rc01"
     }
@@ -89,8 +90,8 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta2'
     implementation "androidx.core:core-ktx:$corektx_version"
     implementation 'androidx.fragment:fragment-ktx:1.2.0-alpha02'
-    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0-alpha02'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0-alpha03'
+    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
     implementation "androidx.preference:preference:$preferences_version"
