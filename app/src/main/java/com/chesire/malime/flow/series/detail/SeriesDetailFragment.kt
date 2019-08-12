@@ -38,9 +38,9 @@ class SeriesDetailFragment : DaggerFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.model.observe(viewLifecycleOwner, Observer { model ->
-            viewBottomSheetTitle.text = model.title
-            viewBottomSheetSubtitle.text = model.userSeriesStatus.name
-            viewBottomSheetProgress.text = "${model.progress} / ${model.totalLength}"
+            viewBottomSheetTitle.setText(model.title)
+            viewBottomSheetSubtitle.setText(model.userSeriesStatus.name)
+            viewBottomSheetProgress.setText("${model.progress} / ${model.totalLength}")
         })
     }
 
