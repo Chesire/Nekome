@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/bottom_sheet_background"
-    android:elevation="8dp"
+    android:elevation="@dimen/bottom_sheet_elevation"
     android:orientation="vertical">
 
     <include layout="@layout/view_bottom_sheet_header" />

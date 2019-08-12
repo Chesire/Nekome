@@ -6,6 +6,8 @@
     <dimen name="half_margin">8dp</dimen>
     <dimen name="full_margin">16dp</dimen>
 
+    <dimen name="bottom_sheet_elevation">8dp</dimen>
+
     <dimen name="progress_bar_height">8dp</dimen>
 
     <dimen name="nav_heading_height">176dp</dimen>
