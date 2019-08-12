@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/bottom_sheet_header_section_height">
+
+    <TextSwitcher
+        android:id="@+id/viewBottomSheetTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/half_margin"
+        android:layout_marginStart="@dimen/half_margin"
+        android:layout_marginTop="@dimen/full_margin"
+        android:inAnimation="@android:anim/fade_in"
+        android:outAnimation="@android:anim/fade_out"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/BottomSheetHeaderTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="No Game No Life"
+            tools:textColor="@android:color/black" />
+
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/BottomSheetHeaderTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="No Game No Life"
+            tools:textColor="@android:color/black" />
+    </TextSwitcher>
+
+    <TextSwitcher
+        android:id="@+id/viewBottomSheetSubtitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/full_margin"
+        android:layout_marginEnd="@dimen/half_margin"
+        android:layout_marginStart="@dimen/half_margin"
+        android:inAnimation="@android:anim/fade_in"
+        android:outAnimation="@android:anim/fade_out"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/viewBottomSheetProgress"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/viewBottomSheetTitle">
+
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/BottomSheetHeaderSubtitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="Current"
+            tools:textColor="@android:color/black" />
+
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/BottomSheetHeaderSubtitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="Current"
+            tools:textColor="@android:color/black" />
+    </TextSwitcher>
+
+    <TextSwitcher
+        android:id="@+id/viewBottomSheetProgress"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/half_margin"
+        android:layout_marginStart="@dimen/half_margin"
+        android:inAnimation="@android:anim/fade_in"
+        android:outAnimation="@android:anim/fade_out"
+        app:flow_horizontalBias="1"
+        app:layout_constraintBaseline_toBaselineOf="@id/viewBottomSheetSubtitle"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/viewBottomSheetSubtitle"
+        app:layout_constraintTop_toBottomOf="@id/viewBottomSheetTitle">
+
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/BottomSheetHeaderProgress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="999 / 999"
+            tools:textColor="@android:color/black" />
+
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/BottomSheetHeaderProgress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="999 / 999"
+            tools:textColor="@android:color/black" />
+    </TextSwitcher>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,46 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bottom_sheet_background"
+    android:elevation="@dimen/bottom_sheet_elevation"
+    android:orientation="vertical">
 
-    <data>
+    <include layout="@layout/view_bottom_sheet_header" />
 
-        <variable
-            name="vm"
-            type="com.chesire.malime.flow.series.detail.SeriesDetailViewModel" />
-    </data>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/fragmentSeriesDetailImageView"
-            android:layout_width="100dp"
-            android:layout_height="145dp"
-            android:layout_gravity="center"
-            android:layout_margin="16dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0"
-            tools:src="@drawable/ic_launcher_background" />
+        <include layout="@layout/view_bottom_sheet_actions" />
 
-        <!--
-        <TextView
-            android:id="@+id/"
-            style="@android:style/TextAppearance.DeviceDefault.Medium"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/fragmentSeriesDetailImageView"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0"
-            tools:text="No Game No Life" />
-            -->
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</layout>
+        <View
+            style="@style/DividerStyle"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/divider_height" />
+
+        <include layout="@layout/view_bottom_sheet_content" />
+
+    </LinearLayout>
+</LinearLayout>
+
