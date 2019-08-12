@@ -9,7 +9,7 @@
     android:elevation="@dimen/bottom_sheet_elevation"
     android:focusable="true"
     app:behavior_hideable="true"
-    app:behavior_peekHeight="160dp"
+    app:behavior_peekHeight="@dimen/bottom_sheet_header_height"
     app:layout_behavior="@string/bottom_sheet_behavior">
 
     <FrameLayout
