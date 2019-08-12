@@ -84,7 +84,6 @@ abstract class SeriesListFragment :
         fragmentSeriesListFab.setOnClickListener {
             toSearch()
         }
-
     }.root
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

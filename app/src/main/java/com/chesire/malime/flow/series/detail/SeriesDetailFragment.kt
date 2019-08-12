@@ -16,6 +16,9 @@ import kotlinx.android.synthetic.main.view_bottom_sheet_header.viewBottomSheetSu
 import kotlinx.android.synthetic.main.view_bottom_sheet_header.viewBottomSheetTitle
 import javax.inject.Inject
 
+/**
+ * A fragment to display details about a series, and provide buttons to interact with the series.
+ */
 @LogLifecykle
 class SeriesDetailFragment : DaggerFragment() {
     @Inject
@@ -42,7 +45,14 @@ class SeriesDetailFragment : DaggerFragment() {
     }
 
     companion object {
+        /**
+         * Identifying tag for the fragment.
+         */
         const val TAG = "SeriesDetailFragment"
+
+        /**
+         * Constructs a new instance of [SeriesDetailFragment].
+         */
         fun newInstance() = SeriesDetailFragment()
     }
 }
