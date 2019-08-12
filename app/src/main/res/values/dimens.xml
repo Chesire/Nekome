@@ -11,4 +11,6 @@
     <dimen name="nav_heading_height">176dp</dimen>
     <dimen name="nav_image_height">56dp</dimen>
     <dimen name="nav_image_width">56dp</dimen>
+
+    <dimen name="divider_height">1dp</dimen>
 </resources>

@@ -17,10 +17,9 @@
         <include layout="@layout/view_bottom_sheet_actions" />
 
         <View
-            android:id="@+id/adapterItemSeriesDivider"
             style="@style/DividerStyle"
             android:layout_width="match_parent"
-            android:layout_height="1dp" />
+            android:layout_height="@dimen/divider_height" />
 
         <include layout="@layout/view_bottom_sheet_content" />
 

@@ -60,7 +60,7 @@
 
     <style name="DividerStyle">
         <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">1dp</item>
+        <item name="android:layout_height">@dimen/divider_height</item>
         <item name="android:layout_margin">8dp</item>
         <item name="android:alpha">0.3</item>
         <item name="android:background">@color/darkerGrey</item>
