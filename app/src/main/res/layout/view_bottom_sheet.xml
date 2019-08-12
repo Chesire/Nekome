@@ -7,6 +7,7 @@
     android:background="@drawable/bottom_sheet_background"
     android:clickable="true"
     android:elevation="@dimen/bottom_sheet_elevation"
+    android:focusable="true"
     app:behavior_hideable="true"
     app:behavior_peekHeight="160dp"
     app:layout_behavior="@string/bottom_sheet_behavior">
