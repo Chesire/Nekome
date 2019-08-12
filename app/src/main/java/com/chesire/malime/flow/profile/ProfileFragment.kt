@@ -8,7 +8,8 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.get
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -26,9 +27,7 @@ class ProfileFragment : DaggerFragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
     private val viewModel by lazy {
-        ViewModelProviders
-            .of(this, viewModelFactory)
-            .get(ProfileViewModel::class.java)
+        ViewModelProvider(this, viewModelFactory).get<ProfileViewModel>()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

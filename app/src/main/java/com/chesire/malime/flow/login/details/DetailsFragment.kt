@@ -8,7 +8,8 @@ import android.view.inputmethod.EditorInfo
 import androidx.annotation.StringRes
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.get
 import androidx.navigation.fragment.findNavController
 import com.chesire.lifecyklelog.LogLifecykle
 import com.chesire.malime.R
@@ -33,11 +34,8 @@ import javax.inject.Inject
 class DetailsFragment : DaggerFragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
-
     private val viewModel by lazy {
-        ViewModelProviders
-            .of(this, viewModelFactory)
-            .get(DetailsViewModel::class.java)
+        ViewModelProvider(this, viewModelFactory).get<DetailsViewModel>()
     }
 
     override fun onCreateView(

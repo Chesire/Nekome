@@ -3,16 +3,17 @@ package com.chesire.malime.flow
 import androidx.annotation.IdRes
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.chesire.malime.IOContext
 import com.chesire.malime.LogoutHandler
 import com.chesire.malime.R
 import com.chesire.malime.SharedPref
 import com.chesire.malime.kitsu.AuthProvider
 import com.chesire.malime.repo.UserRepository
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import timber.log.Timber
 import javax.inject.Inject
+import kotlin.coroutines.CoroutineContext
 
 /**
  * [ViewModel] scoped to the [Activity].
@@ -21,6 +22,7 @@ class ActivityViewModel @Inject constructor(
     private val authProvider: AuthProvider,
     private val sharedPref: SharedPref,
     private val logoutHandler: LogoutHandler,
+    @IOContext private val ioContext: CoroutineContext,
     userRepository: UserRepository
 ) : ViewModel() {
     /**
@@ -50,7 +52,7 @@ class ActivityViewModel @Inject constructor(
      * executed after the [LogoutHandler] has finished clearing its data.
      */
     fun logout(callback: () -> Unit) = viewModelScope.launch {
-        withContext(Dispatchers.IO) {
+        withContext(ioContext) {
             logoutHandler.executeLogout()
         }
 

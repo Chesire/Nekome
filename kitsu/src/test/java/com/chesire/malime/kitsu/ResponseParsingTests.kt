@@ -3,6 +3,7 @@ package com.chesire.malime.kitsu
 import com.chesire.malime.core.Resource
 import io.mockk.every
 import io.mockk.mockk
+import okhttp3.MediaType
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
@@ -14,6 +15,8 @@ class ResponseParsingTests {
     fun `Response#parse !isSuccessful false returns Resource#Error`() {
         val response = Response.error<Any>(400, mockk {
             every { string() } returns ""
+            every { contentType() } returns MediaType.get("application/json")
+            every { contentLength() } returns 0
         })
         assertTrue(response.parse() is Resource.Error)
     }
@@ -35,6 +38,8 @@ class ResponseParsingTests {
         val expected = "expectedError"
         val response = Response.error<Any>(400, mockk {
             every { string() } returns expected
+            every { contentType() } returns MediaType.get("application/json")
+            every { contentLength() } returns 0
         })
         assertEquals(expected, response.parseError().msg)
     }
@@ -44,6 +49,8 @@ class ResponseParsingTests {
         val expected = "expectedError"
         val response = Response.error<Any>(400, mockk {
             every { string() } returns expected
+            every { contentType() } returns MediaType.get("application/json")
+            every { contentLength() } returns 0
         })
         assertEquals(400, response.parseError().code)
     }

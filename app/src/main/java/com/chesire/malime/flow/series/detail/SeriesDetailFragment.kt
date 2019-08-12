@@ -5,7 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.get
 import com.chesire.lifecyklelog.LogLifecykle
 import com.chesire.malime.R
 import com.chesire.malime.flow.ViewModelFactory
@@ -21,9 +22,7 @@ class SeriesDetailFragment : DaggerFragment() {
     lateinit var viewModelFactory: ViewModelFactory
 
     private val viewModel by lazy {
-        ViewModelProviders
-            .of(requireActivity(), viewModelFactory)
-            .get(SeriesDetailViewModel::class.java)
+        ViewModelProvider(requireActivity(), viewModelFactory).get<SeriesDetailViewModel>()
     }
 
     override fun onCreateView(

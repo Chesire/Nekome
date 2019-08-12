@@ -8,7 +8,8 @@ import android.text.style.URLSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.get
 import androidx.navigation.fragment.findNavController
 import com.chesire.lifecyklelog.LogLifecykle
 import com.chesire.malime.R
@@ -24,11 +25,8 @@ import javax.inject.Inject
 class AnalyticsFragment : DaggerFragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
-
     private val viewModel by lazy {
-        ViewModelProviders
-            .of(this, viewModelFactory)
-            .get(AnalyticsViewModel::class.java)
+        ViewModelProvider(this, viewModelFactory).get<AnalyticsViewModel>()
     }
 
     override fun onCreateView(

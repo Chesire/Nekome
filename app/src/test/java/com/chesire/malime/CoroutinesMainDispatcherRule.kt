@@ -10,7 +10,11 @@ import org.junit.runner.Description
 
 @ExperimentalCoroutinesApi
 class CoroutinesMainDispatcherRule : TestWatcher() {
-    private val testDispatcher = TestCoroutineDispatcher()
+    /**
+     * The dispatcher used during tests, accessible in order to inject the same dispatcher that the
+     * rest of the test might use.
+     */
+    val testDispatcher = TestCoroutineDispatcher()
 
     override fun starting(description: Description?) {
         super.starting(description)

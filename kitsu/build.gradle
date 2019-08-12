@@ -32,6 +32,9 @@ android {
                 'WrongAnnotationOrder',
                 'XmlSpacing'
     }
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -41,7 +44,7 @@ android {
 dependencies {
     ext {
         moshi_version = "1.8.0"
-        retrofit_version = "2.6.0"
+        retrofit_version = "2.6.1"
     }
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation fileTree(dir: 'libs', include: ['*.jar'])
