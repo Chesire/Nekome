@@ -15,7 +15,6 @@ import timber.log.Timber
 
 @LogLifecykle
 class SettingsFragment : PreferenceFragmentCompat() {
-    private lateinit var keyAnalytics: String
     private lateinit var keyLogOut: String
     private lateinit var keyPrivacyPolicy: String
     private lateinit var keyLicenses: String
@@ -33,7 +32,6 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.preferences, rootKey)
-        keyAnalytics = getString(R.string.preference_analytics_enabled)
         keyLogOut = getString(R.string.key_log_out)
         keyPrivacyPolicy = getString(R.string.key_privacy_policy)
         keyLicenses = getString(R.string.key_licenses)
@@ -41,7 +39,6 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
     override fun onPreferenceTreeClick(preference: Preference?): Boolean {
         when (preference?.key) {
-            keyAnalytics -> handleAnalyticsToggled()
             keyLogOut -> showLogoutDialog()
             keyPrivacyPolicy -> showPrivacyPolicy()
             keyLicenses -> showLicenses()
@@ -52,10 +49,6 @@ class SettingsFragment : PreferenceFragmentCompat() {
         }
 
         return true
-    }
-
-    private fun handleAnalyticsToggled() {
-        // Change the analytics enabled state
     }
 
     private fun showLogoutDialog() {

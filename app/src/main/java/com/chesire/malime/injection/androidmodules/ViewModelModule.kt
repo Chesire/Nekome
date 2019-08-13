@@ -6,7 +6,6 @@ import com.chesire.malime.flow.ActivityViewModel
 import com.chesire.malime.flow.ViewModelFactory
 import com.chesire.malime.flow.login.details.DetailsViewModel
 import com.chesire.malime.flow.login.syncing.SyncingViewModel
-import com.chesire.malime.flow.oob.AnalyticsViewModel
 import com.chesire.malime.flow.profile.ProfileViewModel
 import com.chesire.malime.flow.series.detail.SeriesDetailViewModel
 import com.chesire.malime.flow.series.list.SeriesListViewModel
@@ -27,11 +26,6 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(ActivityViewModel::class)
     abstract fun bindActivityViewModel(viewModel: ActivityViewModel): ViewModel
-
-    @Binds
-    @IntoMap
-    @ViewModelKey(AnalyticsViewModel::class)
-    abstract fun bindAnalyticsViewModel(viewModel: AnalyticsViewModel): ViewModel
 
     @Binds
     @IntoMap

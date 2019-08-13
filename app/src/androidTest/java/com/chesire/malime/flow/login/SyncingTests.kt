@@ -6,7 +6,6 @@ import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.rule.ActivityTestRule
 import com.chesire.malime.R
-import com.chesire.malime.SharedPref
 import com.chesire.malime.core.Resource
 import com.chesire.malime.core.api.AuthApi
 import com.chesire.malime.core.api.LibraryApi
@@ -14,8 +13,8 @@ import com.chesire.malime.core.api.UserApi
 import com.chesire.malime.core.flags.Service
 import com.chesire.malime.core.models.ImageModel
 import com.chesire.malime.core.models.UserModel
-import com.chesire.malime.flow.Activity
 import com.chesire.malime.createSeriesModel
+import com.chesire.malime.flow.Activity
 import com.chesire.malime.helpers.injector
 import com.chesire.malime.kitsu.AuthProvider
 import com.schibsted.spain.barista.assertion.BaristaVisibilityAssertions.assertDisplayed
@@ -45,8 +44,6 @@ class SyncingTests {
     @Inject
     lateinit var library: LibraryApi
     @Inject
-    lateinit var sharedPref: SharedPref
-    @Inject
     lateinit var authProvider: AuthProvider
 
     @Before
@@ -54,7 +51,6 @@ class SyncingTests {
         injector.inject(this)
 
         authProvider.accessToken = ""
-        sharedPref.isAnalyticsComplete = true
 
         coEvery {
             auth.login("Username", "Password")

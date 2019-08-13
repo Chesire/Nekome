@@ -7,17 +7,6 @@
 
     <!-- OOB -->
     <fragment
-        android:id="@+id/analyticsFragment"
-        android:name="com.chesire.malime.flow.oob.AnalyticsFragment"
-        android:label="@string/nav_analytics"
-        tools:layout="@layout/fragment_analytics">
-        <action
-            android:id="@+id/toDetailsFragment"
-            app:destination="@id/detailsFragment"
-            app:popUpTo="@+id/analyticsFragment"
-            app:popUpToInclusive="true" />
-    </fragment>
-    <fragment
         android:id="@+id/detailsFragment"
         android:name="com.chesire.malime.flow.login.details.DetailsFragment"
         android:label="@string/nav_details"

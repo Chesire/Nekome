@@ -5,7 +5,6 @@ import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.rule.ActivityTestRule
 import com.chesire.malime.R
-import com.chesire.malime.SharedPref
 import com.chesire.malime.core.Resource
 import com.chesire.malime.core.api.AuthApi
 import com.chesire.malime.core.api.LibraryApi
@@ -44,8 +43,6 @@ class DetailsTests {
     @Inject
     lateinit var library: LibraryApi
     @Inject
-    lateinit var sharedPref: SharedPref
-    @Inject
     lateinit var authProvider: AuthProvider
 
     @Before
@@ -53,7 +50,6 @@ class DetailsTests {
         injector.inject(this)
 
         authProvider.accessToken = ""
-        sharedPref.isAnalyticsComplete = true
 
         coEvery {
             library.retrieveAnime(any())
