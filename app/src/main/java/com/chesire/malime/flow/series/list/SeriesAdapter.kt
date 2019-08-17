@@ -1,28 +1,39 @@
 package com.chesire.malime.flow.series.list
 
+import android.content.SharedPreferences
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.ListAdapter
 import com.chesire.malime.R
 import com.chesire.malime.SharedPref
 import com.chesire.malime.core.models.SeriesModel
 import com.chesire.malime.flow.series.SortOption
+import timber.log.Timber
 
+/**
+ * Adapter for use displaying the series.
+ */
 class SeriesAdapter(
     private val listener: SeriesInteractionListener,
     private val sharedPref: SharedPref
-) : RecyclerView.Adapter<SeriesViewHolder>() {
+) : ListAdapter<SeriesModel, SeriesViewHolder>(SeriesModelDiffCallback()),
+    SharedPreferences.OnSharedPreferenceChangeListener {
 
-    private var displayedItems = emptyList<SeriesModel>()
+    init {
+        sharedPref.subscribeToChanges(this)
+    }
 
-    /**
-     * List of all series items.
-     */
-    var allItems: List<SeriesModel> = emptyList()
-        set(value) {
-            field = value
-            performFilter()
+    private var completeList: MutableList<SeriesModel> = mutableListOf()
+
+    override fun submitList(list: MutableList<SeriesModel>?) {
+        if (list == null) {
+            Timber.w("Null list attempted to be passed to submitList")
+            super.submitList(list)
+        } else {
+            completeList = list
+            super.submitList(executeSort(executeFilter(list)))
         }
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SeriesViewHolder {
         return SeriesViewHolder(
@@ -30,41 +41,27 @@ class SeriesAdapter(
         )
     }
 
-    override fun getItemCount() = displayedItems.size
-
     override fun onBindViewHolder(holder: SeriesViewHolder, position: Int) {
-        holder.bind(displayedItems[position])
+        holder.bind(getItem(position))
         holder.bindListener(listener)
     }
 
-    /**
-     * Filters the displayed values based on the value set into the shared preferences. After
-     * performing the filter it will then sort the values based on the sort option.
-     */
-    fun performFilter() {
-        val filterOptions = sharedPref.filterPreference
-        displayedItems = allItems.filter {
-            filterOptions[it.userSeriesStatus.index] ?: false
+    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
+        when (key) {
+            SharedPref.FILTER_PREFERENCE, SharedPref.SORT_PREFERENCE -> submitList(completeList)
         }
-
-        // Sort all the new entries again
-        performSort()
     }
 
-    /**
-     * Sorts the displayed items based on the value set into the shared preferences.
-     */
-    fun performSort() {
-        displayedItems = displayedItems
-            .sortedWith(
-                when (sharedPref.sortPreference) {
-                    SortOption.Default -> compareBy { it.userId }
-                    SortOption.Title -> compareBy { it.title }
-                    SortOption.StartDate -> compareBy { it.startDate }
-                    SortOption.EndDate -> compareBy { it.endDate }
-                }
-            )
-
-        notifyDataSetChanged()
+    private fun executeFilter(items: List<SeriesModel>) = items.filter {
+        sharedPref.filterPreference[it.userSeriesStatus.index] ?: false
     }
+
+    private fun executeSort(items: List<SeriesModel>) = items.sortedWith(
+        when (sharedPref.sortPreference) {
+            SortOption.Default -> compareBy { it.userId }
+            SortOption.Title -> compareBy { it.title }
+            SortOption.StartDate -> compareBy { it.startDate }
+            SortOption.EndDate -> compareBy { it.endDate }
+        }
+    )
 }

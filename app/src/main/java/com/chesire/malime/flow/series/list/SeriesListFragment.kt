@@ -1,6 +1,5 @@
 package com.chesire.malime.flow.series.list
 
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -38,11 +37,9 @@ import javax.inject.Inject
  * Provides a base fragment for the [AnimeFragment] & [MangaFragment] to inherit from, performing
  * most of the setup and interaction.
  */
-@Suppress("TooManyFunctions")
 abstract class SeriesListFragment :
     DaggerFragment(),
-    SeriesInteractionListener,
-    SharedPreferences.OnSharedPreferenceChangeListener {
+    SeriesInteractionListener {
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
@@ -106,19 +103,9 @@ abstract class SeriesListFragment :
         }
     }
 
-    override fun onStart() {
-        super.onStart()
-        sharedPref.subscribeToChanges(this)
-    }
-
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.menu_series_list, menu)
-    }
-
-    override fun onStop() {
-        sharedPref.unsubscribeFromChanges(this)
-        super.onStop()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -129,13 +116,6 @@ abstract class SeriesListFragment :
                 dialogHandler.showSortDialog(requireContext(), viewLifecycleOwner)
         }
         return super.onOptionsItemSelected(item)
-    }
-
-    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
-        when (key) {
-            SharedPref.FILTER_PREFERENCE -> seriesAdapter.performFilter()
-            SharedPref.SORT_PREFERENCE -> seriesAdapter.performSort()
-        }
     }
 
     override fun seriesSelected(imageView: ImageView, model: SeriesModel) {
@@ -170,6 +150,6 @@ abstract class SeriesListFragment :
      */
     fun newSeriesListProvided(newList: List<SeriesModel>) {
         Timber.d("New list provided, new count [${newList.count()}]")
-        seriesAdapter.allItems = newList
+        seriesAdapter.submitList(newList.toMutableList())
     }
 }
