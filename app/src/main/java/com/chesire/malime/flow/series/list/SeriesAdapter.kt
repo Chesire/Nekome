@@ -1,5 +1,6 @@
 package com.chesire.malime.flow.series.list
 
+import android.content.SharedPreferences
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
@@ -10,17 +11,26 @@ import com.chesire.malime.flow.series.SortOption
 import timber.log.Timber
 
 /**
- *
+ * Adapter for use displaying the series.
  */
 class SeriesAdapter(
     private val listener: SeriesInteractionListener,
     private val sharedPref: SharedPref
-) : ListAdapter<SeriesModel, SeriesViewHolder>(SeriesModelDiffCallback()) {
+) : ListAdapter<SeriesModel, SeriesViewHolder>(SeriesModelDiffCallback()),
+    SharedPreferences.OnSharedPreferenceChangeListener {
+
+    init {
+        sharedPref.subscribeToChanges(this)
+    }
+
+    private var completeList: MutableList<SeriesModel> = mutableListOf()
+
     override fun submitList(list: MutableList<SeriesModel>?) {
         if (list == null) {
             Timber.w("Null list attempted to be passed to submitList")
             super.submitList(list)
         } else {
+            completeList = list
             super.submitList(executeSort(executeFilter(list)))
         }
     }
@@ -34,6 +44,12 @@ class SeriesAdapter(
     override fun onBindViewHolder(holder: SeriesViewHolder, position: Int) {
         holder.bind(getItem(position))
         holder.bindListener(listener)
+    }
+
+    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
+        when (key) {
+            SharedPref.FILTER_PREFERENCE, SharedPref.SORT_PREFERENCE -> submitList(completeList)
+        }
     }
 
     private fun executeFilter(items: List<SeriesModel>) = items.filter {

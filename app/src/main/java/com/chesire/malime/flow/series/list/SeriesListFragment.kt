@@ -41,8 +41,7 @@ import javax.inject.Inject
 @Suppress("TooManyFunctions")
 abstract class SeriesListFragment :
     DaggerFragment(),
-    SeriesInteractionListener,
-    SharedPreferences.OnSharedPreferenceChangeListener {
+    SeriesInteractionListener {
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
@@ -106,19 +105,9 @@ abstract class SeriesListFragment :
         }
     }
 
-    override fun onStart() {
-        super.onStart()
-        sharedPref.subscribeToChanges(this)
-    }
-
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.menu_series_list, menu)
-    }
-
-    override fun onStop() {
-        sharedPref.unsubscribeFromChanges(this)
-        super.onStop()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -129,13 +118,6 @@ abstract class SeriesListFragment :
                 dialogHandler.showSortDialog(requireContext(), viewLifecycleOwner)
         }
         return super.onOptionsItemSelected(item)
-    }
-
-    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
-        when (key) {
-            //SharedPref.FILTER_PREFERENCE -> seriesAdapter.performFilter()
-            //SharedPref.SORT_PREFERENCE -> seriesAdapter.performSort()
-        }
     }
 
     override fun seriesSelected(imageView: ImageView, model: SeriesModel) {
