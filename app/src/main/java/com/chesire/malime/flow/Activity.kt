@@ -85,8 +85,6 @@ class Activity : DaggerAppCompatActivity(), AuthCaster.AuthCasterListener {
     }
 
     private fun setupNavController() {
-        val nav = findNavController(R.id.activityNavigation)
-        findViewById<NavigationView>(R.id.activityNavigationView).setupWithNavController(nav)
         appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.animeFragment,
@@ -97,11 +95,14 @@ class Activity : DaggerAppCompatActivity(), AuthCaster.AuthCasterListener {
             findViewById(R.id.activityDrawer)
         )
 
-        setupActionBarWithNavController(nav, appBarConfiguration)
-        nav.addOnDestinationChangedListener { _, destination, _ ->
-            when (destination.id) {
-                R.id.detailsFragment, R.id.syncingFragment -> disableDrawer()
-                else -> enableDrawer()
+        with(findNavController(R.id.activityNavigation)) {
+            findViewById<NavigationView>(R.id.activityNavigationView).setupWithNavController(this)
+            setupActionBarWithNavController(this, appBarConfiguration)
+            addOnDestinationChangedListener { _, destination, _ ->
+                when (destination.id) {
+                    R.id.detailsFragment, R.id.syncingFragment -> disableDrawer()
+                    else -> enableDrawer()
+                }
             }
         }
     }
