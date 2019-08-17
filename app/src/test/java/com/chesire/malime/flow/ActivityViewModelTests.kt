@@ -3,7 +3,6 @@ package com.chesire.malime.flow
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.chesire.malime.CoroutinesMainDispatcherRule
 import com.chesire.malime.LogoutHandler
-import com.chesire.malime.R
 import com.chesire.malime.kitsu.AuthProvider
 import com.chesire.malime.repo.UserRepository
 import io.mockk.Runs
@@ -12,7 +11,8 @@ import io.mockk.just
 import io.mockk.mockk
 import io.mockk.verify
 import io.mockk.verifyOrder
-import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertTrue
 import org.junit.Rule
 import org.junit.Test
 
@@ -21,9 +21,10 @@ class ActivityViewModelTests {
     val taskExecutorRule = InstantTaskExecutorRule()
     @get:Rule
     val coroutineRule = CoroutinesMainDispatcherRule()
+    private val testDispatcher = coroutineRule.testDispatcher
 
     @Test
-    fun `startingFragment with no accessToken, starts at login`() {
+    fun `userLoggedIn failure returns false`() {
         val mockAuthProvider = mockk<AuthProvider> {
             every { accessToken } returns ""
         }
@@ -35,15 +36,15 @@ class ActivityViewModelTests {
         val classUnderTest = ActivityViewModel(
             mockAuthProvider,
             mockLogoutHandler,
-            coroutineRule.testDispatcher,
+            testDispatcher,
             mockUserRepository
         )
 
-        assertEquals(R.id.detailsFragment, classUnderTest.startingFragment)
+        assertFalse(classUnderTest.userLoggedIn)
     }
 
     @Test
-    fun `startingFragment with accessToken, starts at anime`() {
+    fun `userLoggedIn success returns true`() {
         val mockAuthProvider = mockk<AuthProvider> {
             every { accessToken } returns "access token"
         }
@@ -55,11 +56,11 @@ class ActivityViewModelTests {
         val classUnderTest = ActivityViewModel(
             mockAuthProvider,
             mockLogoutHandler,
-            coroutineRule.testDispatcher,
+            testDispatcher,
             mockUserRepository
         )
 
-        assertEquals(R.id.animeFragment, classUnderTest.startingFragment)
+        assertTrue(classUnderTest.userLoggedIn)
     }
 
     @Test
@@ -75,7 +76,7 @@ class ActivityViewModelTests {
         val classUnderTest = ActivityViewModel(
             mockAuthProvider,
             mockLogoutHandler,
-            coroutineRule.testDispatcher,
+            testDispatcher,
             mockUserRepository
         )
 
@@ -98,7 +99,7 @@ class ActivityViewModelTests {
         val classUnderTest = ActivityViewModel(
             mockAuthProvider,
             mockLogoutHandler,
-            coroutineRule.testDispatcher,
+            testDispatcher,
             mockUserRepository
         )
 
