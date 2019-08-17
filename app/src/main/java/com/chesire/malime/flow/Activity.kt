@@ -5,6 +5,8 @@ import android.os.Handler
 import android.os.Looper
 import android.widget.TextView
 import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout.LOCK_MODE_LOCKED_CLOSED
+import androidx.drawerlayout.widget.DrawerLayout.LOCK_MODE_UNLOCKED
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
@@ -96,6 +98,12 @@ class Activity : DaggerAppCompatActivity(), AuthCaster.AuthCasterListener {
         )
 
         setupActionBarWithNavController(nav, appBarConfiguration)
+        nav.addOnDestinationChangedListener { _, destination, _ ->
+            when (destination.id) {
+                R.id.detailsFragment, R.id.syncingFragment -> disableDrawer()
+                else -> enableDrawer()
+            }
+        }
     }
 
     override fun onSupportNavigateUp() =
@@ -118,5 +126,15 @@ class Activity : DaggerAppCompatActivity(), AuthCaster.AuthCasterListener {
                 )
             }
         }
+    }
+
+    private fun disableDrawer() {
+        supportActionBar?.hide()
+        activityDrawer.setDrawerLockMode(LOCK_MODE_LOCKED_CLOSED)
+    }
+
+    private fun enableDrawer() {
+        supportActionBar?.show()
+        activityDrawer.setDrawerLockMode(LOCK_MODE_UNLOCKED)
     }
 }
