@@ -1,6 +1,5 @@
 package com.chesire.malime.flow.series.list
 
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -38,7 +37,6 @@ import javax.inject.Inject
  * Provides a base fragment for the [AnimeFragment] & [MangaFragment] to inherit from, performing
  * most of the setup and interaction.
  */
-@Suppress("TooManyFunctions")
 abstract class SeriesListFragment :
     DaggerFragment(),
     SeriesInteractionListener {
