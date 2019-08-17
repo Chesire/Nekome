@@ -9,7 +9,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -40,14 +39,16 @@ class Activity : DaggerAppCompatActivity(), AuthCaster.AuthCasterListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity)
-
         setSupportActionBar(findViewById(R.id.appBarToolbar))
         setupNavController()
-        loadGraph()
+        observeViewModel()
 
         authCaster.subscribeToAuthError(this)
 
-        observeViewModel()
+        if (!viewModel.userLoggedIn) {
+            findNavController(R.id.activityNavigation)
+                .navigate(OverviewNavGraphDirections.globalToDetailsFragment())
+        }
     }
 
     private fun observeViewModel() {
@@ -79,16 +80,6 @@ class Activity : DaggerAppCompatActivity(), AuthCaster.AuthCasterListener {
         } else {
             super.onBackPressed()
         }
-    }
-
-    private fun loadGraph() {
-        (supportFragmentManager.findFragmentById(R.id.activityNavigation) as? NavHostFragment)
-            ?.navController
-            ?.apply {
-                graph = navInflater.inflate(R.navigation.nav_graph).also {
-                    it.startDestination = viewModel.startingFragment
-                }
-            }
     }
 
     private fun setupNavController() {
