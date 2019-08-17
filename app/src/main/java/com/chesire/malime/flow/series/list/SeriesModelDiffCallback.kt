@@ -1,0 +1,17 @@
+package com.chesire.malime.flow.series.list
+
+import androidx.recyclerview.widget.DiffUtil
+import com.chesire.malime.core.models.SeriesModel
+
+/**
+ * Provides a [DiffUtil.ItemCallback] class for use with the [SeriesModel].
+ */
+class SeriesModelDiffCallback : DiffUtil.ItemCallback<SeriesModel>() {
+    override fun areItemsTheSame(oldItem: SeriesModel, newItem: SeriesModel): Boolean {
+        return oldItem.id == newItem.id
+    }
+
+    override fun areContentsTheSame(oldItem: SeriesModel, newItem: SeriesModel): Boolean {
+        return oldItem == newItem
+    }
+}
