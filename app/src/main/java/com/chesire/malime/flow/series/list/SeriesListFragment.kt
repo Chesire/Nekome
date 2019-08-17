@@ -133,8 +133,8 @@ abstract class SeriesListFragment :
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
         when (key) {
-            SharedPref.FILTER_PREFERENCE -> seriesAdapter.performFilter()
-            SharedPref.SORT_PREFERENCE -> seriesAdapter.performSort()
+            //SharedPref.FILTER_PREFERENCE -> seriesAdapter.performFilter()
+            //SharedPref.SORT_PREFERENCE -> seriesAdapter.performSort()
         }
     }
 
@@ -170,6 +170,6 @@ abstract class SeriesListFragment :
      */
     fun newSeriesListProvided(newList: List<SeriesModel>) {
         Timber.d("New list provided, new count [${newList.count()}]")
-        seriesAdapter.allItems = newList
+        seriesAdapter.submitList(newList.toMutableList())
     }
 }
