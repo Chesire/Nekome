@@ -1,11 +1,9 @@
 package com.chesire.malime.flow
 
-import androidx.annotation.IdRes
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chesire.malime.IOContext
 import com.chesire.malime.LogoutHandler
-import com.chesire.malime.R
 import com.chesire.malime.kitsu.AuthProvider
 import com.chesire.malime.repo.UserRepository
 import kotlinx.coroutines.launch
@@ -29,17 +27,10 @@ class ActivityViewModel @Inject constructor(
     val user = userRepository.user
 
     /**
-     * Checks against stored data to decide which fragment should be displayed on start.
+     * Checks if the user is currently logged in.
      */
-    val startingFragment: Int
-        @IdRes
-        get() {
-            return if (authProvider.accessToken.isEmpty()) {
-                R.id.detailsFragment
-            } else {
-                R.id.animeFragment
-            }
-        }
+    val userLoggedIn: Boolean
+        get() = authProvider.accessToken.isNotEmpty()
 
     /**
      * Logs the user out and returns the user back to entering the login details. [callback] is

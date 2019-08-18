@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/overview_nav_graph"
-    tools:ignore="InvalidNavigation,UnusedNavigation">
+    app:startDestination="@id/animeFragment">
 
     <!-- OOB -->
     <fragment
@@ -84,7 +84,7 @@
     <action
         android:id="@+id/globalToDetailsFragment"
         app:destination="@id/detailsFragment"
-        app:popUpTo="@id/detailsFragment"
+        app:popUpTo="@+id/overview_nav_graph"
         app:popUpToInclusive="true" />
     <!-- End Global Actions -->
 </navigation>

@@ -5,11 +5,12 @@ import android.os.Handler
 import android.os.Looper
 import android.widget.TextView
 import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout.LOCK_MODE_LOCKED_CLOSED
+import androidx.drawerlayout.widget.DrawerLayout.LOCK_MODE_UNLOCKED
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -40,14 +41,16 @@ class Activity : DaggerAppCompatActivity(), AuthCaster.AuthCasterListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity)
-
         setSupportActionBar(findViewById(R.id.appBarToolbar))
         setupNavController()
-        loadGraph()
+        observeViewModel()
 
         authCaster.subscribeToAuthError(this)
 
-        observeViewModel()
+        if (!viewModel.userLoggedIn) {
+            findNavController(R.id.activityNavigation)
+                .navigate(OverviewNavGraphDirections.globalToDetailsFragment())
+        }
     }
 
     private fun observeViewModel() {
@@ -81,19 +84,7 @@ class Activity : DaggerAppCompatActivity(), AuthCaster.AuthCasterListener {
         }
     }
 
-    private fun loadGraph() {
-        (supportFragmentManager.findFragmentById(R.id.activityNavigation) as? NavHostFragment)
-            ?.navController
-            ?.apply {
-                graph = navInflater.inflate(R.navigation.nav_graph).also {
-                    it.startDestination = viewModel.startingFragment
-                }
-            }
-    }
-
     private fun setupNavController() {
-        val nav = findNavController(R.id.activityNavigation)
-        findViewById<NavigationView>(R.id.activityNavigationView).setupWithNavController(nav)
         appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.animeFragment,
@@ -104,7 +95,16 @@ class Activity : DaggerAppCompatActivity(), AuthCaster.AuthCasterListener {
             findViewById(R.id.activityDrawer)
         )
 
-        setupActionBarWithNavController(nav, appBarConfiguration)
+        with(findNavController(R.id.activityNavigation)) {
+            findViewById<NavigationView>(R.id.activityNavigationView).setupWithNavController(this)
+            setupActionBarWithNavController(this, appBarConfiguration)
+            addOnDestinationChangedListener { _, destination, _ ->
+                when (destination.id) {
+                    R.id.detailsFragment, R.id.syncingFragment -> disableDrawer()
+                    else -> enableDrawer()
+                }
+            }
+        }
     }
 
     override fun onSupportNavigateUp() =
@@ -127,5 +127,15 @@ class Activity : DaggerAppCompatActivity(), AuthCaster.AuthCasterListener {
                 )
             }
         }
+    }
+
+    private fun disableDrawer() {
+        supportActionBar?.hide()
+        activityDrawer.setDrawerLockMode(LOCK_MODE_LOCKED_CLOSED)
+    }
+
+    private fun enableDrawer() {
+        supportActionBar?.show()
+        activityDrawer.setDrawerLockMode(LOCK_MODE_UNLOCKED)
     }
 }
