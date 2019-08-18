@@ -77,7 +77,16 @@
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.chesire.malime.flow.settings.SettingsFragment"
-        android:label="@string/nav_settings" />
+        android:label="@string/nav_settings">
+        <action
+            android:id="@+id/toOssFragment"
+            app:destination="@id/ossFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/ossFragment"
+        android:name="com.chesire.malime.flow.settings.OssFragment"
+        android:label="@string/settings_licenses"
+        tools:layout="@layout/fragment_oss" />
     <!-- End Main -->
 
     <!-- Global Actions -->

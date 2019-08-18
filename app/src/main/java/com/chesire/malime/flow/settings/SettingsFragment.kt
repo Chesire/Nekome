@@ -4,6 +4,7 @@ import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import androidx.browser.customtabs.CustomTabsIntent
+import androidx.navigation.fragment.findNavController
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.afollestad.materialdialogs.MaterialDialog
@@ -68,7 +69,6 @@ class SettingsFragment : PreferenceFragmentCompat() {
             .launchUrl(requireContext(), Uri.parse(getString(R.string.privacy_policy_url)))
     }
 
-    private fun showLicenses() {
-        // Load the licenses fragment
-    }
+    private fun showLicenses() =
+        findNavController().navigate(SettingsFragmentDirections.toOssFragment())
 }
