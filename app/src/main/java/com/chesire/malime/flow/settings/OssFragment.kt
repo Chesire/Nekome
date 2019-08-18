@@ -18,7 +18,13 @@ class OssFragment : DaggerFragment() {
         savedInstanceState: Bundle?
     ): View? = inflater.inflate(R.layout.fragment_oss, container, false).also {
         childFragmentManager.commit {
-            replace(R.id.fragmentOssLayout, LibsBuilder().supportFragment())
+            replace(R.id.fragmentOssLayout, createLicensePage())
         }
     }
+
+    private fun createLicensePage() = LibsBuilder()
+        .withLicenseShown(true)
+        .withLicenseDialog(true)
+        .withAboutIconShown(false)
+        .supportFragment()
 }
