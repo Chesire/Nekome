@@ -23,8 +23,9 @@ class OssFragment : DaggerFragment() {
     }
 
     private fun createLicensePage() = LibsBuilder()
-        .withLicenseShown(true)
+        .withLicenseShown(false)
         .withLicenseDialog(true)
         .withAboutIconShown(false)
+        .withVersionShown(false)
         .supportFragment()
 }
