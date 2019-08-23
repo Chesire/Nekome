@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="define_lifecyklelog" translatable="false">year;owner</string>
+    <!-- Author section -->
+    <string name="library_lifecyklelog_author" translatable="false">Chesire</string>
+    <string name="library_lifecyklelog_authorWebsite" translatable="false">https://github.com/Chesire</string>
+    <!-- Library section -->
+    <string name="library_lifecyklelog_libraryName" translatable="false">LifecykleLog</string>
+    <string name="library_lifecyklelog_libraryDescription" translatable="false">Library to easily log out Android lifecycle methods for Activities and Fragments.</string>
+    <string name="library_lifecyklelog_libraryWebsite" translatable="false">https://github.com/Chesire/LifecykleLog</string>
+    <string name="library_lifecyklelog_libraryVersion" translatable="false">2.0.0</string>
+    <!-- OpenSource section -->
+    <string name="library_lifecyklelog_isOpenSource" translatable="false">true</string>
+    <string name="library_lifecyklelog_repositoryLink" translatable="false">https://github.com/Chesire/LifecykleLog</string>
+    <!-- ClassPath for autoDetect section -->
+    <string name="library_lifecyklelog_classPath" translatable="false">com.chesire.lifecyklelog</string>
+    <!-- License section -->
+    <string name="library_lifecyklelog_licenseId" translatable="false">mit</string>
+    <!-- Custom variables section -->
+    <string name="library_lifecyklelog_year" translatable="false">2019</string>
+    <string name="library_lifecyklelog_owner" translatable="false">Chesire</string>
+</resources>
