@@ -10,6 +10,9 @@ import com.chesire.malime.R
 import com.mikepenz.aboutlibraries.LibsBuilder
 import dagger.android.support.DaggerFragment
 
+/**
+ * Fragment that displays information about open source licenses that are used.
+ */
 @LogLifecykle
 class OssFragment : DaggerFragment() {
     override fun onCreateView(
