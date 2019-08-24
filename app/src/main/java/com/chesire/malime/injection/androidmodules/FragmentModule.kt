@@ -7,6 +7,7 @@ import com.chesire.malime.flow.series.detail.SeriesDetailFragment
 import com.chesire.malime.flow.series.list.anime.AnimeFragment
 import com.chesire.malime.flow.series.list.manga.MangaFragment
 import com.chesire.malime.flow.series.search.SearchFragment
+import com.chesire.malime.flow.settings.OssFragment
 import com.chesire.malime.flow.timeline.TimelineFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
@@ -22,6 +23,9 @@ abstract class FragmentModule {
 
     @ContributesAndroidInjector
     abstract fun contributeMangaFragment(): MangaFragment
+
+    @ContributesAndroidInjector
+    abstract fun contributeOssFragment(): OssFragment
 
     @ContributesAndroidInjector
     abstract fun contributeProfileFragment(): ProfileFragment
