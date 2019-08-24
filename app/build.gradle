@@ -53,16 +53,6 @@ android {
     androidExtensions {
         experimental true
     }
-    lintOptions {
-        disable 'ColorCasing',
-                'InvalidImport',
-                'InvalidSingleLineComment',
-                'MissingXmlHeader',
-                'NamingPattern',
-                'ShouldUseStaticImport',
-                'WrongAnnotationOrder',
-                'XmlSpacing'
-    }
     kotlinOptions {
         jvmTarget = "1.8"
     }
@@ -115,7 +105,6 @@ dependencies {
     implementation 'com.jakewharton.timber:timber:4.7.1'
     implementation 'com.mikepenz:aboutlibraries:7.0.2'
     implementation 'com.squareup.moshi:moshi:1.8.0'
-    implementation "com.vanniktech:lint-rules-android:$vanniktech_version"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
 

@@ -22,16 +22,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-    lintOptions {
-        disable 'ColorCasing',
-                'InvalidImport',
-                'InvalidSingleLineComment',
-                'MissingXmlHeader',
-                'NamingPattern',
-                'ShouldUseStaticImport',
-                'WrongAnnotationOrder',
-                'XmlSpacing'
-    }
     kotlinOptions {
         jvmTarget = "1.8"
     }
@@ -50,7 +40,6 @@ dependencies {
 
     implementation "androidx.appcompat:appcompat:$appcompat_version"
     implementation "androidx.room:room-runtime:$room_version"
-    implementation "com.vanniktech:lint-rules-android:$vanniktech_version"
 
     testImplementation 'junit:junit:4.12'
 
