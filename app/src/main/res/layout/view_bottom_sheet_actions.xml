@@ -27,19 +27,19 @@
         android:background="@android:color/transparent"
         android:src="@mipmap/ic_launcher"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/btn3"
+        app:layout_constraintEnd_toStartOf="@id/bottomSheetDelete"
         app:layout_constraintHorizontal_chainStyle="spread_inside"
         app:layout_constraintStart_toEndOf="@id/btn1"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
-        android:id="@+id/btn3"
+        android:id="@+id/bottomSheetDelete"
         android:layout_width="56dp"
         android:layout_height="56dp"
         android:layout_gravity="center_vertical"
         android:layout_margin="32dp"
         android:background="@android:color/transparent"
-        android:src="@mipmap/ic_launcher"
+        android:src="@drawable/ic_delete_black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_chainStyle="spread_inside"
