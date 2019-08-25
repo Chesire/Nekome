@@ -12,7 +12,12 @@ sealed class AsyncState<T, E> {
     /**
      * Async request has completed, and produced an error.
      */
-    class Error<T, E>(val error: E) : AsyncState<T, E>()
+    class Error<T, E>(val data: T?, val error: E) : AsyncState<T, E>() {
+        /**
+         * Constructor which uses null for the data field.
+         */
+        constructor(error: E) : this(null, error)
+    }
 
     /**
      * Async request is in progress.
