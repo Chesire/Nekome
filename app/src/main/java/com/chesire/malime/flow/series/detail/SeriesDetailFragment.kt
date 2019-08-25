@@ -11,6 +11,7 @@ import com.chesire.lifecyklelog.LogLifecykle
 import com.chesire.malime.R
 import com.chesire.malime.flow.ViewModelFactory
 import dagger.android.support.DaggerFragment
+import kotlinx.android.synthetic.main.view_bottom_sheet_actions.bottomSheetDelete
 import kotlinx.android.synthetic.main.view_bottom_sheet_header.viewBottomSheetProgress
 import kotlinx.android.synthetic.main.view_bottom_sheet_header.viewBottomSheetSubtitle
 import kotlinx.android.synthetic.main.view_bottom_sheet_header.viewBottomSheetTitle
@@ -37,10 +38,20 @@ class SeriesDetailFragment : DaggerFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        bottomSheetDelete.setOnClickListener {
+            viewModel.model.value?.let { model ->
+                viewModel.deleteModel(model)
+            }
+        }
+
         viewModel.model.observe(viewLifecycleOwner, Observer { model ->
             viewBottomSheetTitle.setText(model.title)
             viewBottomSheetSubtitle.setText(model.userSeriesStatus.name)
             viewBottomSheetProgress.setText("${model.progress} / ${model.totalLength}")
+        })
+        viewModel.deletionStatus.observe(viewLifecycleOwner, Observer { status ->
+            // show a snackbar for success or error?
+            // maybe add an undo button?
         })
     }
 
