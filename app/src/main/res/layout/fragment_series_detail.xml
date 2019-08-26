@@ -17,7 +17,7 @@
         <include layout="@layout/view_bottom_sheet_actions" />
 
         <View
-            style="@style/DividerStyle"
+            style="@style/DividerStyleNoMargin"
             android:layout_width="match_parent"
             android:layout_height="@dimen/divider_height" />
 
