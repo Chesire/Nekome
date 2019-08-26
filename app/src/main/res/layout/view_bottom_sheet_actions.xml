@@ -36,6 +36,7 @@
         android:id="@+id/bottomSheetDelete"
         android:layout_width="120dp"
         android:layout_height="match_parent"
+        android:focusable="true"
         android:gravity="center"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
