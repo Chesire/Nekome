@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
+import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
 import com.chesire.lifecyklelog.LogLifecykle
 import com.chesire.malime.R
 import com.chesire.malime.flow.ViewModelFactory
@@ -40,7 +42,14 @@ class SeriesDetailFragment : DaggerFragment() {
 
         bottomSheetDelete.setOnClickListener {
             viewModel.model.value?.let { model ->
-                viewModel.deleteModel(model)
+                MaterialDialog(requireContext()).show {
+                    message(text = getString(R.string.series_detail_delete_message, model.title))
+                    positiveButton(R.string.series_detail_delete_confirm) {
+                        viewModel.deleteModel(model)
+                    }
+                    negativeButton(R.string.series_detail_delete_cancel)
+                    lifecycleOwner(viewLifecycleOwner)
+                }
             }
         }
 

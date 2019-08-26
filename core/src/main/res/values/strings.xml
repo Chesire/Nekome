@@ -67,4 +67,7 @@
     <string name="settings_logout_prompt_cancel">Cancel</string>
 
     <string name="series_detail_delete">Delete</string>
+    <string name="series_detail_delete_message">Are you sure you wish to delete %s?</string>
+    <string name="series_detail_delete_cancel">Cancel</string>
+    <string name="series_detail_delete_confirm">Confirm</string>
 </resources>
