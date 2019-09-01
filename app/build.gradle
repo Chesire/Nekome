@@ -17,12 +17,6 @@ android {
         versionName "2.0.0"
         testInstrumentationRunner "com.chesire.malime.TestRunner"
         resConfigs "en"
-
-        kapt {
-            arguments {
-                arg("room.schemaLocation", "$projectDir/schemas".toString())
-            }
-        }
     }
 
     buildTypes {
@@ -41,10 +35,10 @@ android {
     }
     sourceSets {
         androidTest {
-            java.srcDirs += "src/sharedTest/java"
+            java.srcDirs += "../core/src/sharedTest/java"
         }
         test {
-            java.srcDirs += "src/sharedTest/java"
+            java.srcDirs += "../core/src/sharedTest/java"
         }
     }
     dataBinding {
