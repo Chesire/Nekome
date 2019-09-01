@@ -56,5 +56,6 @@ ext {
     corektx_version = "1.2.0-alpha03"
     coroutines_version = "1.2.2"
     dagger_version = "2.24"
+    lifecycle_version = "2.2.0-alpha03"
     room_version = "2.1.0"
 }

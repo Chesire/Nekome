@@ -67,12 +67,12 @@ android {
 
 dependencies {
     ext {
-        lifecycle_version = "2.2.0-alpha03"
         material_dialog_version = "3.1.0"
         preferences_version = "1.1.0-rc01"
     }
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
+    implementation project(path: ':login')
     implementation project(path: ':server')
     implementation project(path: ':kitsu')
 
