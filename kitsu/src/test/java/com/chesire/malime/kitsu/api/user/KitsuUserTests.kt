@@ -1,9 +1,9 @@
 package com.chesire.malime.kitsu.api.user
 
-import com.chesire.malime.core.Resource
-import com.chesire.malime.core.flags.Service
-import com.chesire.malime.core.models.ImageModel
-import com.chesire.malime.core.models.UserModel
+import com.chesire.malime.server.Resource
+import com.chesire.malime.server.flags.Service
+import com.chesire.malime.server.models.ImageModel
+import com.chesire.malime.server.models.UserModel
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk

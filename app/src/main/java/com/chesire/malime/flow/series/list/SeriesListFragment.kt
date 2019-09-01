@@ -14,8 +14,8 @@ import androidx.lifecycle.get
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chesire.malime.R
 import com.chesire.malime.SharedPref
-import com.chesire.malime.core.Resource
-import com.chesire.malime.core.models.SeriesModel
+import com.chesire.malime.server.Resource
+import com.chesire.malime.server.models.SeriesModel
 import com.chesire.malime.databinding.FragmentSeriesListBinding
 import com.chesire.malime.flow.DialogHandler
 import com.chesire.malime.flow.ViewModelFactory

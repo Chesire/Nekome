@@ -1,9 +1,9 @@
 package com.chesire.malime.injection.modules
 
-import com.chesire.malime.core.api.AuthApi
-import com.chesire.malime.core.api.LibraryApi
-import com.chesire.malime.core.api.SearchApi
-import com.chesire.malime.core.api.UserApi
+import com.chesire.malime.server.api.AuthApi
+import com.chesire.malime.server.api.LibraryApi
+import com.chesire.malime.server.api.SearchApi
+import com.chesire.malime.server.api.UserApi
 import com.chesire.malime.harness.FakeAuthApi
 import com.chesire.malime.harness.FakeLibraryApi
 import com.chesire.malime.harness.FakeSearchApi

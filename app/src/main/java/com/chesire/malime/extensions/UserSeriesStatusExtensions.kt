@@ -2,7 +2,7 @@ package com.chesire.malime.extensions
 
 import androidx.annotation.StringRes
 import com.chesire.malime.R
-import com.chesire.malime.core.flags.UserSeriesStatus
+import com.chesire.malime.server.flags.UserSeriesStatus
 
 /**
  * StringID used for getting a string representing the status as a readable string.

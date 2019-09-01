@@ -1,8 +1,8 @@
-package com.chesire.malime.core.models
+package com.chesire.malime.server.models
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.chesire.malime.core.flags.Service
+import com.chesire.malime.server.flags.Service
 
 @Entity
 data class UserModel(

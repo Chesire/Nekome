@@ -1,6 +1,6 @@
-package com.chesire.malime.core.api
+package com.chesire.malime.server.api
 
-import com.chesire.malime.core.Resource
+import com.chesire.malime.server.Resource
 
 /**
  * Methods relating to authorizing and refreshing auth tokens.

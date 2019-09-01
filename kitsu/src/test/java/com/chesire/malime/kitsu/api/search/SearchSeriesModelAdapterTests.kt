@@ -1,10 +1,10 @@
 package com.chesire.malime.kitsu.api.search
 
-import com.chesire.malime.core.flags.SeriesStatus
-import com.chesire.malime.core.flags.SeriesType
-import com.chesire.malime.core.flags.Subtype
-import com.chesire.malime.core.flags.UserSeriesStatus
-import com.chesire.malime.core.models.ImageModel
+import com.chesire.malime.server.flags.SeriesStatus
+import com.chesire.malime.server.flags.SeriesType
+import com.chesire.malime.server.flags.Subtype
+import com.chesire.malime.server.flags.UserSeriesStatus
+import com.chesire.malime.server.models.ImageModel
 import com.chesire.malime.kitsu.api.intermediaries.Links
 import com.chesire.malime.kitsu.api.intermediaries.SeriesItem
 import org.junit.Assert.assertEquals

@@ -3,7 +3,7 @@ package com.chesire.malime.services
 import android.content.Context
 import androidx.work.ListenableWorker
 import androidx.work.WorkerParameters
-import com.chesire.malime.core.Resource
+import com.chesire.malime.server.Resource
 import com.chesire.malime.repo.SeriesRepository
 import com.chesire.malime.repo.UserRepository
 import io.mockk.coEvery

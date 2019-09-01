@@ -6,8 +6,8 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.chesire.malime.core.flags.Service
-import com.chesire.malime.core.models.UserModel
+import com.chesire.malime.server.flags.Service
+import com.chesire.malime.server.models.UserModel
 
 @Dao
 interface UserDao {

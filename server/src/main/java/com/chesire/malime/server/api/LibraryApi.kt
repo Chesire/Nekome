@@ -1,8 +1,8 @@
-package com.chesire.malime.core.api
+package com.chesire.malime.server.api
 
-import com.chesire.malime.core.Resource
-import com.chesire.malime.core.flags.UserSeriesStatus
-import com.chesire.malime.core.models.SeriesModel
+import com.chesire.malime.server.Resource
+import com.chesire.malime.server.flags.UserSeriesStatus
+import com.chesire.malime.server.models.SeriesModel
 
 interface LibraryApi {
     suspend fun retrieveAnime(userId: Int): Resource<List<SeriesModel>>

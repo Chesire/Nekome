@@ -1,12 +1,12 @@
-package com.chesire.malime.core.models
+package com.chesire.malime.server.models
 
 import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.chesire.malime.core.flags.SeriesStatus
-import com.chesire.malime.core.flags.SeriesType
-import com.chesire.malime.core.flags.Subtype
-import com.chesire.malime.core.flags.UserSeriesStatus
+import com.chesire.malime.server.flags.SeriesStatus
+import com.chesire.malime.server.flags.SeriesType
+import com.chesire.malime.server.flags.Subtype
+import com.chesire.malime.server.flags.UserSeriesStatus
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize

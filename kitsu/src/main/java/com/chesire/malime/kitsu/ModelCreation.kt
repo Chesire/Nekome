@@ -1,8 +1,8 @@
 package com.chesire.malime.kitsu
 
-import com.chesire.malime.core.flags.UserSeriesStatus
-import com.chesire.malime.core.models.ImageModel
-import com.chesire.malime.core.models.SeriesModel
+import com.chesire.malime.server.flags.UserSeriesStatus
+import com.chesire.malime.server.models.ImageModel
+import com.chesire.malime.server.models.SeriesModel
 import com.chesire.malime.kitsu.adapters.UserSeriesStatusAdapter
 import com.chesire.malime.kitsu.api.intermediaries.SeriesItem
 import com.chesire.malime.kitsu.api.library.LibraryEntry

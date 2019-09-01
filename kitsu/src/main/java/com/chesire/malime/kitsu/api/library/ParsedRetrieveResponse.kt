@@ -1,6 +1,6 @@
 package com.chesire.malime.kitsu.api.library
 
-import com.chesire.malime.core.models.SeriesModel
+import com.chesire.malime.server.models.SeriesModel
 import com.chesire.malime.kitsu.api.intermediaries.Links
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass

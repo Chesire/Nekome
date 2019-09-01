@@ -1,6 +1,6 @@
 package com.chesire.malime.kitsu
 
-import com.chesire.malime.core.Resource
+import com.chesire.malime.server.Resource
 import retrofit2.Response
 import java.net.UnknownHostException
 

@@ -1,7 +1,7 @@
 package com.chesire.malime.flow.series.list
 
 import android.widget.ImageView
-import com.chesire.malime.core.models.SeriesModel
+import com.chesire.malime.server.models.SeriesModel
 
 interface SeriesInteractionListener {
     /**

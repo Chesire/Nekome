@@ -1,4 +1,4 @@
-package com.chesire.malime.core.flags
+package com.chesire.malime.server.flags
 
 enum class Subtype {
     Unknown,

@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.chesire.malime.R
-import com.chesire.malime.core.models.SeriesModel
+import com.chesire.malime.server.models.SeriesModel
 
 class SearchAdapter(
     private val listener: SearchInteractionListener

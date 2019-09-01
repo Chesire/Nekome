@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chesire.malime.AsyncState
-import com.chesire.malime.core.Resource
+import com.chesire.malime.server.Resource
 import com.chesire.malime.extensions.postError
 import com.chesire.malime.extensions.postLoading
 import com.chesire.malime.extensions.postSuccess

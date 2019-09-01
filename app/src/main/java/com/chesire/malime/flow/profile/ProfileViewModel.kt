@@ -2,8 +2,8 @@ package com.chesire.malime.flow.profile
 
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
-import com.chesire.malime.core.flags.UserSeriesStatus
-import com.chesire.malime.core.models.SeriesModel
+import com.chesire.malime.server.flags.UserSeriesStatus
+import com.chesire.malime.server.models.SeriesModel
 import com.chesire.malime.repo.SeriesRepository
 import com.chesire.malime.repo.UserRepository
 import javax.inject.Inject

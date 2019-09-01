@@ -1,7 +1,7 @@
 package com.chesire.malime.kitsu.api.auth
 
-import com.chesire.malime.core.Resource
-import com.chesire.malime.core.api.AuthApi
+import com.chesire.malime.server.Resource
+import com.chesire.malime.server.api.AuthApi
 import com.chesire.malime.kitsu.AuthProvider
 import com.chesire.malime.kitsu.parse
 import javax.inject.Inject

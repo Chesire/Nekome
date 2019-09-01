@@ -1,7 +1,7 @@
 package com.chesire.malime.db.converters
 
 import androidx.room.TypeConverter
-import com.chesire.malime.core.flags.Subtype
+import com.chesire.malime.server.flags.Subtype
 
 class SubtypeConverter {
     @TypeConverter

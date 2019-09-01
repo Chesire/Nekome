@@ -6,11 +6,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chesire.malime.AsyncState
 import com.chesire.malime.AuthCaster
-import com.chesire.malime.core.Resource
-import com.chesire.malime.core.api.SearchApi
-import com.chesire.malime.core.flags.SeriesType
-import com.chesire.malime.core.flags.UserSeriesStatus
-import com.chesire.malime.core.models.SeriesModel
+import com.chesire.malime.server.Resource
+import com.chesire.malime.server.api.SearchApi
+import com.chesire.malime.server.flags.SeriesType
+import com.chesire.malime.server.flags.UserSeriesStatus
+import com.chesire.malime.server.models.SeriesModel
 import com.chesire.malime.extensions.postError
 import com.chesire.malime.extensions.postLoading
 import com.chesire.malime.extensions.postSuccess

@@ -1,7 +1,7 @@
 package com.chesire.malime.flow.series.list
 
 import androidx.recyclerview.widget.DiffUtil
-import com.chesire.malime.core.models.SeriesModel
+import com.chesire.malime.server.models.SeriesModel
 
 /**
  * Provides a [DiffUtil.ItemCallback] class for use with the [SeriesModel].

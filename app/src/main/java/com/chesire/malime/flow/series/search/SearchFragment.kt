@@ -10,8 +10,8 @@ import androidx.lifecycle.get
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chesire.lifecyklelog.LogLifecykle
 import com.chesire.malime.AsyncState
-import com.chesire.malime.core.flags.UserSeriesStatus
-import com.chesire.malime.core.models.SeriesModel
+import com.chesire.malime.server.flags.UserSeriesStatus
+import com.chesire.malime.server.models.SeriesModel
 import com.chesire.malime.databinding.FragmentSearchBinding
 import com.chesire.malime.flow.ViewModelFactory
 import dagger.android.support.DaggerFragment

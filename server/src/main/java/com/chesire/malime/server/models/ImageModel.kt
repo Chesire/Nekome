@@ -1,4 +1,4 @@
-package com.chesire.malime.core.models
+package com.chesire.malime.server.models
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize

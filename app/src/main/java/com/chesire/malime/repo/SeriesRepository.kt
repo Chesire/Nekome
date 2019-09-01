@@ -1,11 +1,11 @@
 package com.chesire.malime.repo
 
 import androidx.lifecycle.LiveData
-import com.chesire.malime.core.Resource
-import com.chesire.malime.core.api.LibraryApi
-import com.chesire.malime.core.flags.SeriesType
-import com.chesire.malime.core.flags.UserSeriesStatus
-import com.chesire.malime.core.models.SeriesModel
+import com.chesire.malime.server.Resource
+import com.chesire.malime.server.api.LibraryApi
+import com.chesire.malime.server.flags.SeriesType
+import com.chesire.malime.server.flags.UserSeriesStatus
+import com.chesire.malime.server.models.SeriesModel
 import com.chesire.malime.db.SeriesDao
 import timber.log.Timber
 import javax.inject.Inject

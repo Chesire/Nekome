@@ -1,6 +1,6 @@
 package com.chesire.malime.kitsu.adapters
 
-import com.chesire.malime.core.flags.Subtype
+import com.chesire.malime.server.flags.Subtype
 import com.squareup.moshi.FromJson
 import com.squareup.moshi.ToJson
 

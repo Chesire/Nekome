@@ -3,9 +3,9 @@ package com.chesire.malime.flow.series.list
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chesire.malime.AuthCaster
-import com.chesire.malime.core.Resource
-import com.chesire.malime.core.flags.UserSeriesStatus
-import com.chesire.malime.core.models.SeriesModel
+import com.chesire.malime.server.Resource
+import com.chesire.malime.server.flags.UserSeriesStatus
+import com.chesire.malime.server.models.SeriesModel
 import com.chesire.malime.repo.SeriesRepository
 import kotlinx.coroutines.launch
 import javax.inject.Inject

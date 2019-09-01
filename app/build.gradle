@@ -73,7 +73,7 @@ dependencies {
     }
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation project(path: ':core')
+    implementation project(path: ':server')
     implementation project(path: ':kitsu')
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
