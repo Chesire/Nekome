@@ -16,10 +16,12 @@ import com.bumptech.glide.request.RequestOptions
 import com.chesire.lifecyklelog.LogLifecykle
 import com.chesire.malime.R
 import com.chesire.malime.core.models.UserModel
-import com.chesire.malime.databinding.FragmentProfileBinding
 import com.chesire.malime.flow.ViewModelFactory
 import dagger.android.support.DaggerFragment
+import kotlinx.android.synthetic.main.fragment_profile.fragmentProfileAnimeProgress
 import kotlinx.android.synthetic.main.fragment_profile.fragmentProfileAvatar
+import kotlinx.android.synthetic.main.fragment_profile.fragmentProfileMangaProgress
+import kotlinx.android.synthetic.main.view_series_progress.view.viewSeriesProgressTitle
 import javax.inject.Inject
 
 @LogLifecykle

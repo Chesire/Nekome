@@ -1,19 +1,20 @@
 package com.chesire.malime.series
 
 import androidx.lifecycle.LiveData
-import com.chesire.malime.server.Resource
-import com.chesire.malime.server.api.LibraryApi
+import com.chesire.malime.account.UserRepository
 import com.chesire.malime.core.flags.SeriesType
 import com.chesire.malime.core.flags.UserSeriesStatus
 import com.chesire.malime.core.models.SeriesModel
 import com.chesire.malime.database.dao.SeriesDao
+import com.chesire.malime.server.Resource
+import com.chesire.malime.server.api.LibraryApi
 import timber.log.Timber
 import javax.inject.Inject
 
 class SeriesRepository @Inject constructor(
-    private val seriesDao: com.chesire.malime.database.dao.SeriesDao,
+    private val seriesDao: SeriesDao,
     private val libraryApi: LibraryApi,
-    private val userRepository: com.chesire.malime.account.UserRepository
+    private val userRepository: UserRepository
 ) {
     val anime: LiveData<List<SeriesModel>>
         get() = seriesDao.observe(SeriesType.Anime)

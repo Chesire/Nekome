@@ -11,6 +11,7 @@ import com.chesire.malime.core.flags.Subtype
 import com.chesire.malime.core.flags.UserSeriesStatus
 import com.chesire.malime.core.models.ImageModel
 import com.chesire.malime.core.models.SeriesModel
+import com.chesire.malime.database.RoomDB
 import io.mockk.Runs
 import io.mockk.every
 import io.mockk.just
@@ -30,15 +31,15 @@ class SeriesDaoTests {
     @get:Rule
     val rule = InstantTaskExecutorRule()
 
-    private lateinit var db: com.chesire.malime.database.RoomDB
-    private lateinit var seriesDao: com.chesire.malime.database.dao.SeriesDao
+    private lateinit var db: RoomDB
+    private lateinit var seriesDao: SeriesDao
 
     @Before
     fun setup() {
         db = Room
             .inMemoryDatabaseBuilder(
                 InstrumentationRegistry.getInstrumentation().context,
-                com.chesire.malime.database.RoomDB::class.java
+                RoomDB::class.java
             )
             .fallbackToDestructiveMigration()
             .build()

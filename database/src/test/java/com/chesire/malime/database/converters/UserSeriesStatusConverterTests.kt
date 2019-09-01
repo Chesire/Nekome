@@ -7,7 +7,7 @@ import org.junit.Test
 class UserSeriesStatusConverterTests {
     @Test
     fun `fromUserSeriesStatus converts to enum name from UserSeriesStatus`() {
-        val converter = com.chesire.malime.database.converters.UserSeriesStatusConverter()
+        val converter = UserSeriesStatusConverter()
         UserSeriesStatus.values().forEach {
             assertEquals(it.name, converter.fromUserSeriesStatus(it))
         }
@@ -15,7 +15,7 @@ class UserSeriesStatusConverterTests {
 
     @Test
     fun `toUserSeriesStatus converts to UserSeriesStatus from name`() {
-        val converter = com.chesire.malime.database.converters.UserSeriesStatusConverter()
+        val converter = UserSeriesStatusConverter()
         UserSeriesStatus.values().forEach {
             assertEquals(it, converter.toUserSeriesStatus(it.name))
         }

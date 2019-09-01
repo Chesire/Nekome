@@ -1,6 +1,7 @@
 package com.chesire.malime.core
 
 import android.content.SharedPreferences
+import com.chesire.malime.core.flags.SortOption
 import io.mockk.Runs
 import io.mockk.every
 import io.mockk.just
@@ -18,31 +19,41 @@ class SharedPrefTests {
         val mockPreferences = mockk<SharedPreferences> {
             every {
                 getInt(
-                    com.chesire.malime.core.SharedPref.SORT_PREFERENCE,
-                    com.chesire.malime.core.flags.SortOption.Default.index
+                    SharedPref.SORT_PREFERENCE,
+                    SortOption.Default.index
                 )
-            } returns com.chesire.malime.core.flags.SortOption.Title.index
+            } returns SortOption.Title.index
         }
 
-        val classUnderTest = com.chesire.malime.core.SharedPref(mockPreferences)
+        val classUnderTest = SharedPref(mockPreferences)
 
-        assertEquals(com.chesire.malime.core.flags.SortOption.Title, classUnderTest.sortPreference)
+        assertEquals(SortOption.Title, classUnderTest.sortPreference)
     }
 
     @Test
     fun `sortPreference can set in SortOption`() {
         val mockEditor = mockk<SharedPreferences.Editor> {
-            every { putInt(com.chesire.malime.core.SharedPref.SORT_PREFERENCE, com.chesire.malime.core.flags.SortOption.EndDate.index) } returns this
+            every {
+                putInt(
+                    SharedPref.SORT_PREFERENCE,
+                    SortOption.EndDate.index
+                )
+            } returns this
             every { apply() } just Runs
         }
         val mockPreferences = mockk<SharedPreferences> {
             every { edit() } returns mockEditor
         }
 
-        val classUnderTest = com.chesire.malime.core.SharedPref(mockPreferences)
-        classUnderTest.sortPreference = com.chesire.malime.core.flags.SortOption.EndDate
+        val classUnderTest = SharedPref(mockPreferences)
+        classUnderTest.sortPreference = SortOption.EndDate
 
-        verify { mockEditor.putInt(com.chesire.malime.core.SharedPref.SORT_PREFERENCE, com.chesire.malime.core.flags.SortOption.EndDate.index) }
+        verify {
+            mockEditor.putInt(
+                SharedPref.SORT_PREFERENCE,
+                SortOption.EndDate.index
+            )
+        }
     }
 
     @Test
@@ -50,12 +61,15 @@ class SharedPrefTests {
         val expectedJson = """{"0":false,"1":true,"2":false,"3":false,"4":false}"""
         val expectedMap = mapOf(0 to false, 1 to true, 2 to false, 3 to false, 4 to false)
         val mockPreferences = mockk<SharedPreferences> {
-            every { getString(com.chesire.malime.core.SharedPref.FILTER_PREFERENCE,
-                defaultFilter
-            ) } returns expectedJson
+            every {
+                getString(
+                    SharedPref.FILTER_PREFERENCE,
+                    defaultFilter
+                )
+            } returns expectedJson
         }
 
-        val classUnderTest = com.chesire.malime.core.SharedPref(mockPreferences)
+        val classUnderTest = SharedPref(mockPreferences)
 
         assertEquals(expectedMap, classUnderTest.filterPreference)
     }
@@ -65,17 +79,27 @@ class SharedPrefTests {
         val expectedJson = """{"0":false,"1":true,"2":false,"3":false,"4":false}"""
         val expectedMap = mapOf(0 to false, 1 to true, 2 to false, 3 to false, 4 to false)
         val mockEditor = mockk<SharedPreferences.Editor> {
-            every { putString(com.chesire.malime.core.SharedPref.FILTER_PREFERENCE, expectedJson) } returns this
+            every {
+                putString(
+                    SharedPref.FILTER_PREFERENCE,
+                    expectedJson
+                )
+            } returns this
             every { apply() } just Runs
         }
         val mockPreferences = mockk<SharedPreferences> {
             every { edit() } returns mockEditor
         }
 
-        val classUnderTest = com.chesire.malime.core.SharedPref(mockPreferences)
+        val classUnderTest = SharedPref(mockPreferences)
         classUnderTest.filterPreference = expectedMap
 
-        verify { mockEditor.putString(com.chesire.malime.core.SharedPref.FILTER_PREFERENCE, expectedJson) }
+        verify {
+            mockEditor.putString(
+                SharedPref.FILTER_PREFERENCE,
+                expectedJson
+            )
+        }
     }
 
     @Test
@@ -85,7 +109,7 @@ class SharedPrefTests {
             every { registerOnSharedPreferenceChangeListener(any()) } just Runs
         }
 
-        val classUnderTest = com.chesire.malime.core.SharedPref(mockPreferences)
+        val classUnderTest = SharedPref(mockPreferences)
         classUnderTest.subscribeToChanges(listener)
 
         verify { mockPreferences.registerOnSharedPreferenceChangeListener(listener) }
@@ -98,7 +122,7 @@ class SharedPrefTests {
             every { unregisterOnSharedPreferenceChangeListener(any()) } just Runs
         }
 
-        val classUnderTest = com.chesire.malime.core.SharedPref(mockPreferences)
+        val classUnderTest = SharedPref(mockPreferences)
         classUnderTest.unsubscribeFromChanges(listener)
 
         verify { mockPreferences.unregisterOnSharedPreferenceChangeListener(listener) }

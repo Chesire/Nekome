@@ -6,6 +6,7 @@ import androidx.test.platform.app.InstrumentationRegistry
 import com.chesire.malime.core.flags.Service
 import com.chesire.malime.core.models.ImageModel
 import com.chesire.malime.core.models.UserModel
+import com.chesire.malime.database.RoomDB
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Assert.assertEquals
@@ -17,15 +18,15 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class UserDaoTests {
-    private lateinit var db: com.chesire.malime.database.RoomDB
-    private lateinit var userDao: com.chesire.malime.database.dao.UserDao
+    private lateinit var db: RoomDB
+    private lateinit var userDao: UserDao
 
     @Before
     fun setup() {
         db = Room
             .inMemoryDatabaseBuilder(
                 InstrumentationRegistry.getInstrumentation().context,
-                com.chesire.malime.database.RoomDB::class.java
+                RoomDB::class.java
             )
             .fallbackToDestructiveMigration()
             .build()

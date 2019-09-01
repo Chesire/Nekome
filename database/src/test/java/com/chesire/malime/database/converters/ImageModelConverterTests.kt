@@ -16,17 +16,11 @@ class ImageModelConverterTests {
 
     @Test
     fun `fromImageModel converts to String`() {
-        assertEquals(
-            jsonString,
-            com.chesire.malime.database.converters.ImageModelConverter().fromImageModel(model)
-        )
+        assertEquals(jsonString, ImageModelConverter().fromImageModel(model))
     }
 
     @Test
     fun `toImageModel converts to ImageModel`() {
-        assertEquals(
-            model,
-            com.chesire.malime.database.converters.ImageModelConverter().toImageModel(jsonString)
-        )
+        assertEquals(model, ImageModelConverter().toImageModel(jsonString))
     }
 }
