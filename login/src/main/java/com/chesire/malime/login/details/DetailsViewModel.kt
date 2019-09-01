@@ -1,4 +1,4 @@
-package com.chesire.malime.flow.login.details
+package com.chesire.malime.login.details
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chesire.malime.server.Resource
 import com.chesire.malime.server.api.AuthApi
-import com.chesire.malime.account.UserRepository
 import com.hadilq.liveevent.LiveEvent
 import kotlinx.coroutines.launch
 import timber.log.Timber

@@ -18,6 +18,8 @@ import com.chesire.malime.extensions.hide
 import com.chesire.malime.extensions.hideSystemKeyboard
 import com.chesire.malime.extensions.show
 import com.chesire.malime.flow.ViewModelFactory
+import com.chesire.malime.login.details.DetailsViewModel
+import com.chesire.malime.login.details.LoginStatus
 import com.google.android.material.snackbar.Snackbar
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_details.fragmentDetailsLayout
