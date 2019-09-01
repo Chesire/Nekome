@@ -1,4 +1,4 @@
-package com.chesire.malime.db.converters
+package com.chesire.malime.database.converters
 
 import androidx.room.TypeConverter
 import com.chesire.malime.core.flags.SeriesStatus

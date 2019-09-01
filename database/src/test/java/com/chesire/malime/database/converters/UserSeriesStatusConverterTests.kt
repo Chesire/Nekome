@@ -1,4 +1,4 @@
-package com.chesire.malime.db.converters
+package com.chesire.malime.database.converters
 
 import com.chesire.malime.core.flags.UserSeriesStatus
 import org.junit.Assert.assertEquals
@@ -7,7 +7,7 @@ import org.junit.Test
 class UserSeriesStatusConverterTests {
     @Test
     fun `fromUserSeriesStatus converts to enum name from UserSeriesStatus`() {
-        val converter = UserSeriesStatusConverter()
+        val converter = com.chesire.malime.database.converters.UserSeriesStatusConverter()
         UserSeriesStatus.values().forEach {
             assertEquals(it.name, converter.fromUserSeriesStatus(it))
         }
@@ -15,7 +15,7 @@ class UserSeriesStatusConverterTests {
 
     @Test
     fun `toUserSeriesStatus converts to UserSeriesStatus from name`() {
-        val converter = UserSeriesStatusConverter()
+        val converter = com.chesire.malime.database.converters.UserSeriesStatusConverter()
         UserSeriesStatus.values().forEach {
             assertEquals(it, converter.toUserSeriesStatus(it.name))
         }

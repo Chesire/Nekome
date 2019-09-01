@@ -6,12 +6,12 @@ import com.chesire.malime.server.api.LibraryApi
 import com.chesire.malime.core.flags.SeriesType
 import com.chesire.malime.core.flags.UserSeriesStatus
 import com.chesire.malime.core.models.SeriesModel
-import com.chesire.malime.db.SeriesDao
+import com.chesire.malime.database.dao.SeriesDao
 import timber.log.Timber
 import javax.inject.Inject
 
 class SeriesRepository @Inject constructor(
-    private val seriesDao: SeriesDao,
+    private val seriesDao: com.chesire.malime.database.dao.SeriesDao,
     private val libraryApi: LibraryApi,
     private val userRepository: UserRepository
 ) {

@@ -1,4 +1,4 @@
-package com.chesire.malime.db
+package com.chesire.malime.database.dao
 
 import androidx.room.Room
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -17,15 +17,15 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class UserDaoTests {
-    private lateinit var db: RoomDB
-    private lateinit var userDao: UserDao
+    private lateinit var db: com.chesire.malime.database.RoomDB
+    private lateinit var userDao: com.chesire.malime.database.dao.UserDao
 
     @Before
     fun setup() {
         db = Room
             .inMemoryDatabaseBuilder(
                 InstrumentationRegistry.getInstrumentation().context,
-                RoomDB::class.java
+                com.chesire.malime.database.RoomDB::class.java
             )
             .fallbackToDestructiveMigration()
             .build()

@@ -1,4 +1,4 @@
-package com.chesire.malime.db
+package com.chesire.malime.database.dao
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao

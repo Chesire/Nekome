@@ -1,4 +1,4 @@
-package com.chesire.malime.db
+package com.chesire.malime.database.dao
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
@@ -30,15 +30,15 @@ class SeriesDaoTests {
     @get:Rule
     val rule = InstantTaskExecutorRule()
 
-    private lateinit var db: RoomDB
-    private lateinit var seriesDao: SeriesDao
+    private lateinit var db: com.chesire.malime.database.RoomDB
+    private lateinit var seriesDao: com.chesire.malime.database.dao.SeriesDao
 
     @Before
     fun setup() {
         db = Room
             .inMemoryDatabaseBuilder(
                 InstrumentationRegistry.getInstrumentation().context,
-                RoomDB::class.java
+                com.chesire.malime.database.RoomDB::class.java
             )
             .fallbackToDestructiveMigration()
             .build()

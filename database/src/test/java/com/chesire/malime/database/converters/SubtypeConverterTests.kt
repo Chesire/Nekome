@@ -1,4 +1,4 @@
-package com.chesire.malime.db.converters
+package com.chesire.malime.database.converters
 
 import com.chesire.malime.core.flags.Subtype
 import org.junit.Assert.assertEquals
@@ -7,7 +7,7 @@ import org.junit.Test
 class SubtypeConverterTests {
     @Test
     fun `fromSubtype converts to enum name from Subtype`() {
-        val converter = SubtypeConverter()
+        val converter = com.chesire.malime.database.converters.SubtypeConverter()
         Subtype.values().forEach {
             assertEquals(it.name, converter.fromSubtype(it))
         }
@@ -15,7 +15,7 @@ class SubtypeConverterTests {
 
     @Test
     fun `toSubtype converts to Subtype from name`() {
-        val converter = SubtypeConverter()
+        val converter = com.chesire.malime.database.converters.SubtypeConverter()
         Subtype.values().forEach {
             assertEquals(it, converter.toSubtype(it.name))
         }

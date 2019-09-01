@@ -1,6 +1,6 @@
 package com.chesire.malime
 
-import com.chesire.malime.db.RoomDB
+import com.chesire.malime.database.RoomDB
 import com.chesire.malime.kitsu.AuthProvider
 import io.mockk.Runs
 import io.mockk.every
@@ -15,7 +15,7 @@ class LogoutHandlerTests {
         val mockAuthProvider = mockk<AuthProvider> {
             every { clearAuth() } just Runs
         }
-        val mockDb = mockk<RoomDB> {
+        val mockDb = mockk<com.chesire.malime.database.RoomDB> {
             every { clearAllTables() } just Runs
         }
 
@@ -31,7 +31,7 @@ class LogoutHandlerTests {
         val mockAuthProvider = mockk<AuthProvider> {
             every { clearAuth() } just Runs
         }
-        val mockDb = mockk<RoomDB> {
+        val mockDb = mockk<com.chesire.malime.database.RoomDB> {
             every { clearAllTables() } just Runs
         }
 

@@ -1,6 +1,6 @@
 package com.chesire.malime
 
-import com.chesire.malime.db.RoomDB
+import com.chesire.malime.database.RoomDB
 import com.chesire.malime.kitsu.AuthProvider
 import timber.log.Timber
 import javax.inject.Inject
@@ -10,7 +10,7 @@ import javax.inject.Inject
  */
 class LogoutHandler @Inject constructor(
     private val authProvider: AuthProvider,
-    private val db: RoomDB
+    private val db: com.chesire.malime.database.RoomDB
 ) {
     /**
      * Executes log out, clearing anything left over and resetting the application state.
