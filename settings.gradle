@@ -1,3 +1,3 @@
-include ':app', ':login', ':account', ':database', ':core',
+include ':app', ':login', ':account', ':database', ':core', ':series',
         ':server',
         ':kitsu'
