@@ -75,7 +75,6 @@ dependencies {
     implementation project(path: ':account')
     implementation project(path: ':core')
     implementation project(path: ':database')
-    implementation project(path: ':login')
     implementation project(path: ':kitsu')
     implementation project(path: ':series')
     implementation project(path: ':server')

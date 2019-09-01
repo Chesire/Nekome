@@ -8,7 +8,7 @@
 
         <variable
             name="vm"
-            type="com.chesire.malime.login.details.DetailsViewModel" />
+            type="com.chesire.malime.flow.login.details.DetailsViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

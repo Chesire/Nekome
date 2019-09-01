@@ -1,4 +1,4 @@
-package com.chesire.malime.login.details
+package com.chesire.malime.flow.login.details
 
 /**
  * Provides the status of a login request.

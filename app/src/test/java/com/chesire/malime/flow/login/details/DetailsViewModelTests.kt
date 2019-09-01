@@ -1,4 +1,4 @@
-package com.chesire.malime.login.details
+package com.chesire.malime.flow.login.details
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
@@ -26,36 +26,36 @@ class DetailsViewModelTests {
     fun `empty username produces LoginStatus#EmptyUsername`() {
         val mockAuth = mockk<AuthApi>()
         val mockRepo = mockk<com.chesire.malime.account.UserRepository>()
-        val mockObserver = mockk<Observer<LoginStatus>> {
+        val mockObserver = mockk<Observer<com.chesire.malime.flow.login.details.LoginStatus>> {
             every { onChanged(any()) } just Runs
         }
 
-        DetailsViewModel(mockAuth, mockRepo).run {
+        com.chesire.malime.flow.login.details.DetailsViewModel(mockAuth, mockRepo).run {
             username.value = ""
             password.value = "password"
             loginStatus.observeForever(mockObserver)
             login()
         }
 
-        verify { mockObserver.onChanged(LoginStatus.EmptyUsername) }
+        verify { mockObserver.onChanged(com.chesire.malime.flow.login.details.LoginStatus.EmptyUsername) }
     }
 
     @Test
     fun `empty password produces LoginStatus#EmptyPassword`() {
         val mockAuth = mockk<AuthApi>()
         val mockRepo = mockk<com.chesire.malime.account.UserRepository>()
-        val mockObserver = mockk<Observer<LoginStatus>> {
+        val mockObserver = mockk<Observer<com.chesire.malime.flow.login.details.LoginStatus>> {
             every { onChanged(any()) } just Runs
         }
 
-        DetailsViewModel(mockAuth, mockRepo).run {
+        com.chesire.malime.flow.login.details.DetailsViewModel(mockAuth, mockRepo).run {
             username.value = "username"
             password.value = ""
             loginStatus.observeForever(mockObserver)
             login()
         }
 
-        verify { mockObserver.onChanged(LoginStatus.EmptyPassword) }
+        verify { mockObserver.onChanged(com.chesire.malime.flow.login.details.LoginStatus.EmptyPassword) }
     }
 
     @Test
@@ -66,18 +66,18 @@ class DetailsViewModelTests {
             }
         }
         val mockRepo = mockk<com.chesire.malime.account.UserRepository>()
-        val mockObserver = mockk<Observer<LoginStatus>> {
+        val mockObserver = mockk<Observer<com.chesire.malime.flow.login.details.LoginStatus>> {
             every { onChanged(any()) } just Runs
         }
 
-        DetailsViewModel(mockAuth, mockRepo).run {
+        com.chesire.malime.flow.login.details.DetailsViewModel(mockAuth, mockRepo).run {
             username.value = "username"
             password.value = "password"
             loginStatus.observeForever(mockObserver)
             login()
         }
 
-        verify { mockObserver.onChanged(LoginStatus.InvalidCredentials) }
+        verify { mockObserver.onChanged(com.chesire.malime.flow.login.details.LoginStatus.InvalidCredentials) }
     }
 
     @Test
@@ -88,18 +88,18 @@ class DetailsViewModelTests {
             }
         }
         val mockRepo = mockk<com.chesire.malime.account.UserRepository>()
-        val mockObserver = mockk<Observer<LoginStatus>> {
+        val mockObserver = mockk<Observer<com.chesire.malime.flow.login.details.LoginStatus>> {
             every { onChanged(any()) } just Runs
         }
 
-        DetailsViewModel(mockAuth, mockRepo).run {
+        com.chesire.malime.flow.login.details.DetailsViewModel(mockAuth, mockRepo).run {
             username.value = "username"
             password.value = "password"
             loginStatus.observeForever(mockObserver)
             login()
         }
 
-        verify { mockObserver.onChanged(LoginStatus.Error) }
+        verify { mockObserver.onChanged(com.chesire.malime.flow.login.details.LoginStatus.Error) }
     }
 
     @Test
@@ -120,7 +120,7 @@ class DetailsViewModelTests {
             }
         }
 
-        DetailsViewModel(mockAuth, mockRepo).run {
+        com.chesire.malime.flow.login.details.DetailsViewModel(mockAuth, mockRepo).run {
             username.value = "username"
             password.value = "password"
             login()
@@ -142,18 +142,18 @@ class DetailsViewModelTests {
         val mockRepo = mockk<com.chesire.malime.account.UserRepository> {
             coEvery { refreshUser() } coAnswers { Resource.Success(expectedModel) }
         }
-        val mockObserver = mockk<Observer<LoginStatus>> {
+        val mockObserver = mockk<Observer<com.chesire.malime.flow.login.details.LoginStatus>> {
             every { onChanged(any()) } just Runs
         }
 
-        DetailsViewModel(mockAuth, mockRepo).run {
+        com.chesire.malime.flow.login.details.DetailsViewModel(mockAuth, mockRepo).run {
             username.value = "username"
             password.value = "password"
             loginStatus.observeForever(mockObserver)
             login()
         }
 
-        verify { mockObserver.onChanged(LoginStatus.Success) }
+        verify { mockObserver.onChanged(com.chesire.malime.flow.login.details.LoginStatus.Success) }
     }
 
     @Test
@@ -169,11 +169,11 @@ class DetailsViewModelTests {
         val mockRepo = mockk<com.chesire.malime.account.UserRepository> {
             coEvery { refreshUser() } coAnswers { Resource.Error("") }
         }
-        val mockObserver = mockk<Observer<LoginStatus>> {
+        val mockObserver = mockk<Observer<com.chesire.malime.flow.login.details.LoginStatus>> {
             every { onChanged(any()) } just Runs
         }
 
-        DetailsViewModel(mockAuth, mockRepo).run {
+        com.chesire.malime.flow.login.details.DetailsViewModel(mockAuth, mockRepo).run {
             username.value = "username"
             password.value = "password"
             loginStatus.observeForever(mockObserver)
@@ -196,17 +196,17 @@ class DetailsViewModelTests {
         val mockRepo = mockk<com.chesire.malime.account.UserRepository> {
             coEvery { refreshUser() } coAnswers { Resource.Error("") }
         }
-        val mockObserver = mockk<Observer<LoginStatus>> {
+        val mockObserver = mockk<Observer<com.chesire.malime.flow.login.details.LoginStatus>> {
             every { onChanged(any()) } just Runs
         }
 
-        DetailsViewModel(mockAuth, mockRepo).run {
+        com.chesire.malime.flow.login.details.DetailsViewModel(mockAuth, mockRepo).run {
             username.value = "username"
             password.value = "password"
             loginStatus.observeForever(mockObserver)
             login()
         }
 
-        verify { mockObserver.onChanged(LoginStatus.Error) }
+        verify { mockObserver.onChanged(com.chesire.malime.flow.login.details.LoginStatus.Error) }
     }
 }

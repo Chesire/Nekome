@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.chesire.malime.flow.ActivityViewModel
 import com.chesire.malime.flow.ViewModelFactory
-import com.chesire.malime.login.details.DetailsViewModel
+import com.chesire.malime.flow.login.details.DetailsViewModel
 import com.chesire.malime.flow.login.syncing.SyncingViewModel
 import com.chesire.malime.flow.profile.ProfileViewModel
 import com.chesire.malime.flow.series.detail.SeriesDetailViewModel
