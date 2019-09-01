@@ -1,9 +1,9 @@
-package com.chesire.malime
+package com.chesire.malime.core
 
 import android.content.SharedPreferences
 import androidx.core.content.edit
+import com.chesire.malime.core.flags.SortOption
 import com.chesire.malime.core.flags.UserSeriesStatus
-import com.chesire.malime.flow.series.SortOption
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
 import javax.inject.Inject

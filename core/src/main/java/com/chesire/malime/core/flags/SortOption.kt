@@ -1,7 +1,7 @@
-package com.chesire.malime.flow.series
+package com.chesire.malime.core.flags
 
 import androidx.annotation.StringRes
-import com.chesire.malime.R
+import com.chesire.malime.core.R
 
 /**
  * Options available for when sorting the series list is performed.

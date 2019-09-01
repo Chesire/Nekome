@@ -13,7 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chesire.malime.R
-import com.chesire.malime.SharedPref
+import com.chesire.malime.core.SharedPref
 import com.chesire.malime.server.Resource
 import com.chesire.malime.core.models.SeriesModel
 import com.chesire.malime.databinding.FragmentSeriesListBinding
@@ -46,7 +46,7 @@ abstract class SeriesListFragment :
     @Inject
     lateinit var dialogHandler: DialogHandler
     @Inject
-    lateinit var sharedPref: SharedPref
+    lateinit var sharedPref: com.chesire.malime.core.SharedPref
 
     protected val viewModel by lazy {
         ViewModelProvider(this, viewModelFactory).get<SeriesListViewModel>()
