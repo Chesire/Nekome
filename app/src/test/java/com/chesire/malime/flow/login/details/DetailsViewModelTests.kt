@@ -6,7 +6,7 @@ import com.chesire.malime.CoroutinesMainDispatcherRule
 import com.chesire.malime.server.Resource
 import com.chesire.malime.server.api.AuthApi
 import com.chesire.malime.core.models.UserModel
-import com.chesire.malime.repo.UserRepository
+import com.chesire.malime.account.UserRepository
 import io.mockk.Runs
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -26,7 +26,7 @@ class DetailsViewModelTests {
     @Test
     fun `empty username produces LoginStatus#EmptyUsername`() {
         val mockAuth = mockk<AuthApi>()
-        val mockRepo = mockk<UserRepository>()
+        val mockRepo = mockk<com.chesire.malime.account.UserRepository>()
         val mockObserver = mockk<Observer<LoginStatus>> {
             every { onChanged(any()) } just Runs
         }
@@ -44,7 +44,7 @@ class DetailsViewModelTests {
     @Test
     fun `empty password produces LoginStatus#EmptyPassword`() {
         val mockAuth = mockk<AuthApi>()
-        val mockRepo = mockk<UserRepository>()
+        val mockRepo = mockk<com.chesire.malime.account.UserRepository>()
         val mockObserver = mockk<Observer<LoginStatus>> {
             every { onChanged(any()) } just Runs
         }
@@ -66,7 +66,7 @@ class DetailsViewModelTests {
                 Resource.Error("", 401)
             }
         }
-        val mockRepo = mockk<UserRepository>()
+        val mockRepo = mockk<com.chesire.malime.account.UserRepository>()
         val mockObserver = mockk<Observer<LoginStatus>> {
             every { onChanged(any()) } just Runs
         }
@@ -88,7 +88,7 @@ class DetailsViewModelTests {
                 Resource.Error("", 0)
             }
         }
-        val mockRepo = mockk<UserRepository>()
+        val mockRepo = mockk<com.chesire.malime.account.UserRepository>()
         val mockObserver = mockk<Observer<LoginStatus>> {
             every { onChanged(any()) } just Runs
         }
@@ -113,7 +113,7 @@ class DetailsViewModelTests {
             }
             coEvery { clearAuth() } just Runs
         }
-        val mockRepo = mockk<UserRepository> {
+        val mockRepo = mockk<com.chesire.malime.account.UserRepository> {
             coEvery {
                 refreshUser()
             } coAnswers {
@@ -140,7 +140,7 @@ class DetailsViewModelTests {
                 Resource.Success(Any())
             }
         }
-        val mockRepo = mockk<UserRepository> {
+        val mockRepo = mockk<com.chesire.malime.account.UserRepository> {
             coEvery { refreshUser() } coAnswers { Resource.Success(expectedModel) }
         }
         val mockObserver = mockk<Observer<LoginStatus>> {
@@ -167,7 +167,7 @@ class DetailsViewModelTests {
             }
             coEvery { clearAuth() } coAnswers { }
         }
-        val mockRepo = mockk<UserRepository> {
+        val mockRepo = mockk<com.chesire.malime.account.UserRepository> {
             coEvery { refreshUser() } coAnswers { Resource.Error("") }
         }
         val mockObserver = mockk<Observer<LoginStatus>> {
@@ -194,7 +194,7 @@ class DetailsViewModelTests {
             }
             coEvery { clearAuth() } coAnswers { }
         }
-        val mockRepo = mockk<UserRepository> {
+        val mockRepo = mockk<com.chesire.malime.account.UserRepository> {
             coEvery { refreshUser() } coAnswers { Resource.Error("") }
         }
         val mockObserver = mockk<Observer<LoginStatus>> {

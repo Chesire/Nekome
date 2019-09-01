@@ -29,7 +29,7 @@ class SeriesRepositoryTests {
             every { observe(SeriesType.Anime) } returns mockk { every { observeForever(any()) } just Runs }
         }
         val mockApi = mockk<LibraryApi>()
-        val mockUser = mockk<UserRepository>()
+        val mockUser = mockk<com.chesire.malime.account.UserRepository>()
 
         val classUnderTest = SeriesRepository(mockDao, mockApi, mockUser)
         classUnderTest.anime.observeForever(mockk<Observer<List<SeriesModel>>>())
@@ -43,7 +43,7 @@ class SeriesRepositoryTests {
             every { observe(SeriesType.Manga) } returns mockk { every { observeForever(any()) } just Runs }
         }
         val mockApi = mockk<LibraryApi>()
-        val mockUser = mockk<UserRepository>()
+        val mockUser = mockk<com.chesire.malime.account.UserRepository>()
 
         val classUnderTest = SeriesRepository(mockDao, mockApi, mockUser)
         classUnderTest.manga.observeForever(mockk<Observer<List<SeriesModel>>>())
@@ -57,7 +57,7 @@ class SeriesRepositoryTests {
             every { observe() } returns mockk { every { observeForever(any()) } just Runs }
         }
         val mockApi = mockk<LibraryApi>()
-        val mockUser = mockk<UserRepository>()
+        val mockUser = mockk<com.chesire.malime.account.UserRepository>()
 
         val classUnderTest = SeriesRepository(mockDao, mockApi, mockUser)
         classUnderTest.series.observeForever(mockk<Observer<List<SeriesModel>>>())
@@ -74,7 +74,7 @@ class SeriesRepositoryTests {
         val mockApi = mockk<LibraryApi> {
             coEvery { addAnime(any(), any(), any()) } returns expected
         }
-        val mockUser = mockk<UserRepository> {
+        val mockUser = mockk<com.chesire.malime.account.UserRepository> {
             coEvery { retrieveUserId() } returns 1
         }
 
@@ -93,7 +93,7 @@ class SeriesRepositoryTests {
         val mockApi = mockk<LibraryApi> {
             coEvery { addAnime(any(), any(), any()) } returns expected
         }
-        val mockUser = mockk<UserRepository> {
+        val mockUser = mockk<com.chesire.malime.account.UserRepository> {
             coEvery { retrieveUserId() } returns 1
         }
 
@@ -112,7 +112,7 @@ class SeriesRepositoryTests {
         val mockApi = mockk<LibraryApi> {
             coEvery { addAnime(any(), any(), any()) } returns expected
         }
-        val mockUser = mockk<UserRepository> {
+        val mockUser = mockk<com.chesire.malime.account.UserRepository> {
             coEvery { retrieveUserId() } returns 1
         }
 
@@ -131,7 +131,7 @@ class SeriesRepositoryTests {
         val mockApi = mockk<LibraryApi> {
             coEvery { addManga(any(), any(), any()) } returns expected
         }
-        val mockUser = mockk<UserRepository> {
+        val mockUser = mockk<com.chesire.malime.account.UserRepository> {
             coEvery { retrieveUserId() } returns 1
         }
 
@@ -150,7 +150,7 @@ class SeriesRepositoryTests {
         val mockApi = mockk<LibraryApi> {
             coEvery { addManga(any(), any(), any()) } returns expected
         }
-        val mockUser = mockk<UserRepository> {
+        val mockUser = mockk<com.chesire.malime.account.UserRepository> {
             coEvery { retrieveUserId() } returns 1
         }
 
@@ -169,7 +169,7 @@ class SeriesRepositoryTests {
         val mockApi = mockk<LibraryApi> {
             coEvery { addManga(any(), any(), any()) } returns expected
         }
-        val mockUser = mockk<UserRepository> {
+        val mockUser = mockk<com.chesire.malime.account.UserRepository> {
             coEvery { retrieveUserId() } returns 1
         }
 
@@ -192,7 +192,7 @@ class SeriesRepositoryTests {
                 Resource.Success(expected)
             }
         }
-        val mockUser = mockk<UserRepository>()
+        val mockUser = mockk<com.chesire.malime.account.UserRepository>()
 
         val classUnderTest = SeriesRepository(mockDao, mockApi, mockUser)
         classUnderTest.updateSeries(0, 0, UserSeriesStatus.Current)
@@ -210,7 +210,7 @@ class SeriesRepositoryTests {
                 Resource.Error("")
             }
         }
-        val mockUser = mockk<UserRepository>()
+        val mockUser = mockk<com.chesire.malime.account.UserRepository>()
 
         val classUnderTest = SeriesRepository(mockDao, mockApi, mockUser)
         val result = classUnderTest.updateSeries(0, 0, UserSeriesStatus.Current)

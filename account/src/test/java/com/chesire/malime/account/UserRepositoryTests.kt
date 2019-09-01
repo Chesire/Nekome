@@ -1,12 +1,14 @@
-package com.chesire.malime.repo
+package com.chesire.malime.account
 
-import com.chesire.malime.server.Resource
-import com.chesire.malime.server.api.UserApi
 import com.chesire.malime.core.flags.Service
 import com.chesire.malime.core.models.UserModel
-import com.chesire.malime.database.dao.UserDao
+import com.chesire.malime.server.Resource
+import com.chesire.malime.server.api.UserApi
+import io.mockk.Runs
 import io.mockk.coEvery
 import io.mockk.coVerify
+import io.mockk.every
+import io.mockk.just
 import io.mockk.mockk
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
@@ -25,7 +27,7 @@ class UserRepositoryTests {
             coEvery { getUserDetails() } coAnswers { Resource.Success(expected) }
         }
 
-        val classUnderTest = UserRepository(mockDao, mockApi)
+        val classUnderTest = com.chesire.malime.account.UserRepository(mockDao, mockApi)
         val result = classUnderTest.refreshUser()
 
         when (result) {
@@ -44,7 +46,7 @@ class UserRepositoryTests {
             coEvery { getUserDetails() } coAnswers { Resource.Error(expected) }
         }
 
-        val classUnderTest = UserRepository(mockDao, mockApi)
+        val classUnderTest = com.chesire.malime.account.UserRepository(mockDao, mockApi)
         val result = classUnderTest.refreshUser()
 
         when (result) {
@@ -62,7 +64,7 @@ class UserRepositoryTests {
         }
         val mockApi = mockk<UserApi>()
 
-        val classUnderTest = UserRepository(mockDao, mockApi)
+        val classUnderTest = com.chesire.malime.account.UserRepository(mockDao, mockApi)
 
         assertEquals(expected, classUnderTest.retrieveUserId())
     }

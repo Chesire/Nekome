@@ -6,7 +6,7 @@ import androidx.work.WorkerParameters
 import com.chesire.malime.MalimeApplication
 import com.chesire.malime.server.Resource
 import com.chesire.malime.repo.SeriesRepository
-import com.chesire.malime.repo.UserRepository
+import com.chesire.malime.account.UserRepository
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -18,7 +18,7 @@ class RefreshSeriesWorker(
     @Inject
     lateinit var seriesRepo: SeriesRepository
     @Inject
-    lateinit var userRepo: UserRepository
+    lateinit var userRepo: com.chesire.malime.account.UserRepository
 
     init {
         // For now setup in the init block

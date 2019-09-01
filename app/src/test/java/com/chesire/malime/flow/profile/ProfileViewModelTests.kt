@@ -6,7 +6,7 @@ import androidx.lifecycle.Observer
 import com.chesire.malime.core.flags.UserSeriesStatus
 import com.chesire.malime.createSeriesModel
 import com.chesire.malime.repo.SeriesRepository
-import com.chesire.malime.repo.UserRepository
+import com.chesire.malime.account.UserRepository
 import io.mockk.Runs
 import io.mockk.every
 import io.mockk.just
@@ -26,7 +26,7 @@ class ProfileViewModelTests {
             every { anime } returns MutableLiveData(listOf(createSeriesModel()))
             every { manga } returns mockk()
         }
-        val mockUserRepo = mockk<UserRepository> {
+        val mockUserRepo = mockk<com.chesire.malime.account.UserRepository> {
             every { user } returns mockk()
         }
         val mockObserver = mockk<Observer<SeriesProgress>>() {
@@ -45,7 +45,7 @@ class ProfileViewModelTests {
             every { anime } returns mockk()
             every { manga } returns MutableLiveData(listOf(createSeriesModel()))
         }
-        val mockUserRepo = mockk<UserRepository> {
+        val mockUserRepo = mockk<com.chesire.malime.account.UserRepository> {
             every { user } returns mockk()
         }
         val mockObserver = mockk<Observer<SeriesProgress>>() {
@@ -71,7 +71,7 @@ class ProfileViewModelTests {
                 )
             )
         }
-        val mockUserRepo = mockk<UserRepository> {
+        val mockUserRepo = mockk<com.chesire.malime.account.UserRepository> {
             every { user } returns mockk()
         }
         val mockObserver = mockk<Observer<SeriesProgress>>() {
@@ -97,7 +97,7 @@ class ProfileViewModelTests {
                 )
             )
         }
-        val mockUserRepo = mockk<UserRepository> {
+        val mockUserRepo = mockk<com.chesire.malime.account.UserRepository> {
             every { user } returns mockk()
         }
         val mockObserver = mockk<Observer<SeriesProgress>>() {
@@ -123,7 +123,7 @@ class ProfileViewModelTests {
                 )
             )
         }
-        val mockUserRepo = mockk<UserRepository> {
+        val mockUserRepo = mockk<com.chesire.malime.account.UserRepository> {
             every { user } returns mockk()
         }
         val mockObserver = mockk<Observer<SeriesProgress>>() {
@@ -149,7 +149,7 @@ class ProfileViewModelTests {
                 )
             )
         }
-        val mockUserRepo = mockk<UserRepository> {
+        val mockUserRepo = mockk<com.chesire.malime.account.UserRepository> {
             every { user } returns mockk()
         }
         val mockObserver = mockk<Observer<SeriesProgress>>() {
@@ -175,7 +175,7 @@ class ProfileViewModelTests {
                 )
             )
         }
-        val mockUserRepo = mockk<UserRepository> {
+        val mockUserRepo = mockk<com.chesire.malime.account.UserRepository> {
             every { user } returns mockk()
         }
         val mockObserver = mockk<Observer<SeriesProgress>>() {
@@ -201,7 +201,7 @@ class ProfileViewModelTests {
                 )
             )
         }
-        val mockUserRepo = mockk<UserRepository> {
+        val mockUserRepo = mockk<com.chesire.malime.account.UserRepository> {
             every { user } returns mockk()
         }
         val mockObserver = mockk<Observer<SeriesProgress>>() {
@@ -227,7 +227,7 @@ class ProfileViewModelTests {
                 )
             )
         }
-        val mockUserRepo = mockk<UserRepository> {
+        val mockUserRepo = mockk<com.chesire.malime.account.UserRepository> {
             every { user } returns mockk()
         }
         val mockObserver = mockk<Observer<SeriesProgress>>() {

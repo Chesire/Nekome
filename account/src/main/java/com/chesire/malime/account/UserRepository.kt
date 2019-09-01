@@ -1,15 +1,15 @@
-package com.chesire.malime.repo
+package com.chesire.malime.account
 
-import com.chesire.malime.server.Resource
-import com.chesire.malime.server.api.UserApi
 import com.chesire.malime.core.flags.Service
 import com.chesire.malime.core.models.UserModel
 import com.chesire.malime.database.dao.UserDao
+import com.chesire.malime.server.Resource
+import com.chesire.malime.server.api.UserApi
 import timber.log.Timber
 import javax.inject.Inject
 
 class UserRepository @Inject constructor(
-    private val userDao: com.chesire.malime.database.dao.UserDao,
+    private val userDao: UserDao,
     private val userApi: UserApi
 ) {
     val user = userDao.observe(Service.Kitsu)

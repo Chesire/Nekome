@@ -13,7 +13,7 @@ import javax.inject.Inject
 class SeriesRepository @Inject constructor(
     private val seriesDao: com.chesire.malime.database.dao.SeriesDao,
     private val libraryApi: LibraryApi,
-    private val userRepository: UserRepository
+    private val userRepository: com.chesire.malime.account.UserRepository
 ) {
     val anime: LiveData<List<SeriesModel>>
         get() = seriesDao.observe(SeriesType.Anime)
