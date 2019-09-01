@@ -3,9 +3,7 @@ package com.chesire.malime.services
 import android.content.Context
 import androidx.work.ListenableWorker
 import androidx.work.WorkerParameters
-import com.chesire.malime.server.Resource
-import com.chesire.malime.repo.SeriesRepository
-import com.chesire.malime.account.UserRepository
+import com.chesire.malime.series.SeriesRepository
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
@@ -23,7 +21,7 @@ class RefreshSeriesWorkerTests {
                 every { backgroundExecutor } returns mockk()
             }
         }
-        val mockSeriesRepo = mockk<SeriesRepository> {
+        val mockSeriesRepo = mockk<com.chesire.malime.series.SeriesRepository> {
             coEvery { refreshAnime() } coAnswers { Resource.Success(mockk()) }
             coEvery { refreshManga() } coAnswers { Resource.Success(mockk()) }
         }
@@ -49,7 +47,7 @@ class RefreshSeriesWorkerTests {
                 every { backgroundExecutor } returns mockk()
             }
         }
-        val mockSeriesRepo = mockk<SeriesRepository> {
+        val mockSeriesRepo = mockk<com.chesire.malime.series.SeriesRepository> {
             coEvery { refreshAnime() } coAnswers { Resource.Success(mockk()) }
             coEvery { refreshManga() } coAnswers { Resource.Success(mockk()) }
         }
@@ -73,7 +71,7 @@ class RefreshSeriesWorkerTests {
                 every { backgroundExecutor } returns mockk()
             }
         }
-        val mockSeriesRepo = mockk<SeriesRepository> {
+        val mockSeriesRepo = mockk<com.chesire.malime.series.SeriesRepository> {
             coEvery { refreshAnime() } coAnswers { Resource.Error("test error") }
             coEvery { refreshManga() } coAnswers { Resource.Success(mockk()) }
         }
@@ -97,7 +95,7 @@ class RefreshSeriesWorkerTests {
                 every { backgroundExecutor } returns mockk()
             }
         }
-        val mockSeriesRepo = mockk<SeriesRepository> {
+        val mockSeriesRepo = mockk<com.chesire.malime.series.SeriesRepository> {
             coEvery { refreshAnime() } coAnswers { Resource.Success(mockk()) }
             coEvery { refreshManga() } coAnswers { Resource.Error("test error") }
         }
@@ -121,7 +119,7 @@ class RefreshSeriesWorkerTests {
                 every { backgroundExecutor } returns mockk()
             }
         }
-        val mockSeriesRepo = mockk<SeriesRepository> {
+        val mockSeriesRepo = mockk<com.chesire.malime.series.SeriesRepository> {
             coEvery { refreshAnime() } coAnswers { Resource.Error("test error") }
             coEvery { refreshManga() } coAnswers { Resource.Error("test error") }
         }

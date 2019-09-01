@@ -1,4 +1,4 @@
-package com.chesire.malime.repo
+package com.chesire.malime.series
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
@@ -7,7 +7,6 @@ import com.chesire.malime.server.api.LibraryApi
 import com.chesire.malime.core.flags.SeriesType
 import com.chesire.malime.core.flags.UserSeriesStatus
 import com.chesire.malime.core.models.SeriesModel
-import com.chesire.malime.database.dao.SeriesDao
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
@@ -31,7 +30,7 @@ class SeriesRepositoryTests {
         val mockApi = mockk<LibraryApi>()
         val mockUser = mockk<com.chesire.malime.account.UserRepository>()
 
-        val classUnderTest = SeriesRepository(mockDao, mockApi, mockUser)
+        val classUnderTest = com.chesire.malime.series.SeriesRepository(mockDao, mockApi, mockUser)
         classUnderTest.anime.observeForever(mockk<Observer<List<SeriesModel>>>())
 
         verify { mockDao.observe(SeriesType.Anime) }
@@ -45,7 +44,7 @@ class SeriesRepositoryTests {
         val mockApi = mockk<LibraryApi>()
         val mockUser = mockk<com.chesire.malime.account.UserRepository>()
 
-        val classUnderTest = SeriesRepository(mockDao, mockApi, mockUser)
+        val classUnderTest = com.chesire.malime.series.SeriesRepository(mockDao, mockApi, mockUser)
         classUnderTest.manga.observeForever(mockk<Observer<List<SeriesModel>>>())
 
         verify { mockDao.observe(SeriesType.Manga) }
@@ -59,7 +58,7 @@ class SeriesRepositoryTests {
         val mockApi = mockk<LibraryApi>()
         val mockUser = mockk<com.chesire.malime.account.UserRepository>()
 
-        val classUnderTest = SeriesRepository(mockDao, mockApi, mockUser)
+        val classUnderTest = com.chesire.malime.series.SeriesRepository(mockDao, mockApi, mockUser)
         classUnderTest.series.observeForever(mockk<Observer<List<SeriesModel>>>())
 
         verify { mockDao.observe() }
@@ -78,7 +77,7 @@ class SeriesRepositoryTests {
             coEvery { retrieveUserId() } returns 1
         }
 
-        val classUnderTest = SeriesRepository(mockDao, mockApi, mockUser)
+        val classUnderTest = com.chesire.malime.series.SeriesRepository(mockDao, mockApi, mockUser)
         classUnderTest.addAnime(0, UserSeriesStatus.Current)
 
         coVerify { mockDao.insert(any<SeriesModel>()) }
@@ -97,7 +96,7 @@ class SeriesRepositoryTests {
             coEvery { retrieveUserId() } returns 1
         }
 
-        val classUnderTest = SeriesRepository(mockDao, mockApi, mockUser)
+        val classUnderTest = com.chesire.malime.series.SeriesRepository(mockDao, mockApi, mockUser)
         val actual = classUnderTest.addAnime(0, UserSeriesStatus.Current)
 
         assertEquals(expected, actual)
@@ -116,7 +115,7 @@ class SeriesRepositoryTests {
             coEvery { retrieveUserId() } returns 1
         }
 
-        val classUnderTest = SeriesRepository(mockDao, mockApi, mockUser)
+        val classUnderTest = com.chesire.malime.series.SeriesRepository(mockDao, mockApi, mockUser)
         val actual = classUnderTest.addAnime(0, UserSeriesStatus.Current)
 
         assertEquals(expected, actual)
@@ -135,7 +134,7 @@ class SeriesRepositoryTests {
             coEvery { retrieveUserId() } returns 1
         }
 
-        val classUnderTest = SeriesRepository(mockDao, mockApi, mockUser)
+        val classUnderTest = com.chesire.malime.series.SeriesRepository(mockDao, mockApi, mockUser)
         classUnderTest.addManga(0, UserSeriesStatus.Current)
 
         coVerify { mockDao.insert(any<SeriesModel>()) }
@@ -154,7 +153,7 @@ class SeriesRepositoryTests {
             coEvery { retrieveUserId() } returns 1
         }
 
-        val classUnderTest = SeriesRepository(mockDao, mockApi, mockUser)
+        val classUnderTest = com.chesire.malime.series.SeriesRepository(mockDao, mockApi, mockUser)
         val actual = classUnderTest.addManga(0, UserSeriesStatus.Current)
 
         assertEquals(expected, actual)
@@ -173,7 +172,7 @@ class SeriesRepositoryTests {
             coEvery { retrieveUserId() } returns 1
         }
 
-        val classUnderTest = SeriesRepository(mockDao, mockApi, mockUser)
+        val classUnderTest = com.chesire.malime.series.SeriesRepository(mockDao, mockApi, mockUser)
         val actual = classUnderTest.addManga(0, UserSeriesStatus.Current)
 
         assertEquals(expected, actual)
@@ -194,7 +193,7 @@ class SeriesRepositoryTests {
         }
         val mockUser = mockk<com.chesire.malime.account.UserRepository>()
 
-        val classUnderTest = SeriesRepository(mockDao, mockApi, mockUser)
+        val classUnderTest = com.chesire.malime.series.SeriesRepository(mockDao, mockApi, mockUser)
         classUnderTest.updateSeries(0, 0, UserSeriesStatus.Current)
 
         coVerify { mockDao.update(expected) }
@@ -212,7 +211,7 @@ class SeriesRepositoryTests {
         }
         val mockUser = mockk<com.chesire.malime.account.UserRepository>()
 
-        val classUnderTest = SeriesRepository(mockDao, mockApi, mockUser)
+        val classUnderTest = com.chesire.malime.series.SeriesRepository(mockDao, mockApi, mockUser)
         val result = classUnderTest.updateSeries(0, 0, UserSeriesStatus.Current)
 
         when (result) {

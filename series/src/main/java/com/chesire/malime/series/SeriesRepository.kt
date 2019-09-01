@@ -1,4 +1,4 @@
-package com.chesire.malime.repo
+package com.chesire.malime.series
 
 import androidx.lifecycle.LiveData
 import com.chesire.malime.server.Resource

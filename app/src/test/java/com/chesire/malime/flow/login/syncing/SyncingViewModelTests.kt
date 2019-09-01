@@ -2,12 +2,9 @@ package com.chesire.malime.flow.login.syncing
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
-import com.chesire.malime.core.flags.AsyncState
 import com.chesire.malime.CoroutinesMainDispatcherRule
-import com.chesire.malime.server.Resource
-import com.chesire.malime.repo.SeriesRepository
+import com.chesire.malime.series.SeriesRepository
 import io.mockk.Runs
-import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.just
 import io.mockk.mockk
@@ -26,7 +23,7 @@ class SyncingViewModelTests {
 
     @Test
     fun `syncLatestData refreshAnime failure posts error`() = runBlocking {
-        val mockRepo = mockk<SeriesRepository> {
+        val mockRepo = mockk<com.chesire.malime.series.SeriesRepository> {
             coEvery { refreshAnime() } coAnswers { Resource.Error("") }
             coEvery { refreshManga() } coAnswers { Resource.Success(mockk()) }
         }
@@ -43,7 +40,7 @@ class SyncingViewModelTests {
 
     @Test
     fun `syncLatestData refreshManga failure posts error`() = runBlocking {
-        val mockRepo = mockk<SeriesRepository> {
+        val mockRepo = mockk<com.chesire.malime.series.SeriesRepository> {
             coEvery { refreshAnime() } coAnswers { Resource.Success(mockk()) }
             coEvery { refreshManga() } coAnswers { Resource.Error("") }
         }
@@ -60,7 +57,7 @@ class SyncingViewModelTests {
 
     @Test
     fun `syncLatestData all sync success posts success`() = runBlocking {
-        val mockRepo = mockk<SeriesRepository> {
+        val mockRepo = mockk<com.chesire.malime.series.SeriesRepository> {
             coEvery { refreshAnime() } coAnswers { Resource.Success(mockk()) }
             coEvery { refreshManga() } coAnswers { Resource.Success(mockk()) }
         }

@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.chesire.malime.core.flags.AsyncState
 import com.chesire.malime.AuthCaster
 import com.chesire.malime.server.Resource
 import com.chesire.malime.server.api.SearchApi
@@ -14,12 +13,12 @@ import com.chesire.malime.core.models.SeriesModel
 import com.chesire.malime.core.extensions.postError
 import com.chesire.malime.core.extensions.postLoading
 import com.chesire.malime.core.extensions.postSuccess
-import com.chesire.malime.repo.SeriesRepository
+import com.chesire.malime.series.SeriesRepository
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class SearchViewModel @Inject constructor(
-    private val repo: SeriesRepository,
+    private val repo: com.chesire.malime.series.SeriesRepository,
     private val search: SearchApi,
     private val authCaster: AuthCaster
 ) : ViewModel() {

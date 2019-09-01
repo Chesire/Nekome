@@ -76,8 +76,9 @@ dependencies {
     implementation project(path: ':core')
     implementation project(path: ':database')
     implementation project(path: ':login')
-    implementation project(path: ':server')
     implementation project(path: ':kitsu')
+    implementation project(path: ':series')
+    implementation project(path: ':server')
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
