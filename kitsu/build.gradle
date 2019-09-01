@@ -33,7 +33,6 @@ android {
 
 dependencies {
     ext {
-        moshi_version = "1.8.0"
         retrofit_version = "2.6.1"
     }
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
@@ -44,7 +43,7 @@ dependencies {
     implementation "androidx.core:core-ktx:$corektx_version"
     implementation 'com.github.talhahasanzia:android-encryption-helper:0.3.1'
     implementation "com.google.dagger:dagger:$dagger_version"
-    implementation 'com.jakewharton.timber:timber:4.7.1'
+    implementation "com.jakewharton.timber:timber:$timber_version"
     implementation "com.squareup.moshi:moshi:$moshi_version"
     api 'com.squareup.okhttp3:logging-interceptor:3.14.2'
     api "com.squareup.retrofit2:converter-moshi:$retrofit_version"

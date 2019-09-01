@@ -44,7 +44,7 @@ dependencies {
     implementation "androidx.core:core-ktx:$corektx_version"
     implementation "com.google.dagger:dagger:$dagger_version"
     implementation "com.google.dagger:dagger-android:$dagger_version"
-    implementation 'com.jakewharton.timber:timber:4.7.1'
+    implementation "com.jakewharton.timber:timber:$timber_version"
 
     testImplementation 'io.mockk:mockk:1.9.3'
     testImplementation 'junit:junit:4.12'

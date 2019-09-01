@@ -57,5 +57,7 @@ ext {
     coroutines_version = "1.2.2"
     dagger_version = "2.24"
     lifecycle_version = "2.2.0-alpha03"
+    moshi_version = "1.8.0"
     room_version = "2.1.0"
+    timber_version = "4.7.1"
 }
