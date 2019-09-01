@@ -48,9 +48,9 @@ class SyncingFragment : DaggerFragment() {
             viewLifecycleOwner,
             Observer {
                 when (it) {
-                    is com.chesire.malime.core.flags.AsyncState.Success -> findNavController().navigate(SyncingFragmentDirections.toAnimeFragment())
-                    is com.chesire.malime.core.flags.AsyncState.Loading -> setLoading()
-                    is com.chesire.malime.core.flags.AsyncState.Error -> hideLoading()
+                    is AsyncState.Success -> findNavController().navigate(SyncingFragmentDirections.toAnimeFragment())
+                    is AsyncState.Loading -> setLoading()
+                    is AsyncState.Error -> hideLoading()
                 }
             }
         )

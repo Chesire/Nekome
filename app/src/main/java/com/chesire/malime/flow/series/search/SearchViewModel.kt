@@ -13,21 +13,22 @@ import com.chesire.malime.core.models.SeriesModel
 import com.chesire.malime.core.extensions.postError
 import com.chesire.malime.core.extensions.postLoading
 import com.chesire.malime.core.extensions.postSuccess
+import com.chesire.malime.core.flags.AsyncState
 import com.chesire.malime.series.SeriesRepository
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class SearchViewModel @Inject constructor(
-    private val repo: com.chesire.malime.series.SeriesRepository,
+    private val repo: SeriesRepository,
     private val search: SearchApi,
     private val authCaster: AuthCaster
 ) : ViewModel() {
-    private val _searchResults = MutableLiveData<com.chesire.malime.core.flags.AsyncState<List<SeriesModel>, SearchError>>()
+    private val _searchResults = MutableLiveData<AsyncState<List<SeriesModel>, SearchError>>()
 
     val searchTitle = MutableLiveData<String>()
     val series: LiveData<List<SeriesModel>>
         get() = repo.series
-    val searchResults: LiveData<com.chesire.malime.core.flags.AsyncState<List<SeriesModel>, SearchError>>
+    val searchResults: LiveData<AsyncState<List<SeriesModel>, SearchError>>
         get() = _searchResults
 
     var seriesType: SeriesType = SeriesType.Anime

@@ -6,8 +6,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import com.chesire.malime.R
 import com.chesire.malime.core.SharedPref
-import com.chesire.malime.core.models.SeriesModel
 import com.chesire.malime.core.flags.SortOption
+import com.chesire.malime.core.models.SeriesModel
 import timber.log.Timber
 
 /**
@@ -15,7 +15,7 @@ import timber.log.Timber
  */
 class SeriesAdapter(
     private val listener: SeriesInteractionListener,
-    private val sharedPref: com.chesire.malime.core.SharedPref
+    private val sharedPref: SharedPref
 ) : ListAdapter<SeriesModel, SeriesViewHolder>(SeriesModelDiffCallback()),
     SharedPreferences.OnSharedPreferenceChangeListener {
 
@@ -48,7 +48,7 @@ class SeriesAdapter(
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
         when (key) {
-            com.chesire.malime.core.SharedPref.FILTER_PREFERENCE, com.chesire.malime.core.SharedPref.SORT_PREFERENCE -> submitList(completeList)
+            SharedPref.FILTER_PREFERENCE, SharedPref.SORT_PREFERENCE -> submitList(completeList)
         }
     }
 
@@ -58,10 +58,10 @@ class SeriesAdapter(
 
     private fun executeSort(items: List<SeriesModel>) = items.sortedWith(
         when (sharedPref.sortPreference) {
-            com.chesire.malime.core.flags.SortOption.Default -> compareBy { it.userId }
-            com.chesire.malime.core.flags.SortOption.Title -> compareBy { it.title }
-            com.chesire.malime.core.flags.SortOption.StartDate -> compareBy { it.startDate }
-            com.chesire.malime.core.flags.SortOption.EndDate -> compareBy { it.endDate }
+            SortOption.Default -> compareBy { it.userId }
+            SortOption.Title -> compareBy { it.title }
+            SortOption.StartDate -> compareBy { it.startDate }
+            SortOption.EndDate -> compareBy { it.endDate }
         }
     )
 }

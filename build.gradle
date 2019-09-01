@@ -31,9 +31,13 @@ detekt {
     toolVersion = "1.0.0"
     config = files("detekt.yml")
     input = files(
+            "account/src/main/java",
             "app/src/main/java",
             "core/src/main/java",
-            "kitsu/src/main/java"
+            "database/src/main/java",
+            "kitsu/src/main/java",
+            "series/src/main/java",
+            "server/src/main/java"
     )
     reports {
         xml {
