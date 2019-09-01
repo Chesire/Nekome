@@ -10,7 +10,7 @@ import javax.inject.Inject
  */
 class LogoutHandler @Inject constructor(
     private val authProvider: AuthProvider,
-    private val db: com.chesire.malime.database.RoomDB
+    private val db: RoomDB
 ) {
     /**
      * Executes log out, clearing anything left over and resetting the application state.

@@ -1,4 +1,4 @@
-package com.chesire.malime
+package com.chesire.malime.core
 
 import javax.inject.Qualifier
 

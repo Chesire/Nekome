@@ -2,10 +2,10 @@ package com.chesire.malime.flow
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.chesire.malime.IOContext
 import com.chesire.malime.LogoutHandler
-import com.chesire.malime.kitsu.AuthProvider
 import com.chesire.malime.account.UserRepository
+import com.chesire.malime.core.IOContext
+import com.chesire.malime.kitsu.AuthProvider
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import timber.log.Timber
@@ -19,7 +19,7 @@ class ActivityViewModel @Inject constructor(
     private val authProvider: AuthProvider,
     private val logoutHandler: LogoutHandler,
     @IOContext private val ioContext: CoroutineContext,
-    userRepository: com.chesire.malime.account.UserRepository
+    userRepository: UserRepository
 ) : ViewModel() {
     /**
      * The currently logged in user.
