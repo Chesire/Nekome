@@ -42,6 +42,8 @@ class SeriesDetailViewModel @Inject constructor(
         _deletionStatus.postLoading()
 
         viewModelScope.launch {
+            _deletionStatus.postError(target, SeriesDetailError.Error)
+            return@launch
             val response = repo.deleteSeries(target)
             if (response is Resource.Error && response.code == Resource.Error.CouldNotRefresh) {
                 authCaster.issueRefreshingToken()

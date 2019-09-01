@@ -10,9 +10,13 @@ import androidx.lifecycle.get
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
 import com.chesire.lifecyklelog.LogLifecykle
+import com.chesire.malime.AsyncState
 import com.chesire.malime.R
 import com.chesire.malime.flow.ViewModelFactory
+import com.google.android.material.snackbar.Snackbar
 import dagger.android.support.DaggerFragment
+import kotlinx.android.synthetic.main.fragment_series_detail.fragmentSeriesDetailLayout
+import kotlinx.android.synthetic.main.view_bottom_sheet.viewBottomSheetLayout
 import kotlinx.android.synthetic.main.view_bottom_sheet_actions.bottomSheetDelete
 import kotlinx.android.synthetic.main.view_bottom_sheet_header.viewBottomSheetProgress
 import kotlinx.android.synthetic.main.view_bottom_sheet_header.viewBottomSheetSubtitle
@@ -59,8 +63,28 @@ class SeriesDetailFragment : DaggerFragment() {
             viewBottomSheetProgress.setText("${model.progress} / ${model.totalLength}")
         })
         viewModel.deletionStatus.observe(viewLifecycleOwner, Observer { status ->
-            // show a snackbar for success or error?
-            // maybe add an undo button?
+            when (status) {
+                is AsyncState.Loading -> {
+                    // do something to disable the button maybe?
+                }
+                is AsyncState.Error -> {
+                    Snackbar.make(
+                        viewBottomSheetLayout,
+                        R.string.series_detail_delete_failure_message,
+                        Snackbar.LENGTH_INDEFINITE
+                    ).apply {
+                        status.data?.let {
+                            setAction(R.string.series_detail_delete_failure_retry) {
+                                viewModel.deleteModel(status.data)
+                            }
+                        }
+                    }.show()
+                }
+                is AsyncState.Success -> {
+                    // show a snackbar with undo button?
+                    // close bottom drawer?
+                }
+            }
         })
     }
 

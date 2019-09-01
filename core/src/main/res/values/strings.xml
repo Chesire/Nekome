@@ -70,4 +70,6 @@
     <string name="series_detail_delete_message">Are you sure you wish to delete %s?</string>
     <string name="series_detail_delete_cancel">Cancel</string>
     <string name="series_detail_delete_confirm">Confirm</string>
+    <string name="series_detail_delete_failure_message">Failed to delete series</string>
+    <string name="series_detail_delete_failure_retry">Retry</string>
 </resources>
