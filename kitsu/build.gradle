@@ -35,10 +35,12 @@ dependencies {
     ext {
         retrofit_version = "2.6.1"
     }
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation project(path: ':core')
     implementation project(path: ':server')
 
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation "androidx.appcompat:appcompat:$appcompat_version"
     implementation "androidx.core:core-ktx:$corektx_version"
     implementation 'com.github.talhahasanzia:android-encryption-helper:0.3.1'

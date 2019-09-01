@@ -16,6 +16,7 @@ import com.chesire.malime.R
 import com.chesire.malime.core.SharedPref
 import com.chesire.malime.server.Resource
 import com.chesire.malime.core.models.SeriesModel
+import com.chesire.malime.databinding.FragmentSeriesListBinding
 import com.chesire.malime.flow.DialogHandler
 import com.chesire.malime.flow.ViewModelFactory
 import com.chesire.malime.flow.series.detail.SeriesDetailFragment

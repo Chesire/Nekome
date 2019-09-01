@@ -13,9 +13,9 @@ object DatabaseModule {
     @Provides
     @Singleton
     @JvmStatic
-    fun provideDB(context: Context): com.chesire.malime.database.RoomDB {
+    fun provideDB(context: Context): RoomDB {
         return Room
-            .databaseBuilder(context, com.chesire.malime.database.RoomDB::class.java, "malime_database.db")
+            .databaseBuilder(context, RoomDB::class.java, "malime_database.db")
             .fallbackToDestructiveMigration()
             .build()
     }
@@ -23,10 +23,10 @@ object DatabaseModule {
     @Provides
     @Singleton
     @JvmStatic
-    fun provideSeries(db: com.chesire.malime.database.RoomDB) = db.series()
+    fun provideSeries(db: RoomDB) = db.series()
 
     @Provides
     @Singleton
     @JvmStatic
-    fun provideUser(db: com.chesire.malime.database.RoomDB) = db.user()
+    fun provideUser(db: RoomDB) = db.user()
 }
