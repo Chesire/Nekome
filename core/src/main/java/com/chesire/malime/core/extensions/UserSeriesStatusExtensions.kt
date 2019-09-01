@@ -1,4 +1,4 @@
-package com.chesire.malime.extensions
+package com.chesire.malime.core.extensions
 
 import androidx.annotation.StringRes
 import com.chesire.malime.core.flags.UserSeriesStatus

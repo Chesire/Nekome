@@ -2,7 +2,7 @@ package com.chesire.malime.flow.series.search
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
-import com.chesire.malime.AsyncState
+import com.chesire.malime.core.flags.AsyncState
 import com.chesire.malime.AuthCaster
 import com.chesire.malime.CoroutinesMainDispatcherRule
 import com.chesire.malime.server.Resource
@@ -30,7 +30,7 @@ class SearchViewModelTests {
     fun `performSearch with no search title posts error`() {
         val mockRepo = mockk<SeriesRepository>()
         val mockSearch = mockk<SearchApi>()
-        val mockObserver = mockk<Observer<AsyncState<List<SeriesModel>, SearchError>>> {
+        val mockObserver = mockk<Observer<com.chesire.malime.core.flags.AsyncState<List<SeriesModel>, SearchError>>> {
             every { onChanged(any()) } just Runs
         }
         val mockAuthCaster = mockk<AuthCaster>()
@@ -39,7 +39,7 @@ class SearchViewModelTests {
             searchResults.observeForever(mockObserver)
             performSearch()
 
-            assertEquals(SearchError.MissingTitle, (searchResults.value as AsyncState.Error).error)
+            assertEquals(SearchError.MissingTitle, (searchResults.value as com.chesire.malime.core.flags.AsyncState.Error).error)
         }
     }
 
@@ -49,7 +49,7 @@ class SearchViewModelTests {
         val mockSearch = mockk<SearchApi> {
             coEvery { searchForAnime(any()) } returns Resource.Error("", 0)
         }
-        val mockObserver = mockk<Observer<AsyncState<List<SeriesModel>, SearchError>>> {
+        val mockObserver = mockk<Observer<com.chesire.malime.core.flags.AsyncState<List<SeriesModel>, SearchError>>> {
             every { onChanged(any()) } just Runs
         }
         val mockAuthCaster = mockk<AuthCaster>()
@@ -69,7 +69,7 @@ class SearchViewModelTests {
         val mockSearch = mockk<SearchApi> {
             coEvery { searchForManga(any()) } returns Resource.Error("", 0)
         }
-        val mockObserver = mockk<Observer<AsyncState<List<SeriesModel>, SearchError>>> {
+        val mockObserver = mockk<Observer<com.chesire.malime.core.flags.AsyncState<List<SeriesModel>, SearchError>>> {
             every { onChanged(any()) } just Runs
         }
         val mockAuthCaster = mockk<AuthCaster>()
@@ -95,7 +95,7 @@ class SearchViewModelTests {
                 Resource.Success(expected)
             }
         }
-        val mockObserver = mockk<Observer<AsyncState<List<SeriesModel>, SearchError>>> {
+        val mockObserver = mockk<Observer<com.chesire.malime.core.flags.AsyncState<List<SeriesModel>, SearchError>>> {
             every { onChanged(any()) } just Runs
         }
         val mockAuthCaster = mockk<AuthCaster>()
@@ -106,7 +106,7 @@ class SearchViewModelTests {
             seriesType = SeriesType.Anime
             performSearch()
 
-            assertEquals(expected, (searchResults.value as AsyncState.Success).data)
+            assertEquals(expected, (searchResults.value as com.chesire.malime.core.flags.AsyncState.Success).data)
         }
     }
 }

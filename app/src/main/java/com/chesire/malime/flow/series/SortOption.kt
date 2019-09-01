@@ -16,7 +16,6 @@ enum class SortOption(val index: Int, @StringRes val stringId: Int) {
         /**
          * Get [SortOption] for its given [index].
          */
-        fun forIndex(index: Int): SortOption =
-            SortOption.values().find { it.index == index } ?: Default
+        fun forIndex(index: Int): SortOption = values().find { it.index == index } ?: Default
     }
 }

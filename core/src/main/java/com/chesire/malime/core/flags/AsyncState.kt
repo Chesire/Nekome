@@ -1,4 +1,4 @@
-package com.chesire.malime
+package com.chesire.malime.core.flags
 
 /**
  * Provides a container for async requests to communicate via live data.
