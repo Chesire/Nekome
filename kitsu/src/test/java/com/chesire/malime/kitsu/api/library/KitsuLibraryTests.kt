@@ -1,8 +1,8 @@
 package com.chesire.malime.kitsu.api.library
 
 import com.chesire.malime.server.Resource
-import com.chesire.malime.server.flags.UserSeriesStatus
-import com.chesire.malime.server.models.SeriesModel
+import com.chesire.malime.core.flags.UserSeriesStatus
+import com.chesire.malime.core.models.SeriesModel
 import com.chesire.malime.kitsu.api.intermediaries.Links
 import io.mockk.coEvery
 import io.mockk.coVerify

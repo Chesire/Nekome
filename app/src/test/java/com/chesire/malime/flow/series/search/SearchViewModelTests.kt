@@ -7,8 +7,8 @@ import com.chesire.malime.AuthCaster
 import com.chesire.malime.CoroutinesMainDispatcherRule
 import com.chesire.malime.server.Resource
 import com.chesire.malime.server.api.SearchApi
-import com.chesire.malime.server.flags.SeriesType
-import com.chesire.malime.server.models.SeriesModel
+import com.chesire.malime.core.flags.SeriesType
+import com.chesire.malime.core.models.SeriesModel
 import com.chesire.malime.repo.SeriesRepository
 import io.mockk.Runs
 import io.mockk.coEvery

@@ -1,8 +1,8 @@
 package com.chesire.malime.kitsu.api.user
 
-import com.chesire.malime.server.flags.Service
-import com.chesire.malime.server.models.ImageModel
-import com.chesire.malime.server.models.UserModel
+import com.chesire.malime.core.flags.Service
+import com.chesire.malime.core.models.ImageModel
+import com.chesire.malime.core.models.UserModel
 import com.squareup.moshi.FromJson
 
 @Suppress("unused")

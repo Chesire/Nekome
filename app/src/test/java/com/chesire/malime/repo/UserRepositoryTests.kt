@@ -2,8 +2,8 @@ package com.chesire.malime.repo
 
 import com.chesire.malime.server.Resource
 import com.chesire.malime.server.api.UserApi
-import com.chesire.malime.server.flags.Service
-import com.chesire.malime.server.models.UserModel
+import com.chesire.malime.core.flags.Service
+import com.chesire.malime.core.models.UserModel
 import com.chesire.malime.db.UserDao
 import io.mockk.Runs
 import io.mockk.coEvery

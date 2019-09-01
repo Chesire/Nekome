@@ -1,6 +1,6 @@
 package com.chesire.malime.kitsu.adapters
 
-import com.chesire.malime.server.flags.UserSeriesStatus
+import com.chesire.malime.core.flags.UserSeriesStatus
 import com.squareup.moshi.FromJson
 import com.squareup.moshi.ToJson
 

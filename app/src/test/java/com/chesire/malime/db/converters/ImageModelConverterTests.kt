@@ -1,6 +1,6 @@
 package com.chesire.malime.db.converters
 
-import com.chesire.malime.server.models.ImageModel
+import com.chesire.malime.core.models.ImageModel
 import org.junit.Assert.assertEquals
 import org.junit.Test
 

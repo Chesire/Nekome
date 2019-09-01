@@ -3,9 +3,9 @@ package com.chesire.malime.db
 import androidx.room.Room
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
-import com.chesire.malime.server.flags.Service
-import com.chesire.malime.server.models.ImageModel
-import com.chesire.malime.server.models.UserModel
+import com.chesire.malime.core.flags.Service
+import com.chesire.malime.core.models.ImageModel
+import com.chesire.malime.core.models.UserModel
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Assert.assertEquals

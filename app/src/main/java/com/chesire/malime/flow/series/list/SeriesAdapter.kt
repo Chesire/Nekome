@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import com.chesire.malime.R
 import com.chesire.malime.SharedPref
-import com.chesire.malime.server.models.SeriesModel
+import com.chesire.malime.core.models.SeriesModel
 import com.chesire.malime.flow.series.SortOption
 import timber.log.Timber
 

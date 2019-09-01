@@ -1,6 +1,6 @@
 package com.chesire.malime.kitsu.adapters
 
-import com.chesire.malime.server.models.ImageModel
+import com.chesire.malime.core.models.ImageModel
 import com.chesire.malime.kitsu.api.intermediaries.ParsingImageModel
 import com.squareup.moshi.FromJson
 

@@ -3,8 +3,8 @@ package com.chesire.malime.db
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.chesire.malime.server.models.SeriesModel
-import com.chesire.malime.server.models.UserModel
+import com.chesire.malime.core.models.SeriesModel
+import com.chesire.malime.core.models.UserModel
 import com.chesire.malime.db.converters.ImageModelConverter
 import com.chesire.malime.db.converters.SeriesStatusConverter
 import com.chesire.malime.db.converters.SeriesTypeConverter

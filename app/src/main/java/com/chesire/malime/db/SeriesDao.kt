@@ -7,8 +7,8 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
-import com.chesire.malime.server.flags.SeriesType
-import com.chesire.malime.server.models.SeriesModel
+import com.chesire.malime.core.flags.SeriesType
+import com.chesire.malime.core.models.SeriesModel
 
 @Dao
 interface SeriesDao {

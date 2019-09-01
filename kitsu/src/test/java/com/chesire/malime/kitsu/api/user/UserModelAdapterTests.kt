@@ -1,7 +1,7 @@
 package com.chesire.malime.kitsu.api.user
 
-import com.chesire.malime.server.flags.RatingSystem
-import com.chesire.malime.server.models.ImageModel
+import com.chesire.malime.core.flags.RatingSystem
+import com.chesire.malime.core.models.ImageModel
 import org.junit.Assert.assertEquals
 import org.junit.Test
 

@@ -1,4 +1,4 @@
-package com.chesire.malime.server.flags
+package com.chesire.malime.core.flags
 
 enum class UserSeriesStatus(val index: Int) {
     Unknown(-1),

@@ -1,6 +1,6 @@
 package com.chesire.malime.kitsu.api.library
 
-import com.chesire.malime.server.models.SeriesModel
+import com.chesire.malime.core.models.SeriesModel
 import okhttp3.RequestBody
 import retrofit2.Response
 import retrofit2.http.Body

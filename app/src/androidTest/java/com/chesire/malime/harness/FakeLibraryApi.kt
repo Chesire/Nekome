@@ -2,8 +2,8 @@ package com.chesire.malime.harness
 
 import com.chesire.malime.server.Resource
 import com.chesire.malime.server.api.LibraryApi
-import com.chesire.malime.server.flags.UserSeriesStatus
-import com.chesire.malime.server.models.SeriesModel
+import com.chesire.malime.core.flags.UserSeriesStatus
+import com.chesire.malime.core.models.SeriesModel
 
 open class FakeLibraryApi : LibraryApi {
     override suspend fun retrieveAnime(userId: Int): Resource<List<SeriesModel>> {

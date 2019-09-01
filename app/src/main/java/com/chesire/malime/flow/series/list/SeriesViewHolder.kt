@@ -4,7 +4,7 @@ import android.view.View
 import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.chesire.malime.server.models.SeriesModel
+import com.chesire.malime.core.models.SeriesModel
 import com.chesire.malime.extensions.hide
 import com.chesire.malime.extensions.show
 import com.chesire.malime.extensions.toAlpha

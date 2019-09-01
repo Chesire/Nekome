@@ -2,7 +2,7 @@ package com.chesire.malime.kitsu.api.user
 
 import com.chesire.malime.server.Resource
 import com.chesire.malime.server.api.UserApi
-import com.chesire.malime.server.models.UserModel
+import com.chesire.malime.core.models.UserModel
 import com.chesire.malime.kitsu.parse
 import javax.inject.Inject
 

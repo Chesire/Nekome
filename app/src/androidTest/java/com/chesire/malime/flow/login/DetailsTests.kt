@@ -9,9 +9,9 @@ import com.chesire.malime.server.Resource
 import com.chesire.malime.server.api.AuthApi
 import com.chesire.malime.server.api.LibraryApi
 import com.chesire.malime.server.api.UserApi
-import com.chesire.malime.server.flags.Service
-import com.chesire.malime.server.models.ImageModel
-import com.chesire.malime.server.models.UserModel
+import com.chesire.malime.core.flags.Service
+import com.chesire.malime.core.models.ImageModel
+import com.chesire.malime.core.models.UserModel
 import com.chesire.malime.flow.Activity
 import com.chesire.malime.helpers.ToastMatcher.Companion.onToast
 import com.chesire.malime.helpers.injector

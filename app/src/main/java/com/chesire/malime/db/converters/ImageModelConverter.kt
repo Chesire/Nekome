@@ -1,7 +1,7 @@
 package com.chesire.malime.db.converters
 
 import androidx.room.TypeConverter
-import com.chesire.malime.server.models.ImageModel
+import com.chesire.malime.core.models.ImageModel
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types

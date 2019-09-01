@@ -1,6 +1,6 @@
 package com.chesire.malime.kitsu.adapters
 
-import com.chesire.malime.server.flags.RatingSystem
+import com.chesire.malime.core.flags.RatingSystem
 import com.squareup.moshi.FromJson
 import com.squareup.moshi.ToJson
 

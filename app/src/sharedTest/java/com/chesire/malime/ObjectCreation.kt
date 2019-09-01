@@ -1,11 +1,11 @@
 package com.chesire.malime
 
-import com.chesire.malime.server.flags.SeriesStatus
-import com.chesire.malime.server.flags.SeriesType
-import com.chesire.malime.server.flags.Subtype
-import com.chesire.malime.server.flags.UserSeriesStatus
-import com.chesire.malime.server.models.ImageModel
-import com.chesire.malime.server.models.SeriesModel
+import com.chesire.malime.core.flags.SeriesStatus
+import com.chesire.malime.core.flags.SeriesType
+import com.chesire.malime.core.flags.Subtype
+import com.chesire.malime.core.flags.UserSeriesStatus
+import com.chesire.malime.core.models.ImageModel
+import com.chesire.malime.core.models.SeriesModel
 
 fun createSeriesModel(
     id: Int = 999,

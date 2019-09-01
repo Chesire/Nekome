@@ -1,6 +1,6 @@
 package com.chesire.malime.kitsu.api.search
 
-import com.chesire.malime.server.models.SeriesModel
+import com.chesire.malime.core.models.SeriesModel
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query

@@ -1,4 +1,4 @@
-package com.chesire.malime.server.models
+package com.chesire.malime.core.models
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

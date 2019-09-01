@@ -5,7 +5,7 @@ import androidx.lifecycle.Observer
 import com.chesire.malime.CoroutinesMainDispatcherRule
 import com.chesire.malime.server.Resource
 import com.chesire.malime.server.api.AuthApi
-import com.chesire.malime.server.models.UserModel
+import com.chesire.malime.core.models.UserModel
 import com.chesire.malime.repo.UserRepository
 import io.mockk.Runs
 import io.mockk.coEvery

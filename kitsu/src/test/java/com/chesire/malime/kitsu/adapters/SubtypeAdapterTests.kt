@@ -1,6 +1,6 @@
 package com.chesire.malime.kitsu.adapters
 
-import com.chesire.malime.server.flags.Subtype
+import com.chesire.malime.core.flags.Subtype
 import org.junit.Assert.assertEquals
 import org.junit.Test
 

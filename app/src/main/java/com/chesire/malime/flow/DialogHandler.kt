@@ -8,8 +8,7 @@ import com.afollestad.materialdialogs.list.listItems
 import com.afollestad.materialdialogs.list.listItemsMultiChoice
 import com.chesire.malime.R
 import com.chesire.malime.SharedPref
-import com.chesire.malime.server.flags.UserSeriesStatus
-import com.chesire.malime.extensions.stringId
+import com.chesire.malime.core.flags.UserSeriesStatus
 import com.chesire.malime.flow.series.SortOption
 import javax.inject.Inject
 

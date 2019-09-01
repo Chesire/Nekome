@@ -1,7 +1,7 @@
 package com.chesire.malime.kitsu.live
 
 import com.chesire.malime.server.Resource
-import com.chesire.malime.server.flags.UserSeriesStatus
+import com.chesire.malime.core.flags.UserSeriesStatus
 import com.chesire.malime.kitsu.adapters.ImageModelAdapter
 import com.chesire.malime.kitsu.adapters.SeriesStatusAdapter
 import com.chesire.malime.kitsu.adapters.SeriesTypeAdapter

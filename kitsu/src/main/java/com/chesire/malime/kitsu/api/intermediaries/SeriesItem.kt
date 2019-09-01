@@ -1,9 +1,9 @@
 package com.chesire.malime.kitsu.api.intermediaries
 
-import com.chesire.malime.server.flags.SeriesStatus
-import com.chesire.malime.server.flags.SeriesType
-import com.chesire.malime.server.flags.Subtype
-import com.chesire.malime.server.models.ImageModel
+import com.chesire.malime.core.flags.SeriesStatus
+import com.chesire.malime.core.flags.SeriesType
+import com.chesire.malime.core.flags.Subtype
+import com.chesire.malime.core.models.ImageModel
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 

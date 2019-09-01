@@ -1,6 +1,6 @@
 package com.chesire.malime.kitsu.api.user
 
-import com.chesire.malime.server.models.UserModel
+import com.chesire.malime.core.models.UserModel
 import retrofit2.Response
 import retrofit2.http.GET
 

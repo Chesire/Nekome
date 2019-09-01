@@ -1,7 +1,7 @@
 package com.chesire.malime.db.converters
 
 import androidx.room.TypeConverter
-import com.chesire.malime.server.flags.SeriesType
+import com.chesire.malime.core.flags.SeriesType
 
 class SeriesTypeConverter {
     @TypeConverter

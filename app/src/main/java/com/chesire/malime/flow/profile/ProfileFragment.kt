@@ -15,7 +15,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.chesire.lifecyklelog.LogLifecykle
 import com.chesire.malime.R
-import com.chesire.malime.server.models.UserModel
+import com.chesire.malime.core.models.UserModel
 import com.chesire.malime.databinding.FragmentProfileBinding
 import com.chesire.malime.flow.ViewModelFactory
 import dagger.android.support.DaggerFragment

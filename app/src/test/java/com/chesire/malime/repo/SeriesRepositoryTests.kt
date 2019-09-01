@@ -4,9 +4,9 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.chesire.malime.server.Resource
 import com.chesire.malime.server.api.LibraryApi
-import com.chesire.malime.server.flags.SeriesType
-import com.chesire.malime.server.flags.UserSeriesStatus
-import com.chesire.malime.server.models.SeriesModel
+import com.chesire.malime.core.flags.SeriesType
+import com.chesire.malime.core.flags.UserSeriesStatus
+import com.chesire.malime.core.models.SeriesModel
 import com.chesire.malime.db.SeriesDao
 import io.mockk.Runs
 import io.mockk.coEvery

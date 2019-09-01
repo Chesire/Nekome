@@ -4,7 +4,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.chesire.malime.AuthCaster
 import com.chesire.malime.CoroutinesMainDispatcherRule
 import com.chesire.malime.server.Resource
-import com.chesire.malime.server.flags.UserSeriesStatus
+import com.chesire.malime.core.flags.UserSeriesStatus
 import com.chesire.malime.repo.SeriesRepository
 import io.mockk.Runs
 import io.mockk.coEvery

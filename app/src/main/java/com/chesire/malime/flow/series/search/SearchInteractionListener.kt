@@ -1,6 +1,6 @@
 package com.chesire.malime.flow.series.search
 
-import com.chesire.malime.server.models.SeriesModel
+import com.chesire.malime.core.models.SeriesModel
 
 interface SearchInteractionListener {
     /**
