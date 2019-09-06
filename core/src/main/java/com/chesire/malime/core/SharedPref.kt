@@ -6,12 +6,11 @@ import com.chesire.malime.core.flags.SortOption
 import com.chesire.malime.core.flags.UserSeriesStatus
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
-import javax.inject.Inject
 
 /**
  * Provides a wrapper around the [SharedPreferences] to aid with getting and setting values into it.
  */
-class SharedPref @Inject constructor(private val sharedPreferences: SharedPreferences) {
+class SharedPref(private val sharedPreferences: SharedPreferences) {
     private val filterAdapter by lazy {
         Moshi.Builder()
             .build()
