@@ -1,7 +1,7 @@
 package com.chesire.malime.kitsu.api.search
 
-import com.chesire.malime.core.Resource
-import com.chesire.malime.core.api.SearchApi
+import com.chesire.malime.server.Resource
+import com.chesire.malime.server.api.SearchApi
 import com.chesire.malime.core.models.SeriesModel
 import com.chesire.malime.kitsu.parse
 import javax.inject.Inject

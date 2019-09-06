@@ -1,6 +1,6 @@
 package com.chesire.malime
 
-import com.chesire.malime.db.RoomDB
+import com.chesire.malime.database.RoomDB
 import com.chesire.malime.kitsu.AuthProvider
 import timber.log.Timber
 import javax.inject.Inject

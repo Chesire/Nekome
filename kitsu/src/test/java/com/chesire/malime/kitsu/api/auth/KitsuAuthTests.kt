@@ -1,6 +1,6 @@
 package com.chesire.malime.kitsu.api.auth
 
-import com.chesire.malime.core.Resource
+import com.chesire.malime.server.Resource
 import com.chesire.malime.kitsu.AuthProvider
 import io.mockk.CapturingSlot
 import io.mockk.Runs

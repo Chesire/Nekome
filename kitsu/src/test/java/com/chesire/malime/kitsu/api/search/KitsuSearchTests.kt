@@ -1,6 +1,6 @@
 package com.chesire.malime.kitsu.api.search
 
-import com.chesire.malime.core.Resource
+import com.chesire.malime.server.Resource
 import com.chesire.malime.core.models.SeriesModel
 import io.mockk.coEvery
 import io.mockk.every

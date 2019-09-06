@@ -4,13 +4,12 @@ import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.chesire.malime.core.flags.UserSeriesStatus
 import com.chesire.malime.core.models.SeriesModel
-import com.chesire.malime.repo.SeriesRepository
-import com.chesire.malime.repo.UserRepository
+import com.chesire.malime.series.SeriesRepository
 import javax.inject.Inject
 
 class ProfileViewModel @Inject constructor(
-    seriesRepository: SeriesRepository,
-    userRepository: UserRepository
+    seriesRepository: com.chesire.malime.series.SeriesRepository,
+    userRepository: com.chesire.malime.account.UserRepository
 ) : ViewModel() {
     val user = userRepository.user
     val anime = Transformations.map(seriesRepository.anime) { createSeriesProgress(it) }

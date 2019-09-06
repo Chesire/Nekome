@@ -1,6 +1,6 @@
 package com.chesire.malime.kitsu
 
-import com.chesire.malime.core.Resource
+import com.chesire.malime.server.Resource
 import io.mockk.every
 import io.mockk.mockk
 import okhttp3.MediaType

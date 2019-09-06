@@ -13,8 +13,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chesire.malime.R
-import com.chesire.malime.SharedPref
-import com.chesire.malime.core.Resource
+import com.chesire.malime.core.SharedPref
+import com.chesire.malime.server.Resource
 import com.chesire.malime.core.models.SeriesModel
 import com.chesire.malime.databinding.FragmentSeriesListBinding
 import com.chesire.malime.flow.DialogHandler
@@ -29,7 +29,9 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_HIDDEN
 import com.google.android.material.snackbar.Snackbar
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_series_list.fragmentSeriesListBottomSheet
+import kotlinx.android.synthetic.main.fragment_series_list.fragmentSeriesListFab
 import kotlinx.android.synthetic.main.fragment_series_list.fragmentSeriesListLayout
+import kotlinx.android.synthetic.main.fragment_series_list.fragmentSeriesListRecyclerView
 import timber.log.Timber
 import javax.inject.Inject
 

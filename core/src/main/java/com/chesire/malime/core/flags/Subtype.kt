@@ -1,5 +1,8 @@
 package com.chesire.malime.core.flags
 
+/**
+ * List of all possible series sub types.
+ */
 enum class Subtype {
     Unknown,
 

@@ -1,6 +1,6 @@
 package com.chesire.malime.kitsu.live
 
-import com.chesire.malime.core.Resource
+import com.chesire.malime.server.Resource
 import com.chesire.malime.kitsu.api.auth.KitsuAuth
 import com.chesire.malime.kitsu.api.auth.KitsuAuthService
 import com.squareup.moshi.Moshi

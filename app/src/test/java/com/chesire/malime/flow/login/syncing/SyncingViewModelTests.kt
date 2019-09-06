@@ -2,10 +2,10 @@ package com.chesire.malime.flow.login.syncing
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
-import com.chesire.malime.AsyncState
 import com.chesire.malime.CoroutinesMainDispatcherRule
-import com.chesire.malime.core.Resource
-import com.chesire.malime.repo.SeriesRepository
+import com.chesire.malime.core.flags.AsyncState
+import com.chesire.malime.series.SeriesRepository
+import com.chesire.malime.server.Resource
 import io.mockk.Runs
 import io.mockk.coEvery
 import io.mockk.every

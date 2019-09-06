@@ -2,10 +2,10 @@ package com.chesire.malime.flow
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.chesire.malime.IOContext
 import com.chesire.malime.LogoutHandler
+import com.chesire.malime.account.UserRepository
+import com.chesire.malime.core.IOContext
 import com.chesire.malime.kitsu.AuthProvider
-import com.chesire.malime.repo.UserRepository
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import timber.log.Timber

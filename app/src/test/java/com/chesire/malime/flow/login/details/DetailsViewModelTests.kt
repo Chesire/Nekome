@@ -3,10 +3,10 @@ package com.chesire.malime.flow.login.details
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.chesire.malime.CoroutinesMainDispatcherRule
-import com.chesire.malime.core.Resource
-import com.chesire.malime.core.api.AuthApi
+import com.chesire.malime.account.UserRepository
 import com.chesire.malime.core.models.UserModel
-import com.chesire.malime.repo.UserRepository
+import com.chesire.malime.server.Resource
+import com.chesire.malime.server.api.AuthApi
 import io.mockk.Runs
 import io.mockk.coEvery
 import io.mockk.coVerify

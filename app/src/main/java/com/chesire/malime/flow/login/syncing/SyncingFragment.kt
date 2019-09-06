@@ -9,7 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
 import androidx.navigation.fragment.findNavController
 import com.chesire.lifecyklelog.LogLifecykle
-import com.chesire.malime.AsyncState
+import com.chesire.malime.core.flags.AsyncState
 import com.chesire.malime.databinding.FragmentSyncingBinding
 import com.chesire.malime.extensions.hide
 import com.chesire.malime.extensions.show

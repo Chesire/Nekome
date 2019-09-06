@@ -4,20 +4,19 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.chesire.malime.AsyncState
-import com.chesire.malime.core.Resource
-import com.chesire.malime.extensions.postError
-import com.chesire.malime.extensions.postLoading
-import com.chesire.malime.extensions.postSuccess
-import com.chesire.malime.repo.SeriesRepository
+import com.chesire.malime.server.Resource
+import com.chesire.malime.core.extensions.postError
+import com.chesire.malime.core.extensions.postLoading
+import com.chesire.malime.core.extensions.postSuccess
+import com.chesire.malime.series.SeriesRepository
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class SyncingViewModel @Inject constructor(
-    private val seriesRepo: SeriesRepository
+    private val seriesRepo: com.chesire.malime.series.SeriesRepository
 ) : ViewModel() {
-    private val _syncStatus = MutableLiveData<AsyncState<Any, Any>>()
-    val syncStatus: LiveData<AsyncState<Any, Any>>
+    private val _syncStatus = MutableLiveData<com.chesire.malime.core.flags.AsyncState<Any, Any>>()
+    val syncStatus: LiveData<com.chesire.malime.core.flags.AsyncState<Any, Any>>
         get() = _syncStatus
 
     fun syncLatestData() = viewModelScope.launch {

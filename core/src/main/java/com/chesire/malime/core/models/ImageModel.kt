@@ -3,6 +3,10 @@ package com.chesire.malime.core.models
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
+/**
+ * Data for images.
+ * Images are stored as a model with smaller models for each of the sizes.
+ */
 @Parcelize
 data class ImageModel(
     val tiny: ImageData,
@@ -39,6 +43,9 @@ data class ImageModel(
         }
 
     companion object {
+        /**
+         * Provides an empty implementation of [ImageModel].
+         */
         val empty
             get() = ImageModel(
                 tiny = ImageData.empty,
@@ -55,6 +62,9 @@ data class ImageModel(
         val height: Int
     ) : Parcelable {
         companion object {
+            /**
+             * Provides an empty implementation of [ImageData].
+             */
             val empty
                 get() = ImageData("", 0, 0)
         }

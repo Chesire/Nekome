@@ -4,6 +4,9 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.chesire.malime.core.flags.Service
 
+/**
+ * Data for a singular user entity.
+ */
 @Entity
 data class UserModel(
     val userId: Int,

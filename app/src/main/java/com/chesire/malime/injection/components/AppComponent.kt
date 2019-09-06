@@ -5,10 +5,12 @@ import com.chesire.malime.MalimeApplication
 import com.chesire.malime.injection.androidmodules.ActivityModule
 import com.chesire.malime.injection.androidmodules.FragmentModule
 import com.chesire.malime.injection.androidmodules.ViewModelModule
+import com.chesire.malime.injection.modules.AccountModule
 import com.chesire.malime.injection.modules.AppModule
 import com.chesire.malime.injection.modules.CoroutineModule
 import com.chesire.malime.injection.modules.DatabaseModule
 import com.chesire.malime.injection.modules.KitsuModule
+import com.chesire.malime.injection.modules.SeriesModule
 import com.chesire.malime.injection.modules.ServerModule
 import com.chesire.malime.injection.modules.WorkerModule
 import com.chesire.malime.services.RefreshSeriesWorker
@@ -22,6 +24,7 @@ import javax.inject.Singleton
 @Singleton
 @Component(
     modules = [
+        AccountModule::class,
         ActivityModule::class,
         AndroidSupportInjectionModule::class,
         AppModule::class,
@@ -29,6 +32,7 @@ import javax.inject.Singleton
         DatabaseModule::class,
         FragmentModule::class,
         KitsuModule::class,
+        SeriesModule::class,
         ServerModule::class,
         ViewModelModule::class,
         WorkerModule::class

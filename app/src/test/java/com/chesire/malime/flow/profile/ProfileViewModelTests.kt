@@ -3,10 +3,10 @@ package com.chesire.malime.flow.profile
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
+import com.chesire.malime.account.UserRepository
 import com.chesire.malime.core.flags.UserSeriesStatus
 import com.chesire.malime.createSeriesModel
-import com.chesire.malime.repo.SeriesRepository
-import com.chesire.malime.repo.UserRepository
+import com.chesire.malime.series.SeriesRepository
 import io.mockk.Runs
 import io.mockk.every
 import io.mockk.just

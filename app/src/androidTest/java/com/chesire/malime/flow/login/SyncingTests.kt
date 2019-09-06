@@ -6,10 +6,10 @@ import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.rule.ActivityTestRule
 import com.chesire.malime.R
-import com.chesire.malime.core.Resource
-import com.chesire.malime.core.api.AuthApi
-import com.chesire.malime.core.api.LibraryApi
-import com.chesire.malime.core.api.UserApi
+import com.chesire.malime.server.Resource
+import com.chesire.malime.server.api.AuthApi
+import com.chesire.malime.server.api.LibraryApi
+import com.chesire.malime.server.api.UserApi
 import com.chesire.malime.core.flags.Service
 import com.chesire.malime.core.models.ImageModel
 import com.chesire.malime.core.models.UserModel

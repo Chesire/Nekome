@@ -7,14 +7,13 @@ import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
 import com.afollestad.materialdialogs.list.listItems
 import com.afollestad.materialdialogs.list.listItemsMultiChoice
 import com.chesire.malime.R
-import com.chesire.malime.SharedPref
+import com.chesire.malime.core.SharedPref
 import com.chesire.malime.core.flags.UserSeriesStatus
-import com.chesire.malime.extensions.stringId
-import com.chesire.malime.flow.series.SortOption
+import com.chesire.malime.core.flags.SortOption
 import javax.inject.Inject
 
 class DialogHandler @Inject constructor(
-    private val pref: SharedPref
+    private val pref: com.chesire.malime.core.SharedPref
 ) {
     /**
      * Shows the filter dialog, allowing the user to choose how to filter their series.
@@ -52,7 +51,7 @@ class DialogHandler @Inject constructor(
      * Shows the sort dialog, allowing the user to choose how the series list is sorted.
      */
     fun showSortDialog(context: Context, lifecycleOwner: LifecycleOwner) {
-        val sortOptionMap = SortOption
+        val sortOptionMap = com.chesire.malime.core.flags.SortOption
             .values()
             .associate { context.getString(it.stringId) to it.index }
 
@@ -60,7 +59,7 @@ class DialogHandler @Inject constructor(
             title(R.string.sort_dialog_title)
             listItems(items = sortOptionMap.keys.toList()) { _, _, text ->
                 sortOptionMap[text]?.let {
-                    pref.sortPreference = SortOption.forIndex(it)
+                    pref.sortPreference = com.chesire.malime.core.flags.SortOption.forIndex(it)
                 }
             }
             lifecycleOwner(lifecycleOwner)

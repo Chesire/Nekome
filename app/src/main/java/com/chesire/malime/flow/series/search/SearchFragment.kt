@@ -9,7 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chesire.lifecyklelog.LogLifecykle
-import com.chesire.malime.AsyncState
+import com.chesire.malime.core.flags.AsyncState
 import com.chesire.malime.core.flags.UserSeriesStatus
 import com.chesire.malime.core.models.SeriesModel
 import com.chesire.malime.databinding.FragmentSearchBinding
@@ -53,12 +53,12 @@ class SearchFragment : DaggerFragment(), SearchInteractionListener {
             viewLifecycleOwner,
             Observer {
                 when (it) {
-                    is AsyncState.Success -> {
+                    is com.chesire.malime.core.flags.AsyncState.Success -> {
                         Timber.d("Search results has been updated, new count [${it.data.count()}]")
                         searchAdapter.loadItems(it.data)
                     }
-                    is AsyncState.Error -> Timber.w("Search failed: [${it.error}]")
-                    is AsyncState.Loading -> Timber.v("Display load indicator")
+                    is com.chesire.malime.core.flags.AsyncState.Error -> Timber.w("Search failed: [${it.error}]")
+                    is com.chesire.malime.core.flags.AsyncState.Loading -> Timber.v("Display load indicator")
                 }
             }
         )

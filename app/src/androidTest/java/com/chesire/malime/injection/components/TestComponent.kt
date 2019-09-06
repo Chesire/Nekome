@@ -14,10 +14,12 @@ import com.chesire.malime.harness.FakeUserApi
 import com.chesire.malime.injection.androidmodules.ActivityModule
 import com.chesire.malime.injection.androidmodules.FragmentModule
 import com.chesire.malime.injection.androidmodules.ViewModelModule
+import com.chesire.malime.injection.modules.AccountModule
 import com.chesire.malime.injection.modules.AppModule
 import com.chesire.malime.injection.modules.CoroutineModule
 import com.chesire.malime.injection.modules.FakeKitsuModule
 import com.chesire.malime.injection.modules.MemoryDatabaseModule
+import com.chesire.malime.injection.modules.SeriesModule
 import com.chesire.malime.injection.modules.ServerModule
 import dagger.BindsInstance
 import dagger.Component
@@ -28,6 +30,7 @@ import javax.inject.Singleton
 @Singleton
 @Component(
     modules = [
+        AccountModule::class,
         ActivityModule::class,
         AndroidSupportInjectionModule::class,
         AppModule::class,
@@ -35,6 +38,7 @@ import javax.inject.Singleton
         FakeKitsuModule::class,
         FragmentModule::class,
         MemoryDatabaseModule::class,
+        SeriesModule::class,
         ServerModule::class,
         ViewModelModule::class
     ]

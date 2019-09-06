@@ -2,14 +2,14 @@ package com.chesire.malime.flow.series.search
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
-import com.chesire.malime.AsyncState
 import com.chesire.malime.AuthCaster
 import com.chesire.malime.CoroutinesMainDispatcherRule
-import com.chesire.malime.core.Resource
-import com.chesire.malime.core.api.SearchApi
+import com.chesire.malime.core.flags.AsyncState
 import com.chesire.malime.core.flags.SeriesType
 import com.chesire.malime.core.models.SeriesModel
-import com.chesire.malime.repo.SeriesRepository
+import com.chesire.malime.series.SeriesRepository
+import com.chesire.malime.server.Resource
+import com.chesire.malime.server.api.SearchApi
 import io.mockk.Runs
 import io.mockk.coEvery
 import io.mockk.coVerify

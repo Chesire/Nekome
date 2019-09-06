@@ -1,7 +1,7 @@
 package com.chesire.malime.harness
 
-import com.chesire.malime.core.Resource
-import com.chesire.malime.core.api.LibraryApi
+import com.chesire.malime.server.Resource
+import com.chesire.malime.server.api.LibraryApi
 import com.chesire.malime.core.flags.UserSeriesStatus
 import com.chesire.malime.core.models.SeriesModel
 

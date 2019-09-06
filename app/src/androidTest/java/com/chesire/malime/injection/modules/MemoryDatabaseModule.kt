@@ -1,8 +1,7 @@
 package com.chesire.malime.injection.modules
 
 import android.content.Context
-import androidx.room.Room
-import com.chesire.malime.db.RoomDB
+import com.chesire.malime.database.RoomDB
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -13,12 +12,7 @@ object MemoryDatabaseModule {
     @Provides
     @Singleton
     @JvmStatic
-    fun provideDB(context: Context): RoomDB {
-        return Room
-            .inMemoryDatabaseBuilder(context, RoomDB::class.java)
-            .fallbackToDestructiveMigration()
-            .build()
-    }
+    fun provideDB(context: Context): RoomDB = RoomDB.buildMemory(context)
 
     @Provides
     @Singleton

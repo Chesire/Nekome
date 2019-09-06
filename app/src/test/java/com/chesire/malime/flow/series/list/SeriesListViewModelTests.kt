@@ -3,9 +3,9 @@ package com.chesire.malime.flow.series.list
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.chesire.malime.AuthCaster
 import com.chesire.malime.CoroutinesMainDispatcherRule
-import com.chesire.malime.core.Resource
 import com.chesire.malime.core.flags.UserSeriesStatus
-import com.chesire.malime.repo.SeriesRepository
+import com.chesire.malime.series.SeriesRepository
+import com.chesire.malime.server.Resource
 import io.mockk.Runs
 import io.mockk.coEvery
 import io.mockk.coVerify

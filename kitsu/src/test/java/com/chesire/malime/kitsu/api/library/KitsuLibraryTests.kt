@@ -1,6 +1,6 @@
 package com.chesire.malime.kitsu.api.library
 
-import com.chesire.malime.core.Resource
+import com.chesire.malime.server.Resource
 import com.chesire.malime.core.flags.UserSeriesStatus
 import com.chesire.malime.core.models.SeriesModel
 import com.chesire.malime.kitsu.api.intermediaries.Links
