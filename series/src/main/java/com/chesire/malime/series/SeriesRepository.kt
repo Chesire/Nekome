@@ -9,22 +9,36 @@ import com.chesire.malime.database.dao.SeriesDao
 import com.chesire.malime.server.Resource
 import com.chesire.malime.server.api.LibraryApi
 import timber.log.Timber
-import javax.inject.Inject
 
-class SeriesRepository @Inject constructor(
+/**
+ * Repository to interact with a users list of series.
+ */
+class SeriesRepository(
     private val seriesDao: SeriesDao,
     private val libraryApi: LibraryApi,
     private val userRepository: UserRepository
 ) {
+    /**
+     * Observable list of the users anime.
+     */
     val anime: LiveData<List<SeriesModel>>
         get() = seriesDao.observe(SeriesType.Anime)
 
+    /**
+     * Observable list of the users manga.
+     */
     val manga: LiveData<List<SeriesModel>>
         get() = seriesDao.observe(SeriesType.Manga)
 
+    /**
+     * Observable list of all the users series (Anime + Manga).
+     */
     val series: LiveData<List<SeriesModel>>
         get() = seriesDao.observe()
 
+    /**
+     * Adds the anime series with id [seriesId] to the users tracked list.
+     */
     suspend fun addAnime(seriesId: Int, startingStatus: UserSeriesStatus): Resource<SeriesModel> {
         val response = libraryApi.addAnime(retrieveUserId(), seriesId, startingStatus)
         when (response) {
@@ -35,6 +49,9 @@ class SeriesRepository @Inject constructor(
         return response
     }
 
+    /**
+     * Adds the manga series with id [seriesId] to the users tracked list.
+     */
     suspend fun addManga(seriesId: Int, startingStatus: UserSeriesStatus): Resource<SeriesModel> {
         val response = libraryApi.addManga(retrieveUserId(), seriesId, startingStatus)
         when (response) {
@@ -45,6 +62,9 @@ class SeriesRepository @Inject constructor(
         return response
     }
 
+    /**
+     * Pulls and stores all of the users anime list.
+     */
     suspend fun refreshAnime(): Resource<List<SeriesModel>> {
         val response = libraryApi.retrieveAnime(retrieveUserId())
         when (response) {
@@ -55,6 +75,9 @@ class SeriesRepository @Inject constructor(
         return response
     }
 
+    /**
+     * Pulls and stores all of the users manga list.
+     */
     suspend fun refreshManga(): Resource<List<SeriesModel>> {
         val response = libraryApi.retrieveManga(retrieveUserId())
         when (response) {
@@ -67,6 +90,10 @@ class SeriesRepository @Inject constructor(
 
     private suspend fun retrieveUserId() = requireNotNull(userRepository.retrieveUserId())
 
+    /**
+     * Updates the stored data about a users series, mapped via the users id for the series
+     * [userSeriesId].
+     */
     suspend fun updateSeries(
         userSeriesId: Int,
         progress: Int,
