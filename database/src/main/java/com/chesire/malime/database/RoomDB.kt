@@ -15,9 +15,10 @@ import com.chesire.malime.database.converters.SubtypeConverter
 import com.chesire.malime.database.converters.UserSeriesStatusConverter
 import com.chesire.malime.database.dao.SeriesDao
 import com.chesire.malime.database.dao.UserDao
-import dagger.Reusable
 
-@Reusable
+/**
+ * Database for usage throughout the application, contains daos for interacting with the data.
+ */
 @Database(
     entities = [SeriesModel::class, UserModel::class],
     version = 1
@@ -31,7 +32,14 @@ import dagger.Reusable
     UserSeriesStatusConverter::class
 )
 abstract class RoomDB : RoomDatabase() {
+    /**
+     * Dao for interacting with the Series data.
+     */
     abstract fun series(): SeriesDao
+
+    /**
+     * Dao for interacting with the User data.
+     */
     abstract fun user(): UserDao
 
     companion object {
