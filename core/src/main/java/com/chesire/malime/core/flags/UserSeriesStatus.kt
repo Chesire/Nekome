@@ -3,6 +3,9 @@ package com.chesire.malime.core.flags
 import androidx.annotation.StringRes
 import com.chesire.malime.core.R
 
+/**
+ * List of possible states a series can be in for a user.
+ */
 enum class UserSeriesStatus(val index: Int, @StringRes val stringId: Int) {
     Unknown(-1, 0),
     Current(0, R.string.filter_by_current),

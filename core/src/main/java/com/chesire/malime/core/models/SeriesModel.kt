@@ -9,6 +9,9 @@ import com.chesire.malime.core.flags.Subtype
 import com.chesire.malime.core.flags.UserSeriesStatus
 import kotlinx.android.parcel.Parcelize
 
+/**
+ * Data for a singular series entity.
+ */
 @Parcelize
 @Entity
 data class SeriesModel(
