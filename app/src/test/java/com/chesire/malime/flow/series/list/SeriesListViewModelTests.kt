@@ -5,7 +5,9 @@ import com.chesire.malime.AuthCaster
 import com.chesire.malime.CoroutinesMainDispatcherRule
 import com.chesire.malime.core.flags.UserSeriesStatus
 import com.chesire.malime.series.SeriesRepository
+import com.chesire.malime.server.Resource
 import io.mockk.Runs
+import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.just
@@ -23,7 +25,7 @@ class SeriesListViewModelTests {
 
     @Test
     fun `updateSeries sends request through the repository`() {
-        val mockRepo = mockk<com.chesire.malime.series.SeriesRepository> {
+        val mockRepo = mockk<SeriesRepository> {
             coEvery {
                 updateSeries(0, 0, UserSeriesStatus.Current)
             } coAnswers {
@@ -42,7 +44,7 @@ class SeriesListViewModelTests {
 
     @Test
     fun `updateSeries 401 failure notifies through AuthCaster`() {
-        val mockRepo = mockk<com.chesire.malime.series.SeriesRepository> {
+        val mockRepo = mockk<SeriesRepository> {
             coEvery {
                 updateSeries(0, 0, UserSeriesStatus.Current)
             } coAnswers {
@@ -64,7 +66,7 @@ class SeriesListViewModelTests {
     @Test
     fun `updateSeries failure not 401 invokes callback`() {
         var condition = false
-        val mockRepo = mockk<com.chesire.malime.series.SeriesRepository> {
+        val mockRepo = mockk<SeriesRepository> {
             coEvery {
                 updateSeries(0, 0, UserSeriesStatus.Current)
             } coAnswers {
@@ -84,7 +86,7 @@ class SeriesListViewModelTests {
     @Test
     fun `updateSeries success invokes callback`() {
         var condition = false
-        val mockRepo = mockk<com.chesire.malime.series.SeriesRepository> {
+        val mockRepo = mockk<SeriesRepository> {
             coEvery {
                 updateSeries(0, 0, UserSeriesStatus.Current)
             } coAnswers {

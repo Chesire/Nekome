@@ -3,7 +3,9 @@ package com.chesire.malime.services
 import android.content.Context
 import androidx.work.ListenableWorker
 import androidx.work.WorkerParameters
+import com.chesire.malime.account.UserRepository
 import com.chesire.malime.series.SeriesRepository
+import com.chesire.malime.server.Resource
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
@@ -21,11 +23,11 @@ class RefreshSeriesWorkerTests {
                 every { backgroundExecutor } returns mockk()
             }
         }
-        val mockSeriesRepo = mockk<com.chesire.malime.series.SeriesRepository> {
+        val mockSeriesRepo = mockk<SeriesRepository> {
             coEvery { refreshAnime() } coAnswers { Resource.Success(mockk()) }
             coEvery { refreshManga() } coAnswers { Resource.Success(mockk()) }
         }
-        val mockUserRepo = mockk<com.chesire.malime.account.UserRepository> {
+        val mockUserRepo = mockk<UserRepository> {
             coEvery { retrieveUserId() } coAnswers { null }
         }
 
@@ -47,11 +49,11 @@ class RefreshSeriesWorkerTests {
                 every { backgroundExecutor } returns mockk()
             }
         }
-        val mockSeriesRepo = mockk<com.chesire.malime.series.SeriesRepository> {
+        val mockSeriesRepo = mockk<SeriesRepository> {
             coEvery { refreshAnime() } coAnswers { Resource.Success(mockk()) }
             coEvery { refreshManga() } coAnswers { Resource.Success(mockk()) }
         }
-        val mockUserRepo = mockk<com.chesire.malime.account.UserRepository> {
+        val mockUserRepo = mockk<UserRepository> {
             coEvery { retrieveUserId() } coAnswers { 1 }
         }
 
@@ -71,11 +73,11 @@ class RefreshSeriesWorkerTests {
                 every { backgroundExecutor } returns mockk()
             }
         }
-        val mockSeriesRepo = mockk<com.chesire.malime.series.SeriesRepository> {
+        val mockSeriesRepo = mockk<SeriesRepository> {
             coEvery { refreshAnime() } coAnswers { Resource.Error("test error") }
             coEvery { refreshManga() } coAnswers { Resource.Success(mockk()) }
         }
-        val mockUserRepo = mockk<com.chesire.malime.account.UserRepository> {
+        val mockUserRepo = mockk<UserRepository> {
             coEvery { retrieveUserId() } coAnswers { 1 }
         }
 
@@ -95,11 +97,11 @@ class RefreshSeriesWorkerTests {
                 every { backgroundExecutor } returns mockk()
             }
         }
-        val mockSeriesRepo = mockk<com.chesire.malime.series.SeriesRepository> {
+        val mockSeriesRepo = mockk<SeriesRepository> {
             coEvery { refreshAnime() } coAnswers { Resource.Success(mockk()) }
             coEvery { refreshManga() } coAnswers { Resource.Error("test error") }
         }
-        val mockUserRepo = mockk<com.chesire.malime.account.UserRepository> {
+        val mockUserRepo = mockk<UserRepository> {
             coEvery { retrieveUserId() } coAnswers { 1 }
         }
 
@@ -119,11 +121,11 @@ class RefreshSeriesWorkerTests {
                 every { backgroundExecutor } returns mockk()
             }
         }
-        val mockSeriesRepo = mockk<com.chesire.malime.series.SeriesRepository> {
+        val mockSeriesRepo = mockk<SeriesRepository> {
             coEvery { refreshAnime() } coAnswers { Resource.Error("test error") }
             coEvery { refreshManga() } coAnswers { Resource.Error("test error") }
         }
-        val mockUserRepo = mockk<com.chesire.malime.account.UserRepository> {
+        val mockUserRepo = mockk<UserRepository> {
             coEvery { retrieveUserId() } coAnswers { 1 }
         }
 

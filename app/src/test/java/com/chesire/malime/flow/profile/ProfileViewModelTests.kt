@@ -1,7 +1,11 @@
 package com.chesire.malime.flow.profile
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
+import com.chesire.malime.account.UserRepository
+import com.chesire.malime.core.flags.UserSeriesStatus
+import com.chesire.malime.createSeriesModel
 import com.chesire.malime.series.SeriesRepository
 import io.mockk.Runs
 import io.mockk.every
@@ -18,11 +22,11 @@ class ProfileViewModelTests {
 
     @Test
     fun `anime gets updated with seriesRepository anime series`() {
-        val mockSeriesRepo = mockk<com.chesire.malime.series.SeriesRepository> {
+        val mockSeriesRepo = mockk<SeriesRepository> {
             every { anime } returns MutableLiveData(listOf(createSeriesModel()))
             every { manga } returns mockk()
         }
-        val mockUserRepo = mockk<com.chesire.malime.account.UserRepository> {
+        val mockUserRepo = mockk<UserRepository> {
             every { user } returns mockk()
         }
         val mockObserver = mockk<Observer<SeriesProgress>>() {
@@ -37,11 +41,11 @@ class ProfileViewModelTests {
 
     @Test
     fun `manga gets updated with seriesRepository manga series`() {
-        val mockSeriesRepo = mockk<com.chesire.malime.series.SeriesRepository> {
+        val mockSeriesRepo = mockk<SeriesRepository> {
             every { anime } returns mockk()
             every { manga } returns MutableLiveData(listOf(createSeriesModel()))
         }
-        val mockUserRepo = mockk<com.chesire.malime.account.UserRepository> {
+        val mockUserRepo = mockk<UserRepository> {
             every { user } returns mockk()
         }
         val mockObserver = mockk<Observer<SeriesProgress>>() {
@@ -56,7 +60,7 @@ class ProfileViewModelTests {
 
     @Test
     fun `series has expected total items`() {
-        val mockSeriesRepo = mockk<com.chesire.malime.series.SeriesRepository> {
+        val mockSeriesRepo = mockk<SeriesRepository> {
             every { anime } returns mockk()
             every { manga } returns MutableLiveData(
                 listOf(
@@ -67,7 +71,7 @@ class ProfileViewModelTests {
                 )
             )
         }
-        val mockUserRepo = mockk<com.chesire.malime.account.UserRepository> {
+        val mockUserRepo = mockk<UserRepository> {
             every { user } returns mockk()
         }
         val mockObserver = mockk<Observer<SeriesProgress>>() {
@@ -82,7 +86,7 @@ class ProfileViewModelTests {
 
     @Test
     fun `series has expected current items`() {
-        val mockSeriesRepo = mockk<com.chesire.malime.series.SeriesRepository> {
+        val mockSeriesRepo = mockk<SeriesRepository> {
             every { anime } returns mockk()
             every { manga } returns MutableLiveData(
                 listOf(
@@ -93,7 +97,7 @@ class ProfileViewModelTests {
                 )
             )
         }
-        val mockUserRepo = mockk<com.chesire.malime.account.UserRepository> {
+        val mockUserRepo = mockk<UserRepository> {
             every { user } returns mockk()
         }
         val mockObserver = mockk<Observer<SeriesProgress>>() {
@@ -108,7 +112,7 @@ class ProfileViewModelTests {
 
     @Test
     fun `series has expected completed items`() {
-        val mockSeriesRepo = mockk<com.chesire.malime.series.SeriesRepository> {
+        val mockSeriesRepo = mockk<SeriesRepository> {
             every { anime } returns mockk()
             every { manga } returns MutableLiveData(
                 listOf(
@@ -119,7 +123,7 @@ class ProfileViewModelTests {
                 )
             )
         }
-        val mockUserRepo = mockk<com.chesire.malime.account.UserRepository> {
+        val mockUserRepo = mockk<UserRepository> {
             every { user } returns mockk()
         }
         val mockObserver = mockk<Observer<SeriesProgress>>() {
@@ -134,7 +138,7 @@ class ProfileViewModelTests {
 
     @Test
     fun `series has expected onHold items`() {
-        val mockSeriesRepo = mockk<com.chesire.malime.series.SeriesRepository> {
+        val mockSeriesRepo = mockk<SeriesRepository> {
             every { anime } returns mockk()
             every { manga } returns MutableLiveData(
                 listOf(
@@ -145,7 +149,7 @@ class ProfileViewModelTests {
                 )
             )
         }
-        val mockUserRepo = mockk<com.chesire.malime.account.UserRepository> {
+        val mockUserRepo = mockk<UserRepository> {
             every { user } returns mockk()
         }
         val mockObserver = mockk<Observer<SeriesProgress>>() {
@@ -160,7 +164,7 @@ class ProfileViewModelTests {
 
     @Test
     fun `series has expected dropped items`() {
-        val mockSeriesRepo = mockk<com.chesire.malime.series.SeriesRepository> {
+        val mockSeriesRepo = mockk<SeriesRepository> {
             every { anime } returns mockk()
             every { manga } returns MutableLiveData(
                 listOf(
@@ -171,7 +175,7 @@ class ProfileViewModelTests {
                 )
             )
         }
-        val mockUserRepo = mockk<com.chesire.malime.account.UserRepository> {
+        val mockUserRepo = mockk<UserRepository> {
             every { user } returns mockk()
         }
         val mockObserver = mockk<Observer<SeriesProgress>>() {
@@ -186,7 +190,7 @@ class ProfileViewModelTests {
 
     @Test
     fun `series has expected planned items`() {
-        val mockSeriesRepo = mockk<com.chesire.malime.series.SeriesRepository> {
+        val mockSeriesRepo = mockk<SeriesRepository> {
             every { anime } returns mockk()
             every { manga } returns MutableLiveData(
                 listOf(
@@ -197,7 +201,7 @@ class ProfileViewModelTests {
                 )
             )
         }
-        val mockUserRepo = mockk<com.chesire.malime.account.UserRepository> {
+        val mockUserRepo = mockk<UserRepository> {
             every { user } returns mockk()
         }
         val mockObserver = mockk<Observer<SeriesProgress>>() {
@@ -212,7 +216,7 @@ class ProfileViewModelTests {
 
     @Test
     fun `series has expected unknown items`() {
-        val mockSeriesRepo = mockk<com.chesire.malime.series.SeriesRepository> {
+        val mockSeriesRepo = mockk<SeriesRepository> {
             every { anime } returns mockk()
             every { manga } returns MutableLiveData(
                 listOf(
@@ -223,7 +227,7 @@ class ProfileViewModelTests {
                 )
             )
         }
-        val mockUserRepo = mockk<com.chesire.malime.account.UserRepository> {
+        val mockUserRepo = mockk<UserRepository> {
             every { user } returns mockk()
         }
         val mockObserver = mockk<Observer<SeriesProgress>>() {

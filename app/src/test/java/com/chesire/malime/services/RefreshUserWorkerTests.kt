@@ -4,6 +4,8 @@ import android.content.Context
 import androidx.work.ListenableWorker
 import androidx.work.WorkerParameters
 import com.chesire.malime.account.UserRepository
+import com.chesire.malime.server.Resource
+import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
@@ -20,7 +22,7 @@ class RefreshUserWorkerTests {
                 every { backgroundExecutor } returns mockk()
             }
         }
-        val mockUserRepo = mockk<com.chesire.malime.account.UserRepository> {
+        val mockUserRepo = mockk<UserRepository> {
             coEvery { retrieveUserId() } coAnswers { null }
         }
 
@@ -40,7 +42,7 @@ class RefreshUserWorkerTests {
                 every { backgroundExecutor } returns mockk()
             }
         }
-        val mockUserRepo = mockk<com.chesire.malime.account.UserRepository> {
+        val mockUserRepo = mockk<UserRepository> {
             coEvery { retrieveUserId() } coAnswers { 1 }
             coEvery { refreshUser() } coAnswers { Resource.Success(mockk()) }
         }
@@ -61,7 +63,7 @@ class RefreshUserWorkerTests {
                 every { backgroundExecutor } returns mockk()
             }
         }
-        val mockUserRepo = mockk<com.chesire.malime.account.UserRepository> {
+        val mockUserRepo = mockk<UserRepository> {
             coEvery { retrieveUserId() } coAnswers { 1 }
             coEvery { refreshUser() } coAnswers { Resource.Error("") }
         }

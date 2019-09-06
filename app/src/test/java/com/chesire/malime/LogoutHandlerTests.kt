@@ -15,7 +15,7 @@ class LogoutHandlerTests {
         val mockAuthProvider = mockk<AuthProvider> {
             every { clearAuth() } just Runs
         }
-        val mockDb = mockk<com.chesire.malime.database.RoomDB> {
+        val mockDb = mockk<RoomDB> {
             every { clearAllTables() } just Runs
         }
 
@@ -31,7 +31,7 @@ class LogoutHandlerTests {
         val mockAuthProvider = mockk<AuthProvider> {
             every { clearAuth() } just Runs
         }
-        val mockDb = mockk<com.chesire.malime.database.RoomDB> {
+        val mockDb = mockk<RoomDB> {
             every { clearAllTables() } just Runs
         }
 

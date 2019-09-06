@@ -3,8 +3,8 @@ package com.chesire.malime.flow
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.chesire.malime.CoroutinesMainDispatcherRule
 import com.chesire.malime.LogoutHandler
-import com.chesire.malime.kitsu.AuthProvider
 import com.chesire.malime.account.UserRepository
+import com.chesire.malime.kitsu.AuthProvider
 import io.mockk.Runs
 import io.mockk.every
 import io.mockk.just
@@ -29,7 +29,7 @@ class ActivityViewModelTests {
             every { accessToken } returns ""
         }
         val mockLogoutHandler = mockk<LogoutHandler>()
-        val mockUserRepository = mockk<com.chesire.malime.account.UserRepository> {
+        val mockUserRepository = mockk<UserRepository> {
             every { user } returns mockk()
         }
 
@@ -49,7 +49,7 @@ class ActivityViewModelTests {
             every { accessToken } returns "access token"
         }
         val mockLogoutHandler = mockk<LogoutHandler>()
-        val mockUserRepository = mockk<com.chesire.malime.account.UserRepository> {
+        val mockUserRepository = mockk<UserRepository> {
             every { user } returns mockk()
         }
 
@@ -69,7 +69,7 @@ class ActivityViewModelTests {
         val mockLogoutHandler = mockk<LogoutHandler> {
             every { executeLogout() } just Runs
         }
-        val mockUserRepository = mockk<com.chesire.malime.account.UserRepository> {
+        val mockUserRepository = mockk<UserRepository> {
             every { user } returns mockk()
         }
 
@@ -91,7 +91,7 @@ class ActivityViewModelTests {
         val mockLogoutHandler = mockk<LogoutHandler> {
             every { executeLogout() } just Runs
         }
-        val mockUserRepository = mockk<com.chesire.malime.account.UserRepository> {
+        val mockUserRepository = mockk<UserRepository> {
             every { user } returns mockk()
         }
         val mockCallback = mockk<() -> Unit>(relaxed = true)

@@ -4,11 +4,12 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.chesire.malime.AuthCaster
 import com.chesire.malime.CoroutinesMainDispatcherRule
-import com.chesire.malime.server.Resource
-import com.chesire.malime.server.api.SearchApi
+import com.chesire.malime.core.flags.AsyncState
 import com.chesire.malime.core.flags.SeriesType
 import com.chesire.malime.core.models.SeriesModel
 import com.chesire.malime.series.SeriesRepository
+import com.chesire.malime.server.Resource
+import com.chesire.malime.server.api.SearchApi
 import io.mockk.Runs
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -27,9 +28,9 @@ class SearchViewModelTests {
 
     @Test
     fun `performSearch with no search title posts error`() {
-        val mockRepo = mockk<com.chesire.malime.series.SeriesRepository>()
+        val mockRepo = mockk<SeriesRepository>()
         val mockSearch = mockk<SearchApi>()
-        val mockObserver = mockk<Observer<com.chesire.malime.core.flags.AsyncState<List<SeriesModel>, SearchError>>> {
+        val mockObserver = mockk<Observer<AsyncState<List<SeriesModel>, SearchError>>> {
             every { onChanged(any()) } just Runs
         }
         val mockAuthCaster = mockk<AuthCaster>()
@@ -38,17 +39,17 @@ class SearchViewModelTests {
             searchResults.observeForever(mockObserver)
             performSearch()
 
-            assertEquals(SearchError.MissingTitle, (searchResults.value as com.chesire.malime.core.flags.AsyncState.Error).error)
+            assertEquals(SearchError.MissingTitle, (searchResults.value as AsyncState.Error).error)
         }
     }
 
     @Test
     fun `performSearch with seriesType of anime uses correct api`() {
-        val mockRepo = mockk<com.chesire.malime.series.SeriesRepository>()
+        val mockRepo = mockk<SeriesRepository>()
         val mockSearch = mockk<SearchApi> {
             coEvery { searchForAnime(any()) } returns Resource.Error("", 0)
         }
-        val mockObserver = mockk<Observer<com.chesire.malime.core.flags.AsyncState<List<SeriesModel>, SearchError>>> {
+        val mockObserver = mockk<Observer<AsyncState<List<SeriesModel>, SearchError>>> {
             every { onChanged(any()) } just Runs
         }
         val mockAuthCaster = mockk<AuthCaster>()
@@ -64,11 +65,11 @@ class SearchViewModelTests {
 
     @Test
     fun `performSearch with seriesType of manga uses correct api`() {
-        val mockRepo = mockk<com.chesire.malime.series.SeriesRepository>()
+        val mockRepo = mockk<SeriesRepository>()
         val mockSearch = mockk<SearchApi> {
             coEvery { searchForManga(any()) } returns Resource.Error("", 0)
         }
-        val mockObserver = mockk<Observer<com.chesire.malime.core.flags.AsyncState<List<SeriesModel>, SearchError>>> {
+        val mockObserver = mockk<Observer<AsyncState<List<SeriesModel>, SearchError>>> {
             every { onChanged(any()) } just Runs
         }
         val mockAuthCaster = mockk<AuthCaster>()
@@ -86,7 +87,7 @@ class SearchViewModelTests {
     @Test
     fun `performSearch on success posts success with data`() {
         val expected = listOf<SeriesModel>(mockk())
-        val mockRepo = mockk<com.chesire.malime.series.SeriesRepository>()
+        val mockRepo = mockk<SeriesRepository>()
         val mockSearch = mockk<SearchApi> {
             coEvery {
                 searchForAnime(any())
@@ -94,7 +95,7 @@ class SearchViewModelTests {
                 Resource.Success(expected)
             }
         }
-        val mockObserver = mockk<Observer<com.chesire.malime.core.flags.AsyncState<List<SeriesModel>, SearchError>>> {
+        val mockObserver = mockk<Observer<AsyncState<List<SeriesModel>, SearchError>>> {
             every { onChanged(any()) } just Runs
         }
         val mockAuthCaster = mockk<AuthCaster>()
@@ -105,7 +106,7 @@ class SearchViewModelTests {
             seriesType = SeriesType.Anime
             performSearch()
 
-            assertEquals(expected, (searchResults.value as com.chesire.malime.core.flags.AsyncState.Success).data)
+            assertEquals(expected, (searchResults.value as AsyncState.Success).data)
         }
     }
 }
