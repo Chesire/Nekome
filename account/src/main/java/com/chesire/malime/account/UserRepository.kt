@@ -6,9 +6,8 @@ import com.chesire.malime.database.dao.UserDao
 import com.chesire.malime.server.Resource
 import com.chesire.malime.server.api.UserApi
 import timber.log.Timber
-import javax.inject.Inject
 
-class UserRepository @Inject constructor(
+class UserRepository(
     private val userDao: UserDao,
     private val userApi: UserApi
 ) {

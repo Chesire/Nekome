@@ -5,6 +5,7 @@ import com.chesire.malime.MalimeApplication
 import com.chesire.malime.injection.androidmodules.ActivityModule
 import com.chesire.malime.injection.androidmodules.FragmentModule
 import com.chesire.malime.injection.androidmodules.ViewModelModule
+import com.chesire.malime.injection.modules.AccountModule
 import com.chesire.malime.injection.modules.AppModule
 import com.chesire.malime.injection.modules.CoroutineModule
 import com.chesire.malime.injection.modules.DatabaseModule
@@ -22,6 +23,7 @@ import javax.inject.Singleton
 @Singleton
 @Component(
     modules = [
+        AccountModule::class,
         ActivityModule::class,
         AndroidSupportInjectionModule::class,
         AppModule::class,
