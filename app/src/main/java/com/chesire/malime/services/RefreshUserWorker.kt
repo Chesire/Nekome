@@ -4,8 +4,8 @@ import android.content.Context
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.chesire.malime.MalimeApplication
-import com.chesire.malime.server.Resource
 import com.chesire.malime.account.UserRepository
+import com.chesire.malime.server.Resource
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -15,7 +15,7 @@ class RefreshUserWorker(
 ) : CoroutineWorker(appContext, workerParams) {
 
     @Inject
-    lateinit var userRepo: com.chesire.malime.account.UserRepository
+    lateinit var userRepo: UserRepository
 
     init {
         // For now setup in the init block

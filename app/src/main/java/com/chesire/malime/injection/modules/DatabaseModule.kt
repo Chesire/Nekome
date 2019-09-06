@@ -13,12 +13,7 @@ object DatabaseModule {
     @Provides
     @Singleton
     @JvmStatic
-    fun provideDB(context: Context): RoomDB {
-        return Room
-            .databaseBuilder(context, RoomDB::class.java, "malime_database.db")
-            .fallbackToDestructiveMigration()
-            .build()
-    }
+    fun provideDB(context: Context) = RoomDB.build(context)
 
     @Provides
     @Singleton
