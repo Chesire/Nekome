@@ -39,6 +39,7 @@ dependencies {
     implementation project(path: ':server')
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "androidx.appcompat:appcompat:$appcompat_version"
     implementation "com.jakewharton.timber:timber:$timber_version"
 
     testImplementation 'io.mockk:mockk:1.9.3'
