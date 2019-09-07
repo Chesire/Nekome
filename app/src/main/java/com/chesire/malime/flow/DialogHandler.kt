@@ -8,13 +8,11 @@ import com.afollestad.materialdialogs.list.listItems
 import com.afollestad.materialdialogs.list.listItemsMultiChoice
 import com.chesire.malime.R
 import com.chesire.malime.core.SharedPref
-import com.chesire.malime.core.flags.UserSeriesStatus
 import com.chesire.malime.core.flags.SortOption
+import com.chesire.malime.core.flags.UserSeriesStatus
 import javax.inject.Inject
 
-class DialogHandler @Inject constructor(
-    private val pref: com.chesire.malime.core.SharedPref
-) {
+class DialogHandler @Inject constructor(private val pref: SharedPref) {
     /**
      * Shows the filter dialog, allowing the user to choose how to filter their series.
      */
@@ -29,8 +27,11 @@ class DialogHandler @Inject constructor(
             listItemsMultiChoice(
                 items = filterOptionMap.keys.toList(),
                 initialSelection = pref.filterPreference.filter { it.value }.keys.toIntArray()
-            ) { _, _, items ->
-                pref.filterPreference = createFilterMap(filterOptionMap, items)
+            ) { _, _, items: List<CharSequence> ->
+                pref.filterPreference = createFilterMap(
+                    filterOptionMap,
+                    items.map { it.toString() }
+                )
             }
             negativeButton(R.string.filter_dialog_cancel)
             positiveButton(R.string.filter_dialog_confirm)
@@ -51,7 +52,7 @@ class DialogHandler @Inject constructor(
      * Shows the sort dialog, allowing the user to choose how the series list is sorted.
      */
     fun showSortDialog(context: Context, lifecycleOwner: LifecycleOwner) {
-        val sortOptionMap = com.chesire.malime.core.flags.SortOption
+        val sortOptionMap = SortOption
             .values()
             .associate { context.getString(it.stringId) to it.index }
 
@@ -59,7 +60,7 @@ class DialogHandler @Inject constructor(
             title(R.string.sort_dialog_title)
             listItems(items = sortOptionMap.keys.toList()) { _, _, text ->
                 sortOptionMap[text]?.let {
-                    pref.sortPreference = com.chesire.malime.core.flags.SortOption.forIndex(it)
+                    pref.sortPreference = SortOption.forIndex(it)
                 }
             }
             lifecycleOwner(lifecycleOwner)
