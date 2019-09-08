@@ -64,6 +64,12 @@
     <string name="settings_logout_prompt_confirm">Confirm</string>
     <string name="settings_logout_prompt_cancel">Cancel</string>
 
+    <string name="series_detail_progress">Progress</string>
+    <string name="series_detail_progress_message">Enter new progress for %s</string>
+    <string name="series_detail_progress_hint">Enter new progress for below %d</string>
+    <string name="series_detail_progress_cancel">Cancel</string>
+    <string name="series_detail_progress_confirm">Confirm</string>
+
     <string name="series_detail_delete">Delete</string>
     <string name="series_detail_delete_message">Are you sure you wish to delete %s?</string>
     <string name="series_detail_delete_cancel">Cancel</string>
