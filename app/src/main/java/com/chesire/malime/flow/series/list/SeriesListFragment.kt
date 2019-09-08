@@ -14,7 +14,6 @@ import androidx.lifecycle.get
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chesire.malime.R
 import com.chesire.malime.core.SharedPref
-import com.chesire.malime.server.Resource
 import com.chesire.malime.core.models.SeriesModel
 import com.chesire.malime.databinding.FragmentSeriesListBinding
 import com.chesire.malime.flow.DialogHandler
@@ -23,15 +22,14 @@ import com.chesire.malime.flow.series.detail.SeriesDetailFragment
 import com.chesire.malime.flow.series.detail.SeriesDetailViewModel
 import com.chesire.malime.flow.series.list.anime.AnimeFragment
 import com.chesire.malime.flow.series.list.manga.MangaFragment
+import com.chesire.malime.server.Resource
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_COLLAPSED
 import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_HIDDEN
 import com.google.android.material.snackbar.Snackbar
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_series_list.fragmentSeriesListBottomSheet
-import kotlinx.android.synthetic.main.fragment_series_list.fragmentSeriesListFab
 import kotlinx.android.synthetic.main.fragment_series_list.fragmentSeriesListLayout
-import kotlinx.android.synthetic.main.fragment_series_list.fragmentSeriesListRecyclerView
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -41,7 +39,8 @@ import javax.inject.Inject
  */
 abstract class SeriesListFragment :
     DaggerFragment(),
-    SeriesInteractionListener {
+    SeriesInteractionListener,
+    SheetController {
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
@@ -153,5 +152,9 @@ abstract class SeriesListFragment :
     fun newSeriesListProvided(newList: List<SeriesModel>) {
         Timber.d("New list provided, new count [${newList.count()}]")
         seriesAdapter.submitList(newList.toMutableList())
+    }
+
+    override fun closeSheet() {
+        sheetBehavior.state = STATE_HIDDEN
     }
 }

@@ -63,6 +63,21 @@ class SeriesRepository(
     }
 
     /**
+     * Removes the series [seriesToRemove] from being tracked.
+     */
+    suspend fun deleteSeries(seriesToRemove: SeriesModel): Resource<Any> {
+        val response = libraryApi.delete(seriesToRemove.userId)
+        when (response) {
+            is Resource.Success -> seriesDao.delete(seriesToRemove)
+            is Resource.Error -> Timber.e(
+                "Error deleting series [$seriesToRemove], ${response.msg}"
+            )
+        }
+
+        return response
+    }
+
+    /**
      * Pulls and stores all of the users anime list.
      */
     suspend fun refreshAnime(): Resource<List<SeriesModel>> {

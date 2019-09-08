@@ -18,6 +18,13 @@ fun <T, E> MutableLiveData<AsyncState<T, E>>.postError(error: E) {
 }
 
 /**
+ * Posts to the receiver with [AsyncState.Error] containing a data packet of [data].
+ */
+fun <T, E> MutableLiveData<AsyncState<T, E>>.postError(data: T, error: E) {
+    postValue(AsyncState.Error(data, error))
+}
+
+/**
  * Posts to the receiver with [AsyncState.Loading].
  */
 fun <T, E> MutableLiveData<AsyncState<T, E>>.postLoading() {

@@ -49,6 +49,13 @@
         <item name="android:textColor">@color/white</item>
     </style>
 
+    <style name="BottomSheetHeaderAction" parent="TextAppearance.MaterialComponents.Headline6">
+        <item name="android:lines">1</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:fontFamily">bold</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
     <style name="FabStyle">
         <item name="android:layout_width">56dp</item>
         <item name="android:layout_height">56dp</item>
@@ -64,6 +71,10 @@
         <item name="android:layout_margin">8dp</item>
         <item name="android:alpha">0.3</item>
         <item name="android:background">@color/darkerGrey</item>
+    </style>
+
+    <style name="DividerStyleNoMargin" parent="DividerStyle">
+        <item name="android:layout_margin">0dp</item>
     </style>
 
     <style name="AppTheme.NoActionBar">

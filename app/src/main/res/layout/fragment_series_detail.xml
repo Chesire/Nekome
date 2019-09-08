@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/fragmentSeriesDetailLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/bottom_sheet_background"
@@ -17,7 +18,7 @@
         <include layout="@layout/view_bottom_sheet_actions" />
 
         <View
-            style="@style/DividerStyle"
+            style="@style/DividerStyleNoMargin"
             android:layout_width="match_parent"
             android:layout_height="@dimen/divider_height" />
 

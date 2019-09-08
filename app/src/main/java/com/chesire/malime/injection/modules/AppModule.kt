@@ -6,11 +6,13 @@ import android.preference.PreferenceManager
 import com.chesire.malime.core.SharedPref
 import dagger.Module
 import dagger.Provides
+import dagger.Reusable
 
 @Suppress("unused")
 @Module
 object AppModule {
     @Provides
+    @Reusable
     @JvmStatic
     fun provideSharedPreferences(context: Context): SharedPreferences =
         PreferenceManager.getDefaultSharedPreferences(context)

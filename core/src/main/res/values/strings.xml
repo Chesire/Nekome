@@ -10,7 +10,6 @@
     <string name="nav_settings">Settings</string>
     <string name="nav_syncing">Syncing</string>
 
-    <string name="menu_delete">Delete</string>
     <string name="menu_filter">Filter</string>
     <string name="menu_sort">Sort</string>
     <string name="menu_settings">Settings</string>
@@ -67,4 +66,10 @@
     <string name="settings_logout_prompt_confirm">Confirm</string>
     <string name="settings_logout_prompt_cancel">Cancel</string>
 
+    <string name="series_detail_delete">Delete</string>
+    <string name="series_detail_delete_message">Are you sure you wish to delete %s?</string>
+    <string name="series_detail_delete_cancel">Cancel</string>
+    <string name="series_detail_delete_confirm">Confirm</string>
+    <string name="series_detail_delete_failure_message">Failed to delete %s</string>
+    <string name="series_detail_delete_failure_retry">Retry</string>
 </resources>
