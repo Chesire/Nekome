@@ -69,8 +69,9 @@ class SeriesRepository(
         val response = libraryApi.delete(seriesToRemove.userId)
         when (response) {
             is Resource.Success -> seriesDao.delete(seriesToRemove)
-            is Resource.Error ->
-                Timber.e("Error deleting series [$seriesToRemove], ${response.msg}")
+            is Resource.Error -> Timber.e(
+                "Error deleting series [$seriesToRemove], ${response.msg}"
+            )
         }
 
         return response
