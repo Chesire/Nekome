@@ -1,9 +1,12 @@
 package com.chesire.malime.flow.login.syncing
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.chesire.malime.CoroutinesMainDispatcherRule
+import com.chesire.malime.account.UserRepository
 import com.chesire.malime.core.flags.AsyncState
+import com.chesire.malime.createUserModel
 import com.chesire.malime.series.SeriesRepository
 import com.chesire.malime.server.Resource
 import io.mockk.Runs
@@ -30,11 +33,14 @@ class SyncingViewModelTests {
             coEvery { refreshAnime() } coAnswers { Resource.Error("") }
             coEvery { refreshManga() } coAnswers { Resource.Success(mockk()) }
         }
+        val mockUser = mockk<UserRepository> {
+            every { user } returns MutableLiveData(createUserModel())
+        }
         val mockObserver = mockk<Observer<AsyncState<Any, Any>>> {
             every { onChanged(any()) } just Runs
         }
 
-        SyncingViewModel(mockRepo).run {
+        SyncingViewModel(mockRepo, mockUser).run {
             syncStatus.observeForever(mockObserver)
             syncLatestData()
             assertTrue(syncStatus.value is AsyncState.Error)
@@ -47,11 +53,14 @@ class SyncingViewModelTests {
             coEvery { refreshAnime() } coAnswers { Resource.Success(mockk()) }
             coEvery { refreshManga() } coAnswers { Resource.Error("") }
         }
+        val mockUser = mockk<UserRepository> {
+            every { user } returns MutableLiveData(createUserModel())
+        }
         val mockObserver = mockk<Observer<AsyncState<Any, Any>>> {
             every { onChanged(any()) } just Runs
         }
 
-        SyncingViewModel(mockRepo).run {
+        SyncingViewModel(mockRepo, mockUser).run {
             syncStatus.observeForever(mockObserver)
             syncLatestData()
             assertTrue(syncStatus.value is AsyncState.Error)
@@ -64,11 +73,14 @@ class SyncingViewModelTests {
             coEvery { refreshAnime() } coAnswers { Resource.Success(mockk()) }
             coEvery { refreshManga() } coAnswers { Resource.Success(mockk()) }
         }
+        val mockUser = mockk<UserRepository> {
+            every { user } returns MutableLiveData(createUserModel())
+        }
         val mockObserver = mockk<Observer<AsyncState<Any, Any>>> {
             every { onChanged(any()) } just Runs
         }
 
-        SyncingViewModel(mockRepo).run {
+        SyncingViewModel(mockRepo, mockUser).run {
             syncStatus.observeForever(mockObserver)
             syncLatestData()
             assertTrue(syncStatus.value is AsyncState.Success)
