@@ -5,19 +5,15 @@ import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.rule.ActivityTestRule
 import com.chesire.malime.R
-import com.chesire.malime.server.Resource
-import com.chesire.malime.server.api.AuthApi
-import com.chesire.malime.server.api.LibraryApi
-import com.chesire.malime.server.api.UserApi
-import com.chesire.malime.core.flags.Service
-import com.chesire.malime.core.models.ImageModel
-import com.chesire.malime.core.models.UserModel
 import com.chesire.malime.flow.Activity
 import com.chesire.malime.helpers.ToastMatcher.Companion.onToast
 import com.chesire.malime.helpers.injector
 import com.chesire.malime.kitsu.AuthProvider
+import com.chesire.malime.server.Resource
+import com.chesire.malime.server.api.AuthApi
+import com.chesire.malime.server.api.LibraryApi
+import com.chesire.malime.server.api.UserApi
 import com.schibsted.spain.barista.assertion.BaristaErrorAssertions.assertError
-import com.schibsted.spain.barista.assertion.BaristaVisibilityAssertions.assertDisplayed
 import com.schibsted.spain.barista.interaction.BaristaClickInteractions.clickOn
 import com.schibsted.spain.barista.interaction.BaristaEditTextInteractions.writeTo
 import com.schibsted.spain.barista.interaction.BaristaKeyboardInteractions.closeKeyboard
@@ -67,24 +63,24 @@ class DetailsTests {
     fun emptyUsernameShowsError() {
         activity.launchActivity(null)
 
-        writeTo(R.id.fragmentDetailsUsernameText, "")
-        writeTo(R.id.fragmentDetailsPasswordText, "Password")
+        writeTo(R.id.detailsUsernameText, "")
+        writeTo(R.id.detailsPasswordText, "Password")
         closeKeyboard()
-        clickOn(R.id.fragmentDetailsLoginButton)
+        clickOn(R.id.detailsLoginButton)
 
-        assertError(R.id.fragmentDetailsUsernameLayout, R.string.login_error_empty_username)
+        assertError(R.id.detailsUsernameLayout, R.string.login_error_empty_username)
     }
 
     @Test
     fun emptyPasswordShowsError() {
         activity.launchActivity(null)
 
-        writeTo(R.id.fragmentDetailsUsernameText, "Username")
-        writeTo(R.id.fragmentDetailsPasswordText, "")
+        writeTo(R.id.detailsUsernameText, "Username")
+        writeTo(R.id.detailsPasswordText, "")
         closeKeyboard()
-        clickOn(R.id.fragmentDetailsLoginButton)
+        clickOn(R.id.detailsLoginButton)
 
-        assertError(R.id.fragmentDetailsPasswordLayout, R.string.login_error_empty_password)
+        assertError(R.id.detailsPasswordLayout, R.string.login_error_empty_password)
     }
 
     @Test
@@ -97,10 +93,10 @@ class DetailsTests {
 
         activity.launchActivity(null)
 
-        writeTo(R.id.fragmentDetailsUsernameText, "Username")
-        writeTo(R.id.fragmentDetailsPasswordText, "Password")
+        writeTo(R.id.detailsUsernameText, "Username")
+        writeTo(R.id.detailsPasswordText, "Password")
         closeKeyboard()
-        clickOn(R.id.fragmentDetailsLoginButton)
+        clickOn(R.id.detailsLoginButton)
 
         onToast(R.string.login_error_credentials).check(matches(isDisplayed()))
     }
@@ -115,42 +111,11 @@ class DetailsTests {
 
         activity.launchActivity(null)
 
-        writeTo(R.id.fragmentDetailsUsernameText, "Username")
-        writeTo(R.id.fragmentDetailsPasswordText, "Password")
+        writeTo(R.id.detailsUsernameText, "Username")
+        writeTo(R.id.detailsPasswordText, "Password")
         closeKeyboard()
-        clickOn(R.id.fragmentDetailsLoginButton)
+        clickOn(R.id.detailsLoginButton)
 
         onToast(R.string.login_error_generic).check(matches(isDisplayed()))
-    }
-
-    @Test
-    fun successLeadsToSyncingFragment() {
-        coEvery {
-            auth.login("Username", "Password")
-        } coAnswers {
-            Resource.Success(Any())
-        }
-        coEvery {
-            user.getUserDetails()
-        } coAnswers {
-            Resource.Success(
-                UserModel(
-                    999,
-                    "TestUser",
-                    ImageModel.empty,
-                    ImageModel.empty,
-                    Service.Kitsu
-                )
-            )
-        }
-
-        activity.launchActivity(null)
-
-        writeTo(R.id.fragmentDetailsUsernameText, "Username")
-        writeTo(R.id.fragmentDetailsPasswordText, "Password")
-        closeKeyboard()
-        clickOn(R.id.fragmentDetailsLoginButton)
-
-        assertDisplayed(R.id.fragmentSyncingText1)
     }
 }
