@@ -7,6 +7,7 @@ import com.chesire.malime.core.flags.SeriesStatus
 import com.chesire.malime.core.flags.SeriesType
 import com.chesire.malime.core.flags.Subtype
 import com.chesire.malime.core.flags.UserSeriesStatus
+import kotlinx.android.parcel.IgnoredOnParcel
 import kotlinx.android.parcel.Parcelize
 
 /**
@@ -31,4 +32,7 @@ data class SeriesModel(
     val nsfw: Boolean,
     val startDate: String,
     val endDate: String
-) : Parcelable
+) : Parcelable {
+    @IgnoredOnParcel
+    val lengthKnown: Boolean = totalLength != 0
+}

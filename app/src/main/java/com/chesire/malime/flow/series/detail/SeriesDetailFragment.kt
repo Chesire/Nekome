@@ -1,6 +1,7 @@
 package com.chesire.malime.flow.series.detail
 
 import android.os.Bundle
+import android.text.InputType
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,6 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
 import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.input.input
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
 import com.chesire.lifecyklelog.LogLifecykle
 import com.chesire.malime.R
@@ -18,6 +20,7 @@ import com.chesire.malime.flow.series.list.SheetController
 import com.google.android.material.snackbar.Snackbar
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.view_bottom_sheet_actions.bottomSheetDelete
+import kotlinx.android.synthetic.main.view_bottom_sheet_actions.bottomSheetProgress
 import kotlinx.android.synthetic.main.view_bottom_sheet_header.viewBottomSheetProgress
 import kotlinx.android.synthetic.main.view_bottom_sheet_header.viewBottomSheetSubtitle
 import kotlinx.android.synthetic.main.view_bottom_sheet_header.viewBottomSheetTitle
@@ -45,6 +48,25 @@ class SeriesDetailFragment : DaggerFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        bottomSheetProgress.setOnClickListener {
+            viewModel.model.value?.let { model ->
+                MaterialDialog(requireContext()).show {
+                    input(
+                        inputType = InputType.TYPE_CLASS_NUMBER,
+                        prefill = model.progress.toString(),
+                        hint = getString(R.string.series_detail_progress_hint, model.totalLength)
+                    ) { _, charSequence ->
+                        charSequence.toString().toIntOrNull()?.let {
+                            viewModel.updateProgress(model, it)
+                        }
+                    }
+                    message(R.string.series_detail_progress_message)
+                    positiveButton(R.string.series_detail_progress_confirm)
+                    negativeButton(R.string.series_detail_progress_cancel)
+                    lifecycleOwner(viewLifecycleOwner)
+                }
+            }
+        }
         bottomSheetDelete.setOnClickListener {
             viewModel.model.value?.let { model ->
                 MaterialDialog(requireContext()).show {
@@ -59,6 +81,7 @@ class SeriesDetailFragment : DaggerFragment() {
         }
 
         observeModel()
+        observeProgress()
         observeDelete()
     }
 
@@ -67,6 +90,12 @@ class SeriesDetailFragment : DaggerFragment() {
             viewBottomSheetTitle.setText(model.title)
             viewBottomSheetSubtitle.setText(model.userSeriesStatus.name)
             viewBottomSheetProgress.setText("${model.progress} / ${model.totalLength}")
+        })
+    }
+
+    private fun observeProgress() {
+        viewModel.progressStatus.observe(viewLifecycleOwner, Observer { status ->
+            // handle states
         })
     }
 
