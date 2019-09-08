@@ -12,6 +12,7 @@ import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
 import com.chesire.lifecyklelog.LogLifecykle
 import com.chesire.malime.R
 import com.chesire.malime.core.flags.AsyncState
+import com.chesire.malime.core.models.SeriesModel
 import com.chesire.malime.flow.ViewModelFactory
 import com.chesire.malime.flow.series.list.SheetController
 import com.google.android.material.snackbar.Snackbar
@@ -75,36 +76,33 @@ class SeriesDetailFragment : DaggerFragment() {
                 is AsyncState.Loading -> {
                     // do something to disable the button maybe?
                 }
-                is AsyncState.Error -> {
-                    val parent = parentFragment
-                    val parentView = parent?.view
-                    if (parent == null || parentView == null) {
-                        Timber.w("Parent fragment was null, not displaying snackbar")
-                        return@Observer
-                    }
-
-                    (parent as? SheetController)?.closeSheet()
-                    Snackbar.make(
-                        parentView,
-                        getString(
-                            R.string.series_detail_delete_failure_message,
-                            status.data?.title
-                        ),
-                        Snackbar.LENGTH_INDEFINITE
-                    ).apply {
-                        status.data?.let { seriesModel ->
-                            setAction(R.string.series_detail_delete_failure_retry) {
-                                viewModel.deleteModel(seriesModel)
-                            }
-                        }
-                    }.show()
-                }
+                is AsyncState.Error -> onDeleteError(status.data)
                 is AsyncState.Success -> {
                     // TODO: show a snackbar with undo button
                     (parentFragment as? SheetController)?.closeSheet()
                 }
             }
         })
+    }
+
+    private fun onDeleteError(series: SeriesModel?) {
+        val parent = parentFragment
+        val parentView = parent?.view
+        if (series == null || parent == null || parentView == null) {
+            Timber.w("Could not run onDeleteError, a param was null")
+            return
+        }
+
+        (parent as? SheetController)?.closeSheet()
+        Snackbar.make(
+            parentView,
+            getString(R.string.series_detail_delete_failure_message, series.title),
+            Snackbar.LENGTH_INDEFINITE
+        ).apply {
+            setAction(R.string.series_detail_delete_failure_retry) {
+                viewModel.deleteModel(series)
+            }
+        }.show()
     }
 
     companion object {
