@@ -4,15 +4,14 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.chesire.malime.AsyncState
 import com.chesire.malime.AuthCaster
-import com.chesire.malime.core.Resource
-import com.chesire.malime.core.api.LibraryApi
+import com.chesire.malime.core.extensions.postError
+import com.chesire.malime.core.extensions.postLoading
+import com.chesire.malime.core.extensions.postSuccess
+import com.chesire.malime.core.flags.AsyncState
 import com.chesire.malime.core.models.SeriesModel
-import com.chesire.malime.extensions.postError
-import com.chesire.malime.extensions.postLoading
-import com.chesire.malime.extensions.postSuccess
-import com.chesire.malime.repo.SeriesRepository
+import com.chesire.malime.series.SeriesRepository
+import com.chesire.malime.server.Resource
 import com.hadilq.liveevent.LiveEvent
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -42,8 +41,6 @@ class SeriesDetailViewModel @Inject constructor(
         _deletionStatus.postLoading()
 
         viewModelScope.launch {
-            _deletionStatus.postError(target, SeriesDetailError.Error)
-            return@launch
             val response = repo.deleteSeries(target)
             if (response is Resource.Error && response.code == Resource.Error.CouldNotRefresh) {
                 authCaster.issueRefreshingToken()

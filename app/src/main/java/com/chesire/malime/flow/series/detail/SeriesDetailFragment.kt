@@ -10,12 +10,11 @@ import androidx.lifecycle.get
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
 import com.chesire.lifecyklelog.LogLifecykle
-import com.chesire.malime.AsyncState
 import com.chesire.malime.R
+import com.chesire.malime.core.flags.AsyncState
 import com.chesire.malime.flow.ViewModelFactory
 import com.google.android.material.snackbar.Snackbar
 import dagger.android.support.DaggerFragment
-import kotlinx.android.synthetic.main.fragment_series_detail.fragmentSeriesDetailLayout
 import kotlinx.android.synthetic.main.view_bottom_sheet.viewBottomSheetLayout
 import kotlinx.android.synthetic.main.view_bottom_sheet_actions.bottomSheetDelete
 import kotlinx.android.synthetic.main.view_bottom_sheet_header.viewBottomSheetProgress
@@ -73,9 +72,9 @@ class SeriesDetailFragment : DaggerFragment() {
                         R.string.series_detail_delete_failure_message,
                         Snackbar.LENGTH_INDEFINITE
                     ).apply {
-                        status.data?.let {
+                        status.data?.let { seriesModel ->
                             setAction(R.string.series_detail_delete_failure_retry) {
-                                viewModel.deleteModel(status.data)
+                                viewModel.deleteModel(seriesModel)
                             }
                         }
                     }.show()
