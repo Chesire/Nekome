@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chesire.malime.AuthCaster
+import com.chesire.malime.core.IOContext
 import com.chesire.malime.core.extensions.postError
 import com.chesire.malime.core.extensions.postLoading
 import com.chesire.malime.core.extensions.postSuccess
@@ -15,13 +16,15 @@ import com.chesire.malime.server.Resource
 import com.hadilq.liveevent.LiveEvent
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.coroutines.CoroutineContext
 
 /**
  * ViewModel to store the current series detail model, and allow interactions with its data.
  */
 class SeriesDetailViewModel @Inject constructor(
     private val repo: SeriesRepository,
-    private val authCaster: AuthCaster
+    private val authCaster: AuthCaster,
+    @IOContext private val ioContext: CoroutineContext
 ) : ViewModel() {
 
     private val _model = MutableLiveData<SeriesModel>()
@@ -40,7 +43,7 @@ class SeriesDetailViewModel @Inject constructor(
     fun deleteModel(target: SeriesModel) {
         _deletionStatus.postLoading()
 
-        viewModelScope.launch {
+        viewModelScope.launch(ioContext) {
             val response = repo.deleteSeries(target)
             if (response is Resource.Error && response.code == Resource.Error.CouldNotRefresh) {
                 authCaster.issueRefreshingToken()
