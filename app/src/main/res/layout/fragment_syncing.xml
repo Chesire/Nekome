@@ -7,54 +7,40 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/fragmentSyncingText1"
-            style="@style/TextAppearance.MaterialComponents.Body2"
+        <ImageView
+            android:id="@+id/syncingProfileImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/activity_horizontal_margin"
-            android:text="@string/login_syncing_syncing"
-            app:layout_constraintBottom_toTopOf="@+id/fragmentSyncingText2"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <TextView
-            android:id="@+id/fragmentSyncingText2"
-            style="@style/TextAppearance.MaterialComponents.Body2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/activity_horizontal_margin"
-            android:text="@string/login_syncing_wait"
-            app:layout_constraintBottom_toTopOf="@+id/fragmentSyncingAnimation"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/fragmentSyncingAnimation"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
+            android:layout_margin="@dimen/full_margin"
+            android:minWidth="120dp"
+            android:minHeight="120dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:lottie_autoPlay="true"
-            app:lottie_fileName="4463-hi.json"
-            app:lottie_loop="true"
-            tools:visibility="visible" />
+            app:layout_constraintVertical_bias="0.2"
+            tools:src="@drawable/ic_account_circle" />
 
-        <Button
-            android:id="@+id/fragmentSyncingRetryButton"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        <ProgressBar
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:indeterminateOnly="true"
+            android:indeterminateTint="@color/colorPrimaryDark"
+            app:layout_constraintBottom_toBottomOf="@id/syncingProfileImage"
+            app:layout_constraintEnd_toEndOf="@id/syncingProfileImage"
+            app:layout_constraintStart_toStartOf="@id/syncingProfileImage"
+            app:layout_constraintTop_toTopOf="@id/syncingProfileImage" />
+
+        <TextView
+            android:id="@+id/syncingSyncText"
+            style="@style/TextAppearance.MaterialComponents.Headline5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/activity_horizontal_margin"
-            android:text="@string/login_syncing_retry"
-            android:visibility="gone"
+            android:layout_margin="@dimen/full_margin"
+            android:text="@string/syncing_syncing"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/fragmentSyncingText2"
-            tools:visibility="visible" />
+            app:layout_constraintTop_toBottomOf="@id/syncingProfileImage" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

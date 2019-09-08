@@ -8,15 +8,13 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 import com.chesire.lifecyklelog.LogLifecykle
-import com.chesire.malime.core.flags.AsyncState
+import com.chesire.malime.R
 import com.chesire.malime.databinding.FragmentSyncingBinding
-import com.chesire.malime.extensions.hide
-import com.chesire.malime.extensions.show
 import com.chesire.malime.flow.ViewModelFactory
 import dagger.android.support.DaggerFragment
-import kotlinx.android.synthetic.main.fragment_syncing.fragmentSyncingAnimation
-import kotlinx.android.synthetic.main.fragment_syncing.fragmentSyncingRetryButton
+import kotlinx.android.synthetic.main.fragment_syncing.syncingProfileImage
 import javax.inject.Inject
 
 @LogLifecykle
@@ -36,34 +34,37 @@ class SyncingFragment : DaggerFragment() {
             .inflate(inflater, container, false)
             .apply {
                 lifecycleOwner = viewLifecycleOwner
-                fragmentSyncingRetryButton.setOnClickListener { viewModel.syncLatestData() }
             }
             .root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        viewModel.syncStatus.observe(
-            viewLifecycleOwner,
-            Observer {
-                when (it) {
-                    is AsyncState.Success -> findNavController().navigate(SyncingFragmentDirections.toAnimeFragment())
-                    is AsyncState.Loading -> setLoading()
-                    is AsyncState.Error -> hideLoading()
-                }
-            }
-        )
+        observeAvatar()
+        observeSyncStatus()
         viewModel.syncLatestData()
     }
 
-    private fun setLoading() {
-        fragmentSyncingAnimation.show()
-        fragmentSyncingRetryButton.hide()
+    private fun observeAvatar() {
+        viewModel.avatarUrl.observe(
+            viewLifecycleOwner,
+            Observer {
+                Glide.with(this)
+                    .load(it)
+                    .placeholder(R.drawable.ic_account_circle)
+                    .circleCrop()
+                    .into(syncingProfileImage)
+            }
+        )
     }
 
-    private fun hideLoading() {
-        fragmentSyncingAnimation.hide()
-        fragmentSyncingRetryButton.show()
+    private fun observeSyncStatus() {
+        viewModel.syncStatus.observe(
+            viewLifecycleOwner,
+            Observer {
+                findNavController().navigate(SyncingFragmentDirections.toAnimeFragment())
+            }
+        )
     }
 }

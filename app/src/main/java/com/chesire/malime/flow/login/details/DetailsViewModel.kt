@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.chesire.malime.account.UserRepository
 import com.chesire.malime.server.Resource
 import com.chesire.malime.server.api.AuthApi
 import com.hadilq.liveevent.LiveEvent
@@ -13,7 +14,7 @@ import javax.inject.Inject
 
 class DetailsViewModel @Inject constructor(
     private val auth: AuthApi,
-    private val user: com.chesire.malime.account.UserRepository
+    private val user: UserRepository
 ) : ViewModel() {
     private val _loginStatus = LiveEvent<LoginStatus>()
     val username = MutableLiveData<String>()

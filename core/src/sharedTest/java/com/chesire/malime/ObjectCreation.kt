@@ -2,10 +2,12 @@ package com.chesire.malime
 
 import com.chesire.malime.core.flags.SeriesStatus
 import com.chesire.malime.core.flags.SeriesType
+import com.chesire.malime.core.flags.Service
 import com.chesire.malime.core.flags.Subtype
 import com.chesire.malime.core.flags.UserSeriesStatus
 import com.chesire.malime.core.models.ImageModel
 import com.chesire.malime.core.models.SeriesModel
+import com.chesire.malime.core.models.UserModel
 
 fun createSeriesModel(
     id: Int = 999,
@@ -40,3 +42,11 @@ fun createSeriesModel(
     startDate,
     endDate
 )
+
+fun createUserModel(
+    userId: Int = 0,
+    name: String = "name",
+    avatar: ImageModel = ImageModel.empty,
+    coverImage: ImageModel = ImageModel.empty,
+    service: Service = Service.Kitsu
+) = UserModel(userId, name, avatar, coverImage, service)
