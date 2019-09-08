@@ -184,6 +184,69 @@ class SeriesRepositoryTests {
     }
 
     @Test
+    fun `deleteSeries onSuccess removes from dao`() = runBlocking {
+        val expected = mockk<SeriesModel> {
+            every { userId } returns 5
+        }
+        val mockDao = mockk<SeriesDao> {
+            coEvery { delete(any()) } just Runs
+        }
+        val mockApi = mockk<LibraryApi> {
+            coEvery { delete(any()) } returns Resource.Success(Any())
+        }
+        val mockUser = mockk<UserRepository> {
+            coEvery { retrieveUserId() } returns 1
+        }
+
+        val classUnderTest = SeriesRepository(mockDao, mockApi, mockUser)
+        classUnderTest.deleteSeries(expected)
+
+        coVerify { mockDao.delete(expected) }
+    }
+
+    @Test
+    fun `deleteSeries onSuccess returns success`() = runBlocking {
+        val expected = Resource.Success(Any())
+        val mockDao = mockk<SeriesDao> {
+            coEvery { delete(any()) } just Runs
+        }
+        val mockApi = mockk<LibraryApi> {
+            coEvery { delete(any()) } returns expected
+        }
+        val mockUser = mockk<UserRepository> {
+            coEvery { retrieveUserId() } returns 1
+        }
+
+        val classUnderTest = SeriesRepository(mockDao, mockApi, mockUser)
+        val actual = classUnderTest.deleteSeries(mockk {
+            every { userId } returns 5
+        })
+
+        assertEquals(expected, actual)
+    }
+
+    @Test
+    fun `deleteSeries onFailure returns failure`() = runBlocking {
+        val expected = Resource.Error<Any>("")
+        val mockDao = mockk<SeriesDao> {
+            coEvery { delete(any()) } just Runs
+        }
+        val mockApi = mockk<LibraryApi> {
+            coEvery { delete(any()) } returns expected
+        }
+        val mockUser = mockk<UserRepository> {
+            coEvery { retrieveUserId() } returns 1
+        }
+
+        val classUnderTest = SeriesRepository(mockDao, mockApi, mockUser)
+        val actual = classUnderTest.deleteSeries(mockk {
+            every { userId } returns 5
+        })
+
+        assertEquals(expected, actual)
+    }
+
+    @Test
     fun `updateSeries on success updates the dao`() = runBlocking {
         val expected = mockk<SeriesModel>()
         val mockDao = mockk<SeriesDao> {
