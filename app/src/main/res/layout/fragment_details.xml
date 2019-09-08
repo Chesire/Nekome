@@ -54,6 +54,8 @@
                 android:id="@+id/detailsUsernameText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_account_circle"
+                android:drawablePadding="@dimen/login_text_drawable_padding"
                 android:hint="@string/login_username"
                 android:imeOptions="actionNext"
                 android:inputType="textNoSuggestions"
@@ -73,12 +75,15 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/detailsUsernameLayout"
             app:passwordToggleEnabled="true"
+            app:passwordToggleTint="@color/colorPrimary"
             tools:ignore="UnusedAttribute">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/detailsPasswordText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_lock"
+                android:drawablePadding="@dimen/login_text_drawable_padding"
                 android:hint="@string/login_password"
                 android:imeOptions="actionDone"
                 android:inputType="textPassword"

@@ -6,6 +6,8 @@
     <dimen name="half_margin">8dp</dimen>
     <dimen name="full_margin">16dp</dimen>
 
+    <dimen name="login_text_drawable_padding">8dp</dimen>
+
     <dimen name="bottom_sheet_elevation">8dp</dimen>
     <dimen name="bottom_sheet_header_section_height">80dp</dimen>
     <dimen name="bottom_sheet_actions_section_height">80dp</dimen>
