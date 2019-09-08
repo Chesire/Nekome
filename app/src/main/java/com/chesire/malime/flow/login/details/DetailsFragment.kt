@@ -100,11 +100,13 @@ class DetailsFragment : DaggerFragment() {
 
     private fun setLoading() {
         detailsProgressBar.show()
+        detailsLoginButton.text = ""
         detailsLoginButton.isEnabled = false
     }
 
     private fun hideLoading() {
         detailsProgressBar.hide(true)
+        detailsLoginButton.text = getString(R.string.login_login)
         detailsLoginButton.isEnabled = true
     }
 }

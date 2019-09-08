@@ -98,19 +98,19 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/detailsPasswordLayout" />
-        <!-- make this into a progress button? -->
 
         <ProgressBar
             android:id="@+id/detailsProgressBar"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/progress_bar_height"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/half_margin"
             android:indeterminate="true"
-            android:indeterminateTint="@color/colorPrimary"
+            android:indeterminateTint="@color/white"
             android:visibility="invisible"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/detailsLoginButton"
+            app:layout_constraintBottom_toBottomOf="@id/detailsLoginButton"
+            app:layout_constraintEnd_toEndOf="@id/detailsLoginButton"
+            app:layout_constraintStart_toStartOf="@id/detailsLoginButton"
+            app:layout_constraintTop_toTopOf="@id/detailsLoginButton"
             tools:visibility="visible" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
