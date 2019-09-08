@@ -9,6 +9,9 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
 import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.WhichButton
+import com.afollestad.materialdialogs.actions.setActionButtonEnabled
+import com.afollestad.materialdialogs.input.getInputField
 import com.afollestad.materialdialogs.input.input
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
 import com.chesire.lifecyklelog.LogLifecykle
@@ -49,23 +52,7 @@ class SeriesDetailFragment : DaggerFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         bottomSheetProgress.setOnClickListener {
-            viewModel.model.value?.let { model ->
-                MaterialDialog(requireContext()).show {
-                    input(
-                        inputType = InputType.TYPE_CLASS_NUMBER,
-                        prefill = model.progress.toString(),
-                        hint = getString(R.string.series_detail_progress_hint, model.totalLength)
-                    ) { _, charSequence ->
-                        charSequence.toString().toIntOrNull()?.let {
-                            viewModel.updateProgress(model, it)
-                        }
-                    }
-                    message(R.string.series_detail_progress_message)
-                    positiveButton(R.string.series_detail_progress_confirm)
-                    negativeButton(R.string.series_detail_progress_cancel)
-                    lifecycleOwner(viewLifecycleOwner)
-                }
-            }
+            progressFlow()
         }
         bottomSheetDelete.setOnClickListener {
             viewModel.model.value?.let { model ->
@@ -83,6 +70,39 @@ class SeriesDetailFragment : DaggerFragment() {
         observeModel()
         observeProgress()
         observeDelete()
+    }
+
+    private fun progressFlow() {
+        val model = viewModel.model.value ?: return
+
+        MaterialDialog(requireContext()).show {
+            input(
+                inputType = InputType.TYPE_CLASS_NUMBER,
+                waitForPositiveButton = false,
+                prefill = model.progress.toString(),
+                hint = getString(R.string.series_detail_progress_hint, model.totalLength)
+            ) { dialog, charSequence ->
+                val inputField = dialog.getInputField()
+                val newProgress = charSequence.toString().toIntOrNull()
+
+                inputField.error = when (viewModel.checkProgressValue(model, newProgress)) {
+                    SeriesDetailError.NewProgressNaN -> getString(R.string.series_detail_progress_error_nan)
+                    SeriesDetailError.NewProgressBelowZero -> getString(R.string.series_detail_progress_error_below_zero)
+                    SeriesDetailError.NewProgressTooHigh -> getString(R.string.series_detail_progress_error_too_high)
+                    else -> null
+                }
+
+                dialog.setActionButtonEnabled(WhichButton.POSITIVE, inputField.error == null)
+            }
+            title(text = getString(R.string.series_detail_progress_message, model.title))
+            positiveButton(R.string.series_detail_progress_confirm) { dialog ->
+                dialog.getInputField().text.toString().toIntOrNull()?.let {
+                    viewModel.updateProgress(model, it)
+                }
+            }
+            negativeButton(R.string.series_detail_progress_cancel)
+            lifecycleOwner(viewLifecycleOwner)
+        }
     }
 
     private fun observeModel() {

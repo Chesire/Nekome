@@ -58,9 +58,6 @@ class SeriesDetailViewModel @Inject constructor(
     }
 
     fun updateProgress(target: SeriesModel, newProgress: Int) {
-        if (!validatedProgress(target, newProgress)) {
-            return
-        }
         _progressStatus.postLoading()
 
         viewModelScope.launch(ioContext) {
@@ -75,14 +72,12 @@ class SeriesDetailViewModel @Inject constructor(
         }
     }
 
-    private fun validatedProgress(target: SeriesModel, newProgress: Int): Boolean {
-        when {
-            newProgress < 0 ->
-                _progressStatus.postError(target, SeriesDetailError.NewProgressBelowZero)
-            target.lengthKnown && newProgress > target.totalLength ->
-                _progressStatus.postError(target, SeriesDetailError.NewProgressTooHigh)
-            else -> return true
+    fun checkProgressValue(target: SeriesModel, newProgress: Int?): SeriesDetailError {
+        return when {
+            newProgress == null -> SeriesDetailError.NewProgressNaN
+            newProgress < 0 -> SeriesDetailError.NewProgressBelowZero
+            target.lengthKnown && newProgress > target.totalLength -> SeriesDetailError.NewProgressTooHigh
+            else -> return SeriesDetailError.None
         }
-        return false
     }
 }
