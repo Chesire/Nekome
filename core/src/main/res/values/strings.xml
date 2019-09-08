@@ -32,14 +32,14 @@
     <string name="list_plus_one">+1</string>
     <string name="list_try_again">Series %s failed to update, please try again…</string>
 
-    <string name="login_enter_details">Login using Kitsu</string>
-    <string name="login_username">Username</string>
+    <string name="login_username">Kitsu username</string>
     <string name="login_password">Password</string>
     <string name="login_login">Login</string>
     <string name="login_error_empty_username">Empty username not allowed</string>
     <string name="login_error_empty_password">Empty password not allowed</string>
     <string name="login_error_credentials">Error trying to login, invalid credentials provided</string>
     <string name="login_error_generic">Error trying to login, please try again</string>
+    <string name="login_header_image_content_description">Application icon</string>
 
     <string name="login_syncing_syncing">Syncing your Kitsu library</string>
     <string name="login_syncing_wait">Please wait…</string>

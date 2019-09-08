@@ -20,13 +20,13 @@ import com.chesire.malime.extensions.show
 import com.chesire.malime.flow.ViewModelFactory
 import com.google.android.material.snackbar.Snackbar
 import dagger.android.support.DaggerFragment
-import kotlinx.android.synthetic.main.fragment_details.fragmentDetailsLayout
-import kotlinx.android.synthetic.main.fragment_details.fragmentDetailsLoginButton
-import kotlinx.android.synthetic.main.fragment_details.fragmentDetailsPasswordLayout
-import kotlinx.android.synthetic.main.fragment_details.fragmentDetailsPasswordText
-import kotlinx.android.synthetic.main.fragment_details.fragmentDetailsProgressBar
-import kotlinx.android.synthetic.main.fragment_details.fragmentDetailsUsernameLayout
-import kotlinx.android.synthetic.main.fragment_details.fragmentDetailsUsernameText
+import kotlinx.android.synthetic.main.fragment_details.detailsLayout
+import kotlinx.android.synthetic.main.fragment_details.detailsLoginButton
+import kotlinx.android.synthetic.main.fragment_details.detailsPasswordLayout
+import kotlinx.android.synthetic.main.fragment_details.detailsPasswordText
+import kotlinx.android.synthetic.main.fragment_details.detailsProgressBar
+import kotlinx.android.synthetic.main.fragment_details.detailsUsernameLayout
+import kotlinx.android.synthetic.main.fragment_details.detailsUsernameText
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -50,16 +50,16 @@ class DetailsFragment : DaggerFragment() {
         }
         .root
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        fragmentDetailsUsernameText.addTextChangedListener {
-            fragmentDetailsUsernameLayout.error = ""
+        detailsUsernameText.addTextChangedListener {
+            detailsUsernameLayout.error = ""
         }
-        fragmentDetailsPasswordText.addTextChangedListener {
-            fragmentDetailsPasswordLayout.error = ""
+        detailsPasswordText.addTextChangedListener {
+            detailsPasswordLayout.error = ""
         }
-        fragmentDetailsPasswordText.setOnEditorActionListener { _, actionId, event ->
+        detailsPasswordText.setOnEditorActionListener { _, actionId, event ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 activity?.hideSystemKeyboard()
                 if (viewModel.loginStatus.value != LoginStatus.Loading) {
@@ -83,10 +83,10 @@ class DetailsFragment : DaggerFragment() {
         }
 
         when (loginStatus) {
-            LoginStatus.EmptyUsername ->
-                fragmentDetailsUsernameLayout.error = getString(R.string.login_error_empty_username)
-            LoginStatus.EmptyPassword ->
-                fragmentDetailsPasswordLayout.error = getString(R.string.login_error_empty_password)
+            LoginStatus.EmptyUsername -> detailsUsernameLayout.error =
+                getString(R.string.login_error_empty_username)
+            LoginStatus.EmptyPassword -> detailsPasswordLayout.error =
+                getString(R.string.login_error_empty_password)
             LoginStatus.Error -> showSnackbar(R.string.login_error_generic)
             LoginStatus.InvalidCredentials -> showSnackbar(R.string.login_error_credentials)
             LoginStatus.Success ->
@@ -96,15 +96,15 @@ class DetailsFragment : DaggerFragment() {
     }
 
     private fun showSnackbar(@StringRes id: Int) =
-        Snackbar.make(fragmentDetailsLayout, id, Snackbar.LENGTH_LONG).show()
+        Snackbar.make(detailsLayout, id, Snackbar.LENGTH_LONG).show()
 
     private fun setLoading() {
-        fragmentDetailsProgressBar.show()
-        fragmentDetailsLoginButton.isEnabled = false
+        detailsProgressBar.show()
+        detailsLoginButton.isEnabled = false
     }
 
     private fun hideLoading() {
-        fragmentDetailsProgressBar.hide(true)
-        fragmentDetailsLoginButton.isEnabled = true
+        detailsProgressBar.hide(true)
+        detailsLoginButton.isEnabled = true
     }
 }
