@@ -51,21 +51,8 @@ class SeriesDetailFragment : DaggerFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        bottomSheetProgress.setOnClickListener {
-            progressFlow()
-        }
-        bottomSheetDelete.setOnClickListener {
-            viewModel.model.value?.let { model ->
-                MaterialDialog(requireContext()).show {
-                    message(text = getString(R.string.series_detail_delete_message, model.title))
-                    positiveButton(R.string.series_detail_delete_confirm) {
-                        viewModel.deleteModel(model)
-                    }
-                    negativeButton(R.string.series_detail_delete_cancel)
-                    lifecycleOwner(viewLifecycleOwner)
-                }
-            }
-        }
+        bottomSheetProgress.setOnClickListener { progressFlow() }
+        bottomSheetDelete.setOnClickListener { deleteFlow() }
 
         observeModel()
         observeProgress()
@@ -101,6 +88,19 @@ class SeriesDetailFragment : DaggerFragment() {
                 }
             }
             negativeButton(R.string.series_detail_progress_cancel)
+            lifecycleOwner(viewLifecycleOwner)
+        }
+    }
+
+    private fun deleteFlow() {
+        val model = viewModel.model.value ?: return
+
+        MaterialDialog(requireContext()).show {
+            message(text = getString(R.string.series_detail_delete_message, model.title))
+            positiveButton(R.string.series_detail_delete_confirm) {
+                viewModel.deleteModel(model)
+            }
+            negativeButton(R.string.series_detail_delete_cancel)
             lifecycleOwner(viewLifecycleOwner)
         }
     }
