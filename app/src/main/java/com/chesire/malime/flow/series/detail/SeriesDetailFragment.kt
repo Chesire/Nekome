@@ -16,11 +16,11 @@ import com.chesire.malime.flow.ViewModelFactory
 import com.chesire.malime.flow.series.list.SheetController
 import com.google.android.material.snackbar.Snackbar
 import dagger.android.support.DaggerFragment
-import kotlinx.android.synthetic.main.view_bottom_sheet.viewBottomSheetLayout
 import kotlinx.android.synthetic.main.view_bottom_sheet_actions.bottomSheetDelete
 import kotlinx.android.synthetic.main.view_bottom_sheet_header.viewBottomSheetProgress
 import kotlinx.android.synthetic.main.view_bottom_sheet_header.viewBottomSheetSubtitle
 import kotlinx.android.synthetic.main.view_bottom_sheet_header.viewBottomSheetTitle
+import timber.log.Timber
 import javax.inject.Inject
 
 /**
@@ -76,10 +76,20 @@ class SeriesDetailFragment : DaggerFragment() {
                     // do something to disable the button maybe?
                 }
                 is AsyncState.Error -> {
-                    (parentFragment as? SheetController)?.closeSheet()
+                    val parent = parentFragment
+                    val parentView = parent?.view
+                    if (parent == null || parentView == null) {
+                        Timber.w("Parent fragment was null, not displaying snackbar")
+                        return@Observer
+                    }
+
+                    (parent as? SheetController)?.closeSheet()
                     Snackbar.make(
-                        viewBottomSheetLayout,
-                        R.string.series_detail_delete_failure_message,
+                        parentView,
+                        getString(
+                            R.string.series_detail_delete_failure_message,
+                            status.data?.title
+                        ),
                         Snackbar.LENGTH_INDEFINITE
                     ).apply {
                         status.data?.let { seriesModel ->
