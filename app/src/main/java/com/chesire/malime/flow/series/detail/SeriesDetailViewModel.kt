@@ -30,9 +30,9 @@ class SeriesDetailViewModel @Inject constructor(
     private val _model = MutableLiveData<SeriesModel>()
     val model: LiveData<SeriesModel> = _model
     private val _deletionStatus = LiveEvent<AsyncState<SeriesModel, SeriesDetailError>>()
-    val deletionStatus = _deletionStatus
+    val deletionStatus: LiveData<AsyncState<SeriesModel, SeriesDetailError>> = _deletionStatus
     private val _progressStatus = LiveEvent<AsyncState<SeriesModel, SeriesDetailError>>()
-    val progressStatus = _progressStatus
+    val progressStatus: LiveData<AsyncState<SeriesModel, SeriesDetailError>> = _progressStatus
 
     /**
      * Updates the currently stored model in the view model.
