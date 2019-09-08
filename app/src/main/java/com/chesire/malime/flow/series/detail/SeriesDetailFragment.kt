@@ -57,11 +57,19 @@ class SeriesDetailFragment : DaggerFragment() {
             }
         }
 
+        observeModel()
+        observeDelete()
+    }
+
+    private fun observeModel() {
         viewModel.model.observe(viewLifecycleOwner, Observer { model ->
             viewBottomSheetTitle.setText(model.title)
             viewBottomSheetSubtitle.setText(model.userSeriesStatus.name)
             viewBottomSheetProgress.setText("${model.progress} / ${model.totalLength}")
         })
+    }
+
+    private fun observeDelete() {
         viewModel.deletionStatus.observe(viewLifecycleOwner, Observer { status ->
             when (status) {
                 is AsyncState.Loading -> {
