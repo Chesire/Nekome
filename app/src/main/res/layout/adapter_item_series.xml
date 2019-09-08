@@ -4,9 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="113dp"
-    android:layout_marginLeft="@dimen/mtrl_card_spacing"
-    android:layout_marginRight="@dimen/mtrl_card_spacing"
-    android:layout_marginTop="@dimen/mtrl_card_spacing"
+    android:layout_marginTop="4dp"
+    android:layout_marginBottom="4dp"
     android:elevation="4dp"
     android:minHeight="113dp"
     app:cardElevation="4dp">
@@ -23,7 +22,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:src="@drawable/ic_launcher_foreground" />
+            tools:src="@drawable/ic_blackcat" />
 
         <TextView
             android:id="@+id/adapterItemSeriesTitle"
@@ -78,8 +77,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:minWidth="0dp"
-            android:paddingEnd="16dp"
             android:paddingStart="16dp"
+            android:paddingEnd="16dp"
             android:text="@string/list_plus_one"
             android:textColor="@color/colorPrimary"
             app:layout_constraintBottom_toBottomOf="parent"
