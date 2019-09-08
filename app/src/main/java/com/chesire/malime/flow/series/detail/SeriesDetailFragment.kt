@@ -13,6 +13,7 @@ import com.chesire.lifecyklelog.LogLifecykle
 import com.chesire.malime.R
 import com.chesire.malime.core.flags.AsyncState
 import com.chesire.malime.flow.ViewModelFactory
+import com.chesire.malime.flow.series.list.SheetController
 import com.google.android.material.snackbar.Snackbar
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.view_bottom_sheet.viewBottomSheetLayout
@@ -67,6 +68,7 @@ class SeriesDetailFragment : DaggerFragment() {
                     // do something to disable the button maybe?
                 }
                 is AsyncState.Error -> {
+                    (parentFragment as? SheetController)?.closeSheet()
                     Snackbar.make(
                         viewBottomSheetLayout,
                         R.string.series_detail_delete_failure_message,
@@ -80,8 +82,8 @@ class SeriesDetailFragment : DaggerFragment() {
                     }.show()
                 }
                 is AsyncState.Success -> {
-                    // show a snackbar with undo button?
-                    // close bottom drawer?
+                    // TODO: show a snackbar with undo button
+                    (parentFragment as? SheetController)?.closeSheet()
                 }
             }
         })
