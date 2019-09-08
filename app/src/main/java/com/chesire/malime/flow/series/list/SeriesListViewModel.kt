@@ -3,10 +3,10 @@ package com.chesire.malime.flow.series.list
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chesire.malime.AuthCaster
-import com.chesire.malime.server.Resource
 import com.chesire.malime.core.flags.UserSeriesStatus
 import com.chesire.malime.core.models.SeriesModel
 import com.chesire.malime.series.SeriesRepository
+import com.chesire.malime.server.Resource
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -14,7 +14,7 @@ import javax.inject.Inject
  * ViewModel to use with the [SeriesListFragment], handles sending updates for a series.
  */
 class SeriesListViewModel @Inject constructor(
-    private val repo: com.chesire.malime.series.SeriesRepository,
+    private val repo: SeriesRepository,
     private val authCaster: AuthCaster
 ) : ViewModel() {
     val animeSeries = repo.anime
