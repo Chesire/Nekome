@@ -2,6 +2,7 @@ package com.chesire.malime.core.models
 
 import android.os.Parcelable
 import androidx.room.Entity
+import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import com.chesire.malime.core.flags.SeriesStatus
 import com.chesire.malime.core.flags.SeriesType
@@ -33,6 +34,7 @@ data class SeriesModel(
     val startDate: String,
     val endDate: String
 ) : Parcelable {
+    @Ignore
     @IgnoredOnParcel
-    val lengthKnown: Boolean = totalLength != 0
+    val lengthKnown = totalLength != 0
 }
