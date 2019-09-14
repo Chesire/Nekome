@@ -30,7 +30,9 @@ class SeriesDetailViewModel @Inject constructor(
     private val _model = MutableLiveData<SeriesModel>()
     val model: LiveData<SeriesModel> = _model
     private val _deletionStatus = LiveEvent<AsyncState<SeriesModel, SeriesDetailError>>()
-    val deletionStatus = _deletionStatus
+    val deletionStatus: LiveData<AsyncState<SeriesModel, SeriesDetailError>> = _deletionStatus
+    private val _progressStatus = LiveEvent<AsyncState<SeriesModel, SeriesDetailError>>()
+    val progressStatus: LiveData<AsyncState<SeriesModel, SeriesDetailError>> = _progressStatus
 
     /**
      * Updates the currently stored model in the view model.
@@ -52,6 +54,30 @@ class SeriesDetailViewModel @Inject constructor(
             } else {
                 _deletionStatus.postSuccess(target)
             }
+        }
+    }
+
+    fun updateProgress(target: SeriesModel, newProgress: Int) {
+        _progressStatus.postLoading()
+
+        viewModelScope.launch(ioContext) {
+            val response = repo.updateSeries(target.userId, newProgress, target.userSeriesStatus)
+            if (response is Resource.Error && response.code == Resource.Error.CouldNotRefresh) {
+                authCaster.issueRefreshingToken()
+            } else if (response is Resource.Error) {
+                _progressStatus.postError(target, SeriesDetailError.Error)
+            } else {
+                _progressStatus.postSuccess(target)
+            }
+        }
+    }
+
+    fun checkProgressValue(target: SeriesModel, newProgress: Int?): SeriesDetailError {
+        return when {
+            newProgress == null -> SeriesDetailError.NewProgressNaN
+            newProgress < 0 -> SeriesDetailError.NewProgressBelowZero
+            target.lengthKnown && newProgress > target.totalLength -> SeriesDetailError.NewProgressTooHigh
+            else -> return SeriesDetailError.None
         }
     }
 }

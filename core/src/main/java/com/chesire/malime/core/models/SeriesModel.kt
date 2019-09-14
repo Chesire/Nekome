@@ -2,11 +2,13 @@ package com.chesire.malime.core.models
 
 import android.os.Parcelable
 import androidx.room.Entity
+import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import com.chesire.malime.core.flags.SeriesStatus
 import com.chesire.malime.core.flags.SeriesType
 import com.chesire.malime.core.flags.Subtype
 import com.chesire.malime.core.flags.UserSeriesStatus
+import kotlinx.android.parcel.IgnoredOnParcel
 import kotlinx.android.parcel.Parcelize
 
 /**
@@ -31,4 +33,8 @@ data class SeriesModel(
     val nsfw: Boolean,
     val startDate: String,
     val endDate: String
-) : Parcelable
+) : Parcelable {
+    @Ignore
+    @IgnoredOnParcel
+    val lengthKnown = totalLength != 0
+}

@@ -90,6 +90,7 @@ dependencies {
     implementation "androidx.room:room-runtime:$room_version"
     implementation 'androidx.work:work-runtime-ktx:2.2.0'
     implementation "com.afollestad.material-dialogs:core:$material_dialog_version"
+    implementation "com.afollestad.material-dialogs:input:$material_dialog_version"
     implementation "com.afollestad.material-dialogs:lifecycle:$material_dialog_version"
     implementation 'com.chesire:lifecyklelog:2.0.0'
     implementation 'com.github.bumptech.glide:glide:4.9.0'

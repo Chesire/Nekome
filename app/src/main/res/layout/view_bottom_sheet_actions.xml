@@ -5,32 +5,34 @@
     android:layout_height="@dimen/bottom_sheet_actions_section_height"
     android:orientation="vertical">
 
-    <ImageButton
-        android:id="@+id/btn1"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
-        android:layout_gravity="center_vertical"
-        android:layout_margin="32dp"
-        android:background="@android:color/transparent"
-        android:src="@mipmap/ic_launcher"
+    <LinearLayout
+        android:id="@+id/bottomSheetProgress"
+        android:layout_width="120dp"
+        android:layout_height="match_parent"
+        android:focusable="true"
+        android:gravity="center"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_chainStyle="spread_inside"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <ImageButton
-        android:id="@+id/btn2"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
-        android:layout_gravity="center_vertical"
-        android:layout_margin="32dp"
-        android:background="@android:color/transparent"
-        android:src="@mipmap/ic_launcher"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/bottomSheetDelete"
-        app:layout_constraintHorizontal_chainStyle="spread_inside"
-        app:layout_constraintStart_toEndOf="@id/btn1"
-        app:layout_constraintTop_toTopOf="parent" />
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_unfold_more" />
+
+        <TextView
+            style="@style/BottomSheetHeaderAction"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:text="@string/series_detail_progress"
+            android:textAllCaps="true" />
+
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/bottomSheetDelete"

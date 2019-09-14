@@ -71,7 +71,6 @@
         android:layout_marginStart="@dimen/half_margin"
         android:inAnimation="@android:anim/fade_in"
         android:outAnimation="@android:anim/fade_out"
-        app:flow_horizontalBias="1"
         app:layout_constraintBaseline_toBaselineOf="@id/viewBottomSheetSubtitle"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
