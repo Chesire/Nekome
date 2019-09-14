@@ -73,9 +73,12 @@ class SeriesDetailFragment : DaggerFragment() {
                 val newProgress = charSequence.toString().toIntOrNull()
 
                 inputField.error = when (viewModel.checkProgressValue(model, newProgress)) {
-                    SeriesDetailError.NewProgressNaN -> getString(R.string.series_detail_progress_error_nan)
-                    SeriesDetailError.NewProgressBelowZero -> getString(R.string.series_detail_progress_error_below_zero)
-                    SeriesDetailError.NewProgressTooHigh -> getString(R.string.series_detail_progress_error_too_high)
+                    SeriesDetailError.NewProgressNaN ->
+                        getString(R.string.series_detail_progress_error_nan)
+                    SeriesDetailError.NewProgressBelowZero ->
+                        getString(R.string.series_detail_progress_error_below_zero)
+                    SeriesDetailError.NewProgressTooHigh ->
+                        getString(R.string.series_detail_progress_error_too_high)
                     else -> null
                 }
 
