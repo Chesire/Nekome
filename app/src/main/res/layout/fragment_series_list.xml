@@ -20,10 +20,6 @@
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             tools:listitem="@layout/adapter_item_series" />
 
-        <include
-            android:id="@+id/fragmentSeriesListBottomSheet"
-            layout="@layout/view_bottom_sheet" />
-
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fragmentSeriesListFab"
             style="@style/FabStyle"
