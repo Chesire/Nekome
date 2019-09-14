@@ -26,18 +26,12 @@ class SeriesDetailViewModel @Inject constructor(
     private val authCaster: AuthCaster,
     @IOContext private val ioContext: CoroutineContext
 ) : ViewModel() {
+    lateinit var model: SeriesModel
 
-    private val _model = MutableLiveData<SeriesModel>()
-    val model: LiveData<SeriesModel> = _model
     private val _deletionStatus = LiveEvent<AsyncState<SeriesModel, SeriesDetailError>>()
     val deletionStatus: LiveData<AsyncState<SeriesModel, SeriesDetailError>> = _deletionStatus
     private val _progressStatus = LiveEvent<AsyncState<SeriesModel, SeriesDetailError>>()
     val progressStatus: LiveData<AsyncState<SeriesModel, SeriesDetailError>> = _progressStatus
-
-    /**
-     * Updates the currently stored model in the view model.
-     */
-    fun updateModel(newModel: SeriesModel) = _model.postValue(newModel)
 
     /**
      * Sends a delete request for the [target].

@@ -59,7 +59,7 @@ class SeriesDetailFragment : DaggerFragment() {
     }
 
     private fun progressFlow() {
-        val model = viewModel.model.value ?: return
+        val model = viewModel.model
 
         MaterialDialog(requireContext()).show {
             input(
@@ -95,7 +95,7 @@ class SeriesDetailFragment : DaggerFragment() {
     }
 
     private fun deleteFlow() {
-        val model = viewModel.model.value ?: return
+        val model = viewModel.model
 
         MaterialDialog(requireContext()).show {
             message(text = getString(R.string.series_detail_delete_message, model.title))
@@ -108,11 +108,11 @@ class SeriesDetailFragment : DaggerFragment() {
     }
 
     private fun observeModel() {
-        viewModel.model.observe(viewLifecycleOwner, Observer { model ->
-            viewBottomSheetTitle.setText(model.title)
-            viewBottomSheetSubtitle.setText(model.userSeriesStatus.name)
-            viewBottomSheetProgress.setText("${model.progress} / ${model.totalLength}")
-        })
+        // viewModel.model.observe(viewLifecycleOwner, Observer { model ->
+        //     viewBottomSheetTitle.setText(model.title)
+        //     viewBottomSheetSubtitle.setText(model.userSeriesStatus.name)
+        //     viewBottomSheetProgress.setText("${model.progress} / ${model.totalLength}")
+        // })
     }
 
     private fun observeProgress() {

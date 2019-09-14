@@ -4,6 +4,7 @@ import com.chesire.malime.flow.login.details.DetailsFragment
 import com.chesire.malime.flow.login.syncing.SyncingFragment
 import com.chesire.malime.flow.profile.ProfileFragment
 import com.chesire.malime.flow.series.detail.SeriesDetailFragment
+import com.chesire.malime.flow.series.detail.SeriesDetailSheetFragment
 import com.chesire.malime.flow.series.list.anime.AnimeFragment
 import com.chesire.malime.flow.series.list.manga.MangaFragment
 import com.chesire.malime.flow.series.search.SearchFragment
@@ -32,6 +33,9 @@ abstract class FragmentModule {
 
     @ContributesAndroidInjector
     abstract fun contributeSeriesDetailFragment(): SeriesDetailFragment
+
+    @ContributesAndroidInjector
+    abstract fun contributeSeriesDetailSheetFragment(): SeriesDetailSheetFragment
 
     @ContributesAndroidInjector
     abstract fun contributeSeriesSearchFragment(): SearchFragment

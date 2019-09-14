@@ -18,7 +18,6 @@ import com.chesire.malime.databinding.FragmentSeriesListBinding
 import com.chesire.malime.flow.DialogHandler
 import com.chesire.malime.flow.ViewModelFactory
 import com.chesire.malime.flow.series.detail.SeriesDetailSheetFragment
-import com.chesire.malime.flow.series.detail.SeriesDetailViewModel
 import com.chesire.malime.flow.series.list.anime.AnimeFragment
 import com.chesire.malime.flow.series.list.manga.MangaFragment
 import com.chesire.malime.server.Resource
@@ -43,9 +42,6 @@ abstract class SeriesListFragment : DaggerFragment(), SeriesInteractionListener 
 
     protected val viewModel by lazy {
         ViewModelProvider(this, viewModelFactory).get<SeriesListViewModel>()
-    }
-    private val detailViewModel by lazy {
-        ViewModelProvider(requireActivity(), viewModelFactory).get<SeriesDetailViewModel>()
     }
 
     private lateinit var seriesAdapter: SeriesAdapter
@@ -74,7 +70,6 @@ abstract class SeriesListFragment : DaggerFragment(), SeriesInteractionListener 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         fragmentSeriesListFab.setOnClickListener { toSearch() }
     }
 
@@ -95,11 +90,10 @@ abstract class SeriesListFragment : DaggerFragment(), SeriesInteractionListener 
 
     override fun seriesSelected(imageView: ImageView, model: SeriesModel) {
         Timber.i("seriesSelected called with Model ${model.slug}")
-        SeriesDetailSheetFragment.newInstance().show(
+        SeriesDetailSheetFragment.newInstance(model).show(
             childFragmentManager,
             SeriesDetailSheetFragment.TAG
         )
-        detailViewModel.updateModel(model)
     }
 
     override fun onPlusOne(model: SeriesModel, callback: () -> Unit) {
@@ -126,7 +120,7 @@ abstract class SeriesListFragment : DaggerFragment(), SeriesInteractionListener 
     /**
      * Inform the adapter that a new series list has been provided.
      */
-    fun newSeriesListProvided(newList: List<SeriesModel>) {
+    protected fun newSeriesListProvided(newList: List<SeriesModel>) {
         Timber.d("New list provided, new count [${newList.count()}]")
         seriesAdapter.submitList(newList.toMutableList())
     }
