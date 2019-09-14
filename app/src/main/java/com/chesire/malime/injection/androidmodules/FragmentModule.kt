@@ -3,7 +3,6 @@ package com.chesire.malime.injection.androidmodules
 import com.chesire.malime.flow.login.details.DetailsFragment
 import com.chesire.malime.flow.login.syncing.SyncingFragment
 import com.chesire.malime.flow.profile.ProfileFragment
-import com.chesire.malime.flow.series.detail.SeriesDetailFragment
 import com.chesire.malime.flow.series.detail.SeriesDetailSheetFragment
 import com.chesire.malime.flow.series.list.anime.AnimeFragment
 import com.chesire.malime.flow.series.list.manga.MangaFragment
@@ -30,9 +29,6 @@ abstract class FragmentModule {
 
     @ContributesAndroidInjector
     abstract fun contributeProfileFragment(): ProfileFragment
-
-    @ContributesAndroidInjector
-    abstract fun contributeSeriesDetailFragment(): SeriesDetailFragment
 
     @ContributesAndroidInjector
     abstract fun contributeSeriesDetailSheetFragment(): SeriesDetailSheetFragment
