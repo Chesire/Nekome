@@ -19,7 +19,6 @@ import com.chesire.malime.R
 import com.chesire.malime.core.flags.AsyncState
 import com.chesire.malime.core.models.SeriesModel
 import com.chesire.malime.flow.ViewModelFactory
-import com.chesire.malime.flow.series.list.SheetController
 import com.google.android.material.snackbar.Snackbar
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.view_bottom_sheet_actions.bottomSheetDelete
@@ -131,7 +130,6 @@ class SeriesDetailFragment : DaggerFragment() {
                 is AsyncState.Error -> onDeleteError(status.data)
                 is AsyncState.Success -> {
                     // TODO: show a snackbar with undo button
-                    (parentFragment as? SheetController)?.closeSheet()
                 }
             }
         })
@@ -145,7 +143,6 @@ class SeriesDetailFragment : DaggerFragment() {
             return
         }
 
-        (parent as? SheetController)?.closeSheet()
         Snackbar.make(
             parentView,
             getString(R.string.series_detail_delete_failure_message, series.title),

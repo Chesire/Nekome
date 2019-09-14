@@ -33,11 +33,7 @@ import javax.inject.Inject
  * Provides a base fragment for the [AnimeFragment] & [MangaFragment] to inherit from, performing
  * most of the setup and interaction.
  */
-abstract class SeriesListFragment :
-    DaggerFragment(),
-    SeriesInteractionListener,
-    SheetController {
-
+abstract class SeriesListFragment : DaggerFragment(), SeriesInteractionListener {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
     @Inject
@@ -133,9 +129,5 @@ abstract class SeriesListFragment :
     fun newSeriesListProvided(newList: List<SeriesModel>) {
         Timber.d("New list provided, new count [${newList.count()}]")
         seriesAdapter.submitList(newList.toMutableList())
-    }
-
-    override fun closeSheet() {
-        // TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }

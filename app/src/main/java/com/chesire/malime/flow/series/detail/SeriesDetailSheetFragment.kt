@@ -4,11 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.chesire.lifecyklelog.LogLifecykle
 import com.chesire.malime.R
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import dagger.android.support.DaggerDialogFragment
 
-class SeriesDetailSheetFragment: BottomSheetDialogFragment() {
+@LogLifecykle
+class SeriesDetailSheetFragment : BottomSheetDialogFragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater,
