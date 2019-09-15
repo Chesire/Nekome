@@ -8,5 +8,7 @@
 
     <include layout="@layout/view_series_detail_header" />
 
+    <include layout="@layout/view_series_detail_series_status" />
+
 </LinearLayout>
 
