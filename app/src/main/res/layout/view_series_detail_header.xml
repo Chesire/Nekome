@@ -13,8 +13,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="No Game No Life"
-        tools:textColor="@android:color/black" />
+        tools:text="No Game No Life" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/seriesDetailHeaderType"
