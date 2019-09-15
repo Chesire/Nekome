@@ -6,6 +6,7 @@ import com.chesire.malime.AuthCaster
 import com.chesire.malime.CoroutinesMainDispatcherRule
 import com.chesire.malime.core.flags.AsyncState
 import com.chesire.malime.core.models.SeriesModel
+import com.chesire.malime.createSeriesModel
 import com.chesire.malime.series.SeriesRepository
 import com.chesire.malime.server.Resource
 import io.mockk.Runs
@@ -14,6 +15,7 @@ import io.mockk.every
 import io.mockk.just
 import io.mockk.mockk
 import io.mockk.verify
+import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
 
@@ -25,22 +27,17 @@ class SeriesDetailViewModelTests {
 
     @Test
     fun `updateModel updates the currently stored model`() {
-        val expected = mockk<SeriesModel>()
+        val expected = createSeriesModel()
         val mockRepository = mockk<SeriesRepository>()
         val mockAuth = mockk<AuthCaster>()
-        val mockObserver = mockk<Observer<SeriesModel>> {
-            every { onChanged(any()) } just Runs
-        }
 
         val classUnderTest = SeriesDetailViewModel(
             mockRepository,
             mockAuth,
             coroutineRule.testDispatcher
         )
-        classUnderTest.model.observeForever(mockObserver)
-        classUnderTest.updateModel(expected)
-
-        verify { mockObserver.onChanged(expected) }
+        classUnderTest.setModel(expected)
+        assertEquals(expected.title, classUnderTest.mutableModel.seriesName)
     }
 
     @Test
