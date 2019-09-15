@@ -30,6 +30,7 @@ abstract class FragmentModule {
     @ContributesAndroidInjector
     abstract fun contributeProfileFragment(): ProfileFragment
 
+    @Suppress("FunctionMaxLength")
     @ContributesAndroidInjector
     abstract fun contributeSeriesDetailSheetFragment(): SeriesDetailSheetFragment
 

@@ -27,8 +27,8 @@ class SeriesDetailSheetFragment : BottomSheetDialogFragment() {
     private val viewModel by lazy {
         ViewModelProvider(this, viewModelFactory)
             .get<SeriesDetailViewModel>()
-            .apply {
-                setModel(seriesModel)
+            .also { viewModel ->
+                viewModel.setModel(seriesModel)
             }
     }
     private val seriesModel by extraNotNull<SeriesModel>(MODEL_BUNDLE_ID, null)
