@@ -10,5 +10,7 @@
 
     <include layout="@layout/view_series_detail_series_status" />
 
+    <include layout="@layout/view_series_detail_progress" />
+
 </LinearLayout>
 
