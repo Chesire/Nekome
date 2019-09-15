@@ -25,7 +25,7 @@
     <string name="filter_dialog_confirm">Confirm</string>
     <string name="filter_by_current">Current</string>
     <string name="filter_by_completed">Completed</string>
-    <string name="filter_by_on_hold">OnHold</string>
+    <string name="filter_by_on_hold">On Hold</string>
     <string name="filter_by_dropped">Dropped</string>
     <string name="filter_by_planned">Planned</string>
 
