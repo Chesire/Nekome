@@ -15,6 +15,9 @@ import com.chesire.malime.extensions.extraNotNull
 import com.chesire.malime.flow.ViewModelFactory
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.android.support.AndroidSupportInjection
+import kotlinx.android.synthetic.main.view_series_detail_header.seriesDetailHeaderSubtype
+import kotlinx.android.synthetic.main.view_series_detail_header.seriesDetailHeaderTitle
+import kotlinx.android.synthetic.main.view_series_detail_header.seriesDetailHeaderType
 import javax.inject.Inject
 
 @LogLifecykle
@@ -25,7 +28,7 @@ class SeriesDetailSheetFragment : BottomSheetDialogFragment() {
         ViewModelProvider(this, viewModelFactory)
             .get<SeriesDetailViewModel>()
             .apply {
-                model = seriesModel
+                setModel(seriesModel)
             }
     }
     private val seriesModel by extraNotNull<SeriesModel>(MODEL_BUNDLE_ID, null)
@@ -41,6 +44,19 @@ class SeriesDetailSheetFragment : BottomSheetDialogFragment() {
         savedInstanceState: Bundle?
     ): View? = inflater.inflate(R.layout.fragment_series_detail, container, false)
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initializeView()
+    }
+
+    private fun initializeView() {
+        with(viewModel.mutableModel) {
+            seriesDetailHeaderTitle.text = seriesName
+            seriesDetailHeaderType.text = seriesType
+            seriesDetailHeaderSubtype.text = seriesSubType
+        }
+    }
+
     companion object {
         const val TAG = "SeriesDetailSheetFragment"
         private const val MODEL_BUNDLE_ID = "SeriesDetailSheetFragment_model"
@@ -51,7 +67,7 @@ class SeriesDetailSheetFragment : BottomSheetDialogFragment() {
          */
         fun newInstance(seriesModel: SeriesModel): SeriesDetailSheetFragment {
             return SeriesDetailSheetFragment().apply {
-                bundleOf(MODEL_BUNDLE_ID to seriesModel)
+                arguments = bundleOf(MODEL_BUNDLE_ID to seriesModel)
             }
         }
     }

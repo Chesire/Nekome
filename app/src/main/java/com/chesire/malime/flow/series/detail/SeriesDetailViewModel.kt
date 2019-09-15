@@ -1,7 +1,6 @@
 package com.chesire.malime.flow.series.detail
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chesire.malime.AuthCaster
@@ -26,12 +25,20 @@ class SeriesDetailViewModel @Inject constructor(
     private val authCaster: AuthCaster,
     @IOContext private val ioContext: CoroutineContext
 ) : ViewModel() {
-    lateinit var model: SeriesModel
+
+    lateinit var mutableModel: MutableSeriesModel
 
     private val _deletionStatus = LiveEvent<AsyncState<SeriesModel, SeriesDetailError>>()
     val deletionStatus: LiveData<AsyncState<SeriesModel, SeriesDetailError>> = _deletionStatus
     private val _progressStatus = LiveEvent<AsyncState<SeriesModel, SeriesDetailError>>()
     val progressStatus: LiveData<AsyncState<SeriesModel, SeriesDetailError>> = _progressStatus
+
+    /**
+     * Sets the model object into the ViewModel.
+     */
+    fun setModel(model: SeriesModel) {
+        mutableModel = MutableSeriesModel.from(model)
+    }
 
     /**
      * Sends a delete request for the [target].
