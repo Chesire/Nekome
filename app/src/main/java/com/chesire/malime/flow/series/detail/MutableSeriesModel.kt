@@ -9,6 +9,7 @@ import com.chesire.malime.core.models.SeriesModel
 data class MutableSeriesModel(
     val seriesName: String,
     var seriesProgress: Int,
+    var seriesLengthValue: Int,
     val seriesLength: String,
     val seriesType: String,
     val seriesSubType: String,
@@ -18,15 +19,14 @@ data class MutableSeriesModel(
         /**
          * Creates an instance of [MutableSeriesModel] from an instance of [SeriesModel].
          */
-        fun from(model: SeriesModel): MutableSeriesModel {
-            return MutableSeriesModel(
-                model.title,
-                model.progress,
-                if (model.lengthKnown) model.totalLength.toString() else "??",
-                model.type.name,
-                model.subtype.name,
-                model.userSeriesStatus
-            )
-        }
+        fun from(model: SeriesModel) = MutableSeriesModel(
+            model.title,
+            model.progress,
+            model.totalLength,
+            if (model.lengthKnown) model.totalLength.toString() else "?",
+            model.type.name,
+            model.subtype.name,
+            model.userSeriesStatus
+        )
     }
 }

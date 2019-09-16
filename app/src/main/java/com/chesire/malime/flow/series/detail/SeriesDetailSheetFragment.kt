@@ -19,6 +19,7 @@ import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.view_series_detail_header.seriesDetailHeaderSubtype
 import kotlinx.android.synthetic.main.view_series_detail_header.seriesDetailHeaderTitle
 import kotlinx.android.synthetic.main.view_series_detail_header.seriesDetailHeaderType
+import kotlinx.android.synthetic.main.view_series_detail_progress.seriesDetailProgressPicker
 import kotlinx.android.synthetic.main.view_series_detail_series_status.seriesDetailStatusGroup
 import timber.log.Timber
 import javax.inject.Inject
@@ -59,6 +60,7 @@ class SeriesDetailSheetFragment : BottomSheetDialogFragment() {
             seriesDetailHeaderSubtype.text = seriesSubType
             setupSeriesStatusListener(this)
             setupInitialSeriesStatus(this)
+            setupProgressPicker(this)
         }
     }
 
@@ -95,6 +97,17 @@ class SeriesDetailSheetFragment : BottomSheetDialogFragment() {
                 else -> 0
             }
         )
+    }
+
+    private fun setupProgressPicker(model: MutableSeriesModel) {
+        with(seriesDetailProgressPicker) {
+            minValue = 0
+            maxValue = if (model.seriesLengthValue == 0) 999 else model.seriesLengthValue
+            value = model.seriesProgress
+            setOnValueChangedListener { _, _, newVal ->
+                model.seriesProgress = newVal
+            }
+        }
     }
 
     companion object {
