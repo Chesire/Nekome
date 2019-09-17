@@ -72,7 +72,7 @@
     <string name="series_detail_progress_error_below_zero">Progress must be at least 0</string>
     <string name="series_detail_progress_error_nan">Progress must be a number</string>
     <string name="series_detail_progress_cancel">Cancel</string>
-    <string name="series_detail_progress_confirm">Confirm</string>
+    <string name="series_detail_confirm">Confirm</string>
 
     <string name="series_detail_delete">Delete</string>
     <string name="series_detail_delete_message">Are you sure you wish to delete %s?</string>
