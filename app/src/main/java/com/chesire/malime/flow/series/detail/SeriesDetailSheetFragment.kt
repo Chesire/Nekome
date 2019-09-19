@@ -6,16 +6,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
 import com.chesire.lifecyklelog.LogLifecykle
 import com.chesire.malime.R
+import com.chesire.malime.core.flags.AsyncState
 import com.chesire.malime.core.flags.UserSeriesStatus
 import com.chesire.malime.core.models.SeriesModel
 import com.chesire.malime.extensions.extraNotNull
+import com.chesire.malime.extensions.hide
+import com.chesire.malime.extensions.show
 import com.chesire.malime.flow.ViewModelFactory
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.android.material.snackbar.Snackbar
 import dagger.android.support.AndroidSupportInjection
+import kotlinx.android.synthetic.main.view_series_detail_confirmation.seriesDetailConfirmationConfirm
+import kotlinx.android.synthetic.main.view_series_detail_confirmation.seriesDetailConfirmationProgress
 import kotlinx.android.synthetic.main.view_series_detail_header.seriesDetailHeaderSubtype
 import kotlinx.android.synthetic.main.view_series_detail_header.seriesDetailHeaderTitle
 import kotlinx.android.synthetic.main.view_series_detail_header.seriesDetailHeaderType
@@ -54,6 +61,7 @@ class SeriesDetailSheetFragment : BottomSheetDialogFragment() {
     }
 
     private fun initializeView() {
+        observeUpdatingStatus()
         with(viewModel.mutableModel) {
             seriesDetailHeaderTitle.text = seriesName
             seriesDetailHeaderType.text = seriesType
@@ -62,6 +70,32 @@ class SeriesDetailSheetFragment : BottomSheetDialogFragment() {
             setupInitialSeriesStatus(this)
             setupProgressPicker(this)
         }
+        setupConfirmation()
+    }
+
+    private fun observeUpdatingStatus() {
+        fun startInProgressState() {
+            seriesDetailConfirmationConfirm.isEnabled = false
+            seriesDetailConfirmationConfirm.hide(invisible = true)
+            seriesDetailConfirmationProgress.show()
+        }
+
+        fun endInProgressState() {
+            seriesDetailConfirmationConfirm.isEnabled = true
+            seriesDetailConfirmationConfirm.show()
+            seriesDetailConfirmationProgress.hide(invisible = true)
+        }
+
+        viewModel.updatingStatus.observe(viewLifecycleOwner, Observer {
+            when (it) {
+                is AsyncState.Loading -> startInProgressState()
+                is AsyncState.Error -> {
+                    endInProgressState()
+                    Snackbar.make(requireView(), "Test", Snackbar.LENGTH_LONG).show()
+                }
+                is AsyncState.Success -> dismiss()
+            }
+        })
     }
 
     private fun setupSeriesStatusListener(model: MutableSeriesModel) {
@@ -108,6 +142,10 @@ class SeriesDetailSheetFragment : BottomSheetDialogFragment() {
                 model.seriesProgress = newVal
             }
         }
+    }
+
+    private fun setupConfirmation() = seriesDetailConfirmationConfirm.setOnClickListener {
+        viewModel.sendUpdate(viewModel.mutableModel)
     }
 
     companion object {

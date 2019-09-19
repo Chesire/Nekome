@@ -12,5 +12,7 @@
 
     <include layout="@layout/view_series_detail_progress" />
 
+    <include layout="@layout/view_series_detail_confirmation" />
+
 </LinearLayout>
 
