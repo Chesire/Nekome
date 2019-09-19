@@ -1,19 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    android:layout_height="wrap_content">
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/seriesDetailProgressTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/half_margin"
+        android:layout_marginTop="@dimen/half_margin"
+        android:layout_marginEnd="@dimen/half_margin"
+        android:text="@string/series_detail_progress_title"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
+        app:layout_constraintBottom_toTopOf="@id/seriesDetailProgressValue"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/seriesDetailProgress"
+        android:id="@+id/seriesDetailProgressValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/half_margin"
         android:backgroundTint="@color/colorPrimary"
         android:inputType="number"
-        android:padding="@dimen/full_margin"
+        android:paddingStart="@dimen/full_margin"
+        android:paddingTop="@dimen/half_margin"
+        android:paddingEnd="@dimen/full_margin"
+        android:paddingBottom="@dimen/full_margin"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/seriesDetailProgressTitle"
         tools:text="999" />
 
     <com.google.android.material.textview.MaterialTextView
@@ -21,9 +42,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingStart="@dimen/half_margin"
-        android:paddingTop="@dimen/full_margin"
+        android:paddingTop="@dimen/half_margin"
         android:paddingEnd="@dimen/half_margin"
         android:paddingBottom="@dimen/full_margin"
+        app:layout_constraintBottom_toBottomOf="@id/seriesDetailProgressValue"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toEndOf="@id/seriesDetailProgressValue"
+        app:layout_constraintTop_toTopOf="@id/seriesDetailProgressValue"
         tools:text="/ 999" />
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

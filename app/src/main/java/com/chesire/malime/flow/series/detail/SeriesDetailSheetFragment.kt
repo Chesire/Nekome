@@ -28,8 +28,8 @@ import kotlinx.android.synthetic.main.view_series_detail_confirmation.seriesDeta
 import kotlinx.android.synthetic.main.view_series_detail_header.seriesDetailHeaderSubtype
 import kotlinx.android.synthetic.main.view_series_detail_header.seriesDetailHeaderTitle
 import kotlinx.android.synthetic.main.view_series_detail_header.seriesDetailHeaderType
-import kotlinx.android.synthetic.main.view_series_detail_progress.seriesDetailProgress
 import kotlinx.android.synthetic.main.view_series_detail_progress.seriesDetailProgressOutOf
+import kotlinx.android.synthetic.main.view_series_detail_progress.seriesDetailProgressValue
 import kotlinx.android.synthetic.main.view_series_detail_series_status.seriesDetailStatusGroup
 import timber.log.Timber
 import javax.inject.Inject
@@ -137,7 +137,7 @@ class SeriesDetailSheetFragment : BottomSheetDialogFragment() {
     }
 
     private fun setupProgress(model: MutableSeriesModel) {
-        seriesDetailProgress.apply {
+        seriesDetailProgressValue.apply {
             setText("${model.seriesProgress}")
             filters = arrayOf(
                 RangeInputFilter(model.seriesLengthValue),

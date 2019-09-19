@@ -1,9 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/seriesDetailStatusTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/half_margin"
+        android:text="@string/series_detail_status_title"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Overline" />
 
     <com.google.android.material.chip.ChipGroup
         android:id="@+id/seriesDetailStatusGroup"
@@ -11,7 +20,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginStart="@dimen/half_margin"
-        android:layout_marginTop="@dimen/full_margin"
         android:layout_marginEnd="@dimen/half_margin"
         android:layout_marginBottom="@dimen/full_margin"
         app:singleSelection="true"
@@ -53,4 +61,4 @@
             android:text="@string/filter_by_planned" />
     </com.google.android.material.chip.ChipGroup>
 
-</FrameLayout>
+</LinearLayout>

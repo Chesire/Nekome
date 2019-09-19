@@ -65,14 +65,9 @@
     <string name="settings_logout_prompt_cancel">Cancel</string>
 
     <string name="series_detail_dash">-</string>
+    <string name="series_detail_progress_title">Progress</string>
     <string name="series_detail_progress_out_of">/ %s</string>
-    <string name="series_detail_progress">Progress</string>
-    <string name="series_detail_progress_message">Enter new progress for %s</string>
-    <string name="series_detail_progress_hint">Enter new progress below %d</string>
-    <string name="series_detail_progress_error_too_high">Progress past the series length</string>
-    <string name="series_detail_progress_error_below_zero">Progress must be at least 0</string>
-    <string name="series_detail_progress_error_nan">Progress must be a number</string>
-    <string name="series_detail_progress_cancel">Cancel</string>
+    <string name="series_detail_status_title">Users series status</string>
     <string name="series_detail_confirm">Confirm</string>
 
     <string name="series_detail_delete">Delete</string>
