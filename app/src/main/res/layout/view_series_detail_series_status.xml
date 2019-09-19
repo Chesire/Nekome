@@ -9,6 +9,7 @@
         android:id="@+id/seriesDetailStatusGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
         android:layout_marginStart="@dimen/half_margin"
         android:layout_marginTop="@dimen/full_margin"
         android:layout_marginEnd="@dimen/half_margin"
