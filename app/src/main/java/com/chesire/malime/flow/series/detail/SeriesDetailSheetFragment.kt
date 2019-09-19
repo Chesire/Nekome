@@ -2,10 +2,12 @@ package com.chesire.malime.flow.series.detail
 
 import android.content.Context
 import android.os.Bundle
+import android.text.InputFilter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
+import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
@@ -26,7 +28,8 @@ import kotlinx.android.synthetic.main.view_series_detail_confirmation.seriesDeta
 import kotlinx.android.synthetic.main.view_series_detail_header.seriesDetailHeaderSubtype
 import kotlinx.android.synthetic.main.view_series_detail_header.seriesDetailHeaderTitle
 import kotlinx.android.synthetic.main.view_series_detail_header.seriesDetailHeaderType
-import kotlinx.android.synthetic.main.view_series_detail_progress.seriesDetailProgressPicker
+import kotlinx.android.synthetic.main.view_series_detail_progress.seriesDetailProgress
+import kotlinx.android.synthetic.main.view_series_detail_progress.seriesDetailProgressOutOf
 import kotlinx.android.synthetic.main.view_series_detail_series_status.seriesDetailStatusGroup
 import timber.log.Timber
 import javax.inject.Inject
@@ -68,7 +71,7 @@ class SeriesDetailSheetFragment : BottomSheetDialogFragment() {
             seriesDetailHeaderSubtype.text = seriesSubType
             setupSeriesStatusListener(this)
             setupInitialSeriesStatus(this)
-            setupProgressPicker(this)
+            setupProgress(this)
         }
         setupConfirmation()
     }
@@ -133,15 +136,22 @@ class SeriesDetailSheetFragment : BottomSheetDialogFragment() {
         )
     }
 
-    private fun setupProgressPicker(model: MutableSeriesModel) {
-        with(seriesDetailProgressPicker) {
-            minValue = 0
-            maxValue = if (model.seriesLengthValue == 0) 999 else model.seriesLengthValue
-            value = model.seriesProgress
-            setOnValueChangedListener { _, _, newVal ->
-                model.seriesProgress = newVal
+    private fun setupProgress(model: MutableSeriesModel) {
+        seriesDetailProgress.apply {
+            setText("${model.seriesProgress}")
+            filters = arrayOf(
+                RangeInputFilter(model.seriesLengthValue),
+                InputFilter.LengthFilter(4)
+            )
+            doAfterTextChanged {
+                it?.toString()?.toIntOrNull()?.let { newProgress ->
+                    model.seriesProgress = newProgress
+                }
             }
         }
+        seriesDetailProgressOutOf.text = getString(
+            R.string.series_detail_progress_out_of, model.seriesLength
+        )
     }
 
     private fun setupConfirmation() = seriesDetailConfirmationConfirm.setOnClickListener {

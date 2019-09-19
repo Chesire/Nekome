@@ -65,6 +65,7 @@
     <string name="settings_logout_prompt_cancel">Cancel</string>
 
     <string name="series_detail_dash">-</string>
+    <string name="series_detail_progress_out_of">/ %s</string>
     <string name="series_detail_progress">Progress</string>
     <string name="series_detail_progress_message">Enter new progress for %s</string>
     <string name="series_detail_progress_hint">Enter new progress below %d</string>
