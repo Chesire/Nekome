@@ -1,6 +1,5 @@
 package com.chesire.malime.flow.series.detail
 
-import com.chesire.malime.core.flags.SeriesStatus
 import com.chesire.malime.core.flags.UserSeriesStatus
 import com.chesire.malime.core.models.SeriesModel
 
