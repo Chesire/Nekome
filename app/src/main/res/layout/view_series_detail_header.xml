@@ -8,11 +8,11 @@
     <View
         android:layout_width="32dp"
         android:layout_height="1dp"
+        android:layout_marginTop="8dp"
         android:background="@color/darkerGrey"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="8dp"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/seriesDetailHeaderTitle"
