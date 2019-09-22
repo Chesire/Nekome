@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <View
+        android:layout_width="32dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/darkerGrey"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/seriesDetailHeaderTitle"
+        style="@style/BottomSheetHeaderTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="No Game No Life" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/seriesDetailHeaderType"
+        style="@style/BottomSheetHeaderSubtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/full_margin"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/seriesDetailHeaderTitle"
+        tools:text="Anime" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/seriesDetailHeaderDash1"
+        style="@style/BottomSheetHeaderSubtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/series_detail_dash"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/seriesDetailHeaderType"
+        app:layout_constraintTop_toBottomOf="@id/seriesDetailHeaderTitle" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/seriesDetailHeaderSubtype"
+        style="@style/BottomSheetHeaderSubtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/seriesDetailHeaderDash1"
+        app:layout_constraintTop_toBottomOf="@id/seriesDetailHeaderTitle"
+        tools:text="OVA" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/seriesDetailHeaderDash2"
+        style="@style/BottomSheetHeaderSubtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/series_detail_dash"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/seriesDetailHeaderSubtype"
+        app:layout_constraintTop_toBottomOf="@id/seriesDetailHeaderTitle" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/seriesDetailHeaderSeriesStatus"
+        style="@style/BottomSheetHeaderSubtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/series_detail_dash"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/seriesDetailHeaderDash2"
+        app:layout_constraintTop_toBottomOf="@id/seriesDetailHeaderTitle"
+        tools:text="Finished" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

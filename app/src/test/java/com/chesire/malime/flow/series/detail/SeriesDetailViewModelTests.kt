@@ -5,7 +5,7 @@ import androidx.lifecycle.Observer
 import com.chesire.malime.AuthCaster
 import com.chesire.malime.CoroutinesMainDispatcherRule
 import com.chesire.malime.core.flags.AsyncState
-import com.chesire.malime.core.models.SeriesModel
+import com.chesire.malime.createSeriesModel
 import com.chesire.malime.series.SeriesRepository
 import com.chesire.malime.server.Resource
 import io.mockk.Runs
@@ -13,7 +13,10 @@ import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.just
 import io.mockk.mockk
+import io.mockk.slot
 import io.mockk.verify
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Rule
 import org.junit.Test
 
@@ -25,54 +28,25 @@ class SeriesDetailViewModelTests {
 
     @Test
     fun `updateModel updates the currently stored model`() {
-        val expected = mockk<SeriesModel>()
+        val expected = createSeriesModel()
         val mockRepository = mockk<SeriesRepository>()
         val mockAuth = mockk<AuthCaster>()
-        val mockObserver = mockk<Observer<SeriesModel>> {
-            every { onChanged(any()) } just Runs
-        }
 
         val classUnderTest = SeriesDetailViewModel(
             mockRepository,
             mockAuth,
             coroutineRule.testDispatcher
         )
-        classUnderTest.model.observeForever(mockObserver)
-        classUnderTest.updateModel(expected)
+        classUnderTest.setModel(expected)
 
-        verify { mockObserver.onChanged(expected) }
+        assertEquals(expected.title, classUnderTest.mutableModel.seriesName)
     }
 
     @Test
-    fun `deleteModel posts loading to the status`() {
+    fun `sendUpdate on CouldNotRefresh error, notifies AuthCaster`() {
         val mockRepository = mockk<SeriesRepository> {
             coEvery {
-                deleteSeries(any())
-            } coAnswers {
-                Resource.Error("")
-            }
-        }
-        val mockAuth = mockk<AuthCaster>()
-        val mockObserver = mockk<Observer<AsyncState<SeriesModel, SeriesDetailError>>> {
-            every { onChanged(any()) } just Runs
-        }
-
-        val classUnderTest = SeriesDetailViewModel(
-            mockRepository,
-            mockAuth,
-            coroutineRule.testDispatcher
-        )
-        classUnderTest.deletionStatus.observeForever(mockObserver)
-        classUnderTest.deleteModel(mockk())
-
-        verify { mockObserver.onChanged(any<AsyncState.Loading<SeriesModel, SeriesDetailError>>()) }
-    }
-
-    @Test
-    fun `deleteModel notifies authCaster on token failure`() {
-        val mockRepository = mockk<SeriesRepository> {
-            coEvery {
-                deleteSeries(any())
+                updateSeries(any(), any(), any())
             } coAnswers {
                 Resource.Error("", Resource.Error.CouldNotRefresh)
             }
@@ -80,33 +54,33 @@ class SeriesDetailViewModelTests {
         val mockAuth = mockk<AuthCaster> {
             every { issueRefreshingToken() } just Runs
         }
-        val mockObserver = mockk<Observer<AsyncState<SeriesModel, SeriesDetailError>>> {
-            every { onChanged(any()) } just Runs
-        }
 
         val classUnderTest = SeriesDetailViewModel(
             mockRepository,
             mockAuth,
             coroutineRule.testDispatcher
         )
-        classUnderTest.deletionStatus.observeForever(mockObserver)
-        classUnderTest.deleteModel(mockk())
+        classUnderTest.setModel(createSeriesModel())
+        classUnderTest.sendUpdate(classUnderTest.mutableModel)
 
         verify { mockAuth.issueRefreshingToken() }
     }
 
     @Test
-    fun `deleteModel posts error to the status on failure`() {
+    fun `sendUpdate on error, posts Error`() {
+        val slot = slot<AsyncState<MutableSeriesModel, SeriesDetailError>>()
         val mockRepository = mockk<SeriesRepository> {
             coEvery {
-                deleteSeries(any())
+                updateSeries(any(), any(), any())
             } coAnswers {
-                Resource.Error("")
+                Resource.Error("", Resource.Error.GenericError)
             }
         }
-        val mockAuth = mockk<AuthCaster>()
-        val mockObserver = mockk<Observer<AsyncState<SeriesModel, SeriesDetailError>>> {
-            every { onChanged(any()) } just Runs
+        val mockAuth = mockk<AuthCaster> {
+            every { issueRefreshingToken() } just Runs
+        }
+        val mockObserver = mockk<Observer<AsyncState<MutableSeriesModel, SeriesDetailError>>> {
+            every { onChanged(capture(slot)) } just Runs
         }
 
         val classUnderTest = SeriesDetailViewModel(
@@ -114,24 +88,28 @@ class SeriesDetailViewModelTests {
             mockAuth,
             coroutineRule.testDispatcher
         )
-        classUnderTest.deletionStatus.observeForever(mockObserver)
-        classUnderTest.deleteModel(mockk())
+        classUnderTest.updatingStatus.observeForever(mockObserver)
+        classUnderTest.setModel(createSeriesModel())
+        classUnderTest.sendUpdate(classUnderTest.mutableModel)
 
-        verify { mockObserver.onChanged(any<AsyncState.Error<SeriesModel, SeriesDetailError>>()) }
+        assertTrue(slot.captured is AsyncState.Error)
     }
 
     @Test
-    fun `deleteModel posts success to the status on success`() {
+    fun `sendUpdate on success, posts Success`() {
+        val slot = slot<AsyncState<MutableSeriesModel, SeriesDetailError>>()
         val mockRepository = mockk<SeriesRepository> {
             coEvery {
-                deleteSeries(any())
+                updateSeries(any(), any(), any())
             } coAnswers {
-                Resource.Success(Any())
+                Resource.Success(createSeriesModel())
             }
         }
-        val mockAuth = mockk<AuthCaster>()
-        val mockObserver = mockk<Observer<AsyncState<SeriesModel, SeriesDetailError>>> {
-            every { onChanged(any()) } just Runs
+        val mockAuth = mockk<AuthCaster> {
+            every { issueRefreshingToken() } just Runs
+        }
+        val mockObserver = mockk<Observer<AsyncState<MutableSeriesModel, SeriesDetailError>>> {
+            every { onChanged(capture(slot)) } just Runs
         }
 
         val classUnderTest = SeriesDetailViewModel(
@@ -139,9 +117,10 @@ class SeriesDetailViewModelTests {
             mockAuth,
             coroutineRule.testDispatcher
         )
-        classUnderTest.deletionStatus.observeForever(mockObserver)
-        classUnderTest.deleteModel(mockk())
+        classUnderTest.updatingStatus.observeForever(mockObserver)
+        classUnderTest.setModel(createSeriesModel())
+        classUnderTest.sendUpdate(classUnderTest.mutableModel)
 
-        verify { mockObserver.onChanged(any<AsyncState.Success<SeriesModel, SeriesDetailError>>()) }
+        assertTrue(slot.captured is AsyncState.Success)
     }
 }

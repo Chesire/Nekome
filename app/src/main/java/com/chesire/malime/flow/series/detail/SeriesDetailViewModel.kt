@@ -1,7 +1,6 @@
 package com.chesire.malime.flow.series.detail
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chesire.malime.AuthCaster
@@ -27,57 +26,38 @@ class SeriesDetailViewModel @Inject constructor(
     @IOContext private val ioContext: CoroutineContext
 ) : ViewModel() {
 
-    private val _model = MutableLiveData<SeriesModel>()
-    val model: LiveData<SeriesModel> = _model
-    private val _deletionStatus = LiveEvent<AsyncState<SeriesModel, SeriesDetailError>>()
-    val deletionStatus: LiveData<AsyncState<SeriesModel, SeriesDetailError>> = _deletionStatus
-    private val _progressStatus = LiveEvent<AsyncState<SeriesModel, SeriesDetailError>>()
-    val progressStatus: LiveData<AsyncState<SeriesModel, SeriesDetailError>> = _progressStatus
+    lateinit var mutableModel: MutableSeriesModel
+
+    private val _updatingStatus = LiveEvent<AsyncState<MutableSeriesModel, SeriesDetailError>>()
+    val updatingStatus: LiveData<AsyncState<MutableSeriesModel, SeriesDetailError>> =
+        _updatingStatus
 
     /**
-     * Updates the currently stored model in the view model.
+     * Sets the model object into the ViewModel.
      */
-    fun updateModel(newModel: SeriesModel) = _model.postValue(newModel)
+    fun setModel(model: SeriesModel) {
+        mutableModel = MutableSeriesModel.from(model)
+    }
 
     /**
-     * Sends a delete request for the [target].
+     * Sends an update request with the new information in [target].
      */
-    fun deleteModel(target: SeriesModel) {
-        _deletionStatus.postLoading()
+    fun sendUpdate(target: MutableSeriesModel) {
+        _updatingStatus.postLoading()
 
         viewModelScope.launch(ioContext) {
-            val response = repo.deleteSeries(target)
+            val response = repo.updateSeries(
+                target.userSeriesId,
+                target.seriesProgress,
+                target.userSeriesStatus
+            )
             if (response is Resource.Error && response.code == Resource.Error.CouldNotRefresh) {
                 authCaster.issueRefreshingToken()
             } else if (response is Resource.Error) {
-                _deletionStatus.postError(target, SeriesDetailError.Error)
+                _updatingStatus.postError(target, SeriesDetailError.Error)
             } else {
-                _deletionStatus.postSuccess(target)
+                _updatingStatus.postSuccess(target)
             }
-        }
-    }
-
-    fun updateProgress(target: SeriesModel, newProgress: Int) {
-        _progressStatus.postLoading()
-
-        viewModelScope.launch(ioContext) {
-            val response = repo.updateSeries(target.userId, newProgress, target.userSeriesStatus)
-            if (response is Resource.Error && response.code == Resource.Error.CouldNotRefresh) {
-                authCaster.issueRefreshingToken()
-            } else if (response is Resource.Error) {
-                _progressStatus.postError(target, SeriesDetailError.Error)
-            } else {
-                _progressStatus.postSuccess(target)
-            }
-        }
-    }
-
-    fun checkProgressValue(target: SeriesModel, newProgress: Int?): SeriesDetailError {
-        return when {
-            newProgress == null -> SeriesDetailError.NewProgressNaN
-            newProgress < 0 -> SeriesDetailError.NewProgressBelowZero
-            target.lengthKnown && newProgress > target.totalLength -> SeriesDetailError.NewProgressTooHigh
-            else -> return SeriesDetailError.None
         }
     }
 }

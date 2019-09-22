@@ -27,7 +27,7 @@ android {
         debug {
             applicationIdSuffix = ".debug"
             versionNameSuffix '-DEBUG'
-            testCoverageEnabled true
+            testCoverageEnabled !project.hasProperty("skipCoverage")
         }
         buildTypes.each {
             it.resValue('string', 'version', defaultConfig.versionName)
