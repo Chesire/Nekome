@@ -20,35 +20,51 @@
         style="@style/BottomSheetHeaderSubtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/full_margin"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/seriesDetailHeaderTitle"
         tools:text="Anime" />
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/seriesDetailHeaderDash"
+        android:id="@+id/seriesDetailHeaderDash1"
         style="@style/BottomSheetHeaderSubtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/series_detail_dash"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/seriesDetailHeaderType"
-        app:layout_constraintTop_toBottomOf="@id/seriesDetailHeaderTitle"
-        tools:text="-" />
+        app:layout_constraintTop_toBottomOf="@id/seriesDetailHeaderTitle" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/seriesDetailHeaderSubtype"
         style="@style/BottomSheetHeaderSubtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/half_margin"
-        android:layout_marginTop="@dimen/half_margin"
-        android:layout_marginEnd="@dimen/half_margin"
-        android:layout_marginBottom="@dimen/full_margin"
-        android:text="@string/series_detail_dash"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/seriesDetailHeaderDash"
+        app:layout_constraintStart_toEndOf="@id/seriesDetailHeaderDash1"
         app:layout_constraintTop_toBottomOf="@id/seriesDetailHeaderTitle"
         tools:text="OVA" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/seriesDetailHeaderDash2"
+        style="@style/BottomSheetHeaderSubtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/series_detail_dash"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/seriesDetailHeaderSubtype"
+        app:layout_constraintTop_toBottomOf="@id/seriesDetailHeaderTitle" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/seriesDetailHeaderSeriesStatus"
+        style="@style/BottomSheetHeaderSubtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/series_detail_dash"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/seriesDetailHeaderDash2"
+        app:layout_constraintTop_toBottomOf="@id/seriesDetailHeaderTitle"
+        tools:text="Finished" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

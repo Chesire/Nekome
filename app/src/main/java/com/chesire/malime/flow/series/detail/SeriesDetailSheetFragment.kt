@@ -25,6 +25,7 @@ import com.google.android.material.snackbar.Snackbar
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.view_series_detail_confirmation.seriesDetailConfirmationConfirm
 import kotlinx.android.synthetic.main.view_series_detail_confirmation.seriesDetailConfirmationProgress
+import kotlinx.android.synthetic.main.view_series_detail_header.seriesDetailHeaderSeriesStatus
 import kotlinx.android.synthetic.main.view_series_detail_header.seriesDetailHeaderSubtype
 import kotlinx.android.synthetic.main.view_series_detail_header.seriesDetailHeaderTitle
 import kotlinx.android.synthetic.main.view_series_detail_header.seriesDetailHeaderType
@@ -69,6 +70,7 @@ class SeriesDetailSheetFragment : BottomSheetDialogFragment() {
             seriesDetailHeaderTitle.text = seriesName
             seriesDetailHeaderType.text = seriesType
             seriesDetailHeaderSubtype.text = seriesSubType
+            seriesDetailHeaderSeriesStatus.text = seriesStatus
             setupSeriesStatusListener(this)
             setupInitialSeriesStatus(this)
             setupProgress(this)

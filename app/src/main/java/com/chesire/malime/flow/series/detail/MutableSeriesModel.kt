@@ -1,5 +1,6 @@
 package com.chesire.malime.flow.series.detail
 
+import com.chesire.malime.core.flags.SeriesStatus
 import com.chesire.malime.core.flags.UserSeriesStatus
 import com.chesire.malime.core.models.SeriesModel
 
@@ -14,7 +15,8 @@ data class MutableSeriesModel(
     val seriesLength: String,
     val seriesType: String,
     val seriesSubType: String,
-    var userSeriesStatus: UserSeriesStatus
+    var userSeriesStatus: UserSeriesStatus,
+    val seriesStatus: String
 ) {
     companion object {
         /**
@@ -28,7 +30,8 @@ data class MutableSeriesModel(
             if (model.lengthKnown) model.totalLength.toString() else "?",
             model.type.name,
             model.subtype.name,
-            model.userSeriesStatus
+            model.userSeriesStatus,
+            model.seriesStatus.name
         )
     }
 }

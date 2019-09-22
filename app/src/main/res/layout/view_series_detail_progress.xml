@@ -7,13 +7,10 @@
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/seriesDetailProgressTitle"
+        style="@style/BottomSheetSectionTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/half_margin"
-        android:layout_marginTop="@dimen/half_margin"
-        android:layout_marginEnd="@dimen/half_margin"
         android:text="@string/series_detail_progress_title"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
         app:layout_constraintBottom_toTopOf="@id/seriesDetailProgressValue"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0"
@@ -24,7 +21,7 @@
         android:id="@+id/seriesDetailProgressValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/half_margin"
+        android:layout_marginStart="@dimen/full_margin"
         android:backgroundTint="@color/colorPrimary"
         android:inputType="number"
         android:paddingStart="@dimen/full_margin"

@@ -8,9 +8,9 @@
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/seriesDetailStatusTitle"
+        style="@style/BottomSheetSectionTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/half_margin"
         android:text="@string/series_detail_status_title"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Overline" />
 
