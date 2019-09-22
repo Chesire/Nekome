@@ -8,24 +8,24 @@ class MutableSeriesModelTests {
     @Test
     fun `can generate MutableSeriesModel from SeriesModel`() {
         val originalModel = createSeriesModel(userId = 99)
-        val testObject = MutableSeriesModel.from(originalModel)
+        val classUnderTest = MutableSeriesModel.from(originalModel)
 
-        assertEquals(originalModel.userId, testObject.userSeriesId)
+        assertEquals(originalModel.userId, classUnderTest.userSeriesId)
     }
 
     @Test
     fun `generated MutableSeriesModel seriesLength is "?" if unknown length`() {
         val originalModel = createSeriesModel(userId = 99, totalLength = 0)
-        val testObject = MutableSeriesModel.from(originalModel)
+        val classUnderTest = MutableSeriesModel.from(originalModel)
 
-        assertEquals("?", testObject.seriesLength)
+        assertEquals("?", classUnderTest.seriesLength)
     }
 
     @Test
     fun `generated MutableSeriesModel seriesLength is expected if known length`() {
         val originalModel = createSeriesModel(userId = 99, totalLength = 25)
-        val testObject = MutableSeriesModel.from(originalModel)
+        val classUnderTest = MutableSeriesModel.from(originalModel)
 
-        assertEquals("25", testObject.seriesLength)
+        assertEquals("25", classUnderTest.seriesLength)
     }
 }

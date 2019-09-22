@@ -15,12 +15,19 @@ class RangeInputFilter(private val max: Int) : InputFilter {
         dstart: Int,
         dend: Int
     ): CharSequence? {
+        if (source == null || dest == null) {
+            return ""
+        }
         val des = dest.toString()
         val src = source.toString()
-        var newVal = des.substring(0, dstart) + des.substring(dend, des.length)
-        newVal = newVal.substring(0, dstart) + src + newVal.substring(dstart, newVal.length)
+        val newVal = try {
+            val tempVal = des.substring(0, dstart) + des.substring(dend, des.length)
+            tempVal.substring(0, dstart) + src + tempVal.substring(dstart, tempVal.length)
+        } catch (ex: IndexOutOfBoundsException) {
+            null
+        }
 
-        return newVal.toIntOrNull()?.let {
+        return newVal?.toIntOrNull()?.let {
             return when {
                 max == 0 -> null
                 it <= max -> null
