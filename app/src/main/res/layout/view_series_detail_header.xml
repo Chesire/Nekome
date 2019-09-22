@@ -5,6 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
+    <View
+        android:layout_width="32dp"
+        android:layout_height="1dp"
+        android:background="@color/darkerGrey"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="8dp"/>
+
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/seriesDetailHeaderTitle"
         style="@style/BottomSheetHeaderTitle"
