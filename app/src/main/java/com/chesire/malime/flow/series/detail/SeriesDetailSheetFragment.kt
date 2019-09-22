@@ -91,12 +91,18 @@ class SeriesDetailSheetFragment : BottomSheetDialogFragment() {
             seriesDetailConfirmationProgress.hide(invisible = true)
         }
 
-        viewModel.updatingStatus.observe(viewLifecycleOwner, Observer {
-            when (it) {
+        viewModel.updatingStatus.observe(viewLifecycleOwner, Observer { result ->
+            when (result) {
                 is AsyncState.Loading -> startInProgressState()
                 is AsyncState.Error -> {
                     endInProgressState()
-                    Snackbar.make(requireView(), "Test", Snackbar.LENGTH_LONG).show()
+                    view?.let { view ->
+                        Snackbar.make(
+                            view.findViewById(R.id.seriesDetailLayout),
+                            getString(R.string.series_detail_failure, result.data?.seriesName),
+                            Snackbar.LENGTH_LONG
+                        ).show()
+                    }
                 }
                 is AsyncState.Success -> dismiss()
             }
