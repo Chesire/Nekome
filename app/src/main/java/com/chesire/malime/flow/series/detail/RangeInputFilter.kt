@@ -21,10 +21,10 @@ class RangeInputFilter(private val max: Int) : InputFilter {
         newVal = newVal.substring(0, dstart) + src + newVal.substring(dstart, newVal.length)
 
         return newVal.toIntOrNull()?.let {
-            return if (it <= max) {
-                null
-            } else {
-                ""
+            return when {
+                max == 0 -> null
+                it <= max -> null
+                else -> ""
             }
         } ?: ""
     }
