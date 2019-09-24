@@ -30,6 +30,7 @@ import timber.log.Timber
 import javax.inject.Inject
 
 @LogLifecykle
+@Suppress("TooManyFunctions")
 class Activity : DaggerAppCompatActivity(), AuthCaster.AuthCasterListener {
     @Inject
     lateinit var authCaster: AuthCaster
@@ -133,9 +134,6 @@ class Activity : DaggerAppCompatActivity(), AuthCaster.AuthCasterListener {
         }
     }
 
-    /**
-     * Sends a logout request to the [viewModel] to handle.
-     */
     private fun performLogout() {
         Timber.w("Logout called, now attempting")
         viewModel.logout {
