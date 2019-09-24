@@ -33,7 +33,7 @@ android {
 
 dependencies {
     ext {
-        retrofit_version = "2.6.1"
+        retrofit_version = "2.6.2"
     }
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
