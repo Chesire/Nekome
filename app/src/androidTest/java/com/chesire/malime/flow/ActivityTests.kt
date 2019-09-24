@@ -6,6 +6,7 @@ import com.chesire.malime.R
 import com.chesire.malime.helpers.injector
 import com.chesire.malime.kitsu.AuthProvider
 import com.schibsted.spain.barista.assertion.BaristaVisibilityAssertions.assertDisplayed
+import com.schibsted.spain.barista.assertion.BaristaVisibilityAssertions.assertNotExist
 import com.schibsted.spain.barista.interaction.BaristaClickInteractions.clickOn
 import com.schibsted.spain.barista.interaction.BaristaDrawerInteractions.openDrawer
 import com.schibsted.spain.barista.rule.cleardata.ClearPreferencesRule
@@ -79,5 +80,27 @@ class ActivityTests {
         openDrawer()
         clickOn(R.string.nav_settings)
         assertDisplayed(R.string.settings_version)
+    }
+
+    @Test
+    fun acceptingLogoutExits() {
+        activity.launchActivity(null)
+        openDrawer()
+
+        clickOn(R.string.menu_logout)
+        clickOn(R.string.menu_logout_prompt_confirm)
+
+        assertDisplayed(R.id.detailsLayout)
+    }
+
+    @Test
+    fun decliningLogoutRemains() {
+        activity.launchActivity(null)
+        openDrawer()
+
+        clickOn(R.string.menu_logout)
+        clickOn(R.string.menu_logout_prompt_cancel)
+
+        assertNotExist(R.id.detailsLayout)
     }
 }

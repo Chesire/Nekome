@@ -1,12 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <PreferenceCategory android:title="@string/settings_general_category">
-        <Preference
-            android:key="@string/key_log_out"
-            android:summary="@string/settings_logout_summary"
-            android:title="@string/settings_logout" />
-    </PreferenceCategory>
-
     <PreferenceCategory android:title="@string/settings_about_category">
         <Preference
             android:summary="@string/version"

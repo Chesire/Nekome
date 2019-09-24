@@ -43,28 +43,6 @@ class SettingsTests {
     }
 
     @Test
-    fun acceptingLogoutExits() {
-        activity.launchActivity(null)
-        navigateToSettings()
-
-        clickOn(R.string.settings_logout)
-        clickOn(R.string.settings_logout_prompt_confirm)
-
-        verifyNotOnSettings()
-    }
-
-    @Test
-    fun decliningLogoutRemains() {
-        activity.launchActivity(null)
-        navigateToSettings()
-
-        clickOn(R.string.settings_logout)
-        clickOn(R.string.settings_logout_prompt_cancel)
-
-        verifyOnSettings()
-    }
-
-    @Test
     @Ignore("Can't make this work without UIAutomator it looks like")
     fun privacyPolicyOpensNewPage() {
         activity.launchActivity(null)

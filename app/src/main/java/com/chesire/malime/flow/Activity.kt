@@ -3,6 +3,7 @@ package com.chesire.malime.flow
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.view.MenuItem
 import android.widget.TextView
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout.LOCK_MODE_LOCKED_CLOSED
@@ -15,6 +16,8 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
 import com.bumptech.glide.Glide
 import com.chesire.lifecyklelog.LogLifecykle
 import com.chesire.malime.AuthCaster
@@ -27,6 +30,7 @@ import timber.log.Timber
 import javax.inject.Inject
 
 @LogLifecykle
+@Suppress("TooManyFunctions")
 class Activity : DaggerAppCompatActivity(), AuthCaster.AuthCasterListener {
     @Inject
     lateinit var authCaster: AuthCaster
@@ -46,7 +50,6 @@ class Activity : DaggerAppCompatActivity(), AuthCaster.AuthCasterListener {
         observeViewModel()
 
         authCaster.subscribeToAuthError(this)
-
         if (!viewModel.userLoggedIn) {
             findNavController(R.id.activityNavigation)
                 .navigate(OverviewNavGraphDirections.globalToDetailsFragment())
@@ -112,13 +115,26 @@ class Activity : DaggerAppCompatActivity(), AuthCaster.AuthCasterListener {
 
     override fun unableToRefresh() {
         Timber.w("unableToRefresh has occurred")
-        logout()
+        performLogout()
     }
 
     /**
-     * Sends a logout request to the [viewModel] to handle.
+     * Shows a dialog asking the user if they wish to logout.
+     * This is called from the menu_navigation.xml menu resource in order to allow it to still
+     * function while using the nav component.
      */
-    fun logout() {
+    fun requestUserLogout(@Suppress("UNUSED_PARAMETER") item: MenuItem) {
+        MaterialDialog(this).show {
+            message(R.string.menu_logout_prompt_message)
+            positiveButton(R.string.menu_logout_prompt_confirm) {
+                performLogout()
+            }
+            negativeButton(R.string.menu_logout_prompt_cancel)
+            lifecycleOwner(this@Activity)
+        }
+    }
+
+    private fun performLogout() {
         Timber.w("Logout called, now attempting")
         viewModel.logout {
             Handler(Looper.getMainLooper()).post {
