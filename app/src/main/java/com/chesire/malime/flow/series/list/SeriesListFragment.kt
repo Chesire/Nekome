@@ -45,6 +45,7 @@ abstract class SeriesListFragment : DaggerFragment(), SeriesInteractionListener 
     }
 
     private lateinit var seriesAdapter: SeriesAdapter
+    private var seriesDetail: SeriesDetailSheetFragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -90,10 +91,17 @@ abstract class SeriesListFragment : DaggerFragment(), SeriesInteractionListener 
 
     override fun seriesSelected(imageView: ImageView, model: SeriesModel) {
         Timber.i("seriesSelected called with Model ${model.slug}")
-        SeriesDetailSheetFragment.newInstance(model).show(
-            childFragmentManager,
-            SeriesDetailSheetFragment.TAG
-        )
+
+        if (seriesDetail?.isVisible == true) {
+            Timber.w("Attempt to open series detail while already visible")
+        } else {
+            seriesDetail = SeriesDetailSheetFragment.newInstance(model).also {
+                it.show(
+                    childFragmentManager,
+                    SeriesDetailSheetFragment.TAG
+                )
+            }
+        }
     }
 
     override fun onPlusOne(model: SeriesModel, callback: () -> Unit) {
