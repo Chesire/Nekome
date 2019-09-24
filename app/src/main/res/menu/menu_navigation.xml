@@ -4,7 +4,9 @@
     tools:ignore="MatchingMenuId"
     tools:showIn="activityNavigationView">
 
-    <group android:checkableBehavior="single">
+    <group
+        android:id="@+id/navigationMenuPrimary"
+        android:checkableBehavior="single">
 
         <item
             android:id="@+id/animeFragment"
@@ -24,11 +26,17 @@
             android:title="@string/nav_profile" />
     </group>
 
-    <group android:checkableBehavior="none">
+    <group
+        android:id="@+id/navigationMenuSecondary"
+        android:checkableBehavior="none">
 
         <item
             android:id="@+id/settingsFragment"
             android:icon="@drawable/ic_settings_white"
             android:title="@string/nav_settings" />
+        <item
+            android:id="@+id/logoutNavigation"
+            android:icon="@drawable/ic_exit_to_app"
+            android:title="@string/settings_logout" />
     </group>
 </menu>
