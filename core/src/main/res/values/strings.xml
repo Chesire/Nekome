@@ -4,6 +4,7 @@
 
     <string name="nav_anime">Anime</string>
     <string name="nav_details">Details</string>
+    <string name="nav_discover">Discover</string>
     <string name="nav_manga">Manga</string>
     <string name="nav_profile">Profile</string>
     <string name="nav_timeline">Timeline</string>

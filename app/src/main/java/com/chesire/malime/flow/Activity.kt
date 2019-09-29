@@ -92,8 +92,7 @@ class Activity : DaggerAppCompatActivity(), AuthCaster.AuthCasterListener {
             setOf(
                 R.id.animeFragment,
                 R.id.mangaFragment,
-                R.id.timelineFragment,
-                R.id.profileFragment
+                R.id.discoverFragment
             ),
             findViewById(R.id.activityDrawer)
         )
