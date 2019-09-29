@@ -5,7 +5,6 @@ import com.chesire.malime.TestApplication
 import com.chesire.malime.flow.ActivityTests
 import com.chesire.malime.flow.login.DetailsTests
 import com.chesire.malime.flow.login.SyncingTests
-import com.chesire.malime.flow.profile.ProfileTests
 import com.chesire.malime.flow.settings.SettingsTests
 import com.chesire.malime.harness.FakeAuthApi
 import com.chesire.malime.harness.FakeLibraryApi
@@ -66,7 +65,6 @@ interface TestComponent : AndroidInjector<TestApplication> {
 
     fun inject(target: ActivityTests)
     fun inject(target: DetailsTests)
-    fun inject(target: ProfileTests)
     fun inject(target: SettingsTests)
     fun inject(target: SyncingTests)
 }

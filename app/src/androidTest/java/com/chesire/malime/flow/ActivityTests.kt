@@ -59,22 +59,6 @@ class ActivityTests {
     }
 
     @Test
-    fun overviewCanNavigateToProfileView() {
-        activity.launchActivity(null)
-        openDrawer()
-        clickOn(R.string.nav_profile)
-        assertDisplayed(R.string.nav_profile)
-    }
-
-    @Test
-    fun overviewCanNavigateToTimelineView() {
-        activity.launchActivity(null)
-        openDrawer()
-        clickOn(R.string.nav_timeline)
-        assertDisplayed(R.string.nav_timeline)
-    }
-
-    @Test
     fun overviewCanNavigateToSettingsView() {
         activity.launchActivity(null)
         openDrawer()
