@@ -1,16 +1,15 @@
-package com.chesire.malime.kitsu.api.search
+package com.chesire.malime.kitsu.api.trending
 
 import com.chesire.malime.core.flags.SeriesStatus
 import com.chesire.malime.core.flags.SeriesType
 import com.chesire.malime.core.flags.Subtype
 import com.chesire.malime.core.flags.UserSeriesStatus
 import com.chesire.malime.core.models.ImageModel
-import com.chesire.malime.kitsu.api.intermediaries.Links
 import com.chesire.malime.kitsu.api.intermediaries.SeriesItem
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
-class SearchSeriesModelAdapterTests {
+class TrendingAdapterTests {
     @Test
     fun `seriesModelsFromSearchResponse converts to SeriesModels`() {
         val responseData = listOf(
@@ -32,10 +31,9 @@ class SearchSeriesModelAdapterTests {
                 )
             )
         )
-        val responseLinks = Links("", "", "")
-        val response = SearchResponse(responseData, responseLinks)
+        val response = TrendingResponse(responseData)
 
-        val classUnderTest = SearchSeriesModelAdapter()
+        val classUnderTest = TrendingAdapter()
         val actual = classUnderTest.modelsFromResponse(response).first()
 
         // Ensure that the expected data exists in the SeriesModel
