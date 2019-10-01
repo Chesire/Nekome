@@ -94,7 +94,7 @@ dependencies {
     implementation "com.afollestad.material-dialogs:core:$material_dialog_version"
     implementation "com.afollestad.material-dialogs:input:$material_dialog_version"
     implementation "com.afollestad.material-dialogs:lifecycle:$material_dialog_version"
-    implementation 'com.chesire:lifecyklelog:2.0.0'
+    implementation "com.chesire:lifecyklelog:$lifecykle_version"
     implementation "com.github.bumptech.glide:glide:$glide_version"
     implementation 'com.github.hadilq.liveevent:liveevent:1.0.1'
     implementation "com.google.android.material:material:$material_version"
