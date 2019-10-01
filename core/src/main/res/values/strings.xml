@@ -71,4 +71,7 @@
     <string name="series_detail_status_title">Users series status</string>
     <string name="series_detail_confirm">Confirm</string>
     <string name="series_detail_failure">Failed to update series %s, please try again</string>
+
+    <string name="discover_trending_anime">Trending Anime</string>
+    <string name="discover_trending_manga">Trending Manga</string>
 </resources>
