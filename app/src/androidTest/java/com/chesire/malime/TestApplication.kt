@@ -19,6 +19,7 @@ class TestApplication : DaggerApplication() {
             .authApi(spyk())
             .libraryApi(spyk())
             .searchApi(spyk())
+            .trendingApi(spyk())
             .userApi(spyk())
             .build()
             .also {
