@@ -61,7 +61,6 @@ android {
 
 dependencies {
     ext {
-        glide_version = "4.10.0"
         material_dialog_version = "3.1.1"
         preferences_version = "1.1.0"
     }
