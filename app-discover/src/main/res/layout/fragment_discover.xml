@@ -1,7 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-</LinearLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/fragmentDiscoverLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/discoverTrendingAnimeTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/full_margin"
+            android:text="@string/discover_trending_anime"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/discoverTrendingAnimeList"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:clipToPadding="false"
+            android:orientation="horizontal"
+            android:paddingStart="4dp"
+            android:paddingTop="8dp"
+            android:paddingEnd="4dp"
+            android:paddingBottom="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/discoverTrendingAnimeTitle"
+            tools:itemCount="1"
+            tools:listitem="@layout/adapter_item_trending" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/discoverTrendingMangaTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/full_margin"
+            android:text="@string/discover_trending_manga"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/discoverTrendingAnimeList" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/discoverTrendingMangaList"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:clipToPadding="false"
+            android:orientation="horizontal"
+            android:paddingStart="8dp"
+            android:paddingTop="4dp"
+            android:paddingEnd="8dp"
+            android:paddingBottom="4dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/discoverTrendingMangaTitle"
+            tools:itemCount="1"
+            tools:listitem="@layout/adapter_item_trending" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>
