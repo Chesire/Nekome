@@ -42,7 +42,7 @@ data class SeriesModel(
     /**
      * Provides a [DiffUtil.ItemCallback] class for use with the [SeriesModel].
      */
-    class DiffCallback() : DiffUtil.ItemCallback<SeriesModel>() {
+    class DiffCallback : DiffUtil.ItemCallback<SeriesModel>() {
         override fun areItemsTheSame(oldItem: SeriesModel, newItem: SeriesModel) =
             oldItem.id == newItem.id
 
