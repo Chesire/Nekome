@@ -68,7 +68,6 @@ abstract class SeriesListFragment : DaggerFragment(), SeriesInteractionListener 
             adapter = seriesAdapter
             layoutManager = LinearLayoutManager(requireContext())
             setHasFixedSize(true)
-
             val itemTouchHelper = ItemTouchHelper(SwipeToDelete())
             itemTouchHelper.attachToRecyclerView(this)
         }
