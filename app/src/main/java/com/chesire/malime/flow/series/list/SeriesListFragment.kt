@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chesire.malime.R
 import com.chesire.malime.core.SharedPref
@@ -25,6 +26,7 @@ import com.google.android.material.snackbar.Snackbar
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_series_list.fragmentSeriesListFab
 import kotlinx.android.synthetic.main.fragment_series_list.fragmentSeriesListLayout
+import kotlinx.android.synthetic.main.fragment_series_list.fragmentSeriesListRecyclerView
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -66,6 +68,9 @@ abstract class SeriesListFragment : DaggerFragment(), SeriesInteractionListener 
             adapter = seriesAdapter
             layoutManager = LinearLayoutManager(requireContext())
             setHasFixedSize(true)
+
+            val itemTouchHelper = ItemTouchHelper(SwipeToDelete())
+            itemTouchHelper.attachToRecyclerView(this)
         }
     }.root
 
