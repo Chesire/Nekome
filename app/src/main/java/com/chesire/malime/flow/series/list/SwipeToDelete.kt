@@ -40,8 +40,8 @@ class SwipeToDelete : ItemTouchHelper.SimpleCallback(
 
         val maxWidth = recyclerView.width
         val alphaValue = when {
-            dX > 0 -> FADE_BUFFER - (dX / maxWidth * 100)
-            dX < 0 -> FADE_BUFFER + (dX / maxWidth * 100)
+            dX > 0 -> FADE_BUFFER - dX / maxWidth * 100
+            dX < 0 -> FADE_BUFFER + dX / maxWidth * 100
             else -> 100.toFloat()
         }
         viewHolder.itemView.alpha = alphaValue / 100
