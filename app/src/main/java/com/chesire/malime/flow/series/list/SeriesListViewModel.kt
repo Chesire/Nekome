@@ -4,6 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chesire.malime.AuthCaster
+import com.chesire.malime.core.extensions.postError
+import com.chesire.malime.core.flags.AsyncState
 import com.chesire.malime.core.flags.UserSeriesStatus
 import com.chesire.malime.core.models.SeriesModel
 import com.chesire.malime.series.SeriesRepository
@@ -22,8 +24,8 @@ class SeriesListViewModel @Inject constructor(
     val animeSeries = repo.anime
     val mangaSeries = repo.manga
 
-    private val _deletionStatus = LiveEvent<SeriesListDeleteError>()
-    val deletionStatus: LiveData<SeriesListDeleteError> = _deletionStatus
+    private val _deletionStatus = LiveEvent<AsyncState<SeriesModel, SeriesListDeleteError>>()
+    val deletionStatus: LiveData<AsyncState<SeriesModel, SeriesListDeleteError>> = _deletionStatus
 
     /**
      * Sends an update for a series, will fire [callback] on completion.
@@ -52,7 +54,7 @@ class SeriesListViewModel @Inject constructor(
             if (response.code == Resource.Error.CouldNotRefresh) {
                 authCaster.issueRefreshingToken()
             } else {
-                _deletionStatus.postValue(SeriesListDeleteError.DeletionFailure)
+                _deletionStatus.postError(seriesModel, SeriesListDeleteError.DeletionFailure)
             }
         }
     }

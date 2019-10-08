@@ -18,6 +18,7 @@ import com.afollestad.materialdialogs.callbacks.onCancel
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
 import com.chesire.malime.R
 import com.chesire.malime.core.SharedPref
+import com.chesire.malime.core.flags.AsyncState
 import com.chesire.malime.core.models.SeriesModel
 import com.chesire.malime.databinding.FragmentSeriesListBinding
 import com.chesire.malime.flow.DialogHandler
@@ -146,14 +147,17 @@ abstract class SeriesListFragment : DaggerFragment(), SeriesInteractionListener 
     }
 
     private fun observeSeriesDeletion() {
-        viewModel.deletionStatus.observe(viewLifecycleOwner, Observer {
-            if (it == SeriesListDeleteError.DeletionFailure) {
+        viewModel.deletionStatus.observe(viewLifecycleOwner, Observer { state ->
+            if (state is AsyncState.Error && state.error == SeriesListDeleteError.DeletionFailure) {
                 Snackbar.make(
                     fragmentSeriesListLayout,
                     R.string.series_list_delete_failure,
-                    Snackbar.LENGTH_LONG
-                ).show()
-                seriesAdapter.notifyDataSetChanged()
+                    Snackbar.LENGTH_INDEFINITE
+                ).setAction(R.string.series_list_delete_retry) {
+                    state.data?.let { seriesModel ->
+                        viewModel.deleteSeries(seriesModel)
+                    }
+                }.show()
             }
         })
     }
