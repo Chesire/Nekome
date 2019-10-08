@@ -132,6 +132,7 @@ abstract class SeriesListFragment : DaggerFragment(), SeriesInteractionListener 
             title(text = getString(R.string.series_list_delete_title, model.title))
             positiveButton(R.string.series_list_delete_confirm) {
                 // TODO: send request to vm for it to update
+                // If the request fails, notify the adapter to reset
                 callback(true)
             }
             negativeButton(R.string.series_list_delete_cancel) {

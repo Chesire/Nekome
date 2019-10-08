@@ -15,23 +15,14 @@ class SwipeToDelete(
     0,
     ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
 ) {
-
-    // No implementation required
     override fun onMove(
         recyclerView: RecyclerView,
         viewHolder: RecyclerView.ViewHolder,
         target: RecyclerView.ViewHolder
-    ) = false
+    ) = false // No implementation required
 
-    override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-        adapter.attemptDeleteItem(viewHolder.adapterPosition) { confirmed ->
-            if (confirmed) {
-                // TODO: show loading view
-            } else {
-                viewHolder.itemView.alpha = 1f
-            }
-        }
-    }
+    override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) =
+        adapter.attemptDeleteItem(viewHolder.adapterPosition)
 
     override fun onChildDraw(
         c: Canvas,

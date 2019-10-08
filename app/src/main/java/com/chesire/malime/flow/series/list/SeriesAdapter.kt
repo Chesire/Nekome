@@ -4,6 +4,7 @@ import android.content.SharedPreferences
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
+import androidx.recyclerview.widget.RecyclerView
 import com.chesire.malime.R
 import com.chesire.malime.core.SharedPref
 import com.chesire.malime.core.flags.SortOption
@@ -23,17 +24,22 @@ class SeriesAdapter(
         sharedPref.subscribeToChanges(this)
     }
 
+    private var container: RecyclerView? = null
     private var completeList = mutableListOf<SeriesModel>()
 
     /**
      * Execute when an item has been swiped away in the adapter.
      */
-    fun attemptDeleteItem(position: Int, callback: (Boolean) -> Unit) {
+    fun attemptDeleteItem(position: Int) {
         listener.seriesDelete(getItem(position), position) { confirmed ->
-            if (!confirmed) {
-                notifyDataSetChanged()
-            }
-            callback(confirmed)
+            container?.findViewHolderForAdapterPosition(position)?.let { viewHolder ->
+                if (confirmed) {
+                    // nothing for now
+                } else {
+                    notifyDataSetChanged()
+                    viewHolder.itemView.alpha = 1f
+                }
+            } ?: notifyDataSetChanged() // just call notifyDataSetChanged to reset some state
         }
     }
 
@@ -45,6 +51,11 @@ class SeriesAdapter(
             completeList = list
             super.submitList(executeSort(executeFilter(list)))
         }
+    }
+
+    override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
+        super.onAttachedToRecyclerView(recyclerView)
+        container = recyclerView
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SeriesViewHolder {
