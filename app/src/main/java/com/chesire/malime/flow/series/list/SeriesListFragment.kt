@@ -8,6 +8,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -79,6 +80,7 @@ abstract class SeriesListFragment : DaggerFragment(), SeriesInteractionListener 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         fragmentSeriesListFab.setOnClickListener { toSearch() }
+        observeSeriesDeletion()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -115,13 +117,11 @@ abstract class SeriesListFragment : DaggerFragment(), SeriesInteractionListener 
         Timber.i("Model ${model.slug} onPlusOne called")
         viewModel.updateSeries(model.userId, model.progress.inc(), model.userSeriesStatus) {
             if (it is Resource.Error) {
-                Snackbar
-                    .make(
-                        fragmentSeriesListLayout,
-                        getString(R.string.list_try_again, model.title),
-                        Snackbar.LENGTH_LONG
-                    )
-                    .show()
+                Snackbar.make(
+                    fragmentSeriesListLayout,
+                    getString(R.string.list_try_again, model.title),
+                    Snackbar.LENGTH_LONG
+                ).show()
             }
             callback()
         }
@@ -131,9 +131,9 @@ abstract class SeriesListFragment : DaggerFragment(), SeriesInteractionListener 
         MaterialDialog(requireContext()).show {
             title(text = getString(R.string.series_list_delete_title, model.title))
             positiveButton(R.string.series_list_delete_confirm) {
-                // TODO: send request to vm for it to update
-                // If the request fails, notify the adapter to reset
+                Timber.d("Deletion confirmed for series ${model.slug}")
                 callback(true)
+                viewModel.deleteSeries(model)
             }
             negativeButton(R.string.series_list_delete_cancel) {
                 callback(false)
@@ -143,6 +143,19 @@ abstract class SeriesListFragment : DaggerFragment(), SeriesInteractionListener 
             }
             lifecycleOwner(viewLifecycleOwner)
         }
+    }
+
+    private fun observeSeriesDeletion() {
+        viewModel.deletionStatus.observe(viewLifecycleOwner, Observer {
+            if (it == SeriesListDeleteError.DeletionFailure) {
+                Snackbar.make(
+                    fragmentSeriesListLayout,
+                    R.string.series_list_delete_failure,
+                    Snackbar.LENGTH_LONG
+                ).show()
+                seriesAdapter.notifyDataSetChanged()
+            }
+        })
     }
 
     /**
