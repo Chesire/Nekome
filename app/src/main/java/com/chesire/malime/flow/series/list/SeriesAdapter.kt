@@ -23,7 +23,19 @@ class SeriesAdapter(
         sharedPref.subscribeToChanges(this)
     }
 
-    private var completeList: MutableList<SeriesModel> = mutableListOf()
+    private var completeList = mutableListOf<SeriesModel>()
+
+    /**
+     * Execute when an item has been swiped away in the adapter.
+     */
+    fun attemptDeleteItem(position: Int, callback: (Boolean) -> Unit) {
+        listener.seriesDelete(getItem(position), position) { confirmed ->
+            if (!confirmed) {
+                notifyDataSetChanged()
+            }
+            callback(confirmed)
+        }
+    }
 
     override fun submitList(list: MutableList<SeriesModel>?) {
         if (list == null) {

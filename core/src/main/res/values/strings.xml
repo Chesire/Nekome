@@ -64,6 +64,10 @@
     <string name="settings_licenses">Licenses</string>
     <string name="settings_privacy_policy">Privacy Policy</string>
 
+    <string name="series_list_delete_title">Are you sure you want to delete %s?</string>
+    <string name="series_list_delete_confirm">Confirm</string>
+    <string name="series_list_delete_cancel">Cancel</string>
+
     <string name="series_detail_dash">-</string>
     <string name="series_detail_progress_title">Progress</string>
     <string name="series_detail_progress_out_of">/ %s</string>

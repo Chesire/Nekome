@@ -12,6 +12,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.callbacks.onCancel
+import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
 import com.chesire.malime.R
 import com.chesire.malime.core.SharedPref
 import com.chesire.malime.core.models.SeriesModel
@@ -68,7 +71,7 @@ abstract class SeriesListFragment : DaggerFragment(), SeriesInteractionListener 
             adapter = seriesAdapter
             layoutManager = LinearLayoutManager(requireContext())
             setHasFixedSize(true)
-            val itemTouchHelper = ItemTouchHelper(SwipeToDelete())
+            val itemTouchHelper = ItemTouchHelper(SwipeToDelete(seriesAdapter))
             itemTouchHelper.attachToRecyclerView(this)
         }
     }.root
@@ -121,6 +124,23 @@ abstract class SeriesListFragment : DaggerFragment(), SeriesInteractionListener 
                     .show()
             }
             callback()
+        }
+    }
+
+    override fun seriesDelete(model: SeriesModel, position: Int, callback: (Boolean) -> Unit) {
+        MaterialDialog(requireContext()).show {
+            title(text = getString(R.string.series_list_delete_title, model.title))
+            positiveButton(R.string.series_list_delete_confirm) {
+                // TODO: send request to vm for it to update
+                callback(true)
+            }
+            negativeButton(R.string.series_list_delete_cancel) {
+                callback(false)
+            }
+            onCancel {
+                callback(false)
+            }
+            lifecycleOwner(viewLifecycleOwner)
         }
     }
 
