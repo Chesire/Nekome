@@ -19,5 +19,5 @@ interface SeriesInteractionListener {
      * Executed when a series has been chosen for deletion, The [callback] is fired on completion
      * with a value of true if deletion is confirmed, or false if it is cancelled.
      */
-    fun seriesDelete(model: SeriesModel, position: Int, callback: (Boolean) -> Unit)
+    fun seriesDelete(model: SeriesModel, callback: (Boolean) -> Unit)
 }

@@ -31,10 +31,11 @@ class SeriesAdapter(
      * Execute when an item has been swiped away in the adapter.
      */
     fun attemptDeleteItem(position: Int) {
-        listener.seriesDelete(getItem(position), position) { confirmed ->
+        val model = getItem(position)
+        listener.seriesDelete(model) { confirmed ->
             container?.findViewHolderForAdapterPosition(position)?.let { viewHolder ->
                 if (confirmed) {
-                    // nothing for now
+                    submitList(completeList.minus(model).toMutableList())
                 } else {
                     notifyDataSetChanged()
                     viewHolder.itemView.alpha = 1f

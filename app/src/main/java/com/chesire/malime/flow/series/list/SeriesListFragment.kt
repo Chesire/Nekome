@@ -127,7 +127,7 @@ abstract class SeriesListFragment : DaggerFragment(), SeriesInteractionListener 
         }
     }
 
-    override fun seriesDelete(model: SeriesModel, position: Int, callback: (Boolean) -> Unit) {
+    override fun seriesDelete(model: SeriesModel, callback: (Boolean) -> Unit) {
         MaterialDialog(requireContext()).show {
             title(text = getString(R.string.series_list_delete_title, model.title))
             positiveButton(R.string.series_list_delete_confirm) {
