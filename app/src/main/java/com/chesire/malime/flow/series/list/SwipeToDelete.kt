@@ -9,23 +9,20 @@ private const val FADE_BUFFER = 90
 /**
  * [ItemTouchHelper] that fades a view out to allow deletion.
  */
-class SwipeToDelete : ItemTouchHelper.SimpleCallback(
+class SwipeToDelete(
+    private val adapter: SeriesAdapter
+) : ItemTouchHelper.SimpleCallback(
     0,
     ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
 ) {
-    // No implementation required
     override fun onMove(
         recyclerView: RecyclerView,
         viewHolder: RecyclerView.ViewHolder,
         target: RecyclerView.ViewHolder
-    ) = false
+    ) = false // No implementation required
 
-    override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-        // notify the adapter, and fragment?
-
-        // val position = viewHolder.adapterPosition
-        // mAdapter.deleteItem(position)
-    }
+    override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) =
+        adapter.attemptDeleteItem(viewHolder.adapterPosition)
 
     override fun onChildDraw(
         c: Canvas,
