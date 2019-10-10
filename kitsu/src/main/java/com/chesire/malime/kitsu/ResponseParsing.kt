@@ -25,8 +25,9 @@ internal fun <T> emptyResponseError(): Resource.Error<T> =
     Resource.Error("Response body is null", 204)
 
 internal fun <T> Exception.parse(): Resource.Error<T> {
-    return when (this) {
-        is UnknownHostException -> Resource.Error("Could not reach service", 503)
-        else -> Resource.Error("Unknown error encountered", 400)
+    return if (this is UnknownHostException) {
+        Resource.Error("Could not reach service", 503)
+    } else {
+        Resource.Error("Unknown error encountered", 400)
     }
 }
