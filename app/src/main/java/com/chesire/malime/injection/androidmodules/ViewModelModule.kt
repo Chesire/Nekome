@@ -3,8 +3,8 @@ package com.chesire.malime.injection.androidmodules
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.chesire.malime.app.discover.DiscoverViewModel
+import com.chesire.malime.core.viewmodel.ViewModelFactory
 import com.chesire.malime.flow.ActivityViewModel
-import com.chesire.malime.flow.ViewModelFactory
 import com.chesire.malime.flow.login.details.DetailsViewModel
 import com.chesire.malime.flow.login.syncing.SyncingViewModel
 import com.chesire.malime.flow.profile.ProfileViewModel

@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.chesire.lifecyklelog.LogLifecykle
 import com.chesire.malime.app.discover.trending.TrendingAdapter
 import com.chesire.malime.core.flags.AsyncState
-import com.chesire.malime.flow.ViewModelFactory
+import com.chesire.malime.core.viewmodel.ViewModelFactory
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 

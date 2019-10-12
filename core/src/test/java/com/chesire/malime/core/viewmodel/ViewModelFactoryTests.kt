@@ -1,6 +1,7 @@
 package com.chesire.malime.flow
 
 import androidx.lifecycle.ViewModel
+import com.chesire.malime.core.viewmodel.ViewModelFactory
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.Assert
