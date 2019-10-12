@@ -1,6 +1,8 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply from: '../jacoco.gradle'
+apply from: '../ktlint.gradle'
 
 android {
     compileSdkVersion 28
