@@ -33,6 +33,9 @@ detekt {
     input = files(
             "account/src/main/java",
             "app/src/main/java",
+            "app-discover/src/main/java",
+            "app-profile/src/main/java",
+            "app-timeline/src/main/java",
             "core/src/main/java",
             "database/src/main/java",
             "kitsu/src/main/java",
