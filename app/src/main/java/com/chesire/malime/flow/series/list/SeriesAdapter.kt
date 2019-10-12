@@ -17,7 +17,7 @@ import timber.log.Timber
 class SeriesAdapter(
     private val listener: SeriesInteractionListener,
     private val sharedPref: SharedPref
-) : ListAdapter<SeriesModel, SeriesViewHolder>(SeriesModelDiffCallback()),
+) : ListAdapter<SeriesModel, SeriesViewHolder>(SeriesModel.DiffCallback()),
     SharedPreferences.OnSharedPreferenceChangeListener {
 
     init {

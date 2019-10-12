@@ -1,4 +1,4 @@
-package com.chesire.malime.flow
+package com.chesire.malime.core.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

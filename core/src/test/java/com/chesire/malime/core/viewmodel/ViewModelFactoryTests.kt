@@ -1,10 +1,10 @@
 package com.chesire.malime.flow
 
 import androidx.lifecycle.ViewModel
+import com.chesire.malime.core.viewmodel.ViewModelFactory
 import io.mockk.every
 import io.mockk.mockk
-import org.junit.Assert.assertNotNull
-import org.junit.Assert.fail
+import org.junit.Assert
 import org.junit.Test
 import javax.inject.Provider
 
@@ -19,7 +19,7 @@ class ViewModelFactoryTests {
         )
         val classUnderTest = ViewModelFactory(input)
 
-        assertNotNull(classUnderTest.create(ViewModel1::class.java))
+        Assert.assertNotNull(classUnderTest.create(ViewModel1::class.java))
     }
 
     @Test
@@ -32,7 +32,7 @@ class ViewModelFactoryTests {
         )
         val classUnderTest = ViewModelFactory(input)
 
-        assertNotNull(classUnderTest.create(ViewModel1::class.java))
+        Assert.assertNotNull(classUnderTest.create(ViewModel1::class.java))
     }
 
     @Test(expected = IllegalArgumentException::class)
@@ -41,7 +41,7 @@ class ViewModelFactoryTests {
         val classUnderTest = ViewModelFactory(input)
 
         classUnderTest.create(ViewModel1::class.java)
-        fail("Exception should have occurred")
+        Assert.fail("Exception should have occurred")
     }
 
     private open class ViewModel1 : ViewModel()

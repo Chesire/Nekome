@@ -5,11 +5,11 @@ import com.chesire.malime.TestApplication
 import com.chesire.malime.flow.ActivityTests
 import com.chesire.malime.flow.login.DetailsTests
 import com.chesire.malime.flow.login.SyncingTests
-import com.chesire.malime.flow.profile.ProfileTests
 import com.chesire.malime.flow.settings.SettingsTests
 import com.chesire.malime.harness.FakeAuthApi
 import com.chesire.malime.harness.FakeLibraryApi
 import com.chesire.malime.harness.FakeSearchApi
+import com.chesire.malime.harness.FakeTrendingApi
 import com.chesire.malime.harness.FakeUserApi
 import com.chesire.malime.injection.androidmodules.ActivityModule
 import com.chesire.malime.injection.androidmodules.FragmentModule
@@ -59,6 +59,9 @@ interface TestComponent : AndroidInjector<TestApplication> {
         fun searchApi(searchApi: FakeSearchApi): Builder
 
         @BindsInstance
+        fun trendingApi(trendingApi: FakeTrendingApi): Builder
+
+        @BindsInstance
         fun userApi(userApi: FakeUserApi): Builder
 
         fun build(): TestComponent
@@ -66,7 +69,6 @@ interface TestComponent : AndroidInjector<TestApplication> {
 
     fun inject(target: ActivityTests)
     fun inject(target: DetailsTests)
-    fun inject(target: ProfileTests)
     fun inject(target: SettingsTests)
     fun inject(target: SyncingTests)
 }

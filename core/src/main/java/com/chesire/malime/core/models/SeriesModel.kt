@@ -1,6 +1,7 @@
 package com.chesire.malime.core.models
 
 import android.os.Parcelable
+import androidx.recyclerview.widget.DiffUtil
 import androidx.room.Entity
 import androidx.room.Ignore
 import androidx.room.PrimaryKey
@@ -37,4 +38,15 @@ data class SeriesModel(
     @Ignore
     @IgnoredOnParcel
     val lengthKnown = totalLength != 0
+
+    /**
+     * Provides a [DiffUtil.ItemCallback] class for use with the [SeriesModel].
+     */
+    class DiffCallback : DiffUtil.ItemCallback<SeriesModel>() {
+        override fun areItemsTheSame(oldItem: SeriesModel, newItem: SeriesModel) =
+            oldItem.id == newItem.id
+
+        override fun areContentsTheSame(oldItem: SeriesModel, newItem: SeriesModel) =
+            oldItem == newItem
+    }
 }

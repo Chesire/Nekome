@@ -11,8 +11,8 @@ import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.chesire.lifecyklelog.LogLifecykle
 import com.chesire.malime.R
+import com.chesire.malime.core.viewmodel.ViewModelFactory
 import com.chesire.malime.databinding.FragmentSyncingBinding
-import com.chesire.malime.flow.ViewModelFactory
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_syncing.syncingProfileImage
 import javax.inject.Inject

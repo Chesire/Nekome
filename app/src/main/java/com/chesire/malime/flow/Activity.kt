@@ -23,6 +23,7 @@ import com.chesire.lifecyklelog.LogLifecykle
 import com.chesire.malime.AuthCaster
 import com.chesire.malime.OverviewNavGraphDirections
 import com.chesire.malime.R
+import com.chesire.malime.core.viewmodel.ViewModelFactory
 import com.google.android.material.navigation.NavigationView
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity.activityDrawer
@@ -92,8 +93,7 @@ class Activity : DaggerAppCompatActivity(), AuthCaster.AuthCasterListener {
             setOf(
                 R.id.animeFragment,
                 R.id.mangaFragment,
-                R.id.timelineFragment,
-                R.id.profileFragment
+                R.id.discoverFragment
             ),
             findViewById(R.id.activityDrawer)
         )

@@ -13,11 +13,11 @@ import androidx.lifecycle.get
 import androidx.navigation.fragment.findNavController
 import com.chesire.lifecyklelog.LogLifecykle
 import com.chesire.malime.R
+import com.chesire.malime.core.viewmodel.ViewModelFactory
 import com.chesire.malime.databinding.FragmentDetailsBinding
 import com.chesire.malime.extensions.hide
 import com.chesire.malime.extensions.hideSystemKeyboard
 import com.chesire.malime.extensions.show
-import com.chesire.malime.flow.ViewModelFactory
 import com.google.android.material.snackbar.Snackbar
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_details.detailsLayout

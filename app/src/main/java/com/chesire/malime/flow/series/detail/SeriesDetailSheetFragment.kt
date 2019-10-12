@@ -16,10 +16,10 @@ import com.chesire.malime.R
 import com.chesire.malime.core.flags.AsyncState
 import com.chesire.malime.core.flags.UserSeriesStatus
 import com.chesire.malime.core.models.SeriesModel
+import com.chesire.malime.core.viewmodel.ViewModelFactory
 import com.chesire.malime.extensions.extraNotNull
 import com.chesire.malime.extensions.hide
 import com.chesire.malime.extensions.show
-import com.chesire.malime.flow.ViewModelFactory
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.snackbar.Snackbar
 import dagger.android.support.AndroidSupportInjection
