@@ -80,7 +80,7 @@ dependencies {
     implementation 'androidx.browser:browser:1.0.0'
     implementation "androidx.constraintlayout:constraintlayout:$constraint_layout_version"
     implementation "androidx.core:core-ktx:$corektx_version"
-    implementation 'androidx.fragment:fragment-ktx:1.2.0-alpha04'
+    implementation 'androidx.fragment:fragment-ktx:1.2.0-beta01'
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"

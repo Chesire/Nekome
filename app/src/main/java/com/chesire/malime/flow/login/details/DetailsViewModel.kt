@@ -39,9 +39,10 @@ class DetailsViewModel @Inject constructor(
             is Resource.Success -> executeGetUser()
             is Resource.Error -> {
                 Timber.e("Error logging in - [${result.code}] ${result.msg}")
-                when (result.code) {
-                    401 -> _loginStatus.postValue(LoginStatus.InvalidCredentials)
-                    else -> _loginStatus.postValue(LoginStatus.Error)
+                if (result.code == 401) {
+                    _loginStatus.postValue(LoginStatus.InvalidCredentials)
+                } else {
+                    _loginStatus.postValue(LoginStatus.Error)
                 }
             }
         }

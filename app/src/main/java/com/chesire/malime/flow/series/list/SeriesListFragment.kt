@@ -8,11 +8,17 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.callbacks.onCancel
+import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
 import com.chesire.malime.R
 import com.chesire.malime.core.SharedPref
+import com.chesire.malime.core.flags.AsyncState
 import com.chesire.malime.core.models.SeriesModel
 import com.chesire.malime.databinding.FragmentSeriesListBinding
 import com.chesire.malime.flow.DialogHandler
@@ -25,6 +31,7 @@ import com.google.android.material.snackbar.Snackbar
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_series_list.fragmentSeriesListFab
 import kotlinx.android.synthetic.main.fragment_series_list.fragmentSeriesListLayout
+import kotlinx.android.synthetic.main.fragment_series_list.fragmentSeriesListRecyclerView
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -32,6 +39,7 @@ import javax.inject.Inject
  * Provides a base fragment for the [AnimeFragment] & [MangaFragment] to inherit from, performing
  * most of the setup and interaction.
  */
+@Suppress("TooManyFunctions")
 abstract class SeriesListFragment : DaggerFragment(), SeriesInteractionListener {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
@@ -66,12 +74,15 @@ abstract class SeriesListFragment : DaggerFragment(), SeriesInteractionListener 
             adapter = seriesAdapter
             layoutManager = LinearLayoutManager(requireContext())
             setHasFixedSize(true)
+            val itemTouchHelper = ItemTouchHelper(SwipeToDelete(seriesAdapter))
+            itemTouchHelper.attachToRecyclerView(this)
         }
     }.root
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         fragmentSeriesListFab.setOnClickListener { toSearch() }
+        observeSeriesDeletion()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -108,16 +119,48 @@ abstract class SeriesListFragment : DaggerFragment(), SeriesInteractionListener 
         Timber.i("Model ${model.slug} onPlusOne called")
         viewModel.updateSeries(model.userId, model.progress.inc(), model.userSeriesStatus) {
             if (it is Resource.Error) {
-                Snackbar
-                    .make(
-                        fragmentSeriesListLayout,
-                        getString(R.string.list_try_again, model.title),
-                        Snackbar.LENGTH_LONG
-                    )
-                    .show()
+                Snackbar.make(
+                    fragmentSeriesListLayout,
+                    getString(R.string.list_try_again, model.title),
+                    Snackbar.LENGTH_LONG
+                ).show()
             }
             callback()
         }
+    }
+
+    override fun seriesDelete(model: SeriesModel, callback: (Boolean) -> Unit) {
+        MaterialDialog(requireContext()).show {
+            title(text = getString(R.string.series_list_delete_title, model.title))
+            positiveButton(R.string.series_list_delete_confirm) {
+                Timber.d("Deletion confirmed for series ${model.slug}")
+                callback(true)
+                viewModel.deleteSeries(model)
+            }
+            negativeButton(R.string.series_list_delete_cancel) {
+                callback(false)
+            }
+            onCancel {
+                callback(false)
+            }
+            lifecycleOwner(viewLifecycleOwner)
+        }
+    }
+
+    private fun observeSeriesDeletion() {
+        viewModel.deletionStatus.observe(viewLifecycleOwner, Observer { state ->
+            if (state is AsyncState.Error && state.error == SeriesListDeleteError.DeletionFailure) {
+                Snackbar.make(
+                    fragmentSeriesListLayout,
+                    R.string.series_list_delete_failure,
+                    Snackbar.LENGTH_INDEFINITE
+                ).setAction(R.string.series_list_delete_retry) {
+                    state.data?.let { seriesModel ->
+                        viewModel.deleteSeries(seriesModel)
+                    }
+                }.show()
+            }
+        })
     }
 
     /**
