@@ -1,10 +1,10 @@
-package com.chesire.malime.flow.timeline
+package com.chesire.malime.app.timeline
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import com.chesire.lifecyklelog.LogLifecykle
-import com.chesire.malime.databinding.FragmentTimelineBinding
 import dagger.android.support.DaggerFragment
 
 @LogLifecykle
@@ -13,5 +13,5 @@ class TimelineFragment : DaggerFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ) = FragmentTimelineBinding.inflate(inflater, container, false).root
+    ): View? = inflater.inflate(R.layout.fragment_timeline, container, false)
 }

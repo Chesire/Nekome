@@ -68,6 +68,7 @@ dependencies {
 
     implementation project(path: ':account')
     implementation project(path: ':app-discover')
+    implementation project(path: ':app-timeline')
     implementation project(path: ':core')
     implementation project(path: ':database')
     implementation project(path: ':kitsu')

@@ -1,6 +1,7 @@
 package com.chesire.malime.injection.androidmodules
 
 import com.chesire.malime.app.discover.DiscoverFragment
+import com.chesire.malime.app.timeline.TimelineFragment
 import com.chesire.malime.flow.login.details.DetailsFragment
 import com.chesire.malime.flow.login.syncing.SyncingFragment
 import com.chesire.malime.flow.profile.ProfileFragment
@@ -9,7 +10,6 @@ import com.chesire.malime.flow.series.list.anime.AnimeFragment
 import com.chesire.malime.flow.series.list.manga.MangaFragment
 import com.chesire.malime.flow.series.search.SearchFragment
 import com.chesire.malime.flow.settings.OssFragment
-import com.chesire.malime.flow.timeline.TimelineFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 

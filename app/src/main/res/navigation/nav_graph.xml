@@ -62,7 +62,7 @@
         tools:layout="@layout/fragment_discover" />
     <fragment
         android:id="@+id/timelineFragment"
-        android:name="com.chesire.malime.flow.timeline.TimelineFragment"
+        android:name="com.chesire.malime.app.timeline.TimelineFragment"
         android:label="@string/nav_timeline"
         tools:layout="@layout/fragment_timeline" />
     <fragment
