@@ -12,6 +12,7 @@ import com.chesire.malime.core.models.UserModel
 /**
  * Creates a new instance of [SeriesModel] with default data.
  */
+@Suppress("LongParameterList", "LongMethod")
 fun createSeriesModel(
     id: Int = 999,
     userId: Int = 999,
