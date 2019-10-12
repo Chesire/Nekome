@@ -72,6 +72,7 @@ ext {
     lifecykle_version = "2.0.0"
     material_version = "1.1.0-beta01"
     moshi_version = "1.8.0"
+    preferences_version = "1.1.0"
     room_version = "2.2.0"
     timber_version = "4.7.1"
 }

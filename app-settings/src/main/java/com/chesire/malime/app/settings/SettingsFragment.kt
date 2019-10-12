@@ -1,4 +1,4 @@
-package com.chesire.malime.flow.settings
+package com.chesire.malime.app.settings
 
 import android.net.Uri
 import android.os.Bundle
@@ -7,9 +7,11 @@ import androidx.navigation.fragment.findNavController
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.chesire.lifecyklelog.LogLifecykle
-import com.chesire.malime.R
 import timber.log.Timber
 
+/**
+ * [SettingsFragment] hosts the configuration options for the application.
+ */
 @LogLifecykle
 class SettingsFragment : PreferenceFragmentCompat() {
     private lateinit var keyPrivacyPolicy: String

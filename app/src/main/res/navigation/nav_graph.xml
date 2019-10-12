@@ -5,6 +5,9 @@
     android:id="@+id/overview_nav_graph"
     app:startDestination="@id/animeFragment">
 
+    <!-- Nested -->
+    <include app:graph="@navigation/settings_nav_graph" />
+
     <!-- OOB -->
     <fragment
         android:id="@+id/detailsFragment"
@@ -79,19 +82,6 @@
         android:name="com.chesire.malime.flow.series.search.SearchFragment"
         android:label="SearchFragment"
         tools:layout="@layout/fragment_search" />
-    <fragment
-        android:id="@+id/settingsFragment"
-        android:name="com.chesire.malime.flow.settings.SettingsFragment"
-        android:label="@string/nav_settings">
-        <action
-            android:id="@+id/toOssFragment"
-            app:destination="@id/ossFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/ossFragment"
-        android:name="com.chesire.malime.app.settings.oss.OssFragment"
-        android:label="@string/settings_licenses"
-        tools:layout="@layout/fragment_oss" />
     <!-- End Main -->
 
     <!-- Global Actions -->
