@@ -29,7 +29,7 @@ class ProfileViewModelTests {
         val mockUserRepo = mockk<UserRepository> {
             every { user } returns mockk()
         }
-        val mockObserver = mockk<Observer<SeriesProgress>>() {
+        val mockObserver = mockk<Observer<SeriesProgress>> {
             every { onChanged(any()) } just Runs
         }
 
@@ -49,7 +49,7 @@ class ProfileViewModelTests {
         val mockUserRepo = mockk<UserRepository> {
             every { user } returns mockk()
         }
-        val mockObserver = mockk<Observer<SeriesProgress>>() {
+        val mockObserver = mockk<Observer<SeriesProgress>> {
             every { onChanged(any()) } just Runs
         }
 
@@ -76,7 +76,7 @@ class ProfileViewModelTests {
         val mockUserRepo = mockk<UserRepository> {
             every { user } returns mockk()
         }
-        val mockObserver = mockk<Observer<SeriesProgress>>() {
+        val mockObserver = mockk<Observer<SeriesProgress>> {
             every { onChanged(any()) } just Runs
         }
 
@@ -103,7 +103,7 @@ class ProfileViewModelTests {
         val mockUserRepo = mockk<UserRepository> {
             every { user } returns mockk()
         }
-        val mockObserver = mockk<Observer<SeriesProgress>>() {
+        val mockObserver = mockk<Observer<SeriesProgress>> {
             every { onChanged(any()) } just Runs
         }
 
@@ -130,7 +130,7 @@ class ProfileViewModelTests {
         val mockUserRepo = mockk<UserRepository> {
             every { user } returns mockk()
         }
-        val mockObserver = mockk<Observer<SeriesProgress>>() {
+        val mockObserver = mockk<Observer<SeriesProgress>> {
             every { onChanged(any()) } just Runs
         }
 
@@ -157,7 +157,7 @@ class ProfileViewModelTests {
         val mockUserRepo = mockk<UserRepository> {
             every { user } returns mockk()
         }
-        val mockObserver = mockk<Observer<SeriesProgress>>() {
+        val mockObserver = mockk<Observer<SeriesProgress>> {
             every { onChanged(any()) } just Runs
         }
 
@@ -184,7 +184,7 @@ class ProfileViewModelTests {
         val mockUserRepo = mockk<UserRepository> {
             every { user } returns mockk()
         }
-        val mockObserver = mockk<Observer<SeriesProgress>>() {
+        val mockObserver = mockk<Observer<SeriesProgress>> {
             every { onChanged(any()) } just Runs
         }
 
@@ -211,7 +211,7 @@ class ProfileViewModelTests {
         val mockUserRepo = mockk<UserRepository> {
             every { user } returns mockk()
         }
-        val mockObserver = mockk<Observer<SeriesProgress>>() {
+        val mockObserver = mockk<Observer<SeriesProgress>> {
             every { onChanged(any()) } just Runs
         }
 
@@ -238,7 +238,7 @@ class ProfileViewModelTests {
         val mockUserRepo = mockk<UserRepository> {
             every { user } returns mockk()
         }
-        val mockObserver = mockk<Observer<SeriesProgress>>() {
+        val mockObserver = mockk<Observer<SeriesProgress>> {
             every { onChanged(any()) } just Runs
         }
 
