@@ -1,5 +1,8 @@
-package com.chesire.malime.flow.profile
+package com.chesire.malime.app.profile
 
+/**
+ * Container for the different states a series can be in, aids with displaying on the profile.
+ */
 data class SeriesProgress(
     val total: String,
     val current: String,

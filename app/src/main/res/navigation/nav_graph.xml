@@ -67,7 +67,7 @@
         tools:layout="@layout/fragment_timeline" />
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.chesire.malime.flow.profile.ProfileFragment"
+        android:name="com.chesire.malime.app.profile.ProfileFragment"
         android:label="@string/nav_profile"
         tools:layout="@layout/fragment_profile">
         <action

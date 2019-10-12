@@ -1,11 +1,10 @@
-package com.chesire.malime.flow.profile
+package com.chesire.malime.app.profile
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.chesire.malime.account.UserRepository
 import com.chesire.malime.core.flags.UserSeriesStatus
-import com.chesire.malime.createSeriesModel
 import com.chesire.malime.series.SeriesRepository
 import io.mockk.Runs
 import io.mockk.every
@@ -33,7 +32,8 @@ class ProfileViewModelTests {
             every { onChanged(any()) } just Runs
         }
 
-        val classUnderTest = ProfileViewModel(mockSeriesRepo, mockUserRepo)
+        val classUnderTest =
+            ProfileViewModel(mockSeriesRepo, mockUserRepo)
         classUnderTest.anime.observeForever(mockObserver)
 
         assertNotNull(classUnderTest.anime.value)
@@ -52,7 +52,8 @@ class ProfileViewModelTests {
             every { onChanged(any()) } just Runs
         }
 
-        val classUnderTest = ProfileViewModel(mockSeriesRepo, mockUserRepo)
+        val classUnderTest =
+            ProfileViewModel(mockSeriesRepo, mockUserRepo)
         classUnderTest.manga.observeForever(mockObserver)
 
         assertNotNull(classUnderTest.manga.value)
@@ -78,7 +79,8 @@ class ProfileViewModelTests {
             every { onChanged(any()) } just Runs
         }
 
-        val classUnderTest = ProfileViewModel(mockSeriesRepo, mockUserRepo)
+        val classUnderTest =
+            ProfileViewModel(mockSeriesRepo, mockUserRepo)
         classUnderTest.manga.observeForever(mockObserver)
 
         assertEquals("4", classUnderTest.manga.value?.total)
@@ -104,7 +106,8 @@ class ProfileViewModelTests {
             every { onChanged(any()) } just Runs
         }
 
-        val classUnderTest = ProfileViewModel(mockSeriesRepo, mockUserRepo)
+        val classUnderTest =
+            ProfileViewModel(mockSeriesRepo, mockUserRepo)
         classUnderTest.manga.observeForever(mockObserver)
 
         assertEquals("1", classUnderTest.manga.value?.current)
@@ -130,7 +133,8 @@ class ProfileViewModelTests {
             every { onChanged(any()) } just Runs
         }
 
-        val classUnderTest = ProfileViewModel(mockSeriesRepo, mockUserRepo)
+        val classUnderTest =
+            ProfileViewModel(mockSeriesRepo, mockUserRepo)
         classUnderTest.manga.observeForever(mockObserver)
 
         assertEquals("2", classUnderTest.manga.value?.completed)
@@ -156,7 +160,8 @@ class ProfileViewModelTests {
             every { onChanged(any()) } just Runs
         }
 
-        val classUnderTest = ProfileViewModel(mockSeriesRepo, mockUserRepo)
+        val classUnderTest =
+            ProfileViewModel(mockSeriesRepo, mockUserRepo)
         classUnderTest.manga.observeForever(mockObserver)
 
         assertEquals("4", classUnderTest.manga.value?.onHold)
@@ -182,7 +187,8 @@ class ProfileViewModelTests {
             every { onChanged(any()) } just Runs
         }
 
-        val classUnderTest = ProfileViewModel(mockSeriesRepo, mockUserRepo)
+        val classUnderTest =
+            ProfileViewModel(mockSeriesRepo, mockUserRepo)
         classUnderTest.manga.observeForever(mockObserver)
 
         assertEquals("0", classUnderTest.manga.value?.dropped)
@@ -208,7 +214,8 @@ class ProfileViewModelTests {
             every { onChanged(any()) } just Runs
         }
 
-        val classUnderTest = ProfileViewModel(mockSeriesRepo, mockUserRepo)
+        val classUnderTest =
+            ProfileViewModel(mockSeriesRepo, mockUserRepo)
         classUnderTest.manga.observeForever(mockObserver)
 
         assertEquals("1", classUnderTest.manga.value?.planned)
@@ -234,7 +241,8 @@ class ProfileViewModelTests {
             every { onChanged(any()) } just Runs
         }
 
-        val classUnderTest = ProfileViewModel(mockSeriesRepo, mockUserRepo)
+        val classUnderTest =
+            ProfileViewModel(mockSeriesRepo, mockUserRepo)
         classUnderTest.manga.observeForever(mockObserver)
 
         assertEquals("2", classUnderTest.manga.value?.unknown)

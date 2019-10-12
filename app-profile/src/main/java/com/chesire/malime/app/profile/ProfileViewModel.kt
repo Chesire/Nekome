@@ -1,15 +1,19 @@
-package com.chesire.malime.flow.profile
+package com.chesire.malime.app.profile
 
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
+import com.chesire.malime.account.UserRepository
 import com.chesire.malime.core.flags.UserSeriesStatus
 import com.chesire.malime.core.models.SeriesModel
 import com.chesire.malime.series.SeriesRepository
 import javax.inject.Inject
 
+/**
+ * ViewModel to funnel information about the profile.
+ */
 class ProfileViewModel @Inject constructor(
-    seriesRepository: com.chesire.malime.series.SeriesRepository,
-    userRepository: com.chesire.malime.account.UserRepository
+    seriesRepository: SeriesRepository,
+    userRepository: UserRepository
 ) : ViewModel() {
     val user = userRepository.user
     val anime = Transformations.map(seriesRepository.anime) { createSeriesProgress(it) }

@@ -7,7 +7,7 @@ import com.chesire.malime.core.viewmodel.ViewModelFactory
 import com.chesire.malime.flow.ActivityViewModel
 import com.chesire.malime.flow.login.details.DetailsViewModel
 import com.chesire.malime.flow.login.syncing.SyncingViewModel
-import com.chesire.malime.flow.profile.ProfileViewModel
+import com.chesire.malime.app.profile.ProfileViewModel
 import com.chesire.malime.flow.series.detail.SeriesDetailViewModel
 import com.chesire.malime.flow.series.list.SeriesListViewModel
 import com.chesire.malime.flow.series.search.SearchViewModel
@@ -40,8 +40,8 @@ abstract class ViewModelModule {
 
     @Binds
     @IntoMap
-    @ViewModelKey(ProfileViewModel::class)
-    abstract fun bindProfileViewModel(viewModel: ProfileViewModel): ViewModel
+    @ViewModelKey(com.chesire.malime.app.profile.ProfileViewModel::class)
+    abstract fun bindProfileViewModel(viewModel: com.chesire.malime.app.profile.ProfileViewModel): ViewModel
 
     @Binds
     @IntoMap

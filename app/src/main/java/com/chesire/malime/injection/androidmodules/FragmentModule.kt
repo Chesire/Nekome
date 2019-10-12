@@ -4,7 +4,7 @@ import com.chesire.malime.app.discover.DiscoverFragment
 import com.chesire.malime.app.timeline.TimelineFragment
 import com.chesire.malime.flow.login.details.DetailsFragment
 import com.chesire.malime.flow.login.syncing.SyncingFragment
-import com.chesire.malime.flow.profile.ProfileFragment
+import com.chesire.malime.app.profile.ProfileFragment
 import com.chesire.malime.flow.series.detail.SeriesDetailSheetFragment
 import com.chesire.malime.flow.series.list.anime.AnimeFragment
 import com.chesire.malime.flow.series.list.manga.MangaFragment
