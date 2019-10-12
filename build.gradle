@@ -64,7 +64,7 @@ ext {
     glide_version = "4.10.0"
     lifecycle_version = "2.2.0-beta01"
     lifecykle_version = "2.0.0"
-    material_version = "1.1.0-alpha10"
+    material_version = "1.1.0-beta01"
     moshi_version = "1.8.0"
     room_version = "2.2.0"
     timber_version = "4.7.1"
