@@ -1,4 +1,4 @@
-package com.chesire.malime
+package com.chesire.malime.testing
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi

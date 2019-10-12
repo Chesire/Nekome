@@ -3,7 +3,7 @@ package com.chesire.malime.flow.login.syncing
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
-import com.chesire.malime.CoroutinesMainDispatcherRule
+import com.chesire.malime.testing.CoroutinesMainDispatcherRule
 import com.chesire.malime.account.UserRepository
 import com.chesire.malime.core.flags.AsyncState
 import com.chesire.malime.series.SeriesRepository

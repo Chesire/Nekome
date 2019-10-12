@@ -1,7 +1,7 @@
 package com.chesire.malime.flow
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.chesire.malime.CoroutinesMainDispatcherRule
+import com.chesire.malime.testing.CoroutinesMainDispatcherRule
 import com.chesire.malime.LogoutHandler
 import com.chesire.malime.account.UserRepository
 import com.chesire.malime.kitsu.AuthProvider
