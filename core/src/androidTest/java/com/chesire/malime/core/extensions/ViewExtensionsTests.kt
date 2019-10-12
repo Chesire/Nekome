@@ -1,4 +1,4 @@
-package com.chesire.malime.extensions
+package com.chesire.malime.core.extensions
 
 import android.view.View
 import androidx.test.ext.junit.runners.AndroidJUnit4

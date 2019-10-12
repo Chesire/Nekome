@@ -5,10 +5,10 @@ import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.chesire.malime.core.models.SeriesModel
-import com.chesire.malime.extensions.hide
-import com.chesire.malime.extensions.show
-import com.chesire.malime.extensions.toAlpha
-import com.chesire.malime.extensions.visibleIf
+import com.chesire.malime.core.extensions.hide
+import com.chesire.malime.core.extensions.show
+import com.chesire.malime.core.extensions.toAlpha
+import com.chesire.malime.core.extensions.visibleIf
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.adapter_item_series.adapterItemProgressBar
 import kotlinx.android.synthetic.main.adapter_item_series.adapterItemSeriesImage
