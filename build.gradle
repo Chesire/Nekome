@@ -40,7 +40,8 @@ detekt {
             "database/src/main/java",
             "kitsu/src/main/java",
             "series/src/main/java",
-            "server/src/main/java"
+            "server/src/main/java",
+            "testing/src/main/java"
     )
     reports {
         xml {
