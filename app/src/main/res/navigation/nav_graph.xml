@@ -89,7 +89,7 @@
     </fragment>
     <fragment
         android:id="@+id/ossFragment"
-        android:name="com.chesire.malime.flow.settings.OssFragment"
+        android:name="com.chesire.malime.app.settings.oss.OssFragment"
         android:label="@string/settings_licenses"
         tools:layout="@layout/fragment_oss" />
     <!-- End Main -->

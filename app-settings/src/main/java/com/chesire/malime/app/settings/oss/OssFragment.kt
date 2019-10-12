@@ -1,4 +1,4 @@
-package com.chesire.malime.flow.settings
+package com.chesire.malime.app.settings.oss
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.commit
 import com.chesire.lifecyklelog.LogLifecykle
-import com.chesire.malime.R
+import com.chesire.malime.app.settings.R
 import com.mikepenz.aboutlibraries.LibsBuilder
 import dagger.android.support.DaggerFragment
 

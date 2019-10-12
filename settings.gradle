@@ -1,3 +1,12 @@
-include ':app', ':account', ':database', ':core', ':series', ':app-discover', ':app-timeline', ':app-profile', ':testing',
+include ':app',
+        ':app-discover',
+        ':app-profile',
+        ':app-settings',
+        ':app-timeline',
+        ':account',
+        ':core',
+        ':database',
+        ':kitsu',
+        ':series',
         ':server',
-        ':kitsu'
+        ':testing'
