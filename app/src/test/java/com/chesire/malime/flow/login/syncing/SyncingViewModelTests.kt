@@ -6,9 +6,9 @@ import androidx.lifecycle.Observer
 import com.chesire.malime.CoroutinesMainDispatcherRule
 import com.chesire.malime.account.UserRepository
 import com.chesire.malime.core.flags.AsyncState
-import com.chesire.malime.createUserModel
 import com.chesire.malime.series.SeriesRepository
 import com.chesire.malime.server.Resource
+import com.chesire.malime.testing.createUserModel
 import io.mockk.Runs
 import io.mockk.coEvery
 import io.mockk.every

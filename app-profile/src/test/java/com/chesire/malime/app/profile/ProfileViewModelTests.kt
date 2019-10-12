@@ -6,6 +6,7 @@ import androidx.lifecycle.Observer
 import com.chesire.malime.account.UserRepository
 import com.chesire.malime.core.flags.UserSeriesStatus
 import com.chesire.malime.series.SeriesRepository
+import com.chesire.malime.testing.createSeriesModel
 import io.mockk.Runs
 import io.mockk.every
 import io.mockk.just

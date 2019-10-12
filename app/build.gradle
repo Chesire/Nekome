@@ -33,14 +33,6 @@ android {
             it.resValue('string', 'version', defaultConfig.versionName)
         }
     }
-    sourceSets {
-        androidTest {
-            java.srcDirs += "../core/src/sharedTest/java"
-        }
-        test {
-            java.srcDirs += "../core/src/sharedTest/java"
-        }
-    }
     dataBinding {
         enabled true
     }
@@ -110,11 +102,13 @@ dependencies {
 
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.0-beta-3'
 
+    testImplementation project(path: ':testing')
     testImplementation 'androidx.arch.core:core-testing:2.1.0-rc01'
     testImplementation 'io.mockk:mockk:1.9.3'
     testImplementation 'junit:junit:4.12'
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_version"
 
+    androidTestImplementation project(path: ':testing')
     androidTestImplementation 'androidx.arch.core:core-testing:2.1.0-beta01'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test:rules:1.2.0'

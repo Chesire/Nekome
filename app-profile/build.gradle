@@ -23,14 +23,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-    sourceSets {
-        androidTest {
-            java.srcDirs += "../core/src/sharedTest/java"
-        }
-        test {
-            java.srcDirs += "../core/src/sharedTest/java"
-        }
-    }
     dataBinding {
         enabled true
     }
@@ -62,6 +54,7 @@ dependencies {
     implementation "com.google.dagger:dagger-android-support:$dagger_version"
     implementation "com.google.android.material:material:$material_version"
 
+    testImplementation project(path: ':testing')
     testImplementation 'androidx.arch.core:core-testing:2.1.0-rc01'
     testImplementation 'io.mockk:mockk:1.9.3'
     testImplementation 'junit:junit:4.12'

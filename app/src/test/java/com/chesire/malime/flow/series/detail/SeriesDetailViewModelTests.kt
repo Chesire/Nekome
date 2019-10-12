@@ -5,9 +5,9 @@ import androidx.lifecycle.Observer
 import com.chesire.malime.AuthCaster
 import com.chesire.malime.CoroutinesMainDispatcherRule
 import com.chesire.malime.core.flags.AsyncState
-import com.chesire.malime.createSeriesModel
 import com.chesire.malime.series.SeriesRepository
 import com.chesire.malime.server.Resource
+import com.chesire.malime.testing.createSeriesModel
 import io.mockk.Runs
 import io.mockk.coEvery
 import io.mockk.every

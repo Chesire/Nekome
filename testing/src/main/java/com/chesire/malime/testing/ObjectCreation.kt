@@ -1,4 +1,4 @@
-package com.chesire.malime
+package com.chesire.malime.testing
 
 import com.chesire.malime.core.flags.SeriesStatus
 import com.chesire.malime.core.flags.SeriesType
@@ -9,6 +9,9 @@ import com.chesire.malime.core.models.ImageModel
 import com.chesire.malime.core.models.SeriesModel
 import com.chesire.malime.core.models.UserModel
 
+/**
+ * Creates a new instance of [SeriesModel] with default data.
+ */
 fun createSeriesModel(
     id: Int = 999,
     userId: Int = 999,
@@ -43,6 +46,9 @@ fun createSeriesModel(
     endDate
 )
 
+/**
+ * Creates a new instance of [UserModel] with default data.
+ */
 fun createUserModel(
     userId: Int = 0,
     name: String = "name",

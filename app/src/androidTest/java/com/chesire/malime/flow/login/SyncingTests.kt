@@ -6,8 +6,6 @@ import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.rule.ActivityTestRule
 import com.chesire.malime.R
-import com.chesire.malime.createSeriesModel
-import com.chesire.malime.createUserModel
 import com.chesire.malime.flow.Activity
 import com.chesire.malime.helpers.injector
 import com.chesire.malime.kitsu.AuthProvider
@@ -15,6 +13,8 @@ import com.chesire.malime.server.Resource
 import com.chesire.malime.server.api.AuthApi
 import com.chesire.malime.server.api.LibraryApi
 import com.chesire.malime.server.api.UserApi
+import com.chesire.malime.testing.createSeriesModel
+import com.chesire.malime.testing.createUserModel
 import com.schibsted.spain.barista.interaction.BaristaClickInteractions.clickOn
 import com.schibsted.spain.barista.interaction.BaristaEditTextInteractions.writeTo
 import com.schibsted.spain.barista.interaction.BaristaKeyboardInteractions.closeKeyboard

@@ -1,6 +1,6 @@
 package com.chesire.malime.flow.series.detail
 
-import com.chesire.malime.createSeriesModel
+import com.chesire.malime.testing.createSeriesModel
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
