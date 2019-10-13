@@ -1,12 +1,12 @@
-package com.chesire.malime.flow.series.detail
+package com.chesire.malime.app.series.detail
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.chesire.malime.core.AuthCaster
-import com.chesire.malime.testing.CoroutinesMainDispatcherRule
 import com.chesire.malime.core.flags.AsyncState
 import com.chesire.malime.series.SeriesRepository
 import com.chesire.malime.server.Resource
+import com.chesire.malime.testing.CoroutinesMainDispatcherRule
 import com.chesire.malime.testing.createSeriesModel
 import io.mockk.Runs
 import io.mockk.coEvery
@@ -32,7 +32,7 @@ class SeriesDetailViewModelTests {
         val mockRepository = mockk<SeriesRepository>()
         val mockAuth = mockk<AuthCaster>()
 
-        val classUnderTest = com.chesire.malime.app.series.detail.SeriesDetailViewModel(
+        val classUnderTest = SeriesDetailViewModel(
             mockRepository,
             mockAuth,
             coroutineRule.testDispatcher
@@ -55,7 +55,7 @@ class SeriesDetailViewModelTests {
             every { issueRefreshingToken() } just Runs
         }
 
-        val classUnderTest = com.chesire.malime.app.series.detail.SeriesDetailViewModel(
+        val classUnderTest = SeriesDetailViewModel(
             mockRepository,
             mockAuth,
             coroutineRule.testDispatcher
@@ -68,7 +68,7 @@ class SeriesDetailViewModelTests {
 
     @Test
     fun `sendUpdate on error, posts Error`() {
-        val slot = slot<AsyncState<com.chesire.malime.app.series.detail.MutableSeriesModel, com.chesire.malime.app.series.detail.SeriesDetailError>>()
+        val slot = slot<AsyncState<MutableSeriesModel, SeriesDetailError>>()
         val mockRepository = mockk<SeriesRepository> {
             coEvery {
                 updateSeries(any(), any(), any())
@@ -79,11 +79,11 @@ class SeriesDetailViewModelTests {
         val mockAuth = mockk<AuthCaster> {
             every { issueRefreshingToken() } just Runs
         }
-        val mockObserver = mockk<Observer<AsyncState<com.chesire.malime.app.series.detail.MutableSeriesModel, com.chesire.malime.app.series.detail.SeriesDetailError>>> {
+        val mockObserver = mockk<Observer<AsyncState<MutableSeriesModel, SeriesDetailError>>> {
             every { onChanged(capture(slot)) } just Runs
         }
 
-        val classUnderTest = com.chesire.malime.app.series.detail.SeriesDetailViewModel(
+        val classUnderTest = SeriesDetailViewModel(
             mockRepository,
             mockAuth,
             coroutineRule.testDispatcher
@@ -97,7 +97,7 @@ class SeriesDetailViewModelTests {
 
     @Test
     fun `sendUpdate on success, posts Success`() {
-        val slot = slot<AsyncState<com.chesire.malime.app.series.detail.MutableSeriesModel, com.chesire.malime.app.series.detail.SeriesDetailError>>()
+        val slot = slot<AsyncState<MutableSeriesModel, SeriesDetailError>>()
         val mockRepository = mockk<SeriesRepository> {
             coEvery {
                 updateSeries(any(), any(), any())
@@ -108,11 +108,11 @@ class SeriesDetailViewModelTests {
         val mockAuth = mockk<AuthCaster> {
             every { issueRefreshingToken() } just Runs
         }
-        val mockObserver = mockk<Observer<AsyncState<com.chesire.malime.app.series.detail.MutableSeriesModel, com.chesire.malime.app.series.detail.SeriesDetailError>>> {
+        val mockObserver = mockk<Observer<AsyncState<MutableSeriesModel, SeriesDetailError>>> {
             every { onChanged(capture(slot)) } just Runs
         }
 
-        val classUnderTest = com.chesire.malime.app.series.detail.SeriesDetailViewModel(
+        val classUnderTest = SeriesDetailViewModel(
             mockRepository,
             mockAuth,
             coroutineRule.testDispatcher

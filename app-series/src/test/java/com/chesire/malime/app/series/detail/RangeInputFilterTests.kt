@@ -1,4 +1,4 @@
-package com.chesire.malime.flow.series.detail
+package com.chesire.malime.app.series.detail
 
 import android.text.Spanned
 import io.mockk.every
@@ -14,7 +14,7 @@ class RangeInputFilterTests {
             every { this@mockk.toString() } returns "10"
         }
 
-        val classUnderTest = com.chesire.malime.app.series.detail.RangeInputFilter(0)
+        val classUnderTest = RangeInputFilter(0)
 
         assertNull(classUnderTest.filter("0", 0, 0, mockSpanned, 0, 0))
     }
@@ -25,7 +25,7 @@ class RangeInputFilterTests {
             every { this@mockk.toString() } returns "40"
         }
 
-        val classUnderTest = com.chesire.malime.app.series.detail.RangeInputFilter(50)
+        val classUnderTest = RangeInputFilter(50)
 
         assertNull(classUnderTest.filter("0", 0, 0, mockSpanned, 0, 0))
     }
@@ -36,7 +36,7 @@ class RangeInputFilterTests {
             every { this@mockk.toString() } returns "50"
         }
 
-        val classUnderTest = com.chesire.malime.app.series.detail.RangeInputFilter(50)
+        val classUnderTest = RangeInputFilter(50)
 
         assertNull(classUnderTest.filter("0", 0, 0, mockSpanned, 0, 0))
     }
@@ -47,7 +47,7 @@ class RangeInputFilterTests {
             every { this@mockk.toString() } returns "51"
         }
 
-        val classUnderTest = com.chesire.malime.app.series.detail.RangeInputFilter(50)
+        val classUnderTest = RangeInputFilter(50)
 
         assertEquals("", classUnderTest.filter("0", 0, 0, mockSpanned, 0, 0))
     }
@@ -58,14 +58,14 @@ class RangeInputFilterTests {
             every { this@mockk.toString() } returns "0"
         }
 
-        val classUnderTest = com.chesire.malime.app.series.detail.RangeInputFilter(50)
+        val classUnderTest = RangeInputFilter(50)
 
         assertEquals("", classUnderTest.filter(null, 0, 0, mockSpanned, 0, 0))
     }
 
     @Test
     fun `null dest input returns empty string`() {
-        val classUnderTest = com.chesire.malime.app.series.detail.RangeInputFilter(50)
+        val classUnderTest = RangeInputFilter(50)
 
         assertEquals("", classUnderTest.filter("50", 0, 0, null, 0, 0))
     }
@@ -76,7 +76,7 @@ class RangeInputFilterTests {
             every { this@mockk.toString() } returns "0"
         }
 
-        val classUnderTest = com.chesire.malime.app.series.detail.RangeInputFilter(50)
+        val classUnderTest = RangeInputFilter(50)
 
         assertEquals("", classUnderTest.filter(null, -1, -2, mockSpanned, -3, -4))
     }

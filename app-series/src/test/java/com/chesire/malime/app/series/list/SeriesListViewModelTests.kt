@@ -1,14 +1,14 @@
-package com.chesire.malime.flow.series.list
+package com.chesire.malime.app.series.list
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.chesire.malime.core.AuthCaster
-import com.chesire.malime.testing.CoroutinesMainDispatcherRule
 import com.chesire.malime.core.flags.AsyncState
 import com.chesire.malime.core.flags.UserSeriesStatus
 import com.chesire.malime.core.models.SeriesModel
 import com.chesire.malime.series.SeriesRepository
 import com.chesire.malime.server.Resource
+import com.chesire.malime.testing.CoroutinesMainDispatcherRule
 import com.chesire.malime.testing.createSeriesModel
 import io.mockk.Runs
 import io.mockk.coEvery
@@ -40,8 +40,7 @@ class SeriesListViewModelTests {
         }
         val mockAuthCaster = mockk<AuthCaster>()
 
-        val classUnderTest =
-            com.chesire.malime.app.series.detail.list.SeriesListViewModel(mockRepo, mockAuthCaster)
+        val classUnderTest = SeriesListViewModel(mockRepo, mockAuthCaster)
         classUnderTest.updateSeries(0, 0, UserSeriesStatus.Current, { })
 
         coVerify { mockRepo.updateSeries(0, 0, UserSeriesStatus.Current) }
@@ -62,8 +61,7 @@ class SeriesListViewModelTests {
             every { issueRefreshingToken() } just Runs
         }
 
-        val classUnderTest =
-            com.chesire.malime.app.series.detail.list.SeriesListViewModel(mockRepo, mockAuthCaster)
+        val classUnderTest = SeriesListViewModel(mockRepo, mockAuthCaster)
         classUnderTest.updateSeries(0, 0, UserSeriesStatus.Current, { })
 
         verify { mockAuthCaster.issueRefreshingToken() }
@@ -83,8 +81,7 @@ class SeriesListViewModelTests {
         }
         val mockAuthCaster = mockk<AuthCaster>()
 
-        val classUnderTest =
-            com.chesire.malime.app.series.detail.list.SeriesListViewModel(mockRepo, mockAuthCaster)
+        val classUnderTest = SeriesListViewModel(mockRepo, mockAuthCaster)
         classUnderTest.updateSeries(0, 0, UserSeriesStatus.Current) { condition = true }
 
         assertTrue(condition)
@@ -104,8 +101,7 @@ class SeriesListViewModelTests {
         }
         val mockAuthCaster = mockk<AuthCaster>()
 
-        val classUnderTest =
-            com.chesire.malime.app.series.detail.list.SeriesListViewModel(mockRepo, mockAuthCaster)
+        val classUnderTest = SeriesListViewModel(mockRepo, mockAuthCaster)
         classUnderTest.updateSeries(0, 0, UserSeriesStatus.Current) { condition = true }
 
         assertTrue(condition)
@@ -126,8 +122,7 @@ class SeriesListViewModelTests {
             every { issueRefreshingToken() } just Runs
         }
 
-        val classUnderTest =
-            com.chesire.malime.app.series.detail.list.SeriesListViewModel(mockRepo, mockAuthCaster)
+        val classUnderTest = SeriesListViewModel(mockRepo, mockAuthCaster)
         classUnderTest.deleteSeries(createSeriesModel())
 
         verify { mockAuthCaster.issueRefreshingToken() }
@@ -145,12 +140,11 @@ class SeriesListViewModelTests {
             every { manga } returns mockk()
         }
         val mockAuthCaster = mockk<AuthCaster>()
-        val mockObserver = mockk<Observer<AsyncState<SeriesModel, com.chesire.malime.app.series.detail.list.SeriesListDeleteError>>>() {
+        val mockObserver = mockk<Observer<AsyncState<SeriesModel, SeriesListDeleteError>>>() {
             every { onChanged(any()) } just Runs
         }
 
-        val classUnderTest =
-            com.chesire.malime.app.series.detail.list.SeriesListViewModel(mockRepo, mockAuthCaster)
+        val classUnderTest = SeriesListViewModel(mockRepo, mockAuthCaster)
         classUnderTest.deletionStatus.observeForever(mockObserver)
         classUnderTest.deleteSeries(createSeriesModel())
 

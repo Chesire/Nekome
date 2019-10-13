@@ -1,4 +1,4 @@
-package com.chesire.malime.flow.series.detail
+package com.chesire.malime.app.series.detail
 
 import com.chesire.malime.testing.createSeriesModel
 import org.junit.Assert.assertEquals
@@ -8,7 +8,7 @@ class MutableSeriesModelTests {
     @Test
     fun `can generate MutableSeriesModel from SeriesModel`() {
         val originalModel = createSeriesModel(userId = 99)
-        val classUnderTest = com.chesire.malime.app.series.detail.MutableSeriesModel.from(originalModel)
+        val classUnderTest = MutableSeriesModel.from(originalModel)
 
         assertEquals(originalModel.userId, classUnderTest.userSeriesId)
     }
@@ -16,7 +16,7 @@ class MutableSeriesModelTests {
     @Test
     fun `generated MutableSeriesModel seriesLength is "?" if unknown length`() {
         val originalModel = createSeriesModel(userId = 99, totalLength = 0)
-        val classUnderTest = com.chesire.malime.app.series.detail.MutableSeriesModel.from(originalModel)
+        val classUnderTest = MutableSeriesModel.from(originalModel)
 
         assertEquals("?", classUnderTest.seriesLength)
     }
@@ -24,7 +24,7 @@ class MutableSeriesModelTests {
     @Test
     fun `generated MutableSeriesModel seriesLength is expected if known length`() {
         val originalModel = createSeriesModel(userId = 99, totalLength = 25)
-        val classUnderTest = com.chesire.malime.app.series.detail.MutableSeriesModel.from(originalModel)
+        val classUnderTest = MutableSeriesModel.from(originalModel)
 
         assertEquals("25", classUnderTest.seriesLength)
     }
