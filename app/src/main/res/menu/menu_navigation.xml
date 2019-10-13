@@ -27,7 +27,7 @@
         android:checkableBehavior="none">
 
         <item
-            android:id="@+id/settingsFragment"
+            android:id="@+id/settings_nav_graph"
             android:icon="@drawable/ic_settings_white"
             android:title="@string/nav_settings" />
         <item

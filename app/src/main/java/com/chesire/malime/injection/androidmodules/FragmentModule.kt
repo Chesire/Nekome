@@ -1,15 +1,15 @@
 package com.chesire.malime.injection.androidmodules
 
 import com.chesire.malime.app.discover.DiscoverFragment
+import com.chesire.malime.app.profile.ProfileFragment
+import com.chesire.malime.app.series.detail.SeriesDetailSheetFragment
+import com.chesire.malime.app.series.list.anime.AnimeFragment
+import com.chesire.malime.app.series.list.manga.MangaFragment
+import com.chesire.malime.app.series.search.SearchFragment
+import com.chesire.malime.app.settings.oss.OssFragment
+import com.chesire.malime.app.timeline.TimelineFragment
 import com.chesire.malime.flow.login.details.DetailsFragment
 import com.chesire.malime.flow.login.syncing.SyncingFragment
-import com.chesire.malime.flow.profile.ProfileFragment
-import com.chesire.malime.flow.series.detail.SeriesDetailSheetFragment
-import com.chesire.malime.flow.series.list.anime.AnimeFragment
-import com.chesire.malime.flow.series.list.manga.MangaFragment
-import com.chesire.malime.flow.series.search.SearchFragment
-import com.chesire.malime.flow.settings.OssFragment
-import com.chesire.malime.flow.timeline.TimelineFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 

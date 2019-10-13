@@ -20,7 +20,7 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
 import com.bumptech.glide.Glide
 import com.chesire.lifecyklelog.LogLifecykle
-import com.chesire.malime.AuthCaster
+import com.chesire.malime.core.AuthCaster
 import com.chesire.malime.OverviewNavGraphDirections
 import com.chesire.malime.R
 import com.chesire.malime.core.viewmodel.ViewModelFactory
