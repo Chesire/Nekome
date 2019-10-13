@@ -34,7 +34,7 @@
     <!-- Main -->
     <fragment
         android:id="@+id/animeFragment"
-        android:name="com.chesire.malime.app.series.AnimeFragment"
+        android:name="com.chesire.malime.app.series.list.anime.AnimeFragment"
         android:label="@string/nav_anime"
         tools:layout="@layout/fragment_series_list">
         <action
@@ -47,7 +47,7 @@
     </fragment>
     <fragment
         android:id="@+id/mangaFragment"
-        android:name="com.chesire.malime.app.series.MangaFragment"
+        android:name="com.chesire.malime.app.series.list.manga.MangaFragment"
         android:label="@string/nav_manga"
         tools:layout="@layout/fragment_series_list">
         <action
