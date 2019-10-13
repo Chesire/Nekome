@@ -1,9 +1,9 @@
-package com.chesire.malime.flow.series.detail
+package com.chesire.malime.app.series.detail
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.chesire.malime.AuthCaster
+import com.chesire.malime.core.AuthCaster
 import com.chesire.malime.core.IOContext
 import com.chesire.malime.core.extensions.postError
 import com.chesire.malime.core.extensions.postLoading
@@ -54,7 +54,10 @@ class SeriesDetailViewModel @Inject constructor(
             if (response is Resource.Error && response.code == Resource.Error.CouldNotRefresh) {
                 authCaster.issueRefreshingToken()
             } else if (response is Resource.Error) {
-                _updatingStatus.postError(target, SeriesDetailError.Error)
+                _updatingStatus.postError(
+                    target,
+                    SeriesDetailError.Error
+                )
             } else {
                 _updatingStatus.postSuccess(target)
             }

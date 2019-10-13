@@ -23,7 +23,7 @@ import com.chesire.malime.core.models.SeriesModel
 import com.chesire.malime.core.viewmodel.ViewModelFactory
 import com.chesire.malime.databinding.FragmentSeriesListBinding
 import com.chesire.malime.flow.DialogHandler
-import com.chesire.malime.flow.series.detail.SeriesDetailSheetFragment
+import com.chesire.malime.app.series.detail.SeriesDetailSheetFragment
 import com.chesire.malime.flow.series.list.anime.AnimeFragment
 import com.chesire.malime.flow.series.list.manga.MangaFragment
 import com.chesire.malime.server.Resource
@@ -53,7 +53,7 @@ abstract class SeriesListFragment : DaggerFragment(), SeriesInteractionListener 
     }
 
     private lateinit var seriesAdapter: SeriesAdapter
-    private var seriesDetail: SeriesDetailSheetFragment? = null
+    private var seriesDetail: com.chesire.malime.app.series.detail.SeriesDetailSheetFragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -106,10 +106,10 @@ abstract class SeriesListFragment : DaggerFragment(), SeriesInteractionListener 
         if (seriesDetail?.isVisible == true) {
             Timber.w("Attempt to open series detail while already visible")
         } else {
-            seriesDetail = SeriesDetailSheetFragment.newInstance(model).also {
+            seriesDetail = com.chesire.malime.app.series.detail.SeriesDetailSheetFragment.newInstance(model).also {
                 it.show(
                     childFragmentManager,
-                    SeriesDetailSheetFragment.TAG
+                    com.chesire.malime.app.series.detail.SeriesDetailSheetFragment.TAG
                 )
             }
         }

@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.chesire.malime.AuthCaster
+import com.chesire.malime.core.AuthCaster
 import com.chesire.malime.server.Resource
 import com.chesire.malime.server.api.SearchApi
 import com.chesire.malime.core.flags.SeriesType

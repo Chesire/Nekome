@@ -3,7 +3,7 @@ package com.chesire.malime.flow.series.list
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.chesire.malime.AuthCaster
+import com.chesire.malime.core.AuthCaster
 import com.chesire.malime.core.extensions.postError
 import com.chesire.malime.core.flags.AsyncState
 import com.chesire.malime.core.flags.UserSeriesStatus

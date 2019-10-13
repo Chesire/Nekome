@@ -8,7 +8,7 @@ import com.chesire.malime.flow.ActivityViewModel
 import com.chesire.malime.flow.login.details.DetailsViewModel
 import com.chesire.malime.flow.login.syncing.SyncingViewModel
 import com.chesire.malime.app.profile.ProfileViewModel
-import com.chesire.malime.flow.series.detail.SeriesDetailViewModel
+import com.chesire.malime.app.series.detail.SeriesDetailViewModel
 import com.chesire.malime.flow.series.list.SeriesListViewModel
 import com.chesire.malime.flow.series.search.SearchViewModel
 import dagger.Binds
@@ -50,8 +50,8 @@ abstract class ViewModelModule {
 
     @Binds
     @IntoMap
-    @ViewModelKey(SeriesDetailViewModel::class)
-    abstract fun bindSeriesDetailViewModel(viewModel: SeriesDetailViewModel): ViewModel
+    @ViewModelKey(com.chesire.malime.app.series.detail.SeriesDetailViewModel::class)
+    abstract fun bindSeriesDetailViewModel(viewModel: com.chesire.malime.app.series.detail.SeriesDetailViewModel): ViewModel
 
     @Binds
     @IntoMap

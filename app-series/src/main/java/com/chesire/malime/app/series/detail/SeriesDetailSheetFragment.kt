@@ -1,4 +1,4 @@
-package com.chesire.malime.flow.series.detail
+package com.chesire.malime.app.series.detail
 
 import android.content.Context
 import android.os.Bundle
@@ -12,14 +12,14 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
 import com.chesire.lifecyklelog.LogLifecykle
-import com.chesire.malime.R
+import com.chesire.malime.app.series.R
+import com.chesire.malime.core.extensions.extraNotNull
+import com.chesire.malime.core.extensions.hide
+import com.chesire.malime.core.extensions.show
 import com.chesire.malime.core.flags.AsyncState
 import com.chesire.malime.core.flags.UserSeriesStatus
 import com.chesire.malime.core.models.SeriesModel
 import com.chesire.malime.core.viewmodel.ViewModelFactory
-import com.chesire.malime.core.extensions.extraNotNull
-import com.chesire.malime.core.extensions.hide
-import com.chesire.malime.core.extensions.show
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.snackbar.Snackbar
 import dagger.android.support.AndroidSupportInjection

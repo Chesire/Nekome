@@ -6,7 +6,7 @@ import com.chesire.malime.app.settings.oss.OssFragment
 import com.chesire.malime.app.timeline.TimelineFragment
 import com.chesire.malime.flow.login.details.DetailsFragment
 import com.chesire.malime.flow.login.syncing.SyncingFragment
-import com.chesire.malime.flow.series.detail.SeriesDetailSheetFragment
+import com.chesire.malime.app.series.detail.SeriesDetailSheetFragment
 import com.chesire.malime.flow.series.list.anime.AnimeFragment
 import com.chesire.malime.flow.series.list.manga.MangaFragment
 import com.chesire.malime.flow.series.search.SearchFragment
@@ -36,7 +36,7 @@ abstract class FragmentModule {
 
     @Suppress("FunctionMaxLength")
     @ContributesAndroidInjector
-    abstract fun contributeSeriesDetailSheetFragment(): SeriesDetailSheetFragment
+    abstract fun contributeSeriesDetailSheetFragment(): com.chesire.malime.app.series.detail.SeriesDetailSheetFragment
 
     @ContributesAndroidInjector
     abstract fun contributeSeriesSearchFragment(): SearchFragment

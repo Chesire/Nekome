@@ -1,4 +1,4 @@
-package com.chesire.malime.flow.series.detail
+package com.chesire.malime.app.series.detail
 
 import android.text.InputFilter
 import android.text.Spanned

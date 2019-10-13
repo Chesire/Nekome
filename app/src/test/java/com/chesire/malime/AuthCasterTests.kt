@@ -1,5 +1,6 @@
 package com.chesire.malime
 
+import com.chesire.malime.core.AuthCaster
 import io.mockk.Runs
 import io.mockk.every
 import io.mockk.just
