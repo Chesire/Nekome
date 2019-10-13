@@ -2,7 +2,6 @@ package com.chesire.malime.app.series.list.manga
 
 import android.os.Bundle
 import androidx.lifecycle.Observer
-import androidx.navigation.fragment.findNavController
 import com.chesire.lifecyklelog.LogLifecykle
 import com.chesire.malime.app.series.list.SeriesListFragment
 
@@ -17,7 +16,4 @@ class MangaFragment : SeriesListFragment() {
             }
         )
     }
-
-    override fun toSearch() =
-        findNavController().navigate(MangaFragmentDirections.toSearchFragment())
 }

@@ -29,7 +29,6 @@ import com.chesire.malime.core.viewmodel.ViewModelFactory
 import com.chesire.malime.server.Resource
 import com.google.android.material.snackbar.Snackbar
 import dagger.android.support.DaggerFragment
-import kotlinx.android.synthetic.main.fragment_series_list.fragmentSeriesListFab
 import kotlinx.android.synthetic.main.fragment_series_list.fragmentSeriesListLayout
 import timber.log.Timber
 import javax.inject.Inject
@@ -88,7 +87,6 @@ abstract class SeriesListFragment : DaggerFragment(),
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        fragmentSeriesListFab.setOnClickListener { toSearch() }
         observeSeriesDeletion()
     }
 
@@ -167,11 +165,6 @@ abstract class SeriesListFragment : DaggerFragment(),
             }
         })
     }
-
-    /**
-     * Tell the current fragment to navigate to its search screen.
-     */
-    abstract fun toSearch()
 
     /**
      * Inform the adapter that a new series list has been provided.
