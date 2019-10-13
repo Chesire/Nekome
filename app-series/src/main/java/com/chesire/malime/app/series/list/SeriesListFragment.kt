@@ -38,8 +38,7 @@ import javax.inject.Inject
  * most of the setup and interaction.
  */
 @Suppress("TooManyFunctions")
-abstract class SeriesListFragment : DaggerFragment(),
-    SeriesInteractionListener {
+abstract class SeriesListFragment : DaggerFragment(), SeriesInteractionListener {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
     @Inject
@@ -76,11 +75,7 @@ abstract class SeriesListFragment : DaggerFragment(),
             adapter = seriesAdapter
             layoutManager = LinearLayoutManager(requireContext())
             setHasFixedSize(true)
-            val itemTouchHelper = ItemTouchHelper(
-                SwipeToDelete(
-                    seriesAdapter
-                )
-            )
+            val itemTouchHelper = ItemTouchHelper(SwipeToDelete(seriesAdapter))
             itemTouchHelper.attachToRecyclerView(this)
         }
     }.root
@@ -111,10 +106,9 @@ abstract class SeriesListFragment : DaggerFragment(),
         if (seriesDetail?.isVisible == true) {
             Timber.w("Attempt to open series detail while already visible")
         } else {
-            seriesDetail =
-                SeriesDetailSheetFragment.newInstance(model).also {
-                    it.show(childFragmentManager, SeriesDetailSheetFragment.TAG)
-                }
+            seriesDetail = SeriesDetailSheetFragment.newInstance(model).also {
+                it.show(childFragmentManager, SeriesDetailSheetFragment.TAG)
+            }
         }
     }
 

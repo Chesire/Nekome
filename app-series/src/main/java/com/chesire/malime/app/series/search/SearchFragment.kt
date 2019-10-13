@@ -19,8 +19,7 @@ import timber.log.Timber
 import javax.inject.Inject
 
 @LogLifecykle
-class SearchFragment : DaggerFragment(),
-    SearchInteractionListener {
+class SearchFragment : DaggerFragment(), SearchInteractionListener {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
     private lateinit var searchAdapter: SearchAdapter
