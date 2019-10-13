@@ -3,14 +3,14 @@ package com.chesire.malime.injection.androidmodules
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.chesire.malime.app.discover.DiscoverViewModel
+import com.chesire.malime.app.profile.ProfileViewModel
+import com.chesire.malime.app.series.detail.SeriesDetailViewModel
+import com.chesire.malime.app.series.list.SeriesListViewModel
+import com.chesire.malime.app.series.search.SearchViewModel
 import com.chesire.malime.core.viewmodel.ViewModelFactory
 import com.chesire.malime.flow.ActivityViewModel
 import com.chesire.malime.flow.login.details.DetailsViewModel
 import com.chesire.malime.flow.login.syncing.SyncingViewModel
-import com.chesire.malime.app.profile.ProfileViewModel
-import com.chesire.malime.app.series.detail.SeriesDetailViewModel
-import com.chesire.malime.app.series.detail.list.SeriesListViewModel
-import com.chesire.malime.app.series.search.SearchViewModel
 import dagger.Binds
 import dagger.MapKey
 import dagger.Module
@@ -40,23 +40,23 @@ abstract class ViewModelModule {
 
     @Binds
     @IntoMap
-    @ViewModelKey(com.chesire.malime.app.profile.ProfileViewModel::class)
-    abstract fun bindProfileViewModel(viewModel: com.chesire.malime.app.profile.ProfileViewModel): ViewModel
+    @ViewModelKey(ProfileViewModel::class)
+    abstract fun bindProfileViewModel(viewModel: ProfileViewModel): ViewModel
 
     @Binds
     @IntoMap
-    @ViewModelKey(com.chesire.malime.app.series.search.SearchViewModel::class)
-    abstract fun bindSearchViewModel(viewModel: com.chesire.malime.app.series.search.SearchViewModel): ViewModel
+    @ViewModelKey(SearchViewModel::class)
+    abstract fun bindSearchViewModel(viewModel: SearchViewModel): ViewModel
 
     @Binds
     @IntoMap
-    @ViewModelKey(com.chesire.malime.app.series.detail.SeriesDetailViewModel::class)
-    abstract fun bindSeriesDetailViewModel(viewModel: com.chesire.malime.app.series.detail.SeriesDetailViewModel): ViewModel
+    @ViewModelKey(SeriesDetailViewModel::class)
+    abstract fun bindSeriesDetailViewModel(viewModel: SeriesDetailViewModel): ViewModel
 
     @Binds
     @IntoMap
-    @ViewModelKey(com.chesire.malime.app.series.detail.list.SeriesListViewModel::class)
-    abstract fun bindSeriesListViewModel(viewModel: com.chesire.malime.app.series.detail.list.SeriesListViewModel): ViewModel
+    @ViewModelKey(SeriesListViewModel::class)
+    abstract fun bindSeriesListViewModel(viewModel: SeriesListViewModel): ViewModel
 
     @Binds
     @IntoMap
