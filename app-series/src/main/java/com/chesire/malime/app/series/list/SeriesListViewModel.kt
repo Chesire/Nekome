@@ -1,4 +1,4 @@
-package com.chesire.malime.flow.series.list
+package com.chesire.malime.app.series.list
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
@@ -54,7 +54,10 @@ class SeriesListViewModel @Inject constructor(
             if (response.code == Resource.Error.CouldNotRefresh) {
                 authCaster.issueRefreshingToken()
             } else {
-                _deletionStatus.postError(seriesModel, SeriesListDeleteError.DeletionFailure)
+                _deletionStatus.postError(
+                    seriesModel,
+                    SeriesListDeleteError.DeletionFailure
+                )
             }
         }
     }

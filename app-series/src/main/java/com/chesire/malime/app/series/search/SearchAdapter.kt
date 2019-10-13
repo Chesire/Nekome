@@ -1,9 +1,9 @@
-package com.chesire.malime.flow.series.search
+package com.chesire.malime.app.series.search
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.chesire.malime.R
+import com.chesire.malime.app.series.R
 import com.chesire.malime.core.models.SeriesModel
 
 class SearchAdapter(

@@ -1,4 +1,4 @@
-package com.chesire.malime.flow.series.list
+package com.chesire.malime.app.series.list
 
 import android.graphics.Canvas
 import androidx.recyclerview.widget.ItemTouchHelper

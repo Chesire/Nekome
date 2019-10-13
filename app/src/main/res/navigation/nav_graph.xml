@@ -34,7 +34,7 @@
     <!-- Main -->
     <fragment
         android:id="@+id/animeFragment"
-        android:name="com.chesire.malime.flow.series.list.anime.AnimeFragment"
+        android:name="com.chesire.malime.app.series.AnimeFragment"
         android:label="@string/nav_anime"
         tools:layout="@layout/fragment_series_list">
         <action
@@ -47,7 +47,7 @@
     </fragment>
     <fragment
         android:id="@+id/mangaFragment"
-        android:name="com.chesire.malime.flow.series.list.manga.MangaFragment"
+        android:name="com.chesire.malime.app.series.MangaFragment"
         android:label="@string/nav_manga"
         tools:layout="@layout/fragment_series_list">
         <action
@@ -79,7 +79,7 @@
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
-        android:name="com.chesire.malime.flow.series.search.SearchFragment"
+        android:name="com.chesire.malime.app.series.search.SearchFragment"
         android:label="SearchFragment"
         tools:layout="@layout/fragment_search" />
     <!-- End Main -->

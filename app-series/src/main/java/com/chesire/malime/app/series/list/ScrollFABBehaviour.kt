@@ -1,4 +1,4 @@
-package com.chesire.malime.flow.series.list
+package com.chesire.malime.app.series.list
 
 import android.content.Context
 import android.util.AttributeSet

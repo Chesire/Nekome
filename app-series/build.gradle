@@ -23,6 +23,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    dataBinding {
+        enabled true
+    }
     androidExtensions {
         experimental true
     }
@@ -45,6 +48,9 @@ dependencies {
     implementation "androidx.core:core-ktx:$corektx_version"
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
+    implementation "com.afollestad.material-dialogs:core:$materialdialog_version"
+    implementation "com.afollestad.material-dialogs:input:$materialdialog_version"
+    implementation "com.afollestad.material-dialogs:lifecycle:$materialdialog_version"
     implementation "com.chesire:lifecyklelog:$lifecykle_version"
     implementation "com.github.bumptech.glide:glide:$glide_version"
     implementation "com.github.hadilq.liveevent:liveevent:$liveevent_version"

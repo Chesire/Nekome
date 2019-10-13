@@ -1,4 +1,4 @@
-package com.chesire.malime.flow
+package com.chesire.malime.core
 
 import android.content.Context
 import androidx.lifecycle.LifecycleOwner
@@ -6,8 +6,6 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
 import com.afollestad.materialdialogs.list.listItems
 import com.afollestad.materialdialogs.list.listItemsMultiChoice
-import com.chesire.malime.R
-import com.chesire.malime.core.SharedPref
 import com.chesire.malime.core.flags.SortOption
 import com.chesire.malime.core.flags.UserSeriesStatus
 import javax.inject.Inject

@@ -1,14 +1,14 @@
-package com.chesire.malime.flow.series.list
+package com.chesire.malime.app.series.list
 
 import android.view.View
 import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.chesire.malime.core.models.SeriesModel
 import com.chesire.malime.core.extensions.hide
 import com.chesire.malime.core.extensions.show
 import com.chesire.malime.core.extensions.toAlpha
 import com.chesire.malime.core.extensions.visibleIf
+import com.chesire.malime.core.models.SeriesModel
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.adapter_item_series.adapterItemProgressBar
 import kotlinx.android.synthetic.main.adapter_item_series.adapterItemSeriesImage

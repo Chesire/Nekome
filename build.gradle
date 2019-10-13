@@ -73,6 +73,7 @@ ext {
     lifecykle_version = "2.0.0"
     liveevent_version = "1.0.1"
     material_version = "1.1.0-beta01"
+    materialdialog_version = "3.1.1"
     moshi_version = "1.8.0"
     preferences_version = "1.1.0"
     room_version = "2.2.0"

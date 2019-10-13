@@ -1,20 +1,20 @@
-package com.chesire.malime.flow.series.search
+package com.chesire.malime.app.series.search
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chesire.malime.core.AuthCaster
-import com.chesire.malime.server.Resource
-import com.chesire.malime.server.api.SearchApi
-import com.chesire.malime.core.flags.SeriesType
-import com.chesire.malime.core.flags.UserSeriesStatus
-import com.chesire.malime.core.models.SeriesModel
 import com.chesire.malime.core.extensions.postError
 import com.chesire.malime.core.extensions.postLoading
 import com.chesire.malime.core.extensions.postSuccess
 import com.chesire.malime.core.flags.AsyncState
+import com.chesire.malime.core.flags.SeriesType
+import com.chesire.malime.core.flags.UserSeriesStatus
+import com.chesire.malime.core.models.SeriesModel
 import com.chesire.malime.series.SeriesRepository
+import com.chesire.malime.server.Resource
+import com.chesire.malime.server.api.SearchApi
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

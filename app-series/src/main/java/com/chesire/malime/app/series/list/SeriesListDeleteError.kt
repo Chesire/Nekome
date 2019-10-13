@@ -1,4 +1,4 @@
-package com.chesire.malime.flow.series.list
+package com.chesire.malime.app.series.list
 
 /**
  * List of errors that can occur for failure to delete a series.

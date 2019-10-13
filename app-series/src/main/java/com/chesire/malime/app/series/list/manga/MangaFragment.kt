@@ -1,10 +1,10 @@
-package com.chesire.malime.flow.series.list.manga
+package com.chesire.malime.app.series.list.manga
 
 import android.os.Bundle
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.chesire.lifecyklelog.LogLifecykle
-import com.chesire.malime.flow.series.list.SeriesListFragment
+import com.chesire.malime.app.series.list.SeriesListFragment
 
 @LogLifecykle
 class MangaFragment : SeriesListFragment() {

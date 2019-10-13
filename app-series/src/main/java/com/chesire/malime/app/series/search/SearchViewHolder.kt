@@ -1,4 +1,4 @@
-package com.chesire.malime.flow.series.search
+package com.chesire.malime.app.series.search
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView

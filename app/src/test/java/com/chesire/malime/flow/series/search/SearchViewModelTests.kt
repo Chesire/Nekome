@@ -30,16 +30,16 @@ class SearchViewModelTests {
     fun `performSearch with no search title posts error`() {
         val mockRepo = mockk<SeriesRepository>()
         val mockSearch = mockk<SearchApi>()
-        val mockObserver = mockk<Observer<AsyncState<List<SeriesModel>, SearchError>>> {
+        val mockObserver = mockk<Observer<AsyncState<List<SeriesModel>, com.chesire.malime.app.series.search.SearchError>>> {
             every { onChanged(any()) } just Runs
         }
         val mockAuthCaster = mockk<AuthCaster>()
 
-        SearchViewModel(mockRepo, mockSearch, mockAuthCaster).run {
+        com.chesire.malime.app.series.search.SearchViewModel(mockRepo, mockSearch, mockAuthCaster).run {
             searchResults.observeForever(mockObserver)
             performSearch()
 
-            assertEquals(SearchError.MissingTitle, (searchResults.value as AsyncState.Error).error)
+            assertEquals(com.chesire.malime.app.series.search.SearchError.MissingTitle, (searchResults.value as AsyncState.Error).error)
         }
     }
 
@@ -49,12 +49,12 @@ class SearchViewModelTests {
         val mockSearch = mockk<SearchApi> {
             coEvery { searchForAnime(any()) } returns Resource.Error("", 0)
         }
-        val mockObserver = mockk<Observer<AsyncState<List<SeriesModel>, SearchError>>> {
+        val mockObserver = mockk<Observer<AsyncState<List<SeriesModel>, com.chesire.malime.app.series.search.SearchError>>> {
             every { onChanged(any()) } just Runs
         }
         val mockAuthCaster = mockk<AuthCaster>()
 
-        SearchViewModel(mockRepo, mockSearch, mockAuthCaster).run {
+        com.chesire.malime.app.series.search.SearchViewModel(mockRepo, mockSearch, mockAuthCaster).run {
             searchResults.observeForever(mockObserver)
             searchTitle.value = "Test"
             performSearch()
@@ -69,12 +69,12 @@ class SearchViewModelTests {
         val mockSearch = mockk<SearchApi> {
             coEvery { searchForManga(any()) } returns Resource.Error("", 0)
         }
-        val mockObserver = mockk<Observer<AsyncState<List<SeriesModel>, SearchError>>> {
+        val mockObserver = mockk<Observer<AsyncState<List<SeriesModel>, com.chesire.malime.app.series.search.SearchError>>> {
             every { onChanged(any()) } just Runs
         }
         val mockAuthCaster = mockk<AuthCaster>()
 
-        SearchViewModel(mockRepo, mockSearch, mockAuthCaster).run {
+        com.chesire.malime.app.series.search.SearchViewModel(mockRepo, mockSearch, mockAuthCaster).run {
             searchResults.observeForever(mockObserver)
             searchTitle.value = "Test"
             seriesType = SeriesType.Manga
@@ -95,12 +95,12 @@ class SearchViewModelTests {
                 Resource.Success(expected)
             }
         }
-        val mockObserver = mockk<Observer<AsyncState<List<SeriesModel>, SearchError>>> {
+        val mockObserver = mockk<Observer<AsyncState<List<SeriesModel>, com.chesire.malime.app.series.search.SearchError>>> {
             every { onChanged(any()) } just Runs
         }
         val mockAuthCaster = mockk<AuthCaster>()
 
-        SearchViewModel(mockRepo, mockSearch, mockAuthCaster).run {
+        com.chesire.malime.app.series.search.SearchViewModel(mockRepo, mockSearch, mockAuthCaster).run {
             searchResults.observeForever(mockObserver)
             searchTitle.value = "Test"
             seriesType = SeriesType.Anime

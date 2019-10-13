@@ -52,9 +52,6 @@ android {
 }
 
 dependencies {
-    ext {
-        material_dialog_version = "3.1.1"
-    }
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     implementation project(path: ':account')
@@ -83,9 +80,9 @@ dependencies {
     implementation "androidx.room:room-ktx:$room_version"
     implementation "androidx.room:room-runtime:$room_version"
     implementation 'androidx.work:work-runtime-ktx:2.2.0'
-    implementation "com.afollestad.material-dialogs:core:$material_dialog_version"
-    implementation "com.afollestad.material-dialogs:input:$material_dialog_version"
-    implementation "com.afollestad.material-dialogs:lifecycle:$material_dialog_version"
+    implementation "com.afollestad.material-dialogs:core:$materialdialog_version"
+    implementation "com.afollestad.material-dialogs:input:$materialdialog_version"
+    implementation "com.afollestad.material-dialogs:lifecycle:$materialdialog_version"
     implementation "com.chesire:lifecyklelog:$lifecykle_version"
     implementation "com.github.bumptech.glide:glide:$glide_version"
     implementation "com.github.hadilq.liveevent:liveevent:$liveevent_version"

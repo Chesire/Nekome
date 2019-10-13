@@ -1,11 +1,11 @@
-package com.chesire.malime.flow.series.list
+package com.chesire.malime.app.series.list
 
 import android.content.SharedPreferences
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.chesire.malime.R
+import com.chesire.malime.app.series.R
 import com.chesire.malime.core.SharedPref
 import com.chesire.malime.core.flags.SortOption
 import com.chesire.malime.core.models.SeriesModel

@@ -1,4 +1,4 @@
-package com.chesire.malime.flow.series.search
+package com.chesire.malime.app.series.search
 
 import com.chesire.malime.core.models.SeriesModel
 

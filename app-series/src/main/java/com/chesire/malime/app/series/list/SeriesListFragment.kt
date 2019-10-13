@@ -1,4 +1,4 @@
-package com.chesire.malime.flow.series.list
+package com.chesire.malime.app.series.list
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -16,22 +16,21 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.callbacks.onCancel
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
-import com.chesire.malime.R
+import com.chesire.malime.app.series.R
+import com.chesire.malime.app.series.databinding.FragmentSeriesListBinding
+import com.chesire.malime.app.series.detail.SeriesDetailSheetFragment
+import com.chesire.malime.app.series.list.anime.AnimeFragment
+import com.chesire.malime.app.series.list.manga.MangaFragment
+import com.chesire.malime.core.DialogHandler
 import com.chesire.malime.core.SharedPref
 import com.chesire.malime.core.flags.AsyncState
 import com.chesire.malime.core.models.SeriesModel
 import com.chesire.malime.core.viewmodel.ViewModelFactory
-import com.chesire.malime.databinding.FragmentSeriesListBinding
-import com.chesire.malime.flow.DialogHandler
-import com.chesire.malime.app.series.detail.SeriesDetailSheetFragment
-import com.chesire.malime.flow.series.list.anime.AnimeFragment
-import com.chesire.malime.flow.series.list.manga.MangaFragment
 import com.chesire.malime.server.Resource
 import com.google.android.material.snackbar.Snackbar
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_series_list.fragmentSeriesListFab
 import kotlinx.android.synthetic.main.fragment_series_list.fragmentSeriesListLayout
-import kotlinx.android.synthetic.main.fragment_series_list.fragmentSeriesListRecyclerView
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -40,7 +39,8 @@ import javax.inject.Inject
  * most of the setup and interaction.
  */
 @Suppress("TooManyFunctions")
-abstract class SeriesListFragment : DaggerFragment(), SeriesInteractionListener {
+abstract class SeriesListFragment : DaggerFragment(),
+    SeriesInteractionListener {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
     @Inject
@@ -53,7 +53,7 @@ abstract class SeriesListFragment : DaggerFragment(), SeriesInteractionListener 
     }
 
     private lateinit var seriesAdapter: SeriesAdapter
-    private var seriesDetail: com.chesire.malime.app.series.detail.SeriesDetailSheetFragment? = null
+    private var seriesDetail: SeriesDetailSheetFragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,12 +69,19 @@ abstract class SeriesListFragment : DaggerFragment(), SeriesInteractionListener 
         container,
         false
     ).apply {
-        seriesAdapter = SeriesAdapter(this@SeriesListFragment, sharedPref)
+        seriesAdapter = SeriesAdapter(
+            this@SeriesListFragment,
+            sharedPref
+        )
         fragmentSeriesListRecyclerView.apply {
             adapter = seriesAdapter
             layoutManager = LinearLayoutManager(requireContext())
             setHasFixedSize(true)
-            val itemTouchHelper = ItemTouchHelper(SwipeToDelete(seriesAdapter))
+            val itemTouchHelper = ItemTouchHelper(
+                SwipeToDelete(
+                    seriesAdapter
+                )
+            )
             itemTouchHelper.attachToRecyclerView(this)
         }
     }.root
@@ -106,12 +113,10 @@ abstract class SeriesListFragment : DaggerFragment(), SeriesInteractionListener 
         if (seriesDetail?.isVisible == true) {
             Timber.w("Attempt to open series detail while already visible")
         } else {
-            seriesDetail = com.chesire.malime.app.series.detail.SeriesDetailSheetFragment.newInstance(model).also {
-                it.show(
-                    childFragmentManager,
-                    com.chesire.malime.app.series.detail.SeriesDetailSheetFragment.TAG
-                )
-            }
+            seriesDetail =
+                SeriesDetailSheetFragment.newInstance(model).also {
+                    it.show(childFragmentManager, SeriesDetailSheetFragment.TAG)
+                }
         }
     }
 

@@ -1,4 +1,4 @@
-package com.chesire.malime.flow.series.search
+package com.chesire.malime.app.series.search
 
 enum class SearchError {
     MissingTitle,

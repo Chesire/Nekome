@@ -7,9 +7,9 @@ import com.chesire.malime.app.timeline.TimelineFragment
 import com.chesire.malime.flow.login.details.DetailsFragment
 import com.chesire.malime.flow.login.syncing.SyncingFragment
 import com.chesire.malime.app.series.detail.SeriesDetailSheetFragment
-import com.chesire.malime.flow.series.list.anime.AnimeFragment
-import com.chesire.malime.flow.series.list.manga.MangaFragment
-import com.chesire.malime.flow.series.search.SearchFragment
+import com.chesire.malime.app.series.detail.list.anime.AnimeFragment
+import com.chesire.malime.app.series.detail.list.manga.MangaFragment
+import com.chesire.malime.app.series.search.SearchFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -17,7 +17,7 @@ import dagger.android.ContributesAndroidInjector
 @Module
 abstract class FragmentModule {
     @ContributesAndroidInjector
-    abstract fun contributeAnimeFragment(): AnimeFragment
+    abstract fun contributeAnimeFragment(): com.chesire.malime.app.series.detail.list.anime.AnimeFragment
 
     @ContributesAndroidInjector
     abstract fun contributeDetailsFragment(): DetailsFragment
@@ -26,7 +26,7 @@ abstract class FragmentModule {
     abstract fun contributeDiscoverFragment(): DiscoverFragment
 
     @ContributesAndroidInjector
-    abstract fun contributeMangaFragment(): MangaFragment
+    abstract fun contributeMangaFragment(): com.chesire.malime.app.series.detail.list.manga.MangaFragment
 
     @ContributesAndroidInjector
     abstract fun contributeOssFragment(): OssFragment
@@ -39,7 +39,7 @@ abstract class FragmentModule {
     abstract fun contributeSeriesDetailSheetFragment(): com.chesire.malime.app.series.detail.SeriesDetailSheetFragment
 
     @ContributesAndroidInjector
-    abstract fun contributeSeriesSearchFragment(): SearchFragment
+    abstract fun contributeSeriesSearchFragment(): com.chesire.malime.app.series.search.SearchFragment
 
     @ContributesAndroidInjector
     abstract fun contributeSyncingFragment(): SyncingFragment
