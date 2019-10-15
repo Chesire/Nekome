@@ -10,7 +10,7 @@
     <fragment
         android:id="@+id/discoverFragment"
         android:name="com.chesire.malime.app.discover.DiscoverFragment"
-        android:label="DiscoverFragment"
+        android:label="@string/nav_discover"
         tools:layout="@layout/fragment_discover">
         <action
             android:id="@+id/toSearchFragment"
@@ -19,7 +19,7 @@
     <fragment
         android:id="@+id/searchFragment"
         android:name="com.chesire.malime.app.discover.search.SearchFragment"
-        android:label="SearchFragment"
+        android:label="@string/nav_search"
         tools:layout="@layout/fragment_search">
         <argument
             android:name="seriesTitle"
