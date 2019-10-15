@@ -17,7 +17,6 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.callbacks.onCancel
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
 import com.chesire.malime.app.series.R
-import com.chesire.malime.app.series.databinding.FragmentSeriesListBinding
 import com.chesire.malime.app.series.detail.SeriesDetailSheetFragment
 import com.chesire.malime.app.series.list.anime.AnimeFragment
 import com.chesire.malime.app.series.list.manga.MangaFragment
@@ -30,6 +29,7 @@ import com.chesire.malime.server.Resource
 import com.google.android.material.snackbar.Snackbar
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_series_list.fragmentSeriesListLayout
+import kotlinx.android.synthetic.main.fragment_series_list.fragmentSeriesListRecyclerView
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -62,15 +62,12 @@ abstract class SeriesListFragment : DaggerFragment(), SeriesInteractionListener 
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View = FragmentSeriesListBinding.inflate(
-        inflater,
-        container,
-        false
-    ).apply {
-        seriesAdapter = SeriesAdapter(
-            this@SeriesListFragment,
-            sharedPref
-        )
+    ): View = inflater.inflate(R.layout.fragment_series_list, container, false)
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        seriesAdapter = SeriesAdapter(this, sharedPref)
         fragmentSeriesListRecyclerView.apply {
             adapter = seriesAdapter
             layoutManager = LinearLayoutManager(requireContext())
@@ -78,10 +75,6 @@ abstract class SeriesListFragment : DaggerFragment(), SeriesInteractionListener 
             val itemTouchHelper = ItemTouchHelper(SwipeToDelete(seriesAdapter))
             itemTouchHelper.attachToRecyclerView(this)
         }
-    }.root
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
         observeSeriesDeletion()
     }
 
