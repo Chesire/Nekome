@@ -2,8 +2,11 @@ package com.chesire.malime.app.discover
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
@@ -28,6 +31,11 @@ class DiscoverFragment : DaggerFragment() {
     }
     private val animeTrendingAdapter = TrendingAdapter()
     private val mangaTrendingAdapter = TrendingAdapter()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -83,5 +91,33 @@ class DiscoverFragment : DaggerFragment() {
                 }
             }
         })
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.menu_discover, menu)
+
+        val actionMenuItem = menu.findItem(R.id.menuDiscoverSearch)
+        val actionView = actionMenuItem.actionView as? SearchView
+        actionView?.queryHint = getString(R.string.discover_search_hint)
+        actionView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                if (!actionView.isIconified) {
+                    actionView.isIconified = true
+                }
+                actionMenuItem.collapseActionView()
+
+                if (!query.isNullOrBlank()) {
+                    navigateToSearch(query)
+                }
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?) = false
+        })
+    }
+
+    private fun navigateToSearch(title: String) {
+        // perform navigation to search, passing in the title to search for
     }
 }

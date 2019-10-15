@@ -81,4 +81,6 @@
     <string name="discover_trending_anime">Trending Anime</string>
     <string name="discover_trending_manga">Trending Manga</string>
     <string name="discover_trending_track">Track</string>
+    <string name="discover_search">Search</string>
+    <string name="discover_search_hint">Enter series name</string>
 </resources>
