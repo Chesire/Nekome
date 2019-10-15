@@ -25,7 +25,6 @@ class SearchViewModel @Inject constructor(
 ) : ViewModel() {
     private val _searchResults = MutableLiveData<AsyncState<List<SeriesModel>, SearchError>>()
 
-    val searchTitle = MutableLiveData<String>()
     val series: LiveData<List<SeriesModel>>
         get() = repo.series
     val searchResults: LiveData<AsyncState<List<SeriesModel>, SearchError>>
@@ -33,13 +32,7 @@ class SearchViewModel @Inject constructor(
 
     var seriesType: SeriesType = SeriesType.Anime
 
-    fun performSearch() = viewModelScope.launch {
-        val title = searchTitle.value
-        if (title.isNullOrEmpty()) {
-            _searchResults.postError(SearchError.MissingTitle)
-            return@launch
-        }
-
+    fun performSearch(title: String) = viewModelScope.launch {
         _searchResults.postLoading()
 
         when (val result = when (seriesType) {

@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import com.chesire.lifecyklelog.LogLifecykle
 import com.chesire.malime.app.discover.R
@@ -27,6 +28,7 @@ class SearchFragment : DaggerFragment(), SearchInteractionListener {
         ViewModelProvider(this, viewModelFactory).get<SearchViewModel>()
     }
     private lateinit var searchAdapter: SearchAdapter
+    private val searchArgs: SearchFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -60,6 +62,8 @@ class SearchFragment : DaggerFragment(), SearchInteractionListener {
                 }
             }
         )
+
+        viewModel.performSearch(searchArgs.seriesTitle)
     }
 
     override fun addSeries(model: SeriesModel) {
