@@ -4,14 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="@layout/fragment_discover">
 
-    <!--
-    <item
-        android:id="@+id/menuDiscoverSearch"
-        android:icon="@drawable/ic_search"
-        android:title="@string/discover_search"
-        app:showAsAction="ifRoom" />
-        -->
-
     <item
         android:id="@+id/menuDiscoverSearch"
         android:icon="@drawable/ic_search"
