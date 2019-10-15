@@ -10,6 +10,7 @@ import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.chesire.lifecyklelog.LogLifecykle
@@ -117,7 +118,6 @@ class DiscoverFragment : DaggerFragment() {
         })
     }
 
-    private fun navigateToSearch(title: String) {
-        // perform navigation to search, passing in the title to search for
-    }
+    private fun navigateToSearch(title: String) =
+        findNavController().navigate(DiscoverFragmentDirections.toSearchFragment(title))
 }
