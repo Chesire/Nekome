@@ -1,20 +1,17 @@
-package com.chesire.malime.app.series.search
+package com.chesire.malime.app.discover.search
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
-import com.chesire.malime.app.series.R
+import androidx.recyclerview.widget.ListAdapter
+import com.chesire.malime.app.discover.R
 import com.chesire.malime.core.models.SeriesModel
 
+/**
+ * Adapter for use displaying list of series when searching.
+ */
 class SearchAdapter(
     private val listener: SearchInteractionListener
-) : RecyclerView.Adapter<SearchViewHolder>() {
-    private var searchItems = emptyList<SeriesModel>()
-
-    fun loadItems(items: List<SeriesModel>) {
-        searchItems = items
-        notifyDataSetChanged()
-    }
+) : ListAdapter<SeriesModel, SearchViewHolder>(SeriesModel.DiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchViewHolder {
         return SearchViewHolder(
@@ -22,10 +19,8 @@ class SearchAdapter(
         )
     }
 
-    override fun getItemCount() = searchItems.size
-
     override fun onBindViewHolder(holder: SearchViewHolder, position: Int) {
-        holder.bind(searchItems[position])
+        holder.bind(getItem(position))
         holder.bindListener(listener)
     }
 }

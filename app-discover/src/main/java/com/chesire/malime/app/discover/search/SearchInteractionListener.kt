@@ -1,4 +1,4 @@
-package com.chesire.malime.app.series.search
+package com.chesire.malime.app.discover.search
 
 import com.chesire.malime.core.models.SeriesModel
 

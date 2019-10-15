@@ -1,13 +1,13 @@
-package com.chesire.malime.app.series.search
+package com.chesire.malime.app.discover.search
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.chesire.malime.core.models.SeriesModel
 import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.adapter_item_search.adapterItemSearchAdd
-import kotlinx.android.synthetic.main.adapter_item_search.adapterItemSearchBackground
-import kotlinx.android.synthetic.main.adapter_item_search.adapterItemSearchTitle
+import kotlinx.android.synthetic.main.adapter_item_search.itemSearchImage
+import kotlinx.android.synthetic.main.adapter_item_search.itemSearchPlusOne
+import kotlinx.android.synthetic.main.adapter_item_search.itemSearchTitle
 
 class SearchViewHolder(view: View) : RecyclerView.ViewHolder(view), LayoutContainer {
     private lateinit var seriesModel: SeriesModel
@@ -16,13 +16,13 @@ class SearchViewHolder(view: View) : RecyclerView.ViewHolder(view), LayoutContai
 
     fun bind(model: SeriesModel) {
         seriesModel = model
-        adapterItemSearchTitle.text = model.title
+        itemSearchTitle.text = model.title
         Glide.with(itemView)
             .load(model.coverImage.smallest?.url)
-            .into(adapterItemSearchBackground)
+            .into(itemSearchImage)
     }
 
     fun bindListener(listener: SearchInteractionListener) {
-        adapterItemSearchAdd.setOnClickListener { listener.addSeries(seriesModel) }
+        itemSearchPlusOne.setOnClickListener { listener.addSeries(seriesModel) }
     }
 }

@@ -1,4 +1,4 @@
-package com.chesire.malime.app.series.search
+package com.chesire.malime.app.discover.search
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -59,13 +59,8 @@ class SearchViewModel @Inject constructor(
                 SeriesType.Manga -> repo.addManga(model.id, startingStatus)
                 else -> error("Unexpected series type provided")
             }
-            when (response) {
-                is Resource.Success -> {
-                    // Notify back to UI
-                }
-                is Resource.Error -> if (response.code == Resource.Error.CouldNotRefresh) {
-                    authCaster.issueRefreshingToken()
-                }
+            if (response is Resource.Error && response.code == Resource.Error.CouldNotRefresh) {
+                authCaster.issueRefreshingToken()
             }
         }
 }

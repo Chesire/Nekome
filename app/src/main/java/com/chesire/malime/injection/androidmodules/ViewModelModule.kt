@@ -3,10 +3,10 @@ package com.chesire.malime.injection.androidmodules
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.chesire.malime.app.discover.DiscoverViewModel
+import com.chesire.malime.app.discover.search.SearchViewModel
 import com.chesire.malime.app.profile.ProfileViewModel
 import com.chesire.malime.app.series.detail.SeriesDetailViewModel
 import com.chesire.malime.app.series.list.SeriesListViewModel
-import com.chesire.malime.app.series.search.SearchViewModel
 import com.chesire.malime.core.viewmodel.ViewModelFactory
 import com.chesire.malime.flow.ActivityViewModel
 import com.chesire.malime.flow.login.details.DetailsViewModel

@@ -73,11 +73,6 @@
             android:id="@+id/toSettings"
             app:destination="@id/settingsFragment" />
     </fragment>
-    <fragment
-        android:id="@+id/searchFragment"
-        android:name="com.chesire.malime.app.series.search.SearchFragment"
-        android:label="SearchFragment"
-        tools:layout="@layout/fragment_search" />
     <!-- End Main -->
 
     <!-- Global Actions -->
