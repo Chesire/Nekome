@@ -25,7 +25,7 @@ class SearchViewModelTests {
     val taskExecutorRule = InstantTaskExecutorRule()
     @get:Rule
     val coroutineRule = CoroutinesMainDispatcherRule()
-    
+
     @Test
     fun `performSearch with seriesType of anime uses correct api`() {
         val mockRepo = mockk<SeriesRepository>()
