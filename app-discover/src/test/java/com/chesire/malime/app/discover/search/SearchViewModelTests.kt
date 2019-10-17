@@ -1,4 +1,4 @@
-package com.chesire.malime.app.series.search
+package com.chesire.malime.app.discover.search
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
@@ -27,23 +27,6 @@ class SearchViewModelTests {
     val coroutineRule = CoroutinesMainDispatcherRule()
 
     @Test
-    fun `performSearch with no search title posts error`() {
-        val mockRepo = mockk<SeriesRepository>()
-        val mockSearch = mockk<SearchApi>()
-        val mockObserver = mockk<Observer<AsyncState<List<SeriesModel>, SearchError>>> {
-            every { onChanged(any()) } just Runs
-        }
-        val mockAuthCaster = mockk<AuthCaster>()
-
-        SearchViewModel(mockRepo, mockSearch, mockAuthCaster).run {
-            searchResults.observeForever(mockObserver)
-            performSearch()
-
-            assertEquals(SearchError.MissingTitle, (searchResults.value as AsyncState.Error).error)
-        }
-    }
-
-    @Test
     fun `performSearch with seriesType of anime uses correct api`() {
         val mockRepo = mockk<SeriesRepository>()
         val mockSearch = mockk<SearchApi> {
@@ -56,8 +39,7 @@ class SearchViewModelTests {
 
         SearchViewModel(mockRepo, mockSearch, mockAuthCaster).run {
             searchResults.observeForever(mockObserver)
-            searchTitle.value = "Test"
-            performSearch()
+            performSearch("Test")
 
             coVerify { mockSearch.searchForAnime("Test") }
         }
@@ -76,9 +58,8 @@ class SearchViewModelTests {
 
         SearchViewModel(mockRepo, mockSearch, mockAuthCaster).run {
             searchResults.observeForever(mockObserver)
-            searchTitle.value = "Test"
             seriesType = SeriesType.Manga
-            performSearch()
+            performSearch("Test")
 
             coVerify { mockSearch.searchForManga("Test") }
         }
@@ -102,9 +83,8 @@ class SearchViewModelTests {
 
         SearchViewModel(mockRepo, mockSearch, mockAuthCaster).run {
             searchResults.observeForever(mockObserver)
-            searchTitle.value = "Test"
             seriesType = SeriesType.Anime
-            performSearch()
+            performSearch("Test")
 
             assertEquals(expected, (searchResults.value as AsyncState.Success).data)
         }
