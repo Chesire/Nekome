@@ -3,6 +3,7 @@ package com.chesire.malime.injection.androidmodules
 import com.chesire.malime.app.discover.DiscoverFragment
 import com.chesire.malime.app.profile.ProfileFragment
 import com.chesire.malime.app.search.SearchFragment
+import com.chesire.malime.app.search.results.ResultsFragment
 import com.chesire.malime.app.series.detail.SeriesDetailSheetFragment
 import com.chesire.malime.app.series.list.anime.AnimeFragment
 import com.chesire.malime.app.series.list.manga.MangaFragment
@@ -33,6 +34,9 @@ abstract class FragmentModule {
 
     @ContributesAndroidInjector
     abstract fun contributeProfileFragment(): ProfileFragment
+
+    @ContributesAndroidInjector
+    abstract fun contributeResultsFragment(): ResultsFragment
 
     @ContributesAndroidInjector
     abstract fun contributeSearchFragment(): SearchFragment

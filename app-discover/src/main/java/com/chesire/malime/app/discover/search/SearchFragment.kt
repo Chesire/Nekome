@@ -28,7 +28,6 @@ class SearchFragment : DaggerFragment(), SearchInteractionListener {
         ViewModelProvider(this, viewModelFactory).get<SearchViewModel>()
     }
     private lateinit var searchAdapter: SearchAdapter
-    private val searchArgs: SearchFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -63,7 +62,7 @@ class SearchFragment : DaggerFragment(), SearchInteractionListener {
             }
         )
 
-        viewModel.performSearch(searchArgs.seriesTitle)
+        // viewModel.performSearch(searchArgs.seriesTitle)
     }
 
     override fun addSeries(model: SeriesModel) {

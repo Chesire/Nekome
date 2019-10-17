@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.chesire.malime.app.discover.DiscoverViewModel
 import com.chesire.malime.app.profile.ProfileViewModel
 import com.chesire.malime.app.search.SearchViewModel
+import com.chesire.malime.app.search.results.ResultsViewModel
 import com.chesire.malime.app.series.detail.SeriesDetailViewModel
 import com.chesire.malime.app.series.list.SeriesListViewModel
 import com.chesire.malime.core.viewmodel.ViewModelFactory
@@ -42,6 +43,11 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(ProfileViewModel::class)
     abstract fun bindProfileViewModel(viewModel: ProfileViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(ResultsViewModel::class)
+    abstract fun bindResultsViewModel(viewModel: ResultsViewModel): ViewModel
 
     @Binds
     @IntoMap

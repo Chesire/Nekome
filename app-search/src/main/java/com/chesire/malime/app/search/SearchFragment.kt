@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
+import androidx.navigation.fragment.findNavController
+import com.chesire.malime.core.flags.AsyncState
 import com.chesire.malime.core.flags.SeriesType
 import com.chesire.malime.core.viewmodel.ViewModelFactory
 import dagger.android.support.DaggerFragment
@@ -15,6 +17,9 @@ import kotlinx.android.synthetic.main.fragment_search.searchSeriesText
 import kotlinx.android.synthetic.main.fragment_search.seriesDetailStatusGroup
 import javax.inject.Inject
 
+/**
+ * Allows a user to perform a search to find new series to follow.
+ */
 class SearchFragment : DaggerFragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
@@ -37,9 +42,7 @@ class SearchFragment : DaggerFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         searchConfirmButton.setOnClickListener { submitSearch() }
-        viewModel.searchResult.observe(viewLifecycleOwner, Observer {
-
-        })
+        observeSearchResults()
     }
 
     private fun submitSearch() {
@@ -48,6 +51,27 @@ class SearchFragment : DaggerFragment() {
                 searchSeriesText.text.toString(),
                 seriesType
             )
+        )
+    }
+
+    private fun observeSearchResults() {
+        viewModel.searchResult.observe(
+            viewLifecycleOwner,
+            Observer { result ->
+                when (result) {
+                    is AsyncState.Success -> findNavController().navigate(
+                        SearchFragmentDirections.toResultsFragment(
+                            result.data.toTypedArray()
+                        )
+                    )
+                    is AsyncState.Error -> {
+                        // check error and choose what to do based on it
+                    }
+                    is AsyncState.Loading -> {
+                        // show searching indicator
+                    }
+                }
+            }
         )
     }
 }

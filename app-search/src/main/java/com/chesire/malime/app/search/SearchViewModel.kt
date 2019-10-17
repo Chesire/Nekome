@@ -14,13 +14,17 @@ import com.hadilq.liveevent.LiveEvent
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class SearchViewModel @Inject constructor(
-    private val searchApi: SearchApi
-) : ViewModel() {
-
+/**
+ * ViewModel to aid with searching for new series for a user to follow.
+ */
+class SearchViewModel @Inject constructor(private val searchApi: SearchApi) : ViewModel() {
     private val _searchResult = LiveEvent<AsyncState<List<SeriesModel>, SearchError>>()
     val searchResult: LiveData<AsyncState<List<SeriesModel>, SearchError>> = _searchResult
 
+    /**
+     * Executes a search request using the data stored in [model], the result is posted to
+     * [searchResult].
+     */
     fun executeSearch(model: SearchData) {
         if (model.title.isEmpty()) {
             _searchResult.postError(SearchError.EmptyTitle)
@@ -33,7 +37,13 @@ class SearchViewModel @Inject constructor(
                 SeriesType.Manga -> searchApi.searchForManga(model.title)
                 else -> error("Unexpected series type provided")
             }) {
-                is Resource.Success -> _searchResult.postSuccess(result.data)
+                is Resource.Success -> {
+                    if (result.data.isEmpty()) {
+                        _searchResult.postError(SearchError.NoSeriesFound)
+                    } else {
+                        _searchResult.postSuccess(result.data)
+                    }
+                }
                 is Resource.Error -> _searchResult.postError(SearchError.GenericError)
             }
         }
