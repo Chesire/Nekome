@@ -20,6 +20,10 @@
             android:id="@+id/discover_nav_graph"
             android:icon="@drawable/ic_search"
             android:title="@string/nav_discover" />
+        <item
+            android:id="@+id/search_nav_graph"
+            android:icon="@drawable/ic_search"
+            android:title="@string/nav_search" />
     </group>
 
     <group

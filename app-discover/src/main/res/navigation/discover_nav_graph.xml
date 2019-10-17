@@ -11,18 +11,5 @@
         android:id="@+id/discoverFragment"
         android:name="com.chesire.malime.app.discover.DiscoverFragment"
         android:label="@string/nav_discover"
-        tools:layout="@layout/fragment_discover">
-        <action
-            android:id="@+id/toSearchFragment"
-            app:destination="@id/searchFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/searchFragment"
-        android:name="com.chesire.malime.app.discover.search.SearchFragment"
-        android:label="@string/nav_search"
-        tools:layout="@layout/fragment_search">
-        <argument
-            android:name="seriesTitle"
-            app:argType="string" />
-    </fragment>
+        tools:layout="@layout/fragment_discover" />
 </navigation>
