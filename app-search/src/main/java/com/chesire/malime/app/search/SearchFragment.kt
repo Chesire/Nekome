@@ -8,6 +8,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
 import androidx.navigation.fragment.findNavController
+import com.chesire.lifecyklelog.LogLifecykle
 import com.chesire.malime.core.flags.AsyncState
 import com.chesire.malime.core.flags.SeriesType
 import com.chesire.malime.core.viewmodel.ViewModelFactory
@@ -20,6 +21,7 @@ import javax.inject.Inject
 /**
  * Allows a user to perform a search to find new series to follow.
  */
+@LogLifecykle
 class SearchFragment : DaggerFragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
