@@ -35,6 +35,7 @@ detekt {
             "app/src/main/java",
             "app-discover/src/main/java",
             "app-profile/src/main/java",
+            "app-search/src/main/java",
             "app-series/src/main/java",
             "app-settings/src/main/java",
             "app-timeline/src/main/java",
