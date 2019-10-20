@@ -7,10 +7,12 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.chesire.lifecyklelog.LogLifecykle
 import com.chesire.malime.app.search.R
 import com.chesire.malime.core.viewmodel.ViewModelFactory
 import dagger.android.support.DaggerFragment
+import kotlinx.android.synthetic.main.fragment_results.resultsRecyclerView
 import javax.inject.Inject
 
 /**
@@ -24,6 +26,7 @@ class ResultsFragment : DaggerFragment() {
         ViewModelProvider(this, viewModelFactory).get<ResultsViewModel>()
     }
     private val args by navArgs<ResultsFragmentArgs>()
+    private val resultsAdapter = ResultsAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,6 +36,12 @@ class ResultsFragment : DaggerFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        // args.searchResults
+
+        resultsRecyclerView.apply {
+            adapter = resultsAdapter
+            layoutManager = LinearLayoutManager(requireContext())
+            setHasFixedSize(true)
+        }
+        resultsAdapter.submitList(args.searchResults.toList())
     }
 }
