@@ -19,7 +19,7 @@
     <fragment
         android:id="@+id/resultsFragment"
         android:name="com.chesire.malime.app.search.results.ResultsFragment"
-        android:label="ResultsFragment"
+        android:label="@string/nav_results"
         tools:layout="@layout/fragment_results">
         <argument
             android:name="searchResults"
