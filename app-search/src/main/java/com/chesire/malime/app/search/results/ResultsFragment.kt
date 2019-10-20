@@ -37,11 +37,11 @@ class ResultsFragment : DaggerFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        resultsAdapter.submitList(args.searchResults.toList())
         resultsRecyclerView.apply {
             adapter = resultsAdapter
             layoutManager = LinearLayoutManager(requireContext())
             setHasFixedSize(true)
         }
-        resultsAdapter.submitList(args.searchResults.toList())
     }
 }
