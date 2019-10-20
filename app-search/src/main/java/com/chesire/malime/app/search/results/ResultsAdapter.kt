@@ -9,7 +9,19 @@ import com.chesire.malime.core.models.SeriesModel
 /**
  * Adapter to aid with displaying the search results.
  */
-class ResultsAdapter : ListAdapter<SeriesModel, ResultsViewHolder>(SeriesModel.DiffCallback()) {
+class ResultsAdapter(
+    private val trackSeriesAction: (SeriesModel) -> Unit
+) : ListAdapter<SeriesModel, ResultsViewHolder>(SeriesModel.DiffCallback()) {
+
+    /**
+     * Stores all currently known series.
+     */
+    var allSeries: List<SeriesModel>? = null
+        set(value) {
+            field = value
+            notifyDataSetChanged()
+        }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ResultsViewHolder {
         return ResultsViewHolder(
             LayoutInflater.from(parent.context).inflate(R.layout.item_result, parent, false)
@@ -17,6 +29,8 @@ class ResultsAdapter : ListAdapter<SeriesModel, ResultsViewHolder>(SeriesModel.D
     }
 
     override fun onBindViewHolder(holder: ResultsViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        val data = getItem(position)
+        holder.bind(data, allSeries?.any { it.id == data.id } ?: false)
+        holder.bindAction(trackSeriesAction)
     }
 }

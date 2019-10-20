@@ -3,11 +3,13 @@ package com.chesire.malime.app.search.results
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.chesire.malime.core.extensions.visibleIf
 import com.chesire.malime.core.models.SeriesModel
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_result.resultImage
 import kotlinx.android.synthetic.main.item_result.resultSubType
 import kotlinx.android.synthetic.main.item_result.resultTitle
+import kotlinx.android.synthetic.main.item_result.resultTrack
 
 /**
  * ViewHolder to be used with the [ResultsAdapter].
@@ -17,7 +19,10 @@ class ResultsViewHolder(view: View) : RecyclerView.ViewHolder(view), LayoutConta
     override val containerView: View?
         get() = itemView
 
-    fun bind(model: SeriesModel) {
+    /**
+     * Bind the [model] to the view to display data.
+     */
+    fun bind(model: SeriesModel, exists: Boolean) {
         seriesModel = model
 
         Glide.with(itemView)
@@ -25,5 +30,15 @@ class ResultsViewHolder(view: View) : RecyclerView.ViewHolder(view), LayoutConta
             .into(resultImage)
         resultTitle.text = model.title
         resultSubType.text = model.subtype.name
+
+        resultTrack.visibleIf { !exists }
+        containerView?.alpha = if (exists) 0.3f else 1f
+    }
+
+    /**
+     * Bind the [trackSeriesAction] to the [ResultsViewHolder] so click events can be collected.
+     */
+    fun bindAction(trackSeriesAction: (SeriesModel) -> Unit) {
+        resultTrack.setOnClickListener { trackSeriesAction(seriesModel) }
     }
 }

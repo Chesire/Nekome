@@ -42,11 +42,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            app:layout_constraintBottom_toBottomOf="@id/resultTrack"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/resultTrack"
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintStart_toEndOf="@id/resultImage"
-            app:layout_constraintTop_toTopOf="@id/resultTrack"
             tools:text="OVA" />
 
         <com.google.android.material.button.MaterialButton
@@ -55,8 +54,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/results_track"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintBottom_toBottomOf="@id/resultSubType"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/resultSubType" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

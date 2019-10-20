@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
 import androidx.navigation.fragment.navArgs
@@ -26,7 +27,7 @@ class ResultsFragment : DaggerFragment() {
         ViewModelProvider(this, viewModelFactory).get<ResultsViewModel>()
     }
     private val args by navArgs<ResultsFragmentArgs>()
-    private val resultsAdapter = ResultsAdapter()
+    private val resultsAdapter = ResultsAdapter { viewModel.trackNewSeries(it) }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,11 +38,25 @@ class ResultsFragment : DaggerFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        observeTrackSeriesStatus()
+        observeSeries()
         resultsAdapter.submitList(args.searchResults.toList())
         resultsRecyclerView.apply {
             adapter = resultsAdapter
             layoutManager = LinearLayoutManager(requireContext())
             setHasFixedSize(true)
         }
+    }
+
+    private fun observeSeries() {
+        viewModel.series.observe(viewLifecycleOwner, Observer {
+            resultsAdapter.allSeries = it
+        })
+    }
+
+    private fun observeTrackSeriesStatus() {
+        viewModel.trackSeriesData.observe(viewLifecycleOwner, Observer {
+            resultsAdapter.notifyDataSetChanged()
+        })
     }
 }
