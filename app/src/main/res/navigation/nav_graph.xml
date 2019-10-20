@@ -6,8 +6,9 @@
     app:startDestination="@id/animeFragment">
 
     <!-- Nested -->
-    <include app:graph="@navigation/settings_nav_graph" />
     <include app:graph="@navigation/discover_nav_graph" />
+    <include app:graph="@navigation/search_nav_graph" />
+    <include app:graph="@navigation/settings_nav_graph" />
 
     <!-- OOB -->
     <fragment
