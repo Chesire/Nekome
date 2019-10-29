@@ -6,7 +6,7 @@ import org.junit.Test
 
 class ImageModelConverterTests {
     private val jsonString =
-        """{"large":{"height":7,"url":"largeUrl","width":6},"medium":{"height":5,"url":"mediumUrl","width":4},"small":{"height":3,"url":"smallUrl","width":2},"tiny":{"height":1,"url":"tinyUrl","width":0}}""".trimIndent()
+        """{"tiny":{"url":"tinyUrl","width":0,"height":1},"small":{"url":"smallUrl","width":2,"height":3},"medium":{"url":"mediumUrl","width":4,"height":5},"large":{"url":"largeUrl","width":6,"height":7}}""".trimIndent()
     private val model = ImageModel(
         ImageModel.ImageData("tinyUrl", 0, 1),
         ImageModel.ImageData("smallUrl", 2, 3),

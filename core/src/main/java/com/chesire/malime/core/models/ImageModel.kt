@@ -1,6 +1,7 @@
 package com.chesire.malime.core.models
 
 import android.os.Parcelable
+import com.squareup.moshi.JsonClass
 import kotlinx.android.parcel.Parcelize
 
 /**
@@ -8,6 +9,7 @@ import kotlinx.android.parcel.Parcelize
  * Images are stored as a model with smaller models for each of the sizes.
  */
 @Parcelize
+@JsonClass(generateAdapter = true)
 data class ImageModel(
     val tiny: ImageData,
     val small: ImageData,
@@ -56,6 +58,7 @@ data class ImageModel(
     }
 
     @Parcelize
+    @JsonClass(generateAdapter = true)
     data class ImageData(
         val url: String,
         val width: Int,
