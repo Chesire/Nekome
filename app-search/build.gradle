@@ -40,17 +40,15 @@ dependencies {
     implementation project(path: ':server')
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-
     implementation "androidx.appcompat:appcompat:$appcompat_version"
     implementation "androidx.constraintlayout:constraintlayout:$constraint_layout_version"
     implementation "androidx.core:core-ktx:$corektx_version"
-    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
     implementation "androidx.fragment:fragment-ktx:$fragmentctx_version"
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
     implementation "com.chesire:lifecyklelog:$lifecykle_version"
     implementation "com.github.bumptech.glide:glide:$glide_version"
+    implementation "com.github.hadilq.liveevent:liveevent:$liveevent_version"
     implementation "com.google.android.material:material:$material_version"
     implementation "com.google.dagger:dagger:$dagger_version"
     implementation "com.google.dagger:dagger-android:$dagger_version"

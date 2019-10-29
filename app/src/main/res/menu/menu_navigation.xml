@@ -17,8 +17,12 @@
             android:icon="@drawable/ic_collections_bookmark_black"
             android:title="@string/nav_manga" />
         <item
-            android:id="@+id/discoverFragment"
+            android:id="@+id/search_nav_graph"
             android:icon="@drawable/ic_search"
+            android:title="@string/nav_search" />
+        <item
+            android:id="@+id/discover_nav_graph"
+            android:icon="@drawable/ic_whatshot"
             android:title="@string/nav_discover" />
     </group>
 

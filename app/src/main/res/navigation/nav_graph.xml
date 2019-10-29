@@ -6,6 +6,8 @@
     app:startDestination="@id/animeFragment">
 
     <!-- Nested -->
+    <include app:graph="@navigation/discover_nav_graph" />
+    <include app:graph="@navigation/search_nav_graph" />
     <include app:graph="@navigation/settings_nav_graph" />
 
     <!-- OOB -->
@@ -59,11 +61,6 @@
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
     <fragment
-        android:id="@+id/discoverFragment"
-        android:name="com.chesire.malime.app.discover.DiscoverFragment"
-        android:label="@string/nav_discover"
-        tools:layout="@layout/fragment_discover" />
-    <fragment
         android:id="@+id/timelineFragment"
         android:name="com.chesire.malime.app.timeline.TimelineFragment"
         android:label="@string/nav_timeline"
@@ -77,11 +74,6 @@
             android:id="@+id/toSettings"
             app:destination="@id/settingsFragment" />
     </fragment>
-    <fragment
-        android:id="@+id/searchFragment"
-        android:name="com.chesire.malime.app.series.search.SearchFragment"
-        android:label="SearchFragment"
-        tools:layout="@layout/fragment_search" />
     <!-- End Main -->
 
     <!-- Global Actions -->
