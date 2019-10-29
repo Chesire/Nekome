@@ -118,6 +118,7 @@ dependencies {
     }
     // Fixes issue with mockk 1.9.3 https://github.com/mockk/mockk/issues/281
     androidTestImplementation('io.mockk:mockk-android:1.9.3') { exclude module: 'objenesis' }
+    //noinspection GradleDependency
     androidTestImplementation 'org.objenesis:objenesis:2.6'
 
     kapt "androidx.room:room-compiler:$room_version"
