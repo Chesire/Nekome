@@ -59,7 +59,7 @@ class DetailsFragment : DaggerFragment() {
         detailsPasswordText.addTextChangedListener {
             detailsPasswordLayout.error = ""
         }
-        detailsPasswordText.setOnEditorActionListener { _, actionId, event ->
+        detailsPasswordText.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 activity?.hideSystemKeyboard()
                 if (viewModel.loginStatus.value != LoginStatus.Loading) {
