@@ -158,7 +158,7 @@ GEM
     ruby-ll (2.1.2)
       ansi
       ast
-    rubyzip (1.2.2)
+    rubyzip (1.3.0)
     sawyer (0.8.1)
       addressable (>= 2.3.5, < 2.6)
       faraday (~> 0.8, < 1.0)
