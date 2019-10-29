@@ -14,7 +14,7 @@ import com.chesire.malime.flow.login.syncing.SyncingFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
-@Suppress("unused")
+@Suppress("unused", "TooManyFunctions")
 @Module
 abstract class FragmentModule {
     @ContributesAndroidInjector

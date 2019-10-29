@@ -37,13 +37,12 @@ class SearchViewModel @Inject constructor(private val searchApi: SearchApi) : Vi
                 SeriesType.Manga -> searchApi.searchForManga(model.title)
                 else -> error("Unexpected series type provided")
             }) {
-                is Resource.Success -> {
+                is Resource.Success ->
                     if (result.data.isEmpty()) {
                         _searchResult.postError(SearchError.NoSeriesFound)
                     } else {
                         _searchResult.postSuccess(result.data)
                     }
-                }
                 is Resource.Error -> _searchResult.postError(SearchError.GenericError)
             }
         }

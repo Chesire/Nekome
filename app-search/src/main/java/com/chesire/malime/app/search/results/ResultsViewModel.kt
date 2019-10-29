@@ -43,13 +43,12 @@ class ResultsViewModel @Inject constructor(
             )
             else -> error("Unknown SeriesType: ${newSeries.type}")
         }) {
-            is Resource.Error -> {
+            is Resource.Error ->
                 if (result.code == Resource.Error.CouldNotRefresh) {
                     authCaster.issueRefreshingToken()
                 } else {
                     _trackSeriesData.postError(ResultsError.GenericError)
                 }
-            }
             is Resource.Success -> _trackSeriesData.postSuccess(result.data)
         }
     }
