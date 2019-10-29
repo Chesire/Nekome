@@ -10,7 +10,6 @@ import kotlin.coroutines.CoroutineContext
 @Module
 object CoroutineModule {
     @Provides
-    @com.chesire.malime.core.IOContext
-    @JvmStatic
+    @IOContext
     fun providesIOContext(): CoroutineContext = Dispatchers.IO
 }

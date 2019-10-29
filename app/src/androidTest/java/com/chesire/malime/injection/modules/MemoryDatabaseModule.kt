@@ -11,16 +11,13 @@ import javax.inject.Singleton
 object MemoryDatabaseModule {
     @Provides
     @Singleton
-    @JvmStatic
     fun provideDB(context: Context): RoomDB = RoomDB.buildMemory(context)
 
     @Provides
     @Singleton
-    @JvmStatic
     fun provideSeries(db: RoomDB) = db.series()
 
     @Provides
     @Singleton
-    @JvmStatic
     fun provideUser(db: RoomDB) = db.user()
 }

@@ -13,11 +13,9 @@ import dagger.Reusable
 object AppModule {
     @Provides
     @Reusable
-    @JvmStatic
     fun provideSharedPreferences(context: Context): SharedPreferences =
         PreferenceManager.getDefaultSharedPreferences(context)
 
     @Provides
-    @JvmStatic
     fun provideSharedPref(sharedPreferences: SharedPreferences) = SharedPref(sharedPreferences)
 }

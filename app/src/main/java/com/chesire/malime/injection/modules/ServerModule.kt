@@ -34,7 +34,6 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 object ServerModule {
     @Provides
     @Reusable
-    @JvmStatic
     fun providesAuthenticatedClient(
         authInjection: AuthInjectionInterceptor,
         authRefresh: AuthRefreshInterceptor
@@ -55,7 +54,6 @@ object ServerModule {
 
     @Provides
     @Reusable
-    @JvmStatic
     fun providesAuthService(): KitsuAuthService {
         return Retrofit.Builder()
             .baseUrl(KITSU_URL)
@@ -69,7 +67,6 @@ object ServerModule {
 
     @Provides
     @Reusable
-    @JvmStatic
     fun providesLibraryService(httpClient: OkHttpClient): KitsuLibraryService {
         val moshi = Moshi.Builder()
             .add(ImageModelAdapter())
@@ -91,7 +88,6 @@ object ServerModule {
 
     @Provides
     @Reusable
-    @JvmStatic
     fun providesSearchService(httpClient: OkHttpClient): KitsuSearchService {
         val moshi = Moshi.Builder()
             .add(ImageModelAdapter())
@@ -111,7 +107,6 @@ object ServerModule {
 
     @Provides
     @Reusable
-    @JvmStatic
     fun providesTrendingService(httpClient: OkHttpClient): KitsuTrendingService {
         val moshi = Moshi.Builder()
             .add(ImageModelAdapter())
@@ -131,7 +126,6 @@ object ServerModule {
 
     @Provides
     @Reusable
-    @JvmStatic
     fun providesUserService(httpClient: OkHttpClient): KitsuUserService {
         val moshi = Moshi.Builder()
             .add(RatingSystemAdapter())

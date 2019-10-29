@@ -11,7 +11,6 @@ import dagger.Provides
 @Module
 object SeriesModule {
     @Provides
-    @JvmStatic
     fun provideUserRepository(dao: SeriesDao, api: LibraryApi, user: UserRepository) =
         SeriesRepository(dao, api, user)
 }

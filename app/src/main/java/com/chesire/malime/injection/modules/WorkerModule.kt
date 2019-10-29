@@ -9,6 +9,5 @@ import dagger.Provides
 @Module
 object WorkerModule {
     @Provides
-    @JvmStatic
     fun providesWorkManager(context: Context) = WorkManager.getInstance(context)
 }

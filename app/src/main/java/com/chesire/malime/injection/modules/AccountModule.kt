@@ -10,6 +10,5 @@ import dagger.Provides
 @Module
 object AccountModule {
     @Provides
-    @JvmStatic
     fun provideUserRepository(dao: UserDao, api: UserApi) = UserRepository(dao, api)
 }
