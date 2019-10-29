@@ -1,7 +1,5 @@
 package com.chesire.malime.database.dao
 
-import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.lifecycle.Observer
 import androidx.room.Room
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
@@ -12,25 +10,15 @@ import com.chesire.malime.core.flags.UserSeriesStatus
 import com.chesire.malime.core.models.ImageModel
 import com.chesire.malime.core.models.SeriesModel
 import com.chesire.malime.database.RoomDB
-import io.mockk.Runs
-import io.mockk.every
-import io.mockk.just
-import io.mockk.mockk
-import io.mockk.verify
-import io.mockk.verifyAll
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Assert.assertTrue
 import org.junit.Before
-import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class SeriesDaoTests {
-    @get:Rule
-    val rule = InstantTaskExecutorRule()
-
     private lateinit var db: RoomDB
     private lateinit var seriesDao: SeriesDao
 
@@ -108,48 +96,6 @@ class SeriesDaoTests {
         )
         assertTrue(seriesDao.retrieve().count() == 3)
         assertTrue(seriesDao.retrieve().first().userId == 1)
-    }
-
-    @Test
-    fun observeNotifiesOnDaoUpdating() = runBlocking {
-        val mockObserver = mockk<Observer<List<SeriesModel>>> {
-            every { onChanged(any()) } just Runs
-        }
-
-        seriesDao.observe().observeForever(mockObserver)
-
-        val expected = createSeriesModel(id = 0)
-        seriesDao.insert(expected)
-
-        verify { mockObserver.onChanged(listOf(expected)) }
-    }
-
-    @Test
-    fun observeOnTypeNotifiesUpdating() = runBlocking {
-        val mockObserver = mockk<Observer<List<SeriesModel>>> {
-            every { onChanged(any()) } just Runs
-        }
-
-        seriesDao.observe(SeriesType.Manga).observeForever(mockObserver)
-
-        val expected = listOf(
-            createSeriesModel(id = 0, type = SeriesType.Manga),
-            createSeriesModel(id = 1, type = SeriesType.Manga),
-            createSeriesModel(id = 2, type = SeriesType.Manga)
-        )
-        val notExpected = listOf(
-            createSeriesModel(id = 3, type = SeriesType.Anime),
-            createSeriesModel(id = 4, type = SeriesType.Anime),
-            createSeriesModel(id = 5, type = SeriesType.Anime)
-        )
-        val insert = expected + notExpected
-        seriesDao.insert(insert)
-
-        verify { mockObserver.onChanged(expected) }
-        verifyAll(inverse = true) {
-            mockObserver.onChanged(notExpected)
-            mockObserver.onChanged(insert)
-        }
     }
 
     @Test
