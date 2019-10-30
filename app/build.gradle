@@ -79,8 +79,6 @@ dependencies {
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
     implementation "androidx.preference:preference:$preferences_version"
     implementation "androidx.preference:preference-ktx:$preferences_version"
-    implementation "androidx.room:room-ktx:$room_version"
-    implementation "androidx.room:room-runtime:$room_version"
     implementation 'androidx.work:work-runtime-ktx:2.2.0'
     implementation "com.afollestad.material-dialogs:core:$materialdialog_version"
     implementation "com.afollestad.material-dialogs:input:$materialdialog_version"
@@ -121,7 +119,6 @@ dependencies {
     //noinspection GradleDependency
     androidTestImplementation 'org.objenesis:objenesis:2.6'
 
-    kapt "androidx.room:room-compiler:$room_version"
     kapt "com.github.bumptech.glide:compiler:$glide_version"
     kapt "com.google.dagger:dagger-compiler:$dagger_version"
     kapt "com.google.dagger:dagger-android-processor:$dagger_version"
