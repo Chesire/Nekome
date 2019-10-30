@@ -10,7 +10,6 @@ import androidx.lifecycle.get
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.chesire.lifecyklelog.LogLifecykle
-import com.chesire.malime.app.profile.databinding.FragmentProfileBinding
 import com.chesire.malime.core.models.UserModel
 import com.chesire.malime.core.viewmodel.ViewModelFactory
 import dagger.android.support.DaggerFragment
@@ -34,17 +33,7 @@ class ProfileFragment : DaggerFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ) = FragmentProfileBinding
-        .inflate(inflater, container, false)
-        .apply {
-            vm = viewModel
-            lifecycleOwner = viewLifecycleOwner
-            fragmentProfileAnimeProgress.viewSeriesProgressTitle.text =
-                getString(R.string.nav_anime)
-            fragmentProfileMangaProgress.viewSeriesProgressTitle.text =
-                getString(R.string.nav_manga)
-        }
-        .root
+    ): View? = inflater.inflate(R.layout.fragment_profile, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
