@@ -1,7 +1,6 @@
 package com.chesire.malime.flow.login.details
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chesire.malime.account.UserRepository
@@ -17,19 +16,15 @@ class DetailsViewModel @Inject constructor(
     private val user: UserRepository
 ) : ViewModel() {
     private val _loginStatus = LiveEvent<LoginStatus>()
-    val username = MutableLiveData<String>()
-    val password = MutableLiveData<String>()
     val loginStatus: LiveData<LoginStatus> = _loginStatus
 
-    fun login() = viewModelScope.launch {
-        val name = username.value
-        val pw = password.value
+    fun login(username: String, password: String) = viewModelScope.launch {
         when {
-            name.isNullOrEmpty() -> _loginStatus.postValue(LoginStatus.EmptyUsername)
-            pw.isNullOrEmpty() -> _loginStatus.postValue(LoginStatus.EmptyPassword)
+            username.isEmpty() -> _loginStatus.postValue(LoginStatus.EmptyUsername)
+            password.isEmpty() -> _loginStatus.postValue(LoginStatus.EmptyPassword)
             else -> {
                 _loginStatus.postValue(LoginStatus.Loading)
-                executeLogin(name, pw)
+                executeLogin(username, password)
             }
         }
     }
