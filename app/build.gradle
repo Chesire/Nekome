@@ -33,9 +33,6 @@ android {
             it.resValue('string', 'version', defaultConfig.versionName)
         }
     }
-    dataBinding {
-        enabled true
-    }
     androidExtensions {
         experimental true
     }

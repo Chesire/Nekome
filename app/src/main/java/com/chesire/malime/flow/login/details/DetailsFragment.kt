@@ -16,7 +16,6 @@ import com.chesire.malime.R
 import com.chesire.malime.core.extensions.hide
 import com.chesire.malime.core.extensions.show
 import com.chesire.malime.core.viewmodel.ViewModelFactory
-import com.chesire.malime.databinding.FragmentDetailsBinding
 import com.chesire.malime.extensions.hideSystemKeyboard
 import com.google.android.material.snackbar.Snackbar
 import dagger.android.support.DaggerFragment
@@ -42,13 +41,7 @@ class DetailsFragment : DaggerFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View = FragmentDetailsBinding
-        .inflate(inflater, container, false)
-        .apply {
-            vm = viewModel
-            lifecycleOwner = viewLifecycleOwner
-        }
-        .root
+    ): View = inflater.inflate(R.layout.fragment_series_detail, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -63,14 +56,19 @@ class DetailsFragment : DaggerFragment() {
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 activity?.hideSystemKeyboard()
                 if (viewModel.loginStatus.value != LoginStatus.Loading) {
-                    viewModel.login()
+                    executeLogin()
                     return@setOnEditorActionListener true
                 }
             }
 
             false
         }
+        detailsLoginButton.setOnClickListener { executeLogin() }
         viewModel.loginStatus.observe(viewLifecycleOwner, Observer { loginStatusChanged(it) })
+    }
+
+    private fun executeLogin() {
+        viewModel.login(detailsUsernameText.text.toString(), detailsPasswordText.text.toString())
     }
 
     private fun loginStatusChanged(loginStatus: LoginStatus) {

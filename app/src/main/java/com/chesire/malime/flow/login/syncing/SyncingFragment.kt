@@ -12,7 +12,6 @@ import com.bumptech.glide.Glide
 import com.chesire.lifecyklelog.LogLifecykle
 import com.chesire.malime.R
 import com.chesire.malime.core.viewmodel.ViewModelFactory
-import com.chesire.malime.databinding.FragmentSyncingBinding
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_syncing.syncingProfileImage
 import javax.inject.Inject
@@ -29,14 +28,7 @@ class SyncingFragment : DaggerFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return FragmentSyncingBinding
-            .inflate(inflater, container, false)
-            .apply {
-                lifecycleOwner = viewLifecycleOwner
-            }
-            .root
-    }
+    ): View? = inflater.inflate(R.layout.fragment_syncing, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

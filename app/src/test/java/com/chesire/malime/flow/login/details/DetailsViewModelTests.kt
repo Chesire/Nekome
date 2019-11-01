@@ -32,10 +32,8 @@ class DetailsViewModelTests {
         }
 
         DetailsViewModel(mockAuth, mockRepo).run {
-            username.value = ""
-            password.value = "password"
             loginStatus.observeForever(mockObserver)
-            login()
+            login("", "password")
         }
 
         verify { mockObserver.onChanged(LoginStatus.EmptyUsername) }
@@ -50,10 +48,8 @@ class DetailsViewModelTests {
         }
 
         DetailsViewModel(mockAuth, mockRepo).run {
-            username.value = "username"
-            password.value = ""
             loginStatus.observeForever(mockObserver)
-            login()
+            login("username", "")
         }
 
         verify { mockObserver.onChanged(LoginStatus.EmptyPassword) }
@@ -72,10 +68,8 @@ class DetailsViewModelTests {
         }
 
         DetailsViewModel(mockAuth, mockRepo).run {
-            username.value = "username"
-            password.value = "password"
             loginStatus.observeForever(mockObserver)
-            login()
+            login("username", "password")
         }
 
         verify { mockObserver.onChanged(LoginStatus.InvalidCredentials) }
@@ -94,10 +88,8 @@ class DetailsViewModelTests {
         }
 
         DetailsViewModel(mockAuth, mockRepo).run {
-            username.value = "username"
-            password.value = "password"
             loginStatus.observeForever(mockObserver)
-            login()
+            login("username", "password")
         }
 
         verify { mockObserver.onChanged(LoginStatus.Error) }
@@ -122,9 +114,7 @@ class DetailsViewModelTests {
         }
 
         DetailsViewModel(mockAuth, mockRepo).run {
-            username.value = "username"
-            password.value = "password"
-            login()
+            login("username", "password")
         }
 
         coVerify { mockRepo.refreshUser() }
@@ -148,10 +138,8 @@ class DetailsViewModelTests {
         }
 
         DetailsViewModel(mockAuth, mockRepo).run {
-            username.value = "username"
-            password.value = "password"
             loginStatus.observeForever(mockObserver)
-            login()
+            login("username", "password")
         }
 
         verify { mockObserver.onChanged(LoginStatus.Success) }
@@ -175,10 +163,8 @@ class DetailsViewModelTests {
         }
 
         DetailsViewModel(mockAuth, mockRepo).run {
-            username.value = "username"
-            password.value = "password"
             loginStatus.observeForever(mockObserver)
-            login()
+            login("username", "password")
         }
 
         coVerify { mockAuth.clearAuth() }
@@ -202,10 +188,8 @@ class DetailsViewModelTests {
         }
 
         DetailsViewModel(mockAuth, mockRepo).run {
-            username.value = "username"
-            password.value = "password"
             loginStatus.observeForever(mockObserver)
-            login()
+            login("username", "password")
         }
 
         verify { mockObserver.onChanged(LoginStatus.Error) }
