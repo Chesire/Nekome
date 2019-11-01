@@ -5,12 +5,12 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'androidx.navigation.safeargs.kotlin'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
 
     defaultConfig {
         applicationId "com.chesire.malime.v2" // for now leave v2 on, will remove later
         minSdkVersion 21
-        targetSdkVersion 28
+        targetSdkVersion 29
         versionCode 12
         versionName "2.0.0"
         testInstrumentationRunner "com.chesire.malime.TestRunner"
