@@ -3,8 +3,6 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'androidx.navigation.safeargs.kotlin'
-apply from: '../jacoco.gradle'
-apply from: '../ktlint.gradle'
 
 android {
     compileSdkVersion 28
