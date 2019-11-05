@@ -9,6 +9,7 @@ import com.chesire.malime.core.flags.SeriesStatus
 import com.chesire.malime.core.flags.SeriesType
 import com.chesire.malime.core.flags.Subtype
 import com.chesire.malime.core.flags.UserSeriesStatus
+import com.squareup.moshi.JsonClass
 import kotlinx.android.parcel.IgnoredOnParcel
 import kotlinx.android.parcel.Parcelize
 
@@ -17,6 +18,7 @@ import kotlinx.android.parcel.Parcelize
  */
 @Parcelize
 @Entity
+@JsonClass(generateAdapter = true)
 data class SeriesModel(
     @PrimaryKey
     val id: Int,
