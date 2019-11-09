@@ -76,7 +76,7 @@ ext {
     dagger_version = "2.25.2"
     fragmentctx_version = "1.2.0-rc01"
     glide_version = "4.10.0"
-    lifecycle_version = "2.2.0-rc01"
+    lifecycle_version = "2.2.0-rc02"
     lifecykle_version = "2.0.0"
     liveevent_version = "1.0.1"
     material_version = "1.2.0-alpha01"
