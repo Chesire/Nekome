@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chesire.malime.core.extensions.postError
+import com.chesire.malime.core.extensions.postLoading
 import com.chesire.malime.core.extensions.postSuccess
 import com.chesire.malime.core.flags.AsyncState
 import com.chesire.malime.core.flags.SeriesType
@@ -30,6 +31,8 @@ class SearchViewModel @Inject constructor(private val searchApi: SearchApi) : Vi
             _searchResult.postError(SearchError.EmptyTitle)
             return
         }
+
+        _searchResult.postLoading()
 
         viewModelScope.launch {
             when (val result = when (model.seriesType) {

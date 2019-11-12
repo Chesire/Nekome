@@ -9,13 +9,17 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
 import androidx.navigation.fragment.findNavController
 import com.chesire.lifecyklelog.LogLifecykle
+import com.chesire.malime.core.extensions.hide
+import com.chesire.malime.core.extensions.show
 import com.chesire.malime.core.flags.AsyncState
 import com.chesire.malime.core.flags.SeriesType
 import com.chesire.malime.core.viewmodel.ViewModelFactory
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_search.searchConfirmButton
+import kotlinx.android.synthetic.main.fragment_search.searchProgress
 import kotlinx.android.synthetic.main.fragment_search.searchSeriesText
 import kotlinx.android.synthetic.main.fragment_search.seriesDetailStatusGroup
+import timber.log.Timber
 import javax.inject.Inject
 
 /**
@@ -61,19 +65,35 @@ class SearchFragment : DaggerFragment() {
             viewLifecycleOwner,
             Observer { result ->
                 when (result) {
-                    is AsyncState.Success -> findNavController().navigate(
-                        SearchFragmentDirections.toResultsFragment(
-                            result.data.toTypedArray()
+                    is AsyncState.Success -> {
+                        hideSpinner()
+                        findNavController().navigate(
+                            SearchFragmentDirections.toResultsFragment(
+                                result.data.toTypedArray()
+                            )
                         )
-                    )
+                    }
                     is AsyncState.Error -> {
                         // check error and choose what to do based on it
+                        hideSpinner()
                     }
-                    is AsyncState.Loading -> {
-                        // show searching indicator
-                    }
+                    is AsyncState.Loading -> showSpinner()
                 }
             }
         )
+    }
+
+    private fun showSpinner() {
+        Timber.w("Showing Spinner")
+        searchConfirmButton.text = ""
+        searchConfirmButton.isClickable = true
+        searchProgress.show()
+    }
+
+    private fun hideSpinner() {
+        Timber.w("Hiding Spinner")
+        searchConfirmButton.text = getString(R.string.search_search)
+        searchConfirmButton.isClickable = false
+        searchProgress.hide(invisible = true)
     }
 }
