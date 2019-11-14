@@ -10,7 +10,7 @@ import com.chesire.malime.core.models.SeriesModel
  * Adapter to aid with displaying the search results.
  */
 class ResultsAdapter(
-    private val trackSeriesAction: (SeriesModel) -> Unit
+    private val resultsListener: ResultsListener
 ) : ListAdapter<SeriesModel, ResultsViewHolder>(SeriesModel.DiffCallback()) {
 
     /**
@@ -31,6 +31,6 @@ class ResultsAdapter(
     override fun onBindViewHolder(holder: ResultsViewHolder, position: Int) {
         val data = getItem(position)
         holder.bind(data, allSeries?.any { it.id == data.id } ?: false)
-        holder.bindAction(trackSeriesAction)
+        holder.bindListener(resultsListener)
     }
 }

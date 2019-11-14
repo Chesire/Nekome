@@ -39,13 +39,23 @@ class ResultsViewHolder(view: View) : RecyclerView.ViewHolder(view), LayoutConta
     }
 
     /**
-     * Bind the [trackSeriesAction] to the [ResultsViewHolder] so click events can be collected.
+     * Bind the [ResultsListener] to the [ResultsViewHolder] so click events can be collected.
      */
-    fun bindAction(trackSeriesAction: (SeriesModel) -> Unit) {
+    fun bindListener(resultsListener: ResultsListener) {
         resultTrack.setOnClickListener {
-            resultTrack.hide()
-            resultProgressBar.show()
-            trackSeriesAction(seriesModel)
+            startTrackingSeries()
+            resultsListener.onTrack(seriesModel) {
+                finishTrackingSeries()
+            }
         }
+    }
+
+    private fun startTrackingSeries() {
+        resultTrack.hide()
+        resultProgressBar.show()
+    }
+
+    private fun finishTrackingSeries() {
+        resultProgressBar.hide()
     }
 }
