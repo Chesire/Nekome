@@ -11,6 +11,7 @@ import androidx.lifecycle.get
 import androidx.navigation.fragment.findNavController
 import com.chesire.lifecyklelog.LogLifecykle
 import com.chesire.malime.core.extensions.hide
+import com.chesire.malime.core.extensions.hideSystemKeyboard
 import com.chesire.malime.core.extensions.show
 import com.chesire.malime.core.flags.AsyncState
 import com.chesire.malime.core.flags.SeriesType
@@ -59,6 +60,7 @@ class SearchFragment : DaggerFragment() {
     }
 
     private fun submitSearch() {
+        activity?.hideSystemKeyboard()
         viewModel.executeSearch(
             SearchData(
                 searchSeriesText.text.toString(),

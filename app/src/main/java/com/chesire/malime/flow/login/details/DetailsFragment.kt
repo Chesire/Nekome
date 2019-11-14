@@ -16,7 +16,7 @@ import com.chesire.malime.R
 import com.chesire.malime.core.extensions.hide
 import com.chesire.malime.core.extensions.show
 import com.chesire.malime.core.viewmodel.ViewModelFactory
-import com.chesire.malime.extensions.hideSystemKeyboard
+import com.chesire.malime.core.extensions.hideSystemKeyboard
 import com.google.android.material.snackbar.Snackbar
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_details.detailsLayout
