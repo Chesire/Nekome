@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
@@ -14,8 +15,10 @@ import com.chesire.malime.core.extensions.show
 import com.chesire.malime.core.flags.AsyncState
 import com.chesire.malime.core.flags.SeriesType
 import com.chesire.malime.core.viewmodel.ViewModelFactory
+import com.google.android.material.snackbar.Snackbar
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_search.searchConfirmButton
+import kotlinx.android.synthetic.main.fragment_search.searchLayout
 import kotlinx.android.synthetic.main.fragment_search.searchProgress
 import kotlinx.android.synthetic.main.fragment_search.searchSeriesText
 import kotlinx.android.synthetic.main.fragment_search.seriesDetailStatusGroup
@@ -48,6 +51,9 @@ class SearchFragment : DaggerFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         searchConfirmButton.setOnClickListener { submitSearch() }
+        searchSeriesText.addTextChangedListener {
+            searchSeriesText.error = null
+        }
         observeSearchResults()
     }
 
@@ -74,8 +80,8 @@ class SearchFragment : DaggerFragment() {
                         )
                     }
                     is AsyncState.Error -> {
-                        // check error and choose what to do based on it
                         hideSpinner()
+                        parseSearchError(result.error)
                     }
                     is AsyncState.Loading -> showSpinner()
                 }
@@ -83,17 +89,39 @@ class SearchFragment : DaggerFragment() {
         )
     }
 
+    private fun parseSearchError(error: SearchError) {
+        when (error) {
+            SearchError.EmptyTitle ->
+                searchSeriesText.error = getString(R.string.search_error_no_text)
+            SearchError.GenericError -> Snackbar.make(
+                searchLayout,
+                R.string.error_generic,
+                Snackbar.LENGTH_LONG
+            ).show()
+            SearchError.NoTypeSelected -> Snackbar.make(
+                searchLayout,
+                R.string.search_error_no_type_selected,
+                Snackbar.LENGTH_LONG
+            ).show()
+            SearchError.NoSeriesFound -> Snackbar.make(
+                searchLayout,
+                R.string.search_error_no_series_found,
+                Snackbar.LENGTH_LONG
+            ).show()
+        }
+    }
+
     private fun showSpinner() {
         Timber.w("Showing Spinner")
         searchConfirmButton.text = ""
-        searchConfirmButton.isClickable = true
+        searchConfirmButton.isClickable = false
         searchProgress.show()
     }
 
     private fun hideSpinner() {
         Timber.w("Hiding Spinner")
         searchConfirmButton.text = getString(R.string.search_search)
-        searchConfirmButton.isClickable = false
+        searchConfirmButton.isClickable = true
         searchProgress.hide(invisible = true)
     }
 }

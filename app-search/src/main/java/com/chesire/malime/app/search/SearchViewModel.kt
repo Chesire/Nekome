@@ -31,6 +31,10 @@ class SearchViewModel @Inject constructor(private val searchApi: SearchApi) : Vi
             _searchResult.postError(SearchError.EmptyTitle)
             return
         }
+        if (model.seriesType == SeriesType.Unknown) {
+            _searchResult.postError(SearchError.NoTypeSelected)
+            return
+        }
 
         _searchResult.postLoading()
 
