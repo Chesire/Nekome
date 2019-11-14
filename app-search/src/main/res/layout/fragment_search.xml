@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/searchLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -11,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/full_margin"
+        app:errorEnabled="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -31,12 +33,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_margin="@dimen/full_margin"
+        android:layout_marginStart="@dimen/full_margin"
+        android:layout_marginTop="@dimen/half_margin"
+        android:layout_marginEnd="@dimen/full_margin"
+        android:layout_marginBottom="@dimen/full_margin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/searchSeriesLayout"
-        app:singleSelection="true"
-        app:checkedChip="@id/searchChipAnime">
+        app:singleSelection="true">
 
         <com.google.android.material.chip.Chip
             android:id="@+id/searchChipAnime"
@@ -63,5 +67,19 @@
         android:text="@string/search_search"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
+    <ProgressBar
+        android:id="@+id/searchProgress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="4dp"
+        android:indeterminateOnly="true"
+        android:indeterminateTint="@color/colorPrimaryDark"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@id/searchConfirmButton"
+        app:layout_constraintEnd_toEndOf="@id/searchConfirmButton"
+        app:layout_constraintStart_toStartOf="@id/searchConfirmButton"
+        app:layout_constraintTop_toTopOf="@id/searchConfirmButton"
+        tools:visibility="visible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -90,5 +90,10 @@
     <string name="search_anime">Anime</string>
     <string name="search_manga">Manga</string>
     <string name="search_search">Search</string>
+    <string name="search_error_no_text">A series title must be provided</string>
+    <string name="search_error_no_type_selected">A series type must be selected</string>
+    <string name="search_error_no_series_found">No series could be found</string>
     <string name="results_track">Track</string>
+
+    <string name="error_generic">An unknown error has occurred…</string>
 </resources>
