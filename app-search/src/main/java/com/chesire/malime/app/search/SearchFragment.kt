@@ -20,6 +20,7 @@ import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_search.searchConfirmButton
 import kotlinx.android.synthetic.main.fragment_search.searchLayout
 import kotlinx.android.synthetic.main.fragment_search.searchProgress
+import kotlinx.android.synthetic.main.fragment_search.searchSeriesLayout
 import kotlinx.android.synthetic.main.fragment_search.searchSeriesText
 import kotlinx.android.synthetic.main.fragment_search.seriesDetailStatusGroup
 import timber.log.Timber
@@ -52,7 +53,7 @@ class SearchFragment : DaggerFragment() {
         super.onViewCreated(view, savedInstanceState)
         searchConfirmButton.setOnClickListener { submitSearch() }
         searchSeriesText.addTextChangedListener {
-            searchSeriesText.error = null
+            searchSeriesLayout.error = null
         }
         observeSearchResults()
     }
@@ -92,7 +93,7 @@ class SearchFragment : DaggerFragment() {
     private fun parseSearchError(error: SearchError) {
         when (error) {
             SearchError.EmptyTitle ->
-                searchSeriesText.error = getString(R.string.search_error_no_text)
+                searchSeriesLayout.error = getString(R.string.search_error_no_text)
             SearchError.GenericError -> Snackbar.make(
                 searchLayout,
                 R.string.error_generic,
