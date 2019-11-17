@@ -2,7 +2,6 @@ package com.chesire.malime.series
 
 import androidx.lifecycle.LiveData
 import com.chesire.malime.account.UserRepository
-import com.chesire.malime.core.flags.SeriesType
 import com.chesire.malime.core.flags.UserSeriesStatus
 import com.chesire.malime.core.models.SeriesModel
 import com.chesire.malime.database.dao.SeriesDao

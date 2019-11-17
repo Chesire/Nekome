@@ -3,6 +3,7 @@ package com.chesire.malime.app.profile
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.chesire.malime.account.UserRepository
+import com.chesire.malime.core.flags.SeriesType
 import com.chesire.malime.core.flags.UserSeriesStatus
 import com.chesire.malime.core.models.SeriesModel
 import com.chesire.malime.series.SeriesRepository
@@ -16,6 +17,12 @@ class ProfileViewModel @Inject constructor(
     userRepository: UserRepository
 ) : ViewModel() {
     val user = userRepository.user
+    val anime = Transformations.map(seriesRepository.series) {
+        createSeriesProgress(it.filter { it.type == SeriesType.Anime })
+    }
+    val manga = Transformations.map(seriesRepository.series) {
+        createSeriesProgress(it.filter { it.type == SeriesType.Manga })
+    }
 
     private fun createSeriesProgress(items: List<SeriesModel>): SeriesProgress {
         val mapped = items.groupBy { it.userSeriesStatus }
