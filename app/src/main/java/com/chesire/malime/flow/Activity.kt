@@ -44,6 +44,7 @@ class Activity : DaggerAppCompatActivity(), AuthCaster.AuthCasterListener {
     private lateinit var appBarConfiguration: AppBarConfiguration
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(R.style.AppTheme_NoActionBar)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity)
         setSupportActionBar(findViewById(R.id.appBarToolbar))

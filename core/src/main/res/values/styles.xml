@@ -11,6 +11,10 @@
         <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogTheme</item>
     </style>
 
+    <style name="AppTheme.Launcher">
+        <item name="android:windowBackground">@drawable/splash_screen</item>
+    </style>
+
     <style name="TextInputStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox" />
 
     <style name="OutlineButtonStyle" parent="Widget.MaterialComponents.Button.OutlinedButton" />
