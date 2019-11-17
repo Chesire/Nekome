@@ -23,6 +23,7 @@ import com.chesire.malime.app.series.list.manga.MangaFragment
 import com.chesire.malime.core.DialogHandler
 import com.chesire.malime.core.SharedPref
 import com.chesire.malime.core.flags.AsyncState
+import com.chesire.malime.core.flags.SeriesType
 import com.chesire.malime.core.models.SeriesModel
 import com.chesire.malime.core.viewmodel.ViewModelFactory
 import com.chesire.malime.server.Resource
@@ -37,7 +38,6 @@ import javax.inject.Inject
  * Provides a base fragment for the [AnimeFragment] & [MangaFragment] to inherit from, performing
  * most of the setup and interaction.
  */
-@Suppress("TooManyFunctions")
 abstract class SeriesListFragment : DaggerFragment(), SeriesInteractionListener {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
@@ -46,10 +46,14 @@ abstract class SeriesListFragment : DaggerFragment(), SeriesInteractionListener 
     @Inject
     lateinit var sharedPref: SharedPref
 
-    protected val viewModel by lazy {
+    /**
+     * Flag for which type of series should be displayed in this fragment instance.
+     */
+    protected abstract val seriesType: SeriesType
+
+    private val viewModel by lazy {
         ViewModelProvider(this, viewModelFactory).get<SeriesListViewModel>()
     }
-
     private lateinit var seriesAdapter: SeriesAdapter
     private var seriesDetail: SeriesDetailSheetFragment? = null
 
@@ -75,6 +79,15 @@ abstract class SeriesListFragment : DaggerFragment(), SeriesInteractionListener 
             val itemTouchHelper = ItemTouchHelper(SwipeToDelete(seriesAdapter))
             itemTouchHelper.attachToRecyclerView(this)
         }
+
+        viewModel.series.observe(
+            viewLifecycleOwner,
+            Observer { series ->
+                val newList = series.filter { it.type == seriesType }
+                Timber.d("New list provided, new count [${newList.count()}]")
+                seriesAdapter.submitList(newList)
+            }
+        )
         observeSeriesDeletion()
     }
 
@@ -151,13 +164,5 @@ abstract class SeriesListFragment : DaggerFragment(), SeriesInteractionListener 
                 }.show()
             }
         })
-    }
-
-    /**
-     * Inform the adapter that a new series list has been provided.
-     */
-    protected fun newSeriesListProvided(newList: List<SeriesModel>) {
-        Timber.d("New list provided, new count [${newList.count()}]")
-        seriesAdapter.submitList(newList.toMutableList())
     }
 }

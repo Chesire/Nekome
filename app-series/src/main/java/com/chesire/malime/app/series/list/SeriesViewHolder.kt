@@ -1,7 +1,6 @@
 package com.chesire.malime.app.series.list
 
 import android.view.View
-import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.chesire.malime.core.extensions.hide
@@ -22,7 +21,7 @@ import kotlinx.android.synthetic.main.adapter_item_series.adapterItemSeriesTitle
  */
 class SeriesViewHolder(view: View) : RecyclerView.ViewHolder(view), LayoutContainer {
     private lateinit var seriesModel: SeriesModel
-    override val containerView: View?
+    override val containerView: View
         get() = itemView
 
     /**
@@ -38,7 +37,6 @@ class SeriesViewHolder(view: View) : RecyclerView.ViewHolder(view), LayoutContai
         adapterItemSeriesSubtype.text = model.subtype.name
         adapterItemSeriesProgress.text = "${model.progress} / ${model.totalLength}"
         adapterItemSeriesPlusOne.visibleIf(invisible = true) { model.progress < model.totalLength }
-        ViewCompat.setTransitionName(adapterItemSeriesImage, model.title)
     }
 
     /**

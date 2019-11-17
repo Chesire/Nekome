@@ -35,8 +35,7 @@ class SeriesListViewModelTests {
             } coAnswers {
                 mockk()
             }
-            every { anime } returns mockk()
-            every { manga } returns mockk()
+            every { series } returns mockk()
         }
         val mockAuthCaster = mockk<AuthCaster>()
 
@@ -54,8 +53,7 @@ class SeriesListViewModelTests {
             } coAnswers {
                 Resource.Error("error", Resource.Error.CouldNotRefresh)
             }
-            every { anime } returns mockk()
-            every { manga } returns mockk()
+            every { series } returns mockk()
         }
         val mockAuthCaster = mockk<AuthCaster> {
             every { issueRefreshingToken() } just Runs
@@ -76,8 +74,7 @@ class SeriesListViewModelTests {
             } coAnswers {
                 Resource.Error("error", Resource.Error.GenericError)
             }
-            every { anime } returns mockk()
-            every { manga } returns mockk()
+            every { series } returns mockk()
         }
         val mockAuthCaster = mockk<AuthCaster>()
 
@@ -96,8 +93,7 @@ class SeriesListViewModelTests {
             } coAnswers {
                 Resource.Success(mockk())
             }
-            every { anime } returns mockk()
-            every { manga } returns mockk()
+            every { series } returns mockk()
         }
         val mockAuthCaster = mockk<AuthCaster>()
 
@@ -115,8 +111,7 @@ class SeriesListViewModelTests {
             } coAnswers {
                 Resource.Error("error", Resource.Error.CouldNotRefresh)
             }
-            every { anime } returns mockk()
-            every { manga } returns mockk()
+            every { series } returns mockk()
         }
         val mockAuthCaster = mockk<AuthCaster> {
             every { issueRefreshingToken() } just Runs
@@ -136,8 +131,7 @@ class SeriesListViewModelTests {
             } coAnswers {
                 Resource.Error("error", Resource.Error.GenericError)
             }
-            every { anime } returns mockk()
-            every { manga } returns mockk()
+            every { series } returns mockk()
         }
         val mockAuthCaster = mockk<AuthCaster>()
         val mockObserver = mockk<Observer<AsyncState<SeriesModel, SeriesListDeleteError>>>() {

@@ -1,5 +1,6 @@
 package com.chesire.malime.database.dao
 
+import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
@@ -7,7 +8,6 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
-import com.chesire.malime.core.flags.SeriesType
 import com.chesire.malime.core.models.SeriesModel
 
 /**
@@ -34,32 +34,22 @@ interface SeriesDao {
     suspend fun insert(series: List<SeriesModel>)
 
     /**
-     * Provides an observable for all series.
+     * Provides an observable for all [SeriesModel].
      */
     @Query("SELECT * FROM seriesmodel")
-    fun observe(): LiveData<List<SeriesModel>>
-
-    /**
-     * Provides an observable for the [type] of series.
-     */
-    @Query("SELECT * FROM seriesmodel WHERE type == :type")
-    fun observe(type: SeriesType): LiveData<List<SeriesModel>>
-
-    /**
-     * Retrieves all series.
-     */
-    @Query("SELECT * FROM seriesmodel")
-    suspend fun retrieve(): List<SeriesModel>
-
-    /**
-     * Retrieves all series of [type].
-     */
-    @Query("SELECT * FROM seriesmodel WHERE type == :type")
-    suspend fun retrieve(type: SeriesType): List<SeriesModel>
+    fun series(): LiveData<List<SeriesModel>>
 
     /**
      * Updates the series [series].
      */
     @Update
     suspend fun update(series: SeriesModel)
+
+    // This method only exists to allow easier testing of the SeriesDao.
+    /**
+     * Retrieves all series.
+     */
+    @VisibleForTesting
+    @Query("SELECT * FROM seriesmodel")
+    suspend fun retrieve(): List<SeriesModel>
 }

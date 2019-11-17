@@ -2,7 +2,6 @@ package com.chesire.malime.series
 
 import androidx.lifecycle.LiveData
 import com.chesire.malime.account.UserRepository
-import com.chesire.malime.core.flags.SeriesType
 import com.chesire.malime.core.flags.UserSeriesStatus
 import com.chesire.malime.core.models.SeriesModel
 import com.chesire.malime.database.dao.SeriesDao
@@ -19,22 +18,9 @@ class SeriesRepository(
     private val userRepository: UserRepository
 ) {
     /**
-     * Observable list of the users anime.
-     */
-    val anime: LiveData<List<SeriesModel>>
-        get() = seriesDao.observe(SeriesType.Anime)
-
-    /**
-     * Observable list of the users manga.
-     */
-    val manga: LiveData<List<SeriesModel>>
-        get() = seriesDao.observe(SeriesType.Manga)
-
-    /**
      * Observable list of all the users series (Anime + Manga).
      */
-    val series: LiveData<List<SeriesModel>>
-        get() = seriesDao.observe()
+    val series: LiveData<List<SeriesModel>> = seriesDao.series()
 
     /**
      * Adds the anime series with id [seriesId] to the users tracked list.
