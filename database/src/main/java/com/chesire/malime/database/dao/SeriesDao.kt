@@ -1,5 +1,6 @@
 package com.chesire.malime.database.dao
 
+import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
@@ -43,4 +44,12 @@ interface SeriesDao {
      */
     @Update
     suspend fun update(series: SeriesModel)
+
+    // This method only exists to allow easier testing of the SeriesDao.
+    /**
+     * Retrieves all series.
+     */
+    @VisibleForTesting
+    @Query("SELECT * FROM seriesmodel")
+    suspend fun retrieve(): List<SeriesModel>
 }

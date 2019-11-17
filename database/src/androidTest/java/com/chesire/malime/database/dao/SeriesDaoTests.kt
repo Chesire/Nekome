@@ -130,7 +130,7 @@ class SeriesDaoTests {
             )
         )
         assertTrue(seriesDao.retrieve().count() == 6)
-        assertTrue(seriesDao.retrieve(SeriesType.Anime).count() == 3)
+        assertTrue(seriesDao.retrieve().filter { it.type == SeriesType.Anime }.count() == 3)
     }
 
     @Test

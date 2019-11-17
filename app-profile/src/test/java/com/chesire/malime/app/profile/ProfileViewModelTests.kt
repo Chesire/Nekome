@@ -4,6 +4,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.chesire.malime.account.UserRepository
+import com.chesire.malime.core.flags.SeriesType
 import com.chesire.malime.core.flags.UserSeriesStatus
 import com.chesire.malime.series.SeriesRepository
 import com.chesire.malime.testing.createSeriesModel
@@ -23,8 +24,7 @@ class ProfileViewModelTests {
     @Test
     fun `anime gets updated with seriesRepository anime series`() {
         val mockSeriesRepo = mockk<SeriesRepository> {
-            every { anime } returns MutableLiveData(listOf(createSeriesModel()))
-            every { manga } returns mockk()
+            every { series } returns MutableLiveData(listOf(createSeriesModel(seriesType = SeriesType.Anime)))
         }
         val mockUserRepo = mockk<UserRepository> {
             every { user } returns mockk()
@@ -42,8 +42,7 @@ class ProfileViewModelTests {
     @Test
     fun `manga gets updated with seriesRepository manga series`() {
         val mockSeriesRepo = mockk<SeriesRepository> {
-            every { anime } returns mockk()
-            every { manga } returns MutableLiveData(listOf(createSeriesModel()))
+            every { series } returns MutableLiveData(listOf(createSeriesModel(seriesType = SeriesType.Manga)))
         }
         val mockUserRepo = mockk<UserRepository> {
             every { user } returns mockk()
@@ -61,8 +60,7 @@ class ProfileViewModelTests {
     @Test
     fun `series has expected total items`() {
         val mockSeriesRepo = mockk<SeriesRepository> {
-            every { anime } returns mockk()
-            every { manga } returns MutableLiveData(
+            every { series } returns MutableLiveData(
                 listOf(
                     createSeriesModel(userSeriesStatus = UserSeriesStatus.Planned),
                     createSeriesModel(userSeriesStatus = UserSeriesStatus.Planned),
@@ -79,16 +77,15 @@ class ProfileViewModelTests {
         }
 
         val classUnderTest = ProfileViewModel(mockSeriesRepo, mockUserRepo)
-        classUnderTest.manga.observeForever(mockObserver)
+        classUnderTest.anime.observeForever(mockObserver)
 
-        assertEquals("4", classUnderTest.manga.value?.total)
+        assertEquals("4", classUnderTest.anime.value?.total)
     }
 
     @Test
     fun `series has expected current items`() {
         val mockSeriesRepo = mockk<SeriesRepository> {
-            every { anime } returns mockk()
-            every { manga } returns MutableLiveData(
+            every { series } returns MutableLiveData(
                 listOf(
                     createSeriesModel(userSeriesStatus = UserSeriesStatus.Current),
                     createSeriesModel(userSeriesStatus = UserSeriesStatus.Planned),
@@ -105,16 +102,15 @@ class ProfileViewModelTests {
         }
 
         val classUnderTest = ProfileViewModel(mockSeriesRepo, mockUserRepo)
-        classUnderTest.manga.observeForever(mockObserver)
+        classUnderTest.anime.observeForever(mockObserver)
 
-        assertEquals("1", classUnderTest.manga.value?.current)
+        assertEquals("1", classUnderTest.anime.value?.current)
     }
 
     @Test
     fun `series has expected completed items`() {
         val mockSeriesRepo = mockk<SeriesRepository> {
-            every { anime } returns mockk()
-            every { manga } returns MutableLiveData(
+            every { series } returns MutableLiveData(
                 listOf(
                     createSeriesModel(userSeriesStatus = UserSeriesStatus.Completed),
                     createSeriesModel(userSeriesStatus = UserSeriesStatus.Completed),
@@ -131,16 +127,15 @@ class ProfileViewModelTests {
         }
 
         val classUnderTest = ProfileViewModel(mockSeriesRepo, mockUserRepo)
-        classUnderTest.manga.observeForever(mockObserver)
+        classUnderTest.anime.observeForever(mockObserver)
 
-        assertEquals("2", classUnderTest.manga.value?.completed)
+        assertEquals("2", classUnderTest.anime.value?.completed)
     }
 
     @Test
     fun `series has expected onHold items`() {
         val mockSeriesRepo = mockk<SeriesRepository> {
-            every { anime } returns mockk()
-            every { manga } returns MutableLiveData(
+            every { series } returns MutableLiveData(
                 listOf(
                     createSeriesModel(userSeriesStatus = UserSeriesStatus.OnHold),
                     createSeriesModel(userSeriesStatus = UserSeriesStatus.OnHold),
@@ -157,16 +152,15 @@ class ProfileViewModelTests {
         }
 
         val classUnderTest = ProfileViewModel(mockSeriesRepo, mockUserRepo)
-        classUnderTest.manga.observeForever(mockObserver)
+        classUnderTest.anime.observeForever(mockObserver)
 
-        assertEquals("4", classUnderTest.manga.value?.onHold)
+        assertEquals("4", classUnderTest.anime.value?.onHold)
     }
 
     @Test
     fun `series has expected dropped items`() {
         val mockSeriesRepo = mockk<SeriesRepository> {
-            every { anime } returns mockk()
-            every { manga } returns MutableLiveData(
+            every { series } returns MutableLiveData(
                 listOf(
                     createSeriesModel(userSeriesStatus = UserSeriesStatus.OnHold),
                     createSeriesModel(userSeriesStatus = UserSeriesStatus.OnHold),
@@ -183,16 +177,15 @@ class ProfileViewModelTests {
         }
 
         val classUnderTest = ProfileViewModel(mockSeriesRepo, mockUserRepo)
-        classUnderTest.manga.observeForever(mockObserver)
+        classUnderTest.anime.observeForever(mockObserver)
 
-        assertEquals("0", classUnderTest.manga.value?.dropped)
+        assertEquals("0", classUnderTest.anime.value?.dropped)
     }
 
     @Test
     fun `series has expected planned items`() {
         val mockSeriesRepo = mockk<SeriesRepository> {
-            every { anime } returns mockk()
-            every { manga } returns MutableLiveData(
+            every { series } returns MutableLiveData(
                 listOf(
                     createSeriesModel(userSeriesStatus = UserSeriesStatus.OnHold),
                     createSeriesModel(userSeriesStatus = UserSeriesStatus.OnHold),
@@ -209,16 +202,15 @@ class ProfileViewModelTests {
         }
 
         val classUnderTest = ProfileViewModel(mockSeriesRepo, mockUserRepo)
-        classUnderTest.manga.observeForever(mockObserver)
+        classUnderTest.anime.observeForever(mockObserver)
 
-        assertEquals("1", classUnderTest.manga.value?.planned)
+        assertEquals("1", classUnderTest.anime.value?.planned)
     }
 
     @Test
     fun `series has expected unknown items`() {
         val mockSeriesRepo = mockk<SeriesRepository> {
-            every { anime } returns mockk()
-            every { manga } returns MutableLiveData(
+            every { series } returns MutableLiveData(
                 listOf(
                     createSeriesModel(userSeriesStatus = UserSeriesStatus.OnHold),
                     createSeriesModel(userSeriesStatus = UserSeriesStatus.Unknown),
@@ -235,8 +227,8 @@ class ProfileViewModelTests {
         }
 
         val classUnderTest = ProfileViewModel(mockSeriesRepo, mockUserRepo)
-        classUnderTest.manga.observeForever(mockObserver)
+        classUnderTest.anime.observeForever(mockObserver)
 
-        assertEquals("2", classUnderTest.manga.value?.unknown)
+        assertEquals("2", classUnderTest.anime.value?.unknown)
     }
 }

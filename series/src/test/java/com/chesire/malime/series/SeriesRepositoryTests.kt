@@ -3,7 +3,6 @@ package com.chesire.malime.series
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.chesire.malime.account.UserRepository
-import com.chesire.malime.core.flags.SeriesType
 import com.chesire.malime.core.flags.UserSeriesStatus
 import com.chesire.malime.core.models.SeriesModel
 import com.chesire.malime.database.dao.SeriesDao
@@ -28,37 +27,9 @@ class SeriesRepositoryTests {
     val rule = InstantTaskExecutorRule()
 
     @Test
-    fun `anime observes the dao anime series`() {
-        val mockDao = mockk<SeriesDao> {
-            every { observe(SeriesType.Anime) } returns mockk { every { observeForever(any()) } just Runs }
-        }
-        val mockApi = mockk<LibraryApi>()
-        val mockUser = mockk<UserRepository>()
-
-        val classUnderTest = SeriesRepository(mockDao, mockApi, mockUser)
-        classUnderTest.anime.observeForever(mockk<Observer<List<SeriesModel>>>())
-
-        verify { mockDao.observe(SeriesType.Anime) }
-    }
-
-    @Test
-    fun `manga observes the dao manga series`() {
-        val mockDao = mockk<SeriesDao> {
-            every { observe(SeriesType.Manga) } returns mockk { every { observeForever(any()) } just Runs }
-        }
-        val mockApi = mockk<LibraryApi>()
-        val mockUser = mockk<UserRepository>()
-
-        val classUnderTest = SeriesRepository(mockDao, mockApi, mockUser)
-        classUnderTest.manga.observeForever(mockk<Observer<List<SeriesModel>>>())
-
-        verify { mockDao.observe(SeriesType.Manga) }
-    }
-
-    @Test
     fun `series observes all the dao series`() {
         val mockDao = mockk<SeriesDao> {
-            every { observe() } returns mockk { every { observeForever(any()) } just Runs }
+            every { series() } returns mockk { every { observeForever(any()) } just Runs }
         }
         val mockApi = mockk<LibraryApi>()
         val mockUser = mockk<UserRepository>()
@@ -66,7 +37,7 @@ class SeriesRepositoryTests {
         val classUnderTest = SeriesRepository(mockDao, mockApi, mockUser)
         classUnderTest.series.observeForever(mockk<Observer<List<SeriesModel>>>())
 
-        verify { mockDao.observe() }
+        verify { mockDao.series() }
     }
 
     @Test
