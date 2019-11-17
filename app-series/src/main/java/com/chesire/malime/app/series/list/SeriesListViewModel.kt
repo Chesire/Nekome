@@ -22,10 +22,9 @@ import kotlin.coroutines.CoroutineContext
  */
 class SeriesListViewModel @Inject constructor(
     private val repo: SeriesRepository,
-    private val authCaster: AuthCaster,
-    @IOContext private val ioContext: CoroutineContext
+    private val authCaster: AuthCaster
 ) : ViewModel() {
-    val series = liveData(ioContext) { emitSource(repo.series) }
+    val series = repo.series
     private val _deletionStatus = LiveEvent<AsyncState<SeriesModel, SeriesListDeleteError>>()
     val deletionStatus: LiveData<AsyncState<SeriesModel, SeriesListDeleteError>> = _deletionStatus
 

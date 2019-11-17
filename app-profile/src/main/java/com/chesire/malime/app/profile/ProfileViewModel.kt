@@ -16,8 +16,6 @@ class ProfileViewModel @Inject constructor(
     userRepository: UserRepository
 ) : ViewModel() {
     val user = userRepository.user
-    val anime = Transformations.map(seriesRepository.anime) { createSeriesProgress(it) }
-    val manga = Transformations.map(seriesRepository.manga) { createSeriesProgress(it) }
 
     private fun createSeriesProgress(items: List<SeriesModel>): SeriesProgress {
         val mapped = items.groupBy { it.userSeriesStatus }

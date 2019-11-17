@@ -7,7 +7,6 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
-import com.chesire.malime.core.flags.SeriesType
 import com.chesire.malime.core.models.SeriesModel
 
 /**
@@ -38,24 +37,6 @@ interface SeriesDao {
      */
     @Query("SELECT * FROM seriesmodel")
     fun observe(): LiveData<List<SeriesModel>>
-
-    /**
-     * Provides an observable for the [type] of series.
-     */
-    @Query("SELECT * FROM seriesmodel WHERE type == :type")
-    fun observe(type: SeriesType): LiveData<List<SeriesModel>>
-
-    /**
-     * Retrieves all series.
-     */
-    @Query("SELECT * FROM seriesmodel")
-    suspend fun retrieve(): List<SeriesModel>
-
-    /**
-     * Retrieves all series of [type].
-     */
-    @Query("SELECT * FROM seriesmodel WHERE type == :type")
-    suspend fun retrieve(type: SeriesType): List<SeriesModel>
 
     /**
      * Updates the series [series].
