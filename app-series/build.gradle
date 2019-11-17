@@ -42,7 +42,6 @@ dependencies {
     implementation "androidx.constraintlayout:constraintlayout:$constraint_layout_version"
     implementation "androidx.core:core-ktx:$corektx_version"
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
     implementation "com.afollestad.material-dialogs:core:$materialdialog_version"
     implementation "com.afollestad.material-dialogs:input:$materialdialog_version"
