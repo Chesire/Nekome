@@ -14,11 +14,11 @@ class MutableSeriesModelTests {
     }
 
     @Test
-    fun `generated MutableSeriesModel seriesLength is "?" if unknown length`() {
+    fun `generated MutableSeriesModel seriesLength is "-" if unknown length`() {
         val originalModel = createSeriesModel(userId = 99, totalLength = 0)
         val classUnderTest = MutableSeriesModel.from(originalModel)
 
-        assertEquals("?", classUnderTest.seriesLength)
+        assertEquals("-", classUnderTest.seriesLength)
     }
 
     @Test

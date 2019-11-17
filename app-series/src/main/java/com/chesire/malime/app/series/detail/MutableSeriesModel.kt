@@ -26,7 +26,7 @@ data class MutableSeriesModel(
             model.title,
             model.progress,
             model.totalLength,
-            if (model.lengthKnown) model.totalLength.toString() else "?",
+            if (model.lengthKnown) model.totalLength.toString() else "-",
             model.type.name,
             model.subtype.name,
             model.userSeriesStatus,

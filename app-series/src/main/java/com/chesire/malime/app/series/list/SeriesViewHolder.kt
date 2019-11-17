@@ -3,6 +3,7 @@ package com.chesire.malime.app.series.list
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.chesire.malime.app.series.R
 import com.chesire.malime.core.extensions.hide
 import com.chesire.malime.core.extensions.show
 import com.chesire.malime.core.extensions.toAlpha
@@ -35,7 +36,11 @@ class SeriesViewHolder(view: View) : RecyclerView.ViewHolder(view), LayoutContai
             .into(adapterItemSeriesImage)
         adapterItemSeriesTitle.text = model.title
         adapterItemSeriesSubtype.text = model.subtype.name
-        adapterItemSeriesProgress.text = "${model.progress} / ${model.totalLength}"
+        adapterItemSeriesProgress.text = containerView.context.getString(
+            R.string.series_list_length,
+            model.progress.toString(),
+            if (model.lengthKnown) model.totalLength else '-'
+        )
         adapterItemSeriesPlusOne.visibleIf(invisible = true) { model.progress < model.totalLength }
     }
 
