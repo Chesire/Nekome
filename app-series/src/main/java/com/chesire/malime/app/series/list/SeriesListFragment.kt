@@ -38,7 +38,6 @@ import javax.inject.Inject
  * Provides a base fragment for the [AnimeFragment] & [MangaFragment] to inherit from, performing
  * most of the setup and interaction.
  */
-@Suppress("TooManyFunctions")
 abstract class SeriesListFragment : DaggerFragment(), SeriesInteractionListener {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
@@ -80,17 +79,16 @@ abstract class SeriesListFragment : DaggerFragment(), SeriesInteractionListener 
             val itemTouchHelper = ItemTouchHelper(SwipeToDelete(seriesAdapter))
             itemTouchHelper.attachToRecyclerView(this)
         }
-        observeSeriesDeletion()
-    }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
         viewModel.series.observe(
             viewLifecycleOwner,
             Observer { series ->
-                newSeriesListProvided(series.filter { it.type == seriesType })
+                val newList = series.filter { it.type == seriesType }
+                Timber.d("New list provided, new count [${newList.count()}]")
+                seriesAdapter.submitList(newList)
             }
         )
+        observeSeriesDeletion()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -166,13 +164,5 @@ abstract class SeriesListFragment : DaggerFragment(), SeriesInteractionListener 
                 }.show()
             }
         })
-    }
-
-    /**
-     * Inform the adapter that a new series list has been provided.
-     */
-    protected fun newSeriesListProvided(newList: List<SeriesModel>) {
-        Timber.d("New list provided, new count [${newList.count()}]")
-        seriesAdapter.submitList(newList)
     }
 }
