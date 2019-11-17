@@ -2,8 +2,10 @@ package com.chesire.malime.app.series.list
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import com.chesire.malime.core.AuthCaster
+import com.chesire.malime.core.IOContext
 import com.chesire.malime.core.extensions.postError
 import com.chesire.malime.core.flags.AsyncState
 import com.chesire.malime.core.flags.UserSeriesStatus
@@ -13,17 +15,17 @@ import com.chesire.malime.server.Resource
 import com.hadilq.liveevent.LiveEvent
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.coroutines.CoroutineContext
 
 /**
  * ViewModel to use with the [SeriesListFragment], handles sending updates for a series.
  */
 class SeriesListViewModel @Inject constructor(
     private val repo: SeriesRepository,
-    private val authCaster: AuthCaster
+    private val authCaster: AuthCaster,
+    @IOContext private val ioContext: CoroutineContext
 ) : ViewModel() {
-    val animeSeries = repo.anime
-    val mangaSeries = repo.manga
-
+    val series = liveData(ioContext) { emitSource(repo.series) }
     private val _deletionStatus = LiveEvent<AsyncState<SeriesModel, SeriesListDeleteError>>()
     val deletionStatus: LiveData<AsyncState<SeriesModel, SeriesListDeleteError>> = _deletionStatus
 
