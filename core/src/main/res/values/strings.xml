@@ -37,6 +37,7 @@
     <string name="filter_by_dropped">Dropped</string>
     <string name="filter_by_planned">Planned</string>
 
+    <string name="series_list_length">%s / %s</string>
     <string name="series_list_plus_one">+1</string>
     <string name="series_list_try_again">Series %s failed to update, please try again…</string>
     <string name="series_list_delete_title">Are you sure you want to delete %s?</string>
