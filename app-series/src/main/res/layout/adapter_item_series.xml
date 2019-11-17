@@ -79,7 +79,7 @@
             android:minWidth="0dp"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
-            android:text="@string/list_plus_one"
+            android:text="@string/series_list_plus_one"
             android:textColor="@color/colorPrimary"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />

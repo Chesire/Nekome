@@ -124,7 +124,7 @@ abstract class SeriesListFragment : DaggerFragment(), SeriesInteractionListener 
             if (it is Resource.Error) {
                 Snackbar.make(
                     fragmentSeriesListLayout,
-                    getString(R.string.list_try_again, model.title),
+                    getString(R.string.series_list_try_again, model.title),
                     Snackbar.LENGTH_LONG
                 ).show()
             }
