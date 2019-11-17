@@ -11,9 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToPadding="false"
-        android:paddingStart="8dp"
         android:paddingTop="4dp"
-        android:paddingEnd="8dp"
         android:paddingBottom="4dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         tools:listitem="@layout/adapter_item_series" />
