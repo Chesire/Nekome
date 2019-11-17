@@ -23,6 +23,7 @@ import com.chesire.malime.app.series.list.manga.MangaFragment
 import com.chesire.malime.core.DialogHandler
 import com.chesire.malime.core.SharedPref
 import com.chesire.malime.core.flags.AsyncState
+import com.chesire.malime.core.flags.SeriesType
 import com.chesire.malime.core.models.SeriesModel
 import com.chesire.malime.core.viewmodel.ViewModelFactory
 import com.chesire.malime.server.Resource
@@ -46,10 +47,14 @@ abstract class SeriesListFragment : DaggerFragment(), SeriesInteractionListener 
     @Inject
     lateinit var sharedPref: SharedPref
 
-    protected val viewModel by lazy {
+    /**
+     * Flag for which type of series should be displayed in this fragment instance.
+     */
+    protected abstract val seriesType: SeriesType
+
+    private val viewModel by lazy {
         ViewModelProvider(this, viewModelFactory).get<SeriesListViewModel>()
     }
-
     private lateinit var seriesAdapter: SeriesAdapter
     private var seriesDetail: SeriesDetailSheetFragment? = null
 
@@ -76,6 +81,16 @@ abstract class SeriesListFragment : DaggerFragment(), SeriesInteractionListener 
             itemTouchHelper.attachToRecyclerView(this)
         }
         observeSeriesDeletion()
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        viewModel.series.observe(
+            viewLifecycleOwner,
+            Observer { series ->
+                newSeriesListProvided(series.filter { it.type == seriesType })
+            }
+        )
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
