@@ -158,6 +158,6 @@ abstract class SeriesListFragment : DaggerFragment(), SeriesInteractionListener 
      */
     protected fun newSeriesListProvided(newList: List<SeriesModel>) {
         Timber.d("New list provided, new count [${newList.count()}]")
-        seriesAdapter.submitList(newList.toMutableList())
+        seriesAdapter.submitList(newList)
     }
 }

@@ -25,7 +25,7 @@ class SeriesAdapter(
     }
 
     private var container: RecyclerView? = null
-    private var completeList = mutableListOf<SeriesModel>()
+    private var completeList = listOf<SeriesModel>()
 
     /**
      * Execute when an item has been swiped away in the adapter.
@@ -44,7 +44,7 @@ class SeriesAdapter(
         }
     }
 
-    override fun submitList(list: MutableList<SeriesModel>?) {
+    override fun submitList(list: List<SeriesModel>?) {
         if (list == null) {
             Timber.w("Null list attempted to be passed to submitList")
             super.submitList(list)
