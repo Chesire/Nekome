@@ -33,10 +33,10 @@ interface SeriesDao {
     suspend fun insert(series: List<SeriesModel>)
 
     /**
-     * Provides an observable for all series.
+     * Provides an observable for all [SeriesModel].
      */
     @Query("SELECT * FROM seriesmodel")
-    fun observe(): LiveData<List<SeriesModel>>
+    fun series(): LiveData<List<SeriesModel>>
 
     /**
      * Updates the series [series].

@@ -20,7 +20,7 @@ class SeriesRepository(
     /**
      * Observable list of all the users series (Anime + Manga).
      */
-    val series: LiveData<List<SeriesModel>> = seriesDao.observe()
+    val series: LiveData<List<SeriesModel>> = seriesDao.series()
 
     /**
      * Adds the anime series with id [seriesId] to the users tracked list.
