@@ -59,6 +59,11 @@ class SeriesAdapter(
         container = recyclerView
     }
 
+    override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
+        container = null
+        super.onDetachedFromRecyclerView(recyclerView)
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SeriesViewHolder {
         return SeriesViewHolder(
             LayoutInflater.from(parent.context).inflate(R.layout.adapter_item_series, parent, false)
