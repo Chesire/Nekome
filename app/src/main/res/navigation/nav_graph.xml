@@ -10,7 +10,7 @@
     <include app:graph="@navigation/search_nav_graph" />
     <include app:graph="@navigation/settings_nav_graph" />
 
-    <!-- OOB -->
+    <!-- Login -->
     <fragment
         android:id="@+id/detailsFragment"
         android:name="com.chesire.malime.flow.login.details.DetailsFragment"
@@ -31,35 +31,19 @@
             app:popUpTo="@+id/detailsFragment"
             app:popUpToInclusive="true" />
     </fragment>
-    <!-- End OOB -->
+    <!-- End Login -->
 
     <!-- Main -->
     <fragment
         android:id="@+id/animeFragment"
         android:name="com.chesire.malime.app.series.list.anime.AnimeFragment"
         android:label="@string/nav_anime"
-        tools:layout="@layout/fragment_series_list">
-        <action
-            android:id="@+id/toSearchFragment"
-            app:destination="@id/searchFragment"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
-    </fragment>
+        tools:layout="@layout/fragment_series_list" />
     <fragment
         android:id="@+id/mangaFragment"
         android:name="com.chesire.malime.app.series.list.manga.MangaFragment"
         android:label="@string/nav_manga"
-        tools:layout="@layout/fragment_series_list">
-        <action
-            android:id="@+id/toSearchFragment"
-            app:destination="@id/searchFragment"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
-    </fragment>
+        tools:layout="@layout/fragment_series_list" />
     <fragment
         android:id="@+id/timelineFragment"
         android:name="com.chesire.malime.app.timeline.TimelineFragment"
@@ -69,11 +53,7 @@
         android:id="@+id/profileFragment"
         android:name="com.chesire.malime.app.profile.ProfileFragment"
         android:label="@string/nav_profile"
-        tools:layout="@layout/fragment_profile">
-        <action
-            android:id="@+id/toSettings"
-            app:destination="@id/settingsFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_profile" />
     <!-- End Main -->
 
     <!-- Global Actions -->
