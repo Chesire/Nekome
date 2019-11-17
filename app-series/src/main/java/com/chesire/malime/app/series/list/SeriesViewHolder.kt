@@ -22,7 +22,7 @@ import kotlinx.android.synthetic.main.adapter_item_series.adapterItemSeriesTitle
  */
 class SeriesViewHolder(view: View) : RecyclerView.ViewHolder(view), LayoutContainer {
     private lateinit var seriesModel: SeriesModel
-    override val containerView: View?
+    override val containerView: View
         get() = itemView
 
     /**
