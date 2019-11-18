@@ -41,7 +41,9 @@ class SeriesViewHolder(view: View) : RecyclerView.ViewHolder(view), LayoutContai
             model.progress.toString(),
             if (model.lengthKnown) model.totalLength else '-'
         )
-        adapterItemSeriesPlusOne.visibleIf(invisible = true) { model.progress < model.totalLength }
+        adapterItemSeriesPlusOne.visibleIf(invisible = true) {
+            !model.lengthKnown || model.progress < model.totalLength
+        }
     }
 
     /**
