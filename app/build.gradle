@@ -90,7 +90,7 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
 
-    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.0-beta-3'
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.0-beta-4'
 
     testImplementation project(path: ':testing')
     testImplementation 'androidx.arch.core:core-testing:2.1.0'
