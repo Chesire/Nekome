@@ -38,6 +38,7 @@ captures/
 
 # Intellij
 *.iml
+.idea/assetWizardSettings.xml
 .idea/workspace.xml
 .idea/tasks.xml
 .idea/gradle.xml
@@ -230,4 +231,10 @@ $RECYCLE.BIN/
 google-services.json
 Fastlane/report.xml
 .idea/caches/
+.idea/sonarlint/
+.idea/navEditor.xml
+# this has been ignored as its only for some non-vital development tools
+node_modules
+# this has been ignored as its only for some non-vital development tools
+package-lock.json
 # End of custom

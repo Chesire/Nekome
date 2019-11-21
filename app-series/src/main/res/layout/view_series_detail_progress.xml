@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/seriesDetailProgressTitle"
+        style="@style/BottomSheetSectionTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/series_detail_progress_title" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/seriesDetailProgressValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/full_margin"
+        android:backgroundTint="@color/colorPrimary"
+        android:inputType="number"
+        android:paddingStart="@dimen/full_margin"
+        android:paddingTop="@dimen/half_margin"
+        android:paddingEnd="@dimen/full_margin"
+        android:paddingBottom="@dimen/full_margin"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+        tools:text="999" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/seriesDetailProgressOutOf"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/half_margin"
+        android:paddingTop="@dimen/half_margin"
+        android:paddingEnd="@dimen/full_margin"
+        android:paddingBottom="@dimen/full_margin"
+        tools:text="/ 999" />
+
+</LinearLayout>

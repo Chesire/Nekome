@@ -1,0 +1,5 @@
+# http://editorconfig.org
+root = true
+
+[*.{kt,kts}]
+disabled_rules=import-ordering

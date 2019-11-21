@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="MatchingMenuId"
+    tools:showIn="activityNavigationView">
+
+    <group
+        android:id="@+id/navigationMenuPrimary"
+        android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/animeFragment"
+            android:icon="@drawable/ic_video_library_black"
+            android:title="@string/nav_anime" />
+        <item
+            android:id="@+id/mangaFragment"
+            android:icon="@drawable/ic_collections_bookmark_black"
+            android:title="@string/nav_manga" />
+        <item
+            android:id="@+id/search_nav_graph"
+            android:icon="@drawable/ic_search"
+            android:title="@string/nav_search" />
+    </group>
+
+    <group
+        android:id="@+id/navigationMenuSecondary"
+        android:checkableBehavior="none">
+
+        <item
+            android:id="@+id/settings_nav_graph"
+            android:icon="@drawable/ic_settings_white"
+            android:title="@string/nav_settings" />
+        <item
+            android:id="@+id/logoutNavigation"
+            android:icon="@drawable/ic_exit_to_app"
+            android:onClick="requestUserLogout"
+            android:title="@string/menu_logout" />
+    </group>
+</menu>

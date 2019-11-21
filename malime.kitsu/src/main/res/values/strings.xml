@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="view_profile_kitsu">https://kitsu.io/users/%s</string>
-    <string name="view_series_kitsu">https://kitsu.io/%s/%s"</string>
-</resources>

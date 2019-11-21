@@ -20,4 +20,4 @@ android_lint.lint(inline_mode: true)
 
 # CheckstyleFormat
 checkstyle_format.base_path = Dir.pwd
-checkstyle_format.report 'app/build/reports/detekt/detekt.xml'
+checkstyle_format.report 'app/build/reports/detekt/detekt.xml' 	

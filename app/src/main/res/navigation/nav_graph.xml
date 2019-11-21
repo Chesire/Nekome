@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/overview_nav_graph"
+    app:startDestination="@id/animeFragment">
+
+    <!-- Nested -->
+    <include app:graph="@navigation/discover_nav_graph" />
+    <include app:graph="@navigation/search_nav_graph" />
+    <include app:graph="@navigation/settings_nav_graph" />
+
+    <!-- Login -->
+    <fragment
+        android:id="@+id/detailsFragment"
+        android:name="com.chesire.malime.flow.login.details.DetailsFragment"
+        android:label="@string/nav_details"
+        tools:layout="@layout/fragment_details">
+        <action
+            android:id="@+id/toSyncingFragment"
+            app:destination="@id/syncingFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/syncingFragment"
+        android:name="com.chesire.malime.flow.login.syncing.SyncingFragment"
+        android:label="@string/nav_syncing"
+        tools:layout="@layout/fragment_syncing">
+        <action
+            android:id="@+id/toAnimeFragment"
+            app:destination="@id/animeFragment"
+            app:popUpTo="@+id/detailsFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <!-- End Login -->
+
+    <!-- Main -->
+    <fragment
+        android:id="@+id/animeFragment"
+        android:name="com.chesire.malime.app.series.list.anime.AnimeFragment"
+        android:label="@string/nav_anime"
+        tools:layout="@layout/fragment_series_list" />
+    <fragment
+        android:id="@+id/mangaFragment"
+        android:name="com.chesire.malime.app.series.list.manga.MangaFragment"
+        android:label="@string/nav_manga"
+        tools:layout="@layout/fragment_series_list" />
+    <fragment
+        android:id="@+id/timelineFragment"
+        android:name="com.chesire.malime.app.timeline.TimelineFragment"
+        android:label="@string/nav_timeline"
+        tools:layout="@layout/fragment_timeline" />
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.chesire.malime.app.profile.ProfileFragment"
+        android:label="@string/nav_profile"
+        tools:layout="@layout/fragment_profile" />
+    <!-- End Main -->
+
+    <!-- Global Actions -->
+    <action
+        android:id="@+id/globalToDetailsFragment"
+        app:destination="@id/detailsFragment"
+        app:popUpTo="@+id/overview_nav_graph"
+        app:popUpToInclusive="true" />
+    <!-- End Global Actions -->
+</navigation>

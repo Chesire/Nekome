@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/seriesDetailStatusTitle"
+        style="@style/BottomSheetSectionTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/series_detail_status_title"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Overline" />
+
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/seriesDetailStatusGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginStart="@dimen/half_margin"
+        android:layout_marginEnd="@dimen/half_margin"
+        android:layout_marginBottom="@dimen/full_margin"
+        app:singleSelection="true"
+        tools:checkedChip="@+id/seriesDetailChipCompleted">
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/seriesDetailChipCurrent"
+            style="@style/Widget.MaterialComponents.Chip.Choice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/filter_by_current" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/seriesDetailChipCompleted"
+            style="@style/Widget.MaterialComponents.Chip.Choice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/filter_by_completed" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/seriesDetailChipDropped"
+            style="@style/Widget.MaterialComponents.Chip.Choice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/filter_by_dropped" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/seriesDetailChipOnHold"
+            style="@style/Widget.MaterialComponents.Chip.Choice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/filter_by_on_hold" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/seriesDetailChipPlanned"
+            style="@style/Widget.MaterialComponents.Chip.Choice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/filter_by_planned" />
+    </com.google.android.material.chip.ChipGroup>
+
+</LinearLayout>

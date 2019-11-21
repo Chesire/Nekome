@@ -20,48 +20,7 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
-# Glide https://github.com/bumptech/glide#proguard
--keep public class * implements com.bumptech.glide.module.GlideModule
--keep public class * extends com.bumptech.glide.module.AppGlideModule
--keep public enum com.bumptech.glide.load.ImageHeaderParser$** {
-  **[] $VALUES;
-  public *;
-}
--dontwarn com.bumptech.glide.load.resource.bitmap.VideoDecoder
-
-# Retrofit http://square.github.io/retrofit/
--dontnote retrofit2.Platform
--dontwarn retrofit2.Platform$Java8
--keepattributes Signature
--keepattributes Exceptions
-
-# OkHttp3
-#-dontwarn okhttp3.internal.platform.*
--dontwarn okhttp3.**
--dontwarn okio.**
--dontwarn org.conscrypt.**
-# A resource is loaded with a relative path so the package of this class must be preserved.
--keepnames class okhttp3.internal.publicsuffix.PublicSuffixDatabase
-
-# Crashlytics
--keepattributes *Annotation*
--keepattributes SourceFile,LineNumberTable
-
-# Simplexml
--dontwarn com.bea.xml.stream.**
--dontwarn org.simpleframework.xml.stream.**
--keep class org.simpleframework.xml.**{ *; }
--keepclassmembers,allowobfuscation class * {
-    @org.simpleframework.xml.* <fields>;
-    @org.simpleframework.xml.* <init>(...);
-}
-
-# AboutLibraries
-# Exclude R from ProGuard to enable the libraries auto detection
 -keep class .R
 -keep class **.R$* {
     <fields>;
 }
-
-# Other
--dontwarn javax.annotation.**

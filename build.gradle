@@ -1,27 +1,23 @@
 buildscript {
-    ext.dagger_version = '2.16'
-    ext.dokka_version = '0.9.16'
-    ext.glide_version = "4.8.0"
-    ext.jacoco_version = '0.8.2'
-    ext.kotlin_version = '1.3.21'
-    ext.rxandroid_version = '2.1.0'
-    ext.rxjava_version = '2.2.0'
-    ext.timber_version = '4.7.1'
+    ext.jacoco_version = '0.8.5'
+    ext.kotlin_version = '1.3.60'
+    ext.nav_version = '2.2.0-rc02'
     repositories {
         google()
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.3.1'
+        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$nav_version"
+        classpath 'com.android.tools.build:gradle:3.5.2'
         classpath "org.jacoco:org.jacoco.core:$jacoco_version"
-        classpath "org.jetbrains.dokka:dokka-android-gradle-plugin:$dokka_version"
         classpath "org.jetbrains.kotlin:kotlin-allopen:$kotlin_version"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
 
 plugins {
-    id "io.gitlab.arturbosch.detekt" version "1.0.0-RC12"
+    id "io.gitlab.arturbosch.detekt" version "1.1.1"
+    id "org.jlleitschuh.gradle.ktlint" version "9.1.1"
 }
 
 allprojects {
@@ -32,17 +28,30 @@ allprojects {
     }
 }
 
+subprojects {
+    apply plugin: "org.jlleitschuh.gradle.ktlint"
+    apply from: "../jacoco.gradle"
+}
+
 detekt {
-    toolVersion = "1.0.0-RC12"
+    toolVersion = "1.1.1"
     config = files("detekt.yml")
     input = files(
+            "account/src/main/java",
             "app/src/main/java",
-            "malime.core/src/main/java",
-            "malime.kitsu/src/main/java",
-            "malime.mal/src/main/java"
+            "app-discover/src/main/java",
+            "app-profile/src/main/java",
+            "app-search/src/main/java",
+            "app-series/src/main/java",
+            "app-settings/src/main/java",
+            "app-timeline/src/main/java",
+            "core/src/main/java",
+            "database/src/main/java",
+            "kitsu/src/main/java",
+            "series/src/main/java",
+            "server/src/main/java",
+            "testing/src/main/java"
     )
-    filters = ".*/resources/.*,.*/build/.*"
-
     reports {
         xml {
             enabled = true
@@ -57,4 +66,23 @@ detekt {
 
 task clean(type: Delete) {
     delete rootProject.buildDir
+}
+
+ext {
+    appcompat_version = "1.1.0"
+    constraint_layout_version = "2.0.0-beta3"
+    corektx_version = "1.2.0-rc01"
+    coroutines_version = "1.3.2"
+    dagger_version = "2.25.2"
+    fragmentctx_version = "1.2.0-rc02"
+    glide_version = "4.10.0"
+    lifecycle_version = "2.2.0-rc02"
+    lifecykle_version = "2.1.0"
+    liveevent_version = "1.0.1"
+    material_version = "1.2.0-alpha02"
+    materialdialog_version = "3.1.1"
+    moshi_version = "1.9.2"
+    preferences_version = "1.1.0"
+    room_version = "2.2.2"
+    timber_version = "4.7.1"
 }

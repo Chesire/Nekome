@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="@string/settings_about_category">
+        <Preference
+            android:summary="@string/version"
+            android:title="@string/settings_version" />
+        <Preference
+            android:key="@string/key_privacy_policy"
+            android:title="@string/settings_privacy_policy" />
+        <Preference
+            android:key="@string/key_licenses"
+            android:title="@string/settings_licenses" />
+    </PreferenceCategory>
+</PreferenceScreen>

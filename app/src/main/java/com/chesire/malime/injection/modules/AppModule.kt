@@ -1,14 +1,21 @@
 package com.chesire.malime.injection.modules
 
-import android.app.Application
 import android.content.Context
-import com.chesire.malime.injection.androidmodules.ViewModelModule
+import android.content.SharedPreferences
+import android.preference.PreferenceManager
+import com.chesire.malime.core.SharedPref
 import dagger.Module
 import dagger.Provides
+import dagger.Reusable
 
 @Suppress("unused")
-@Module(includes = [ViewModelModule::class])
-internal class AppModule {
+@Module
+object AppModule {
     @Provides
-    fun provideApplicationContext(app: Application): Context = app.applicationContext
+    @Reusable
+    fun provideSharedPreferences(context: Context): SharedPreferences =
+        PreferenceManager.getDefaultSharedPreferences(context)
+
+    @Provides
+    fun provideSharedPref(sharedPreferences: SharedPreferences) = SharedPref(sharedPreferences)
 }

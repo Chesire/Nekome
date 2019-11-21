@@ -1,24 +1,5 @@
-autoCorrect: true
-failFast: false
-
-test-pattern: # Configure exclusions for test sources
-  active: true
-  patterns: # Test file regexes
-    - '.*/test/.*'
-    - '.*Test.kt'
-    - '.*Spec.kt'
-  exclude-rule-sets:
-    - 'comments'
-  exclude-rules:
-    - 'NamingRules'
-    - 'WildcardImport'
-    - 'MagicNumber'
-    - 'MaxLineLength'
-    - 'LateinitUsage'
-    - 'StringLiteralDuplication'
-    - 'SpreadOperator'
-    - 'TooManyFunctions'
-    - 'ForEachOnRange'
+params:
+  &test_files "**/test/**,**/androidTest/**,**/*.Test.kt,**/*.Spec.kt,**/*.Spek.kt"
 
 build:
   maxIssues: 10
@@ -46,15 +27,9 @@ console-reports:
   #  - 'FindingsReport'
   #  - 'BuildFailureReport'
 
-output-reports:
-  active: true
-  exclude:
-  #  - 'HtmlOutputReport'
-  #  - 'PlainOutputReport'
-  #  - 'XmlOutputReport'
-
 comments:
   active: true
+  excludes: *test_files
   CommentOverPrivateFunction:
     active: true
   CommentOverPrivateProperty:
@@ -86,14 +61,16 @@ complexity:
     active: true
     threshold: 10
     ignoreSingleWhenExpression: false
+    ignoreSimpleWhenEntries: false
   LabeledExpression:
     active: false
+    ignoredLabels: ""
   LargeClass:
     active: true
     threshold: 150
   LongMethod:
     active: true
-    threshold: 20
+    threshold: 30
   LongParameterList:
     active: true
     threshold: 6
@@ -106,12 +83,14 @@ complexity:
     threshold: 4
   StringLiteralDuplication:
     active: true
+    excludes: *test_files
     threshold: 3
     ignoreAnnotation: true
     excludeStringsWithLessThan5Characters: true
     ignoreStringsRegex: '$^'
   TooManyFunctions:
     active: true
+    excludes: *test_files
     thresholdInFiles: 11
     thresholdInClasses: 11
     thresholdInInterfaces: 11
@@ -119,6 +98,7 @@ complexity:
     thresholdInEnums: 11
     ignoreDeprecated: false
     ignorePrivate: false
+    ignoreOverridden: false
 
 empty-blocks:
   active: true
@@ -139,7 +119,7 @@ empty-blocks:
     active: true
   EmptyFunctionBlock:
     active: true
-    ignoreOverriddenFunctions: true
+    ignoreOverriddenFunctions: false
   EmptyIfBlock:
     active: true
   EmptyInitBlock:
@@ -155,6 +135,7 @@ empty-blocks:
 
 exceptions:
   active: true
+  excludes: *test_files
   ExceptionRaisedInUnexpectedLocation:
     active: true
     methodNames: 'toString,hashCode,equals,finalize'
@@ -169,13 +150,14 @@ exceptions:
   ReturnFromFinally:
     active: true
   SwallowedException:
-    active: false
+    active: true
+    ignoredExceptionTypes: 'InterruptedException,NumberFormatException,ParseException,MalformedURLException'
   ThrowingExceptionFromFinally:
-    active: false
+    active: true
   ThrowingExceptionInMain:
-    active: false
+    active: true
   ThrowingExceptionsWithoutMessageOrCause:
-    active: false
+    active: true
     exceptions: 'IllegalArgumentException,IllegalStateException,IOException'
   ThrowingNewInstanceOfSameException:
     active: true
@@ -211,7 +193,7 @@ formatting:
   Filename:
     active: true
   FinalNewline:
-    active: false
+    active: true
     autoCorrect: false
   ImportOrdering:
     active: true
@@ -281,6 +263,9 @@ formatting:
   SpacingAroundOperators:
     active: true
     autoCorrect: false
+  SpacingAroundParens:
+    active: true
+    autoCorrect: false
   SpacingAroundRangeOperator:
     active: true
     autoCorrect: false
@@ -292,23 +277,45 @@ naming:
   active: true
   ClassNaming:
     active: true
+    excludes: *test_files
     classPattern: '[A-Z$][a-zA-Z0-9$]*'
+  ConstructorParameterNaming:
+    active: true
+    excludes: *test_files
+    parameterPattern: '[a-z][A-Za-z0-9]*'
+    privateParameterPattern: '[a-z][A-Za-z0-9]*'
+    excludeClassPattern: '$^'
   EnumNaming:
     active: true
+    excludes: *test_files
     enumEntryPattern: '^[A-Z][_a-zA-Z0-9]*'
   ForbiddenClassName:
-    active: false
+    active: true
+    excludes: *test_files
     forbiddenName: ''
   FunctionMaxLength:
-    active: false
+    active: true
+    excludes: *test_files
     maximumFunctionNameLength: 30
   FunctionMinLength:
-    active: false
+    active: true
+    excludes: *test_files
     minimumFunctionNameLength: 3
   FunctionNaming:
     active: true
+    excludes: *test_files
     functionPattern: '^([a-z$][a-zA-Z$0-9]*)|(`.*`)$'
     excludeClassPattern: '$^'
+    ignoreOverridden: true
+  FunctionParameterNaming:
+    active: true
+    excludes: *test_files
+    parameterPattern: '[a-z][A-Za-z0-9]*'
+    excludeClassPattern: '$^'
+    ignoreOverriddenFunctions: true
+  InvalidPackageDeclaration:
+    active: true
+    rootPackage: ''
   MatchingDeclarationName:
     active: true
   MemberNameEqualsClassName:
@@ -316,34 +323,46 @@ naming:
     ignoreOverriddenFunction: true
   ObjectPropertyNaming:
     active: true
-    propertyPattern: '[A-Za-z][_A-Za-z0-9]*'
+    excludes: *test_files
     constantPattern: '[A-Za-z][_A-Za-z0-9]*'
+    propertyPattern: '[A-Za-z][_A-Za-z0-9]*'
+    privatePropertyPattern: '(_)?[A-Za-z][_A-Za-z0-9]*'
   PackageNaming:
     active: true
-    packagePattern: '^[a-z]+(\.[a-z][a-z0-9]*)*$'
+    excludes: *test_files
+    packagePattern: '^[a-z]+(\.[a-z][A-Za-z0-9]*)*$'
   TopLevelPropertyNaming:
     active: true
+    excludes: *test_files
     constantPattern: '[A-Z][_A-Z0-9]*'
     propertyPattern: '[A-Za-z][_A-Za-z0-9]*'
-    privatePropertyPattern: '(_)?[A-Za-z][A-Za-z0-9]*'
+    privatePropertyPattern: '_?[A-Za-z][_A-Za-z0-9]*'
   VariableMaxLength:
-    active: false
+    active: true
+    excludes: *test_files
     maximumVariableNameLength: 64
   VariableMinLength:
     active: false
+    excludes: *test_files
     minimumVariableNameLength: 1
   VariableNaming:
     active: true
+    excludes: *test_files
     variablePattern: '[a-z][A-Za-z0-9]*'
     privateVariablePattern: '(_)?[a-z][A-Za-z0-9]*'
     excludeClassPattern: '$^'
+    ignoreOverridden: true
 
 performance:
   active: true
+  ArrayPrimitive:
+    active: true
   ForEachOnRange:
     active: true
+    excludes: *test_files
   SpreadOperator:
     active: true
+    excludes: *test_files
   UnnecessaryTemporaryInstantiation:
     active: true
 
@@ -367,12 +386,14 @@ potential-bugs:
     active: false
     excludeAnnotatedProperties: ""
     ignoreOnClassesPattern: ""
+  MissingWhenCase:
+    active: true
   UnconditionalJumpStatementInLoop:
     active: true
   UnreachableCode:
     active: true
   UnsafeCallOnNullableType:
-    active: false
+    active: true
   UnsafeCast:
     active: true
   UselessPostfixExpression:
@@ -387,7 +408,13 @@ style:
   DataClassContainsFunctions:
     active: false
     conversionFunctionPrefix: 'to'
+  DataClassShouldBeImmutable:
+    active: false
   EqualsNullCall:
+    active: true
+  EqualsOnSignatureLine:
+    active: true
+  ExplicitItLambdaParameter:
     active: true
   ExpressionBodySyntax:
     active: true
@@ -396,8 +423,11 @@ style:
     active: false
     values: 'FIXME:,STOPSHIP:'
   ForbiddenImport:
-    active: false
+    active: true
     imports: ''
+  ForbiddenVoid:
+    active: true
+    ignoreOverridden: false
   FunctionOnlyReturningConstant:
     active: true
     ignoreOverridableFunction: true
@@ -408,20 +438,21 @@ style:
   MagicNumber:
     active: false
     ignoreNumbers: '-1,0,1,2'
-    ignoreHashCodeFunction: false
+    ignoreHashCodeFunction: true
     ignorePropertyDeclaration: false
     ignoreConstantDeclaration: true
     ignoreCompanionObjectPropertyDeclaration: true
     ignoreAnnotation: false
     ignoreNamedArgument: true
     ignoreEnums: false
+    ignoreRanges: false
   MandatoryBracesIfStatements:
     active: true
   MaxLineLength:
     active: true
     maxLineLength: 120
-    excludePackageStatements: false
-    excludeImportStatements: false
+    excludePackageStatements: true
+    excludeImportStatements: true
     excludeCommentStatements: false
   MayBeConst:
     active: true
@@ -446,9 +477,11 @@ style:
   RedundantVisibilityModifierRule:
     active: true
   ReturnCount:
-    active: false
+    active: true
     max: 2
     excludedFunctions: "equals"
+    excludeLabeled: false
+    excludeReturnFromLambda: true
   SafeCast:
     active: true
   SerialVersionUIDInSerializableClass:
@@ -460,10 +493,17 @@ style:
     max: 2
   TrailingWhitespace:
     active: true
-  UnnecessaryAbstractClass:
-    # This is false, as Dagger uses Abstract modules
+  UnderscoresInNumericLiterals:
     active: false
+    acceptableDecimalLength: 5
+  UnnecessaryAbstractClass:
+    active: false
+    excludeAnnotatedClasses: "dagger.Module"
+  UnnecessaryApply:
+    active: true
   UnnecessaryInheritance:
+    active: true
+  UnnecessaryLet:
     active: true
   UnnecessaryParentheses:
     active: true
@@ -471,15 +511,25 @@ style:
     active: true
   UnusedImports:
     active: true
+  UnusedPrivateClass:
+    active: true
   UnusedPrivateMember:
-    # This is false, as it seemed to flag false positives in an abstract class
-    active: false
-    allowedNames: "(_|ignored|expected)"
+    active: true
+    allowedNames: "(_|ignored|expected|serialVersionUID)"
+  UseCheckOrError:
+    active: true
   UseDataClass:
     active: true
     excludeAnnotatedClasses: ""
+  UseRequire:
+    active: true
+  UselessCallOnNotNull:
+    active: true
   UtilityClassWithPublicConstructor:
+    active: true
+  VarCouldBeVal:
     active: true
   WildcardImport:
     active: true
+    excludes: *test_files
     excludeImports: 'java.util.*,kotlinx.android.synthetic.*'

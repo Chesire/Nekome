@@ -1,40 +1,46 @@
 package com.chesire.malime
 
 import android.os.StrictMode
-import com.chesire.malime.injection.DaggerAppComponent
-import com.squareup.leakcanary.LeakCanary
+import com.chesire.lifecyklelog.LifecykleLog
+import com.chesire.lifecyklelog.LogHandler
+import com.chesire.malime.injection.components.AppComponent
+import com.chesire.malime.injection.components.DaggerAppComponent
+import com.chesire.malime.services.WorkerQueue
 import dagger.android.AndroidInjector
-import dagger.android.DaggerApplication
-import io.reactivex.plugins.RxJavaPlugins
+import dagger.android.support.DaggerApplication
 import timber.log.Timber
+import javax.inject.Inject
 
 class MalimeApplication : DaggerApplication() {
+    lateinit var daggerComponent: AppComponent
+    @Inject
+    lateinit var workerQueue: WorkerQueue
 
     override fun onCreate() {
         super.onCreate()
-        if (BuildConfig.DEBUG) {
-            if (LeakCanary.isInAnalyzerProcess(this)) {
-                // This process is dedicated to LeakCanary for heap analysis.
-                // You should not init your app in this process.
-                return
-            }
-            LeakCanary.install(this)
 
+        if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
+            LifecykleLog.apply {
+                initialize(this@MalimeApplication)
+                logHandler = LogHandler { clazz, lifecycleEvent ->
+                    Timber.tag(clazz)
+                    Timber.d("-> $lifecycleEvent")
+                }
+            }
             startStrictMode()
         }
 
-        // This is to handle switching fragments quickly while a request is occurring.
-        RxJavaPlugins.setErrorHandler {
-            Timber.e(it, "Caught exception in RXJava")
-        }
+        workerQueue.enqueueSeriesRefresh()
+        workerQueue.enqueueUserRefresh()
     }
 
     override fun applicationInjector(): AndroidInjector<out DaggerApplication> {
         return DaggerAppComponent
             .builder()
-            .create(this)
+            .applicationContext(this)
             .build()
+            .also { daggerComponent = it }
     }
 
     private fun startStrictMode() {
