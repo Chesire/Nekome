@@ -13,5 +13,5 @@ class TestRunner : AndroidJUnitRunner() {
         cl: ClassLoader?,
         className: String?,
         context: Context?
-    ): Application = super.newApplication(cl, "com.chesire.malime.TestApplication", context)
+    ): Application = super.newApplication(cl, "com.chesire.nekome.TestApplication", context)
 }
