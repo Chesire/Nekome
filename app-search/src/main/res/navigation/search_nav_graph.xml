@@ -9,7 +9,7 @@
 
     <fragment
         android:id="@+id/searchFragment"
-        android:name="com.chesire.malime.app.search.SearchFragment"
+        android:name="com.chesire.nekome.app.search.SearchFragment"
         android:label="@string/nav_search"
         tools:layout="@layout/fragment_search">
         <action
@@ -18,7 +18,7 @@
     </fragment>
     <fragment
         android:id="@+id/resultsFragment"
-        android:name="com.chesire.malime.app.search.results.ResultsFragment"
+        android:name="com.chesire.nekome.app.search.results.ResultsFragment"
         android:label="@string/nav_results"
         tools:layout="@layout/fragment_results">
         <argument

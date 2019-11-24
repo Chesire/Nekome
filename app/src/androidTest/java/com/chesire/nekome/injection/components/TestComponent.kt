@@ -1,0 +1,74 @@
+package com.chesire.nekome.injection.components
+
+import android.content.Context
+import com.chesire.nekome.TestApplication
+import com.chesire.nekome.flow.ActivityTests
+import com.chesire.nekome.flow.login.DetailsTests
+import com.chesire.nekome.flow.login.SyncingTests
+import com.chesire.nekome.flow.settings.SettingsTests
+import com.chesire.nekome.harness.FakeAuthApi
+import com.chesire.nekome.harness.FakeLibraryApi
+import com.chesire.nekome.harness.FakeSearchApi
+import com.chesire.nekome.harness.FakeTrendingApi
+import com.chesire.nekome.harness.FakeUserApi
+import com.chesire.nekome.injection.androidmodules.ActivityModule
+import com.chesire.nekome.injection.androidmodules.FragmentModule
+import com.chesire.nekome.injection.androidmodules.ViewModelModule
+import com.chesire.nekome.injection.modules.AccountModule
+import com.chesire.nekome.injection.modules.AppModule
+import com.chesire.nekome.injection.modules.CoroutineModule
+import com.chesire.nekome.injection.modules.FakeKitsuModule
+import com.chesire.nekome.injection.modules.MemoryDatabaseModule
+import com.chesire.nekome.injection.modules.SeriesModule
+import com.chesire.nekome.injection.modules.ServerModule
+import dagger.BindsInstance
+import dagger.Component
+import dagger.android.AndroidInjector
+import dagger.android.support.AndroidSupportInjectionModule
+import javax.inject.Singleton
+
+@Singleton
+@Component(
+    modules = [
+        AccountModule::class,
+        ActivityModule::class,
+        AndroidSupportInjectionModule::class,
+        AppModule::class,
+        CoroutineModule::class,
+        FakeKitsuModule::class,
+        FragmentModule::class,
+        MemoryDatabaseModule::class,
+        SeriesModule::class,
+        ServerModule::class,
+        ViewModelModule::class
+    ]
+)
+interface TestComponent : AndroidInjector<TestApplication> {
+    @Component.Builder
+    interface Builder {
+        @BindsInstance
+        fun applicationContext(applicationContext: Context): Builder
+
+        @BindsInstance
+        fun authApi(authApi: FakeAuthApi): Builder
+
+        @BindsInstance
+        fun libraryApi(libraryApi: FakeLibraryApi): Builder
+
+        @BindsInstance
+        fun searchApi(searchApi: FakeSearchApi): Builder
+
+        @BindsInstance
+        fun trendingApi(trendingApi: FakeTrendingApi): Builder
+
+        @BindsInstance
+        fun userApi(userApi: FakeUserApi): Builder
+
+        fun build(): TestComponent
+    }
+
+    fun inject(target: ActivityTests)
+    fun inject(target: DetailsTests)
+    fun inject(target: SettingsTests)
+    fun inject(target: SyncingTests)
+}

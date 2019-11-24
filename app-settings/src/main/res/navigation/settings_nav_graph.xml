@@ -9,7 +9,7 @@
 
     <fragment
         android:id="@+id/settingsFragment"
-        android:name="com.chesire.malime.app.settings.SettingsFragment"
+        android:name="com.chesire.nekome.app.settings.SettingsFragment"
         android:label="@string/nav_settings">
         <action
             android:id="@+id/toOssFragment"
@@ -17,7 +17,7 @@
     </fragment>
     <fragment
         android:id="@+id/ossFragment"
-        android:name="com.chesire.malime.app.settings.oss.OssFragment"
+        android:name="com.chesire.nekome.app.settings.oss.OssFragment"
         android:label="@string/settings_licenses"
         tools:layout="@layout/fragment_oss" />
 </navigation>

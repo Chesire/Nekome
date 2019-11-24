@@ -13,7 +13,7 @@
     <!-- Login -->
     <fragment
         android:id="@+id/detailsFragment"
-        android:name="com.chesire.malime.flow.login.details.DetailsFragment"
+        android:name="com.chesire.nekome.flow.login.details.DetailsFragment"
         android:label="@string/nav_details"
         tools:layout="@layout/fragment_details">
         <action
@@ -22,7 +22,7 @@
     </fragment>
     <fragment
         android:id="@+id/syncingFragment"
-        android:name="com.chesire.malime.flow.login.syncing.SyncingFragment"
+        android:name="com.chesire.nekome.flow.login.syncing.SyncingFragment"
         android:label="@string/nav_syncing"
         tools:layout="@layout/fragment_syncing">
         <action
@@ -36,22 +36,22 @@
     <!-- Main -->
     <fragment
         android:id="@+id/animeFragment"
-        android:name="com.chesire.malime.app.series.list.anime.AnimeFragment"
+        android:name="com.chesire.nekome.app.series.list.anime.AnimeFragment"
         android:label="@string/nav_anime"
         tools:layout="@layout/fragment_series_list" />
     <fragment
         android:id="@+id/mangaFragment"
-        android:name="com.chesire.malime.app.series.list.manga.MangaFragment"
+        android:name="com.chesire.nekome.app.series.list.manga.MangaFragment"
         android:label="@string/nav_manga"
         tools:layout="@layout/fragment_series_list" />
     <fragment
         android:id="@+id/timelineFragment"
-        android:name="com.chesire.malime.app.timeline.TimelineFragment"
+        android:name="com.chesire.nekome.app.timeline.TimelineFragment"
         android:label="@string/nav_timeline"
         tools:layout="@layout/fragment_timeline" />
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.chesire.malime.app.profile.ProfileFragment"
+        android:name="com.chesire.nekome.app.profile.ProfileFragment"
         android:label="@string/nav_profile"
         tools:layout="@layout/fragment_profile" />
     <!-- End Main -->
