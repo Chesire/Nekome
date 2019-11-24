@@ -23,6 +23,6 @@
         tools:layout="@layout/fragment_results">
         <argument
             android:name="searchResults"
-            app:argType="com.chesire.malime.core.models.SeriesModel[]" />
+            app:argType="com.chesire.nekome.core.models.SeriesModel[]" />
     </fragment>
 </navigation>
