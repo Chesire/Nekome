@@ -11,7 +11,7 @@ import dagger.android.support.DaggerApplication
 import timber.log.Timber
 import javax.inject.Inject
 
-class MalimeApplication : DaggerApplication() {
+class App : DaggerApplication() {
     lateinit var daggerComponent: AppComponent
     @Inject
     lateinit var workerQueue: WorkerQueue
@@ -22,7 +22,7 @@ class MalimeApplication : DaggerApplication() {
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
             LifecykleLog.apply {
-                initialize(this@MalimeApplication)
+                initialize(this@App)
                 logHandler = LogHandler { clazz, lifecycleEvent ->
                     Timber.tag(clazz)
                     Timber.d("-> $lifecycleEvent")

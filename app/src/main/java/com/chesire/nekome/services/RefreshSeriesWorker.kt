@@ -3,7 +3,7 @@ package com.chesire.nekome.services
 import android.content.Context
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
-import com.chesire.nekome.MalimeApplication
+import com.chesire.nekome.App
 import com.chesire.nekome.account.UserRepository
 import com.chesire.nekome.series.SeriesRepository
 import com.chesire.nekome.server.Resource
@@ -24,7 +24,7 @@ class RefreshSeriesWorker(
         // For now setup in the init block
         // dagger currently doesn't support androidInjection for workers
         Timber.i("Initializing the RefreshSeriesWorker")
-        if (appContext is MalimeApplication) {
+        if (appContext is App) {
             appContext.daggerComponent.inject(this)
         }
     }

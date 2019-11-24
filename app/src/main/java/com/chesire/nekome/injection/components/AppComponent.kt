@@ -1,7 +1,7 @@
 package com.chesire.nekome.injection.components
 
 import android.content.Context
-import com.chesire.nekome.MalimeApplication
+import com.chesire.nekome.App
 import com.chesire.nekome.injection.androidmodules.ActivityModule
 import com.chesire.nekome.injection.androidmodules.FragmentModule
 import com.chesire.nekome.injection.androidmodules.ViewModelModule
@@ -38,7 +38,7 @@ import javax.inject.Singleton
         WorkerModule::class
     ]
 )
-interface AppComponent : AndroidInjector<MalimeApplication> {
+interface AppComponent : AndroidInjector<App> {
     @Component.Builder
     interface Builder {
         @BindsInstance
