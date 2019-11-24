@@ -1,1 +1,0 @@
-First internal release of the application, contains basic functionality.

@@ -1,2 +1,0 @@
-Due to MyAnimeList removing access to their API, the application has been refactored to instead work with kitsu.io.
-If the MyAnimeList api becomes available again then I will re-enable that functionality (and allow a choice of which service to use).
