@@ -8,12 +8,12 @@ android {
     compileSdkVersion 29
 
     defaultConfig {
-        applicationId "com.chesire.malime.v2" // for now leave v2 on, will remove later
+        applicationId "com.chesire.nekome"
         minSdkVersion 21
         targetSdkVersion 29
         versionCode 12
         versionName "2.0.0"
-        testInstrumentationRunner "com.chesire.malime.TestRunner"
+        testInstrumentationRunner "com.chesire.nekome.TestRunner"
         resConfigs "en"
     }
 

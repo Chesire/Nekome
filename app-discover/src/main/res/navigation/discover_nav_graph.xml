@@ -9,7 +9,7 @@
 
     <fragment
         android:id="@+id/discoverFragment"
-        android:name="com.chesire.malime.app.discover.DiscoverFragment"
+        android:name="com.chesire.nekome.app.discover.DiscoverFragment"
         android:label="@string/nav_discover"
         tools:layout="@layout/fragment_discover" />
 </navigation>

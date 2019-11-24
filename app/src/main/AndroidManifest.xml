@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.chesire.malime">
+    package="com.chesire.nekome">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <!--
@@ -10,7 +10,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
-        android:name=".MalimeApplication"
+        android:name="com.chesire.nekome.App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -39,7 +39,7 @@
             android:value="598.0dip" />
 
         <activity
-            android:name=".flow.Activity"
+            android:name="com.chesire.nekome.flow.Activity"
             android:theme="@style/AppTheme.Launcher"
             android:windowSoftInputMode="adjustResize" >
             <intent-filter>
