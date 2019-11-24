@@ -230,7 +230,7 @@ $RECYCLE.BIN/
 # Start of custom
 google-services.json
 Fastlane/report.xml
-fastlane/ServiceAccount.json
+fastlane/googleservice.json
 .idea/caches/
 .idea/sonarlint/
 .idea/navEditor.xml
