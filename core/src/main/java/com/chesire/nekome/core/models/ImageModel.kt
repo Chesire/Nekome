@@ -6,6 +6,7 @@ import kotlinx.android.parcel.Parcelize
 
 /**
  * Data for images.
+ *
  * Images are stored as a model with smaller models for each of the sizes.
  */
 @Parcelize
@@ -57,6 +58,10 @@ data class ImageModel(
             )
     }
 
+    /**
+     * Data for a single image type, containing the [url] it can be accessed at, also the [width]
+     * and [height] it should be.
+     */
     @Parcelize
     @JsonClass(generateAdapter = true)
     data class ImageData(

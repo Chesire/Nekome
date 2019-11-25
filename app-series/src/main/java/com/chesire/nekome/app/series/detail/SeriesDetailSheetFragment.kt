@@ -35,6 +35,9 @@ import kotlinx.android.synthetic.main.view_series_detail_series_status.seriesDet
 import timber.log.Timber
 import javax.inject.Inject
 
+/**
+ * Fragment to display the series detail in a [BottomSheetDialogFragment].
+ */
 @LogLifecykle
 class SeriesDetailSheetFragment : BottomSheetDialogFragment() {
     @Inject

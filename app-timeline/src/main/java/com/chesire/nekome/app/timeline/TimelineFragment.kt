@@ -7,6 +7,9 @@ import android.view.ViewGroup
 import com.chesire.lifecyklelog.LogLifecykle
 import dagger.android.support.DaggerFragment
 
+/**
+ * Fragment to display the users timeline.
+ */
 @LogLifecykle
 class TimelineFragment : DaggerFragment() {
     override fun onCreateView(
