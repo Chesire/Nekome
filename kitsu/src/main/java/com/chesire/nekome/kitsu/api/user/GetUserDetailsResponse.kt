@@ -5,11 +5,17 @@ import com.chesire.nekome.core.models.ImageModel
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
+/**
+ * Class to parse a response from [KitsuUserService] into an object.
+ */
 @JsonClass(generateAdapter = true)
 data class GetUserDetailsResponse(
     @Json(name = "data")
     val data: List<UserDetailsData>
 ) {
+    /**
+     * Class to parse a response from [KitsuUserService] into an object.
+     */
     @JsonClass(generateAdapter = true)
     data class UserDetailsData(
         @Json(name = "id")
@@ -17,6 +23,9 @@ data class GetUserDetailsResponse(
         @Json(name = "attributes")
         val attributes: UserDetailsAttributes
     ) {
+        /**
+         * Class to parse a response from [KitsuUserService] into an object.
+         */
         @JsonClass(generateAdapter = true)
         data class UserDetailsAttributes(
             @Json(name = "name")

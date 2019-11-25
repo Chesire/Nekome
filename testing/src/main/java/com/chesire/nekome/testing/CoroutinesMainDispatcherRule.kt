@@ -8,6 +8,10 @@ import kotlinx.coroutines.test.setMain
 import org.junit.rules.TestWatcher
 import org.junit.runner.Description
 
+/**
+ * *Test Only*
+ * Rule to use during tests that forces all coroutines to execute on the [TestCoroutineDispatcher].
+ */
 @ExperimentalCoroutinesApi
 class CoroutinesMainDispatcherRule : TestWatcher() {
     /**

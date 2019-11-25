@@ -6,6 +6,9 @@ import com.chesire.nekome.kitsu.AuthProvider
 import com.chesire.nekome.kitsu.parse
 import javax.inject.Inject
 
+/**
+ * Provides an implementation of [AuthApi] to interact with [KitsuAuth] to log a user in.
+ */
 @Suppress("TooGenericExceptionCaught")
 class KitsuAuth @Inject constructor(
     private val authService: KitsuAuthService,

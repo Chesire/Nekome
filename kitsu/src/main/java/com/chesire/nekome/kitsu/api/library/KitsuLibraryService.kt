@@ -16,7 +16,13 @@ private const val ANIME_FIELDS =
 private const val MANGA_FIELDS =
     "slug,canonicalTitle,startDate,endDate,subtype,status,posterImage,coverImage,chapterCount"
 
+/**
+ * Constructed using Retrofit to interface with the Kitsu API for queries related to users library.
+ */
 interface KitsuLibraryService {
+    /**
+     * Retrieves all of the users anime series in their library.
+     */
     @GET(
         "api/edge/users/{userId}/library-entries" +
                 "?include=anime" +
@@ -31,6 +37,9 @@ interface KitsuLibraryService {
         @Query("page[limit]") limit: Int
     ): Response<ParsedRetrieveResponse>
 
+    /**
+     * Retrieves all of the users manga series in their library.
+     */
     @GET(
         "api/edge/users/{userId}/library-entries" +
                 "?include=manga" +
@@ -45,6 +54,9 @@ interface KitsuLibraryService {
         @Query("page[limit]") limit: Int
     ): Response<ParsedRetrieveResponse>
 
+    /**
+     * Adds an anime series to the users library.
+     */
     @POST(
         "api/edge/library-entries" +
                 "?include=anime" +
@@ -52,6 +64,9 @@ interface KitsuLibraryService {
     )
     suspend fun addAnimeAsync(@Body data: RequestBody): Response<SeriesModel>
 
+    /**
+     * Adds a manga series to the users library.
+     */
     @POST(
         "api/edge/library-entries" +
                 "?include=manga" +
@@ -59,6 +74,9 @@ interface KitsuLibraryService {
     )
     suspend fun addMangaAsync(@Body data: RequestBody): Response<SeriesModel>
 
+    /**
+     * Updates a series in the users library with new data.
+     */
     @PATCH(
         "api/edge/library-entries/{id}" +
                 "?include=anime,manga" +
@@ -70,6 +88,11 @@ interface KitsuLibraryService {
         @Body data: RequestBody
     ): Response<SeriesModel>
 
+    /**
+     * Deletes a series from the users library.
+     *
+     * This returns a [Response] of [Any] as we just need to know if the request succeeded or not.
+     */
     @DELETE("api/edge/library-entries/{id}")
     suspend fun deleteItemAsync(@Path("id") userSeriesId: Int): Response<Any>
 }

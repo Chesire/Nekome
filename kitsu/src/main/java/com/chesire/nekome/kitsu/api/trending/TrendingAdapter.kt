@@ -8,6 +8,9 @@ import com.squareup.moshi.FromJson
  * Adapter to convert classes of [TrendingResponse] into a [List] of [SeriesModel].
  */
 class TrendingAdapter {
+    /**
+     * Converts [response] into a [List] of [SeriesModel].
+     */
     @FromJson
     fun modelsFromResponse(response: TrendingResponse) = response.data.convertToSeriesModels()
 }

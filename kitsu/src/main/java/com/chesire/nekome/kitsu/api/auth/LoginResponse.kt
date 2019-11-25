@@ -3,6 +3,9 @@ package com.chesire.nekome.kitsu.api.auth
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
+/**
+ * Class to parse a response from [KitsuAuthService] into an object.
+ */
 @JsonClass(generateAdapter = true)
 data class LoginResponse(
     @Json(name = "access_token")

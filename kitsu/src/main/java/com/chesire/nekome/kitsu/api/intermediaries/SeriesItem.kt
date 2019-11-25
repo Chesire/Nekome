@@ -7,6 +7,9 @@ import com.chesire.nekome.core.models.ImageModel
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
+/**
+ * Class used as intermediary when parsing out response json.
+ */
 @JsonClass(generateAdapter = true)
 data class SeriesItem(
     @Json(name = "id")
@@ -16,6 +19,9 @@ data class SeriesItem(
     @Json(name = "attributes")
     val attributes: SeriesAttributes
 ) {
+    /**
+     * Class used as intermediary when parsing out response json.
+     */
     @JsonClass(generateAdapter = true)
     data class SeriesAttributes(
         @Json(name = "slug")
