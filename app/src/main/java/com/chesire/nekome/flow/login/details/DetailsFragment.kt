@@ -14,9 +14,9 @@ import androidx.navigation.fragment.findNavController
 import com.chesire.lifecyklelog.LogLifecykle
 import com.chesire.nekome.R
 import com.chesire.nekome.core.extensions.hide
+import com.chesire.nekome.core.extensions.hideSystemKeyboard
 import com.chesire.nekome.core.extensions.show
 import com.chesire.nekome.core.viewmodel.ViewModelFactory
-import com.chesire.nekome.core.extensions.hideSystemKeyboard
 import com.google.android.material.snackbar.Snackbar
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_details.detailsLayout
@@ -87,8 +87,10 @@ class DetailsFragment : DaggerFragment() {
                 getString(R.string.login_error_empty_password)
             LoginStatus.Error -> showSnackbar(R.string.login_error_generic)
             LoginStatus.InvalidCredentials -> showSnackbar(R.string.login_error_credentials)
-            LoginStatus.Success ->
+            LoginStatus.Success -> {
+                activity?.hideSystemKeyboard()
                 findNavController().navigate(DetailsFragmentDirections.toSyncingFragment())
+            }
             else -> Timber.w("Unexpected LoginStatus [$loginStatus]")
         }
     }
