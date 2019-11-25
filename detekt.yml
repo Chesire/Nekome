@@ -38,15 +38,13 @@ comments:
     active: true
     endOfSentenceFormat: ([.?!][ \t\n\r\f<])|([.?!]$)
   UndocumentedPublicClass:
-    # This should be enabled at some point, to ensure files are documented
-    active: false
+    active: true
     searchInNestedClass: true
     searchInInnerClass: true
     searchInInnerObject: true
     searchInInnerInterface: true
   UndocumentedPublicFunction:
-    # This should be enabled at some point, to ensure files are documented
-    active: false
+    active: true
 
 complexity:
   active: true
