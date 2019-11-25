@@ -34,7 +34,7 @@ subprojects {
 }
 
 detekt {
-    toolVersion = "1.1.1"
+    toolVersion = "1.2.0"
     config = files("detekt.yml")
     input = files(
             "account/src/main/java",
