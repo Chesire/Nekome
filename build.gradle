@@ -86,3 +86,18 @@ ext {
     room_version = "2.2.2"
     timber_version = "4.7.1"
 }
+
+ext.appVersion = {
+    def stdout = new ByteArrayOutputStream()
+    exec {
+        commandLine 'git', 'describe', '--tags', '--always'
+        standardOutput = stdout
+    }
+
+    def longTag = stdout.toString().trim()
+    if (longTag.contains('-')) {
+        return longTag.substring(longTag.indexOf('/') + 1, longTag.indexOf('-'))
+    } else {
+        return longTag
+    }
+}
