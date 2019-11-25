@@ -11,6 +11,9 @@ import dagger.android.support.DaggerApplication
 import timber.log.Timber
 import javax.inject.Inject
 
+/**
+ * Custom application to initialize anything that needs to be activated from application start.
+ */
 class App : DaggerApplication() {
     lateinit var daggerComponent: AppComponent
     @Inject

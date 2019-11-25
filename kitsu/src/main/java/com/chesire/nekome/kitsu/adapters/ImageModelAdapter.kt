@@ -4,7 +4,13 @@ import com.chesire.nekome.core.models.ImageModel
 import com.chesire.nekome.kitsu.api.intermediaries.ParsingImageModel
 import com.squareup.moshi.FromJson
 
+/**
+ * Adapter to plug into retrofit to generate [ImageModel] objects.
+ */
 class ImageModelAdapter {
+    /**
+     * Converts any instance of [ParsingImageModel] into an instance of [ImageModel].
+     */
     @FromJson
     fun imageFromParsingImage(parsingImage: ParsingImageModel): ImageModel {
         return ImageModel(

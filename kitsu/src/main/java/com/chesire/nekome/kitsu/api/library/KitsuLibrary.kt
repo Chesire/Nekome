@@ -1,13 +1,13 @@
 package com.chesire.nekome.kitsu.api.library
 
-import com.chesire.nekome.server.Resource
-import com.chesire.nekome.server.api.LibraryApi
 import com.chesire.nekome.core.flags.UserSeriesStatus
 import com.chesire.nekome.core.models.SeriesModel
 import com.chesire.nekome.kitsu.createNewAddModel
 import com.chesire.nekome.kitsu.createUpdateModel
 import com.chesire.nekome.kitsu.parse
 import com.chesire.nekome.kitsu.parseError
+import com.chesire.nekome.server.Resource
+import com.chesire.nekome.server.api.LibraryApi
 import okhttp3.MediaType
 import okhttp3.RequestBody
 import retrofit2.Response
@@ -20,6 +20,10 @@ private const val MAX_RETRIES = 3
 private const val ANIME_TYPE = "anime"
 private const val MANGA_TYPE = "manga"
 
+/**
+ * Provides an implementation of [LibraryApi] to interact with [KitsuLibrary] to manage a users
+ * series.
+ */
 @Suppress("TooGenericExceptionCaught")
 class KitsuLibrary @Inject constructor(
     private val libraryService: KitsuLibraryService

@@ -11,6 +11,9 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 
+/**
+ * ViewModel to aid with logging a user in via the [DetailsFragment].
+ */
 class DetailsViewModel @Inject constructor(
     private val auth: AuthApi,
     private val user: UserRepository
@@ -18,6 +21,11 @@ class DetailsViewModel @Inject constructor(
     private val _loginStatus = LiveEvent<LoginStatus>()
     val loginStatus: LiveData<LoginStatus> = _loginStatus
 
+    /**
+     * Send a login request to Kitsu, with the credentials of [username] and [password].
+     *
+     * The result of this operation will be posted to [loginStatus].
+     */
     fun login(username: String, password: String) = viewModelScope.launch {
         when {
             username.isEmpty() -> _loginStatus.postValue(LoginStatus.EmptyUsername)

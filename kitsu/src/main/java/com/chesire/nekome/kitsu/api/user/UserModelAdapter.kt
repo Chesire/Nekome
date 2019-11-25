@@ -5,8 +5,13 @@ import com.chesire.nekome.core.models.ImageModel
 import com.chesire.nekome.core.models.UserModel
 import com.squareup.moshi.FromJson
 
-@Suppress("unused")
+/**
+ * Class for converting a [GetUserDetailsResponse] into a [UserModel].
+ */
 class UserModelAdapter {
+    /**
+     * Converts [response] into a [UserModel].
+     */
     @FromJson
     fun userModelFromUserDetails(response: GetUserDetailsResponse): UserModel {
         val details = response.data.first()

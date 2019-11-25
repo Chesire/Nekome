@@ -29,9 +29,16 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
+/**
+ * Dagger [Module] for the [com.chesire.nekome.server] package.
+ */
 @Suppress("unused")
 @Module
 object ServerModule {
+    /**
+     * Provides an instance of [OkHttpClient] with the authentication injectors pre-setup, so that
+     * authentication is already handled.
+     */
     @Provides
     @Reusable
     fun providesAuthenticatedClient(
@@ -52,6 +59,9 @@ object ServerModule {
             .build()
     }
 
+    /**
+     * Builds and provides the instance of [KitsuAuthService].
+     */
     @Provides
     @Reusable
     fun providesAuthService(): KitsuAuthService {
@@ -65,6 +75,9 @@ object ServerModule {
             .create(KitsuAuthService::class.java)
     }
 
+    /**
+     * Builds and provides the instance of [KitsuLibraryService].
+     */
     @Provides
     @Reusable
     fun providesLibraryService(httpClient: OkHttpClient): KitsuLibraryService {
@@ -86,6 +99,9 @@ object ServerModule {
             .create(KitsuLibraryService::class.java)
     }
 
+    /**
+     * Builds and provides the instance of [KitsuSearchService].
+     */
     @Provides
     @Reusable
     fun providesSearchService(httpClient: OkHttpClient): KitsuSearchService {
@@ -105,6 +121,9 @@ object ServerModule {
             .create(KitsuSearchService::class.java)
     }
 
+    /**
+     * Builds and provides the instance of [KitsuTrendingService].
+     */
     @Provides
     @Reusable
     fun providesTrendingService(httpClient: OkHttpClient): KitsuTrendingService {
@@ -124,6 +143,9 @@ object ServerModule {
             .create(KitsuTrendingService::class.java)
     }
 
+    /**
+     * Builds and provides the instance of [KitsuUserService].
+     */
     @Provides
     @Reusable
     fun providesUserService(httpClient: OkHttpClient): KitsuUserService {

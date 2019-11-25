@@ -5,6 +5,9 @@ import com.chesire.nekome.kitsu.api.intermediaries.SeriesItem
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
+/**
+ * Class to parse a response from [KitsuLibraryService] into an object.
+ */
 @JsonClass(generateAdapter = true)
 data class RetrieveResponse(
     @Json(name = "data")

@@ -10,6 +10,9 @@ import com.chesire.nekome.core.flags.SortOption
 import com.chesire.nekome.core.flags.UserSeriesStatus
 import javax.inject.Inject
 
+/**
+ * Handler to aid with displaying and interacting with Dialogs.
+ */
 class DialogHandler @Inject constructor(private val pref: SharedPref) {
     /**
      * Shows the filter dialog, allowing the user to choose how to filter their series.

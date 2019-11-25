@@ -18,9 +18,15 @@ import dagger.Module
 import dagger.multibindings.IntoMap
 import kotlin.reflect.KClass
 
-@Suppress("unused")
+/**
+ * Dagger [Module] for Android ViewModels.
+ */
+@Suppress("unused", "UndocumentedPublicFunction")
 @Module
 abstract class ViewModelModule {
+    /**
+     * Binds the [ViewModelFactory] into the Dagger graph.
+     */
     @Binds
     abstract fun bindViewModelFactory(viewModelFactory: ViewModelFactory): ViewModelProvider.Factory
 

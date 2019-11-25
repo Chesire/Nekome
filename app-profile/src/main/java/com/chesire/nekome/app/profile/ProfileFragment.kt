@@ -16,6 +16,9 @@ import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_profile.fragmentProfileAvatar
 import javax.inject.Inject
 
+/**
+ * Fragment to display to the user information about their profile.
+ */
 @LogLifecykle
 class ProfileFragment : DaggerFragment() {
     @Inject

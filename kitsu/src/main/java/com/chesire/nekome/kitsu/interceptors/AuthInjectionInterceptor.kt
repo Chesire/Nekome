@@ -5,6 +5,9 @@ import okhttp3.Interceptor
 import okhttp3.Response
 import javax.inject.Inject
 
+/**
+ * Interceptor to push the authorization header into Kitsu requests.
+ */
 class AuthInjectionInterceptor @Inject constructor(
     private val provider: AuthProvider
 ) : Interceptor {

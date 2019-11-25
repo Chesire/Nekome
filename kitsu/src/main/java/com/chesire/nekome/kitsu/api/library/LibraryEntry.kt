@@ -4,6 +4,9 @@ import com.chesire.nekome.core.flags.UserSeriesStatus
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
+/**
+ * Class to parse a response from [KitsuLibraryService] into an object.
+ */
 @JsonClass(generateAdapter = true)
 data class LibraryEntry(
     @Json(name = "id")
@@ -13,6 +16,9 @@ data class LibraryEntry(
     @Json(name = "relationships")
     val relationships: LibraryRelationships
 ) {
+    /**
+     * Class to parse a response from [KitsuLibraryService] into an object.
+     */
     @JsonClass(generateAdapter = true)
     data class LibraryAttributes(
         @Json(name = "status")
@@ -25,6 +31,9 @@ data class LibraryEntry(
         val finishedAt: String?
     )
 
+    /**
+     * Class to parse a response from [KitsuLibraryService] into an object.
+     */
     @JsonClass(generateAdapter = true)
     data class LibraryRelationships(
         @Json(name = "anime")
@@ -32,11 +41,17 @@ data class LibraryEntry(
         @Json(name = "manga")
         val manga: RelationshipObject? = null
     ) {
+        /**
+         * Class to parse a response from [KitsuLibraryService] into an object.
+         */
         @JsonClass(generateAdapter = true)
         data class RelationshipObject(
             @Json(name = "data")
             val data: RelationshipData? = null
         ) {
+            /**
+             * Class to parse a response from [KitsuLibraryService] into an object.
+             */
             @JsonClass(generateAdapter = true)
             data class RelationshipData(
                 @Json(name = "type")

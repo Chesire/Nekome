@@ -11,7 +11,13 @@ private const val UNRELEASED = "unreleased"
 private const val UPCOMING = "upcoming"
 private const val UNKNOWN = "unknown"
 
+/**
+ * Adapter to plug into retrofit to convert strings into [SeriesStatus] values.
+ */
 class SeriesStatusAdapter {
+    /**
+     * Converts [status] into the [SeriesStatus] value.
+     */
     @FromJson
     fun seriesStatusFromString(status: String): SeriesStatus {
         return when (status) {
@@ -24,6 +30,9 @@ class SeriesStatusAdapter {
         }
     }
 
+    /**
+     * Converts [seriesStatus] into its [String] value.
+     */
     @ToJson
     fun seriesStatusToString(seriesStatus: SeriesStatus): String {
         return when (seriesStatus) {

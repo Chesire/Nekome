@@ -29,6 +29,9 @@ import kotlinx.android.synthetic.main.fragment_details.detailsUsernameText
 import timber.log.Timber
 import javax.inject.Inject
 
+/**
+ * Fragment to allow the user to enter their login details for Kitsu.
+ */
 @LogLifecykle
 class DetailsFragment : DaggerFragment() {
     @Inject

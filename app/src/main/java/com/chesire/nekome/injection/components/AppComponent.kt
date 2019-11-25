@@ -21,6 +21,9 @@ import dagger.android.AndroidInjector
 import dagger.android.support.AndroidSupportInjectionModule
 import javax.inject.Singleton
 
+/**
+ * [Component] that is scoped to the entire application.
+ */
 @Singleton
 @Component(
     modules = [
@@ -39,14 +42,30 @@ import javax.inject.Singleton
     ]
 )
 interface AppComponent : AndroidInjector<App> {
+    /**
+     * Builder for the [AppComponent].
+     */
     @Component.Builder
     interface Builder {
+        /**
+         * Bind the [Context] of the application to the Dagger graph.
+         */
         @BindsInstance
         fun applicationContext(applicationContext: Context): Builder
 
+        /**
+         * Builds the [AppComponent].
+         */
         fun build(): AppComponent
     }
 
+    /**
+     * Provides Dagger injection into the [RefreshSeriesWorker].
+     */
     fun inject(worker: RefreshSeriesWorker)
+
+    /**
+     * Provides Dagger injection into the [RefreshUserWorker].
+     */
     fun inject(worker: RefreshUserWorker)
 }

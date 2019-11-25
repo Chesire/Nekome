@@ -3,7 +3,13 @@ package com.chesire.nekome.kitsu.api.library
 import com.chesire.nekome.kitsu.createSeriesModel
 import com.squareup.moshi.FromJson
 
+/**
+ * Class to convert a [RetrieveResponse] into a [ParsedRetrieveResponse].
+ */
 class ParsedRetrieveResponseAdapter {
+    /**
+     * Converts [response] into a [ParsedRetrieveResponse].
+     */
     @FromJson
     fun parseRetrieveResponse(response: RetrieveResponse): ParsedRetrieveResponse {
         val seriesModels = response

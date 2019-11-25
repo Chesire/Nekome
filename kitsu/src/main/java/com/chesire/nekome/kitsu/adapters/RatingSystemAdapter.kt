@@ -9,7 +9,13 @@ private const val REGULAR = "regular"
 private const val SIMPLE = "simple"
 private const val UNKNOWN = "unknown"
 
+/**
+ * Adapter to plug into retrofit to convert strings into [RatingSystem] values.
+ */
 class RatingSystemAdapter {
+    /**
+     * Converts [ratingString] into the [RatingSystem] value.
+     */
     @FromJson
     fun ratingFromString(ratingString: String): RatingSystem {
         return when (ratingString) {
@@ -20,6 +26,9 @@ class RatingSystemAdapter {
         }
     }
 
+    /**
+     * Converts [ratingSystem] into its [String] value.
+     */
     @ToJson
     fun ratingToString(ratingSystem: RatingSystem): String {
         return when (ratingSystem) {

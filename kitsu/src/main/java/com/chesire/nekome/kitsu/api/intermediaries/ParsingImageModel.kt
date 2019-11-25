@@ -3,6 +3,9 @@ package com.chesire.nekome.kitsu.api.intermediaries
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
+/**
+ * Class used as intermediary when parsing out response json.
+ */
 @JsonClass(generateAdapter = true)
 data class ParsingImageModel(
     @Json(name = "tiny")
@@ -16,11 +19,17 @@ data class ParsingImageModel(
     @Json(name = "meta")
     val meta: ImageMeta
 ) {
+    /**
+     * Class used as intermediary when parsing out response json.
+     */
     @JsonClass(generateAdapter = true)
     data class ImageMeta(
         @Json(name = "dimensions")
         val dimensions: DimensionsMeta
     ) {
+        /**
+         * Class used as intermediary when parsing out response json.
+         */
         @JsonClass(generateAdapter = true)
         data class DimensionsMeta(
             @Json(name = "tiny")
@@ -32,6 +41,9 @@ data class ParsingImageModel(
             @Json(name = "large")
             val large: DimensionsData?
         ) {
+            /**
+             * Class used as intermediary when parsing out response json.
+             */
             @JsonClass(generateAdapter = true)
             data class DimensionsData(
                 @Json(name = "width")

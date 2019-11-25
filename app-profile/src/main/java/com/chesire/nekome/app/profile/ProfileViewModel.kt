@@ -10,7 +10,7 @@ import com.chesire.nekome.series.SeriesRepository
 import javax.inject.Inject
 
 /**
- * ViewModel to funnel information about the profile.
+ * ViewModel to provide profile information to [ProfileFragment].
  */
 class ProfileViewModel @Inject constructor(
     seriesRepository: SeriesRepository,

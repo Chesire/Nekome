@@ -20,9 +20,9 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
 import com.bumptech.glide.Glide
 import com.chesire.lifecyklelog.LogLifecykle
-import com.chesire.nekome.core.AuthCaster
 import com.chesire.nekome.OverviewNavGraphDirections
 import com.chesire.nekome.R
+import com.chesire.nekome.core.AuthCaster
 import com.chesire.nekome.core.viewmodel.ViewModelFactory
 import com.google.android.material.navigation.NavigationView
 import dagger.android.support.DaggerAppCompatActivity
@@ -30,6 +30,10 @@ import kotlinx.android.synthetic.main.activity.activityDrawer
 import timber.log.Timber
 import javax.inject.Inject
 
+/**
+ * Single host activity for the application, handles all required logic of the activity such as
+ * hiding/showing the drawer.
+ */
 @LogLifecykle
 @Suppress("TooManyFunctions")
 class Activity : DaggerAppCompatActivity(), AuthCaster.AuthCasterListener {
