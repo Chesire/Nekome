@@ -8,7 +8,13 @@ private const val ANIME = "anime"
 private const val MANGA = "manga"
 private const val UNKNOWN = "unknown"
 
+/**
+ * Adapter to plug into retrofit to convert strings into [SeriesType] values.
+ */
 class SeriesTypeAdapter {
+    /**
+     * Converts [type] into the [SeriesType] value.
+     */
     @FromJson
     fun seriesTypeFromString(type: String): SeriesType {
         return when (type) {
@@ -18,6 +24,9 @@ class SeriesTypeAdapter {
         }
     }
 
+    /**
+     * Converts [type] into its [String] value.
+     */
     @ToJson
     fun seriesTypeToString(type: SeriesType): String {
         return when (type) {

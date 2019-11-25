@@ -19,7 +19,13 @@ private const val OEL = "oel"
 private const val ONESHOT = "oneshot"
 private const val UNKNOWN = "unknown"
 
+/**
+ * Adapter to plug into retrofit to convert strings into [Subtype] values.
+ */
 class SubtypeAdapter {
+    /**
+     * Converts [subString] into the [Subtype] value.
+     */
     @Suppress("ComplexMethod")
     @FromJson
     fun subtypeFromString(subString: String): Subtype {
@@ -41,6 +47,9 @@ class SubtypeAdapter {
         }
     }
 
+    /**
+     * Converts [subtype] into its [String] value.
+     */
     @Suppress("ComplexMethod")
     @ToJson
     fun subtypeToString(subtype: Subtype): String {

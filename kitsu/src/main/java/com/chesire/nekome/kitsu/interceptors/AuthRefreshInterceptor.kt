@@ -8,7 +8,16 @@ import okhttp3.Interceptor
 import okhttp3.Response
 import javax.inject.Inject
 
-// We must use an interceptor as Kitsu doesn't return a 401, only 403.
+/**
+ * Interceptor to handle refreshing access tokens if required.
+ *
+ * There is an official way to do this using OkHttp or Retrofit, but unfortunately this has to be
+ * done as an interceptor instead as the official way expects a 401 to be returned if auth fails,
+ * but Kitsu returns a 403 which won't work.
+ *
+ * If we still cannot refresh the token after attempting here, force a 401 to be returned back to
+ * the calling layer and let that handle it.
+ */
 class AuthRefreshInterceptor @Inject constructor(
     private val provider: AuthProvider,
     private val auth: KitsuAuthService

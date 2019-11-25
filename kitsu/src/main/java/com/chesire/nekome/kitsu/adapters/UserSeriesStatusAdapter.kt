@@ -11,8 +11,13 @@ private const val DROPPED = "dropped"
 private const val PLANNED = "planned"
 private const val UNKNOWN = "unknown"
 
-@Suppress("unused")
+/**
+ * Adapter to plug into retrofit to convert strings into [UserSeriesStatus] values.
+ */
 class UserSeriesStatusAdapter {
+    /**
+     * Converts [status] into the [UserSeriesStatus] value.
+     */
     @FromJson
     fun userSeriesStatusFromString(status: String): UserSeriesStatus {
         return when (status) {
@@ -25,6 +30,9 @@ class UserSeriesStatusAdapter {
         }
     }
 
+    /**
+     * Converts [status] into its [String] value.
+     */
     @ToJson
     fun userSeriesStatusToString(status: UserSeriesStatus): String {
         return when (status) {
