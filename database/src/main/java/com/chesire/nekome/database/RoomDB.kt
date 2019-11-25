@@ -46,9 +46,9 @@ abstract class RoomDB : RoomDatabase() {
         /**
          * Builds the database for usage.
          */
-        fun build(context: Context): RoomDB {
+        fun build(context: Context, databaseName: String = "nekome_database.db"): RoomDB {
             return Room
-                .databaseBuilder(context, RoomDB::class.java, "malime_database.db")
+                .databaseBuilder(context, RoomDB::class.java, databaseName)
                 .fallbackToDestructiveMigration()
                 .build()
         }
