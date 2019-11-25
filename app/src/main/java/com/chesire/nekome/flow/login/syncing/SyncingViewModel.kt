@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 /**
- * Provides a ViewModel to aid with the [SyncingFragment].
+ * ViewModel to aid with pulling down the users series via the [SyncingFragment].
  */
 class SyncingViewModel @Inject constructor(
     private val seriesRepo: SeriesRepository,
@@ -25,8 +25,9 @@ class SyncingViewModel @Inject constructor(
     val avatarUrl = Transformations.map(userRepo.user) { it.avatar.largest?.url }
 
     /**
-     * Sets off the process for pulling down and storing the users series. Success or failure is
-     * reported back on [syncStatus].
+     * Sets off the process for pulling down and storing the users series.
+     *
+     * Success or failure is reported back on [syncStatus].
      */
     fun syncLatestData() = viewModelScope.launch {
         val syncCommands = listOf(

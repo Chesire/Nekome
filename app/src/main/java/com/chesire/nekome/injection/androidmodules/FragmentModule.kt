@@ -9,12 +9,16 @@ import com.chesire.nekome.app.series.list.anime.AnimeFragment
 import com.chesire.nekome.app.series.list.manga.MangaFragment
 import com.chesire.nekome.app.settings.oss.OssFragment
 import com.chesire.nekome.app.timeline.TimelineFragment
+import com.chesire.nekome.flow.Activity
 import com.chesire.nekome.flow.login.details.DetailsFragment
 import com.chesire.nekome.flow.login.syncing.SyncingFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
-@Suppress("unused", "TooManyFunctions")
+/**
+ * Dagger [Module] for Android Fragments.
+ */
+@Suppress("unused", "TooManyFunctions", "UndocumentedPublicFunction")
 @Module
 abstract class FragmentModule {
     @ContributesAndroidInjector

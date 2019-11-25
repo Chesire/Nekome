@@ -10,6 +10,12 @@ import com.chesire.nekome.server.Resource
 import timber.log.Timber
 import javax.inject.Inject
 
+/**
+ * Worker object that handles updating a users Series if possible.
+ *
+ * When scheduled to run it will send a request to the [seriesRepo] to try to update the series,
+ * letting the [seriesRepo] handle what to do with the results.
+ */
 class RefreshSeriesWorker(
     appContext: Context,
     workerParams: WorkerParameters

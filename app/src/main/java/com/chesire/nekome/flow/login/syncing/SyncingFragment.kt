@@ -16,6 +16,9 @@ import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_syncing.syncingProfileImage
 import javax.inject.Inject
 
+/**
+ * Fragment to show a user that their series are currently being synced down.
+ */
 @LogLifecykle
 class SyncingFragment : DaggerFragment() {
     @Inject

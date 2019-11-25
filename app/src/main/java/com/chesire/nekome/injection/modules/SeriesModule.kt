@@ -7,10 +7,16 @@ import com.chesire.nekome.server.api.LibraryApi
 import dagger.Module
 import dagger.Provides
 
+/**
+ * Dagger [Module] for the [com.chesire.nekome.series] package.
+ */
 @Suppress("unused")
 @Module
 object SeriesModule {
+    /**
+     * Provides the [SeriesRepository] to the dependency graph.
+     */
     @Provides
-    fun provideUserRepository(dao: SeriesDao, api: LibraryApi, user: UserRepository) =
+    fun provideSeriesRepository(dao: SeriesDao, api: LibraryApi, user: UserRepository) =
         SeriesRepository(dao, api, user)
 }

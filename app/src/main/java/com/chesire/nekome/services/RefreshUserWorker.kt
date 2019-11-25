@@ -9,6 +9,12 @@ import com.chesire.nekome.server.Resource
 import timber.log.Timber
 import javax.inject.Inject
 
+/**
+ * Worker object that handles updating a users authenticated state.
+ *
+ * When scheduled to run it will send a request to the [userRepo] to try to refresh the current
+ * user.
+ */
 class RefreshUserWorker(
     appContext: Context,
     workerParams: WorkerParameters

@@ -4,7 +4,10 @@ import com.chesire.nekome.flow.Activity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
-@Suppress("unused")
+/**
+ * Dagger [Module] for Android Activities.
+ */
+@Suppress("unused", "UndocumentedPublicFunction")
 @Module
 abstract class ActivityModule {
     @ContributesAndroidInjector
