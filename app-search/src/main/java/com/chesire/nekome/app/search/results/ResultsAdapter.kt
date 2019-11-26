@@ -25,12 +25,13 @@ class ResultsAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ResultsViewHolder {
         return ResultsViewHolder(
             LayoutInflater.from(parent.context).inflate(R.layout.item_result, parent, false)
-        )
+        ).apply {
+            bindListener(resultsListener)
+        }
     }
 
     override fun onBindViewHolder(holder: ResultsViewHolder, position: Int) {
         val data = getItem(position)
         holder.bind(data, allSeries?.any { it.id == data.id } ?: false)
-        holder.bindListener(resultsListener)
     }
 }
