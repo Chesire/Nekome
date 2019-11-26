@@ -50,7 +50,12 @@ class SeriesViewHolder(view: View) : RecyclerView.ViewHolder(view), LayoutContai
      * Binds the [listener] to the view.
      */
     fun bindListener(listener: SeriesInteractionListener) {
-        itemView.setOnClickListener { listener.seriesSelected(adapterItemSeriesImage, seriesModel) }
+        containerView.setOnClickListener {
+            listener.seriesSelected(
+                adapterItemSeriesImage,
+                seriesModel
+            )
+        }
         adapterItemSeriesPlusOne.setOnClickListener {
             startUpdatingSeries()
             listener.onPlusOne(seriesModel) {
