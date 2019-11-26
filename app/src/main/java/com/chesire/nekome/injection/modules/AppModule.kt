@@ -2,7 +2,7 @@ package com.chesire.nekome.injection.modules
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.preference.PreferenceManager
+import androidx.preference.PreferenceManager
 import com.chesire.nekome.core.SharedPref
 import dagger.Module
 import dagger.Provides
