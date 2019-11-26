@@ -67,13 +67,13 @@ class SeriesAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SeriesViewHolder {
         return SeriesViewHolder(
             LayoutInflater.from(parent.context).inflate(R.layout.adapter_item_series, parent, false)
-        )
+        ).apply {
+            bindListener(listener)
+        }
     }
 
-    override fun onBindViewHolder(holder: SeriesViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: SeriesViewHolder, position: Int) =
         holder.bind(getItem(position))
-        holder.bindListener(listener)
-    }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
         when (key) {
