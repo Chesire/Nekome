@@ -3,23 +3,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="113dp"
+    android:layout_height="125dp"
     android:layout_marginStart="8dp"
     android:layout_marginTop="4dp"
     android:layout_marginEnd="8dp"
     android:layout_marginBottom="4dp"
     android:elevation="4dp"
-    android:minHeight="113dp"
     app:cardElevation="4dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
         <ImageView
             android:id="@+id/adapterItemSeriesImage"
-            android:layout_width="80dp"
-            android:layout_height="113dp"
+            android:layout_width="89dp"
+            android:layout_height="match_parent"
             android:adjustViewBounds="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -43,8 +42,12 @@
             android:id="@+id/adapterItemSeriesSubtype"
             style="@style/TextAppearance.MaterialComponents.Overline"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:gravity="center_vertical"
             app:layout_constraintBottom_toTopOf="@id/adapterItemSeriesDivider"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/adapterItemSeriesImage"
@@ -54,11 +57,11 @@
         <View
             android:id="@+id/adapterItemSeriesDivider"
             style="@style/DividerStyle"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
             app:layout_constraintBottom_toTopOf="@id/adapterItemSeriesPlusOne"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/adapterItemSeriesImage"
-            app:layout_constraintTop_toBottomOf="@id/adapterItemSeriesSubtype"
-            app:layout_constraintVertical_bias="1" />
+            app:layout_constraintStart_toEndOf="@+id/adapterItemSeriesImage" />
 
         <TextView
             android:id="@+id/adapterItemSeriesProgress"
@@ -66,21 +69,20 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/adapterItemSeriesPlusOne"
             app:layout_constraintEnd_toStartOf="@id/adapterItemSeriesPlusOne"
             app:layout_constraintStart_toEndOf="@id/adapterItemSeriesImage"
-            app:layout_constraintTop_toBottomOf="@id/adapterItemSeriesDivider"
+            app:layout_constraintTop_toTopOf="@id/adapterItemSeriesPlusOne"
             tools:text="101 / 250" />
 
         <Button
             android:id="@+id/adapterItemSeriesPlusOne"
             style="@style/Widget.MaterialComponents.Button.TextButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_width="56dp"
+            android:layout_height="48dp"
             android:layout_marginStart="8dp"
-            android:minWidth="0dp"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
             android:text="@string/series_list_plus_one"
             android:textColor="@color/colorPrimary"
             app:layout_constraintBottom_toBottomOf="parent"

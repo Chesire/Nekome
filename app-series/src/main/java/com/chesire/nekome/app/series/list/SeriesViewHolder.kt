@@ -31,7 +31,7 @@ class SeriesViewHolder(view: View) : RecyclerView.ViewHolder(view), LayoutContai
     fun bind(model: SeriesModel) {
         seriesModel = model
 
-        Glide.with(itemView)
+        Glide.with(containerView)
             .load(model.posterImage.smallest?.url)
             .into(adapterItemSeriesImage)
         adapterItemSeriesTitle.text = model.title
