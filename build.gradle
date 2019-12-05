@@ -74,7 +74,7 @@ ext {
     corektx_version = "1.2.0-rc01"
     coroutines_version = "1.3.2"
     dagger_version = "2.25.2"
-    fragmentctx_version = "1.2.0-rc02"
+    fragmentctx_version = "1.2.0-rc03"
     glide_version = "4.10.0"
     lifecycle_version = "2.2.0-rc03"
     lifecykle_version = "2.1.0"
