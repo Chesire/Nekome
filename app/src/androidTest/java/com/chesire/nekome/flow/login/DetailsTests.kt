@@ -1,13 +1,16 @@
 package com.chesire.nekome.flow.login
 
+import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
+import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.rule.ActivityTestRule
 import com.chesire.nekome.R
 import com.chesire.nekome.core.url.UrlHandler
 import com.chesire.nekome.flow.Activity
 import com.chesire.nekome.helpers.ToastMatcher.Companion.onToast
+import com.chesire.nekome.helpers.clickClickableSpan
 import com.chesire.nekome.helpers.getResource
 import com.chesire.nekome.helpers.injector
 import com.chesire.nekome.kitsu.AuthProvider
@@ -129,8 +132,8 @@ class DetailsTests {
 
     @Test
     fun clickingForgotPasswordAttemptsToNavigate() {
-        val expectedUrl = R.string.login_sign_up_url.getResource()
-        every { urlHandler.launch(any(), expectedUrl) } just Runs
+        val expectedUrl = R.string.login_forgot_password_url.getResource()
+        every { urlHandler.launch(any(), any()) } just Runs
 
         activity.launchActivity(null)
         clickOn(R.id.detailsForgotPassword)
@@ -140,11 +143,12 @@ class DetailsTests {
 
     @Test
     fun clickingSignUpAttemptsToNavigate() {
-        val expectedUrl = R.string.login_forgot_password_url.getResource()
-        every { urlHandler.launch(any(), expectedUrl) } just Runs
+        val expectedUrl = R.string.login_sign_up_url.getResource()
+        every { urlHandler.launch(any(), any()) } just Runs
 
         activity.launchActivity(null)
-        clickOn(R.id.detailsSignUp)
+        onView(withId(R.id.detailsSignUp))
+            .perform(clickClickableSpan(R.string.login_sign_up_link_target))
 
         verify { urlHandler.launch(any(), expectedUrl) }
     }
