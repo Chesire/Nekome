@@ -21,6 +21,7 @@ class TestApplication : DaggerApplication() {
             .searchApi(spyk())
             .trendingApi(spyk())
             .userApi(spyk())
+            .urlHandler(spyk())
             .build()
             .also {
                 component = it
