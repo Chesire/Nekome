@@ -54,14 +54,6 @@ class DetailsFragment : DaggerFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        detailsSignUp.setLinkedText(R.string.login_sign_up, R.string.login_sign_up_link_target) {
-            CustomTabsIntent.Builder()
-                .build()
-                .launchUrl(
-                    requireContext(),
-                    Uri.parse(getString(R.string.login_sign_up_url))
-                )
-        }
         detailsUsernameText.addTextChangedListener { detailsUsernameLayout.error = "" }
         detailsPasswordText.addTextChangedListener { detailsPasswordLayout.error = "" }
         detailsPasswordText.setOnEditorActionListener { _, actionId, _ ->
@@ -75,6 +67,22 @@ class DetailsFragment : DaggerFragment() {
 
             false
         }
+        detailsLoginButton.setOnClickListener { executeLogin() }
+
+        setupLinks()
+        viewModel.loginStatus.observe(viewLifecycleOwner, Observer { loginStatusChanged(it) })
+    }
+
+    private fun setupLinks() {
+        detailsSignUp.setLinkedText(R.string.login_sign_up, R.string.login_sign_up_link_target) {
+            CustomTabsIntent.Builder()
+                .build()
+                .launchUrl(
+                    requireContext(),
+                    Uri.parse(getString(R.string.login_sign_up_url))
+                )
+        }
+
         detailsForgotPassword.setOnClickListener {
             CustomTabsIntent.Builder()
                 .build()
@@ -83,8 +91,6 @@ class DetailsFragment : DaggerFragment() {
                     Uri.parse(getString(R.string.login_forgot_password_url))
                 )
         }
-        detailsLoginButton.setOnClickListener { executeLogin() }
-        viewModel.loginStatus.observe(viewLifecycleOwner, Observer { loginStatusChanged(it) })
     }
 
     private fun executeLogin() {
