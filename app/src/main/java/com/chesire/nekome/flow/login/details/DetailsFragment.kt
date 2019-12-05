@@ -1,13 +1,11 @@
 package com.chesire.nekome.flow.login.details
 
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import androidx.annotation.StringRes
-import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -19,6 +17,7 @@ import com.chesire.nekome.core.extensions.hide
 import com.chesire.nekome.core.extensions.hideSystemKeyboard
 import com.chesire.nekome.core.extensions.setLinkedText
 import com.chesire.nekome.core.extensions.show
+import com.chesire.nekome.core.url.UrlHandler
 import com.chesire.nekome.core.viewmodel.ViewModelFactory
 import com.google.android.material.snackbar.Snackbar
 import dagger.android.support.DaggerFragment
@@ -44,6 +43,8 @@ class DetailsFragment : DaggerFragment() {
     private val viewModel by lazy {
         ViewModelProvider(this, viewModelFactory).get<DetailsViewModel>()
     }
+    @Inject
+    lateinit var urlHandler: UrlHandler
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -75,21 +76,11 @@ class DetailsFragment : DaggerFragment() {
 
     private fun setupLinks() {
         detailsSignUp.setLinkedText(R.string.login_sign_up, R.string.login_sign_up_link_target) {
-            CustomTabsIntent.Builder()
-                .build()
-                .launchUrl(
-                    requireContext(),
-                    Uri.parse(getString(R.string.login_sign_up_url))
-                )
+            urlHandler.launch(requireContext(), getString(R.string.login_sign_up_url))
         }
 
         detailsForgotPassword.setOnClickListener {
-            CustomTabsIntent.Builder()
-                .build()
-                .launchUrl(
-                    requireContext(),
-                    Uri.parse(getString(R.string.login_forgot_password_url))
-                )
+            urlHandler.launch(requireContext(), getString(R.string.login_forgot_password_url))
         }
     }
 
