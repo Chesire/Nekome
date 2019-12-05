@@ -17,4 +17,3 @@ abstract class UrlModule {
     @Binds
     abstract fun providesUrlHandler(urlHandler: CustomTabsUrl): UrlHandler
 }
-
