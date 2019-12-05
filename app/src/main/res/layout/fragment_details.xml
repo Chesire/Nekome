@@ -1,133 +1,142 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/detailsLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white"
-    android:focusableInTouchMode="true"
-    android:gravity="center_horizontal"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/detailsHeaderImage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/half_margin"
-        android:contentDescription="@string/login_header_image_content_description"
-        android:src="@drawable/ic_blackcat"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/detailsHeaderText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/full_margin"
-        android:layout_marginTop="@dimen/full_margin"
-        android:layout_marginEnd="@dimen/full_margin"
-        android:text="@string/login_header"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/detailsHeaderImage" />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/detailsUsernameLayout"
-        style="@style/TextInputStyle"
+    <LinearLayout
+        android:id="@+id/detailsLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/full_margin"
-        android:layout_marginTop="@dimen/full_margin"
-        android:layout_marginEnd="@dimen/full_margin"
-        app:errorEnabled="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/detailsHeaderText">
+        android:background="@color/white"
+        android:focusableInTouchMode="true"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/detailsUsernameText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:drawableStart="@drawable/ic_account_circle"
-            android:drawablePadding="@dimen/login_text_drawable_padding"
-            android:hint="@string/login_username"
-            android:imeOptions="actionNext"
-            android:inputType="textNoSuggestions"
-            android:maxLines="1" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/detailsPasswordLayout"
-        style="@style/TextInputStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/full_margin"
-        android:layout_marginTop="@dimen/full_margin"
-        android:layout_marginEnd="@dimen/full_margin"
-        android:autofillHints="password"
-        app:errorEnabled="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/detailsUsernameLayout"
-        app:passwordToggleEnabled="true"
-        app:passwordToggleTint="@color/colorPrimary"
-        tools:ignore="UnusedAttribute">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/detailsPasswordText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:drawableStart="@drawable/ic_lock"
-            android:drawablePadding="@dimen/login_text_drawable_padding"
-            android:hint="@string/login_password"
-            android:imeOptions="actionDone"
-            android:inputType="textPassword"
-            android:lines="1" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/detailsForgotPassword"
-        style="@style/Widget.MaterialComponents.Button.TextButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:layout_marginEnd="@dimen/full_margin"
-        android:text="@string/login_forgot_password"
-        android:textSize="12sp" />
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/half_margin">
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/detailsLoginButton"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:backgroundTint="@color/colorPrimary"
-            android:text="@string/login_login"
-            android:textColor="@color/white" />
-
-        <ProgressBar
-            android:id="@+id/detailsProgressBar"
+        <ImageView
+            android:id="@+id/detailsHeaderImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:indeterminate="true"
-            android:indeterminateTint="@color/white"
-            android:visibility="invisible"
-            tools:visibility="visible" />
-    </FrameLayout>
+            android:layout_marginTop="@dimen/half_margin"
+            android:contentDescription="@string/login_header_image_content_description"
+            android:src="@drawable/ic_blackcat"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/detailsSignUp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/half_margin"
-        tools:text="@string/login_sign_up" />
+        <TextView
+            android:id="@+id/detailsHeaderText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/full_margin"
+            android:layout_marginTop="@dimen/full_margin"
+            android:layout_marginEnd="@dimen/full_margin"
+            android:text="@string/login_header"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/detailsHeaderImage" />
 
-</LinearLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/detailsUsernameLayout"
+            style="@style/TextInputStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/full_margin"
+            android:layout_marginTop="@dimen/full_margin"
+            android:layout_marginEnd="@dimen/full_margin"
+            app:errorEnabled="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/detailsHeaderText">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/detailsUsernameText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_account_circle"
+                android:drawablePadding="@dimen/login_text_drawable_padding"
+                android:hint="@string/login_username"
+                android:imeOptions="actionNext"
+                android:inputType="textNoSuggestions"
+                android:maxLines="1" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/detailsPasswordLayout"
+            style="@style/TextInputStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/full_margin"
+            android:layout_marginTop="@dimen/full_margin"
+            android:layout_marginEnd="@dimen/full_margin"
+            android:autofillHints="password"
+            app:errorEnabled="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/detailsUsernameLayout"
+            app:passwordToggleEnabled="true"
+            app:passwordToggleTint="@color/colorPrimary"
+            tools:ignore="UnusedAttribute">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/detailsPasswordText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_lock"
+                android:drawablePadding="@dimen/login_text_drawable_padding"
+                android:hint="@string/login_password"
+                android:imeOptions="actionDone"
+                android:inputType="textPassword"
+                android:lines="1" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/detailsForgotPassword"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginEnd="@dimen/full_margin"
+            android:text="@string/login_forgot_password"
+            android:textSize="12sp" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/half_margin">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/detailsLoginButton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:backgroundTint="@color/colorPrimary"
+                android:text="@string/login_login"
+                android:textColor="@color/white" />
+
+            <ProgressBar
+                android:id="@+id/detailsProgressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:indeterminate="true"
+                android:indeterminateTint="@color/white"
+                android:visibility="invisible"
+                tools:visibility="visible" />
+        </FrameLayout>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/detailsSignUp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/full_margin"
+            android:layout_marginTop="@dimen/half_margin"
+            android:layout_marginEnd="@dimen/full_margin"
+            android:layout_marginBottom="@dimen/full_margin"
+            tools:text="@string/login_sign_up" />
+
+    </LinearLayout>
+
+</ScrollView>
