@@ -66,6 +66,7 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
     implementation "androidx.appcompat:appcompat:$appcompat_version"
+    implementation 'androidx.browser:browser:1.0.0'
     implementation "androidx.constraintlayout:constraintlayout:$constraint_layout_version"
     implementation "androidx.core:core-ktx:$corektx_version"
     implementation "androidx.fragment:fragment-ktx:$fragmentctx_version"

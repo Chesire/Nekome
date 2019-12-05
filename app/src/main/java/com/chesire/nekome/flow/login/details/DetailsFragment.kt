@@ -1,11 +1,13 @@
 package com.chesire.nekome.flow.login.details
 
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import androidx.annotation.StringRes
+import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -15,15 +17,18 @@ import com.chesire.lifecyklelog.LogLifecykle
 import com.chesire.nekome.R
 import com.chesire.nekome.core.extensions.hide
 import com.chesire.nekome.core.extensions.hideSystemKeyboard
+import com.chesire.nekome.core.extensions.setLinkedText
 import com.chesire.nekome.core.extensions.show
 import com.chesire.nekome.core.viewmodel.ViewModelFactory
 import com.google.android.material.snackbar.Snackbar
 import dagger.android.support.DaggerFragment
+import kotlinx.android.synthetic.main.fragment_details.detailsForgotPassword
 import kotlinx.android.synthetic.main.fragment_details.detailsLayout
 import kotlinx.android.synthetic.main.fragment_details.detailsLoginButton
 import kotlinx.android.synthetic.main.fragment_details.detailsPasswordLayout
 import kotlinx.android.synthetic.main.fragment_details.detailsPasswordText
 import kotlinx.android.synthetic.main.fragment_details.detailsProgressBar
+import kotlinx.android.synthetic.main.fragment_details.detailsSignUp
 import kotlinx.android.synthetic.main.fragment_details.detailsUsernameLayout
 import kotlinx.android.synthetic.main.fragment_details.detailsUsernameText
 import timber.log.Timber
@@ -49,12 +54,16 @@ class DetailsFragment : DaggerFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        detailsUsernameText.addTextChangedListener {
-            detailsUsernameLayout.error = ""
+        detailsSignUp.setLinkedText(R.string.login_sign_up, R.string.login_sign_up_link_target) {
+            CustomTabsIntent.Builder()
+                .build()
+                .launchUrl(
+                    requireContext(),
+                    Uri.parse(getString(R.string.login_sign_up_url))
+                )
         }
-        detailsPasswordText.addTextChangedListener {
-            detailsPasswordLayout.error = ""
-        }
+        detailsUsernameText.addTextChangedListener { detailsUsernameLayout.error = "" }
+        detailsPasswordText.addTextChangedListener { detailsPasswordLayout.error = "" }
         detailsPasswordText.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 activity?.hideSystemKeyboard()
@@ -65,6 +74,14 @@ class DetailsFragment : DaggerFragment() {
             }
 
             false
+        }
+        detailsForgotPassword.setOnClickListener {
+            CustomTabsIntent.Builder()
+                .build()
+                .launchUrl(
+                    requireContext(),
+                    Uri.parse(getString(R.string.login_forgot_password_url))
+                )
         }
         detailsLoginButton.setOnClickListener { executeLogin() }
         viewModel.loginStatus.observe(viewLifecycleOwner, Observer { loginStatusChanged(it) })
