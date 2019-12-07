@@ -12,6 +12,7 @@ import com.chesire.nekome.injection.modules.DatabaseModule
 import com.chesire.nekome.injection.modules.KitsuModule
 import com.chesire.nekome.injection.modules.SeriesModule
 import com.chesire.nekome.injection.modules.ServerModule
+import com.chesire.nekome.injection.modules.UrlModule
 import com.chesire.nekome.injection.modules.WorkerModule
 import com.chesire.nekome.services.RefreshSeriesWorker
 import com.chesire.nekome.services.RefreshUserWorker
@@ -38,6 +39,7 @@ import javax.inject.Singleton
         SeriesModule::class,
         ServerModule::class,
         ViewModelModule::class,
+        UrlModule::class,
         WorkerModule::class
     ]
 )

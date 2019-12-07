@@ -10,6 +10,7 @@ import com.chesire.nekome.harness.FakeAuthApi
 import com.chesire.nekome.harness.FakeLibraryApi
 import com.chesire.nekome.harness.FakeSearchApi
 import com.chesire.nekome.harness.FakeTrendingApi
+import com.chesire.nekome.harness.FakeUrlHandler
 import com.chesire.nekome.harness.FakeUserApi
 import com.chesire.nekome.injection.androidmodules.ActivityModule
 import com.chesire.nekome.injection.androidmodules.FragmentModule
@@ -18,6 +19,7 @@ import com.chesire.nekome.injection.modules.AccountModule
 import com.chesire.nekome.injection.modules.AppModule
 import com.chesire.nekome.injection.modules.CoroutineModule
 import com.chesire.nekome.injection.modules.FakeKitsuModule
+import com.chesire.nekome.injection.modules.FakeUrlModule
 import com.chesire.nekome.injection.modules.MemoryDatabaseModule
 import com.chesire.nekome.injection.modules.SeriesModule
 import com.chesire.nekome.injection.modules.ServerModule
@@ -36,6 +38,7 @@ import javax.inject.Singleton
         AppModule::class,
         CoroutineModule::class,
         FakeKitsuModule::class,
+        FakeUrlModule::class,
         FragmentModule::class,
         MemoryDatabaseModule::class,
         SeriesModule::class,
@@ -63,6 +66,9 @@ interface TestComponent : AndroidInjector<TestApplication> {
 
         @BindsInstance
         fun userApi(userApi: FakeUserApi): Builder
+
+        @BindsInstance
+        fun urlHandler(url: FakeUrlHandler): Builder
 
         fun build(): TestComponent
     }

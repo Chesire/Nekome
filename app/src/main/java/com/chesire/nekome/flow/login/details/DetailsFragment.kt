@@ -15,15 +15,19 @@ import com.chesire.lifecyklelog.LogLifecykle
 import com.chesire.nekome.R
 import com.chesire.nekome.core.extensions.hide
 import com.chesire.nekome.core.extensions.hideSystemKeyboard
+import com.chesire.nekome.core.extensions.setLinkedText
 import com.chesire.nekome.core.extensions.show
+import com.chesire.nekome.core.url.UrlHandler
 import com.chesire.nekome.core.viewmodel.ViewModelFactory
 import com.google.android.material.snackbar.Snackbar
 import dagger.android.support.DaggerFragment
+import kotlinx.android.synthetic.main.fragment_details.detailsForgotPassword
 import kotlinx.android.synthetic.main.fragment_details.detailsLayout
 import kotlinx.android.synthetic.main.fragment_details.detailsLoginButton
 import kotlinx.android.synthetic.main.fragment_details.detailsPasswordLayout
 import kotlinx.android.synthetic.main.fragment_details.detailsPasswordText
 import kotlinx.android.synthetic.main.fragment_details.detailsProgressBar
+import kotlinx.android.synthetic.main.fragment_details.detailsSignUp
 import kotlinx.android.synthetic.main.fragment_details.detailsUsernameLayout
 import kotlinx.android.synthetic.main.fragment_details.detailsUsernameText
 import timber.log.Timber
@@ -39,6 +43,8 @@ class DetailsFragment : DaggerFragment() {
     private val viewModel by lazy {
         ViewModelProvider(this, viewModelFactory).get<DetailsViewModel>()
     }
+    @Inject
+    lateinit var urlHandler: UrlHandler
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -49,12 +55,8 @@ class DetailsFragment : DaggerFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        detailsUsernameText.addTextChangedListener {
-            detailsUsernameLayout.error = ""
-        }
-        detailsPasswordText.addTextChangedListener {
-            detailsPasswordLayout.error = ""
-        }
+        detailsUsernameText.addTextChangedListener { detailsUsernameLayout.error = "" }
+        detailsPasswordText.addTextChangedListener { detailsPasswordLayout.error = "" }
         detailsPasswordText.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 activity?.hideSystemKeyboard()
@@ -67,7 +69,19 @@ class DetailsFragment : DaggerFragment() {
             false
         }
         detailsLoginButton.setOnClickListener { executeLogin() }
+
+        setupLinks()
         viewModel.loginStatus.observe(viewLifecycleOwner, Observer { loginStatusChanged(it) })
+    }
+
+    private fun setupLinks() {
+        detailsSignUp.setLinkedText(R.string.login_sign_up, R.string.login_sign_up_link_target) {
+            urlHandler.launch(requireContext(), getString(R.string.login_sign_up_url))
+        }
+
+        detailsForgotPassword.setOnClickListener {
+            urlHandler.launch(requireContext(), getString(R.string.login_forgot_password_url))
+        }
     }
 
     private fun executeLogin() {

@@ -1,12 +1,17 @@
 package com.chesire.nekome.flow.login
 
+import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
+import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.rule.ActivityTestRule
 import com.chesire.nekome.R
+import com.chesire.nekome.core.url.UrlHandler
 import com.chesire.nekome.flow.Activity
 import com.chesire.nekome.helpers.ToastMatcher.Companion.onToast
+import com.chesire.nekome.helpers.clickClickableSpan
+import com.chesire.nekome.helpers.getResource
 import com.chesire.nekome.helpers.injector
 import com.chesire.nekome.kitsu.AuthProvider
 import com.chesire.nekome.server.Resource
@@ -18,7 +23,11 @@ import com.schibsted.spain.barista.interaction.BaristaClickInteractions.clickOn
 import com.schibsted.spain.barista.interaction.BaristaEditTextInteractions.writeTo
 import com.schibsted.spain.barista.interaction.BaristaKeyboardInteractions.closeKeyboard
 import com.schibsted.spain.barista.rule.cleardata.ClearPreferencesRule
+import io.mockk.Runs
 import io.mockk.coEvery
+import io.mockk.every
+import io.mockk.just
+import io.mockk.verify
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -40,6 +49,8 @@ class DetailsTests {
     lateinit var library: LibraryApi
     @Inject
     lateinit var authProvider: AuthProvider
+    @Inject
+    lateinit var urlHandler: UrlHandler
 
     @Before
     fun setUp() {
@@ -117,5 +128,28 @@ class DetailsTests {
         clickOn(R.id.detailsLoginButton)
 
         onToast(R.string.login_error_generic).check(matches(isDisplayed()))
+    }
+
+    @Test
+    fun clickingForgotPasswordAttemptsToNavigate() {
+        val expectedUrl = R.string.login_forgot_password_url.getResource()
+        every { urlHandler.launch(any(), any()) } just Runs
+
+        activity.launchActivity(null)
+        clickOn(R.id.detailsForgotPassword)
+
+        verify { urlHandler.launch(any(), expectedUrl) }
+    }
+
+    @Test
+    fun clickingSignUpAttemptsToNavigate() {
+        val expectedUrl = R.string.login_sign_up_url.getResource()
+        every { urlHandler.launch(any(), any()) } just Runs
+
+        activity.launchActivity(null)
+        onView(withId(R.id.detailsSignUp))
+            .perform(clickClickableSpan(R.string.login_sign_up_link_target))
+
+        verify { urlHandler.launch(any(), expectedUrl) }
     }
 }
