@@ -22,6 +22,3 @@
 
 # Keep the flags that Moshi needs to generate adapters
 -keep class com.chesire.nekome.core.flags.** { *; }
-
-# JSR 305 annotations are for embedding nullability information.
--dontwarn javax.annotation.**
