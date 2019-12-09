@@ -19,3 +19,8 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+# Needed for the AboutLibraries library to work
+-keepclasseswithmembers class **.R$* {
+    public static final int define_*;
+}
