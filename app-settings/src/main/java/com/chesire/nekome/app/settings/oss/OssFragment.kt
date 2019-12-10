@@ -15,6 +15,22 @@ import dagger.android.support.DaggerFragment
  */
 @LogLifecykle
 class OssFragment : DaggerFragment() {
+    // Commented out libraries are pulled in automatically, because the library already includes the
+    // xml file required, or it is supplied manually. We only need to specify the libraries that the
+    // about libraries plugin provides.
+    private val includedLibraries = arrayOf(
+        // "AboutLibraries",
+        // "androidencryptionhelper",
+        "Dagger2",
+        "glide",
+        // "lifecyklelog",
+        // "liveevent",
+        "materialdialogs",
+        "moshi",
+        "Retrofit",
+        "Timber"
+    )
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -25,10 +41,14 @@ class OssFragment : DaggerFragment() {
         }
     }
 
+    @Suppress("SpreadOperator")
     private fun createLicensePage() = LibsBuilder()
+        .withAutoDetect(false)
         .withLicenseShown(false)
         .withLicenseDialog(true)
         .withAboutIconShown(false)
         .withVersionShown(false)
+        .withFields(R.string::class.java.fields)
+        .withLibraries(*includedLibraries)
         .supportFragment()
 }
