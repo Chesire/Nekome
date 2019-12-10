@@ -74,6 +74,8 @@ class Activity : DaggerAppCompatActivity(), AuthCaster.AuthCasterListener {
 
                 Glide.with(this)
                     .load(userModel.avatar.medium.url)
+                    .placeholder(R.drawable.ic_account_circle)
+                    .error(R.drawable.ic_account_circle)
                     .optionalCircleCrop()
                     .into(it.findViewById(R.id.viewNavHeaderImage))
             }

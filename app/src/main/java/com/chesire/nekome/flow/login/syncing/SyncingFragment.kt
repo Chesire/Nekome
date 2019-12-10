@@ -48,6 +48,7 @@ class SyncingFragment : DaggerFragment() {
                 Glide.with(this)
                     .load(it)
                     .placeholder(R.drawable.ic_account_circle)
+                    .error(R.drawable.ic_account_circle)
                     .circleCrop()
                     .into(syncingProfileImage)
             }
