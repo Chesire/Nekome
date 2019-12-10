@@ -3,6 +3,7 @@ package com.chesire.nekome.app.search.results
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.chesire.nekome.app.search.R
 import com.chesire.nekome.core.extensions.hide
 import com.chesire.nekome.core.extensions.show
 import com.chesire.nekome.core.extensions.visibleIf
@@ -30,6 +31,8 @@ class ResultsViewHolder(view: View) : RecyclerView.ViewHolder(view), LayoutConta
 
         Glide.with(itemView)
             .load(model.posterImage.smallest?.url)
+            .placeholder(R.drawable.ic_insert_photo)
+            .error(R.drawable.ic_insert_photo)
             .into(resultImage)
         resultTitle.text = model.title
         resultSubType.text = model.subtype.name
