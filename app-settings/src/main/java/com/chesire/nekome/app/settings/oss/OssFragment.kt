@@ -41,6 +41,7 @@ class OssFragment : DaggerFragment() {
         }
     }
 
+    @Suppress("SpreadOperator")
     private fun createLicensePage() = LibsBuilder()
         .withAutoDetect(false)
         .withLicenseShown(false)
