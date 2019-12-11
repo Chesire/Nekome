@@ -33,6 +33,8 @@ class SeriesViewHolder(view: View) : RecyclerView.ViewHolder(view), LayoutContai
 
         Glide.with(containerView)
             .load(model.posterImage.smallest?.url)
+            .placeholder(R.drawable.ic_insert_photo)
+            .error(R.drawable.ic_insert_photo)
             .into(adapterItemSeriesImage)
         adapterItemSeriesTitle.text = model.title
         adapterItemSeriesSubtype.text = model.subtype.name
