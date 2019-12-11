@@ -5,7 +5,8 @@
     android:layout_height="wrap_content"
     android:elevation="@dimen/bottom_sheet_elevation"
     android:focusable="true"
-    android:focusableInTouchMode="true">
+    android:focusableInTouchMode="true"
+    android:theme="@style/AppTheme">
 
     <LinearLayout
         android:layout_width="match_parent"
