@@ -227,6 +227,86 @@ class SeriesRepositoryTests {
     }
 
     @Test
+    fun `refreshAnime on success updates the dao`() = runBlocking {
+        val response = Resource.Success(listOf<SeriesModel>())
+        val mockDao = mockk<SeriesDao> {
+            coEvery { insert(any<List<SeriesModel>>()) } just Runs
+            every { series() } returns mockk()
+        }
+        val mockApi = mockk<LibraryApi> {
+            coEvery { retrieveAnime(any()) } returns response
+        }
+        val mockUser = mockk<UserRepository> {
+            coEvery { retrieveUserId() } returns 1
+        }
+
+        val classUnderTest = SeriesRepository(mockDao, mockApi, mockUser)
+        classUnderTest.refreshAnime()
+
+        coVerify { mockDao.insert(any<List<SeriesModel>>()) }
+    }
+
+    @Test
+    fun `refreshAnime on failure doesn't update the dao`() = runBlocking {
+        val response = Resource.Error<List<SeriesModel>>("")
+        val mockDao = mockk<SeriesDao> {
+            coEvery { insert(any<List<SeriesModel>>()) } just Runs
+            every { series() } returns mockk()
+        }
+        val mockApi = mockk<LibraryApi> {
+            coEvery { retrieveAnime(any()) } returns response
+        }
+        val mockUser = mockk<UserRepository> {
+            coEvery { retrieveUserId() } returns 1
+        }
+
+        val classUnderTest = SeriesRepository(mockDao, mockApi, mockUser)
+        classUnderTest.refreshAnime()
+
+        coVerify(exactly = 0) { mockDao.insert(any<List<SeriesModel>>()) }
+    }
+
+    @Test
+    fun `refreshManga on success updates the dao`() = runBlocking {
+        val response = Resource.Success(listOf<SeriesModel>())
+        val mockDao = mockk<SeriesDao> {
+            coEvery { insert(any<List<SeriesModel>>()) } just Runs
+            every { series() } returns mockk()
+        }
+        val mockApi = mockk<LibraryApi> {
+            coEvery { retrieveManga(any()) } returns response
+        }
+        val mockUser = mockk<UserRepository> {
+            coEvery { retrieveUserId() } returns 1
+        }
+
+        val classUnderTest = SeriesRepository(mockDao, mockApi, mockUser)
+        classUnderTest.refreshManga()
+
+        coVerify { mockDao.insert(any<List<SeriesModel>>()) }
+    }
+
+    @Test
+    fun `refreshManga on failure doesn't update the dao`() = runBlocking {
+        val response = Resource.Error<List<SeriesModel>>("")
+        val mockDao = mockk<SeriesDao> {
+            coEvery { insert(any<List<SeriesModel>>()) } just Runs
+            every { series() } returns mockk()
+        }
+        val mockApi = mockk<LibraryApi> {
+            coEvery { retrieveManga(any()) } returns response
+        }
+        val mockUser = mockk<UserRepository> {
+            coEvery { retrieveUserId() } returns 1
+        }
+
+        val classUnderTest = SeriesRepository(mockDao, mockApi, mockUser)
+        classUnderTest.refreshManga()
+
+        coVerify(exactly = 0) { mockDao.insert(any<List<SeriesModel>>()) }
+    }
+
+    @Test
     fun `updateSeries on success updates the dao`() = runBlocking {
         val expected = mockk<SeriesModel>()
         val mockDao = mockk<SeriesDao> {
