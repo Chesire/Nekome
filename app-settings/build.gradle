@@ -34,7 +34,7 @@ dependencies {
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation "androidx.appcompat:appcompat:$appcompat_version"
-    implementation 'androidx.browser:browser:1.0.0'
+    implementation 'androidx.browser:browser:1.2.0'
     implementation "androidx.core:core-ktx:$corektx_version"
     implementation "androidx.fragment:fragment-ktx:$fragmentctx_version"
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
