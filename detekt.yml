@@ -361,6 +361,8 @@ potential-bugs:
     active: false
     excludeAnnotatedProperties: ""
     ignoreOnClassesPattern: ""
+  MapGetWithNotNullAssertionOperator:
+    active: true
   MissingWhenCase:
     active: true
   UnconditionalJumpStatementInLoop:
@@ -474,6 +476,8 @@ style:
   UnnecessaryAbstractClass:
     active: false
     excludeAnnotatedClasses: "dagger.Module"
+  UnnecessaryAnnotationUseSiteTarget:
+    active: true
   UnnecessaryApply:
     active: true
   UnnecessaryInheritance:
