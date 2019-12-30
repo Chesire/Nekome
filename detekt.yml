@@ -402,6 +402,12 @@ style:
   ForbiddenImport:
     active: true
     imports: ''
+  ForbiddenMethodCall:
+    active: false
+    methods: ''
+  ForbiddenPublicDataClass:
+    active: false
+    ignorePackages: '*.internal,*.internal.*'
   ForbiddenVoid:
     active: true
     ignoreOverridden: false
