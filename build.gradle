@@ -77,7 +77,7 @@ ext {
     fragmentctx_version = "1.2.0-rc04"
     glide_version = "4.10.0"
     lifecycle_version = "2.2.0-rc03"
-    lifecykle_version = "2.1.0"
+    lifecykle_version = "3.0.0"
     liveevent_version = "1.0.1"
     material_version = "1.2.0-alpha03"
     materialdialog_version = "3.1.1"
