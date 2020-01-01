@@ -26,9 +26,9 @@ class App : DaggerApplication() {
             Timber.plant(Timber.DebugTree())
             LifecykleLog.apply {
                 initialize(this@App)
-                logHandler = LogHandler { clazz, lifecycleEvent ->
+                logHandler = LogHandler { clazz, lifecycleEvent, bundle ->
                     Timber.tag(clazz)
-                    Timber.d("-> $lifecycleEvent")
+                    Timber.d("-> $lifecycleEvent ${bundle?.let { "- $it" } ?: ""}")
                 }
             }
             startStrictMode()
