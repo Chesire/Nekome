@@ -11,11 +11,14 @@ import com.chesire.nekome.core.extensions.visibleIf
 import com.chesire.nekome.core.models.SeriesModel
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.adapter_item_series.adapterItemProgressBar
+import kotlinx.android.synthetic.main.adapter_item_series.adapterItemSeriesDate
 import kotlinx.android.synthetic.main.adapter_item_series.adapterItemSeriesImage
 import kotlinx.android.synthetic.main.adapter_item_series.adapterItemSeriesPlusOne
 import kotlinx.android.synthetic.main.adapter_item_series.adapterItemSeriesProgress
 import kotlinx.android.synthetic.main.adapter_item_series.adapterItemSeriesSubtype
 import kotlinx.android.synthetic.main.adapter_item_series.adapterItemSeriesTitle
+
+private const val UNKNOWN_DATE = "????-??-??"
 
 /**
  * ViewHolder for Series items in the Anime or Manga list.
@@ -43,9 +46,35 @@ class SeriesViewHolder(view: View) : RecyclerView.ViewHolder(view), LayoutContai
             model.progress.toString(),
             if (model.lengthKnown) model.totalLength else '-'
         )
+        setupDateString(model)
         adapterItemSeriesPlusOne.visibleIf(invisible = true) {
             !model.lengthKnown || model.progress < model.totalLength
         }
+    }
+
+    private fun setupDateString(model: SeriesModel) {
+        val dateString = if (model.startDate.isEmpty() && model.endDate.isEmpty()) {
+            containerView.context.getString(
+                R.string.series_list_date_range,
+                UNKNOWN_DATE,
+                UNKNOWN_DATE
+            )
+        } else if (model.startDate == model.endDate) {
+            model.startDate
+        } else if (model.endDate.isEmpty()) {
+            containerView.context.getString(
+                R.string.series_list_date_range,
+                model.startDate,
+                UNKNOWN_DATE
+            )
+        } else {
+            containerView.context.getString(
+                R.string.series_list_date_range,
+                model.startDate,
+                model.endDate
+            )
+        }
+        adapterItemSeriesDate.text = dateString
     }
 
     /**

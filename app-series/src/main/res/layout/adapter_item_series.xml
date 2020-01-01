@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:ellipsize="end"
-            android:maxLines="2"
+            android:maxLines="1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/adapterItemSeriesImage"
             app:layout_constraintTop_toTopOf="parent"
@@ -41,18 +41,27 @@
         <TextView
             android:id="@+id/adapterItemSeriesSubtype"
             style="@style/TextAppearance.MaterialComponents.Overline"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
+            android:layout_margin="8dp"
             android:gravity="center_vertical"
             app:layout_constraintBottom_toTopOf="@id/adapterItemSeriesDivider"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/adapterItemSeriesImage"
             app:layout_constraintTop_toBottomOf="@id/adapterItemSeriesTitle"
             tools:text="TV" />
+
+        <TextView
+            android:id="@+id/adapterItemSeriesDate"
+            style="@style/TextAppearance.MaterialComponents.Overline"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="8dp"
+            android:gravity="center_vertical"
+            app:layout_constraintBottom_toBottomOf="@id/adapterItemSeriesSubtype"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/adapterItemSeriesSubtype"
+            app:layout_constraintTop_toTopOf="@id/adapterItemSeriesSubtype"
+            tools:text="2020-01-31 - 2020-02-31" />
 
         <View
             android:id="@+id/adapterItemSeriesDivider"
