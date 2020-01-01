@@ -87,7 +87,7 @@
     <string name="settings_version">Version</string>
     <string name="settings_licenses">Licenses</string>
     <string name="settings_privacy_policy">Privacy Policy</string>
-    <string name="settings_github">Github</string>
+    <string name="settings_github">GitHub</string>
     <string name="settings_github_url">https://github.com/Chesire/Nekome</string>
 
     <string name="discover_trending_anime">Trending Anime</string>
