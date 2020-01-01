@@ -2,4 +2,5 @@
 <resources>
     <string name="key_privacy_policy" translatable="false">keyPrivacyPolicy</string>
     <string name="key_licenses" translatable="false">keyLicenses</string>
+    <string name="key_github" translatable="false">keyGithub</string>
 </resources>
