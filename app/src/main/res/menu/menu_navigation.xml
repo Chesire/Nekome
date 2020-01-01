@@ -10,7 +10,7 @@
 
         <item
             android:id="@+id/animeFragment"
-            android:icon="@drawable/ic_video_library_black"
+            android:icon="@drawable/ic_video_library"
             android:title="@string/nav_anime" />
         <item
             android:id="@+id/mangaFragment"
@@ -28,7 +28,7 @@
 
         <item
             android:id="@+id/settings_nav_graph"
-            android:icon="@drawable/ic_settings_white"
+            android:icon="@drawable/ic_settings"
             android:title="@string/nav_settings" />
         <item
             android:id="@+id/logoutNavigation"
