@@ -115,14 +115,14 @@ class SearchFragment : DaggerFragment() {
     }
 
     private fun showSpinner() {
-        Timber.w("Showing Spinner")
+        Timber.d("Showing Spinner")
         searchConfirmButton.text = ""
         searchConfirmButton.isClickable = false
         searchProgress.show()
     }
 
     private fun hideSpinner() {
-        Timber.w("Hiding Spinner")
+        Timber.d("Hiding Spinner")
         searchConfirmButton.text = getString(R.string.search_search)
         searchConfirmButton.isClickable = true
         searchProgress.hide(invisible = true)
