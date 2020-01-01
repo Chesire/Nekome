@@ -1,4 +1,4 @@
-An ad free and open source application to interface with Kitsu to keep your current anime and manga series progress up to date.
+An ad free and open source application that uses Kitsu to keep your current anime and manga series progress up to date.
 
 Application features: 
 * Add new anime/manga series to track 
