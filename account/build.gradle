@@ -41,6 +41,6 @@ dependencies {
     implementation "com.jakewharton.timber:timber:$timber_version"
 
     testImplementation 'io.mockk:mockk:1.9.3'
-    testImplementation 'junit:junit:4.12'
+    testImplementation 'junit:junit:4.13'
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
 }
