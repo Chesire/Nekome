@@ -49,7 +49,7 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
 
-    testImplementation 'com.squareup.okhttp3:mockwebserver:3.14.2'
+    testImplementation 'com.squareup.okhttp3:mockwebserver:3.14.4'
     testImplementation 'io.mockk:mockk:1.9.3'
     testImplementation 'junit:junit:4.12'
 
