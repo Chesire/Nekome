@@ -16,16 +16,19 @@ import timber.log.Timber
 class SettingsFragment : PreferenceFragmentCompat() {
     private lateinit var keyPrivacyPolicy: String
     private lateinit var keyLicenses: String
+    private lateinit var keyGithub: String
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.preferences, rootKey)
         keyPrivacyPolicy = getString(R.string.key_privacy_policy)
         keyLicenses = getString(R.string.key_licenses)
+        keyGithub = getString(R.string.key_github)
     }
 
     override fun onPreferenceTreeClick(preference: Preference?): Boolean {
         when (preference?.key) {
             keyPrivacyPolicy -> showPrivacyPolicy()
+            keyGithub -> showGithub()
             keyLicenses -> showLicenses()
             else -> {
                 Timber.w("Unexpected key for onPreferenceClick - ${preference?.key}")
@@ -40,6 +43,12 @@ class SettingsFragment : PreferenceFragmentCompat() {
         CustomTabsIntent.Builder()
             .build()
             .launchUrl(requireContext(), Uri.parse(getString(R.string.privacy_policy_url)))
+    }
+
+    private fun showGithub() {
+        CustomTabsIntent.Builder()
+            .build()
+            .launchUrl(requireContext(), Uri.parse(getString(R.string.settings_github_url)))
     }
 
     private fun showLicenses() =
