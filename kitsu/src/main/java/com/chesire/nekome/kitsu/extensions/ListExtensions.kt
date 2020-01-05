@@ -15,6 +15,7 @@ internal fun List<SeriesItem>.convertToSeriesModels() = map {
         type = it.type,
         subtype = it.attributes.subtype,
         slug = it.attributes.slug,
+        synopsis = it.attributes.synopsis,
         title = it.attributes.canonicalTitle,
         seriesStatus = it.attributes.status,
         userSeriesStatus = UserSeriesStatus.Unknown,

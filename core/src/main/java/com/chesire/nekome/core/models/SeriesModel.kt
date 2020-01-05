@@ -26,6 +26,7 @@ data class SeriesModel(
     val type: SeriesType,
     val subtype: Subtype,
     val slug: String,
+    val synopsis: String,
     val title: String,
     val seriesStatus: SeriesStatus,
     val userSeriesStatus: UserSeriesStatus,

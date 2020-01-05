@@ -21,7 +21,7 @@ import com.chesire.nekome.database.dao.UserDao
  */
 @Database(
     entities = [SeriesModel::class, UserModel::class],
-    version = 1
+    version = 2
 )
 @TypeConverters(
     ImageModelConverter::class,
@@ -49,6 +49,7 @@ abstract class RoomDB : RoomDatabase() {
         fun build(context: Context, databaseName: String = "nekome_database.db"): RoomDB {
             return Room
                 .databaseBuilder(context, RoomDB::class.java, databaseName)
+                .addMigrations(MIGRATION_1_2)
                 .fallbackToDestructiveMigration()
                 .build()
         }

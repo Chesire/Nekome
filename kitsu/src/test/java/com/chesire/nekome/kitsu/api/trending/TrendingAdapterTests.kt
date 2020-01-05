@@ -18,6 +18,7 @@ class TrendingAdapterTests {
                 SeriesType.Anime,
                 SeriesItem.SeriesAttributes(
                     "slug",
+                    "synopsis",
                     "canonicalTitle",
                     "startDate",
                     "endDate",
@@ -42,6 +43,7 @@ class TrendingAdapterTests {
         assertEquals(SeriesType.Anime, actual.type)
         assertEquals(Subtype.Movie, actual.subtype)
         assertEquals("slug", actual.slug)
+        assertEquals("synopsis", actual.synopsis)
         assertEquals("canonicalTitle", actual.title)
         assertEquals(SeriesStatus.Finished, actual.seriesStatus)
         assertEquals(UserSeriesStatus.Unknown, actual.userSeriesStatus)
