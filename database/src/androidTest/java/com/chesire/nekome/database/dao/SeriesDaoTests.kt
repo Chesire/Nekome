@@ -151,6 +151,7 @@ class SeriesDaoTests {
         type,
         Subtype.Unknown,
         "slug",
+        "synopsis",
         "title",
         SeriesStatus.Unknown,
         UserSeriesStatus.Unknown,
