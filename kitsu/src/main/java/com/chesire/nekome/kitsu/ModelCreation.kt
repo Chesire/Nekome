@@ -71,6 +71,7 @@ internal fun createSeriesModel(library: LibraryEntry, series: SeriesItem) = Seri
     type = series.type,
     subtype = series.attributes.subtype,
     slug = series.attributes.slug,
+    synopsis = series.attributes.synopsis,
     title = series.attributes.canonicalTitle,
     seriesStatus = series.attributes.status,
     userSeriesStatus = library.attributes.status,

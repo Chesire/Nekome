@@ -26,6 +26,8 @@ data class SeriesItem(
     data class SeriesAttributes(
         @Json(name = "slug")
         val slug: String,
+        @Json(name = "synopsis")
+        val synopsis: String,
         @Json(name = "canonicalTitle")
         val canonicalTitle: String,
         @Json(name = "startDate")

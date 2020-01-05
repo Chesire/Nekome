@@ -15,7 +15,7 @@ interface KitsuSearchService {
      *
      * Search is limited to only 20 items at once.
      */
-    @GET("api/edge/anime?fields[anime]=slug,canonicalTitle,startDate,endDate,subtype,status,posterImage,coverImage,episodeCount,nsfw")
+    @GET("api/edge/anime?fields[anime]=slug,synopsis,canonicalTitle,startDate,endDate,subtype,status,posterImage,coverImage,episodeCount,nsfw")
     suspend fun searchForAnimeAsync(@Query("filter[text]") title: String): Response<List<SeriesModel>>
 
     /**
@@ -23,6 +23,6 @@ interface KitsuSearchService {
      *
      * Search is limited to only 20 items at once.
      */
-    @GET("api/edge/manga?fields[manga]=slug,canonicalTitle,startDate,endDate,subtype,status,posterImage,coverImage,chapterCount")
+    @GET("api/edge/manga?fields[manga]=slug,synopsis,canonicalTitle,startDate,endDate,subtype,status,posterImage,coverImage,chapterCount")
     suspend fun searchForMangaAsync(@Query("filter[text]") title: String): Response<List<SeriesModel>>
 }
