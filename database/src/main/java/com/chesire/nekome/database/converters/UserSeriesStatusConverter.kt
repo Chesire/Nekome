@@ -16,7 +16,7 @@ class UserSeriesStatusConverter {
     fun fromUserSeriesStatus(status: UserSeriesStatus): String = status.name
 
     /**
-     * Converts a [String] into a [StUserSeriesStatusring].
+     * Converts a [String] into a [UserSeriesStatus].
      */
     @TypeConverter
     fun toUserSeriesStatus(status: String): UserSeriesStatus = UserSeriesStatus.valueOf(status)
