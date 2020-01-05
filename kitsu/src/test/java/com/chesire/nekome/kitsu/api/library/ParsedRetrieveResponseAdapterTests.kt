@@ -35,6 +35,7 @@ class ParsedRetrieveResponseAdapterTests {
                 SeriesType.Anime,
                 SeriesItem.SeriesAttributes(
                     "seriesSlug",
+                    "synopsis",
                     "seriesTitle",
                     "startDate",
                     "endDate",
@@ -60,6 +61,7 @@ class ParsedRetrieveResponseAdapterTests {
         assertEquals(SeriesType.Anime, actual.type)
         assertEquals(Subtype.OVA, actual.subtype)
         assertEquals("seriesSlug", actual.slug)
+        assertEquals("synopsis", actual.synopsis)
         assertEquals("seriesTitle", actual.title)
         assertEquals(SeriesStatus.TBA, actual.seriesStatus)
         assertEquals(UserSeriesStatus.Planned, actual.userSeriesStatus)
@@ -95,6 +97,7 @@ class ParsedRetrieveResponseAdapterTests {
                 SeriesType.Anime,
                 SeriesItem.SeriesAttributes(
                     "seriesSlug",
+                    "synopsis",
                     "seriesTitle",
                     "startDate",
                     "endDate",
@@ -132,6 +135,7 @@ class ParsedRetrieveResponseAdapterTests {
                 SeriesType.Anime,
                 SeriesItem.SeriesAttributes(
                     "seriesSlug",
+                    "synopsis",
                     "seriesTitle",
                     "startDate",
                     "endDate",

@@ -18,6 +18,7 @@ class ListExtensionsTests {
                 SeriesType.Anime,
                 SeriesItem.SeriesAttributes(
                     "slug",
+                    "synopsis",
                     "canonicalTitle",
                     "startDate",
                     "endDate",
@@ -40,6 +41,7 @@ class ListExtensionsTests {
         assertEquals(SeriesType.Anime, actual.type)
         assertEquals(Subtype.Movie, actual.subtype)
         assertEquals("slug", actual.slug)
+        assertEquals("synopsis", actual.synopsis)
         assertEquals("canonicalTitle", actual.title)
         assertEquals(SeriesStatus.Finished, actual.seriesStatus)
         assertEquals(UserSeriesStatus.Unknown, actual.userSeriesStatus)
@@ -60,6 +62,7 @@ class ListExtensionsTests {
                 SeriesType.Anime,
                 SeriesItem.SeriesAttributes(
                     "slug",
+                    "synopsis",
                     "canonicalTitle",
                     "startDate",
                     "endDate",
@@ -87,6 +90,7 @@ class ListExtensionsTests {
                 SeriesType.Anime,
                 SeriesItem.SeriesAttributes(
                     "slug",
+                    "synopsis",
                     "canonicalTitle",
                     "startDate",
                     "endDate",
@@ -114,6 +118,7 @@ class ListExtensionsTests {
                 SeriesType.Anime,
                 SeriesItem.SeriesAttributes(
                     "slug",
+                    "synopsis",
                     "canonicalTitle",
                     "startDate",
                     "endDate",
@@ -141,6 +146,7 @@ class ListExtensionsTests {
                 SeriesType.Anime,
                 SeriesItem.SeriesAttributes(
                     "slug",
+                    "synopsis",
                     "canonicalTitle",
                     "startDate",
                     "endDate",
@@ -168,6 +174,7 @@ class ListExtensionsTests {
                 SeriesType.Anime,
                 SeriesItem.SeriesAttributes(
                     "slug",
+                    "synopsis",
                     "canonicalTitle",
                     null,
                     "endDate",
@@ -195,6 +202,7 @@ class ListExtensionsTests {
                 SeriesType.Anime,
                 SeriesItem.SeriesAttributes(
                     "slug",
+                    "synopsis",
                     "canonicalTitle",
                     null,
                     null,

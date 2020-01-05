@@ -51,6 +51,7 @@ class SeriesModelTests {
         type = SeriesType.Unknown,
         subtype = Subtype.Unknown,
         slug = "",
+        synopsis = "",
         title = "",
         seriesStatus = SeriesStatus.Unknown,
         userSeriesStatus = UserSeriesStatus.Unknown,

@@ -23,6 +23,7 @@ class LibrarySeriesModelAdapterTests {
                 SeriesType.Manga,
                 SeriesItem.SeriesAttributes(
                     "seriesSlug",
+                    "synopsis",
                     "seriesTitle",
                     "startDate",
                     "endDate",
@@ -46,6 +47,7 @@ class LibrarySeriesModelAdapterTests {
         assertEquals(SeriesType.Manga, actual.type)
         assertEquals(Subtype.Oneshot, actual.subtype)
         assertEquals("seriesSlug", actual.slug)
+        assertEquals("synopsis", actual.synopsis)
         assertEquals("seriesTitle", actual.title)
         assertEquals(SeriesStatus.TBA, actual.seriesStatus)
         assertEquals(UserSeriesStatus.Planned, actual.userSeriesStatus)
@@ -71,6 +73,7 @@ class LibrarySeriesModelAdapterTests {
                 SeriesType.Manga,
                 SeriesItem.SeriesAttributes(
                     "seriesSlug",
+                    "synopsis",
                     "seriesTitle",
                     "startDate",
                     "endDate",
@@ -105,6 +108,7 @@ class LibrarySeriesModelAdapterTests {
                 SeriesType.Manga,
                 SeriesItem.SeriesAttributes(
                     "seriesSlug",
+                    "synopsis",
                     "seriesTitle",
                     "startDate",
                     "endDate",
@@ -139,6 +143,7 @@ class LibrarySeriesModelAdapterTests {
                 SeriesType.Manga,
                 SeriesItem.SeriesAttributes(
                     "seriesSlug",
+                    "synopsis",
                     "seriesTitle",
                     "startDate",
                     "endDate",
@@ -173,6 +178,7 @@ class LibrarySeriesModelAdapterTests {
                 SeriesType.Manga,
                 SeriesItem.SeriesAttributes(
                     "seriesSlug",
+                    "synopsis",
                     "seriesTitle",
                     "startDate",
                     "endDate",
@@ -207,6 +213,7 @@ class LibrarySeriesModelAdapterTests {
                 SeriesType.Manga,
                 SeriesItem.SeriesAttributes(
                     "seriesSlug",
+                    "synopsis",
                     "seriesTitle",
                     null,
                     "endDate",
@@ -241,6 +248,7 @@ class LibrarySeriesModelAdapterTests {
                 SeriesType.Manga,
                 SeriesItem.SeriesAttributes(
                     "seriesSlug",
+                    "synopsis",
                     "seriesTitle",
                     null,
                     null,
