@@ -9,6 +9,7 @@ import com.chesire.nekome.core.extensions.show
 import com.chesire.nekome.core.extensions.visibleIf
 import com.chesire.nekome.core.models.SeriesModel
 import kotlinx.android.extensions.LayoutContainer
+import kotlinx.android.synthetic.main.item_result.resultDescription
 import kotlinx.android.synthetic.main.item_result.resultImage
 import kotlinx.android.synthetic.main.item_result.resultProgressBar
 import kotlinx.android.synthetic.main.item_result.resultSubType
@@ -35,6 +36,7 @@ class ResultsViewHolder(view: View) : RecyclerView.ViewHolder(view), LayoutConta
             .error(R.drawable.ic_insert_photo)
             .into(resultImage)
         resultTitle.text = model.title
+        resultDescription.text = model.synopsis
         resultSubType.text = model.subtype.name
 
         resultTrack.visibleIf { !exists }
