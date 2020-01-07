@@ -4,9 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.get
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chesire.lifecyklelog.LogLifecykle
@@ -27,9 +26,7 @@ import javax.inject.Inject
 class ResultsFragment : DaggerFragment(), ResultsListener {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
-    private val viewModel by lazy {
-        ViewModelProvider(this, viewModelFactory).get<ResultsViewModel>()
-    }
+    private val viewModel by viewModels<ResultsViewModel> { viewModelFactory }
     private val args by navArgs<ResultsFragmentArgs>()
     private val resultsAdapter = ResultsAdapter(this)
 

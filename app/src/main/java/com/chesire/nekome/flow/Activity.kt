@@ -5,12 +5,11 @@ import android.os.Handler
 import android.os.Looper
 import android.view.MenuItem
 import android.widget.TextView
+import androidx.activity.viewModels
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout.LOCK_MODE_LOCKED_CLOSED
 import androidx.drawerlayout.widget.DrawerLayout.LOCK_MODE_UNLOCKED
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.get
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
@@ -41,9 +40,7 @@ class Activity : DaggerAppCompatActivity(), AuthCaster.AuthCasterListener {
     lateinit var authCaster: AuthCaster
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
-    private val viewModel by lazy {
-        ViewModelProvider(this, viewModelFactory).get<ActivityViewModel>()
-    }
+    private val viewModel by viewModels<ActivityViewModel> { viewModelFactory }
 
     private lateinit var appBarConfiguration: AppBarConfiguration
 

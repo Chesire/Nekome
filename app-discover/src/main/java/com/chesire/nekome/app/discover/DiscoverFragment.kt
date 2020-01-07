@@ -4,9 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.get
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.chesire.lifecyklelog.LogLifecykle
@@ -23,9 +22,7 @@ import javax.inject.Inject
 class DiscoverFragment : DaggerFragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
-    private val viewModel by lazy {
-        ViewModelProvider(this, viewModelFactory).get<DiscoverViewModel>()
-    }
+    private val viewModel by viewModels<DiscoverViewModel> { viewModelFactory }
     private val animeTrendingAdapter = TrendingAdapter()
     private val mangaTrendingAdapter = TrendingAdapter()
 
