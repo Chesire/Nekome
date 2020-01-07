@@ -8,9 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.core.widget.doAfterTextChanged
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.get
 import com.chesire.lifecyklelog.LogLifecykle
 import com.chesire.nekome.app.series.R
 import com.chesire.nekome.core.extensions.extraNotNull
@@ -42,13 +41,7 @@ import javax.inject.Inject
 class SeriesDetailSheetFragment : BottomSheetDialogFragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
-    private val viewModel by lazy {
-        ViewModelProvider(this, viewModelFactory)
-            .get<SeriesDetailViewModel>()
-            .also { viewModel ->
-                viewModel.setModel(seriesModel)
-            }
-    }
+    private val viewModel by viewModels<SeriesDetailViewModel> { viewModelFactory }
     private val seriesModel by extraNotNull<SeriesModel>(MODEL_BUNDLE_ID, null)
 
     override fun onAttach(context: Context) {
@@ -64,6 +57,7 @@ class SeriesDetailSheetFragment : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.setModel(seriesModel)
         initializeView()
     }
 

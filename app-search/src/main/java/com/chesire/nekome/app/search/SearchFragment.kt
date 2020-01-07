@@ -5,9 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.get
 import androidx.navigation.fragment.findNavController
 import com.chesire.lifecyklelog.LogLifecykle
 import com.chesire.nekome.core.extensions.hide
@@ -34,9 +33,7 @@ import javax.inject.Inject
 class SearchFragment : DaggerFragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
-    private val viewModel by lazy {
-        ViewModelProvider(this, viewModelFactory).get<SearchViewModel>()
-    }
+    private val viewModel by viewModels<SearchViewModel> { viewModelFactory }
     private val seriesType: SeriesType
         get() = when (seriesDetailStatusGroup.checkedChipId) {
             R.id.searchChipAnime -> SeriesType.Anime
