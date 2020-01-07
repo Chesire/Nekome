@@ -35,7 +35,7 @@ class SeriesListViewModelTests {
             } coAnswers {
                 mockk()
             }
-            every { series } returns mockk()
+            every { getSeries() } returns mockk()
         }
         val mockAuthCaster = mockk<AuthCaster>()
 
@@ -53,7 +53,7 @@ class SeriesListViewModelTests {
             } coAnswers {
                 Resource.Error("error", Resource.Error.CouldNotRefresh)
             }
-            every { series } returns mockk()
+            every { getSeries() } returns mockk()
         }
         val mockAuthCaster = mockk<AuthCaster> {
             every { issueRefreshingToken() } just Runs
@@ -74,7 +74,7 @@ class SeriesListViewModelTests {
             } coAnswers {
                 Resource.Error("error", Resource.Error.GenericError)
             }
-            every { series } returns mockk()
+            every { getSeries() } returns mockk()
         }
         val mockAuthCaster = mockk<AuthCaster>()
 
@@ -93,7 +93,7 @@ class SeriesListViewModelTests {
             } coAnswers {
                 Resource.Success(mockk())
             }
-            every { series } returns mockk()
+            every { getSeries() } returns mockk()
         }
         val mockAuthCaster = mockk<AuthCaster>()
 
@@ -111,7 +111,7 @@ class SeriesListViewModelTests {
             } coAnswers {
                 Resource.Error("error", Resource.Error.CouldNotRefresh)
             }
-            every { series } returns mockk()
+            every { getSeries() } returns mockk()
         }
         val mockAuthCaster = mockk<AuthCaster> {
             every { issueRefreshingToken() } just Runs
@@ -131,7 +131,7 @@ class SeriesListViewModelTests {
             } coAnswers {
                 Resource.Error("error", Resource.Error.GenericError)
             }
-            every { series } returns mockk()
+            every { getSeries() } returns mockk()
         }
         val mockAuthCaster = mockk<AuthCaster>()
         val mockObserver = mockk<Observer<AsyncState<SeriesModel, SeriesListDeleteError>>>() {

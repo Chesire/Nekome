@@ -34,7 +34,7 @@ class SyncingViewModelTests {
             coEvery { refreshManga() } coAnswers { Resource.Success(mockk()) }
         }
         val mockUser = mockk<UserRepository> {
-            every { user } returns MutableLiveData(createUserModel())
+            every { user } returns mockk()
         }
         val mockObserver = mockk<Observer<AsyncState<Any, Any>>> {
             every { onChanged(any()) } just Runs
@@ -54,7 +54,7 @@ class SyncingViewModelTests {
             coEvery { refreshManga() } coAnswers { Resource.Error("") }
         }
         val mockUser = mockk<UserRepository> {
-            every { user } returns MutableLiveData(createUserModel())
+            every { user } returns mockk()
         }
         val mockObserver = mockk<Observer<AsyncState<Any, Any>>> {
             every { onChanged(any()) } just Runs
@@ -74,7 +74,7 @@ class SyncingViewModelTests {
             coEvery { refreshManga() } coAnswers { Resource.Success(mockk()) }
         }
         val mockUser = mockk<UserRepository> {
-            every { user } returns MutableLiveData(createUserModel())
+            every { user } returns mockk()
         }
         val mockObserver = mockk<Observer<AsyncState<Any, Any>>> {
             every { onChanged(any()) } just Runs

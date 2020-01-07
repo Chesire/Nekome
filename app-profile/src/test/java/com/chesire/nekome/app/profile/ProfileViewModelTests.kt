@@ -6,12 +6,16 @@ import androidx.lifecycle.Observer
 import com.chesire.nekome.account.UserRepository
 import com.chesire.nekome.core.flags.SeriesType
 import com.chesire.nekome.core.flags.UserSeriesStatus
+import com.chesire.nekome.core.models.SeriesModel
 import com.chesire.nekome.series.SeriesRepository
+import com.chesire.nekome.testing.CoroutinesMainDispatcherRule
 import com.chesire.nekome.testing.createSeriesModel
 import io.mockk.Runs
 import io.mockk.every
 import io.mockk.just
 import io.mockk.mockk
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Rule
@@ -20,11 +24,13 @@ import org.junit.Test
 class ProfileViewModelTests {
     @get:Rule
     val taskExecutorRule = InstantTaskExecutorRule()
+    @get:Rule
+    val coroutineRule = CoroutinesMainDispatcherRule()
 
     @Test
     fun `anime gets updated with seriesRepository anime series`() {
         val mockSeriesRepo = mockk<SeriesRepository> {
-            every { series } returns MutableLiveData(listOf(createSeriesModel(seriesType = SeriesType.Anime)))
+            every { getSeries() } returns flowOf(listOf(createSeriesModel(seriesType = SeriesType.Anime)))
         }
         val mockUserRepo = mockk<UserRepository> {
             every { user } returns mockk()
@@ -42,7 +48,7 @@ class ProfileViewModelTests {
     @Test
     fun `manga gets updated with seriesRepository manga series`() {
         val mockSeriesRepo = mockk<SeriesRepository> {
-            every { series } returns MutableLiveData(listOf(createSeriesModel(seriesType = SeriesType.Manga)))
+            every { getSeries() } returns flowOf(listOf(createSeriesModel(seriesType = SeriesType.Manga)))
         }
         val mockUserRepo = mockk<UserRepository> {
             every { user } returns mockk()
@@ -60,7 +66,7 @@ class ProfileViewModelTests {
     @Test
     fun `series has expected total items`() {
         val mockSeriesRepo = mockk<SeriesRepository> {
-            every { series } returns MutableLiveData(
+            every { getSeries() } returns flowOf(
                 listOf(
                     createSeriesModel(userSeriesStatus = UserSeriesStatus.Planned),
                     createSeriesModel(userSeriesStatus = UserSeriesStatus.Planned),
@@ -85,7 +91,7 @@ class ProfileViewModelTests {
     @Test
     fun `series has expected current items`() {
         val mockSeriesRepo = mockk<SeriesRepository> {
-            every { series } returns MutableLiveData(
+            every { getSeries() } returns flowOf(
                 listOf(
                     createSeriesModel(userSeriesStatus = UserSeriesStatus.Current),
                     createSeriesModel(userSeriesStatus = UserSeriesStatus.Planned),
@@ -110,7 +116,7 @@ class ProfileViewModelTests {
     @Test
     fun `series has expected completed items`() {
         val mockSeriesRepo = mockk<SeriesRepository> {
-            every { series } returns MutableLiveData(
+            every { getSeries() } returns flowOf(
                 listOf(
                     createSeriesModel(userSeriesStatus = UserSeriesStatus.Completed),
                     createSeriesModel(userSeriesStatus = UserSeriesStatus.Completed),
@@ -135,7 +141,7 @@ class ProfileViewModelTests {
     @Test
     fun `series has expected onHold items`() {
         val mockSeriesRepo = mockk<SeriesRepository> {
-            every { series } returns MutableLiveData(
+            every { getSeries() } returns flowOf(
                 listOf(
                     createSeriesModel(userSeriesStatus = UserSeriesStatus.OnHold),
                     createSeriesModel(userSeriesStatus = UserSeriesStatus.OnHold),
@@ -160,7 +166,7 @@ class ProfileViewModelTests {
     @Test
     fun `series has expected dropped items`() {
         val mockSeriesRepo = mockk<SeriesRepository> {
-            every { series } returns MutableLiveData(
+            every { getSeries() } returns flowOf(
                 listOf(
                     createSeriesModel(userSeriesStatus = UserSeriesStatus.OnHold),
                     createSeriesModel(userSeriesStatus = UserSeriesStatus.OnHold),
@@ -185,7 +191,7 @@ class ProfileViewModelTests {
     @Test
     fun `series has expected planned items`() {
         val mockSeriesRepo = mockk<SeriesRepository> {
-            every { series } returns MutableLiveData(
+            every { getSeries() } returns flowOf(
                 listOf(
                     createSeriesModel(userSeriesStatus = UserSeriesStatus.OnHold),
                     createSeriesModel(userSeriesStatus = UserSeriesStatus.OnHold),
@@ -210,7 +216,7 @@ class ProfileViewModelTests {
     @Test
     fun `series has expected unknown items`() {
         val mockSeriesRepo = mockk<SeriesRepository> {
-            every { series } returns MutableLiveData(
+            every { getSeries() } returns flowOf(
                 listOf(
                     createSeriesModel(userSeriesStatus = UserSeriesStatus.OnHold),
                     createSeriesModel(userSeriesStatus = UserSeriesStatus.Unknown),
