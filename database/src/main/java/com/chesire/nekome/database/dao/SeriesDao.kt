@@ -1,7 +1,6 @@
 package com.chesire.nekome.database.dao
 
 import androidx.annotation.VisibleForTesting
-import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
@@ -9,6 +8,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import com.chesire.nekome.core.models.SeriesModel
+import kotlinx.coroutines.flow.Flow
 
 /**
  * Dao to interact with series data.
@@ -16,13 +16,13 @@ import com.chesire.nekome.core.models.SeriesModel
 @Dao
 interface SeriesDao {
     /**
-     * Deletes the series [series].
+     * Deletes [series] from the dao.
      */
     @Delete
     suspend fun delete(series: SeriesModel)
 
     /**
-     * Inserts the series [series], replacing it if it already exists.
+     * Inserts [series], replacing it if it already exists.
      */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(series: SeriesModel)
@@ -34,22 +34,22 @@ interface SeriesDao {
     suspend fun insert(series: List<SeriesModel>)
 
     /**
-     * Provides an observable for all [SeriesModel].
+     * Gets all the [SeriesModel], and subscribes to updates.
      */
     @Query("SELECT * FROM seriesmodel")
-    fun series(): LiveData<List<SeriesModel>>
+    fun getSeries(): Flow<List<SeriesModel>>
 
     /**
-     * Updates the series [series].
+     * Updates the [series].
      */
     @Update
     suspend fun update(series: SeriesModel)
 
     // This method only exists to allow easier testing of the SeriesDao.
     /**
-     * Retrieves all series.
+     * Retrieves all [SeriesModel].
      */
-    @VisibleForTesting
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     @Query("SELECT * FROM seriesmodel")
     suspend fun retrieve(): List<SeriesModel>
 }
