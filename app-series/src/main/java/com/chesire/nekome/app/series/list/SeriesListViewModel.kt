@@ -2,6 +2,7 @@ package com.chesire.nekome.app.series.list
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.chesire.nekome.core.AuthCaster
 import com.chesire.nekome.core.extensions.postError
@@ -21,7 +22,7 @@ class SeriesListViewModel @Inject constructor(
     private val repo: SeriesRepository,
     private val authCaster: AuthCaster
 ) : ViewModel() {
-    val series = repo.series
+    val series = repo.getSeries().asLiveData()
     private val _deletionStatus = LiveEvent<AsyncState<SeriesModel, SeriesListDeleteError>>()
     val deletionStatus: LiveData<AsyncState<SeriesModel, SeriesListDeleteError>> = _deletionStatus
 

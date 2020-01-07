@@ -1,6 +1,7 @@
 package com.chesire.nekome.app.search.results
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.chesire.nekome.core.AuthCaster
 import com.chesire.nekome.core.flags.SeriesType
@@ -19,7 +20,7 @@ class ResultsViewModel @Inject constructor(
     private val authCaster: AuthCaster
 ) : ViewModel() {
 
-    val series = seriesRepo.series
+    val series = seriesRepo.getSeries().asLiveData()
 
     /**
      * Adds [newSeries] to the list of tracked series.

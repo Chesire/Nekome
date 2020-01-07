@@ -17,7 +17,7 @@ class UserRepository(
     /**
      * Access the user information.
      */
-    val user = userDao.observe(Service.Kitsu)
+    val user = userDao.getUser(Service.Kitsu)
 
     /**
      * Updates the stored user in the database, data will be funneled to the [user].

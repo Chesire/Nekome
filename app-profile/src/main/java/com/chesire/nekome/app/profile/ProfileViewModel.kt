@@ -2,6 +2,7 @@ package com.chesire.nekome.app.profile
 
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import com.chesire.nekome.account.UserRepository
 import com.chesire.nekome.core.flags.SeriesType
 import com.chesire.nekome.core.flags.UserSeriesStatus
@@ -16,11 +17,11 @@ class ProfileViewModel @Inject constructor(
     seriesRepository: SeriesRepository,
     userRepository: UserRepository
 ) : ViewModel() {
-    val user = userRepository.user
-    val anime = Transformations.map(seriesRepository.series) {
+    val user = userRepository.user.asLiveData()
+    val anime = Transformations.map(seriesRepository.getSeries().asLiveData()) {
         createSeriesProgress(it.filter { it.type == SeriesType.Anime })
     }
-    val manga = Transformations.map(seriesRepository.series) {
+    val manga = Transformations.map(seriesRepository.getSeries().asLiveData()) {
         createSeriesProgress(it.filter { it.type == SeriesType.Manga })
     }
 

@@ -1,14 +1,12 @@
 package com.chesire.nekome.flow.login.syncing
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.chesire.nekome.account.UserRepository
 import com.chesire.nekome.core.flags.AsyncState
 import com.chesire.nekome.series.SeriesRepository
 import com.chesire.nekome.server.Resource
 import com.chesire.nekome.testing.CoroutinesMainDispatcherRule
-import com.chesire.nekome.testing.createUserModel
 import io.mockk.Runs
 import io.mockk.coEvery
 import io.mockk.every
@@ -34,7 +32,7 @@ class SyncingViewModelTests {
             coEvery { refreshManga() } coAnswers { Resource.Success(mockk()) }
         }
         val mockUser = mockk<UserRepository> {
-            every { user } returns MutableLiveData(createUserModel())
+            every { user } returns mockk()
         }
         val mockObserver = mockk<Observer<AsyncState<Any, Any>>> {
             every { onChanged(any()) } just Runs
@@ -54,7 +52,7 @@ class SyncingViewModelTests {
             coEvery { refreshManga() } coAnswers { Resource.Error("") }
         }
         val mockUser = mockk<UserRepository> {
-            every { user } returns MutableLiveData(createUserModel())
+            every { user } returns mockk()
         }
         val mockObserver = mockk<Observer<AsyncState<Any, Any>>> {
             every { onChanged(any()) } just Runs
@@ -74,7 +72,7 @@ class SyncingViewModelTests {
             coEvery { refreshManga() } coAnswers { Resource.Success(mockk()) }
         }
         val mockUser = mockk<UserRepository> {
-            every { user } returns MutableLiveData(createUserModel())
+            every { user } returns mockk()
         }
         val mockObserver = mockk<Observer<AsyncState<Any, Any>>> {
             every { onChanged(any()) } just Runs

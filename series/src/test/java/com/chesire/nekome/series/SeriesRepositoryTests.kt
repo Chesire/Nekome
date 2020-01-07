@@ -1,7 +1,6 @@
 package com.chesire.nekome.series
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.lifecycle.Observer
 import com.chesire.nekome.account.UserRepository
 import com.chesire.nekome.core.flags.UserSeriesStatus
 import com.chesire.nekome.core.models.SeriesModel
@@ -14,7 +13,6 @@ import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.just
 import io.mockk.mockk
-import io.mockk.verify
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
@@ -27,25 +25,11 @@ class SeriesRepositoryTests {
     val rule = InstantTaskExecutorRule()
 
     @Test
-    fun `series observes all the dao series`() {
-        val mockDao = mockk<SeriesDao> {
-            every { series() } returns mockk { every { observeForever(any()) } just Runs }
-        }
-        val mockApi = mockk<LibraryApi>()
-        val mockUser = mockk<UserRepository>()
-
-        val classUnderTest = SeriesRepository(mockDao, mockApi, mockUser)
-        classUnderTest.series.observeForever(mockk<Observer<List<SeriesModel>>>())
-
-        verify { mockDao.series() }
-    }
-
-    @Test
     fun `addAnime onSuccess saves to dao`() = runBlocking {
         val expected = Resource.Success<SeriesModel>(mockk())
         val mockDao = mockk<SeriesDao> {
             coEvery { insert(any<SeriesModel>()) } just Runs
-            every { series() } returns mockk()
+            every { getSeries() } returns mockk()
         }
         val mockApi = mockk<LibraryApi> {
             coEvery { addAnime(any(), any(), any()) } returns expected
@@ -65,7 +49,7 @@ class SeriesRepositoryTests {
         val expected = Resource.Success<SeriesModel>(mockk())
         val mockDao = mockk<SeriesDao> {
             coEvery { insert(any<SeriesModel>()) } just Runs
-            every { series() } returns mockk()
+            every { getSeries() } returns mockk()
         }
         val mockApi = mockk<LibraryApi> {
             coEvery { addAnime(any(), any(), any()) } returns expected
@@ -85,7 +69,7 @@ class SeriesRepositoryTests {
         val expected = Resource.Error<SeriesModel>("Error")
         val mockDao = mockk<SeriesDao> {
             coEvery { insert(any<SeriesModel>()) } just Runs
-            every { series() } returns mockk()
+            every { getSeries() } returns mockk()
         }
         val mockApi = mockk<LibraryApi> {
             coEvery { addAnime(any(), any(), any()) } returns expected
@@ -105,7 +89,7 @@ class SeriesRepositoryTests {
         val expected = Resource.Success<SeriesModel>(mockk())
         val mockDao = mockk<SeriesDao> {
             coEvery { insert(any<SeriesModel>()) } just Runs
-            every { series() } returns mockk()
+            every { getSeries() } returns mockk()
         }
         val mockApi = mockk<LibraryApi> {
             coEvery { addManga(any(), any(), any()) } returns expected
@@ -125,7 +109,7 @@ class SeriesRepositoryTests {
         val expected = Resource.Success<SeriesModel>(mockk())
         val mockDao = mockk<SeriesDao> {
             coEvery { insert(any<SeriesModel>()) } just Runs
-            every { series() } returns mockk()
+            every { getSeries() } returns mockk()
         }
         val mockApi = mockk<LibraryApi> {
             coEvery { addManga(any(), any(), any()) } returns expected
@@ -145,7 +129,7 @@ class SeriesRepositoryTests {
         val expected = Resource.Error<SeriesModel>("Error")
         val mockDao = mockk<SeriesDao> {
             coEvery { insert(any<SeriesModel>()) } just Runs
-            every { series() } returns mockk()
+            every { getSeries() } returns mockk()
         }
         val mockApi = mockk<LibraryApi> {
             coEvery { addManga(any(), any(), any()) } returns expected
@@ -167,7 +151,7 @@ class SeriesRepositoryTests {
         }
         val mockDao = mockk<SeriesDao> {
             coEvery { delete(any()) } just Runs
-            every { series() } returns mockk()
+            every { getSeries() } returns mockk()
         }
         val mockApi = mockk<LibraryApi> {
             coEvery { delete(any()) } returns Resource.Success(Any())
@@ -187,7 +171,7 @@ class SeriesRepositoryTests {
         val expected = Resource.Success(Any())
         val mockDao = mockk<SeriesDao> {
             coEvery { delete(any()) } just Runs
-            every { series() } returns mockk()
+            every { getSeries() } returns mockk()
         }
         val mockApi = mockk<LibraryApi> {
             coEvery { delete(any()) } returns expected
@@ -209,7 +193,7 @@ class SeriesRepositoryTests {
         val expected = Resource.Error<Any>("")
         val mockDao = mockk<SeriesDao> {
             coEvery { delete(any()) } just Runs
-            every { series() } returns mockk()
+            every { getSeries() } returns mockk()
         }
         val mockApi = mockk<LibraryApi> {
             coEvery { delete(any()) } returns expected
@@ -231,7 +215,7 @@ class SeriesRepositoryTests {
         val response = Resource.Success(listOf<SeriesModel>())
         val mockDao = mockk<SeriesDao> {
             coEvery { insert(any<List<SeriesModel>>()) } just Runs
-            every { series() } returns mockk()
+            every { getSeries() } returns mockk()
         }
         val mockApi = mockk<LibraryApi> {
             coEvery { retrieveAnime(any()) } returns response
@@ -251,7 +235,7 @@ class SeriesRepositoryTests {
         val response = Resource.Error<List<SeriesModel>>("")
         val mockDao = mockk<SeriesDao> {
             coEvery { insert(any<List<SeriesModel>>()) } just Runs
-            every { series() } returns mockk()
+            every { getSeries() } returns mockk()
         }
         val mockApi = mockk<LibraryApi> {
             coEvery { retrieveAnime(any()) } returns response
@@ -271,7 +255,7 @@ class SeriesRepositoryTests {
         val response = Resource.Success(listOf<SeriesModel>())
         val mockDao = mockk<SeriesDao> {
             coEvery { insert(any<List<SeriesModel>>()) } just Runs
-            every { series() } returns mockk()
+            every { getSeries() } returns mockk()
         }
         val mockApi = mockk<LibraryApi> {
             coEvery { retrieveManga(any()) } returns response
@@ -291,7 +275,7 @@ class SeriesRepositoryTests {
         val response = Resource.Error<List<SeriesModel>>("")
         val mockDao = mockk<SeriesDao> {
             coEvery { insert(any<List<SeriesModel>>()) } just Runs
-            every { series() } returns mockk()
+            every { getSeries() } returns mockk()
         }
         val mockApi = mockk<LibraryApi> {
             coEvery { retrieveManga(any()) } returns response
@@ -311,7 +295,7 @@ class SeriesRepositoryTests {
         val expected = mockk<SeriesModel>()
         val mockDao = mockk<SeriesDao> {
             coEvery { update(expected) } just Runs
-            every { series() } returns mockk()
+            every { getSeries() } returns mockk()
         }
         val mockApi = mockk<LibraryApi> {
             coEvery {
@@ -331,7 +315,7 @@ class SeriesRepositoryTests {
     @Test
     fun `updateSeries on failure returns failure`() = runBlocking {
         val mockDao = mockk<SeriesDao> {
-            every { series() } returns mockk()
+            every { getSeries() } returns mockk()
         }
         val mockApi = mockk<LibraryApi> {
             coEvery {

@@ -29,7 +29,7 @@ class ResultsViewModelTests {
             } coAnswers {
                 Resource.Success(mockk())
             }
-            every { series } returns mockk()
+            every { getSeries() } returns mockk()
         }
         val mockCaster = mockk<AuthCaster>()
         val testObject = ResultsViewModel(mockRepo, mockCaster)
@@ -47,7 +47,7 @@ class ResultsViewModelTests {
             } coAnswers {
                 Resource.Success(mockk())
             }
-            every { series } returns mockk()
+            every { getSeries() } returns mockk()
         }
         val mockCaster = mockk<AuthCaster>()
         val testObject = ResultsViewModel(mockRepo, mockCaster)
@@ -65,7 +65,7 @@ class ResultsViewModelTests {
             } coAnswers {
                 Resource.Error("", Resource.Error.CouldNotRefresh)
             }
-            every { series } returns mockk()
+            every { getSeries() } returns mockk()
         }
         val mockCaster = mockk<AuthCaster> {
             every { issueRefreshingToken() } just Runs
@@ -85,7 +85,7 @@ class ResultsViewModelTests {
             } coAnswers {
                 Resource.Success(mockk())
             }
-            every { series } returns mockk()
+            every { getSeries() } returns mockk()
         }
         val mockCaster = mockk<AuthCaster>()
         val mockCallback = mockk<(Resource<SeriesModel>) -> Unit>()

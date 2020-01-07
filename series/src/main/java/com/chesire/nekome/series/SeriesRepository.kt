@@ -1,6 +1,5 @@
 package com.chesire.nekome.series
 
-import androidx.lifecycle.LiveData
 import com.chesire.nekome.account.UserRepository
 import com.chesire.nekome.core.flags.UserSeriesStatus
 import com.chesire.nekome.core.models.SeriesModel
@@ -20,7 +19,7 @@ class SeriesRepository(
     /**
      * Observable list of all the users series (Anime + Manga).
      */
-    val series: LiveData<List<SeriesModel>> = seriesDao.series()
+    fun getSeries() = seriesDao.getSeries()
 
     /**
      * Adds the anime series with id [seriesId] to the users tracked list.

@@ -3,6 +3,7 @@ package com.chesire.nekome.flow.login.syncing
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.chesire.nekome.account.UserRepository
 import com.chesire.nekome.core.extensions.postError
@@ -22,7 +23,7 @@ class SyncingViewModel @Inject constructor(
 ) : ViewModel() {
     private val _syncStatus = MutableLiveData<AsyncState<Any, Any>>()
     val syncStatus = _syncStatus
-    val avatarUrl = Transformations.map(userRepo.user) { it.avatar.largest?.url }
+    val avatarUrl = Transformations.map(userRepo.user.asLiveData()) { it.avatar.largest?.url }
 
     /**
      * Sets off the process for pulling down and storing the users series.
