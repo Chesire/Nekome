@@ -1,6 +1,7 @@
 package com.chesire.nekome.flow
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.chesire.nekome.LogoutHandler
 import com.chesire.nekome.account.UserRepository
@@ -24,7 +25,7 @@ class ActivityViewModel @Inject constructor(
     /**
      * The currently logged in user.
      */
-    val user = userRepository.user
+    val user = userRepository.user.asLiveData()
 
     /**
      * Checks if the user is currently logged in.

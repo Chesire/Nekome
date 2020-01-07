@@ -17,7 +17,7 @@ class ProfileViewModel @Inject constructor(
     seriesRepository: SeriesRepository,
     userRepository: UserRepository
 ) : ViewModel() {
-    val user = userRepository.user
+    val user = userRepository.user.asLiveData()
     val anime = Transformations.map(seriesRepository.getSeries().asLiveData()) {
         createSeriesProgress(it.filter { it.type == SeriesType.Anime })
     }

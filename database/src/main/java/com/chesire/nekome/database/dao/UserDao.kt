@@ -1,6 +1,5 @@
 package com.chesire.nekome.database.dao
 
-import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
@@ -8,6 +7,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.chesire.nekome.core.flags.Service
 import com.chesire.nekome.core.models.UserModel
+import kotlinx.coroutines.flow.Flow
 
 /**
  * Dao to interact with user data.
@@ -48,5 +48,5 @@ interface UserDao {
      * Provides an observable for the type of [service].
      */
     @Query("SELECT * FROM usermodel WHERE service == :service")
-    fun observe(service: Service): LiveData<UserModel>
+    fun getUser(service: Service): Flow<UserModel>
 }
