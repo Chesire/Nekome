@@ -38,4 +38,6 @@ dependencies {
     implementation project(path: ':core')
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "com.chesire.lintrules:lint-gradle:$lintrules_version"
+    implementation "com.chesire.lintrules:lint-xml:$lintrules_version"
 }
