@@ -5,6 +5,7 @@
 
     <dimen name="half_margin">8dp</dimen>
     <dimen name="full_margin">16dp</dimen>
+    <dimen name="double_margin">32dp</dimen>
 
     <dimen name="login_text_drawable_padding">8dp</dimen>
 
