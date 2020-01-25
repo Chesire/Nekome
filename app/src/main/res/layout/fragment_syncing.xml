@@ -19,16 +19,6 @@
         app:layout_constraintVertical_bias="0.2"
         tools:src="@drawable/ic_account_circle" />
 
-    <ProgressBar
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:indeterminateOnly="true"
-        android:indeterminateTint="@color/colorPrimaryDark"
-        app:layout_constraintBottom_toBottomOf="@id/syncingProfileImage"
-        app:layout_constraintEnd_toEndOf="@id/syncingProfileImage"
-        app:layout_constraintStart_toStartOf="@id/syncingProfileImage"
-        app:layout_constraintTop_toTopOf="@id/syncingProfileImage" />
-
     <TextView
         android:id="@+id/syncingSyncText"
         style="@style/TextAppearance.MaterialComponents.Headline5"
@@ -39,5 +29,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/syncingProfileImage" />
+
+    <ProgressBar
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/double_margin"
+        android:layout_marginTop="@dimen/full_margin"
+        android:layout_marginEnd="@dimen/double_margin"
+        android:indeterminateOnly="true"
+        android:indeterminateTint="@color/colorPrimaryDark"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/syncingSyncText" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -18,7 +18,7 @@
             android:id="@+id/detailsHeaderImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/half_margin"
+            android:layout_marginTop="@dimen/double_margin"
             android:contentDescription="@string/login_header_image_content_description"
             android:src="@drawable/ic_blackcat"
             app:layout_constraintEnd_toEndOf="parent"
@@ -105,7 +105,7 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/half_margin">
+            android:layout_margin="@dimen/full_margin">
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/detailsLoginButton"
