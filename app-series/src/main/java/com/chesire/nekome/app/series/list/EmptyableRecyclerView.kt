@@ -50,8 +50,8 @@ class EmptyableRecyclerView(
         adapter?.let { adap ->
             emptyView?.let { empty ->
                 val emptyViewVisible = adap.itemCount == 0
-                empty.visibleIf { emptyViewVisible }
-                visibleIf { !emptyViewVisible }
+                empty.visibleIf(animate = true) { emptyViewVisible }
+                visibleIf(animate = true) { !emptyViewVisible }
             }
         }
     }

@@ -36,11 +36,15 @@ fun View.show() {
 /**
  * Makes the [View] visible if the [callback] condition is met.
  */
-fun View.visibleIf(invisible: Boolean = false, callback: () -> Boolean) {
-    visibility = if (callback()) {
-        View.VISIBLE
+fun View.visibleIf(invisible: Boolean = false, animate: Boolean = false, callback: () -> Boolean) {
+    if (callback()) {
+        if (animate) show() else visibility = View.VISIBLE
     } else {
-        if (invisible) View.INVISIBLE else View.GONE
+        if (animate) {
+            hide(invisible)
+        } else {
+            visibility = if (invisible) View.INVISIBLE else View.GONE
+        }
     }
 }
 
