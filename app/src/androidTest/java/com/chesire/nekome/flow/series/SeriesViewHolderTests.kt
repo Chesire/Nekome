@@ -183,7 +183,7 @@ class SeriesViewHolderTests {
             seriesDao.insert(createSeriesModel(progress = 1, totalLength = 3))
         }
         coEvery {
-            library.update(any(), any(),any())
+            library.update(any(), any(), any())
         } coAnswers {
             Resource.Error("")
         }
@@ -209,7 +209,7 @@ class SeriesViewHolderTests {
             seriesDao.insert(createSeriesModel(progress = 1, totalLength = 3))
         }
         coEvery {
-            library.update(any(), any(),any())
+            library.update(any(), any(), any())
         } coAnswers {
             Resource.Success(createSeriesModel(progress = 2, totalLength = 3))
         }
