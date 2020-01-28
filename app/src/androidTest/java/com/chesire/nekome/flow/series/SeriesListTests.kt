@@ -8,6 +8,7 @@ import com.chesire.nekome.helpers.injector
 import com.chesire.nekome.helpers.login
 import com.chesire.nekome.kitsu.AuthProvider
 import com.schibsted.spain.barista.assertion.BaristaVisibilityAssertions.assertDisplayed
+import com.schibsted.spain.barista.interaction.BaristaSleepInteractions.sleep
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -39,6 +40,9 @@ class SeriesListTests {
     fun emptyListDisplaysEmptyView() {
         activity.launchActivity(null)
 
+        // Sleep for 500m to ensure that the empty list is displayed, not the best but will work for
+        // now
+        sleep(1000)
         assertDisplayed(R.id.fragmentSeriesListEmpty)
     }
 }
