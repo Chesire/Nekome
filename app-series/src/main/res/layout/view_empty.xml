@@ -7,6 +7,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="Test text to ensure this is working" />
+        android:layout_margin="@dimen/double_margin"
+        android:text="@string/series_list_empty"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1" />
 
 </FrameLayout>
