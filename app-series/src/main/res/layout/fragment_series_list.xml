@@ -16,11 +16,11 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         tools:listitem="@layout/adapter_item_series" />
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/fragmentSeriesListEmptyView"
+    <include
+        android:id="@+id/fragmentSeriesListEmpty"
+        layout="@layout/view_empty"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="Test text to ensure this is working" />
+        android:layout_gravity="center" />
 
 </FrameLayout>

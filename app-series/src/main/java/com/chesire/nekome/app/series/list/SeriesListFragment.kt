@@ -28,7 +28,7 @@ import com.chesire.nekome.core.viewmodel.ViewModelFactory
 import com.chesire.nekome.server.Resource
 import com.google.android.material.snackbar.Snackbar
 import dagger.android.support.DaggerFragment
-import kotlinx.android.synthetic.main.fragment_series_list.fragmentSeriesListEmptyView
+import kotlinx.android.synthetic.main.fragment_series_list.fragmentSeriesListEmpty
 import kotlinx.android.synthetic.main.fragment_series_list.fragmentSeriesListLayout
 import kotlinx.android.synthetic.main.fragment_series_list.fragmentSeriesListRecyclerView
 import timber.log.Timber
@@ -71,7 +71,7 @@ abstract class SeriesListFragment : DaggerFragment(), SeriesInteractionListener 
 
         seriesAdapter = SeriesAdapter(this, sharedPref)
         fragmentSeriesListRecyclerView.apply {
-            emptyView = fragmentSeriesListEmptyView
+            emptyView = fragmentSeriesListEmpty
             adapter = seriesAdapter
             layoutManager = LinearLayoutManager(requireContext())
             setHasFixedSize(true)
