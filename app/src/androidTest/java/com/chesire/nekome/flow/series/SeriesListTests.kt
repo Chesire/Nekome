@@ -10,7 +10,6 @@ import com.chesire.nekome.helpers.login
 import com.chesire.nekome.kitsu.AuthProvider
 import com.schibsted.spain.barista.assertion.BaristaVisibilityAssertions.assertDisplayed
 import org.junit.Before
-import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -40,10 +39,9 @@ class SeriesListTests {
     }
 
     @Test
-    @Ignore("Once empty view is merged in, this can be done")
     fun emptyListDisplaysEmptyView() {
         activity.launchActivity(null)
 
-        //assertDisplayed(R.id.emptyView)
+        assertDisplayed(R.id.fragmentSeriesListEmpty)
     }
 }
