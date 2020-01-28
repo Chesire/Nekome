@@ -28,6 +28,7 @@ import com.chesire.nekome.core.viewmodel.ViewModelFactory
 import com.chesire.nekome.server.Resource
 import com.google.android.material.snackbar.Snackbar
 import dagger.android.support.DaggerFragment
+import kotlinx.android.synthetic.main.fragment_series_list.fragmentSeriesListEmpty
 import kotlinx.android.synthetic.main.fragment_series_list.fragmentSeriesListLayout
 import kotlinx.android.synthetic.main.fragment_series_list.fragmentSeriesListRecyclerView
 import timber.log.Timber
@@ -83,9 +84,20 @@ abstract class SeriesListFragment : DaggerFragment(), SeriesInteractionListener 
                 val newList = series.filter { it.type == seriesType }
                 Timber.d("New list provided, new count [${newList.count()}]")
                 seriesAdapter.submitList(newList)
+                if (fragmentSeriesListRecyclerView.emptyView == null) {
+                    // Set the empty view here so it doesn't show on load before we get series
+                    Timber.d("Setting in the RecyclerViews empty view")
+                    fragmentSeriesListRecyclerView.emptyView = fragmentSeriesListEmpty
+                }
             }
         )
         observeSeriesDeletion()
+    }
+
+    override fun onDestroyView() {
+        // If this isn't removed here it can still display when we come back to this view
+        fragmentSeriesListRecyclerView.emptyView = null
+        super.onDestroyView()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
