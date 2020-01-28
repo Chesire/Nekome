@@ -9,13 +9,18 @@ import com.chesire.nekome.flow.Activity
 import com.chesire.nekome.helpers.injector
 import com.chesire.nekome.helpers.login
 import com.chesire.nekome.kitsu.AuthProvider
+import com.chesire.nekome.server.Resource
+import com.chesire.nekome.server.api.LibraryApi
 import com.chesire.nekome.testing.createSeriesModel
 import com.schibsted.spain.barista.assertion.BaristaListAssertions.assertDisplayedAtPosition
 import com.schibsted.spain.barista.assertion.BaristaListAssertions.assertListNotEmpty
 import com.schibsted.spain.barista.assertion.BaristaVisibilityAssertions.assertDisplayed
 import com.schibsted.spain.barista.assertion.BaristaVisibilityAssertions.assertNotDisplayed
+import com.schibsted.spain.barista.interaction.BaristaListInteractions.clickListItemChild
+import io.mockk.coEvery
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
+import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -30,6 +35,8 @@ class SeriesViewHolderTests {
     lateinit var authProvider: AuthProvider
     @Inject
     lateinit var seriesDao: SeriesDao
+    @Inject
+    lateinit var library: LibraryApi
 
     @Before
     fun setUp() {
@@ -167,5 +174,60 @@ class SeriesViewHolderTests {
 
         assertListNotEmpty(R.id.fragmentSeriesListRecyclerView)
         assertNotDisplayed(R.id.adapterItemSeriesPlusOne)
+    }
+
+    @Test
+    @Ignore("Leave for now as unsure how to ensure that the progress bar appears")
+    fun itemChangesToLoadingViewWhileUpdating() {
+        runBlocking {
+            seriesDao.insert(createSeriesModel(progress = 1, totalLength = 3))
+        }
+        coEvery {
+            library.update(any(), any(),any())
+        } coAnswers {
+            Resource.Error("")
+        }
+        activity.launchActivity(null)
+
+        assertNotDisplayed(R.id.adapterItemProgressBar)
+        clickListItemChild(R.id.fragmentSeriesListRecyclerView, 0, R.id.adapterItemSeriesPlusOne)
+
+        assertDisplayed(R.id.adapterItemProgressBar)
+    }
+
+    @Test
+    @Ignore("Leave for now as unsure how to ensure that the progress bar appears")
+    fun itemRevertsFromLoadingViewOnceUpdated() {
+        // See ignore
+    }
+
+    @Test
+    fun seriesProgressIncrementsByOneOnUpdate() {
+        val initialProgress = "1 / 3"
+        val expectedProgress = "2 / 3"
+        runBlocking {
+            seriesDao.insert(createSeriesModel(progress = 1, totalLength = 3))
+        }
+        coEvery {
+            library.update(any(), any(),any())
+        } coAnswers {
+            Resource.Success(createSeriesModel(progress = 2, totalLength = 3))
+        }
+        activity.launchActivity(null)
+
+        assertDisplayedAtPosition(
+            R.id.fragmentSeriesListRecyclerView,
+            0,
+            R.id.adapterItemSeriesProgress,
+            initialProgress
+        )
+        clickListItemChild(R.id.fragmentSeriesListRecyclerView, 0, R.id.adapterItemSeriesPlusOne)
+
+        assertDisplayedAtPosition(
+            R.id.fragmentSeriesListRecyclerView,
+            0,
+            R.id.adapterItemSeriesProgress,
+            expectedProgress
+        )
     }
 }
