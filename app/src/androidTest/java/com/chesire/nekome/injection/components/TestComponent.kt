@@ -6,6 +6,7 @@ import com.chesire.nekome.flow.ActivityTests
 import com.chesire.nekome.flow.login.DetailsTests
 import com.chesire.nekome.flow.login.SyncingTests
 import com.chesire.nekome.flow.series.SeriesListTests
+import com.chesire.nekome.flow.series.SeriesViewHolderTests
 import com.chesire.nekome.flow.settings.SettingsTests
 import com.chesire.nekome.harness.FakeAuthApi
 import com.chesire.nekome.harness.FakeLibraryApi
@@ -77,6 +78,7 @@ interface TestComponent : AndroidInjector<TestApplication> {
     fun inject(target: ActivityTests)
     fun inject(target: DetailsTests)
     fun inject(target: SeriesListTests)
+    fun inject(target: SeriesViewHolderTests)
     fun inject(target: SettingsTests)
     fun inject(target: SyncingTests)
 }
