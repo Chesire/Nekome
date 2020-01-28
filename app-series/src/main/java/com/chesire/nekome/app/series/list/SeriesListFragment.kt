@@ -71,7 +71,6 @@ abstract class SeriesListFragment : DaggerFragment(), SeriesInteractionListener 
 
         seriesAdapter = SeriesAdapter(this, sharedPref)
         fragmentSeriesListRecyclerView.apply {
-            emptyView = fragmentSeriesListEmpty
             adapter = seriesAdapter
             layoutManager = LinearLayoutManager(requireContext())
             setHasFixedSize(true)
@@ -85,9 +84,20 @@ abstract class SeriesListFragment : DaggerFragment(), SeriesInteractionListener 
                 val newList = series.filter { it.type == seriesType }
                 Timber.d("New list provided, new count [${newList.count()}]")
                 seriesAdapter.submitList(newList)
+                if (fragmentSeriesListRecyclerView.emptyView == null) {
+                    // Set the empty view here so it doesn't show on load before we get series
+                    Timber.d("Setting in the RecyclerViews empty view")
+                    fragmentSeriesListRecyclerView.emptyView = fragmentSeriesListEmpty
+                }
             }
         )
         observeSeriesDeletion()
+    }
+
+    override fun onDestroyView() {
+        // If this isn't removed here it can still display when we come back to this view
+        fragmentSeriesListRecyclerView.emptyView = null
+        super.onDestroyView()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
