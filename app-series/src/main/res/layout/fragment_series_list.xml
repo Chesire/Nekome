@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.recyclerview.widget.RecyclerView
+    <com.chesire.nekome.app.series.list.EmptyableRecyclerView
         android:id="@+id/fragmentSeriesListRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -15,5 +15,12 @@
         android:paddingBottom="4dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         tools:listitem="@layout/adapter_item_series" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/fragmentSeriesListEmptyView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Test text to ensure this is working" />
 
 </FrameLayout>
