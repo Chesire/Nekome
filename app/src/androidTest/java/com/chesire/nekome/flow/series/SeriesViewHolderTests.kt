@@ -123,6 +123,24 @@ class SeriesViewHolderTests {
     }
 
     @Test
+    fun itemWithMatchingDatesShowsJustOneDate() {
+        val expectedDate = "2020-01-31"
+
+        runBlocking {
+            seriesDao.insert(createSeriesModel(startDate = expectedDate, endDate = expectedDate))
+        }
+        activity.launchActivity(null)
+
+        assertListNotEmpty(R.id.fragmentSeriesListRecyclerView)
+        assertDisplayedAtPosition(
+            R.id.fragmentSeriesListRecyclerView,
+            0,
+            R.id.adapterItemSeriesDate,
+            expectedDate
+        )
+    }
+
+    @Test
     fun itemWithNoLengthShowsUnknown() {
         val expectedProgress = "3 / -"
 
