@@ -3,7 +3,6 @@ package com.chesire.nekome.flow.series
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.rule.ActivityTestRule
 import com.chesire.nekome.R
-import com.chesire.nekome.database.dao.SeriesDao
 import com.chesire.nekome.flow.Activity
 import com.chesire.nekome.helpers.injector
 import com.chesire.nekome.helpers.login
@@ -22,8 +21,6 @@ class SeriesListTests {
 
     @Inject
     lateinit var authProvider: AuthProvider
-    @Inject
-    lateinit var seriesDao: SeriesDao
 
     @Before
     fun setUp() {
