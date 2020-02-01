@@ -1,4 +1,4 @@
-package com.chesire.nekome.core
+package com.chesire.nekome.app.series
 
 import android.content.SharedPreferences
 import androidx.core.content.edit
@@ -66,13 +66,6 @@ class SharedPref(private val sharedPreferences: SharedPreferences) {
      */
     fun subscribeToChanges(changeListener: SharedPreferences.OnSharedPreferenceChangeListener) {
         sharedPreferences.registerOnSharedPreferenceChangeListener(changeListener)
-    }
-
-    /**
-     * Unsubscribe from changes in the [SharedPreferences].
-     */
-    fun unsubscribeFromChanges(changeListener: SharedPreferences.OnSharedPreferenceChangeListener) {
-        sharedPreferences.unregisterOnSharedPreferenceChangeListener(changeListener)
     }
 
     companion object {

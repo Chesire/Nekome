@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.chesire.nekome.app.series.R
-import com.chesire.nekome.core.SharedPref
+import com.chesire.nekome.app.series.SharedPref
 import com.chesire.nekome.core.flags.SortOption
 import com.chesire.nekome.core.models.SeriesModel
 import timber.log.Timber

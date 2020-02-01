@@ -1,4 +1,4 @@
-package com.chesire.nekome.core
+package com.chesire.nekome.app.series
 
 import android.content.SharedPreferences
 import com.chesire.nekome.core.flags.SortOption
@@ -113,18 +113,5 @@ class SharedPrefTests {
         classUnderTest.subscribeToChanges(listener)
 
         verify { mockPreferences.registerOnSharedPreferenceChangeListener(listener) }
-    }
-
-    @Test
-    fun `unsubscribeFromChanges removes change listener`() {
-        val listener = mockk<SharedPreferences.OnSharedPreferenceChangeListener>()
-        val mockPreferences = mockk<SharedPreferences> {
-            every { unregisterOnSharedPreferenceChangeListener(any()) } just Runs
-        }
-
-        val classUnderTest = SharedPref(mockPreferences)
-        classUnderTest.unsubscribeFromChanges(listener)
-
-        verify { mockPreferences.unregisterOnSharedPreferenceChangeListener(listener) }
     }
 }

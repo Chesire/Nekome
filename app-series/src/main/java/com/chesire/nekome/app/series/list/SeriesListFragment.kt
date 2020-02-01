@@ -15,12 +15,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.callbacks.onCancel
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
+import com.chesire.nekome.app.series.DialogHandler
 import com.chesire.nekome.app.series.R
+import com.chesire.nekome.app.series.SharedPref
 import com.chesire.nekome.app.series.detail.SeriesDetailSheetFragment
 import com.chesire.nekome.app.series.list.anime.AnimeFragment
 import com.chesire.nekome.app.series.list.manga.MangaFragment
-import com.chesire.nekome.core.DialogHandler
-import com.chesire.nekome.core.SharedPref
 import com.chesire.nekome.core.flags.AsyncState
 import com.chesire.nekome.core.flags.SeriesType
 import com.chesire.nekome.core.models.SeriesModel
