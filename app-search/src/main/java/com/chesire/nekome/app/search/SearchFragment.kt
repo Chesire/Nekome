@@ -34,6 +34,8 @@ class SearchFragment : DaggerFragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
     private val viewModel by viewModels<SearchViewModel> { viewModelFactory }
+    @Inject
+    lateinit var searchPreferences: SearchPreferences
     private val seriesType: SeriesType
         get() = when (seriesDetailStatusGroup.checkedChipId) {
             R.id.searchChipAnime -> SeriesType.Anime
@@ -49,6 +51,7 @@ class SearchFragment : DaggerFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setInitialSeriesType()
         searchConfirmButton.setOnClickListener { submitSearch() }
         searchSeriesText.addTextChangedListener {
             searchSeriesLayout.error = null
@@ -56,8 +59,14 @@ class SearchFragment : DaggerFragment() {
         observeSearchResults()
     }
 
+    private fun setInitialSeriesType() {
+        val lastType = searchPreferences.lastSearchType
+        seriesDetailStatusGroup.check(if (lastType == 0) R.id.searchChipAnime else lastType)
+    }
+
     private fun submitSearch() {
         activity?.hideSystemKeyboard()
+        searchPreferences.lastSearchType = seriesDetailStatusGroup.checkedChipId
         viewModel.executeSearch(
             SearchData(
                 searchSeriesText.text.toString(),

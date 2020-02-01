@@ -1,0 +1,22 @@
+package com.chesire.nekome.app.search
+
+import android.content.SharedPreferences
+import androidx.core.content.edit
+import javax.inject.Inject
+
+/**
+ * Wrapper around [SharedPreferences] to store settings or items related to Search.
+ */
+@Suppress("UseDataClass")
+class SearchPreferences @Inject constructor(private val sharedPreferences: SharedPreferences) {
+    /**
+     * The last type that was selected on the Search screen.
+     */
+    var lastSearchType: Int
+        get() = sharedPreferences.getInt(LAST_SEARCH_TYPE, 0)
+        set(value) = sharedPreferences.edit { putInt(LAST_SEARCH_TYPE, value) }
+
+    companion object {
+        private const val LAST_SEARCH_TYPE = "preference.last_search_type"
+    }
+}
