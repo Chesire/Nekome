@@ -1,5 +1,6 @@
 package com.chesire.nekome.core.flags
 
+import android.content.Context
 import androidx.annotation.StringRes
 import com.chesire.nekome.core.R
 
@@ -12,5 +13,15 @@ enum class UserSeriesStatus(val index: Int, @StringRes val stringId: Int) {
     Completed(1, R.string.filter_by_completed),
     OnHold(2, R.string.filter_by_on_hold),
     Dropped(3, R.string.filter_by_dropped),
-    Planned(4, R.string.filter_by_planned)
+    Planned(4, R.string.filter_by_planned);
+
+    companion object {
+        /**
+         * Gets a map of [index] to the string acquired from the [stringId].
+         * This call will ignore the [Unknown] value as it should not be displayed to the user.
+         */
+        fun getValueMap(context: Context) = values()
+            .filterNot { it == Unknown }
+            .associate { it.index to context.getString(it.stringId) }
+    }
 }
