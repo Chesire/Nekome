@@ -1,4 +1,4 @@
-package com.chesire.nekome.app.series.list
+package com.chesire.nekome.app.series.list.view
 
 import android.content.Context
 import android.util.AttributeSet

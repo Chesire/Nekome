@@ -1,4 +1,4 @@
-package com.chesire.nekome.app.series.list
+package com.chesire.nekome.app.series.list.view
 
 import android.content.SharedPreferences
 import android.view.LayoutInflater
@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.chesire.nekome.app.series.R
 import com.chesire.nekome.app.series.SeriesPreferences
+import com.chesire.nekome.app.series.list.SeriesInteractionListener
 import com.chesire.nekome.core.flags.SortOption
 import com.chesire.nekome.core.models.SeriesModel
 import timber.log.Timber

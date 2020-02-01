@@ -1,4 +1,4 @@
-package com.chesire.nekome.app.series.list
+package com.chesire.nekome.app.series.list.view
 
 import android.graphics.Canvas
 import androidx.recyclerview.widget.ItemTouchHelper

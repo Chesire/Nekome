@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.chesire.nekome.app.series.list.EmptyableRecyclerView
+    <com.chesire.nekome.app.series.list.view.EmptyableRecyclerView
         android:id="@+id/fragmentSeriesListRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
