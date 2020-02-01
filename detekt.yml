@@ -398,6 +398,8 @@ style:
     active: true
   EqualsOnSignatureLine:
     active: true
+  ExplicitCollectionElementAccessMethod:
+    active: true
   ExplicitItLambdaParameter:
     active: true
   ExpressionBodySyntax:
