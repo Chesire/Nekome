@@ -12,20 +12,20 @@ import org.junit.Test
 
 private const val defaultFilter = """{"0":true,"1":false,"2":false,"3":false,"4":false}"""
 
-class SharedPrefTests {
+class SeriesPreferencesTests {
 
     @Test
     fun `sortPreference returns expected SortOption`() {
         val mockPreferences = mockk<SharedPreferences> {
             every {
                 getInt(
-                    SharedPref.SORT_PREFERENCE,
+                    SeriesPreferences.SORT_PREFERENCE,
                     SortOption.Default.index
                 )
             } returns SortOption.Title.index
         }
 
-        val classUnderTest = SharedPref(mockPreferences)
+        val classUnderTest = SeriesPreferences(mockPreferences)
 
         assertEquals(SortOption.Title, classUnderTest.sortPreference)
     }
@@ -35,7 +35,7 @@ class SharedPrefTests {
         val mockEditor = mockk<SharedPreferences.Editor> {
             every {
                 putInt(
-                    SharedPref.SORT_PREFERENCE,
+                    SeriesPreferences.SORT_PREFERENCE,
                     SortOption.EndDate.index
                 )
             } returns this
@@ -45,12 +45,12 @@ class SharedPrefTests {
             every { edit() } returns mockEditor
         }
 
-        val classUnderTest = SharedPref(mockPreferences)
+        val classUnderTest = SeriesPreferences(mockPreferences)
         classUnderTest.sortPreference = SortOption.EndDate
 
         verify {
             mockEditor.putInt(
-                SharedPref.SORT_PREFERENCE,
+                SeriesPreferences.SORT_PREFERENCE,
                 SortOption.EndDate.index
             )
         }
@@ -63,13 +63,13 @@ class SharedPrefTests {
         val mockPreferences = mockk<SharedPreferences> {
             every {
                 getString(
-                    SharedPref.FILTER_PREFERENCE,
+                    SeriesPreferences.FILTER_PREFERENCE,
                     defaultFilter
                 )
             } returns expectedJson
         }
 
-        val classUnderTest = SharedPref(mockPreferences)
+        val classUnderTest = SeriesPreferences(mockPreferences)
 
         assertEquals(expectedMap, classUnderTest.filterPreference)
     }
@@ -81,7 +81,7 @@ class SharedPrefTests {
         val mockEditor = mockk<SharedPreferences.Editor> {
             every {
                 putString(
-                    SharedPref.FILTER_PREFERENCE,
+                    SeriesPreferences.FILTER_PREFERENCE,
                     expectedJson
                 )
             } returns this
@@ -91,12 +91,12 @@ class SharedPrefTests {
             every { edit() } returns mockEditor
         }
 
-        val classUnderTest = SharedPref(mockPreferences)
+        val classUnderTest = SeriesPreferences(mockPreferences)
         classUnderTest.filterPreference = expectedMap
 
         verify {
             mockEditor.putString(
-                SharedPref.FILTER_PREFERENCE,
+                SeriesPreferences.FILTER_PREFERENCE,
                 expectedJson
             )
         }
@@ -109,7 +109,7 @@ class SharedPrefTests {
             every { registerOnSharedPreferenceChangeListener(any()) } just Runs
         }
 
-        val classUnderTest = SharedPref(mockPreferences)
+        val classUnderTest = SeriesPreferences(mockPreferences)
         classUnderTest.subscribeToChanges(listener)
 
         verify { mockPreferences.registerOnSharedPreferenceChangeListener(listener) }

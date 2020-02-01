@@ -10,7 +10,7 @@ import com.squareup.moshi.Types
 /**
  * Provides a wrapper around the [SharedPreferences] to aid with getting and setting values into it.
  */
-class SharedPref(private val sharedPreferences: SharedPreferences) {
+class SeriesPreferences(private val sharedPreferences: SharedPreferences) {
     private val filterAdapter by lazy {
         Moshi.Builder()
             .build()

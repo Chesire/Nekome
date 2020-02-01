@@ -3,7 +3,7 @@ package com.chesire.nekome.injection.modules
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.preference.PreferenceManager
-import com.chesire.nekome.app.series.SharedPref
+import com.chesire.nekome.app.series.SeriesPreferences
 import dagger.Module
 import dagger.Provides
 import dagger.Reusable
@@ -23,8 +23,8 @@ object AppModule {
         PreferenceManager.getDefaultSharedPreferences(context)
 
     /**
-     * Provides the [SharedPref] wrapper around [SharedPreferences].
+     * Provides the [SeriesPreferences] wrapper around [SharedPreferences].
      */
     @Provides
-    fun provideSharedPref(sharedPreferences: SharedPreferences) = SharedPref(sharedPreferences)
+    fun provideSharedPref(sharedPreferences: SharedPreferences) = SeriesPreferences(sharedPreferences)
 }
