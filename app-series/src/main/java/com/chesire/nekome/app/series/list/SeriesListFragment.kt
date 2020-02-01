@@ -16,11 +16,12 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.callbacks.onCancel
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
 import com.chesire.nekome.app.series.R
+import com.chesire.nekome.app.series.SeriesPreferences
 import com.chesire.nekome.app.series.detail.SeriesDetailSheetFragment
 import com.chesire.nekome.app.series.list.anime.AnimeFragment
 import com.chesire.nekome.app.series.list.manga.MangaFragment
-import com.chesire.nekome.core.DialogHandler
-import com.chesire.nekome.core.SharedPref
+import com.chesire.nekome.app.series.list.view.SeriesAdapter
+import com.chesire.nekome.app.series.list.view.SwipeToDelete
 import com.chesire.nekome.core.flags.AsyncState
 import com.chesire.nekome.core.flags.SeriesType
 import com.chesire.nekome.core.models.SeriesModel
@@ -44,7 +45,7 @@ abstract class SeriesListFragment : DaggerFragment(), SeriesInteractionListener 
     @Inject
     lateinit var dialogHandler: DialogHandler
     @Inject
-    lateinit var sharedPref: SharedPref
+    lateinit var seriesPreferences: SeriesPreferences
 
     /**
      * Flag for which type of series should be displayed in this fragment instance.
@@ -69,7 +70,7 @@ abstract class SeriesListFragment : DaggerFragment(), SeriesInteractionListener 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        seriesAdapter = SeriesAdapter(this, sharedPref)
+        seriesAdapter = SeriesAdapter(this, seriesPreferences)
         fragmentSeriesListRecyclerView.apply {
             adapter = seriesAdapter
             layoutManager = LinearLayoutManager(requireContext())

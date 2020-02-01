@@ -1,4 +1,4 @@
-package com.chesire.nekome.app.series.list
+package com.chesire.nekome.app.series.list.view
 
 import android.content.SharedPreferences
 import android.view.LayoutInflater
@@ -6,7 +6,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.chesire.nekome.app.series.R
-import com.chesire.nekome.core.SharedPref
+import com.chesire.nekome.app.series.SeriesPreferences
+import com.chesire.nekome.app.series.list.SeriesInteractionListener
 import com.chesire.nekome.core.flags.SortOption
 import com.chesire.nekome.core.models.SeriesModel
 import timber.log.Timber
@@ -16,12 +17,12 @@ import timber.log.Timber
  */
 class SeriesAdapter(
     private val listener: SeriesInteractionListener,
-    private val sharedPref: SharedPref
+    private val seriesPreferences: SeriesPreferences
 ) : ListAdapter<SeriesModel, SeriesViewHolder>(SeriesModel.DiffCallback()),
     SharedPreferences.OnSharedPreferenceChangeListener {
 
     init {
-        sharedPref.subscribeToChanges(this)
+        seriesPreferences.subscribeToChanges(this)
     }
 
     private var container: RecyclerView? = null
@@ -77,16 +78,18 @@ class SeriesAdapter(
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
         when (key) {
-            SharedPref.FILTER_PREFERENCE, SharedPref.SORT_PREFERENCE -> submitList(completeList)
+            SeriesPreferences.FILTER_PREFERENCE, SeriesPreferences.SORT_PREFERENCE -> submitList(
+                completeList
+            )
         }
     }
 
     private fun executeFilter(items: List<SeriesModel>) = items.filter {
-        sharedPref.filterPreference[it.userSeriesStatus.index] ?: false
+        seriesPreferences.filterPreference[it.userSeriesStatus.index] ?: false
     }
 
     private fun executeSort(items: List<SeriesModel>) = items.sortedWith(
-        when (sharedPref.sortPreference) {
+        when (seriesPreferences.sortPreference) {
             SortOption.Default -> compareBy { it.userId }
             SortOption.Title -> compareBy { it.title }
             SortOption.StartDate -> compareBy { it.startDate }

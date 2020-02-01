@@ -1,4 +1,4 @@
-package com.chesire.nekome.core
+package com.chesire.nekome.app.series.list
 
 import android.content.Context
 import androidx.lifecycle.LifecycleOwner
@@ -6,6 +6,8 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
 import com.afollestad.materialdialogs.list.listItems
 import com.afollestad.materialdialogs.list.listItemsMultiChoice
+import com.chesire.nekome.app.series.SeriesPreferences
+import com.chesire.nekome.core.R
 import com.chesire.nekome.core.flags.SortOption
 import com.chesire.nekome.core.flags.UserSeriesStatus
 import javax.inject.Inject
@@ -13,7 +15,7 @@ import javax.inject.Inject
 /**
  * Handler to aid with displaying and interacting with Dialogs.
  */
-class DialogHandler @Inject constructor(private val pref: SharedPref) {
+class DialogHandler @Inject constructor(private val preferences: SeriesPreferences) {
     /**
      * Shows the filter dialog, allowing the user to choose how to filter their series.
      */
@@ -27,9 +29,9 @@ class DialogHandler @Inject constructor(private val pref: SharedPref) {
             title(R.string.filter_dialog_title)
             listItemsMultiChoice(
                 items = filterOptionMap.keys.toList(),
-                initialSelection = pref.filterPreference.filter { it.value }.keys.toIntArray()
+                initialSelection = preferences.filterPreference.filter { it.value }.keys.toIntArray()
             ) { _, _, items: List<CharSequence> ->
-                pref.filterPreference = createFilterMap(
+                preferences.filterPreference = createFilterMap(
                     filterOptionMap,
                     items.map { it.toString() }
                 )
@@ -61,7 +63,7 @@ class DialogHandler @Inject constructor(private val pref: SharedPref) {
             title(R.string.sort_dialog_title)
             listItems(items = sortOptionMap.keys.toList()) { _, _, text ->
                 sortOptionMap[text]?.let {
-                    pref.sortPreference = SortOption.forIndex(it)
+                    preferences.sortPreference = SortOption.forIndex(it)
                 }
             }
             lifecycleOwner(lifecycleOwner)

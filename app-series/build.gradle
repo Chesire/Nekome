@@ -58,6 +58,7 @@ dependencies {
     implementation "com.google.dagger:dagger-android-support:$dagger_version"
     implementation "com.google.android.material:material:$material_version"
     implementation "com.jakewharton.timber:timber:$timber_version"
+    implementation "com.squareup.moshi:moshi:$moshi_version"
 
     testImplementation project(path: ':testing')
     testImplementation 'androidx.arch.core:core-testing:2.1.0'

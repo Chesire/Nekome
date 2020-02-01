@@ -1,9 +1,10 @@
-package com.chesire.nekome.app.series.list
+package com.chesire.nekome.app.series.list.view
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.chesire.nekome.app.series.R
+import com.chesire.nekome.app.series.list.SeriesInteractionListener
 import com.chesire.nekome.core.extensions.hide
 import com.chesire.nekome.core.extensions.show
 import com.chesire.nekome.core.extensions.toAlpha
