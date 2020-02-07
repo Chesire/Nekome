@@ -1,9 +1,6 @@
 package com.chesire.nekome.core.flags
 
 import android.content.Context
-import android.view.ViewDebug
-import androidx.annotation.IntDef
-import androidx.annotation.IntRange
 import androidx.annotation.StringRes
 import com.chesire.nekome.core.R
 

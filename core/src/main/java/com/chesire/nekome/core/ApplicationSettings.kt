@@ -11,6 +11,7 @@ import javax.inject.Inject
  * Interact with the settings of the application, provides methods to get the user chosen values.
  * These values must be set from the settings fragment within the app-Settings module.
  */
+@Suppress("UseDataClass")
 @Reusable
 class ApplicationSettings @Inject constructor(
     context: Context,
