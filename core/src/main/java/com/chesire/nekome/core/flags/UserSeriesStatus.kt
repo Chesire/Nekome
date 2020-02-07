@@ -1,6 +1,9 @@
 package com.chesire.nekome.core.flags
 
 import android.content.Context
+import android.view.ViewDebug
+import androidx.annotation.IntDef
+import androidx.annotation.IntRange
 import androidx.annotation.StringRes
 import com.chesire.nekome.core.R
 
@@ -23,5 +26,16 @@ enum class UserSeriesStatus(val index: Int, @StringRes val stringId: Int) {
         fun getValueMap(context: Context) = values()
             .filterNot { it == Unknown }
             .associate { it.index to context.getString(it.stringId) }
+
+        /**
+         * Gets the [UserSeriesStatus] from a given [index], the [index] should be the index field
+         * in the the enum class, but as a string. If this is null or cannot be found then [Unknown]
+         * will be returned.
+         */
+        fun getFromIndex(index: String): UserSeriesStatus {
+            return index.toIntOrNull()?.let { intIndex ->
+                values().find { it.index == intIndex } ?: Unknown
+            } ?: Unknown
+        }
     }
 }
