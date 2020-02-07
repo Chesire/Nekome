@@ -2,6 +2,7 @@ package com.chesire.nekome.core
 
 import android.content.Context
 import android.content.SharedPreferences
+import androidx.core.content.edit
 import com.chesire.nekome.core.flags.UserSeriesStatus
 import dagger.Reusable
 import javax.inject.Inject
@@ -22,8 +23,8 @@ class ApplicationSettings @Inject constructor(
      * Gets the default [UserSeriesStatus] a series should start in when a user begins tracking it.
      */
     val defaultSeriesState: UserSeriesStatus
-        get() = UserSeriesStatus.getFromIndex(
-            requireNotNull(
+        get() {
+            val index = requireNotNull(
                 preferences.getString(
                     _defaultSeriesState,
                     UserSeriesStatus.Current.index.toString()
@@ -31,5 +32,19 @@ class ApplicationSettings @Inject constructor(
             ) {
                 "Preferences defaultSeriesState returned null, with supplied default value"
             }
-        )
+            var status = UserSeriesStatus.getFromIndex(index)
+            if (status == UserSeriesStatus.Unknown) {
+                // Something has gone wrong, this shouldn't be possible.
+                // Reset the state of the setting and return "Current".
+                preferences.edit {
+                    putString(
+                        _defaultSeriesState,
+                        UserSeriesStatus.Current.index.toString()
+                    )
+                }
+                status = UserSeriesStatus.Current
+            }
+
+            return status
+        }
 }
