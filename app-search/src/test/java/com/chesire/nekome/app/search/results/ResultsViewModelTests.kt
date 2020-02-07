@@ -1,7 +1,9 @@
 package com.chesire.nekome.app.search.results
 
+import com.chesire.nekome.core.ApplicationSettings
 import com.chesire.nekome.core.AuthCaster
 import com.chesire.nekome.core.flags.SeriesType
+import com.chesire.nekome.core.flags.UserSeriesStatus
 import com.chesire.nekome.core.models.SeriesModel
 import com.chesire.nekome.series.SeriesRepository
 import com.chesire.nekome.server.Resource
@@ -32,7 +34,10 @@ class ResultsViewModelTests {
             every { getSeries() } returns mockk()
         }
         val mockCaster = mockk<AuthCaster>()
-        val testObject = ResultsViewModel(mockRepo, mockCaster)
+        val mockSettings = mockk<ApplicationSettings> {
+            every { defaultSeriesState } returns UserSeriesStatus.Current
+        }
+        val testObject = ResultsViewModel(mockRepo, mockCaster, mockSettings)
 
         testObject.trackNewSeries(createSeriesModel(seriesType = SeriesType.Anime)) {}
 
@@ -50,7 +55,10 @@ class ResultsViewModelTests {
             every { getSeries() } returns mockk()
         }
         val mockCaster = mockk<AuthCaster>()
-        val testObject = ResultsViewModel(mockRepo, mockCaster)
+        val mockSettings = mockk<ApplicationSettings> {
+            every { defaultSeriesState } returns UserSeriesStatus.Current
+        }
+        val testObject = ResultsViewModel(mockRepo, mockCaster, mockSettings)
 
         testObject.trackNewSeries(createSeriesModel(seriesType = SeriesType.Manga)) {}
 
@@ -70,7 +78,10 @@ class ResultsViewModelTests {
         val mockCaster = mockk<AuthCaster> {
             every { issueRefreshingToken() } just Runs
         }
-        val testObject = ResultsViewModel(mockRepo, mockCaster)
+        val mockSettings = mockk<ApplicationSettings> {
+            every { defaultSeriesState } returns UserSeriesStatus.Current
+        }
+        val testObject = ResultsViewModel(mockRepo, mockCaster, mockSettings)
 
         testObject.trackNewSeries(createSeriesModel(seriesType = SeriesType.Manga)) {}
 
@@ -89,7 +100,10 @@ class ResultsViewModelTests {
         }
         val mockCaster = mockk<AuthCaster>()
         val mockCallback = mockk<(Resource<SeriesModel>) -> Unit>()
-        val testObject = ResultsViewModel(mockRepo, mockCaster)
+        val mockSettings = mockk<ApplicationSettings> {
+            every { defaultSeriesState } returns UserSeriesStatus.Current
+        }
+        val testObject = ResultsViewModel(mockRepo, mockCaster, mockSettings)
 
         testObject.trackNewSeries(createSeriesModel(seriesType = SeriesType.Anime), mockCallback)
 
