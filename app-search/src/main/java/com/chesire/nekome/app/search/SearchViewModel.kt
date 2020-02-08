@@ -44,22 +44,26 @@ class SearchViewModel @Inject constructor(
         _searchResult.postLoading()
 
         viewModelScope.launch {
-            when (val result = when (model.seriesType) {
+            val response = when (model.seriesType) {
                 SeriesType.Anime -> searchApi.searchForAnime(model.title)
                 SeriesType.Manga -> searchApi.searchForManga(model.title)
                 else -> error("Unexpected series type provided")
-            }) {
-                is Resource.Success -> if (result.data.isEmpty()) {
-                    _searchResult.postError(SearchError.NoSeriesFound)
-                } else {
-                    _searchResult.postSuccess(result.data)
-                }
-                is Resource.Error -> if (result.code == Resource.Error.CouldNotRefresh) {
-                    authCaster.issueRefreshingToken()
-                } else {
-                    _searchResult.postError(SearchError.GenericError)
-                }
             }
+
+            parseSearchResponse(response)
+        }
+    }
+
+    private fun parseSearchResponse(response: Resource<List<SeriesModel>>) = when (response) {
+        is Resource.Success -> if (response.data.isEmpty()) {
+            _searchResult.postError(SearchError.NoSeriesFound)
+        } else {
+            _searchResult.postSuccess(response.data)
+        }
+        is Resource.Error -> if (response.code == Resource.Error.CouldNotRefresh) {
+            authCaster.issueRefreshingToken()
+        } else {
+            _searchResult.postError(SearchError.GenericError)
         }
     }
 }
