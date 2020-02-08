@@ -20,15 +20,12 @@ class DialogHandler @Inject constructor(private val preferences: SeriesPreferenc
      * Shows the filter dialog, allowing the user to choose how to filter their series.
      */
     fun showFilterDialog(context: Context, lifecycleOwner: LifecycleOwner) {
-        val filterOptionMap = UserSeriesStatus
-            .values()
-            .filterNot { it == UserSeriesStatus.Unknown }
-            .associate { context.getString(it.stringId) to it.index }
+        val filterOptionMap = UserSeriesStatus.getValueMap(context)
 
         MaterialDialog(context).show {
             title(R.string.filter_dialog_title)
             listItemsMultiChoice(
-                items = filterOptionMap.keys.toList(),
+                items = filterOptionMap.values.toList(),
                 initialSelection = preferences.filterPreference.filter { it.value }.keys.toIntArray()
             ) { _, _, items: List<CharSequence> ->
                 preferences.filterPreference = createFilterMap(
@@ -43,11 +40,11 @@ class DialogHandler @Inject constructor(private val preferences: SeriesPreferenc
     }
 
     private fun createFilterMap(
-        allItems: Map<String, Int>,
+        allItems: Map<Int, String>,
         chosenItems: List<String>
     ) = mutableMapOf<Int, Boolean>().apply {
         allItems.forEach { entry ->
-            this[entry.value] = chosenItems.contains(entry.key)
+            this[entry.key] = chosenItems.contains(entry.value)
         }
     }
 

@@ -3,9 +3,9 @@ package com.chesire.nekome.app.search.results
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
+import com.chesire.nekome.core.ApplicationSettings
 import com.chesire.nekome.core.AuthCaster
 import com.chesire.nekome.core.flags.SeriesType
-import com.chesire.nekome.core.flags.UserSeriesStatus
 import com.chesire.nekome.core.models.SeriesModel
 import com.chesire.nekome.series.SeriesRepository
 import com.chesire.nekome.server.Resource
@@ -17,7 +17,8 @@ import javax.inject.Inject
  */
 class ResultsViewModel @Inject constructor(
     private val seriesRepo: SeriesRepository,
-    private val authCaster: AuthCaster
+    private val authCaster: AuthCaster,
+    private val settings: ApplicationSettings
 ) : ViewModel() {
 
     val series = seriesRepo.getSeries().asLiveData()
@@ -32,11 +33,11 @@ class ResultsViewModel @Inject constructor(
         val response = when (newSeries.type) {
             SeriesType.Anime -> seriesRepo.addAnime(
                 newSeries.id,
-                UserSeriesStatus.Current
+                settings.defaultSeriesState
             )
             SeriesType.Manga -> seriesRepo.addManga(
                 newSeries.id,
-                UserSeriesStatus.Current
+                settings.defaultSeriesState
             )
             else -> error("Unknown SeriesType: ${newSeries.type}")
         }
