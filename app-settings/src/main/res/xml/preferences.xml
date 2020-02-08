@@ -3,8 +3,8 @@
     <PreferenceCategory android:title="@string/settings_general_category">
         <ListPreference
             android:key="@string/key_default_series_state"
-            android:summary="@string/settings_default_series_state_summary"
-            android:title="@string/settings_default_series_state_title" />
+            android:summary="@string/settings_default_series_status_summary"
+            android:title="@string/settings_default_series_status_title" />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/settings_about_category">
