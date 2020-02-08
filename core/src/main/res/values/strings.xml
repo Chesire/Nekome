@@ -90,8 +90,8 @@
     <string name="settings_privacy_policy">Privacy Policy</string>
     <string name="settings_github">GitHub</string>
     <string name="settings_github_url">https://github.com/Chesire/Nekome</string>
-    <string name="settings_default_series_state_title">Default Series State</string>
-    <string name="settings_default_series_state_summary">Default state a series will be in when it is tracked</string>
+    <string name="settings_default_series_state_title">Default Series Status</string>
+    <string name="settings_default_series_state_summary">Status a newly tracked series will start in</string>
 
     <string name="discover_trending_anime">Trending Anime</string>
     <string name="discover_trending_manga">Trending Manga</string>
