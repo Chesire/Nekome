@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.core.content.edit
 import com.chesire.nekome.core.flags.UserSeriesStatus
-import dagger.Reusable
 import javax.inject.Inject
 
 /**
@@ -12,7 +11,6 @@ import javax.inject.Inject
  * These values must be set from the settings fragment within the app-Settings module.
  */
 @Suppress("UseDataClass")
-@Reusable
 class ApplicationSettings @Inject constructor(
     context: Context,
     private val preferences: SharedPreferences
