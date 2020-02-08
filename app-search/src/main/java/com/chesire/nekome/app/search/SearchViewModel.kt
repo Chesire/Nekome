@@ -49,18 +49,15 @@ class SearchViewModel @Inject constructor(
                 SeriesType.Manga -> searchApi.searchForManga(model.title)
                 else -> error("Unexpected series type provided")
             }) {
-                is Resource.Success ->
-                    if (result.data.isEmpty()) {
-                        _searchResult.postError(SearchError.NoSeriesFound)
-                    } else {
-                        _searchResult.postSuccess(result.data)
-                    }
-                is Resource.Error -> {
-                    if (result.code == Resource.Error.CouldNotRefresh) {
-                        authCaster.issueRefreshingToken()
-                    } else {
-                        _searchResult.postError(SearchError.GenericError)
-                    }
+                is Resource.Success -> if (result.data.isEmpty()) {
+                    _searchResult.postError(SearchError.NoSeriesFound)
+                } else {
+                    _searchResult.postSuccess(result.data)
+                }
+                is Resource.Error -> if (result.code == Resource.Error.CouldNotRefresh) {
+                    authCaster.issueRefreshingToken()
+                } else {
+                    _searchResult.postError(SearchError.GenericError)
                 }
             }
         }
