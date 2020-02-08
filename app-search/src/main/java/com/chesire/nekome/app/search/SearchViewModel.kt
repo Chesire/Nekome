@@ -3,6 +3,7 @@ package com.chesire.nekome.app.search
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.chesire.nekome.core.AuthCaster
 import com.chesire.nekome.core.extensions.postError
 import com.chesire.nekome.core.extensions.postLoading
 import com.chesire.nekome.core.extensions.postSuccess
@@ -18,7 +19,11 @@ import javax.inject.Inject
 /**
  * ViewModel to aid with searching for new series for a user to follow.
  */
-class SearchViewModel @Inject constructor(private val searchApi: SearchApi) : ViewModel() {
+class SearchViewModel @Inject constructor(
+    private val searchApi: SearchApi,
+    private val authCaster: AuthCaster
+) : ViewModel() {
+
     private val _searchResult = LiveEvent<AsyncState<List<SeriesModel>, SearchError>>()
     val searchResult: LiveData<AsyncState<List<SeriesModel>, SearchError>> = _searchResult
 
@@ -50,7 +55,13 @@ class SearchViewModel @Inject constructor(private val searchApi: SearchApi) : Vi
                     } else {
                         _searchResult.postSuccess(result.data)
                     }
-                is Resource.Error -> _searchResult.postError(SearchError.GenericError)
+                is Resource.Error -> {
+                    if (result.code == Resource.Error.CouldNotRefresh) {
+                        authCaster.issueRefreshingToken()
+                    } else {
+                        _searchResult.postError(SearchError.GenericError)
+                    }
+                }
             }
         }
     }

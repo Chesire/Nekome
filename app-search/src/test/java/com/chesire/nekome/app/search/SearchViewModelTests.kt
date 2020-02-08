@@ -2,6 +2,7 @@ package com.chesire.nekome.app.search
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
+import com.chesire.nekome.core.AuthCaster
 import com.chesire.nekome.core.flags.AsyncState
 import com.chesire.nekome.core.flags.SeriesType
 import com.chesire.nekome.core.models.SeriesModel
@@ -15,6 +16,7 @@ import io.mockk.every
 import io.mockk.just
 import io.mockk.mockk
 import io.mockk.slot
+import io.mockk.verify
 import org.junit.Assert.assertTrue
 import org.junit.Rule
 import org.junit.Test
@@ -29,10 +31,11 @@ class SearchViewModelTests {
     fun `executeSearch with empty title posts error`() {
         val observerSlot = slot<AsyncState<List<SeriesModel>, SearchError>>()
         val mockSearch = mockk<SearchApi>()
+        val mockCaster = mockk<AuthCaster>()
         val mockObserver = mockk<Observer<AsyncState<List<SeriesModel>, SearchError>>> {
             every { onChanged(capture(observerSlot)) } just Runs
         }
-        val testObject = SearchViewModel(mockSearch)
+        val testObject = SearchViewModel(mockSearch, mockCaster)
 
         testObject.searchResult.observeForever(mockObserver)
         testObject.executeSearch(SearchData("", SeriesType.Anime))
@@ -45,10 +48,11 @@ class SearchViewModelTests {
     fun `executeSearch with unknown seriesType posts error`() {
         val observerSlot = slot<AsyncState<List<SeriesModel>, SearchError>>()
         val mockSearch = mockk<SearchApi>()
+        val mockCaster = mockk<AuthCaster>()
         val mockObserver = mockk<Observer<AsyncState<List<SeriesModel>, SearchError>>> {
             every { onChanged(capture(observerSlot)) } just Runs
         }
-        val testObject = SearchViewModel(mockSearch)
+        val testObject = SearchViewModel(mockSearch, mockCaster)
 
         testObject.searchResult.observeForever(mockObserver)
         testObject.executeSearch(SearchData("New Title", SeriesType.Unknown))
@@ -66,7 +70,8 @@ class SearchViewModelTests {
                 Resource.Error("")
             }
         }
-        val testObject = SearchViewModel(mockSearch)
+        val mockCaster = mockk<AuthCaster>()
+        val testObject = SearchViewModel(mockSearch, mockCaster)
 
         testObject.executeSearch(SearchData("title", SeriesType.Anime))
 
@@ -82,7 +87,8 @@ class SearchViewModelTests {
                 Resource.Error("")
             }
         }
-        val testObject = SearchViewModel(mockSearch)
+        val mockCaster = mockk<AuthCaster>()
+        val testObject = SearchViewModel(mockSearch, mockCaster)
 
         testObject.executeSearch(SearchData("title", SeriesType.Manga))
 
@@ -102,7 +108,8 @@ class SearchViewModelTests {
                 Resource.Success(emptyList())
             }
         }
-        val testObject = SearchViewModel(mockSearch)
+        val mockCaster = mockk<AuthCaster>()
+        val testObject = SearchViewModel(mockSearch, mockCaster)
 
         testObject.searchResult.observeForever(mockObserver)
         testObject.executeSearch(SearchData("title", SeriesType.Anime))
@@ -125,7 +132,8 @@ class SearchViewModelTests {
                 Resource.Success(listOf(mockk()))
             }
         }
-        val testObject = SearchViewModel(mockSearch)
+        val mockCaster = mockk<AuthCaster>()
+        val testObject = SearchViewModel(mockSearch, mockCaster)
 
         testObject.searchResult.observeForever(mockObserver)
         testObject.executeSearch(SearchData("title", SeriesType.Anime))
@@ -148,7 +156,8 @@ class SearchViewModelTests {
                 Resource.Error("")
             }
         }
-        val testObject = SearchViewModel(mockSearch)
+        val mockCaster = mockk<AuthCaster>()
+        val testObject = SearchViewModel(mockSearch, mockCaster)
 
         testObject.searchResult.observeForever(mockObserver)
         testObject.executeSearch(SearchData("title", SeriesType.Anime))
@@ -156,5 +165,29 @@ class SearchViewModelTests {
         coVerify { mockSearch.searchForAnime(any()) }
         assertTrue(observerSlot.isCaptured)
         assertTrue(observerSlot.captured is AsyncState.Error)
+    }
+
+    @Test
+    fun `executeSearch on CouldNotRefresh failure posts to AuthCaster`() {
+        val observerSlot = slot<AsyncState<List<SeriesModel>, SearchError>>()
+        val mockObserver = mockk<Observer<AsyncState<List<SeriesModel>, SearchError>>> {
+            every { onChanged(capture(observerSlot)) } just Runs
+        }
+        val mockSearch = mockk<SearchApi> {
+            coEvery {
+                searchForAnime(any())
+            } coAnswers {
+                Resource.Error("", Resource.Error.CouldNotRefresh)
+            }
+        }
+        val mockCaster = mockk<AuthCaster> {
+            every { issueRefreshingToken() } just Runs
+        }
+        val testObject = SearchViewModel(mockSearch, mockCaster)
+
+        testObject.searchResult.observeForever(mockObserver)
+        testObject.executeSearch(SearchData("title", SeriesType.Anime))
+
+        verify { mockCaster.issueRefreshingToken() }
     }
 }
