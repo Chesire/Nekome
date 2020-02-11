@@ -70,12 +70,4 @@ class WorkerQueue @Inject constructor(private val workManager: WorkManager) {
             request
         )
     }
-
-    /**
-     * Cancels any queued workers.
-     */
-    fun cancelQueued() {
-        workManager.cancelUniqueWork(SERIES_UNIQUE_NAME)
-        workManager.cancelUniqueWork(USER_UNIQUE_NAME)
-    }
 }

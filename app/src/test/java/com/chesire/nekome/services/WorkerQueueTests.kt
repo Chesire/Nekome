@@ -9,6 +9,31 @@ import org.junit.Test
 
 class WorkerQueueTests {
     @Test
+    fun `enqueueAuthRefresh enqueues the request on the manager`() {
+        val mockWorkManager = mockk<WorkManager> {
+            every {
+                enqueueUniquePeriodicWork(
+                    "AuthSync",
+                    ExistingPeriodicWorkPolicy.KEEP,
+                    any()
+                )
+            } returns mockk()
+        }
+
+        WorkerQueue(mockWorkManager).run {
+            enqueueAuthRefresh()
+
+            verify {
+                mockWorkManager.enqueueUniquePeriodicWork(
+                    "AuthSync",
+                    ExistingPeriodicWorkPolicy.KEEP,
+                    any()
+                )
+            }
+        }
+    }
+
+    @Test
     fun `enqueueSeriesRefresh enqueues the request on the manager`() {
         val mockWorkManager = mockk<WorkManager> {
             every {
@@ -55,32 +80,6 @@ class WorkerQueueTests {
                     any()
                 )
             }
-        }
-    }
-
-    @Test
-    fun `cancelEnqueued cancels the SeriesRefresh worker`() {
-        val mockWorkManager = mockk<WorkManager> {
-            every { cancelUniqueWork("SeriesSync") } returns mockk()
-            every { cancelUniqueWork("UserSync") } returns mockk()
-        }
-
-        WorkerQueue(mockWorkManager).run {
-            cancelQueued()
-            verify { mockWorkManager.cancelUniqueWork("SeriesSync") }
-        }
-    }
-
-    @Test
-    fun `cancelEnqueued cancels the UserRefresh worker`() {
-        val mockWorkManager = mockk<WorkManager> {
-            every { cancelUniqueWork("SeriesSync") } returns mockk()
-            every { cancelUniqueWork("UserSync") } returns mockk()
-        }
-
-        WorkerQueue(mockWorkManager).run {
-            cancelQueued()
-            verify { mockWorkManager.cancelUniqueWork("UserSync") }
         }
     }
 }
