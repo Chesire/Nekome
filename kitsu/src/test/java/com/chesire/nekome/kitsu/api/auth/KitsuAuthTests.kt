@@ -1,7 +1,7 @@
 package com.chesire.nekome.kitsu.api.auth
 
-import com.chesire.nekome.server.Resource
 import com.chesire.nekome.kitsu.AuthProvider
+import com.chesire.nekome.server.Resource
 import io.mockk.CapturingSlot
 import io.mockk.Runs
 import io.mockk.coEvery
@@ -19,7 +19,7 @@ import java.net.UnknownHostException
 
 class KitsuAuthTests {
     @Test
-    fun `failure response returns Resource#Error with errorBody`() = runBlocking {
+    fun `login failure response returns Resource#Error with errorBody`() = runBlocking {
         val usernameInput = "username"
         val passwordInput = "password"
         val expected = "errorBodyString"
@@ -51,7 +51,7 @@ class KitsuAuthTests {
     }
 
     @Test
-    fun `failure response returns Resource#Error with message if no error`() = runBlocking {
+    fun `login failure response returns Resource#Error with message if no error`() = runBlocking {
         val usernameInput = "username"
         val passwordInput = "password"
         val expected = "responseBodyString"
@@ -81,7 +81,7 @@ class KitsuAuthTests {
     }
 
     @Test
-    fun `successful response with no body returns Resource#Error`() = runBlocking {
+    fun `login successful response with no body returns Resource#Error`() = runBlocking {
         val usernameInput = "username"
         val passwordInput = "password"
         val expected = "Response body is null"
@@ -110,7 +110,7 @@ class KitsuAuthTests {
     }
 
     @Test
-    fun `successful response with body returns Resource#Success`() = runBlocking {
+    fun `login successful response with body returns Resource#Success`() = runBlocking {
         val usernameInput = "username"
         val passwordInput = "password"
         val loginResponse = LoginResponse("accessToken", 0, 0, "refreshToken", "scope", "tokenType")
@@ -141,7 +141,7 @@ class KitsuAuthTests {
     }
 
     @Test
-    fun `successful response with body saves an access token`() = runBlocking {
+    fun `login successful response with body saves an access token`() = runBlocking {
         val usernameInput = "username"
         val passwordInput = "password"
         val expected = "expectedAccessToken"
@@ -171,7 +171,7 @@ class KitsuAuthTests {
     }
 
     @Test
-    fun `successful response with body saves a refresh token`() = runBlocking {
+    fun `login successful response with body saves a refresh token`() = runBlocking {
         val usernameInput = "username"
         val passwordInput = "password"
         val expected = "expectedRefreshToken"
@@ -201,7 +201,7 @@ class KitsuAuthTests {
     }
 
     @Test
-    fun `on thrown exception return Resource#Error`() = runBlocking {
+    fun `login on thrown exception return Resource#Error`() = runBlocking {
         val usernameInput = "username"
         val passwordInput = "password"
 
@@ -214,6 +214,207 @@ class KitsuAuthTests {
 
         val classUnderTest = KitsuAuth(mockService, mockProvider)
         val result = classUnderTest.login(usernameInput, passwordInput)
+
+        when (result) {
+            is Resource.Success -> error("Test has failed")
+            is Resource.Error -> assertTrue(true)
+        }
+    }
+
+    @Test
+    fun `refresh failure response returns Resource#Error with errorBody`() = runBlocking {
+        val expected = "errorBodyString"
+
+        val mockProvider = mockk<AuthProvider> {
+            every { refreshToken } returns "token"
+        }
+        val mockResponseBody = mockk<ResponseBody> {
+            every { string() } returns expected
+        }
+        val mockResponse = mockk<Response<LoginResponse>> {
+            every { isSuccessful } returns false
+            every { errorBody() } returns mockResponseBody
+            every { code() } returns 0
+        }
+        val mockService = mockk<KitsuAuthService> {
+            coEvery {
+                refreshAccessTokenAsync(RefreshTokenRequest("token"))
+            } coAnswers {
+                mockResponse
+            }
+        }
+
+        val classUnderTest = KitsuAuth(mockService, mockProvider)
+        val actual = classUnderTest.refresh()
+
+        when (actual) {
+            is Resource.Success -> error("Test has failed")
+            is Resource.Error -> assertEquals(expected, actual.msg)
+        }
+    }
+
+    @Test
+    fun `refresh failure response returns Resource#Error with message if no error`() = runBlocking {
+        val expected = "responseBodyString"
+
+        val mockProvider = mockk<AuthProvider> {
+            every { refreshToken } returns "token"
+        }
+        val mockResponse = mockk<Response<LoginResponse>> {
+            every { isSuccessful } returns false
+            every { errorBody() } returns null
+            every { message() } returns expected
+            every { code() } returns 0
+        }
+        val mockService = mockk<KitsuAuthService> {
+            coEvery {
+                refreshAccessTokenAsync(RefreshTokenRequest("token"))
+            } coAnswers {
+                mockResponse
+            }
+        }
+
+        val classUnderTest = KitsuAuth(mockService, mockProvider)
+        val actual = classUnderTest.refresh()
+
+        when (actual) {
+            is Resource.Success -> error("Test has failed")
+            is Resource.Error -> assertEquals(expected, actual.msg)
+        }
+    }
+
+    @Test
+    fun `refresh successful response with no body returns Resource#Error`() = runBlocking {
+        val expected = "Response body is null"
+
+        val mockProvider = mockk<AuthProvider> {
+            every { refreshToken } returns "token"
+        }
+        val mockResponse = mockk<Response<LoginResponse>> {
+            every { isSuccessful } returns true
+            every { body() } returns null
+            every { message() } returns expected
+        }
+        val mockService = mockk<KitsuAuthService> {
+            coEvery {
+                refreshAccessTokenAsync(RefreshTokenRequest("token"))
+            } coAnswers {
+                mockResponse
+            }
+        }
+
+        val classUnderTest = KitsuAuth(mockService, mockProvider)
+        val actual = classUnderTest.refresh()
+
+        when (actual) {
+            is Resource.Success -> error("Test has failed")
+            is Resource.Error -> assertEquals(expected, actual.msg)
+        }
+    }
+
+    @Test
+    fun `refresh successful response with body returns Resource#Success`() = runBlocking {
+        val loginResponse = LoginResponse("accessToken", 0, 0, "refreshToken", "scope", "tokenType")
+
+        val mockProvider = mockk<AuthProvider> {
+            every { accessToken = any() } just Runs
+            every { refreshToken } returns "token"
+            every { refreshToken = any() } just Runs
+        }
+        val mockResponse = mockk<Response<LoginResponse>> {
+            every { isSuccessful } returns true
+            every { body() } returns loginResponse
+        }
+        val mockService = mockk<KitsuAuthService> {
+            coEvery {
+                refreshAccessTokenAsync(RefreshTokenRequest("token"))
+            } coAnswers {
+                mockResponse
+            }
+        }
+
+        val classUnderTest = KitsuAuth(mockService, mockProvider)
+        val actual = classUnderTest.refresh()
+
+        when (actual) {
+            is Resource.Success -> assertTrue(true)
+            is Resource.Error -> error("Test has failed")
+        }
+    }
+
+    @Test
+    fun `refresh successful response with body saves an access token`() = runBlocking {
+        val expected = "expectedAccessToken"
+        val slot = CapturingSlot<String>()
+        val loginResponse = LoginResponse(expected, 0, 0, "refreshToken", "scope", "tokenType")
+
+        val mockProvider = mockk<AuthProvider> {
+            every { accessToken = capture(slot) } just Runs
+            every { refreshToken } returns "token"
+            every { refreshToken = any() } just Runs
+        }
+        val mockResponse = mockk<Response<LoginResponse>> {
+            every { isSuccessful } returns true
+            every { body() } returns loginResponse
+        }
+        val mockService = mockk<KitsuAuthService> {
+            coEvery {
+                refreshAccessTokenAsync(RefreshTokenRequest("token"))
+            } coAnswers {
+                mockResponse
+            }
+        }
+
+        val classUnderTest = KitsuAuth(mockService, mockProvider)
+        classUnderTest.refresh()
+
+        assertEquals(expected, slot.captured)
+    }
+
+    @Test
+    fun `refresh successful response with body saves a refresh token`() = runBlocking {
+        val expected = "expectedRefreshToken"
+        val slot = CapturingSlot<String>()
+        val loginResponse = LoginResponse("accessToken", 0, 0, expected, "scope", "tokenType")
+
+        val mockProvider = mockk<AuthProvider> {
+            every { accessToken = any() } just Runs
+            every { refreshToken } returns "token"
+            every { refreshToken = capture(slot) } just Runs
+        }
+        val mockResponse = mockk<Response<LoginResponse>> {
+            every { isSuccessful } returns true
+            every { body() } returns loginResponse
+        }
+        val mockService = mockk<KitsuAuthService> {
+            coEvery {
+                refreshAccessTokenAsync(RefreshTokenRequest("token"))
+            } coAnswers {
+                mockResponse
+            }
+        }
+
+        val classUnderTest = KitsuAuth(mockService, mockProvider)
+        classUnderTest.refresh()
+
+        assertEquals(expected, slot.captured)
+    }
+
+    @Test
+    fun `refresh on thrown exception return Resource#Error`() = runBlocking {
+        val tokenInput = "token"
+
+        val mockService = mockk<KitsuAuthService> {
+            coEvery {
+                refreshAccessTokenAsync(RefreshTokenRequest(tokenInput))
+            } throws UnknownHostException()
+        }
+        val mockProvider = mockk<AuthProvider> {
+            every { refreshToken } returns tokenInput
+        }
+
+        val classUnderTest = KitsuAuth(mockService, mockProvider)
+        val result = classUnderTest.refresh()
 
         when (result) {
             is Resource.Success -> error("Test has failed")
