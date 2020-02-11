@@ -1,8 +1,8 @@
 package com.chesire.nekome.kitsu.interceptors
 
 import com.chesire.nekome.kitsu.AuthProvider
-import com.chesire.nekome.kitsu.api.auth.KitsuAuthService
-import com.chesire.nekome.kitsu.api.auth.RefreshTokenRequest
+import com.chesire.nekome.server.Resource
+import com.chesire.nekome.server.api.AuthApi
 import kotlinx.coroutines.runBlocking
 import okhttp3.Interceptor
 import okhttp3.Response
@@ -20,25 +20,20 @@ import javax.inject.Inject
  */
 class AuthRefreshInterceptor @Inject constructor(
     private val provider: AuthProvider,
-    private val auth: KitsuAuthService
+    private val auth: AuthApi
 ) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val originRequest = chain.request()
         val response = chain.proceed(originRequest)
 
         return if (!response.isSuccessful && response.code() == 403) {
-            val authResponse = runBlocking { getNewAuth(provider.refreshToken) }
-            if (authResponse.isSuccessful && authResponse.body() != null) {
-                authResponse.body()?.let {
-                    provider.accessToken = it.accessToken
-                    provider.refreshToken = it.refreshToken
-
-                    chain.proceed(
-                        originRequest.newBuilder()
-                            .header("Authorization", "Bearer ${it.accessToken}")
-                            .build()
-                    )
-                } ?: generateFailureResponse()
+            val authResponse = runBlocking { auth.refresh() }
+            if (authResponse is Resource.Success) {
+                chain.proceed(
+                    originRequest.newBuilder()
+                        .header("Authorization", "Bearer ${provider.accessToken}")
+                        .build()
+                )
             } else {
                 generateFailureResponse()
             }
@@ -47,11 +42,8 @@ class AuthRefreshInterceptor @Inject constructor(
         }
     }
 
-    private suspend fun getNewAuth(refreshToken: String) =
-        auth.refreshAccessTokenAsync(RefreshTokenRequest(refreshToken))
-
     private fun generateFailureResponse(): Response {
-        // If there is an auth failure report a 401 error for the app to logout with
+        // If there is an unrecoverable auth failure report a 401 error for the app to logout with
         return Response
             .Builder()
             .code(401)
