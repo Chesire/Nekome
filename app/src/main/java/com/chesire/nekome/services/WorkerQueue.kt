@@ -8,6 +8,8 @@ import androidx.work.WorkManager
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
+private const val AUTH_REFRESH_TAG = "AuthRefresh"
+private const val AUTH_UNIQUE_NAME = "AuthSync"
 private const val SERIES_REFRESH_TAG = "SeriesRefresh"
 private const val SERIES_UNIQUE_NAME = "SeriesSync"
 private const val USER_REFRESH_TAG = "UserRefresh"
@@ -20,6 +22,22 @@ class WorkerQueue @Inject constructor(private val workManager: WorkManager) {
     private val constraints = Constraints.Builder()
         .setRequiredNetworkType(NetworkType.CONNECTED)
         .build()
+
+    /**
+     * Starts up the worker to perform auth refreshing.
+     */
+    fun enqueueAuthRefresh() {
+        val request = PeriodicWorkRequestBuilder<RefreshAuthWorker>(7, TimeUnit.DAYS)
+            .setConstraints(constraints)
+            .addTag(AUTH_REFRESH_TAG)
+            .build()
+
+        workManager.enqueueUniquePeriodicWork(
+            AUTH_UNIQUE_NAME,
+            ExistingPeriodicWorkPolicy.KEEP,
+            request
+        )
+    }
 
     /**
      * Starts up the worker to perform series refreshing.

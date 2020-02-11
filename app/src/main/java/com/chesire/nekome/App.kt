@@ -34,6 +34,7 @@ class App : DaggerApplication() {
             startStrictMode()
         }
 
+        workerQueue.enqueueAuthRefresh()
         workerQueue.enqueueSeriesRefresh()
         workerQueue.enqueueUserRefresh()
     }
