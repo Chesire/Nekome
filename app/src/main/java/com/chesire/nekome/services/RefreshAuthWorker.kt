@@ -10,7 +10,6 @@ import com.chesire.nekome.server.api.AuthApi
 import timber.log.Timber
 import javax.inject.Inject
 
-
 /**
  * Worker object that handles updating a users authenticated state.
  *
