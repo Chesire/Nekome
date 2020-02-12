@@ -14,6 +14,7 @@ import com.chesire.nekome.injection.modules.SeriesModule
 import com.chesire.nekome.injection.modules.ServerModule
 import com.chesire.nekome.injection.modules.UrlModule
 import com.chesire.nekome.injection.modules.WorkerModule
+import com.chesire.nekome.services.RefreshAuthWorker
 import com.chesire.nekome.services.RefreshSeriesWorker
 import com.chesire.nekome.services.RefreshUserWorker
 import dagger.BindsInstance
@@ -38,8 +39,8 @@ import javax.inject.Singleton
         KitsuModule::class,
         SeriesModule::class,
         ServerModule::class,
-        ViewModelModule::class,
         UrlModule::class,
+        ViewModelModule::class,
         WorkerModule::class
     ]
 )
@@ -60,6 +61,11 @@ interface AppComponent : AndroidInjector<App> {
          */
         fun build(): AppComponent
     }
+
+    /**
+     * Provides Dagger injection into the [RefreshAuthWorker].
+     */
+    fun inject(worker: RefreshAuthWorker)
 
     /**
      * Provides Dagger injection into the [RefreshSeriesWorker].

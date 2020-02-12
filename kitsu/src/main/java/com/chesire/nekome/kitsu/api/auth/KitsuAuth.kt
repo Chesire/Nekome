@@ -1,9 +1,10 @@
 package com.chesire.nekome.kitsu.api.auth
 
-import com.chesire.nekome.server.Resource
-import com.chesire.nekome.server.api.AuthApi
 import com.chesire.nekome.kitsu.AuthProvider
 import com.chesire.nekome.kitsu.parse
+import com.chesire.nekome.server.Resource
+import com.chesire.nekome.server.api.AuthApi
+import retrofit2.Response
 import javax.inject.Inject
 
 /**
@@ -16,18 +17,38 @@ class KitsuAuth @Inject constructor(
 ) : AuthApi {
     override suspend fun login(username: String, password: String): Resource<Any> {
         return try {
-            when (val response = authService.loginAsync(LoginRequest(username, password)).parse()) {
-                is Resource.Success -> {
-                    authProvider.apply {
-                        accessToken = response.data.accessToken
-                        refreshToken = response.data.refreshToken
-                    }
-                    Resource.Success(Any())
-                }
-                is Resource.Error -> Resource.Error(response.msg, response.code)
-            }
+            return parseResponse(authService.loginAsync(LoginRequest(username, password)))
         } catch (ex: Exception) {
             ex.parse()
+        }
+    }
+
+    override suspend fun refresh(): Resource<Any> {
+        return try {
+            return parseResponse(
+                authService.refreshAccessTokenAsync(
+                    RefreshTokenRequest(authProvider.refreshToken)
+                )
+            )
+        } catch (ex: Exception) {
+            ex.parse()
+        }
+    }
+
+    private fun parseResponse(response: Response<LoginResponse>): Resource<Any> {
+        return when (val parsed = response.parse()) {
+            is Resource.Success -> {
+                saveTokens(parsed.data)
+                Resource.Success(Any())
+            }
+            is Resource.Error -> Resource.Error(parsed.msg, parsed.code)
+        }
+    }
+
+    private fun saveTokens(loginResponse: LoginResponse) {
+        authProvider.apply {
+            accessToken = loginResponse.accessToken
+            refreshToken = loginResponse.refreshToken
         }
     }
 

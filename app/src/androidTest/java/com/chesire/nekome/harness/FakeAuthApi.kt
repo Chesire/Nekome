@@ -8,6 +8,10 @@ open class FakeAuthApi : AuthApi {
         TODO("not implemented")
     }
 
+    override suspend fun refresh(): Resource<Any> {
+        TODO("not implemented")
+    }
+
     override suspend fun clearAuth() {
         TODO("not implemented")
     }

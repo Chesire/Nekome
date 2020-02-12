@@ -12,6 +12,12 @@ interface AuthApi {
     suspend fun login(username: String, password: String): Resource<Any>
 
     /**
+     * Sends a request to refresh any currently stored tokens. The result is returned in a standard
+     * [Resource].
+     */
+    suspend fun refresh(): Resource<Any>
+
+    /**
      * Clears the auth details out.
      */
     suspend fun clearAuth()
