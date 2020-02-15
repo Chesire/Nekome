@@ -1,4 +1,4 @@
-apply plugin: 'jacoco'
+apply plugin: "jacoco"
 
 jacoco {
     toolVersion = "$jacoco_version"
@@ -10,7 +10,7 @@ tasks.withType(Test) {
 
 task jacocoTestReport(
         type: JacocoReport,
-        group: 'verification'
+        group: "verification"
 ) {
     reports {
         xml.enabled = true
@@ -24,7 +24,7 @@ task jacocoTestReport(
     sourceDirectories = files([mainSrc])
     classDirectories = files([debugTree])
     executionData = fileTree(dir: project.buildDir, includes: [
-            'jacoco/testDebugUnitTest.exec',
-            'outputs/code-coverage/connected/*coverage.ec'
+            "jacoco/testDebugUnitTest.exec",
+            "outputs/code-coverage/connected/*coverage.ec"
     ])
 }
