@@ -11,7 +11,6 @@ android {
         targetSdkVersion 29
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles "proguard-rules.pro"
     }
     buildTypes {
         release {
