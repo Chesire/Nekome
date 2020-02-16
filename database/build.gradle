@@ -1,7 +1,7 @@
-apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
-apply plugin: 'kotlin-kapt'
+apply plugin: "com.android.library"
+apply plugin: "kotlin-android"
+apply plugin: "kotlin-android-extensions"
+apply plugin: "kotlin-kapt"
 
 android {
     compileSdkVersion 29
@@ -9,8 +9,6 @@ android {
     defaultConfig {
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 1
-        versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
@@ -21,11 +19,10 @@ android {
             }
         }
     }
-
     buildTypes {
         release {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
         }
     }
     kotlinOptions {
@@ -41,9 +38,9 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(dir: "libs", include: ["*.jar"])
 
-    implementation project(path: ':core')
+    implementation project(path: ":core")
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation "androidx.appcompat:appcompat:$appcompat_version"
@@ -56,15 +53,15 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
 
-    testImplementation 'junit:junit:4.13'
+    testImplementation "junit:junit:4.13"
 
     androidTestImplementation "androidx.room:room-testing:$room_version"
-    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-    androidTestImplementation 'androidx.test:rules:1.2.0'
+    androidTestImplementation "androidx.test.ext:junit:1.1.1"
+    androidTestImplementation "androidx.test:rules:1.2.0"
     // Fixes issue with mockk 1.9.3 https://github.com/mockk/mockk/issues/281
-    androidTestImplementation('io.mockk:mockk-android:1.9.3') { exclude module: 'objenesis' }
+    androidTestImplementation("io.mockk:mockk-android:1.9.3") { exclude module: "objenesis" }
     //noinspection GradleDependency
-    androidTestImplementation 'org.objenesis:objenesis:2.6'
+    androidTestImplementation "org.objenesis:objenesis:2.6"
 
     kapt "androidx.room:room-compiler:$room_version"
 }

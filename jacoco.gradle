@@ -1,4 +1,4 @@
-apply plugin: 'jacoco'
+apply plugin: "jacoco"
 
 jacoco {
     toolVersion = "$jacoco_version"
@@ -10,7 +10,7 @@ tasks.withType(Test) {
 
 task jacocoTestReport(
         type: JacocoReport,
-        group: 'verification'
+        group: "verification"
 ) {
     reports {
         xml.enabled = true
@@ -21,10 +21,10 @@ task jacocoTestReport(
     def debugTree = fileTree(dir: "$project.buildDir/tmp/kotlin-classes/debug", excludes: coverageExcludes)
     def mainSrc = "$project.projectDir/src/main/java"
 
-    sourceDirectories = files([mainSrc])
-    classDirectories = files([debugTree])
-    executionData = fileTree(dir: project.buildDir, includes: [
-            'jacoco/testDebugUnitTest.exec',
-            'outputs/code-coverage/connected/*coverage.ec'
-    ])
+    getSourceDirectories().setFrom(files([mainSrc]))
+    getClassDirectories().setFrom(files([debugTree]))
+    getExecutionData().setFrom(fileTree(dir: project.buildDir, includes: [
+            "jacoco/testDebugUnitTest.exec",
+            "outputs/code-coverage/connected/*coverage.ec"
+    ]))
 }
