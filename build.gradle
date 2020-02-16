@@ -96,8 +96,8 @@ ext.appVersion = {
     }
 
     def longTag = stdout.toString().trim()
-    if (longTag.contains("-")) {
-        return longTag.substring(longTag.indexOf("/") + 1, longTag.indexOf("-"))
+    if (longTag.contains('-')) {
+        return longTag.substring(longTag.indexOf('/') + 1, longTag.indexOf('-'))
     } else {
         return longTag
     }
