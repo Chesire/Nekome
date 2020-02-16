@@ -16,7 +16,6 @@ android {
         testInstrumentationRunner "com.chesire.nekome.TestRunner"
         resConfigs "en"
     }
-
     buildTypes {
         release {
             minifyEnabled true
