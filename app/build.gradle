@@ -89,7 +89,7 @@ dependencies {
     implementation "com.google.dagger:dagger-android-support:$dagger_version"
     implementation "com.jakewharton.timber:timber:$timber_version"
     implementation "com.squareup.moshi:moshi:$moshi_version"
-    implementation "com.squareup.okhttp3:logging-interceptor:4.3.1"
+    implementation "com.squareup.okhttp3:logging-interceptor:4.4.0"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
 
