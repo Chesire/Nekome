@@ -84,7 +84,7 @@ ext {
     materialdialog_version = "3.2.1"
     moshi_version = "1.9.2"
     preferences_version = "1.1.0"
-    room_version = "2.2.3"
+    room_version = "2.2.4"
     timber_version = "4.7.1"
 }
 
