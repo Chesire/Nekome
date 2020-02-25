@@ -12,6 +12,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.chesire.lifecyklelog.LogLifecykle
 import com.chesire.nekome.app.series.R
+import com.chesire.nekome.app.series.databinding.FragmentSeriesDetailBinding
 import com.chesire.nekome.core.extensions.extraNotNull
 import com.chesire.nekome.core.extensions.hide
 import com.chesire.nekome.core.extensions.show
@@ -22,15 +23,6 @@ import com.chesire.nekome.core.viewmodel.ViewModelFactory
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.snackbar.Snackbar
 import dagger.android.support.AndroidSupportInjection
-import kotlinx.android.synthetic.main.view_series_detail_confirmation.seriesDetailConfirmationConfirm
-import kotlinx.android.synthetic.main.view_series_detail_confirmation.seriesDetailConfirmationProgress
-import kotlinx.android.synthetic.main.view_series_detail_header.seriesDetailHeaderSeriesStatus
-import kotlinx.android.synthetic.main.view_series_detail_header.seriesDetailHeaderSubtype
-import kotlinx.android.synthetic.main.view_series_detail_header.seriesDetailHeaderTitle
-import kotlinx.android.synthetic.main.view_series_detail_header.seriesDetailHeaderType
-import kotlinx.android.synthetic.main.view_series_detail_progress.seriesDetailProgressOutOf
-import kotlinx.android.synthetic.main.view_series_detail_progress.seriesDetailProgressValue
-import kotlinx.android.synthetic.main.view_series_detail_series_status.seriesDetailStatusGroup
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -43,6 +35,8 @@ class SeriesDetailSheetFragment : BottomSheetDialogFragment() {
     lateinit var viewModelFactory: ViewModelFactory
     private val viewModel by viewModels<SeriesDetailViewModel> { viewModelFactory }
     private val seriesModel by extraNotNull<SeriesModel>(MODEL_BUNDLE_ID, null)
+    private var _binding: FragmentSeriesDetailBinding? = null
+    private val binding get() = requireNotNull(_binding) { "Binding not set" }
 
     override fun onAttach(context: Context) {
         AndroidSupportInjection.inject(this)
@@ -53,7 +47,7 @@ class SeriesDetailSheetFragment : BottomSheetDialogFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.fragment_series_detail, container, false)
+    ) = FragmentSeriesDetailBinding.inflate(inflater, container, false).also { _binding = it }.root
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -61,13 +55,18 @@ class SeriesDetailSheetFragment : BottomSheetDialogFragment() {
         initializeView()
     }
 
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
+    }
+
     private fun initializeView() {
         observeUpdatingStatus()
         with(viewModel.mutableModel) {
-            seriesDetailHeaderTitle.text = seriesName
-            seriesDetailHeaderType.text = seriesType
-            seriesDetailHeaderSubtype.text = seriesSubType
-            seriesDetailHeaderSeriesStatus.text = seriesStatus
+            binding.detailHeader.headerTitle.text = seriesName
+            binding.detailHeader.headerType.text = seriesType
+            binding.detailHeader.headerSubtype.text = seriesSubType
+            binding.detailHeader.headerSeriesStatus.text = seriesStatus
             setupSeriesStatusListener(this)
             setupInitialSeriesStatus(this)
             setupProgress(this)
@@ -77,15 +76,15 @@ class SeriesDetailSheetFragment : BottomSheetDialogFragment() {
 
     private fun observeUpdatingStatus() {
         fun startInProgressState() {
-            seriesDetailConfirmationConfirm.isEnabled = false
-            seriesDetailConfirmationConfirm.hide(invisible = true)
-            seriesDetailConfirmationProgress.show()
+            binding.detailConfirmation.confirmationConfirm.isEnabled = false
+            binding.detailConfirmation.confirmationConfirm.hide(invisible = true)
+            binding.detailConfirmation.confirmationProgress.show()
         }
 
         fun endInProgressState() {
-            seriesDetailConfirmationConfirm.isEnabled = true
-            seriesDetailConfirmationConfirm.show()
-            seriesDetailConfirmationProgress.hide(invisible = true)
+            binding.detailConfirmation.confirmationConfirm.isEnabled = true
+            binding.detailConfirmation.confirmationConfirm.show()
+            binding.detailConfirmation.confirmationProgress.hide(invisible = true)
         }
 
         viewModel.updatingStatus.observe(viewLifecycleOwner, Observer { result ->
@@ -108,7 +107,7 @@ class SeriesDetailSheetFragment : BottomSheetDialogFragment() {
 
     private fun setupSeriesStatusListener(model: MutableSeriesModel) {
         var lastCheckedId = View.NO_ID
-        seriesDetailStatusGroup.setOnCheckedChangeListener { group, checkedId ->
+        binding.detailStatus.statusGroup.setOnCheckedChangeListener { group, checkedId ->
             if (checkedId == View.NO_ID) {
                 Timber.w("Tried to uncheck chip, resetting to be checked")
                 group.check(lastCheckedId)
@@ -118,31 +117,30 @@ class SeriesDetailSheetFragment : BottomSheetDialogFragment() {
             Timber.d("Chip checked, selected is now $checkedId")
 
             when (checkedId) {
-                R.id.seriesDetailChipCurrent -> model.userSeriesStatus = UserSeriesStatus.Current
-                R.id.seriesDetailChipCompleted ->
-                    model.userSeriesStatus = UserSeriesStatus.Completed
-                R.id.seriesDetailChipDropped -> model.userSeriesStatus = UserSeriesStatus.Dropped
-                R.id.seriesDetailChipOnHold -> model.userSeriesStatus = UserSeriesStatus.OnHold
-                R.id.seriesDetailChipPlanned -> model.userSeriesStatus = UserSeriesStatus.Planned
+                R.id.statusChipCurrent -> model.userSeriesStatus = UserSeriesStatus.Current
+                R.id.statusChipCompleted -> model.userSeriesStatus = UserSeriesStatus.Completed
+                R.id.statusChipDropped -> model.userSeriesStatus = UserSeriesStatus.Dropped
+                R.id.statusChipOnHold -> model.userSeriesStatus = UserSeriesStatus.OnHold
+                R.id.statusChipPlanned -> model.userSeriesStatus = UserSeriesStatus.Planned
             }
         }
     }
 
     private fun setupInitialSeriesStatus(model: MutableSeriesModel) {
-        seriesDetailStatusGroup.check(
+        binding.detailStatus.statusGroup.check(
             when (model.userSeriesStatus) {
-                UserSeriesStatus.Current -> R.id.seriesDetailChipCurrent
-                UserSeriesStatus.Completed -> R.id.seriesDetailChipCompleted
-                UserSeriesStatus.Dropped -> R.id.seriesDetailChipDropped
-                UserSeriesStatus.OnHold -> R.id.seriesDetailChipOnHold
-                UserSeriesStatus.Planned -> R.id.seriesDetailChipPlanned
+                UserSeriesStatus.Current -> R.id.statusChipCurrent
+                UserSeriesStatus.Completed -> R.id.statusChipCompleted
+                UserSeriesStatus.Dropped -> R.id.statusChipDropped
+                UserSeriesStatus.OnHold -> R.id.statusChipOnHold
+                UserSeriesStatus.Planned -> R.id.statusChipPlanned
                 else -> 0
             }
         )
     }
 
     private fun setupProgress(model: MutableSeriesModel) {
-        seriesDetailProgressValue.apply {
+        binding.detailProgress.progressValue.apply {
             setText("${model.seriesProgress}")
             filters = arrayOf(
                 RangeInputFilter(model.seriesLengthValue),
@@ -154,14 +152,15 @@ class SeriesDetailSheetFragment : BottomSheetDialogFragment() {
                 }
             }
         }
-        seriesDetailProgressOutOf.text = getString(
+        binding.detailProgress.progressOutOf.text = getString(
             R.string.series_detail_progress_out_of, model.seriesLength
         )
     }
 
-    private fun setupConfirmation() = seriesDetailConfirmationConfirm.setOnClickListener {
-        viewModel.sendUpdate(viewModel.mutableModel)
-    }
+    private fun setupConfirmation() =
+        binding.detailConfirmation.confirmationConfirm.setOnClickListener {
+            viewModel.sendUpdate(viewModel.mutableModel)
+        }
 
     companion object {
         const val TAG = "SeriesDetailSheetFragment"

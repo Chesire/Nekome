@@ -13,13 +13,21 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <include layout="@layout/view_series_detail_header" />
+        <include
+            android:id="@+id/detailHeader"
+            layout="@layout/view_series_detail_header" />
 
-        <include layout="@layout/view_series_detail_series_status" />
+        <include
+            android:id="@+id/detailStatus"
+            layout="@layout/view_series_detail_series_status" />
 
-        <include layout="@layout/view_series_detail_progress" />
+        <include
+            android:id="@+id/detailProgress"
+            layout="@layout/view_series_detail_progress" />
 
-        <include layout="@layout/view_series_detail_confirmation" />
+        <include
+            android:id="@+id/detailConfirmation"
+            layout="@layout/view_series_detail_confirmation" />
 
     </LinearLayout>
 
