@@ -16,7 +16,7 @@ buildscript {
 }
 
 plugins {
-    id "io.gitlab.arturbosch.detekt" version "1.5.0"
+    id "io.gitlab.arturbosch.detekt" version "1.6.0"
     id "org.jlleitschuh.gradle.ktlint" version "9.2.1"
 }
 
@@ -34,7 +34,7 @@ subprojects {
 }
 
 detekt {
-    toolVersion = "1.5.0"
+    toolVersion = "1.6.0"
     config = files("detekt.yml")
     input = files(
             "account/src/main/java",
