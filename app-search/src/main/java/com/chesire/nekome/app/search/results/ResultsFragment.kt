@@ -10,13 +10,12 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chesire.lifecyklelog.LogLifecykle
 import com.chesire.nekome.app.search.R
+import com.chesire.nekome.app.search.databinding.FragmentResultsBinding
 import com.chesire.nekome.core.models.SeriesModel
 import com.chesire.nekome.core.viewmodel.ViewModelFactory
 import com.chesire.nekome.server.Resource
 import com.google.android.material.snackbar.Snackbar
 import dagger.android.support.DaggerFragment
-import kotlinx.android.synthetic.main.fragment_results.resultsLayout
-import kotlinx.android.synthetic.main.fragment_results.resultsRecyclerView
 import javax.inject.Inject
 
 /**
@@ -29,19 +28,21 @@ class ResultsFragment : DaggerFragment(), ResultsListener {
     private val viewModel by viewModels<ResultsViewModel> { viewModelFactory }
     private val args by navArgs<ResultsFragmentArgs>()
     private val resultsAdapter = ResultsAdapter(this)
+    private var _binding: FragmentResultsBinding? = null
+    private val binding get() = requireNotNull(_binding) { "Binding not set" }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.fragment_results, container, false)
+    ) = FragmentResultsBinding.inflate(inflater, container, false).also { _binding = it }.root
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         observeSeries()
         resultsAdapter.submitList(args.searchResults.toList())
-        resultsRecyclerView.apply {
+        binding.resultsContent.apply {
             adapter = resultsAdapter
             layoutManager = LinearLayoutManager(requireContext())
             setHasFixedSize(true)
@@ -58,7 +59,7 @@ class ResultsFragment : DaggerFragment(), ResultsListener {
         viewModel.trackNewSeries(model) {
             if (it is Resource.Error) {
                 Snackbar.make(
-                    resultsLayout,
+                    binding.resultsLayout,
                     getString(R.string.results_failure, model.title),
                     Snackbar.LENGTH_LONG
                 ).show()

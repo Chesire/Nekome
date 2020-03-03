@@ -2,12 +2,13 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/confirmationLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="@dimen/full_margin">
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/seriesDetailConfirmationConfirm"
+        android:id="@+id/confirmationConfirm"
         style="@style/Widget.MaterialComponents.Button.TextButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -18,16 +19,16 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ProgressBar
-        android:id="@+id/seriesDetailConfirmationProgress"
+        android:id="@+id/confirmationProgress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
         android:indeterminateTint="@color/colorPrimary"
         android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="@id/seriesDetailConfirmationConfirm"
-        app:layout_constraintEnd_toEndOf="@id/seriesDetailConfirmationConfirm"
-        app:layout_constraintStart_toStartOf="@id/seriesDetailConfirmationConfirm"
-        app:layout_constraintTop_toTopOf="@id/seriesDetailConfirmationConfirm"
+        app:layout_constraintBottom_toBottomOf="@id/confirmationConfirm"
+        app:layout_constraintEnd_toEndOf="@id/confirmationConfirm"
+        app:layout_constraintStart_toStartOf="@id/confirmationConfirm"
+        app:layout_constraintTop_toTopOf="@id/confirmationConfirm"
         tools:visibility="visible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

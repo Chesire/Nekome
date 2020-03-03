@@ -15,7 +15,7 @@
         android:orientation="vertical">
 
         <ImageView
-            android:id="@+id/detailsHeaderImage"
+            android:id="@+id/headerImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/double_margin"
@@ -26,7 +26,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/detailsHeaderText"
+            android:id="@+id/headerText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/full_margin"
@@ -36,10 +36,10 @@
             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/detailsHeaderImage" />
+            app:layout_constraintTop_toBottomOf="@id/headerImage" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/detailsUsernameLayout"
+            android:id="@+id/usernameLayout"
             style="@style/TextInputStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -49,10 +49,10 @@
             app:errorEnabled="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/detailsHeaderText">
+            app:layout_constraintTop_toBottomOf="@id/headerText">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/detailsUsernameText"
+                android:id="@+id/usernameText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/ic_account_circle"
@@ -64,7 +64,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/detailsPasswordLayout"
+            android:id="@+id/passwordLayout"
             style="@style/TextInputStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -75,13 +75,13 @@
             app:errorEnabled="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/detailsUsernameLayout"
+            app:layout_constraintTop_toBottomOf="@id/usernameLayout"
             app:passwordToggleEnabled="true"
             app:passwordToggleTint="@color/colorPrimary"
             tools:ignore="UnusedAttribute">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/detailsPasswordText"
+                android:id="@+id/passwordText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/ic_lock"
@@ -93,7 +93,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/detailsForgotPassword"
+            android:id="@+id/forgotPasswordButton"
             style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -108,7 +108,7 @@
             android:layout_margin="@dimen/full_margin">
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/detailsLoginButton"
+                android:id="@+id/loginButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
@@ -117,7 +117,7 @@
                 android:textColor="@color/white" />
 
             <ProgressBar
-                android:id="@+id/detailsProgressBar"
+                android:id="@+id/progressBar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -128,7 +128,7 @@
         </FrameLayout>
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/detailsSignUp"
+            android:id="@+id/signUp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/full_margin"

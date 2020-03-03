@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.chesire.lifecyklelog.LogLifecykle
+import com.chesire.nekome.app.search.databinding.FragmentSearchBinding
 import com.chesire.nekome.core.extensions.hide
 import com.chesire.nekome.core.extensions.hideSystemKeyboard
 import com.chesire.nekome.core.extensions.show
@@ -17,12 +18,6 @@ import com.chesire.nekome.core.flags.SeriesType
 import com.chesire.nekome.core.viewmodel.ViewModelFactory
 import com.google.android.material.snackbar.Snackbar
 import dagger.android.support.DaggerFragment
-import kotlinx.android.synthetic.main.fragment_search.searchConfirmButton
-import kotlinx.android.synthetic.main.fragment_search.searchLayout
-import kotlinx.android.synthetic.main.fragment_search.searchProgress
-import kotlinx.android.synthetic.main.fragment_search.searchSeriesLayout
-import kotlinx.android.synthetic.main.fragment_search.searchSeriesText
-import kotlinx.android.synthetic.main.fragment_search.seriesDetailStatusGroup
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -37,39 +32,42 @@ class SearchFragment : DaggerFragment() {
     @Inject
     lateinit var searchPreferences: SearchPreferences
     private val seriesType: SeriesType
-        get() = when (seriesDetailStatusGroup.checkedChipId) {
+        get() = when (binding.searchChipGroup.checkedChipId) {
             R.id.searchChipAnime -> SeriesType.Anime
             R.id.searchChipManga -> SeriesType.Manga
             else -> SeriesType.Unknown
         }
 
+    private var _binding: FragmentSearchBinding? = null
+    private val binding get() = requireNotNull(_binding) { "Binding not set" }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.fragment_search, container, false)
+    ) = FragmentSearchBinding.inflate(inflater, container, false).also { _binding = it }.root
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setInitialSeriesType()
-        searchConfirmButton.setOnClickListener { submitSearch() }
-        searchSeriesText.addTextChangedListener {
-            searchSeriesLayout.error = null
+        binding.searchConfirmButton.setOnClickListener { submitSearch() }
+        binding.searchText.addTextChangedListener {
+            binding.searchTextLayout.error = null
         }
         observeSearchResults()
     }
 
     private fun setInitialSeriesType() {
         val lastType = searchPreferences.lastSearchType
-        seriesDetailStatusGroup.check(if (lastType == 0) R.id.searchChipAnime else lastType)
+        binding.searchChipGroup.check(if (lastType == 0) R.id.searchChipAnime else lastType)
     }
 
     private fun submitSearch() {
         activity?.hideSystemKeyboard()
-        searchPreferences.lastSearchType = seriesDetailStatusGroup.checkedChipId
+        searchPreferences.lastSearchType = binding.searchChipGroup.checkedChipId
         viewModel.executeSearch(
             SearchData(
-                searchSeriesText.text.toString(),
+                binding.searchText.text.toString(),
                 seriesType
             )
         )
@@ -101,19 +99,19 @@ class SearchFragment : DaggerFragment() {
     private fun parseSearchError(error: SearchError) {
         when (error) {
             SearchError.EmptyTitle ->
-                searchSeriesLayout.error = getString(R.string.search_error_no_text)
+                binding.searchTextLayout.error = getString(R.string.search_error_no_text)
             SearchError.GenericError -> Snackbar.make(
-                searchLayout,
+                binding.searchLayout,
                 R.string.error_generic,
                 Snackbar.LENGTH_LONG
             ).show()
             SearchError.NoTypeSelected -> Snackbar.make(
-                searchLayout,
+                binding.searchLayout,
                 R.string.search_error_no_type_selected,
                 Snackbar.LENGTH_LONG
             ).show()
             SearchError.NoSeriesFound -> Snackbar.make(
-                searchLayout,
+                binding.searchLayout,
                 R.string.search_error_no_series_found,
                 Snackbar.LENGTH_LONG
             ).show()
@@ -122,15 +120,15 @@ class SearchFragment : DaggerFragment() {
 
     private fun showSpinner() {
         Timber.d("Showing Spinner")
-        searchConfirmButton.text = ""
-        searchConfirmButton.isClickable = false
-        searchProgress.show()
+        binding.searchConfirmButton.text = ""
+        binding.searchConfirmButton.isClickable = false
+        binding.searchProgress.show()
     }
 
     private fun hideSpinner() {
         Timber.d("Hiding Spinner")
-        searchConfirmButton.text = getString(R.string.search_search)
-        searchConfirmButton.isClickable = true
-        searchProgress.hide(invisible = true)
+        binding.searchConfirmButton.text = getString(R.string.search_search)
+        binding.searchConfirmButton.isClickable = true
+        binding.searchProgress.hide(invisible = true)
     }
 }

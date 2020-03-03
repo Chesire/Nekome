@@ -31,15 +31,19 @@ import javax.inject.Inject
 class SyncingTests {
     @get:Rule
     val activity = ActivityTestRule(Activity::class.java, false, false)
+
     @get:Rule
     val clearPreferencesRule = ClearPreferencesRule()
 
     @Inject
     lateinit var auth: AuthApi
+
     @Inject
     lateinit var user: UserApi
+
     @Inject
     lateinit var library: LibraryApi
+
     @Inject
     lateinit var authProvider: AuthProvider
 
@@ -86,10 +90,10 @@ class SyncingTests {
     }
 
     private fun navigateToSyncing() {
-        writeTo(R.id.detailsUsernameText, "Username")
-        writeTo(R.id.detailsPasswordText, "Password")
+        writeTo(R.id.usernameText, "Username")
+        writeTo(R.id.passwordText, "Password")
         // For now use this, will fix it later on
         closeKeyboard()
-        clickOn(R.id.detailsLoginButton)
+        clickOn(R.id.loginButton)
     }
 }

@@ -17,6 +17,7 @@ import com.afollestad.materialdialogs.callbacks.onCancel
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
 import com.chesire.nekome.app.series.R
 import com.chesire.nekome.app.series.SeriesPreferences
+import com.chesire.nekome.app.series.databinding.FragmentSeriesListBinding
 import com.chesire.nekome.app.series.detail.SeriesDetailSheetFragment
 import com.chesire.nekome.app.series.list.anime.AnimeFragment
 import com.chesire.nekome.app.series.list.manga.MangaFragment
@@ -29,9 +30,6 @@ import com.chesire.nekome.core.viewmodel.ViewModelFactory
 import com.chesire.nekome.server.Resource
 import com.google.android.material.snackbar.Snackbar
 import dagger.android.support.DaggerFragment
-import kotlinx.android.synthetic.main.fragment_series_list.fragmentSeriesListEmpty
-import kotlinx.android.synthetic.main.fragment_series_list.fragmentSeriesListLayout
-import kotlinx.android.synthetic.main.fragment_series_list.fragmentSeriesListRecyclerView
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -52,6 +50,8 @@ abstract class SeriesListFragment : DaggerFragment(), SeriesInteractionListener 
      */
     protected abstract val seriesType: SeriesType
 
+    private var _binding: FragmentSeriesListBinding? = null
+    private val binding get() = requireNotNull(_binding) { "Binding not set" }
     private val viewModel by viewModels<SeriesListViewModel> { viewModelFactory }
     private lateinit var seriesAdapter: SeriesAdapter
     private var seriesDetail: SeriesDetailSheetFragment? = null
@@ -65,13 +65,13 @@ abstract class SeriesListFragment : DaggerFragment(), SeriesInteractionListener 
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View = inflater.inflate(R.layout.fragment_series_list, container, false)
+    ) = FragmentSeriesListBinding.inflate(inflater, container, false).also { _binding = it }.root
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         seriesAdapter = SeriesAdapter(this, seriesPreferences)
-        fragmentSeriesListRecyclerView.apply {
+        binding.listContent.apply {
             adapter = seriesAdapter
             layoutManager = LinearLayoutManager(requireContext())
             setHasFixedSize(true)
@@ -85,10 +85,10 @@ abstract class SeriesListFragment : DaggerFragment(), SeriesInteractionListener 
                 val newList = series.filter { it.type == seriesType }
                 Timber.d("New list provided, new count [${newList.count()}]")
                 seriesAdapter.submitList(newList)
-                if (fragmentSeriesListRecyclerView.emptyView == null) {
+                if (binding.listContent.emptyView == null) {
                     // Set the empty view here so it doesn't show on load before we get series
                     Timber.d("Setting in the RecyclerViews empty view")
-                    fragmentSeriesListRecyclerView.emptyView = fragmentSeriesListEmpty
+                    binding.listContent.emptyView = binding.listEmpty.root
                 }
             }
         )
@@ -97,7 +97,8 @@ abstract class SeriesListFragment : DaggerFragment(), SeriesInteractionListener 
 
     override fun onDestroyView() {
         // If this isn't removed here it can still display when we come back to this view
-        fragmentSeriesListRecyclerView.emptyView = null
+        binding.listContent.emptyView = null
+        _binding = null
         super.onDestroyView()
     }
 
@@ -133,7 +134,7 @@ abstract class SeriesListFragment : DaggerFragment(), SeriesInteractionListener 
         viewModel.updateSeries(model.userId, model.progress.inc(), model.userSeriesStatus) {
             if (it is Resource.Error) {
                 Snackbar.make(
-                    fragmentSeriesListLayout,
+                    binding.seriesListLayout,
                     getString(R.string.series_list_try_again, model.title),
                     Snackbar.LENGTH_LONG
                 ).show()
@@ -164,7 +165,7 @@ abstract class SeriesListFragment : DaggerFragment(), SeriesInteractionListener 
         viewModel.deletionStatus.observe(viewLifecycleOwner, Observer { state ->
             if (state is AsyncState.Error && state.error == SeriesListDeleteError.DeletionFailure) {
                 Snackbar.make(
-                    fragmentSeriesListLayout,
+                    binding.seriesListLayout,
                     R.string.series_list_delete_failure,
                     Snackbar.LENGTH_INDEFINITE
                 ).setAction(R.string.series_list_delete_retry) {

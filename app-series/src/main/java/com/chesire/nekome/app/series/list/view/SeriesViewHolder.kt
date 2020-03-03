@@ -11,13 +11,13 @@ import com.chesire.nekome.core.extensions.toAlpha
 import com.chesire.nekome.core.extensions.visibleIf
 import com.chesire.nekome.core.models.SeriesModel
 import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.adapter_item_series.adapterItemProgressBar
-import kotlinx.android.synthetic.main.adapter_item_series.adapterItemSeriesDate
-import kotlinx.android.synthetic.main.adapter_item_series.adapterItemSeriesImage
-import kotlinx.android.synthetic.main.adapter_item_series.adapterItemSeriesPlusOne
-import kotlinx.android.synthetic.main.adapter_item_series.adapterItemSeriesProgress
-import kotlinx.android.synthetic.main.adapter_item_series.adapterItemSeriesSubtype
-import kotlinx.android.synthetic.main.adapter_item_series.adapterItemSeriesTitle
+import kotlinx.android.synthetic.main.adapter_item_series.seriesDate
+import kotlinx.android.synthetic.main.adapter_item_series.seriesImage
+import kotlinx.android.synthetic.main.adapter_item_series.seriesPlusOne
+import kotlinx.android.synthetic.main.adapter_item_series.seriesProgress
+import kotlinx.android.synthetic.main.adapter_item_series.seriesProgressBar
+import kotlinx.android.synthetic.main.adapter_item_series.seriesSubtype
+import kotlinx.android.synthetic.main.adapter_item_series.seriesTitle
 
 private const val UNKNOWN_DATE = "????-??-??"
 
@@ -39,16 +39,16 @@ class SeriesViewHolder(view: View) : RecyclerView.ViewHolder(view), LayoutContai
             .load(model.posterImage.smallest?.url)
             .placeholder(R.drawable.ic_insert_photo)
             .error(R.drawable.ic_insert_photo)
-            .into(adapterItemSeriesImage)
-        adapterItemSeriesTitle.text = model.title
-        adapterItemSeriesSubtype.text = model.subtype.name
-        adapterItemSeriesProgress.text = containerView.context.getString(
+            .into(seriesImage)
+        seriesTitle.text = model.title
+        seriesSubtype.text = model.subtype.name
+        seriesProgress.text = containerView.context.getString(
             R.string.series_list_length,
             model.progress.toString(),
             if (model.lengthKnown) model.totalLength else '-'
         )
         setupDateString(model)
-        adapterItemSeriesPlusOne.visibleIf(invisible = true) {
+        seriesPlusOne.visibleIf(invisible = true) {
             !model.lengthKnown || model.progress < model.totalLength
         }
     }
@@ -75,7 +75,7 @@ class SeriesViewHolder(view: View) : RecyclerView.ViewHolder(view), LayoutContai
                 model.endDate
             )
         }
-        adapterItemSeriesDate.text = dateString
+        seriesDate.text = dateString
     }
 
     /**
@@ -84,11 +84,11 @@ class SeriesViewHolder(view: View) : RecyclerView.ViewHolder(view), LayoutContai
     fun bindListener(listener: SeriesInteractionListener) {
         containerView.setOnClickListener {
             listener.seriesSelected(
-                adapterItemSeriesImage,
+                seriesImage,
                 seriesModel
             )
         }
-        adapterItemSeriesPlusOne.setOnClickListener {
+        seriesPlusOne.setOnClickListener {
             startUpdatingSeries()
             listener.onPlusOne(seriesModel) {
                 finishUpdatingSeries()
@@ -97,14 +97,14 @@ class SeriesViewHolder(view: View) : RecyclerView.ViewHolder(view), LayoutContai
     }
 
     private fun startUpdatingSeries() {
-        adapterItemProgressBar.show()
-        adapterItemSeriesPlusOne.isEnabled = false
-        adapterItemSeriesPlusOne.toAlpha(0.3f)
+        seriesProgressBar.show()
+        seriesPlusOne.isEnabled = false
+        seriesPlusOne.toAlpha(0.3f)
     }
 
     private fun finishUpdatingSeries() {
-        adapterItemProgressBar.hide()
-        adapterItemSeriesPlusOne.isEnabled = true
-        adapterItemSeriesPlusOne.toAlpha(1f)
+        seriesProgressBar.hide()
+        seriesPlusOne.isEnabled = true
+        seriesPlusOne.toAlpha(1f)
     }
 }

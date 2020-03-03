@@ -11,8 +11,8 @@ import com.bumptech.glide.Glide
 import com.chesire.lifecyklelog.LogLifecykle
 import com.chesire.nekome.R
 import com.chesire.nekome.core.viewmodel.ViewModelFactory
+import com.chesire.nekome.databinding.FragmentSyncingBinding
 import dagger.android.support.DaggerFragment
-import kotlinx.android.synthetic.main.fragment_syncing.syncingProfileImage
 import javax.inject.Inject
 
 /**
@@ -23,12 +23,14 @@ class SyncingFragment : DaggerFragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
     private val viewModel by viewModels<SyncingViewModel> { viewModelFactory }
+    private var _binding: FragmentSyncingBinding? = null
+    private val binding get() = requireNotNull(_binding) { "Binding not set" }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.fragment_syncing, container, false)
+    ) = FragmentSyncingBinding.inflate(inflater, container, false).also { _binding = it }.root
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -47,7 +49,7 @@ class SyncingFragment : DaggerFragment() {
                     .placeholder(R.drawable.ic_account_circle)
                     .error(R.drawable.ic_account_circle)
                     .circleCrop()
-                    .into(syncingProfileImage)
+                    .into(binding.profileImage)
             }
         )
     }
