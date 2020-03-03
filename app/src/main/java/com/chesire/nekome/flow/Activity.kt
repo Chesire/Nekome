@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.MenuItem
+import android.view.View
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.core.view.GravityCompat
@@ -24,6 +25,7 @@ import com.chesire.nekome.R
 import com.chesire.nekome.core.AuthCaster
 import com.chesire.nekome.core.viewmodel.ViewModelFactory
 import com.google.android.material.navigation.NavigationView
+import com.google.android.material.snackbar.Snackbar
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity.activityDrawer
 import timber.log.Timber
@@ -38,6 +40,7 @@ import javax.inject.Inject
 class Activity : DaggerAppCompatActivity(), AuthCaster.AuthCasterListener {
     @Inject
     lateinit var authCaster: AuthCaster
+
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
     private val viewModel by viewModels<ActivityViewModel> { viewModelFactory }
@@ -120,7 +123,7 @@ class Activity : DaggerAppCompatActivity(), AuthCaster.AuthCasterListener {
 
     override fun unableToRefresh() {
         Timber.w("unableToRefresh has occurred")
-        performLogout()
+        performLogout(true)
     }
 
     /**
@@ -139,13 +142,19 @@ class Activity : DaggerAppCompatActivity(), AuthCaster.AuthCasterListener {
         }
     }
 
-    private fun performLogout() {
+    private fun performLogout(isFailure: Boolean = false) {
         Timber.w("Logout called, now attempting")
         viewModel.logout {
             Handler(Looper.getMainLooper()).post {
                 findNavController(R.id.activityNavigation).navigate(
                     OverviewNavGraphDirections.globalToDetailsFragment()
                 )
+
+                if (isFailure) {
+                    (findViewById<View?>(R.id.activityDrawer))?.let { view ->
+                        Snackbar.make(view, R.string.logout_forced, Snackbar.LENGTH_LONG).show()
+                    }
+                }
             }
         }
     }
