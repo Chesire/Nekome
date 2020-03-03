@@ -33,8 +33,10 @@ class SeriesViewHolderTests {
 
     @Inject
     lateinit var authProvider: AuthProvider
+
     @Inject
     lateinit var seriesDao: SeriesDao
+
     @Inject
     lateinit var library: LibraryApi
 
@@ -65,32 +67,32 @@ class SeriesViewHolderTests {
         }
         activity.launchActivity(null)
 
-        assertListNotEmpty(R.id.fragmentSeriesListRecyclerView)
+        assertListNotEmpty(R.id.listContent)
         assertDisplayedAtPosition(
-            R.id.fragmentSeriesListRecyclerView,
+            R.id.listContent,
             0,
-            R.id.adapterItemSeriesTitle,
+            R.id.seriesTitle,
             expectedTitle
         )
         assertDisplayedAtPosition(
-            R.id.fragmentSeriesListRecyclerView,
+            R.id.listContent,
             0,
-            R.id.adapterItemSeriesSubtype,
+            R.id.seriesSubtype,
             expectedSubtype.name
         )
         assertDisplayedAtPosition(
-            R.id.fragmentSeriesListRecyclerView,
+            R.id.listContent,
             0,
-            R.id.adapterItemSeriesProgress,
+            R.id.seriesProgress,
             expectedProgress
         )
         assertDisplayedAtPosition(
-            R.id.fragmentSeriesListRecyclerView,
+            R.id.listContent,
             0,
-            R.id.adapterItemSeriesDate,
+            R.id.seriesDate,
             expectedDate
         )
-        assertDisplayed(R.id.adapterItemSeriesPlusOne)
+        assertDisplayed(R.id.seriesPlusOne)
     }
 
     @Test
@@ -102,11 +104,11 @@ class SeriesViewHolderTests {
         }
         activity.launchActivity(null)
 
-        assertListNotEmpty(R.id.fragmentSeriesListRecyclerView)
+        assertListNotEmpty(R.id.listContent)
         assertDisplayedAtPosition(
-            R.id.fragmentSeriesListRecyclerView,
+            R.id.listContent,
             0,
-            R.id.adapterItemSeriesDate,
+            R.id.seriesDate,
             expectedDate
         )
     }
@@ -120,11 +122,11 @@ class SeriesViewHolderTests {
         }
         activity.launchActivity(null)
 
-        assertListNotEmpty(R.id.fragmentSeriesListRecyclerView)
+        assertListNotEmpty(R.id.listContent)
         assertDisplayedAtPosition(
-            R.id.fragmentSeriesListRecyclerView,
+            R.id.listContent,
             0,
-            R.id.adapterItemSeriesDate,
+            R.id.seriesDate,
             expectedDate
         )
     }
@@ -138,11 +140,11 @@ class SeriesViewHolderTests {
         }
         activity.launchActivity(null)
 
-        assertListNotEmpty(R.id.fragmentSeriesListRecyclerView)
+        assertListNotEmpty(R.id.listContent)
         assertDisplayedAtPosition(
-            R.id.fragmentSeriesListRecyclerView,
+            R.id.listContent,
             0,
-            R.id.adapterItemSeriesDate,
+            R.id.seriesDate,
             expectedDate
         )
     }
@@ -156,11 +158,11 @@ class SeriesViewHolderTests {
         }
         activity.launchActivity(null)
 
-        assertListNotEmpty(R.id.fragmentSeriesListRecyclerView)
+        assertListNotEmpty(R.id.listContent)
         assertDisplayedAtPosition(
-            R.id.fragmentSeriesListRecyclerView,
+            R.id.listContent,
             0,
-            R.id.adapterItemSeriesProgress,
+            R.id.seriesProgress,
             expectedProgress
         )
     }
@@ -172,8 +174,8 @@ class SeriesViewHolderTests {
         }
         activity.launchActivity(null)
 
-        assertListNotEmpty(R.id.fragmentSeriesListRecyclerView)
-        assertNotDisplayed(R.id.adapterItemSeriesPlusOne)
+        assertListNotEmpty(R.id.listContent)
+        assertNotDisplayed(R.id.seriesPlusOne)
     }
 
     @Test
@@ -189,10 +191,10 @@ class SeriesViewHolderTests {
         }
         activity.launchActivity(null)
 
-        assertNotDisplayed(R.id.adapterItemProgressBar)
-        clickListItemChild(R.id.fragmentSeriesListRecyclerView, 0, R.id.adapterItemSeriesPlusOne)
+        assertNotDisplayed(R.id.seriesProgressBar)
+        clickListItemChild(R.id.listContent, 0, R.id.seriesPlusOne)
 
-        assertDisplayed(R.id.adapterItemProgressBar)
+        assertDisplayed(R.id.seriesProgressBar)
     }
 
     @Test
@@ -216,17 +218,17 @@ class SeriesViewHolderTests {
         activity.launchActivity(null)
 
         assertDisplayedAtPosition(
-            R.id.fragmentSeriesListRecyclerView,
+            R.id.listContent,
             0,
-            R.id.adapterItemSeriesProgress,
+            R.id.seriesProgress,
             initialProgress
         )
-        clickListItemChild(R.id.fragmentSeriesListRecyclerView, 0, R.id.adapterItemSeriesPlusOne)
+        clickListItemChild(R.id.listContent, 0, R.id.seriesPlusOne)
 
         assertDisplayedAtPosition(
-            R.id.fragmentSeriesListRecyclerView,
+            R.id.listContent,
             0,
-            R.id.adapterItemSeriesProgress,
+            R.id.seriesProgress,
             expectedProgress
         )
     }

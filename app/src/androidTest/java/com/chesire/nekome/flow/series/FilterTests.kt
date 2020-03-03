@@ -36,6 +36,7 @@ class FilterTests {
     from the MaterialDialogs library, but they should do for now.
      */
     val activity = ActivityTestRule(Activity::class.java, false, false)
+
     @get:Rule
     val clearPreferencesRule = ClearPreferencesRule()
 

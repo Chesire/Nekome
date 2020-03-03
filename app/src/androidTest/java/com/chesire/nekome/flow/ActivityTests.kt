@@ -20,6 +20,7 @@ import javax.inject.Inject
 class ActivityTests {
     @get:Rule
     val activity = ActivityTestRule(Activity::class.java, false, false)
+
     @get:Rule
     val clearPreferencesRule = ClearPreferencesRule()
 

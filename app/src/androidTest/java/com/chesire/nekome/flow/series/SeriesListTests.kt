@@ -33,7 +33,7 @@ class SeriesListTests {
     fun canReachSeriesList() {
         activity.launchActivity(null)
 
-        assertDisplayed(R.id.fragmentSeriesListLayout)
+        assertDisplayed(R.id.seriesListLayout)
     }
 
     @Test
@@ -41,6 +41,6 @@ class SeriesListTests {
     fun emptyListDisplaysEmptyView() {
         activity.launchActivity(null)
 
-        assertDisplayed(R.id.fragmentSeriesListEmpty)
+        assertDisplayed(R.id.listEmpty)
     }
 }

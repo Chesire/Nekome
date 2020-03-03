@@ -38,17 +38,22 @@ import javax.inject.Inject
 class DetailsTests {
     @get:Rule
     val activity = ActivityTestRule(Activity::class.java, false, false)
+
     @get:Rule
     val clearPreferencesRule = ClearPreferencesRule()
 
     @Inject
     lateinit var auth: AuthApi
+
     @Inject
     lateinit var user: UserApi
+
     @Inject
     lateinit var library: LibraryApi
+
     @Inject
     lateinit var authProvider: AuthProvider
+
     @Inject
     lateinit var urlHandler: UrlHandler
 
@@ -74,24 +79,24 @@ class DetailsTests {
     fun emptyUsernameShowsError() {
         activity.launchActivity(null)
 
-        writeTo(R.id.detailsUsernameText, "")
-        writeTo(R.id.detailsPasswordText, "Password")
+        writeTo(R.id.usernameText, "")
+        writeTo(R.id.passwordText, "Password")
         closeKeyboard()
-        clickOn(R.id.detailsLoginButton)
+        clickOn(R.id.loginButton)
 
-        assertError(R.id.detailsUsernameLayout, R.string.login_error_empty_username)
+        assertError(R.id.usernameLayout, R.string.login_error_empty_username)
     }
 
     @Test
     fun emptyPasswordShowsError() {
         activity.launchActivity(null)
 
-        writeTo(R.id.detailsUsernameText, "Username")
-        writeTo(R.id.detailsPasswordText, "")
+        writeTo(R.id.usernameText, "Username")
+        writeTo(R.id.passwordText, "")
         closeKeyboard()
-        clickOn(R.id.detailsLoginButton)
+        clickOn(R.id.loginButton)
 
-        assertError(R.id.detailsPasswordLayout, R.string.login_error_empty_password)
+        assertError(R.id.passwordLayout, R.string.login_error_empty_password)
     }
 
     @Test
@@ -104,10 +109,10 @@ class DetailsTests {
 
         activity.launchActivity(null)
 
-        writeTo(R.id.detailsUsernameText, "Username")
-        writeTo(R.id.detailsPasswordText, "Password")
+        writeTo(R.id.usernameText, "Username")
+        writeTo(R.id.passwordText, "Password")
         closeKeyboard()
-        clickOn(R.id.detailsLoginButton)
+        clickOn(R.id.loginButton)
 
         onToast(R.string.login_error_credentials).check(matches(isDisplayed()))
     }
@@ -122,10 +127,10 @@ class DetailsTests {
 
         activity.launchActivity(null)
 
-        writeTo(R.id.detailsUsernameText, "Username")
-        writeTo(R.id.detailsPasswordText, "Password")
+        writeTo(R.id.usernameText, "Username")
+        writeTo(R.id.passwordText, "Password")
         closeKeyboard()
-        clickOn(R.id.detailsLoginButton)
+        clickOn(R.id.loginButton)
 
         onToast(R.string.login_error_generic).check(matches(isDisplayed()))
     }
@@ -136,7 +141,7 @@ class DetailsTests {
         every { urlHandler.launch(any(), any()) } just Runs
 
         activity.launchActivity(null)
-        clickOn(R.id.detailsForgotPassword)
+        clickOn(R.id.forgotPasswordButton)
 
         verify { urlHandler.launch(any(), expectedUrl) }
     }
@@ -147,7 +152,7 @@ class DetailsTests {
         every { urlHandler.launch(any(), any()) } just Runs
 
         activity.launchActivity(null)
-        onView(withId(R.id.detailsSignUp))
+        onView(withId(R.id.signUp))
             .perform(clickClickableSpan(R.string.login_sign_up_link_target))
 
         verify { urlHandler.launch(any(), expectedUrl) }
