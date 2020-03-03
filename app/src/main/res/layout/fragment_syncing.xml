@@ -2,11 +2,12 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/syncingLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <ImageView
-        android:id="@+id/syncingProfileImage"
+        android:id="@+id/profileImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/full_margin"
@@ -20,7 +21,7 @@
         tools:src="@drawable/ic_account_circle" />
 
     <TextView
-        android:id="@+id/syncingSyncText"
+        android:id="@+id/syncText"
         style="@style/TextAppearance.MaterialComponents.Headline5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -28,7 +29,7 @@
         android:text="@string/syncing_syncing"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/syncingProfileImage" />
+        app:layout_constraintTop_toBottomOf="@id/profileImage" />
 
     <ProgressBar
         style="@style/Widget.AppCompat.ProgressBar.Horizontal"
@@ -41,6 +42,6 @@
         android:indeterminateTint="@color/colorPrimaryDark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/syncingSyncText" />
+        app:layout_constraintTop_toBottomOf="@id/syncText" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
