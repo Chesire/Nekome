@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/fragmentProfileCoordinatorLayout"
+    android:id="@+id/profileLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -10,7 +10,7 @@
         android:orientation="vertical">
 
         <ImageView
-            android:id="@+id/fragmentProfileAvatar"
+            android:id="@+id/profileAvatar"
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_margin="@dimen/full_margin" />

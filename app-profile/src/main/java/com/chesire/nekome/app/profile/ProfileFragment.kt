@@ -9,10 +9,10 @@ import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.chesire.lifecyklelog.LogLifecykle
+import com.chesire.nekome.app.profile.databinding.FragmentProfileBinding
 import com.chesire.nekome.core.models.UserModel
 import com.chesire.nekome.core.viewmodel.ViewModelFactory
 import dagger.android.support.DaggerFragment
-import kotlinx.android.synthetic.main.fragment_profile.fragmentProfileAvatar
 import javax.inject.Inject
 
 /**
@@ -23,6 +23,8 @@ class ProfileFragment : DaggerFragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
     private val viewModel by viewModels<ProfileViewModel> { viewModelFactory }
+    private var _binding: FragmentProfileBinding? = null
+    private val binding get() = requireNotNull(_binding) { "Binding not set" }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,7 +35,7 @@ class ProfileFragment : DaggerFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.fragment_profile, container, false)
+    ) = FragmentProfileBinding.inflate(inflater, container, false).also { _binding = it }.root
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -49,6 +51,6 @@ class ProfileFragment : DaggerFragment() {
         Glide.with(requireContext())
             .load(user.avatar.largest?.url)
             .apply(RequestOptions.circleCropTransform())
-            .into(fragmentProfileAvatar)
+            .into(binding.profileAvatar)
     }
 }
