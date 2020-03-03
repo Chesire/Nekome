@@ -7,7 +7,7 @@
     android:layout_height="match_parent">
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/searchSeriesLayout"
+        android:id="@+id/searchTextLayout"
         style="@style/TextInputStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/searchSeriesText"
+            android:id="@+id/searchText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawablePadding="@dimen/login_text_drawable_padding"
@@ -29,7 +29,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.chip.ChipGroup
-        android:id="@+id/seriesDetailStatusGroup"
+        android:id="@+id/searchChipGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -39,7 +39,7 @@
         android:layout_marginBottom="@dimen/full_margin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/searchSeriesLayout"
+        app:layout_constraintTop_toBottomOf="@id/searchTextLayout"
         app:singleSelection="true">
 
         <com.google.android.material.chip.Chip
