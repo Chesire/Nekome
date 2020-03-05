@@ -38,6 +38,7 @@ import javax.inject.Inject
 class Activity : DaggerAppCompatActivity(), AuthCaster.AuthCasterListener {
     @Inject
     lateinit var authCaster: AuthCaster
+
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
     private val viewModel by viewModels<ActivityViewModel> { viewModelFactory }
@@ -53,9 +54,13 @@ class Activity : DaggerAppCompatActivity(), AuthCaster.AuthCasterListener {
         observeViewModel()
 
         authCaster.subscribeToAuthError(this)
-        if (!viewModel.userLoggedIn) {
-            findNavController(R.id.activityNavigation)
-                .navigate(OverviewNavGraphDirections.globalToDetailsFragment())
+
+        // This is needed or the DetailsFragment will be recreated on configuration change
+        if (savedInstanceState == null) {
+            if (!viewModel.userLoggedIn) {
+                findNavController(R.id.activityNavigation)
+                    .navigate(OverviewNavGraphDirections.globalToDetailsFragment())
+            }
         }
     }
 
