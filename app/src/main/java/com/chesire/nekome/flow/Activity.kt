@@ -55,12 +55,11 @@ class Activity : DaggerAppCompatActivity(), AuthCaster.AuthCasterListener {
 
         authCaster.subscribeToAuthError(this)
 
-        // This is needed or the DetailsFragment will be recreated on configuration change
-        if (savedInstanceState == null) {
-            if (!viewModel.userLoggedIn) {
-                findNavController(R.id.activityNavigation)
-                    .navigate(OverviewNavGraphDirections.globalToDetailsFragment())
-            }
+        // savedInstanceState check is needed or the DetailsFragment will be recreated
+        // on configuration change
+        if (savedInstanceState == null && !viewModel.userLoggedIn) {
+            findNavController(R.id.activityNavigation)
+                .navigate(OverviewNavGraphDirections.globalToDetailsFragment())
         }
     }
 
