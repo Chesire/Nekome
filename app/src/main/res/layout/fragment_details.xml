@@ -102,7 +102,7 @@
             android:text="@string/login_forgot_password"
             android:textSize="12sp" />
 
-        <FrameLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/full_margin">
@@ -114,18 +114,27 @@
                 android:layout_gravity="center"
                 android:backgroundTint="@color/colorPrimary"
                 android:text="@string/login_login"
-                android:textColor="@color/white" />
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <ProgressBar
                 android:id="@+id/progressBar"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:layout_gravity="center"
+                android:layout_margin="8dp"
                 android:indeterminate="true"
                 android:indeterminateTint="@color/white"
                 android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="@id/loginButton"
+                app:layout_constraintEnd_toEndOf="@id/loginButton"
+                app:layout_constraintStart_toStartOf="@id/loginButton"
+                app:layout_constraintTop_toTopOf="@id/loginButton"
                 tools:visibility="visible" />
-        </FrameLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/signUp"
