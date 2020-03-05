@@ -151,7 +151,7 @@ class Activity : DaggerAppCompatActivity(), AuthCaster.AuthCasterListener {
                 )
 
                 if (isFailure) {
-                    (findViewById<View?>(R.id.activityDrawer))?.let { view ->
+                    findViewById<View?>(R.id.activityDrawer)?.let { view ->
                         Snackbar.make(view, R.string.logout_forced, Snackbar.LENGTH_LONG).show()
                     }
                 }
