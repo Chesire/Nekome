@@ -1,5 +1,6 @@
 include ':app',
         ':app-discover',
+        ':app-login',
         ':app-profile',
         ':app-search',
         ':app-series',
