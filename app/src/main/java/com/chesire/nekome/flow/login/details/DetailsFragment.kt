@@ -29,11 +29,6 @@ import javax.inject.Inject
  */
 @LogLifecykle
 class DetailsFragment : DaggerFragment() {
-    companion object {
-        private const val BUNDLE_USERNAME = "bundle_username"
-        private const val BUNDLE_PASSWORD = "bundle_password"
-    }
-
     @Inject
     lateinit var urlHandler: UrlHandler
 
@@ -52,11 +47,6 @@ class DetailsFragment : DaggerFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        savedInstanceState?.let { state ->
-            binding.usernameText.setText(state.getString(BUNDLE_USERNAME))
-            binding.passwordText.setText(state.getString(BUNDLE_PASSWORD))
-        }
-
         binding.usernameText.addTextChangedListener { binding.usernameLayout.error = "" }
         binding.passwordText.addTextChangedListener { binding.passwordLayout.error = "" }
         binding.passwordText.setOnEditorActionListener { _, actionId, _ ->
@@ -74,15 +64,6 @@ class DetailsFragment : DaggerFragment() {
 
         setupLinks()
         viewModel.loginStatus.observe(viewLifecycleOwner, Observer { loginStatusChanged(it) })
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-
-        _binding?.let { binding ->
-            outState.putString(BUNDLE_USERNAME, binding.usernameText.text.toString())
-            outState.putString(BUNDLE_PASSWORD, binding.passwordText.text.toString())
-        }
     }
 
     private fun setupLinks() {
