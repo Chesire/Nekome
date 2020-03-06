@@ -1,4 +1,4 @@
-package com.chesire.nekome.flow.login.details
+package com.chesire.nekome.app.login.details
 
 /**
  * Provides the status of a login request.

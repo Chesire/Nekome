@@ -1,4 +1,4 @@
-package com.chesire.nekome.flow.login.details
+package com.chesire.nekome.app.login.details
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
@@ -14,12 +14,15 @@ import io.mockk.every
 import io.mockk.just
 import io.mockk.mockk
 import io.mockk.verify
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.Rule
 import org.junit.Test
 
+@ExperimentalCoroutinesApi
 class DetailsViewModelTests {
     @get:Rule
     val taskExecutorRule = InstantTaskExecutorRule()
+
     @get:Rule
     val coroutineRule = CoroutinesMainDispatcherRule()
 
@@ -31,10 +34,11 @@ class DetailsViewModelTests {
             every { onChanged(any()) } just Runs
         }
 
-        DetailsViewModel(mockAuth, mockRepo).run {
-            loginStatus.observeForever(mockObserver)
-            login("", "password")
-        }
+        DetailsViewModel(mockAuth, mockRepo)
+            .run {
+                loginStatus.observeForever(mockObserver)
+                login("", "password")
+            }
 
         verify { mockObserver.onChanged(LoginStatus.EmptyUsername) }
     }
@@ -47,10 +51,11 @@ class DetailsViewModelTests {
             every { onChanged(any()) } just Runs
         }
 
-        DetailsViewModel(mockAuth, mockRepo).run {
-            loginStatus.observeForever(mockObserver)
-            login("username", "")
-        }
+        DetailsViewModel(mockAuth, mockRepo)
+            .run {
+                loginStatus.observeForever(mockObserver)
+                login("username", "")
+            }
 
         verify { mockObserver.onChanged(LoginStatus.EmptyPassword) }
     }
@@ -67,10 +72,11 @@ class DetailsViewModelTests {
             every { onChanged(any()) } just Runs
         }
 
-        DetailsViewModel(mockAuth, mockRepo).run {
-            loginStatus.observeForever(mockObserver)
-            login("username", "password")
-        }
+        DetailsViewModel(mockAuth, mockRepo)
+            .run {
+                loginStatus.observeForever(mockObserver)
+                login("username", "password")
+            }
 
         verify { mockObserver.onChanged(LoginStatus.InvalidCredentials) }
     }
@@ -87,10 +93,11 @@ class DetailsViewModelTests {
             every { onChanged(any()) } just Runs
         }
 
-        DetailsViewModel(mockAuth, mockRepo).run {
-            loginStatus.observeForever(mockObserver)
-            login("username", "password")
-        }
+        DetailsViewModel(mockAuth, mockRepo)
+            .run {
+                loginStatus.observeForever(mockObserver)
+                login("username", "password")
+            }
 
         verify { mockObserver.onChanged(LoginStatus.Error) }
     }
@@ -113,9 +120,10 @@ class DetailsViewModelTests {
             }
         }
 
-        DetailsViewModel(mockAuth, mockRepo).run {
-            login("username", "password")
-        }
+        DetailsViewModel(mockAuth, mockRepo)
+            .run {
+                login("username", "password")
+            }
 
         coVerify { mockRepo.refreshUser() }
     }
@@ -137,10 +145,11 @@ class DetailsViewModelTests {
             every { onChanged(any()) } just Runs
         }
 
-        DetailsViewModel(mockAuth, mockRepo).run {
-            loginStatus.observeForever(mockObserver)
-            login("username", "password")
-        }
+        DetailsViewModel(mockAuth, mockRepo)
+            .run {
+                loginStatus.observeForever(mockObserver)
+                login("username", "password")
+            }
 
         verify { mockObserver.onChanged(LoginStatus.Success) }
     }
@@ -162,10 +171,11 @@ class DetailsViewModelTests {
             every { onChanged(any()) } just Runs
         }
 
-        DetailsViewModel(mockAuth, mockRepo).run {
-            loginStatus.observeForever(mockObserver)
-            login("username", "password")
-        }
+        DetailsViewModel(mockAuth, mockRepo)
+            .run {
+                loginStatus.observeForever(mockObserver)
+                login("username", "password")
+            }
 
         coVerify { mockAuth.clearAuth() }
     }
@@ -187,10 +197,11 @@ class DetailsViewModelTests {
             every { onChanged(any()) } just Runs
         }
 
-        DetailsViewModel(mockAuth, mockRepo).run {
-            loginStatus.observeForever(mockObserver)
-            login("username", "password")
-        }
+        DetailsViewModel(mockAuth, mockRepo)
+            .run {
+                loginStatus.observeForever(mockObserver)
+                login("username", "password")
+            }
 
         verify { mockObserver.onChanged(LoginStatus.Error) }
     }

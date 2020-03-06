@@ -1,4 +1,4 @@
-package com.chesire.nekome.flow.login.details
+package com.chesire.nekome.app.login.details
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,14 +11,14 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.chesire.lifecyklelog.LogLifecykle
-import com.chesire.nekome.R
+import com.chesire.nekome.app.login.R
+import com.chesire.nekome.app.login.databinding.FragmentDetailsBinding
 import com.chesire.nekome.core.extensions.hide
 import com.chesire.nekome.core.extensions.hideSystemKeyboard
 import com.chesire.nekome.core.extensions.setLinkedText
 import com.chesire.nekome.core.extensions.show
 import com.chesire.nekome.core.url.UrlHandler
 import com.chesire.nekome.core.viewmodel.ViewModelFactory
-import com.chesire.nekome.databinding.FragmentDetailsBinding
 import com.google.android.material.snackbar.Snackbar
 import dagger.android.support.DaggerFragment
 import timber.log.Timber

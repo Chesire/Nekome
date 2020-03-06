@@ -1,4 +1,4 @@
-package com.chesire.nekome.flow.login.syncing
+package com.chesire.nekome.app.login.syncing
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations

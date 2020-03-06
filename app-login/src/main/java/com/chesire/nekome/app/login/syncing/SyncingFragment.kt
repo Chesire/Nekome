@@ -1,4 +1,4 @@
-package com.chesire.nekome.flow.login.syncing
+package com.chesire.nekome.app.login.syncing
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,6 +10,8 @@ import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.chesire.lifecyklelog.LogLifecykle
 import com.chesire.nekome.R
+import com.chesire.nekome.app.login.R
+import com.chesire.nekome.app.login.databinding.FragmentSyncingBinding
 import com.chesire.nekome.core.viewmodel.ViewModelFactory
 import com.chesire.nekome.databinding.FragmentSyncingBinding
 import dagger.android.support.DaggerFragment
