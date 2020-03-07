@@ -2,8 +2,8 @@ package com.chesire.nekome.flow.settings
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.rule.ActivityTestRule
+import com.chesire.nekome.Activity
 import com.chesire.nekome.R
-import com.chesire.nekome.flow.Activity
 import com.chesire.nekome.helpers.injector
 import com.chesire.nekome.kitsu.AuthProvider
 import com.schibsted.spain.barista.assertion.BaristaVisibilityAssertions.assertContains

@@ -1,9 +1,8 @@
-package com.chesire.nekome.flow
+package com.chesire.nekome
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.chesire.nekome.LogoutHandler
 import com.chesire.nekome.account.UserRepository
 import com.chesire.nekome.core.IOContext
 import com.chesire.nekome.kitsu.AuthProvider

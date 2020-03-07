@@ -5,8 +5,8 @@ import androidx.test.espresso.intent.Intents.intended
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.rule.ActivityTestRule
+import com.chesire.nekome.Activity
 import com.chesire.nekome.R
-import com.chesire.nekome.flow.Activity
 import com.chesire.nekome.helpers.injector
 import com.chesire.nekome.kitsu.AuthProvider
 import com.chesire.nekome.server.Resource

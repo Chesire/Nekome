@@ -1,4 +1,4 @@
-package com.chesire.nekome.flow
+package com.chesire.nekome
 
 import android.os.Bundle
 import android.os.Handler
@@ -20,9 +20,8 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
 import com.bumptech.glide.Glide
 import com.chesire.lifecyklelog.LogLifecykle
-import com.chesire.nekome.OverviewNavGraphDirections
-import com.chesire.nekome.R
 import com.chesire.nekome.core.AuthCaster
+import com.chesire.nekome.core.nav.Flow
 import com.chesire.nekome.core.viewmodel.ViewModelFactory
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
@@ -37,7 +36,7 @@ import javax.inject.Inject
  */
 @LogLifecykle
 @Suppress("TooManyFunctions")
-class Activity : DaggerAppCompatActivity(), AuthCaster.AuthCasterListener {
+class Activity : DaggerAppCompatActivity(), AuthCaster.AuthCasterListener, Flow {
     @Inject
     lateinit var authCaster: AuthCaster
 
@@ -170,5 +169,11 @@ class Activity : DaggerAppCompatActivity(), AuthCaster.AuthCasterListener {
     private fun enableDrawer() {
         supportActionBar?.show()
         activityDrawer.setDrawerLockMode(LOCK_MODE_UNLOCKED)
+    }
+
+    override fun finishLogin() {
+        findNavController(R.id.activityNavigation).navigate(
+            OverviewNavGraphDirections.globalToAnimeFragment()
+        )
     }
 }

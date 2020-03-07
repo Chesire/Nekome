@@ -1,4 +1,4 @@
-package com.chesire.nekome.flow.login.syncing
+package com.chesire.nekome.app.login.syncing
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
@@ -22,6 +22,7 @@ import org.junit.Test
 class SyncingViewModelTests {
     @get:Rule
     val taskExecutorRule = InstantTaskExecutorRule()
+
     @get:Rule
     val coroutineRule = CoroutinesMainDispatcherRule()
 
@@ -38,11 +39,12 @@ class SyncingViewModelTests {
             every { onChanged(any()) } just Runs
         }
 
-        SyncingViewModel(mockRepo, mockUser).run {
-            syncStatus.observeForever(mockObserver)
-            syncLatestData()
-            assertTrue(syncStatus.value is AsyncState.Error)
-        }
+        SyncingViewModel(mockRepo, mockUser)
+            .run {
+                syncStatus.observeForever(mockObserver)
+                syncLatestData()
+                assertTrue(syncStatus.value is AsyncState.Error)
+            }
     }
 
     @Test
@@ -58,11 +60,12 @@ class SyncingViewModelTests {
             every { onChanged(any()) } just Runs
         }
 
-        SyncingViewModel(mockRepo, mockUser).run {
-            syncStatus.observeForever(mockObserver)
-            syncLatestData()
-            assertTrue(syncStatus.value is AsyncState.Error)
-        }
+        SyncingViewModel(mockRepo, mockUser)
+            .run {
+                syncStatus.observeForever(mockObserver)
+                syncLatestData()
+                assertTrue(syncStatus.value is AsyncState.Error)
+            }
     }
 
     @Test
@@ -78,10 +81,11 @@ class SyncingViewModelTests {
             every { onChanged(any()) } just Runs
         }
 
-        SyncingViewModel(mockRepo, mockUser).run {
-            syncStatus.observeForever(mockObserver)
-            syncLatestData()
-            assertTrue(syncStatus.value is AsyncState.Success)
-        }
+        SyncingViewModel(mockRepo, mockUser)
+            .run {
+                syncStatus.observeForever(mockObserver)
+                syncLatestData()
+                assertTrue(syncStatus.value is AsyncState.Success)
+            }
     }
 }

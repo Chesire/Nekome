@@ -6,9 +6,9 @@ import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.rule.ActivityTestRule
+import com.chesire.nekome.Activity
 import com.chesire.nekome.R
 import com.chesire.nekome.core.url.UrlHandler
-import com.chesire.nekome.flow.Activity
 import com.chesire.nekome.helpers.ToastMatcher.Companion.onToast
 import com.chesire.nekome.helpers.clickClickableSpan
 import com.chesire.nekome.helpers.getResource

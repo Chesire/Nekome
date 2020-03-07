@@ -1,6 +1,7 @@
 package com.chesire.nekome.flow
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import com.chesire.nekome.ActivityViewModel
 import com.chesire.nekome.LogoutHandler
 import com.chesire.nekome.account.UserRepository
 import com.chesire.nekome.kitsu.AuthProvider

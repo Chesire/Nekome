@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/login_nav_graph"
+    app:startDestination="@id/detailsFragment"
+    tools:ignore="UnusedNavigation">
+    <!-- UnusedNavigation is used because this is reached as a nested graph -->
+
+    <fragment
+        android:id="@+id/detailsFragment"
+        android:name="com.chesire.nekome.app.login.details.DetailsFragment"
+        android:label="@string/nav_details"
+        tools:layout="@layout/fragment_details">
+        <action
+            android:id="@+id/toSyncingFragment"
+            app:destination="@id/syncingFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/syncingFragment"
+        android:name="com.chesire.nekome.app.login.syncing.SyncingFragment"
+        android:label="@string/nav_syncing"
+        tools:layout="@layout/fragment_syncing" />
+
+</navigation>
