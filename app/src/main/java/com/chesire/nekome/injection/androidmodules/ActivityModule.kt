@@ -1,6 +1,6 @@
 package com.chesire.nekome.injection.androidmodules
 
-import com.chesire.nekome.flow.Activity
+import com.chesire.nekome.Activity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 

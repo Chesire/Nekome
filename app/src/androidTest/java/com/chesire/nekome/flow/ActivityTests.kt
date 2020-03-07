@@ -2,6 +2,7 @@ package com.chesire.nekome.flow
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.rule.ActivityTestRule
+import com.chesire.nekome.Activity
 import com.chesire.nekome.R
 import com.chesire.nekome.helpers.injector
 import com.chesire.nekome.kitsu.AuthProvider

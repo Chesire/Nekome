@@ -9,7 +9,7 @@ import com.chesire.nekome.app.search.results.ResultsViewModel
 import com.chesire.nekome.app.series.detail.SeriesDetailViewModel
 import com.chesire.nekome.app.series.list.SeriesListViewModel
 import com.chesire.nekome.core.viewmodel.ViewModelFactory
-import com.chesire.nekome.flow.ActivityViewModel
+import com.chesire.nekome.ActivityViewModel
 import com.chesire.nekome.app.login.details.DetailsViewModel
 import com.chesire.nekome.app.login.syncing.SyncingViewModel
 import dagger.Binds

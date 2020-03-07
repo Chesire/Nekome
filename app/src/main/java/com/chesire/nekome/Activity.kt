@@ -1,4 +1,4 @@
-package com.chesire.nekome.flow
+package com.chesire.nekome
 
 import android.os.Bundle
 import android.os.Handler
@@ -20,8 +20,6 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
 import com.bumptech.glide.Glide
 import com.chesire.lifecyklelog.LogLifecykle
-import com.chesire.nekome.OverviewNavGraphDirections
-import com.chesire.nekome.R
 import com.chesire.nekome.core.AuthCaster
 import com.chesire.nekome.core.nav.Flow
 import com.chesire.nekome.core.viewmodel.ViewModelFactory
