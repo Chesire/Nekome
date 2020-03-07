@@ -21,13 +21,5 @@
         android:name="com.chesire.nekome.app.login.syncing.SyncingFragment"
         android:label="@string/nav_syncing"
         tools:layout="@layout/fragment_syncing" />
-    <!--
-    need to exit to anime fragment from details...
-        <action
-            android:id="@+id/toAnimeFragment"
-            app:destination="@id/animeFragment"
-            app:popUpTo="@+id/detailsFragment"
-            app:popUpToInclusive="true" />
-    -->
 
 </navigation>

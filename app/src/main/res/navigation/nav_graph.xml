@@ -36,8 +36,14 @@
 
     <!-- Global Actions -->
     <action
+        android:id="@+id/globalToAnimeFragment"
+        app:destination="@id/animeFragment"
+        app:popUpTo="@+id/overview_nav_graph"
+        app:popUpToInclusive="true" />
+
+    <action
         android:id="@+id/globalToDetailsFragment"
-        app:destination="@id/detailsFragment"
+        app:destination="@id/login_nav_graph"
         app:popUpTo="@+id/overview_nav_graph"
         app:popUpToInclusive="true" />
     <!-- End Global Actions -->
