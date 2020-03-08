@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.core.content.edit
 import com.chesire.nekome.core.flags.UserSeriesStatus
+import com.chesire.nekome.core.settings.Theme
 import javax.inject.Inject
 
 /**
@@ -17,6 +18,7 @@ class ApplicationSettings @Inject constructor(
 ) {
 
     private val _defaultSeriesState = context.getString(R.string.key_default_series_state)
+    private val _theme = context.getString(R.string.key_theme)
 
     /**
      * Gets the default [UserSeriesStatus] a series should start in when a user begins tracking it.
@@ -46,4 +48,19 @@ class ApplicationSettings @Inject constructor(
 
             return status
         }
+
+    /**
+     * Gets the [Theme] the user has chosen to use for the application.
+     */
+    val theme: Theme
+        get() = Theme.fromValue(
+            requireNotNull(
+                preferences.getString(
+                    _theme,
+                    Theme.System.value.toString()
+                )
+            ) {
+                "Preferences theme returned null, with supplied default value"
+            }
+        )
 }

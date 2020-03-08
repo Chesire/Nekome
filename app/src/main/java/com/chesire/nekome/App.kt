@@ -1,8 +1,10 @@
 package com.chesire.nekome
 
 import android.os.StrictMode
+import androidx.appcompat.app.AppCompatDelegate
 import com.chesire.lifecyklelog.LifecykleLog
 import com.chesire.lifecyklelog.LogHandler
+import com.chesire.nekome.core.ApplicationSettings
 import com.chesire.nekome.injection.components.AppComponent
 import com.chesire.nekome.injection.components.DaggerAppComponent
 import com.chesire.nekome.services.WorkerQueue
@@ -16,8 +18,12 @@ import javax.inject.Inject
  */
 class App : DaggerApplication() {
     lateinit var daggerComponent: AppComponent
+
     @Inject
     lateinit var workerQueue: WorkerQueue
+
+    @Inject
+    lateinit var settings: ApplicationSettings
 
     override fun onCreate() {
         super.onCreate()
@@ -34,10 +40,13 @@ class App : DaggerApplication() {
             startStrictMode()
         }
 
+        setApplicationTheme()
         workerQueue.enqueueAuthRefresh()
         workerQueue.enqueueSeriesRefresh()
         workerQueue.enqueueUserRefresh()
     }
+
+    private fun setApplicationTheme() = AppCompatDelegate.setDefaultNightMode(settings.theme.value)
 
     override fun applicationInjector(): AndroidInjector<out DaggerApplication> {
         return DaggerAppComponent
