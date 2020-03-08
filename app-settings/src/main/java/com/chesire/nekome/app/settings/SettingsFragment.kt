@@ -55,7 +55,8 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 pref.value = Theme.System.value.toString()
             }
             pref.setOnPreferenceChangeListener { _, newValue ->
-                setTheme((newValue as? Int) ?: AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+                val convertedValue = (newValue as? String)?.toIntOrNull()
+                setTheme(convertedValue ?: AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
                 true
             }
         }
