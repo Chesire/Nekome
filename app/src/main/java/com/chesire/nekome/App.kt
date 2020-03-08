@@ -4,7 +4,7 @@ import android.os.StrictMode
 import androidx.appcompat.app.AppCompatDelegate
 import com.chesire.lifecyklelog.LifecykleLog
 import com.chesire.lifecyklelog.LogHandler
-import com.chesire.nekome.core.ApplicationSettings
+import com.chesire.nekome.core.settings.ApplicationSettings
 import com.chesire.nekome.injection.components.AppComponent
 import com.chesire.nekome.injection.components.DaggerAppComponent
 import com.chesire.nekome.services.WorkerQueue

@@ -1,7 +1,8 @@
-package com.chesire.nekome.core
+package com.chesire.nekome.core.settings
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.chesire.nekome.core.R
 import com.chesire.nekome.core.flags.UserSeriesStatus
 import io.mockk.Runs
 import io.mockk.every
@@ -21,7 +22,10 @@ class ApplicationSettingsTests {
         val mockPreferences = mockk<SharedPreferences> {
             every { getString("key_default_series_state", "0") } returns "2"
         }
-        val testObject = ApplicationSettings(mockContext, mockPreferences)
+        val testObject = ApplicationSettings(
+            mockContext,
+            mockPreferences
+        )
 
         assertEquals(UserSeriesStatus.OnHold, testObject.defaultSeriesState)
     }
@@ -36,7 +40,10 @@ class ApplicationSettingsTests {
             every { getString("key_default_series_state", "0") } returns "-1"
             every { edit() } returns mockEditor
         }
-        val testObject = ApplicationSettings(mockContext, mockPreferences)
+        val testObject = ApplicationSettings(
+            mockContext,
+            mockPreferences
+        )
 
         testObject.defaultSeriesState
 
@@ -53,7 +60,10 @@ class ApplicationSettingsTests {
             every { getString("key_default_series_state", "0") } returns "-1"
             every { edit() } returns mockEditor
         }
-        val testObject = ApplicationSettings(mockContext, mockPreferences)
+        val testObject = ApplicationSettings(
+            mockContext,
+            mockPreferences
+        )
 
         val result = testObject.defaultSeriesState
 

@@ -1,10 +1,10 @@
 package com.chesire.nekome.app.search.results
 
-import com.chesire.nekome.core.ApplicationSettings
 import com.chesire.nekome.core.AuthCaster
 import com.chesire.nekome.core.flags.SeriesType
 import com.chesire.nekome.core.flags.UserSeriesStatus
 import com.chesire.nekome.core.models.SeriesModel
+import com.chesire.nekome.core.settings.ApplicationSettings
 import com.chesire.nekome.series.SeriesRepository
 import com.chesire.nekome.server.Resource
 import com.chesire.nekome.testing.CoroutinesMainDispatcherRule
