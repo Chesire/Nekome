@@ -11,7 +11,6 @@ import androidx.preference.PreferenceFragmentCompat
 import com.chesire.lifecyklelog.LogLifecykle
 import com.chesire.nekome.core.flags.UserSeriesStatus
 import com.chesire.nekome.core.settings.Theme
-import timber.log.Timber
 
 /**
  * [SettingsFragment] hosts the configuration options for the application.
@@ -67,10 +66,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
             keyPrivacyPolicy -> showPrivacyPolicy()
             keyGithub -> showGithub()
             keyLicenses -> showLicenses()
-            else -> {
-                Timber.w("Unexpected key for onPreferenceClick - ${preference?.key}")
-                return super.onPreferenceTreeClick(preference)
-            }
+            else -> return super.onPreferenceTreeClick(preference)
         }
 
         return true
