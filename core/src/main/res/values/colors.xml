@@ -4,9 +4,6 @@
     <color name="colorPrimaryDark">#455A64</color>
     <color name="colorPrimaryLight">#FFE0B2</color>
     <color name="colorAccent">#D81B60</color>
-    <color name="colorText">#212121</color>
-    <color name="colorIcons">#212121</color>
-    <color name="colorSecondaryText">#757575</color>
 
     <color name="bottomSheetDrag">#AAAAAA</color>
 
