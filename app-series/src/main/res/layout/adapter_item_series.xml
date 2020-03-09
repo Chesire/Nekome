@@ -94,7 +94,7 @@
             android:paddingStart="8dp"
             android:paddingEnd="8dp"
             android:text="@string/series_list_plus_one"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@color/colorAccent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
@@ -104,7 +104,7 @@
             android:layout_width="0dp"
             android:layout_height="@dimen/progress_bar_height"
             android:indeterminate="true"
-            android:indeterminateTint="@color/colorPrimary"
+            android:indeterminateTint="@color/colorAccent"
             android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

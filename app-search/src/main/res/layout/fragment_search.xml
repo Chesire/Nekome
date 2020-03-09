@@ -74,7 +74,7 @@
         android:layout_height="wrap_content"
         android:elevation="4dp"
         android:indeterminateOnly="true"
-        android:indeterminateTint="@color/colorPrimaryDark"
+        android:indeterminateTint="@color/colorAccent"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@id/searchConfirmButton"
         app:layout_constraintEnd_toEndOf="@id/searchConfirmButton"
