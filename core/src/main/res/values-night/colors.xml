@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#333F48</color>
     <color name="colorPrimaryDark">#252E34</color>
-    <color name="colorAccent">#D81B60</color>
-<!-- #2196f3 -->
+    <color name="colorAccent">#2196F3</color>
+
     <color name="bottomSheetDrag">#AAAAAA</color>
 </resources>
