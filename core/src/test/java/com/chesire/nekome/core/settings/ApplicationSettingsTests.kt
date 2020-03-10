@@ -15,6 +15,7 @@ import org.junit.Test
 class ApplicationSettingsTests {
     private val mockContext = mockk<Context> {
         every { getString(R.string.key_default_series_state) } returns "key_default_series_state"
+        every { getString(R.string.key_theme) } returns "key_theme"
     }
 
     @Test
@@ -68,5 +69,18 @@ class ApplicationSettingsTests {
         val result = testObject.defaultSeriesState
 
         assertEquals(UserSeriesStatus.Current, result)
+    }
+
+    @Test
+    fun `can get theme`() {
+        val mockPreferences = mockk<SharedPreferences> {
+            every { getString("key_theme", "-1") } returns "2"
+        }
+        val testObject = ApplicationSettings(
+            mockContext,
+            mockPreferences
+        )
+
+        assertEquals(Theme.Dark, testObject.theme)
     }
 }
