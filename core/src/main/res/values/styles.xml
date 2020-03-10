@@ -56,10 +56,16 @@
     </style>
 
     <style name="BottomSheetSectionTitle" parent="TextAppearance.MaterialComponents.Body1">
-        <item name="android:layout_marginStart">@dimen/bottom_sheet_sub_title_horizontal_margin</item>
+        <item name="android:layout_marginStart">@dimen/bottom_sheet_sub_title_horizontal_margin
+        </item>
         <item name="android:layout_marginTop">@dimen/bottom_sheet_sub_title_vertical_margin</item>
         <item name="android:layout_marginEnd">@dimen/bottom_sheet_sub_title_horizontal_margin</item>
-        <item name="android:layout_marginBottom">@dimen/bottom_sheet_sub_title_vertical_margin</item>
+        <item name="android:layout_marginBottom">@dimen/bottom_sheet_sub_title_vertical_margin
+        </item>
+    </style>
+
+    <style name="ChipStyle" parent="Widget.MaterialComponents.Chip.Choice">
+        <item name="android:textColor">@color/chip_text_color</item>
     </style>
 
     <style name="DividerStyle">
