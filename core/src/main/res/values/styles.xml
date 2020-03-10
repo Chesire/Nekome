@@ -9,6 +9,9 @@
         <item name="windowNoTitle">true</item>
         <item name="chipIconTint">@color/colorAccent</item>
         <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogTheme</item>
+        <item name="alertDialogTheme">@style/AlertDialogTheme</item>
+        <item name="dialogTheme">@style/DialogTheme</item>
+        <item name="md_color_button_text">@color/colorAccent</item>
     </style>
 
     <style name="AppTheme.Launcher">
@@ -19,6 +22,20 @@
     <style name="TextInputStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox" />
 
     <style name="OutlineButtonStyle" parent="Widget.MaterialComponents.Button.OutlinedButton" />
+
+    <style name="DialogTheme" parent="ThemeOverlay.MaterialComponents.Dialog">
+        <item name="buttonBarNegativeButtonStyle">@style/DialogButtonTheme</item>
+        <item name="buttonBarPositiveButtonStyle">@style/DialogButtonTheme</item>
+    </style>
+
+    <style name="AlertDialogTheme" parent="ThemeOverlay.MaterialComponents.Dialog.Alert">
+        <item name="buttonBarNegativeButtonStyle">@style/DialogButtonTheme</item>
+        <item name="buttonBarPositiveButtonStyle">@style/DialogButtonTheme</item>
+    </style>
+
+    <style name="DialogButtonTheme" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:textColor">@color/colorAccent</item>
+    </style>
 
     <style name="SeriesProgressTextTitle" parent="TextAppearance.MaterialComponents.Headline6">
         <item name="android:layout_height">wrap_content</item>
@@ -56,12 +73,10 @@
     </style>
 
     <style name="BottomSheetSectionTitle" parent="TextAppearance.MaterialComponents.Body1">
-        <item name="android:layout_marginStart">@dimen/bottom_sheet_sub_title_horizontal_margin
-        </item>
+        <item name="android:layout_marginStart">@dimen/bottom_sheet_sub_title_horizontal_margin</item>
         <item name="android:layout_marginTop">@dimen/bottom_sheet_sub_title_vertical_margin</item>
         <item name="android:layout_marginEnd">@dimen/bottom_sheet_sub_title_horizontal_margin</item>
-        <item name="android:layout_marginBottom">@dimen/bottom_sheet_sub_title_vertical_margin
-        </item>
+        <item name="android:layout_marginBottom">@dimen/bottom_sheet_sub_title_vertical_margin</item>
     </style>
 
     <style name="ChipStyle" parent="Widget.MaterialComponents.Chip.Choice">
