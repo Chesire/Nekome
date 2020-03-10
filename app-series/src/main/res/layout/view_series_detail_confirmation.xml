@@ -2,7 +2,6 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/confirmationLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="@dimen/full_margin">
@@ -14,6 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end"
         android:text="@string/series_detail_confirm"
+        android:textColor="?attr/colorAccent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -23,7 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
-        android:indeterminateTint="@color/colorPrimary"
+        android:indeterminateTint="?attr/colorAccent"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@id/confirmationConfirm"
         app:layout_constraintEnd_toEndOf="@id/confirmationConfirm"

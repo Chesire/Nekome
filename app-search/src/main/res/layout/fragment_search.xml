@@ -44,14 +44,14 @@
 
         <com.google.android.material.chip.Chip
             android:id="@+id/searchChipAnime"
-            style="@style/Widget.MaterialComponents.Chip.Choice"
+            style="@style/ChipStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/search_anime" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/searchChipManga"
-            style="@style/Widget.MaterialComponents.Chip.Choice"
+            style="@style/ChipStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/search_manga" />
@@ -65,6 +65,7 @@
         android:layout_margin="@dimen/full_margin"
         android:padding="@dimen/full_margin"
         android:text="@string/search_search"
+        android:textColor="?attr/colorOnPrimarySurface"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -73,8 +74,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:elevation="4dp"
-        android:indeterminateOnly="true"
-        android:indeterminateTint="@color/colorPrimaryDark"
+        android:indeterminate="true"
+        android:indeterminateTint="@color/colorAccent"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@id/searchConfirmButton"
         app:layout_constraintEnd_toEndOf="@id/searchConfirmButton"
