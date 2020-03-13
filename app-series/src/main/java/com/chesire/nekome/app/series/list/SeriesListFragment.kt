@@ -40,8 +40,10 @@ import javax.inject.Inject
 abstract class SeriesListFragment : DaggerFragment(), SeriesInteractionListener {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
+
     @Inject
     lateinit var dialogHandler: DialogHandler
+
     @Inject
     lateinit var seriesPreferences: SeriesPreferences
 
@@ -54,7 +56,6 @@ abstract class SeriesListFragment : DaggerFragment(), SeriesInteractionListener 
     private val binding get() = requireNotNull(_binding) { "Binding not set" }
     private val viewModel by viewModels<SeriesListViewModel> { viewModelFactory }
     private lateinit var seriesAdapter: SeriesAdapter
-    private var seriesDetail: SeriesDetailSheetFragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -120,13 +121,9 @@ abstract class SeriesListFragment : DaggerFragment(), SeriesInteractionListener 
     override fun seriesSelected(imageView: ImageView, model: SeriesModel) {
         Timber.i("seriesSelected called with Model ${model.slug}")
 
-        if (seriesDetail?.isVisible == true) {
-            Timber.w("Attempt to open series detail while already visible")
-        } else {
-            seriesDetail = SeriesDetailSheetFragment.newInstance(model).also {
-                it.show(childFragmentManager, SeriesDetailSheetFragment.TAG)
-            }
-        }
+        SeriesDetailSheetFragment
+            .newInstance(model)
+            .show(parentFragmentManager, SeriesDetailSheetFragment.TAG)
     }
 
     override fun onPlusOne(model: SeriesModel, callback: () -> Unit) {
