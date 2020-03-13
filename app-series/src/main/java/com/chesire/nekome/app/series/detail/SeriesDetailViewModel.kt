@@ -29,8 +29,8 @@ class SeriesDetailViewModel @Inject constructor(
     lateinit var mutableModel: MutableSeriesModel
 
     private val _updatingStatus = LiveEvent<AsyncState<MutableSeriesModel, SeriesDetailError>>()
-    val updatingStatus: LiveData<AsyncState<MutableSeriesModel, SeriesDetailError>> =
-        _updatingStatus
+    val updatingStatus: LiveData<AsyncState<MutableSeriesModel, SeriesDetailError>>
+        get() = _updatingStatus
 
     /**
      * Sets the model object into the ViewModel.
