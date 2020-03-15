@@ -17,7 +17,7 @@ class KitsuAuth @Inject constructor(
 ) : AuthApi {
     override suspend fun login(username: String, password: String): Resource<Any> {
         return try {
-            return parseResponse(authService.loginAsync(LoginRequest(username, password)))
+            parseResponse(authService.loginAsync(LoginRequest(username, password)))
         } catch (ex: Exception) {
             ex.parse()
         }
@@ -25,7 +25,7 @@ class KitsuAuth @Inject constructor(
 
     override suspend fun refresh(): Resource<Any> {
         return try {
-            return parseResponse(
+            parseResponse(
                 authService.refreshAccessTokenAsync(
                     RefreshTokenRequest(authProvider.refreshToken)
                 )

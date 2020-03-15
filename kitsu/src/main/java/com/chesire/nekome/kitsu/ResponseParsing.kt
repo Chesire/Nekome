@@ -40,6 +40,6 @@ internal fun <T> Exception.parse(): Resource.Error<T> {
     return if (this is UnknownHostException) {
         Resource.Error("Could not reach service", 503)
     } else {
-        Resource.Error("Unknown error encountered", 400)
+        Resource.Error(toString(), 400)
     }
 }
