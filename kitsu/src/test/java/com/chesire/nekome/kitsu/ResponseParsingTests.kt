@@ -78,7 +78,7 @@ class ResponseParsingTests {
     fun `Exception#parse handles generic exception`() {
         // use some random exception to simulate
         val exception = NullPointerException().parse<Any>()
-        assertEquals("Unknown error encountered", exception.msg)
+        assertEquals("java.lang.NullPointerException", exception.msg)
         assertEquals(400, exception.code)
     }
 }
