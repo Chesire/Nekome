@@ -2,7 +2,7 @@ package com.chesire.nekome.app.search.results
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
+import coil.api.load
 import com.chesire.nekome.app.search.R
 import com.chesire.nekome.core.extensions.hide
 import com.chesire.nekome.core.extensions.show
@@ -30,11 +30,10 @@ class ResultsViewHolder(view: View) : RecyclerView.ViewHolder(view), LayoutConta
     fun bind(model: SeriesModel, exists: Boolean) {
         seriesModel = model
 
-        Glide.with(itemView)
-            .load(model.posterImage.smallest?.url)
-            .placeholder(R.drawable.ic_insert_photo)
-            .error(R.drawable.ic_insert_photo)
-            .into(resultImage)
+        resultImage.load(model.posterImage.smallest?.url) {
+            placeholder(R.drawable.ic_insert_photo)
+            error(R.drawable.ic_insert_photo)
+        }
         resultTitle.text = model.title
         resultDescription.text = model.synopsis
         resultSubType.text = model.subtype.name

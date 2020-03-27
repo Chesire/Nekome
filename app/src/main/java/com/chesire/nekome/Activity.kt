@@ -5,6 +5,7 @@ import android.os.Handler
 import android.os.Looper
 import android.view.MenuItem
 import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.core.view.GravityCompat
@@ -16,9 +17,10 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import coil.api.load
+import coil.transform.CircleCropTransformation
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
-import com.bumptech.glide.Glide
 import com.chesire.lifecyklelog.LogLifecykle
 import com.chesire.nekome.core.AuthCaster
 import com.chesire.nekome.core.nav.Flow
@@ -73,13 +75,12 @@ class Activity : DaggerAppCompatActivity(), AuthCaster.AuthCasterListener, Flow 
             findViewById<NavigationView>(R.id.activityNavigationView)?.getHeaderView(0)?.let {
                 it.findViewById<TextView>(R.id.viewNavHeaderTitle).text = userModel.name
                 it.findViewById<TextView>(R.id.viewNavHeaderSubtitle).text = userModel.service.name
-
-                Glide.with(this)
-                    .load(userModel.avatar.medium.url)
-                    .placeholder(R.drawable.ic_account_circle)
-                    .error(R.drawable.ic_account_circle)
-                    .optionalCircleCrop()
-                    .into(it.findViewById(R.id.viewNavHeaderImage))
+                it.findViewById<ImageView>(R.id.viewNavHeaderImage)
+                    .load(userModel.avatar.medium.url) {
+                        transformations(CircleCropTransformation())
+                        placeholder(R.drawable.ic_account_circle)
+                        error(R.drawable.ic_account_circle)
+                    }
             }
         })
     }
