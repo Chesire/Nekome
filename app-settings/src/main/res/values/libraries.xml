@@ -18,6 +18,24 @@
     <!-- Custom variables section -->
     <!-- End androidencryptionhelper -->
 
+    <!-- Start coil -->
+    <string name="define_coil" translatable="false">year;owner</string>
+    <!-- Author section -->
+    <string name="library_coil_author" translatable="false">coil-kt</string>
+    <!-- Library section -->
+    <string name="library_coil_libraryName" translatable="false">Coil</string>
+    <string name="library_coil_libraryDescription" translatable="false">Image loading for Android backed by Kotlin Coroutines.</string>
+    <string name="library_coil_libraryWebsite" translatable="false">https://coil-kt.github.io/coil/</string>
+    <string name="library_coil_libraryVersion" translatable="false">0.9.5</string>
+    <!-- OpenSource section -->
+    <string name="library_coil_isOpenSource" translatable="false">true</string>
+    <string name="library_coil_repositoryLink" translatable="false">https://github.com/coil-kt/coil</string>
+    <!-- ClassPath for autoDetect section -->
+    <!-- License section -->
+    <string name="library_coil_licenseId" translatable="false">apache_2_0</string>
+    <!-- Custom variables section -->
+    <!-- End coil -->
+
     <!-- Start liveevent -->
     <string name="define_liveevent" translatable="false">year;owner</string>
     <!-- Author section -->

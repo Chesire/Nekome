@@ -21,8 +21,8 @@ class OssFragment : DaggerFragment() {
     private val includedLibraries = arrayOf(
         // "AboutLibraries",
         // "androidencryptionhelper",
+        // "coil",
         "Dagger2",
-        "glide",
         // "lifecyklelog",
         // "liveevent",
         "materialdialogs",
