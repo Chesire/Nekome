@@ -2,7 +2,7 @@ package com.chesire.nekome.app.discover.trending
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
+import coil.api.load
 import com.chesire.nekome.core.models.SeriesModel
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.adapter_item_trending.itemTrendingImage
@@ -22,9 +22,7 @@ class TrendingViewHolder(view: View) : RecyclerView.ViewHolder(view), LayoutCont
     fun bind(model: SeriesModel) {
         seriesModel = model
 
-        Glide.with(itemView)
-            .load(model.posterImage.smallest?.url)
-            .into(itemTrendingImage)
+        itemTrendingImage.load(model.posterImage.smallest?.url)
         itemTrendingTitle.text = seriesModel.title
     }
 }

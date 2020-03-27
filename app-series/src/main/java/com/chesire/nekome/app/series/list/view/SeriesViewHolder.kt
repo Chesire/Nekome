@@ -2,7 +2,7 @@ package com.chesire.nekome.app.series.list.view
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
+import coil.api.load
 import com.chesire.nekome.app.series.R
 import com.chesire.nekome.app.series.list.SeriesInteractionListener
 import com.chesire.nekome.core.extensions.hide
@@ -35,11 +35,10 @@ class SeriesViewHolder(view: View) : RecyclerView.ViewHolder(view), LayoutContai
     fun bind(model: SeriesModel) {
         seriesModel = model
 
-        Glide.with(containerView)
-            .load(model.posterImage.smallest?.url)
-            .placeholder(R.drawable.ic_insert_photo)
-            .error(R.drawable.ic_insert_photo)
-            .into(seriesImage)
+        seriesImage.load(model.posterImage.smallest?.url) {
+            placeholder(R.drawable.ic_insert_photo)
+            error(R.drawable.ic_insert_photo)
+        }
         seriesTitle.text = model.title
         seriesSubtype.text = model.subtype.name
         seriesProgress.text = containerView.context.getString(

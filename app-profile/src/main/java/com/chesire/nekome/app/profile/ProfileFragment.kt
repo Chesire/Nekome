@@ -6,8 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
+import coil.api.load
+import coil.transform.CircleCropTransformation
 import com.chesire.lifecyklelog.LogLifecykle
 import com.chesire.nekome.app.profile.databinding.FragmentProfileBinding
 import com.chesire.nekome.core.models.UserModel
@@ -48,9 +48,8 @@ class ProfileFragment : DaggerFragment() {
     }
 
     private fun setImagery(user: UserModel) {
-        Glide.with(requireContext())
-            .load(user.avatar.largest?.url)
-            .apply(RequestOptions.circleCropTransform())
-            .into(binding.profileAvatar)
+        binding.profileAvatar.load(user.avatar.largest?.url) {
+            transformations(CircleCropTransformation())
+        }
     }
 }

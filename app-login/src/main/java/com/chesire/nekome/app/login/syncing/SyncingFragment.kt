@@ -7,7 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import com.bumptech.glide.Glide
+import coil.api.load
+import coil.transform.CircleCropTransformation
 import com.chesire.lifecyklelog.LogLifecykle
 import com.chesire.nekome.app.login.R
 import com.chesire.nekome.app.login.databinding.FragmentSyncingBinding
@@ -53,12 +54,11 @@ class SyncingFragment : DaggerFragment() {
         viewModel.avatarUrl.observe(
             viewLifecycleOwner,
             Observer {
-                Glide.with(this)
-                    .load(it)
-                    .placeholder(R.drawable.ic_account_circle)
-                    .error(R.drawable.ic_account_circle)
-                    .circleCrop()
-                    .into(binding.profileImage)
+                binding.profileImage.load(it) {
+                    transformations(CircleCropTransformation())
+                    placeholder(R.drawable.ic_account_circle)
+                    error(R.drawable.ic_account_circle)
+                }
             }
         )
     }

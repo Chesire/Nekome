@@ -3,11 +3,6 @@
     package="com.chesire.nekome">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <!--
-    Allows Glide to monitor connectivity status and restart failed requests if users go from a
-    a disconnected to a connected network state.
-    -->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:name="com.chesire.nekome.App"
@@ -41,7 +36,7 @@
         <activity
             android:name="com.chesire.nekome.Activity"
             android:theme="@style/AppTheme.Launcher"
-            android:windowSoftInputMode="adjustResize" >
+            android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
