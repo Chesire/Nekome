@@ -55,7 +55,6 @@ abstract class SeriesListFragment : DaggerFragment(), SeriesInteractionListener 
     private var _binding: FragmentSeriesListBinding? = null
     private val binding get() = requireNotNull(_binding) { "Binding not set" }
     private val viewModel by viewModels<SeriesListViewModel> { viewModelFactory }
-    private lateinit var seriesAdapter: SeriesAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -71,7 +70,7 @@ abstract class SeriesListFragment : DaggerFragment(), SeriesInteractionListener 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        seriesAdapter = SeriesAdapter(this, seriesPreferences)
+        val seriesAdapter = SeriesAdapter(this, seriesPreferences)
         binding.listContent.apply {
             adapter = seriesAdapter
             layoutManager = LinearLayoutManager(requireContext())
