@@ -14,7 +14,7 @@
             android:title="@string/nav_anime" />
         <item
             android:id="@+id/mangaFragment"
-            android:icon="@drawable/ic_collections_bookmark_black"
+            android:icon="@drawable/ic_collections_bookmark"
             android:title="@string/nav_manga" />
         <item
             android:id="@+id/search_nav_graph"

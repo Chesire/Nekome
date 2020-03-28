@@ -21,7 +21,7 @@
             android:id="@+id/searchText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawablePadding="@dimen/login_text_drawable_padding"
+            android:drawablePadding="@dimen/edit_text_drawable_padding"
             android:hint="@string/search_series_title"
             android:imeOptions="actionNext"
             android:inputType="textNoSuggestions"
