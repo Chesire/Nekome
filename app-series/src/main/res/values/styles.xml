@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="BottomSheetHeaderTitle" parent="TextAppearance.MaterialComponents.Headline6">
+        <item name="android:ellipsize">end</item>
+        <item name="android:maxLines">2</item>
+        <item name="android:layout_marginStart">@dimen/bottom_sheet_title_horizontal_margin</item>
+        <item name="android:layout_marginTop">@dimen/full_margin</item>
+        <item name="android:layout_marginEnd">@dimen/bottom_sheet_title_horizontal_margin</item>
+        <item name="android:layout_marginBottom">@dimen/full_margin</item>
+    </style>
+
+    <style name="BottomSheetHeaderSubtitle" parent="TextAppearance.MaterialComponents.Body2">
+        <item name="android:ellipsize">end</item>
+        <item name="android:lines">1</item>
+        <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Body2</item>
+        <item name="android:layout_marginStart">@dimen/half_margin</item>
+        <item name="android:layout_marginTop">@dimen/half_margin</item>
+        <item name="android:layout_marginEnd">@dimen/half_margin</item>
+        <item name="android:layout_marginBottom">@dimen/full_margin</item>
+    </style>
+
+    <style name="BottomSheetSectionTitle" parent="TextAppearance.MaterialComponents.Body1">
+        <item name="android:layout_marginStart">@dimen/bottom_sheet_sub_title_horizontal_margin</item>
+        <item name="android:layout_marginTop">@dimen/bottom_sheet_sub_title_vertical_margin</item>
+        <item name="android:layout_marginEnd">@dimen/bottom_sheet_sub_title_horizontal_margin</item>
+        <item name="android:layout_marginBottom">@dimen/bottom_sheet_sub_title_vertical_margin</item>
+    </style>
+
+    <style name="DividerStyle">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">@dimen/divider_height</item>
+        <item name="android:alpha">0.3</item>
+        <item name="android:background">@color/bottomSheetDrag</item>
+    </style>
+
+</resources>

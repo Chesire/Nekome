@@ -19,9 +19,14 @@
         <item name="android:navigationBarColor">?attr/colorPrimaryDark</item>
     </style>
 
-    <style name="TextInputStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox" />
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
 
-    <style name="OutlineButtonStyle" parent="Widget.MaterialComponents.Button.OutlinedButton" />
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <style name="DialogTheme" parent="ThemeOverlay.MaterialComponents.Dialog">
         <item name="buttonBarNegativeButtonStyle">@style/DialogButtonTheme</item>
@@ -37,72 +42,6 @@
         <item name="android:textColor">@color/colorAccent</item>
     </style>
 
-    <style name="SeriesProgressTextTitle" parent="TextAppearance.MaterialComponents.Headline6">
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_marginStart">@dimen/full_margin</item>
-        <item name="android:layout_marginEnd">@dimen/full_margin</item>
-        <item name="android:layout_marginTop">@dimen/full_margin</item>
-    </style>
-
-    <style name="SeriesProgressTextBody" parent="TextAppearance.MaterialComponents.Body1">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginStart">@dimen/full_margin</item>
-        <item name="android:layout_marginEnd">@dimen/full_margin</item>
-        <item name="android:layout_marginTop">@dimen/half_margin</item>
-    </style>
-
-    <style name="BottomSheetHeaderTitle" parent="TextAppearance.MaterialComponents.Headline6">
-        <item name="android:ellipsize">end</item>
-        <item name="android:maxLines">2</item>
-        <item name="android:layout_marginStart">@dimen/bottom_sheet_title_horizontal_margin</item>
-        <item name="android:layout_marginTop">@dimen/full_margin</item>
-        <item name="android:layout_marginEnd">@dimen/bottom_sheet_title_horizontal_margin</item>
-        <item name="android:layout_marginBottom">@dimen/full_margin</item>
-    </style>
-
-    <style name="BottomSheetHeaderSubtitle" parent="TextAppearance.MaterialComponents.Body2">
-        <item name="android:ellipsize">end</item>
-        <item name="android:lines">1</item>
-        <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Body2</item>
-        <item name="android:layout_marginStart">@dimen/half_margin</item>
-        <item name="android:layout_marginTop">@dimen/half_margin</item>
-        <item name="android:layout_marginEnd">@dimen/half_margin</item>
-        <item name="android:layout_marginBottom">@dimen/full_margin</item>
-    </style>
-
-    <style name="BottomSheetSectionTitle" parent="TextAppearance.MaterialComponents.Body1">
-        <item name="android:layout_marginStart">@dimen/bottom_sheet_sub_title_horizontal_margin</item>
-        <item name="android:layout_marginTop">@dimen/bottom_sheet_sub_title_vertical_margin</item>
-        <item name="android:layout_marginEnd">@dimen/bottom_sheet_sub_title_horizontal_margin</item>
-        <item name="android:layout_marginBottom">@dimen/bottom_sheet_sub_title_vertical_margin</item>
-    </style>
-
-    <style name="ChipStyle" parent="Widget.MaterialComponents.Chip.Choice">
-        <item name="android:textColor">@color/chip_text_color</item>
-    </style>
-
-    <style name="DividerStyle">
-        <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">@dimen/divider_height</item>
-        <item name="android:alpha">0.3</item>
-        <item name="android:background">@color/bottomSheetDrag</item>
-    </style>
-
-    <style name="DividerStyleNoMargin" parent="DividerStyle">
-        <item name="android:layout_margin">0dp</item>
-    </style>
-
-    <style name="AppTheme.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-    </style>
-
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
-
     <style name="AppBottomSheetDialogTheme" parent="Theme.MaterialComponents.DayNight.BottomSheetDialog">
         <item name="android:windowIsFloating">false</item>
         <item name="bottomSheetStyle">@style/AppModalStyle</item>
@@ -114,5 +53,11 @@
     <style name="AppModalStyle" parent="Widget.Design.BottomSheet.Modal">
         <item name="android:background">@drawable/rounded_dialog</item>
     </style>
+
+    <style name="ChipStyle" parent="Widget.MaterialComponents.Chip.Choice">
+        <item name="android:textColor">@color/chip_text_color</item>
+    </style>
+
+    <style name="TextInputStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox" />
 
 </resources>
