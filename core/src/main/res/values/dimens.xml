@@ -7,18 +7,7 @@
     <dimen name="full_margin">16dp</dimen>
     <dimen name="double_margin">32dp</dimen>
 
-    <dimen name="login_text_drawable_padding">8dp</dimen>
-
-    <dimen name="bottom_sheet_elevation">8dp</dimen>
-    <dimen name="bottom_sheet_title_horizontal_margin">16dp</dimen>
-    <dimen name="bottom_sheet_sub_title_horizontal_margin">16dp</dimen>
-    <dimen name="bottom_sheet_sub_title_vertical_margin">16dp</dimen>
+    <dimen name="edit_text_drawable_padding">8dp</dimen>
 
     <dimen name="progress_bar_height">8dp</dimen>
-
-    <dimen name="nav_heading_height">176dp</dimen>
-    <dimen name="nav_image_height">56dp</dimen>
-    <dimen name="nav_image_width">56dp</dimen>
-
-    <dimen name="divider_height">1dp</dimen>
 </resources>

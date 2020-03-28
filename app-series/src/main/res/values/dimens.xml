@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="bottom_sheet_elevation">8dp</dimen>
+
+    <dimen name="bottom_sheet_title_horizontal_margin">16dp</dimen>
+    <dimen name="bottom_sheet_sub_title_horizontal_margin">16dp</dimen>
+    <dimen name="bottom_sheet_sub_title_vertical_margin">16dp</dimen>
+
+    <dimen name="divider_height">1dp</dimen>
+</resources>
