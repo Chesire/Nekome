@@ -33,7 +33,7 @@ class SortTests {
     @Test
     fun sortDialogDisplaysWithAllOptions() {
         activity.launchActivity(null)
-        clickMenu(R.id.menuSeriesListSort)
+        clickMenu(R.id.menuSort)
 
         assertDisplayedAtPosition(R.id.md_recyclerview_content, 0, R.string.sort_by_default)
         assertDisplayedAtPosition(R.id.md_recyclerview_content, 1, R.string.sort_by_title)
@@ -44,7 +44,7 @@ class SortTests {
     @Test
     fun sortDialogClosesOnOptionSelected() {
         activity.launchActivity(null)
-        clickMenu(R.id.menuSeriesListSort)
+        clickMenu(R.id.menuSort)
 
         assertDisplayed(R.string.sort_dialog_title)
         clickOn(R.string.sort_by_title)

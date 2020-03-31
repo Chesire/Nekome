@@ -49,6 +49,8 @@
     <string name="series_list_delete_failure">Encountered error trying to delete series</string>
     <string name="series_list_delete_retry">Retry</string>
     <string name="series_list_empty">No series found with the current filter</string>
+    <string name="series_list_refresh">Refresh series</string>
+    <string name="series_list_refresh_error">Encountered error trying to refresh series list, please try again…</string>
 
     <string name="series_detail_dash">-</string>
     <string name="series_detail_progress_title">Progress</string>

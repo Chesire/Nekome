@@ -37,6 +37,7 @@ import javax.inject.Inject
  * Provides a base fragment for the [AnimeFragment] & [MangaFragment] to inherit from, performing
  * most of the setup and interaction.
  */
+@Suppress("TooManyFunctions")
 abstract class SeriesListFragment : DaggerFragment(), SeriesInteractionListener {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
@@ -79,6 +80,8 @@ abstract class SeriesListFragment : DaggerFragment(), SeriesInteractionListener 
             itemTouchHelper.attachToRecyclerView(this)
         }
 
+        binding.refreshLayout.setOnRefreshListener { startRefreshingSeries() }
+
         viewModel.series.observe(
             viewLifecycleOwner,
             Observer { series ->
@@ -92,7 +95,9 @@ abstract class SeriesListFragment : DaggerFragment(), SeriesInteractionListener 
                 }
             }
         )
+
         observeSeriesDeletion()
+        observeSeriesRefresh()
     }
 
     override fun onDestroyView() {
@@ -109,10 +114,12 @@ abstract class SeriesListFragment : DaggerFragment(), SeriesInteractionListener 
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.menuSeriesListFilter ->
-                dialogHandler.showFilterDialog(requireContext(), viewLifecycleOwner)
-            R.id.menuSeriesListSort ->
-                dialogHandler.showSortDialog(requireContext(), viewLifecycleOwner)
+            R.id.menuFilter -> dialogHandler.showFilterDialog(requireContext(), viewLifecycleOwner)
+            R.id.menuSort -> dialogHandler.showSortDialog(requireContext(), viewLifecycleOwner)
+            R.id.menuRefresh -> {
+                binding.refreshLayout.isRefreshing = true
+                startRefreshingSeries()
+            }
         }
         return super.onOptionsItemSelected(item)
     }
@@ -169,6 +176,31 @@ abstract class SeriesListFragment : DaggerFragment(), SeriesInteractionListener 
                         viewModel.deleteSeries(seriesModel)
                     }
                 }.show()
+            }
+        })
+    }
+
+    private fun startRefreshingSeries() {
+        viewModel.refreshAllSeries()
+    }
+
+    private fun endRefreshingSeries() {
+        binding.refreshLayout.isRefreshing = false
+    }
+
+    private fun observeSeriesRefresh() {
+        viewModel.refreshStatus.observe(viewLifecycleOwner, Observer { state ->
+            when (state) {
+                is AsyncState.Success -> endRefreshingSeries()
+                is AsyncState.Error -> {
+                    Timber.w("Error trying to refresh series - ${state.error}")
+                    endRefreshingSeries()
+                    Snackbar.make(
+                        binding.seriesListLayout,
+                        R.string.series_list_refresh_error,
+                        Snackbar.LENGTH_LONG
+                    ).show()
+                }
             }
         })
     }

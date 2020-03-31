@@ -6,6 +6,7 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.chesire.nekome.core.AuthCaster
 import com.chesire.nekome.core.extensions.postError
+import com.chesire.nekome.core.extensions.postSuccess
 import com.chesire.nekome.core.flags.AsyncState
 import com.chesire.nekome.core.flags.UserSeriesStatus
 import com.chesire.nekome.core.models.SeriesModel
@@ -25,6 +26,10 @@ class SeriesListViewModel @Inject constructor(
     val series = repo.getSeries().asLiveData()
     private val _deletionStatus = LiveEvent<AsyncState<SeriesModel, SeriesListDeleteError>>()
     val deletionStatus: LiveData<AsyncState<SeriesModel, SeriesListDeleteError>> = _deletionStatus
+
+    private val _refreshStatus = LiveEvent<AsyncState<Any, Any>>()
+    val refreshStatus: LiveData<AsyncState<Any, Any>>
+        get() = _refreshStatus
 
     /**
      * Sends an update for a series, will fire [callback] on completion.
@@ -58,6 +63,22 @@ class SeriesListViewModel @Inject constructor(
                     SeriesListDeleteError.DeletionFailure
                 )
             }
+        }
+    }
+
+    /**
+     * Forces a refresh of all series.
+     */
+    fun refreshAllSeries() = viewModelScope.launch {
+        val syncCommands = listOf(
+            repo.refreshAnime(),
+            repo.refreshManga()
+        )
+
+        if (syncCommands.any { it is Resource.Error }) {
+            _refreshStatus.postError(Any())
+        } else {
+            _refreshStatus.postSuccess(Any())
         }
     }
 }

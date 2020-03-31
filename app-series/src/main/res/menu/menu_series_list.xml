@@ -2,15 +2,20 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/menuSeriesListFilter"
+        android:id="@+id/menuFilter"
         android:icon="@drawable/ic_filter"
         android:title="@string/menu_filter"
         app:showAsAction="ifRoom" />
 
     <item
-        android:id="@+id/menuSeriesListSort"
+        android:id="@+id/menuSort"
         android:icon="@drawable/ic_sort_by"
         android:title="@string/menu_sort"
         app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/menuRefresh"
+        android:title="@string/series_list_refresh"
+        app:showAsAction="never" />
 
 </menu>
