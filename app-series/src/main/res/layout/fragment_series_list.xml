@@ -6,15 +6,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.chesire.nekome.app.series.list.view.EmptyableRecyclerView
-        android:id="@+id/listContent"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:clipToPadding="false"
-        android:paddingTop="4dp"
-        android:paddingBottom="4dp"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:listitem="@layout/adapter_item_series" />
+        android:layout_height="match_parent">
+
+        <com.chesire.nekome.app.series.list.view.EmptyableRecyclerView
+            android:id="@+id/listContent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            tools:listitem="@layout/adapter_item_series" />
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <include
         android:id="@+id/listEmpty"
