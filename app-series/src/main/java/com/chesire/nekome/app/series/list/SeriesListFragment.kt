@@ -115,7 +115,10 @@ abstract class SeriesListFragment : DaggerFragment(), SeriesInteractionListener 
         when (item.itemId) {
             R.id.menuFilter -> dialogHandler.showFilterDialog(requireContext(), viewLifecycleOwner)
             R.id.menuSort -> dialogHandler.showSortDialog(requireContext(), viewLifecycleOwner)
-            R.id.menuRefresh -> startRefreshingSeries()
+            R.id.menuRefresh -> {
+                binding.refreshLayout.isRefreshing = true
+                startRefreshingSeries()
+            }
         }
         return super.onOptionsItemSelected(item)
     }
@@ -177,7 +180,6 @@ abstract class SeriesListFragment : DaggerFragment(), SeriesInteractionListener 
     }
 
     private fun startRefreshingSeries() {
-        binding.refreshLayout.isRefreshing = true
         viewModel.refreshAllSeries()
     }
 
