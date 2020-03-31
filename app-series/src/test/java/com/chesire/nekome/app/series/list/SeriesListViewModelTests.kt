@@ -16,6 +16,7 @@ import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.just
 import io.mockk.mockk
+import io.mockk.slot
 import io.mockk.verify
 import org.junit.Assert.assertTrue
 import org.junit.Rule
@@ -24,6 +25,7 @@ import org.junit.Test
 class SeriesListViewModelTests {
     @get:Rule
     val taskExecutorRule = InstantTaskExecutorRule()
+
     @get:Rule
     val coroutineRule = CoroutinesMainDispatcherRule()
 
@@ -143,5 +145,135 @@ class SeriesListViewModelTests {
         classUnderTest.deleteSeries(createSeriesModel())
 
         verify { mockObserver.onChanged(any()) }
+    }
+
+    @Test
+    fun `refreshAllSeries calls refreshAnime in repo`() {
+        val mockRepo = mockk<SeriesRepository> {
+            coEvery {
+                refreshAnime()
+            } coAnswers {
+                mockk()
+            }
+            coEvery {
+                refreshManga()
+            } coAnswers {
+                mockk()
+            }
+            every { getSeries() } returns mockk()
+        }
+        val mockAuthCaster = mockk<AuthCaster>()
+
+        val classUnderTest = SeriesListViewModel(mockRepo, mockAuthCaster)
+        classUnderTest.refreshAllSeries()
+
+        coVerify { mockRepo.refreshAnime() }
+    }
+
+    @Test
+    fun `refreshAllSeries calls refreshManga in repo`() {
+        val mockRepo = mockk<SeriesRepository> {
+            coEvery {
+                refreshAnime()
+            } coAnswers {
+                mockk()
+            }
+            coEvery {
+                refreshManga()
+            } coAnswers {
+                mockk()
+            }
+            every { getSeries() } returns mockk()
+        }
+        val mockAuthCaster = mockk<AuthCaster>()
+
+        val classUnderTest = SeriesListViewModel(mockRepo, mockAuthCaster)
+        classUnderTest.refreshAllSeries()
+
+        coVerify { mockRepo.refreshManga() }
+    }
+
+    @Test
+    fun `refreshAllSeries posts error if anime call fails`() {
+        val slot = slot<AsyncState<Any, Any>>()
+        val mockRepo = mockk<SeriesRepository> {
+            coEvery {
+                refreshAnime()
+            } coAnswers {
+                Resource.Error("")
+            }
+            coEvery {
+                refreshManga()
+            } coAnswers {
+                Resource.Success(emptyList())
+            }
+            every { getSeries() } returns mockk()
+        }
+        val mockAuthCaster = mockk<AuthCaster>()
+        val mockObserver = mockk<Observer<AsyncState<Any, Any>>>() {
+            every { onChanged(capture(slot)) } just Runs
+        }
+
+        val classUnderTest = SeriesListViewModel(mockRepo, mockAuthCaster)
+        classUnderTest.refreshStatus.observeForever(mockObserver)
+        classUnderTest.refreshAllSeries()
+
+        assertTrue(slot.captured is AsyncState.Error)
+    }
+
+    @Test
+    fun `refreshAllSeries posts error if manga call fails`() {
+        val slot = slot<AsyncState<Any, Any>>()
+        val mockRepo = mockk<SeriesRepository> {
+            coEvery {
+                refreshAnime()
+            } coAnswers {
+                Resource.Success(emptyList())
+            }
+            coEvery {
+                refreshManga()
+            } coAnswers {
+                Resource.Error("")
+            }
+            every { getSeries() } returns mockk()
+        }
+        val mockAuthCaster = mockk<AuthCaster>()
+        val mockObserver = mockk<Observer<AsyncState<Any, Any>>>() {
+            every { onChanged(capture(slot)) } just Runs
+        }
+
+        val classUnderTest = SeriesListViewModel(mockRepo, mockAuthCaster)
+        classUnderTest.refreshStatus.observeForever(mockObserver)
+        classUnderTest.refreshAllSeries()
+
+        assertTrue(slot.captured is AsyncState.Error)
+    }
+
+    @Test
+    fun `refreshAllSeries posts success if both calls are successful`() {
+        val slot = slot<AsyncState<Any, Any>>()
+        val mockRepo = mockk<SeriesRepository> {
+            coEvery {
+                refreshAnime()
+            } coAnswers {
+                Resource.Success(emptyList())
+            }
+            coEvery {
+                refreshManga()
+            } coAnswers {
+                Resource.Success(emptyList())
+            }
+            every { getSeries() } returns mockk()
+        }
+        val mockAuthCaster = mockk<AuthCaster>()
+        val mockObserver = mockk<Observer<AsyncState<Any, Any>>>() {
+            every { onChanged(capture(slot)) } just Runs
+        }
+
+        val classUnderTest = SeriesListViewModel(mockRepo, mockAuthCaster)
+        classUnderTest.refreshStatus.observeForever(mockObserver)
+        classUnderTest.refreshAllSeries()
+
+        assertTrue(slot.captured is AsyncState.Success)
     }
 }
