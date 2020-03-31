@@ -113,10 +113,8 @@ abstract class SeriesListFragment : DaggerFragment(), SeriesInteractionListener 
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.menuSeriesListFilter ->
-                dialogHandler.showFilterDialog(requireContext(), viewLifecycleOwner)
-            R.id.menuSeriesListSort ->
-                dialogHandler.showSortDialog(requireContext(), viewLifecycleOwner)
+            R.id.menuFilter -> dialogHandler.showFilterDialog(requireContext(), viewLifecycleOwner)
+            R.id.menuSort -> dialogHandler.showSortDialog(requireContext(), viewLifecycleOwner)
             R.id.menuRefresh -> startRefreshingSeries()
         }
         return super.onOptionsItemSelected(item)

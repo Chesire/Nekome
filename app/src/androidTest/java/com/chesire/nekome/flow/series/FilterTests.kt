@@ -52,7 +52,7 @@ class FilterTests {
     @Test
     fun filterDialogDisplaysWithAllOptions() {
         activity.launchActivity(null)
-        clickMenu(R.id.menuSeriesListFilter)
+        clickMenu(R.id.menuFilter)
 
         assertDisplayedAtPosition(R.id.md_recyclerview_content, 0, R.string.filter_by_current)
         assertDisplayedAtPosition(R.id.md_recyclerview_content, 1, R.string.filter_by_completed)
@@ -64,7 +64,7 @@ class FilterTests {
     @Test
     fun filterDialogHasCorrectDefaultChoices() {
         activity.launchActivity(null)
-        clickMenu(R.id.menuSeriesListFilter)
+        clickMenu(R.id.menuFilter)
 
         assertPositionState(0, true)
         assertPositionState(1, false)
@@ -76,12 +76,12 @@ class FilterTests {
     @Test
     fun filterDialogRetainsLastChoices() {
         activity.launchActivity(null)
-        clickMenu(R.id.menuSeriesListFilter)
+        clickMenu(R.id.menuFilter)
 
         clickListItem(R.id.md_recyclerview_content, 2)
         clickListItem(R.id.md_recyclerview_content, 4)
         clickOn(R.id.md_button_positive)
-        clickMenu(R.id.menuSeriesListFilter)
+        clickMenu(R.id.menuFilter)
 
         assertPositionState(0, true)
         assertPositionState(1, false)
@@ -93,12 +93,12 @@ class FilterTests {
     @Test
     fun filterDialogCancelsOnCancelHit() {
         activity.launchActivity(null)
-        clickMenu(R.id.menuSeriesListFilter)
+        clickMenu(R.id.menuFilter)
 
         clickListItem(R.id.md_recyclerview_content, 2)
         clickListItem(R.id.md_recyclerview_content, 4)
         clickOn(R.id.md_button_negative)
-        clickMenu(R.id.menuSeriesListFilter)
+        clickMenu(R.id.menuFilter)
 
         assertPositionState(0, true)
         assertPositionState(1, false)
@@ -110,7 +110,7 @@ class FilterTests {
     @Test
     fun filterDialogConfirmDisabledIfNoFilter() {
         activity.launchActivity(null)
-        clickMenu(R.id.menuSeriesListFilter)
+        clickMenu(R.id.menuFilter)
 
         assertEnabled(R.id.md_button_positive)
         clickListItem(R.id.md_recyclerview_content, 0)
