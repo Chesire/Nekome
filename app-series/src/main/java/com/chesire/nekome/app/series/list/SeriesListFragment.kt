@@ -79,6 +79,8 @@ abstract class SeriesListFragment : DaggerFragment(), SeriesInteractionListener 
             itemTouchHelper.attachToRecyclerView(this)
         }
 
+        binding.refreshLayout.setOnRefreshListener { startRefreshingSeries() }
+
         viewModel.series.observe(
             viewLifecycleOwner,
             Observer { series ->
@@ -92,7 +94,9 @@ abstract class SeriesListFragment : DaggerFragment(), SeriesInteractionListener 
                 }
             }
         )
+
         observeSeriesDeletion()
+        observeSeriesRefresh()
     }
 
     override fun onDestroyView() {
@@ -169,6 +173,32 @@ abstract class SeriesListFragment : DaggerFragment(), SeriesInteractionListener 
                         viewModel.deleteSeries(seriesModel)
                     }
                 }.show()
+            }
+        })
+    }
+
+    private fun startRefreshingSeries() {
+        binding.refreshLayout.isRefreshing = true
+        viewModel.refreshAllSeries()
+    }
+
+    private fun endRefreshingSeries() {
+        binding.refreshLayout.isRefreshing = false
+    }
+
+    private fun observeSeriesRefresh() {
+        viewModel.refreshStatus.observe(viewLifecycleOwner, Observer { state ->
+            when (state) {
+                is AsyncState.Success -> endRefreshingSeries()
+                is AsyncState.Error -> {
+                    Timber.w("Error trying to refresh series - ${state.error}")
+                    endRefreshingSeries()
+                    Snackbar.make(
+                        binding.seriesListLayout,
+                        R.string.series_list_refresh_error,
+                        Snackbar.LENGTH_LONG
+                    ).show()
+                }
             }
         })
     }
