@@ -37,6 +37,7 @@ import javax.inject.Inject
  * Provides a base fragment for the [AnimeFragment] & [MangaFragment] to inherit from, performing
  * most of the setup and interaction.
  */
+@Suppress("TooManyFunctions")
 abstract class SeriesListFragment : DaggerFragment(), SeriesInteractionListener {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
