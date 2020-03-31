@@ -117,6 +117,7 @@ abstract class SeriesListFragment : DaggerFragment(), SeriesInteractionListener 
                 dialogHandler.showFilterDialog(requireContext(), viewLifecycleOwner)
             R.id.menuSeriesListSort ->
                 dialogHandler.showSortDialog(requireContext(), viewLifecycleOwner)
+            R.id.menuRefresh -> startRefreshingSeries()
         }
         return super.onOptionsItemSelected(item)
     }

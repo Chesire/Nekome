@@ -13,4 +13,9 @@
         android:title="@string/menu_sort"
         app:showAsAction="ifRoom" />
 
+    <item
+        android:id="@+id/menuRefresh"
+        android:title="@string/series_list_refresh"
+        app:showAsAction="never" />
+
 </menu>
