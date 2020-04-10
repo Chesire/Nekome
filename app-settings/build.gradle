@@ -46,7 +46,7 @@ dependencies {
     implementation "com.google.dagger:dagger-android-support:$dagger_version"
     implementation "com.jakewharton.timber:timber:$timber_version"
     implementation "com.mikepenz:aboutlibraries:8.0.0"
-    implementation "com.mikepenz:aboutlibraries-definitions:8.0.0"
+    implementation "com.mikepenz:aboutlibraries-definitions:8.1.0"
 
     testImplementation "junit:junit:4.13"
 
