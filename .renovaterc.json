@@ -2,5 +2,7 @@
   "extends": [
     "config:base"
   ],
-  "assignees": ["Chesire"]
+  "assignees": ["Chesire"],
+  "commitMessageTopic": "{{depName}}",
+  "ignoreDeps": ["com.android.tools:r8", "org.objenesis:objenesis"]
 }
