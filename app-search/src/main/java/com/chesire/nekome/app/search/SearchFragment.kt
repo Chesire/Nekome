@@ -29,6 +29,7 @@ class SearchFragment : DaggerFragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
     private val viewModel by viewModels<SearchViewModel> { viewModelFactory }
+
     @Inject
     lateinit var searchPreferences: SearchPreferences
     private val seriesType: SeriesType
@@ -54,22 +55,29 @@ class SearchFragment : DaggerFragment() {
         binding.searchText.addTextChangedListener {
             binding.searchTextLayout.error = null
         }
+        binding.searchChipGroup.setOnCheckedChangeListener { _, checkedId ->
+            val type = when (checkedId) {
+                R.id.searchChipAnime -> SeriesType.Anime
+                R.id.searchChipManga -> SeriesType.Manga
+                else -> SeriesType.Unknown
+            }
+            searchPreferences.lastSearchType = type.id
+        }
         observeSearchResults()
     }
 
     private fun setInitialSeriesType() {
-        val lastType = searchPreferences.lastSearchType
-        binding.searchChipGroup.check(if (lastType == 0) R.id.searchChipAnime else lastType)
+        val chipId = when (SeriesType.forId(searchPreferences.lastSearchType)) {
+            SeriesType.Manga -> R.id.searchChipManga
+            else -> R.id.searchChipAnime
+        }
+        binding.searchChipGroup.check(chipId)
     }
 
     private fun submitSearch() {
         activity?.hideSystemKeyboard()
-        searchPreferences.lastSearchType = binding.searchChipGroup.checkedChipId
         viewModel.executeSearch(
-            SearchData(
-                binding.searchText.text.toString(),
-                seriesType
-            )
+            SearchData(binding.searchText.text.toString(), seriesType)
         )
     }
 

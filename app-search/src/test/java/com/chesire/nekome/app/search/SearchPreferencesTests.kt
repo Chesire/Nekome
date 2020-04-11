@@ -14,7 +14,7 @@ class SearchPreferencesTests {
     fun `lastSearchType returns expected value`() {
         val expected = 9001
         val mockPreferences = mockk<SharedPreferences> {
-            every { getInt("preference.last_search_type", 0) } returns expected
+            every { getInt("preference.last_search_type", -1) } returns expected
         }
         val testObject = SearchPreferences(mockPreferences)
 
