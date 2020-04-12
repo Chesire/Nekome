@@ -19,8 +19,6 @@ import kotlinx.android.synthetic.main.adapter_item_series.seriesProgressBar
 import kotlinx.android.synthetic.main.adapter_item_series.seriesSubtype
 import kotlinx.android.synthetic.main.adapter_item_series.seriesTitle
 
-private const val UNKNOWN_DATE = "????-??-??"
-
 /**
  * ViewHolder for Series items in the Anime or Manga list.
  */
@@ -53,26 +51,17 @@ class SeriesViewHolder(view: View) : RecyclerView.ViewHolder(view), LayoutContai
     }
 
     private fun setupDateString(model: SeriesModel) {
-        val dateString = if (model.startDate.isEmpty() && model.endDate.isEmpty()) {
-            containerView.context.getString(
-                R.string.series_list_date_range,
-                UNKNOWN_DATE,
-                UNKNOWN_DATE
-            )
-        } else if (model.startDate == model.endDate) {
-            model.startDate
-        } else if (model.endDate.isEmpty()) {
-            containerView.context.getString(
-                R.string.series_list_date_range,
-                model.startDate,
-                UNKNOWN_DATE
-            )
-        } else {
-            containerView.context.getString(
-                R.string.series_list_date_range,
-                model.startDate,
-                model.endDate
-            )
+        val dateString = with(containerView.context) {
+            when {
+                model.startDate.isEmpty() && model.endDate.isEmpty() -> getString(R.string.series_list_unknown)
+                model.startDate == model.endDate -> model.startDate
+                model.endDate.isEmpty() -> getString(
+                    R.string.series_list_date_range,
+                    model.startDate,
+                    getString(R.string.series_list_ongoing)
+                )
+                else -> getString(R.string.series_list_date_range, model.startDate, model.endDate)
+            }
         }
         seriesDate.text = dateString
     }
