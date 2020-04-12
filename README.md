@@ -1,23 +1,36 @@
 # Nekome
 [![Build Status](https://app.bitrise.io/app/9d4a9399b9f5d683/status.svg?token=9KwlEAgGeH0XqZ_LuwDJuA&branch=master)](https://app.bitrise.io/app/9d4a9399b9f5d683)
 [![codecov](https://codecov.io/gh/Chesire/Nekome/branch/master/graph/badge.svg)](https://codecov.io/gh/Chesire/Nekome)
+[![codebeat badge](https://codebeat.co/badges/76f57136-df6b-4eda-be4b-18191b6a007e)](https://codebeat.co/projects/github-com-chesire-nekome-master)
 
-Nekome is a free and open source application for Android that helps with tracking your anime and manga watchlists.  
+Nekome is an Android application that helps with tracking your anime and manga watch lists. Watch list data is handled by [Kitsu](https://kitsu.io/).
 
 [<img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png"
       alt="Download from Google Play"
       height="80">](https://play.google.com/store/apps/details?id=com.chesire.nekome)
 
+![List](screenshots/list.png) ![detail](screenshots/detail.png)
+
 ## Features
-Features include:  
-* Track Anime and Manga series progress  
-* Quick update of series progress  
-* Find and add new series to follow  
-* Uses [Kitsu](https://kitsu.io/) to store series progress  
-* Created using recommended tools for Android development (Architecture Components, Dagger, Navigation, Retrofit, etc)
+* Track Anime and Manga series progress
+* Quickly update progress on series
+* Search for new series to follow
+* Light and Dark themes
+
+## Tech Stack
+* Support for Android 21+
+* Fully Kotlin
+* Uses [Kitsu](https://kitsu.io/) to store information, all accessed through [their API](https://kitsu.docs.apiary.io/)
+* [Architecture components](https://developer.android.com/topic/libraries/architecture) (LiveData, ViewModels, Room)
+* [Dagger](https://github.com/google/dagger) for dependency injection
+* [Retrofit](https://github.com/square/retrofit) to aid with API communicaton
+* [Moshi](https://github.com/square/moshi) for parsing JSON
+* [Coroutines](https://github.com/Kotlin/kotlinx.coroutines) to perform async tasks
+* [Coil](https://github.com/coil-kt/coil) for async image loading
+* [Detekt](https://github.com/arturbosch/detekt) & [ktlint](https://github.com/pinterest/ktlint) are used for static analysis
 
 ## Contribution
-For contributing to the project, please feel free to create an [issue](https://github.com/Chesire/Nekome/issues/new) or submit a pull request.
+For contributing to the project, please feel free to [create an issue](https://github.com/Chesire/Nekome/issues/new) or submit a pull request.
 
 ## License
 
