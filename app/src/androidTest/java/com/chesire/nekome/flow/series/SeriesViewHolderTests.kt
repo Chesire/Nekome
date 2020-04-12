@@ -96,8 +96,8 @@ class SeriesViewHolderTests {
     }
 
     @Test
-    fun itemWithNoEndDateShowsUnknown() {
-        val expectedDate = "2020-01-31 - ????-??-??"
+    fun itemWithNoEndDateShowsOngoing() {
+        val expectedDate = "2020-01-31 - ONGOING"
 
         runBlocking {
             seriesDao.insert(createSeriesModel(startDate = "2020-01-31", endDate = ""))
@@ -115,7 +115,7 @@ class SeriesViewHolderTests {
 
     @Test
     fun itemWithNoDatesShowsUnknown() {
-        val expectedDate = "????-??-?? - ????-??-??"
+        val expectedDate = "UNKNOWN"
 
         runBlocking {
             seriesDao.insert(createSeriesModel(startDate = "", endDate = ""))
