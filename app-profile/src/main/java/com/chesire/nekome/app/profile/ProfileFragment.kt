@@ -1,9 +1,7 @@
 package com.chesire.nekome.app.profile
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import coil.api.load
@@ -19,7 +17,7 @@ import javax.inject.Inject
  * Fragment to display to the user information about their profile.
  */
 @LogLifecykle
-class ProfileFragment : DaggerFragment() {
+class ProfileFragment : DaggerFragment(R.layout.fragment_profile) {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
     private val viewModel by viewModels<ProfileViewModel> { viewModelFactory }
@@ -31,14 +29,9 @@ class ProfileFragment : DaggerFragment() {
         setHasOptionsMenu(true)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ) = FragmentProfileBinding.inflate(inflater, container, false).also { _binding = it }.root
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        _binding = FragmentProfileBinding.bind(view)
 
         viewModel.user.observe(viewLifecycleOwner, Observer {
             if (it != null) {

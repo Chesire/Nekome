@@ -1,12 +1,10 @@
 package com.chesire.nekome.app.series.list
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
-import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -38,7 +36,10 @@ import javax.inject.Inject
  * most of the setup and interaction.
  */
 @Suppress("TooManyFunctions")
-abstract class SeriesListFragment : DaggerFragment(), SeriesInteractionListener {
+abstract class SeriesListFragment :
+    DaggerFragment(R.layout.fragment_series_list),
+    SeriesInteractionListener {
+
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
 
@@ -62,14 +63,9 @@ abstract class SeriesListFragment : DaggerFragment(), SeriesInteractionListener 
         setHasOptionsMenu(true)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ) = FragmentSeriesListBinding.inflate(inflater, container, false).also { _binding = it }.root
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        _binding = FragmentSeriesListBinding.bind(view)
 
         val seriesAdapter = SeriesAdapter(this, seriesPreferences)
         binding.listContent.apply {
