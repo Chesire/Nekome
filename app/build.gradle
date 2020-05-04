@@ -116,10 +116,7 @@ dependencies {
         exclude group: "com.android.support"
         exclude group: "org.jetbrains.kotlin"
     }
-    // Fixes issue with mockk 1.9.3 https://github.com/mockk/mockk/issues/281
-    androidTestImplementation("io.mockk:mockk-android:1.10.0") { exclude module: "objenesis" }
-    //noinspection GradleDependency
-    androidTestImplementation "org.objenesis:objenesis:2.6"
+    androidTestImplementation "io.mockk:mockk-android:1.10.0"
 
     kapt "com.google.dagger:dagger-android-processor:$dagger_version"
     kapt "com.google.dagger:dagger-compiler:$dagger_version"
