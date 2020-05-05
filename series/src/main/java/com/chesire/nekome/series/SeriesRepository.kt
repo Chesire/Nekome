@@ -1,6 +1,5 @@
 package com.chesire.nekome.series
 
-import com.chesire.nekome.account.UserRepository
 import com.chesire.nekome.core.flags.UserSeriesStatus
 import com.chesire.nekome.core.models.SeriesModel
 import com.chesire.nekome.database.dao.SeriesDao
@@ -14,7 +13,7 @@ import timber.log.Timber
 class SeriesRepository(
     private val seriesDao: SeriesDao,
     private val libraryApi: LibraryApi,
-    private val userRepository: UserRepository
+    private val userProvider: UserProvider
 ) {
     /**
      * Observable list of all the users series (Anime + Manga).
@@ -25,7 +24,7 @@ class SeriesRepository(
      * Adds the anime series with id [seriesId] to the users tracked list.
      */
     suspend fun addAnime(seriesId: Int, startingStatus: UserSeriesStatus): Resource<SeriesModel> {
-        val response = libraryApi.addAnime(retrieveUserId(), seriesId, startingStatus)
+        val response = libraryApi.addAnime(userProvider.provideUserId(), seriesId, startingStatus)
         when (response) {
             is Resource.Success -> seriesDao.insert(response.data)
             is Resource.Error -> Timber.e("Error adding anime [$seriesId], ${response.msg}")
@@ -38,7 +37,7 @@ class SeriesRepository(
      * Adds the manga series with id [seriesId] to the users tracked list.
      */
     suspend fun addManga(seriesId: Int, startingStatus: UserSeriesStatus): Resource<SeriesModel> {
-        val response = libraryApi.addManga(retrieveUserId(), seriesId, startingStatus)
+        val response = libraryApi.addManga(userProvider.provideUserId(), seriesId, startingStatus)
         when (response) {
             is Resource.Success -> seriesDao.insert(response.data)
             is Resource.Error -> Timber.e("Error adding manga [$seriesId], ${response.msg}")
@@ -66,7 +65,7 @@ class SeriesRepository(
      * Pulls and stores all of the users anime list.
      */
     suspend fun refreshAnime(): Resource<List<SeriesModel>> {
-        val response = libraryApi.retrieveAnime(retrieveUserId())
+        val response = libraryApi.retrieveAnime(userProvider.provideUserId())
         when (response) {
             is Resource.Success -> seriesDao.insert(response.data)
             is Resource.Error -> Timber.e("Error refreshing anime, ${response.msg}")
@@ -79,7 +78,7 @@ class SeriesRepository(
      * Pulls and stores all of the users manga list.
      */
     suspend fun refreshManga(): Resource<List<SeriesModel>> {
-        val response = libraryApi.retrieveManga(retrieveUserId())
+        val response = libraryApi.retrieveManga(userProvider.provideUserId())
         when (response) {
             is Resource.Success -> seriesDao.insert(response.data)
             is Resource.Error -> Timber.e("Error refreshing manga, ${response.msg}")
@@ -87,8 +86,6 @@ class SeriesRepository(
 
         return response
     }
-
-    private suspend fun retrieveUserId() = requireNotNull(userRepository.retrieveUserId())
 
     /**
      * Updates the stored data about a users series, mapped via the users id for the series
