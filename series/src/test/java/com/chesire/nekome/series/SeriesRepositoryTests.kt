@@ -1,7 +1,6 @@
 package com.chesire.nekome.series
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.chesire.nekome.account.UserRepository
 import com.chesire.nekome.core.flags.UserSeriesStatus
 import com.chesire.nekome.core.models.SeriesModel
 import com.chesire.nekome.database.dao.SeriesDao
@@ -34,8 +33,8 @@ class SeriesRepositoryTests {
         val mockApi = mockk<LibraryApi> {
             coEvery { addAnime(any(), any(), any()) } returns expected
         }
-        val mockUser = mockk<UserRepository> {
-            coEvery { retrieveUserId() } returns 1
+        val mockUser = mockk<UserProvider> {
+            coEvery { provideUserId() } returns 1
         }
 
         val classUnderTest = SeriesRepository(mockDao, mockApi, mockUser)
@@ -54,8 +53,8 @@ class SeriesRepositoryTests {
         val mockApi = mockk<LibraryApi> {
             coEvery { addAnime(any(), any(), any()) } returns expected
         }
-        val mockUser = mockk<UserRepository> {
-            coEvery { retrieveUserId() } returns 1
+        val mockUser = mockk<UserProvider> {
+            coEvery { provideUserId() } returns 1
         }
 
         val classUnderTest = SeriesRepository(mockDao, mockApi, mockUser)
@@ -74,8 +73,8 @@ class SeriesRepositoryTests {
         val mockApi = mockk<LibraryApi> {
             coEvery { addAnime(any(), any(), any()) } returns expected
         }
-        val mockUser = mockk<UserRepository> {
-            coEvery { retrieveUserId() } returns 1
+        val mockUser = mockk<UserProvider> {
+            coEvery { provideUserId() } returns 1
         }
 
         val classUnderTest = SeriesRepository(mockDao, mockApi, mockUser)
@@ -94,8 +93,8 @@ class SeriesRepositoryTests {
         val mockApi = mockk<LibraryApi> {
             coEvery { addManga(any(), any(), any()) } returns expected
         }
-        val mockUser = mockk<UserRepository> {
-            coEvery { retrieveUserId() } returns 1
+        val mockUser = mockk<UserProvider> {
+            coEvery { provideUserId() } returns 1
         }
 
         val classUnderTest = SeriesRepository(mockDao, mockApi, mockUser)
@@ -114,8 +113,8 @@ class SeriesRepositoryTests {
         val mockApi = mockk<LibraryApi> {
             coEvery { addManga(any(), any(), any()) } returns expected
         }
-        val mockUser = mockk<UserRepository> {
-            coEvery { retrieveUserId() } returns 1
+        val mockUser = mockk<UserProvider> {
+            coEvery { provideUserId() } returns 1
         }
 
         val classUnderTest = SeriesRepository(mockDao, mockApi, mockUser)
@@ -134,8 +133,8 @@ class SeriesRepositoryTests {
         val mockApi = mockk<LibraryApi> {
             coEvery { addManga(any(), any(), any()) } returns expected
         }
-        val mockUser = mockk<UserRepository> {
-            coEvery { retrieveUserId() } returns 1
+        val mockUser = mockk<UserProvider> {
+            coEvery { provideUserId() } returns 1
         }
 
         val classUnderTest = SeriesRepository(mockDao, mockApi, mockUser)
@@ -156,8 +155,8 @@ class SeriesRepositoryTests {
         val mockApi = mockk<LibraryApi> {
             coEvery { delete(any()) } returns Resource.Success(Any())
         }
-        val mockUser = mockk<UserRepository> {
-            coEvery { retrieveUserId() } returns 1
+        val mockUser = mockk<UserProvider> {
+            coEvery { provideUserId() } returns 1
         }
 
         val classUnderTest = SeriesRepository(mockDao, mockApi, mockUser)
@@ -176,8 +175,8 @@ class SeriesRepositoryTests {
         val mockApi = mockk<LibraryApi> {
             coEvery { delete(any()) } returns expected
         }
-        val mockUser = mockk<UserRepository> {
-            coEvery { retrieveUserId() } returns 1
+        val mockUser = mockk<UserProvider> {
+            coEvery { provideUserId() } returns 1
         }
 
         val classUnderTest = SeriesRepository(mockDao, mockApi, mockUser)
@@ -198,8 +197,8 @@ class SeriesRepositoryTests {
         val mockApi = mockk<LibraryApi> {
             coEvery { delete(any()) } returns expected
         }
-        val mockUser = mockk<UserRepository> {
-            coEvery { retrieveUserId() } returns 1
+        val mockUser = mockk<UserProvider> {
+            coEvery { provideUserId() } returns 1
         }
 
         val classUnderTest = SeriesRepository(mockDao, mockApi, mockUser)
@@ -220,8 +219,8 @@ class SeriesRepositoryTests {
         val mockApi = mockk<LibraryApi> {
             coEvery { retrieveAnime(any()) } returns response
         }
-        val mockUser = mockk<UserRepository> {
-            coEvery { retrieveUserId() } returns 1
+        val mockUser = mockk<UserProvider> {
+            coEvery { provideUserId() } returns 1
         }
 
         val classUnderTest = SeriesRepository(mockDao, mockApi, mockUser)
@@ -240,8 +239,8 @@ class SeriesRepositoryTests {
         val mockApi = mockk<LibraryApi> {
             coEvery { retrieveAnime(any()) } returns response
         }
-        val mockUser = mockk<UserRepository> {
-            coEvery { retrieveUserId() } returns 1
+        val mockUser = mockk<UserProvider> {
+            coEvery { provideUserId() } returns 1
         }
 
         val classUnderTest = SeriesRepository(mockDao, mockApi, mockUser)
@@ -260,8 +259,8 @@ class SeriesRepositoryTests {
         val mockApi = mockk<LibraryApi> {
             coEvery { retrieveManga(any()) } returns response
         }
-        val mockUser = mockk<UserRepository> {
-            coEvery { retrieveUserId() } returns 1
+        val mockUser = mockk<UserProvider> {
+            coEvery { provideUserId() } returns 1
         }
 
         val classUnderTest = SeriesRepository(mockDao, mockApi, mockUser)
@@ -280,8 +279,8 @@ class SeriesRepositoryTests {
         val mockApi = mockk<LibraryApi> {
             coEvery { retrieveManga(any()) } returns response
         }
-        val mockUser = mockk<UserRepository> {
-            coEvery { retrieveUserId() } returns 1
+        val mockUser = mockk<UserProvider> {
+            coEvery { provideUserId() } returns 1
         }
 
         val classUnderTest = SeriesRepository(mockDao, mockApi, mockUser)
@@ -304,7 +303,7 @@ class SeriesRepositoryTests {
                 Resource.Success(expected)
             }
         }
-        val mockUser = mockk<UserRepository>()
+        val mockUser = mockk<UserProvider>()
 
         val classUnderTest = SeriesRepository(mockDao, mockApi, mockUser)
         classUnderTest.updateSeries(0, 0, UserSeriesStatus.Current)
@@ -324,7 +323,7 @@ class SeriesRepositoryTests {
                 Resource.Error("")
             }
         }
-        val mockUser = mockk<UserRepository>()
+        val mockUser = mockk<UserProvider>()
 
         val classUnderTest = SeriesRepository(mockDao, mockApi, mockUser)
         val result = classUnderTest.updateSeries(0, 0, UserSeriesStatus.Current)
