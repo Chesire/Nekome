@@ -1,9 +1,7 @@
 package com.chesire.nekome.app.login.details
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import androidx.annotation.StringRes
 import androidx.core.widget.addTextChangedListener
@@ -28,7 +26,7 @@ import javax.inject.Inject
  * Fragment to allow the user to enter their login details for Kitsu.
  */
 @LogLifecykle
-class DetailsFragment : DaggerFragment() {
+class DetailsFragment : DaggerFragment(R.layout.fragment_details) {
     @Inject
     lateinit var urlHandler: UrlHandler
 
@@ -38,14 +36,9 @@ class DetailsFragment : DaggerFragment() {
     private var _binding: FragmentDetailsBinding? = null
     private val binding get() = requireNotNull(_binding) { "Binding not set" }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ) = FragmentDetailsBinding.inflate(inflater, container, false).also { _binding = it }.root
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        _binding = FragmentDetailsBinding.bind(view)
 
         binding.usernameText.addTextChangedListener { binding.usernameLayout.error = "" }
         binding.passwordText.addTextChangedListener { binding.passwordLayout.error = "" }

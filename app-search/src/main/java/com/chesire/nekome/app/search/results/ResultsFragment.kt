@@ -1,9 +1,7 @@
 package com.chesire.nekome.app.search.results
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
@@ -22,7 +20,7 @@ import javax.inject.Inject
  * Displays the results of a search to the user, allowing them to select to track new series.
  */
 @LogLifecykle
-class ResultsFragment : DaggerFragment(), ResultsListener {
+class ResultsFragment : DaggerFragment(R.layout.fragment_results), ResultsListener {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
     private val viewModel by viewModels<ResultsViewModel> { viewModelFactory }
@@ -31,14 +29,9 @@ class ResultsFragment : DaggerFragment(), ResultsListener {
     private var _binding: FragmentResultsBinding? = null
     private val binding get() = requireNotNull(_binding) { "Binding not set" }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ) = FragmentResultsBinding.inflate(inflater, container, false).also { _binding = it }.root
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        _binding = FragmentResultsBinding.bind(view)
 
         observeSeries()
         resultsAdapter.submitList(args.searchResults.toList())

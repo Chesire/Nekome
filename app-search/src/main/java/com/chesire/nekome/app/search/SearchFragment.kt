@@ -1,9 +1,7 @@
 package com.chesire.nekome.app.search
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -25,7 +23,7 @@ import javax.inject.Inject
  * Allows a user to perform a search to find new series to follow.
  */
 @LogLifecykle
-class SearchFragment : DaggerFragment() {
+class SearchFragment : DaggerFragment(R.layout.fragment_search) {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
     private val viewModel by viewModels<SearchViewModel> { viewModelFactory }
@@ -42,14 +40,10 @@ class SearchFragment : DaggerFragment() {
     private var _binding: FragmentSearchBinding? = null
     private val binding get() = requireNotNull(_binding) { "Binding not set" }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ) = FragmentSearchBinding.inflate(inflater, container, false).also { _binding = it }.root
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        _binding = FragmentSearchBinding.bind(view)
+
         setInitialSeriesType()
         binding.searchConfirmButton.setOnClickListener { submitSearch() }
         binding.searchText.addTextChangedListener {
