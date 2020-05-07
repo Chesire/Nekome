@@ -112,7 +112,7 @@ dependencies {
     androidTestImplementation "androidx.test.ext:junit:1.1.1"
     androidTestImplementation "androidx.test:rules:1.2.0"
     // androidTestImplementation "androidx.work:work-testing:2.0.1"
-    androidTestImplementation("com.schibsted.spain:barista:3.4.0") {
+    androidTestImplementation("com.schibsted.spain:barista:3.5.0") {
         exclude group: "com.android.support"
         exclude group: "org.jetbrains.kotlin"
     }
