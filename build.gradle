@@ -83,7 +83,7 @@ ext {
     lifecykle_version = "3.0.0"
     lintrules_version = "1.2.0"
     liveevent_version = "1.2.0"
-    material_version = "1.2.0-alpha06"
+    material_version = "1.2.0-beta01"
     materialdialog_version = "3.3.0"
     moshi_version = "1.9.2"
     preferences_version = "1.1.1"
