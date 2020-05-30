@@ -449,6 +449,8 @@ style:
     ignoreRanges: false
   MandatoryBracesIfStatements:
     active: true
+  MandatoryBracesLoops:
+    active: true
   MaxLineLength:
     active: true
     maxLineLength: 120
