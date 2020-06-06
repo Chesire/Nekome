@@ -15,6 +15,3 @@ updates:
   - dependency-name: com.squareup.okhttp3:mockwebserver
     versions:
     - ">= 4.a, < 5"
-  - dependency-name: org.objenesis:objenesis
-    versions:
-    - "> 2.6"
