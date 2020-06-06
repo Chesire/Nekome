@@ -1,0 +1,17 @@
+version: 2
+updates:
+- package-ecosystem: gradle
+  directory: "/"
+  schedule:
+    interval: daily
+    time: '09:00'
+  open-pull-requests-limit: 30
+  assignees:
+  - Chesire
+  ignore:
+  - dependency-name: com.android.tools:r8
+    versions:
+    - "> 1.6.75"
+  - dependency-name: com.squareup.okhttp3:mockwebserver
+    versions:
+    - ">= 4.a, < 5"
