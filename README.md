@@ -1,7 +1,6 @@
 # Nekome
 [![Build Status](https://app.bitrise.io/app/9d4a9399b9f5d683/status.svg?token=9KwlEAgGeH0XqZ_LuwDJuA&branch=master)](https://app.bitrise.io/app/9d4a9399b9f5d683)
 [![codecov](https://codecov.io/gh/Chesire/Nekome/branch/master/graph/badge.svg)](https://codecov.io/gh/Chesire/Nekome)
-[![codebeat badge](https://codebeat.co/badges/76f57136-df6b-4eda-be4b-18191b6a007e)](https://codebeat.co/projects/github-com-chesire-nekome-master)
 
 Nekome is an Android application that helps with tracking your anime and manga watch lists. Watch list data is handled by [Kitsu](https://kitsu.io/).
 
