@@ -22,8 +22,8 @@ android {
     androidExtensions {
         experimental true
     }
-    viewBinding {
-        enabled true
+    buildFeatures {
+        viewBinding true
     }
     kotlinOptions {
         jvmTarget = "1.8"
