@@ -5,8 +5,6 @@ import android.os.Handler
 import android.os.Looper
 import android.view.MenuItem
 import android.view.View
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout.LOCK_MODE_LOCKED_CLOSED
@@ -17,8 +15,6 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import coil.api.load
-import coil.transform.CircleCropTransformation
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
 import com.chesire.lifecyklelog.LogLifecykle
@@ -72,16 +68,7 @@ class Activity : DaggerAppCompatActivity(), AuthCaster.AuthCasterListener, Flow 
                 return@Observer
             }
 
-            findViewById<NavigationView>(R.id.activityNavigationView)?.getHeaderView(0)?.let {
-                it.findViewById<TextView>(R.id.viewNavHeaderTitle).text = userModel.name
-                it.findViewById<TextView>(R.id.viewNavHeaderSubtitle).text = userModel.service.name
-                it.findViewById<ImageView>(R.id.viewNavHeaderImage)
-                    .load(userModel.avatar.medium.url) {
-                        transformations(CircleCropTransformation())
-                        placeholder(R.drawable.ic_account_circle)
-                        error(R.drawable.ic_account_circle)
-                    }
-            }
+            updateAvatar(findViewById(R.id.activityNavigationView), userModel)
         })
     }
 
