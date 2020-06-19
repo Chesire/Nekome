@@ -23,6 +23,7 @@ class RefreshAuthWorker(
 
     @Inject
     lateinit var userRepo: UserRepository
+
     @Inject
     lateinit var auth: AuthApi
 
