@@ -21,6 +21,7 @@ class SyncingViewModel @Inject constructor(
     private val seriesRepo: SeriesRepository,
     userRepo: UserRepository
 ) : ViewModel() {
+
     private val _syncStatus = MutableLiveData<AsyncState<Any, Any>>()
     val syncStatus = _syncStatus
     val avatarUrl = Transformations.map(userRepo.user.asLiveData()) { it.avatar.largest?.url }

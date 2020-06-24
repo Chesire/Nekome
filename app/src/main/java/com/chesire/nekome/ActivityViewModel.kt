@@ -21,6 +21,7 @@ class ActivityViewModel @Inject constructor(
     @IOContext private val ioContext: CoroutineContext,
     userRepository: UserRepository
 ) : ViewModel() {
+
     /**
      * The currently logged in user.
      */

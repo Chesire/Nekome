@@ -23,6 +23,7 @@ class RefreshSeriesWorker(
 
     @Inject
     lateinit var seriesRepo: SeriesRepository
+
     @Inject
     lateinit var userRepo: UserRepository
 

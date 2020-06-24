@@ -23,6 +23,7 @@ class SeriesListViewModel @Inject constructor(
     private val repo: SeriesRepository,
     private val authCaster: AuthCaster
 ) : ViewModel() {
+
     val series = repo.getSeries().asLiveData()
     private val _deletionStatus = LiveEvent<AsyncState<SeriesModel, SeriesListDeleteError>>()
     val deletionStatus: LiveData<AsyncState<SeriesModel, SeriesListDeleteError>> = _deletionStatus

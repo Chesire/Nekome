@@ -18,6 +18,7 @@ class DetailsViewModel @Inject constructor(
     private val auth: AuthApi,
     private val user: UserRepository
 ) : ViewModel() {
+
     private val _loginStatus = LiveEvent<LoginStatus>()
     val loginStatus: LiveData<LoginStatus> = _loginStatus
 
