@@ -15,3 +15,12 @@ updates:
   - dependency-name: com.squareup.okhttp3:mockwebserver
     versions:
     - ">= 4.a, < 5"
+
+- package-ecosystem: npm
+  directory: "/"
+  schedule:
+    interval: daily
+    time: '09:00'
+  open-pull-requests-limit: 30
+  assignees:
+  - Chesire
