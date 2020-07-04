@@ -2,15 +2,12 @@ package com.chesire.nekome
 
 import android.os.StrictMode
 import androidx.appcompat.app.AppCompatDelegate
-import com.chesire.lifecyklelog.LifecykleLog
-import com.chesire.lifecyklelog.LogHandler
 import com.chesire.nekome.core.settings.ApplicationSettings
 import com.chesire.nekome.injection.components.AppComponent
 import com.chesire.nekome.injection.components.DaggerAppComponent
 import com.chesire.nekome.services.WorkerQueue
 import dagger.android.AndroidInjector
 import dagger.android.support.DaggerApplication
-import timber.log.Timber
 import javax.inject.Inject
 
 /**
@@ -29,14 +26,6 @@ class App : DaggerApplication() {
         super.onCreate()
 
         if (BuildConfig.DEBUG) {
-            Timber.plant(Timber.DebugTree())
-            LifecykleLog.apply {
-                initialize(this@App)
-                logHandler = LogHandler { clazz, lifecycleEvent, bundle ->
-                    Timber.tag(clazz)
-                    Timber.d("-> $lifecycleEvent ${bundle?.let { "- $it" } ?: ""}")
-                }
-            }
             startStrictMode()
         }
 
