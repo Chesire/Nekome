@@ -363,6 +363,10 @@ potential-bugs:
     active: true
   ExplicitGarbageCollectionCall:
     active: true
+  IgnoredReturnValue:
+    active: true
+  ImplicitUnitReturnType:
+    active: true
   InvalidRange:
     active: true
   IteratorHasNextCallsNextMethod:
