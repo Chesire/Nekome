@@ -10,6 +10,7 @@ import timber.log.Timber
 /**
  * Initializes [LifecykleLog].
  */
+@Suppress("Unused")
 class LifecykleLogInitializer : Initializer<Unit> {
     override fun create(context: Context) {
         LifecykleLog.apply {
