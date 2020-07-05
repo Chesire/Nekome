@@ -7,6 +7,7 @@ import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
 import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.drawerlayout.widget.DrawerLayout.LOCK_MODE_LOCKED_CLOSED
 import androidx.drawerlayout.widget.DrawerLayout.LOCK_MODE_UNLOCKED
 import androidx.lifecycle.Observer
@@ -93,7 +94,7 @@ class Activity : DaggerAppCompatActivity(), AuthCaster.AuthCasterListener, Flow 
                 R.id.discoverFragment,
                 R.id.searchFragment
             ),
-            findViewById(R.id.activityDrawer)
+            findViewById<DrawerLayout>(R.id.activityDrawer)
         )
 
         with(findNavController(R.id.activityNavigation)) {
