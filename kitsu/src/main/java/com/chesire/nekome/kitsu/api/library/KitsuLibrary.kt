@@ -73,10 +73,10 @@ class KitsuLibrary @Inject constructor(
     private suspend fun performRetrieveCall(
         userId: Int,
         execute: KSuspendFunction3<
-                @ParameterName(name = "userId") Int,
-                @ParameterName(name = "offset") Int,
-                @ParameterName(name = "limit") Int,
-                Response<ParsedRetrieveResponse>>
+            @ParameterName(name = "userId") Int,
+            @ParameterName(name = "offset") Int,
+            @ParameterName(name = "limit") Int,
+            Response<ParsedRetrieveResponse>>
     ): Resource<List<SeriesModel>> {
         val models = mutableListOf<SeriesModel>()
 

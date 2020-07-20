@@ -43,9 +43,12 @@ class ResultsFragment : DaggerFragment(R.layout.fragment_results), ResultsListen
     }
 
     private fun observeSeries() {
-        viewModel.series.observe(viewLifecycleOwner, Observer {
-            resultsAdapter.allSeries = it
-        })
+        viewModel.series.observe(
+            viewLifecycleOwner,
+            Observer {
+                resultsAdapter.allSeries = it
+            }
+        )
     }
 
     override fun onTrack(model: SeriesModel, callback: () -> Unit) {

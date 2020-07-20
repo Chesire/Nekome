@@ -1,11 +1,11 @@
 package com.chesire.nekome.kitsu.live
 
-import com.chesire.nekome.server.Resource
 import com.chesire.nekome.kitsu.adapters.ImageModelAdapter
 import com.chesire.nekome.kitsu.adapters.RatingSystemAdapter
 import com.chesire.nekome.kitsu.api.user.KitsuUser
 import com.chesire.nekome.kitsu.api.user.KitsuUserService
 import com.chesire.nekome.kitsu.api.user.UserModelAdapter
+import com.chesire.nekome.server.Resource
 import com.squareup.moshi.Moshi
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking

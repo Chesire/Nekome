@@ -55,15 +55,17 @@ class SearchViewModel @Inject constructor(
     }
 
     private fun parseSearchResponse(response: Resource<List<SeriesModel>>) = when (response) {
-        is Resource.Success -> if (response.data.isEmpty()) {
-            _searchResult.postError(SearchError.NoSeriesFound)
-        } else {
-            _searchResult.postSuccess(response.data)
-        }
-        is Resource.Error -> if (response.code == Resource.Error.CouldNotRefresh) {
-            authCaster.issueRefreshingToken()
-        } else {
-            _searchResult.postError(SearchError.GenericError)
-        }
+        is Resource.Success ->
+            if (response.data.isEmpty()) {
+                _searchResult.postError(SearchError.NoSeriesFound)
+            } else {
+                _searchResult.postSuccess(response.data)
+            }
+        is Resource.Error ->
+            if (response.code == Resource.Error.CouldNotRefresh) {
+                authCaster.issueRefreshingToken()
+            } else {
+                _searchResult.postError(SearchError.GenericError)
+            }
     }
 }

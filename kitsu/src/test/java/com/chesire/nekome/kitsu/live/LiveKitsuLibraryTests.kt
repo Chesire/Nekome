@@ -1,6 +1,5 @@
 package com.chesire.nekome.kitsu.live
 
-import com.chesire.nekome.server.Resource
 import com.chesire.nekome.core.flags.UserSeriesStatus
 import com.chesire.nekome.kitsu.adapters.ImageModelAdapter
 import com.chesire.nekome.kitsu.adapters.SeriesStatusAdapter
@@ -11,6 +10,7 @@ import com.chesire.nekome.kitsu.api.library.KitsuLibrary
 import com.chesire.nekome.kitsu.api.library.KitsuLibraryService
 import com.chesire.nekome.kitsu.api.library.LibrarySeriesModelAdapter
 import com.chesire.nekome.kitsu.api.library.ParsedRetrieveResponseAdapter
+import com.chesire.nekome.server.Resource
 import com.squareup.moshi.Moshi
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking

@@ -51,9 +51,11 @@ object ServerModule {
             .addInterceptor(authRefresh)
             .also { httpClient ->
                 if (BuildConfig.DEBUG) {
-                    httpClient.addInterceptor(HttpLoggingInterceptor().apply {
-                        level = HttpLoggingInterceptor.Level.BODY
-                    })
+                    httpClient.addInterceptor(
+                        HttpLoggingInterceptor().apply {
+                            level = HttpLoggingInterceptor.Level.BODY
+                        }
+                    )
                 }
             }
             .build()

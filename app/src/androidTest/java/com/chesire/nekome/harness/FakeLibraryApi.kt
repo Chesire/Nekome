@@ -1,9 +1,9 @@
 package com.chesire.nekome.harness
 
-import com.chesire.nekome.server.Resource
-import com.chesire.nekome.server.api.LibraryApi
 import com.chesire.nekome.core.flags.UserSeriesStatus
 import com.chesire.nekome.core.models.SeriesModel
+import com.chesire.nekome.server.Resource
+import com.chesire.nekome.server.api.LibraryApi
 
 open class FakeLibraryApi : LibraryApi {
     override suspend fun retrieveAnime(userId: Int): Resource<List<SeriesModel>> {

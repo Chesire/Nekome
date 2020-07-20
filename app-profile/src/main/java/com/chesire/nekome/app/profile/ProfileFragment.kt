@@ -33,11 +33,14 @@ class ProfileFragment : DaggerFragment(R.layout.fragment_profile) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentProfileBinding.bind(view)
 
-        viewModel.user.observe(viewLifecycleOwner, Observer {
-            if (it != null) {
-                setImagery(it)
+        viewModel.user.observe(
+            viewLifecycleOwner,
+            Observer {
+                if (it != null) {
+                    setImagery(it)
+                }
             }
-        })
+        )
     }
 
     private fun setImagery(user: UserModel) {

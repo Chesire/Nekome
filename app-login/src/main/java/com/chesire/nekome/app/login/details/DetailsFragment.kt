@@ -83,10 +83,10 @@ class DetailsFragment : DaggerFragment(R.layout.fragment_details) {
         }
 
         when (loginStatus) {
-            LoginStatus.EmptyUsername -> binding.usernameLayout.error =
-                getString(R.string.login_error_empty_username)
-            LoginStatus.EmptyPassword -> binding.passwordLayout.error =
-                getString(R.string.login_error_empty_password)
+            LoginStatus.EmptyUsername ->
+                binding.usernameLayout.error = getString(R.string.login_error_empty_username)
+            LoginStatus.EmptyPassword ->
+                binding.passwordLayout.error = getString(R.string.login_error_empty_password)
             LoginStatus.Error -> showSnackbar(R.string.login_error_generic)
             LoginStatus.InvalidCredentials -> showSnackbar(R.string.login_error_credentials)
             LoginStatus.Success -> {
