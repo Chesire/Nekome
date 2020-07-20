@@ -13,11 +13,14 @@ import java.net.UnknownHostException
 class ResponseParsingTests {
     @Test
     fun `Response#parse !isSuccessful false returns Resource#Error`() {
-        val response = Response.error<Any>(400, mockk {
-            every { string() } returns ""
-            every { contentType() } returns MediaType.get("application/json")
-            every { contentLength() } returns 0
-        })
+        val response = Response.error<Any>(
+            400,
+            mockk {
+                every { string() } returns ""
+                every { contentType() } returns MediaType.get("application/json")
+                every { contentLength() } returns 0
+            }
+        )
         assertTrue(response.parse() is Resource.Error)
     }
 
@@ -36,22 +39,28 @@ class ResponseParsingTests {
     @Test
     fun `parseError with errorBody returns error`() {
         val expected = "expectedError"
-        val response = Response.error<Any>(400, mockk {
-            every { string() } returns expected
-            every { contentType() } returns MediaType.get("application/json")
-            every { contentLength() } returns 0
-        })
+        val response = Response.error<Any>(
+            400,
+            mockk {
+                every { string() } returns expected
+                every { contentType() } returns MediaType.get("application/json")
+                every { contentLength() } returns 0
+            }
+        )
         assertEquals(expected, response.parseError().msg)
     }
 
     @Test
     fun `parseError contains the code`() {
         val expected = "expectedError"
-        val response = Response.error<Any>(400, mockk {
-            every { string() } returns expected
-            every { contentType() } returns MediaType.get("application/json")
-            every { contentLength() } returns 0
-        })
+        val response = Response.error<Any>(
+            400,
+            mockk {
+                every { string() } returns expected
+                every { contentType() } returns MediaType.get("application/json")
+                every { contentLength() } returns 0
+            }
+        )
         assertEquals(400, response.parseError().code)
     }
 

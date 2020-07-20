@@ -180,9 +180,11 @@ class SeriesRepositoryTests {
         }
 
         val classUnderTest = SeriesRepository(mockDao, mockApi, mockUser)
-        val actual = classUnderTest.deleteSeries(mockk {
-            every { userId } returns 5
-        })
+        val actual = classUnderTest.deleteSeries(
+            mockk {
+                every { userId } returns 5
+            }
+        )
 
         assertEquals(expected, actual)
     }
@@ -202,9 +204,11 @@ class SeriesRepositoryTests {
         }
 
         val classUnderTest = SeriesRepository(mockDao, mockApi, mockUser)
-        val actual = classUnderTest.deleteSeries(mockk {
-            every { userId } returns 5
-        })
+        val actual = classUnderTest.deleteSeries(
+            mockk {
+                every { userId } returns 5
+            }
+        )
 
         assertEquals(expected, actual)
     }

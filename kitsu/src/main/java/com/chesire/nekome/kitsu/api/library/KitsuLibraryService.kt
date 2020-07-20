@@ -25,11 +25,11 @@ interface KitsuLibraryService {
      */
     @GET(
         "api/edge/users/{userId}/library-entries" +
-                "?include=anime" +
-                "&fields[libraryEntries]=status,progress,anime,startedAt,finishedAt" +
-                "&fields[anime]=$ANIME_FIELDS" +
-                "&filter[kind]=anime" +
-                "&sort=anime.titles.canonical"
+            "?include=anime" +
+            "&fields[libraryEntries]=status,progress,anime,startedAt,finishedAt" +
+            "&fields[anime]=$ANIME_FIELDS" +
+            "&filter[kind]=anime" +
+            "&sort=anime.titles.canonical"
     )
     suspend fun retrieveAnimeAsync(
         @Path("userId") userId: Int,
@@ -42,11 +42,11 @@ interface KitsuLibraryService {
      */
     @GET(
         "api/edge/users/{userId}/library-entries" +
-                "?include=manga" +
-                "&fields[libraryEntries]=status,progress,manga,startedAt,finishedAt" +
-                "&fields[manga]=$MANGA_FIELDS" +
-                "&filter[kind]=manga" +
-                "&sort=manga.titles.canonical"
+            "?include=manga" +
+            "&fields[libraryEntries]=status,progress,manga,startedAt,finishedAt" +
+            "&fields[manga]=$MANGA_FIELDS" +
+            "&filter[kind]=manga" +
+            "&sort=manga.titles.canonical"
     )
     suspend fun retrieveMangaAsync(
         @Path("userId") userId: Int,
@@ -59,8 +59,8 @@ interface KitsuLibraryService {
      */
     @POST(
         "api/edge/library-entries" +
-                "?include=anime" +
-                "&fields[anime]=$ANIME_FIELDS"
+            "?include=anime" +
+            "&fields[anime]=$ANIME_FIELDS"
     )
     suspend fun addAnimeAsync(@Body data: RequestBody): Response<SeriesModel>
 
@@ -69,8 +69,8 @@ interface KitsuLibraryService {
      */
     @POST(
         "api/edge/library-entries" +
-                "?include=manga" +
-                "&fields[manga]=$MANGA_FIELDS"
+            "?include=manga" +
+            "&fields[manga]=$MANGA_FIELDS"
     )
     suspend fun addMangaAsync(@Body data: RequestBody): Response<SeriesModel>
 
@@ -79,9 +79,9 @@ interface KitsuLibraryService {
      */
     @PATCH(
         "api/edge/library-entries/{id}" +
-                "?include=anime,manga" +
-                "&fields[anime]=$ANIME_FIELDS" +
-                "&fields[manga]=$MANGA_FIELDS"
+            "?include=anime,manga" +
+            "&fields[anime]=$ANIME_FIELDS" +
+            "&fields[manga]=$MANGA_FIELDS"
     )
     suspend fun updateItemAsync(
         @Path("id") userSeriesId: Int,

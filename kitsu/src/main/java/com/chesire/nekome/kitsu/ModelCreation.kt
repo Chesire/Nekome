@@ -18,7 +18,8 @@ internal fun createNewAddModel(
     seriesId: Int,
     startingStatus: UserSeriesStatus,
     seriesType: String
-) = """
+) =
+    """
 {
   "data": {
     "type": "libraryEntries",
@@ -41,7 +42,8 @@ internal fun createNewAddModel(
       }
     }
   }
-}""".trimIndent()
+}
+    """.trimIndent()
 
 /**
  * Creates the json required for updating a tracked series.
@@ -50,7 +52,8 @@ internal fun createUpdateModel(
     userSeriesId: Int,
     newProgress: Int,
     newStatus: UserSeriesStatus
-) = """
+) =
+    """
 {
   "data": {
     "id": $userSeriesId,
@@ -60,7 +63,8 @@ internal fun createUpdateModel(
       "status": "${userSeriesStatusAdapter.userSeriesStatusToString(newStatus)}"
     }
   }
-}""".trimIndent()
+}
+    """.trimIndent()
 
 /**
  * Creates a [SeriesModel] from the information stored in [library] and [series].

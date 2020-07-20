@@ -161,19 +161,22 @@ abstract class SeriesListFragment :
     }
 
     private fun observeSeriesDeletion() {
-        viewModel.deletionStatus.observe(viewLifecycleOwner, Observer { state ->
-            if (state is AsyncState.Error && state.error == SeriesListDeleteError.DeletionFailure) {
-                Snackbar.make(
-                    binding.seriesListLayout,
-                    R.string.series_list_delete_failure,
-                    Snackbar.LENGTH_INDEFINITE
-                ).setAction(R.string.series_list_delete_retry) {
-                    state.data?.let { seriesModel ->
-                        viewModel.deleteSeries(seriesModel)
-                    }
-                }.show()
+        viewModel.deletionStatus.observe(
+            viewLifecycleOwner,
+            Observer { state ->
+                if (state is AsyncState.Error && state.error == SeriesListDeleteError.DeletionFailure) {
+                    Snackbar.make(
+                        binding.seriesListLayout,
+                        R.string.series_list_delete_failure,
+                        Snackbar.LENGTH_INDEFINITE
+                    ).setAction(R.string.series_list_delete_retry) {
+                        state.data?.let { seriesModel ->
+                            viewModel.deleteSeries(seriesModel)
+                        }
+                    }.show()
+                }
             }
-        })
+        )
     }
 
     private fun startRefreshingSeries() {
@@ -185,19 +188,22 @@ abstract class SeriesListFragment :
     }
 
     private fun observeSeriesRefresh() {
-        viewModel.refreshStatus.observe(viewLifecycleOwner, Observer { state ->
-            when (state) {
-                is AsyncState.Success -> endRefreshingSeries()
-                is AsyncState.Error -> {
-                    Timber.w("Error trying to refresh series - ${state.error}")
-                    endRefreshingSeries()
-                    Snackbar.make(
-                        binding.seriesListLayout,
-                        R.string.series_list_refresh_error,
-                        Snackbar.LENGTH_LONG
-                    ).show()
+        viewModel.refreshStatus.observe(
+            viewLifecycleOwner,
+            Observer { state ->
+                when (state) {
+                    is AsyncState.Success -> endRefreshingSeries()
+                    is AsyncState.Error -> {
+                        Timber.w("Error trying to refresh series - ${state.error}")
+                        endRefreshingSeries()
+                        Snackbar.make(
+                            binding.seriesListLayout,
+                            R.string.series_list_refresh_error,
+                            Snackbar.LENGTH_LONG
+                        ).show()
+                    }
                 }
             }
-        })
+        )
     }
 }

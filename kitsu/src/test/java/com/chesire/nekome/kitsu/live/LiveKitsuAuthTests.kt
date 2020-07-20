@@ -1,8 +1,8 @@
 package com.chesire.nekome.kitsu.live
 
-import com.chesire.nekome.server.Resource
 import com.chesire.nekome.kitsu.api.auth.KitsuAuth
 import com.chesire.nekome.kitsu.api.auth.KitsuAuthService
+import com.chesire.nekome.server.Resource
 import com.squareup.moshi.Moshi
 import io.mockk.mockk
 import kotlinx.coroutines.launch

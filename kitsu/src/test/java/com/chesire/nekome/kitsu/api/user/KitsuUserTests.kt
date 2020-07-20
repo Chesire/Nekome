@@ -1,9 +1,9 @@
 package com.chesire.nekome.kitsu.api.user
 
-import com.chesire.nekome.server.Resource
 import com.chesire.nekome.core.flags.Service
 import com.chesire.nekome.core.models.ImageModel
 import com.chesire.nekome.core.models.UserModel
+import com.chesire.nekome.server.Resource
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk

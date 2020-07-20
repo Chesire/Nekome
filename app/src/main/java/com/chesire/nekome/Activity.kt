@@ -64,13 +64,16 @@ class Activity : DaggerAppCompatActivity(), AuthCaster.AuthCasterListener, Flow 
     }
 
     private fun observeViewModel() {
-        viewModel.user.observe(this, Observer { userModel ->
-            if (userModel == null) {
-                return@Observer
-            }
+        viewModel.user.observe(
+            this,
+            Observer { userModel ->
+                if (userModel == null) {
+                    return@Observer
+                }
 
-            updateAvatar(findViewById(R.id.activityNavigationView), userModel)
-        })
+                updateAvatar(findViewById(R.id.activityNavigationView), userModel)
+            }
+        )
     }
 
     override fun onDestroy() {
