@@ -7,7 +7,7 @@
   "devDependencies": {
     "@commitlint/cli": "9.1.2",
     "@commitlint/config-conventional": "9.1.2",
-    "cz-conventional-changelog": "3.2.1",
+    "cz-conventional-changelog": "3.3.0",
     "husky": "4.2.5"
   },
   "config": {
