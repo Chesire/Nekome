@@ -65,7 +65,7 @@ dependencies {
     implementation project(path: ":libraries:core")
     implementation project(path: ":libraries:database")
     implementation project(path: ":libraries:kitsu")
-    implementation project(path: ':libraries:library')
+    implementation project(path: ":libraries:library")
     implementation project(path: ":libraries:server")
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
