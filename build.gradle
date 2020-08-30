@@ -39,19 +39,19 @@ subprojects {
 detekt {
     config = files("detekt.yml")
     input = files(
-            "account/src/main/java",
             "app/src/main/java",
-            "app-discover/src/main/java",
-            "app-profile/src/main/java",
-            "app-search/src/main/java",
-            "app-series/src/main/java",
-            "app-settings/src/main/java",
-            "app-timeline/src/main/java",
-            "core/src/main/java",
-            "database/src/main/java",
-            "kitsu/src/main/java",
-            "series/src/main/java",
-            "server/src/main/java",
+            "features/discover/src/main/java",
+            "features/profile/src/main/java",
+            "features/search/src/main/java",
+            "features/series/src/main/java",
+            "features/settings/src/main/java",
+            "features/timeline/src/main/java",
+            "libraries/account/src/main/java",
+            "libraries/core/src/main/java",
+            "libraries/database/src/main/java",
+            "libraries/kitsu/src/main/java",
+            "libraries/series/src/main/java",
+            "libraries/server/src/main/java",
             "testing/src/main/java"
     )
     reports {
