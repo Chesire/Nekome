@@ -5,7 +5,7 @@ import androidx.lifecycle.Observer
 import com.chesire.nekome.account.UserRepository
 import com.chesire.nekome.core.flags.SeriesType
 import com.chesire.nekome.core.flags.UserSeriesStatus
-import com.chesire.nekome.series.SeriesRepository
+import com.chesire.nekome.library.SeriesRepository
 import com.chesire.nekome.testing.CoroutinesMainDispatcherRule
 import com.chesire.nekome.testing.createSeriesModel
 import io.mockk.Runs

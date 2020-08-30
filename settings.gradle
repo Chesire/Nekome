@@ -10,6 +10,6 @@ include ':app',
         ':libraries:core',
         ':libraries:database',
         ':libraries:kitsu',
-        ':libraries:series',
+        ':libraries:library',
         ':libraries:server',
         ':testing'

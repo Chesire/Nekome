@@ -1,4 +1,4 @@
-package com.chesire.nekome.series
+package com.chesire.nekome.library
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.chesire.nekome.core.flags.UserSeriesStatus

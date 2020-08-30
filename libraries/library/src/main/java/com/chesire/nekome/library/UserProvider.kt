@@ -1,4 +1,4 @@
-package com.chesire.nekome.series
+package com.chesire.nekome.library
 
 /**
  * Provider for accessing the information for a user.

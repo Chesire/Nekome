@@ -9,7 +9,7 @@ import com.chesire.nekome.account.UserRepository
 import com.chesire.nekome.core.extensions.postError
 import com.chesire.nekome.core.extensions.postSuccess
 import com.chesire.nekome.core.flags.AsyncState
-import com.chesire.nekome.series.SeriesRepository
+import com.chesire.nekome.library.SeriesRepository
 import com.chesire.nekome.server.Resource
 import kotlinx.coroutines.launch
 import javax.inject.Inject

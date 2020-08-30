@@ -7,7 +7,7 @@ import com.chesire.nekome.account.UserRepository
 import com.chesire.nekome.core.flags.SeriesType
 import com.chesire.nekome.core.flags.UserSeriesStatus
 import com.chesire.nekome.core.models.SeriesModel
-import com.chesire.nekome.series.SeriesRepository
+import com.chesire.nekome.library.SeriesRepository
 import javax.inject.Inject
 
 /**

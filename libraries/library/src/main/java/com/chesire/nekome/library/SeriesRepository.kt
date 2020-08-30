@@ -1,4 +1,4 @@
-package com.chesire.nekome.series
+package com.chesire.nekome.library
 
 import com.chesire.nekome.core.flags.UserSeriesStatus
 import com.chesire.nekome.core.models.SeriesModel
