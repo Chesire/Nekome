@@ -54,9 +54,6 @@ android {
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
 
-    implementation project(path: ":account")
-    implementation project(path: ":core")
-    implementation project(path: ":database")
     implementation project(path: ":features:app-discover")
     implementation project(path: ":features:app-login")
     implementation project(path: ":features:app-profile")
@@ -64,9 +61,12 @@ dependencies {
     implementation project(path: ":features:app-series")
     implementation project(path: ":features:app-settings")
     implementation project(path: ":features:app-timeline")
-    implementation project(path: ":kitsu")
-    implementation project(path: ":series")
-    implementation project(path: ":server")
+    implementation project(path: ":libraries:account")
+    implementation project(path: ":libraries:core")
+    implementation project(path: ":libraries:database")
+    implementation project(path: ":libraries:kitsu")
+    implementation project(path: ":libraries:series")
+    implementation project(path: ":libraries:server")
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
