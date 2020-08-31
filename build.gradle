@@ -80,7 +80,7 @@ ext {
     fragmentctx_version = "1.2.5"
     lifecycle_version = "2.2.0"
     lifecykle_version = "3.0.0"
-    lintrules_version = "1.2.2"
+    lintrules_version = "1.2.3"
     liveevent_version = "1.2.0"
     material_version = "1.3.0-alpha02"
     materialdialog_version = "3.3.0"
