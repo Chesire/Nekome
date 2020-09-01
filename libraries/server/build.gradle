@@ -1,6 +1,7 @@
 apply plugin: "com.android.library"
 apply plugin: "kotlin-android"
 apply plugin: "kotlin-android-extensions"
+apply plugin: "kotlin-kapt"
 
 android {
     compileSdkVersion 29
@@ -17,6 +18,16 @@ android {
             proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
         }
     }
+    androidExtensions {
+        experimental true
+    }
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
@@ -27,6 +38,4 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation "com.chesire.lintrules:lint-gradle:$lintrules_version"
     implementation "com.chesire.lintrules:lint-xml:$lintrules_version"
-    implementation "junit:junit:4.13"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_version"
 }

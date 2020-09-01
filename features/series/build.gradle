@@ -1,34 +1,21 @@
-apply plugin: "com.android.application"
+apply plugin: "com.android.library"
 apply plugin: "kotlin-android"
 apply plugin: "kotlin-android-extensions"
 apply plugin: "kotlin-kapt"
-apply plugin: "androidx.navigation.safeargs.kotlin"
 
 android {
     compileSdkVersion 29
 
     defaultConfig {
-        applicationId "com.chesire.nekome"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 1
-        versionName "${appVersion()}"
-        testInstrumentationRunner "com.chesire.nekome.TestRunner"
-        resConfigs "en"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
-            minifyEnabled true
-            shrinkResources true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
-        }
-        debug {
-            applicationIdSuffix = ".debug"
-            versionNameSuffix "-DEBUG"
-            testCoverageEnabled !project.hasProperty("skipCoverage")
-        }
-        buildTypes.each {
-            it.resValue("string", "version", defaultConfig.versionName)
         }
     }
     androidExtensions {
@@ -40,36 +27,17 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-    packagingOptions {
-        exclude "META-INF/AL2.0"
-        exclude "META-INF/LGPL2.1"
-        exclude "META-INF/library-core_release.kotlin_module"
-    }
 }
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
 
-    implementation project(path: ":features:discover")
-    implementation project(path: ":features:login")
-    implementation project(path: ":features:profile")
-    implementation project(path: ":features:search")
-    implementation project(path: ":features:series")
-    implementation project(path: ":features:settings")
-    implementation project(path: ":features:timeline")
     implementation project(path: ":libraries:account")
     implementation project(path: ":libraries:core")
-    implementation project(path: ":libraries:database")
-    implementation project(path: ":libraries:kitsu")
     implementation project(path: ":libraries:library")
     implementation project(path: ":libraries:server")
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-
     implementation "androidx.appcompat:appcompat:$appcompat_version"
     implementation "androidx.constraintlayout:constraintlayout:$constraint_layout_version"
     implementation "androidx.core:core-ktx:$corektx_version"
@@ -77,10 +45,7 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
-    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
-    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
-    implementation "androidx.preference:preference-ktx:$preferences_version"
-    implementation "androidx.work:work-runtime-ktx:2.4.0"
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
     implementation "com.afollestad.material-dialogs:core:$materialdialog_version"
     implementation "com.afollestad.material-dialogs:input:$materialdialog_version"
     implementation "com.afollestad.material-dialogs:lifecycle:$materialdialog_version"
@@ -94,12 +59,7 @@ dependencies {
     implementation "com.google.dagger:dagger-android-support:$dagger_version"
     implementation "com.jakewharton.timber:timber:$timber_version"
     implementation "com.squareup.moshi:moshi:$moshi_version"
-    implementation "com.squareup.okhttp3:logging-interceptor:4.8.1"
     implementation "io.coil-kt:coil:$coil_version"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
-
-    debugImplementation "com.squareup.leakcanary:leakcanary-android:2.4"
 
     testImplementation project(path: ":testing")
     testImplementation "androidx.arch.core:core-testing:2.1.0"
@@ -107,21 +67,9 @@ dependencies {
     testImplementation "junit:junit:4.13"
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_version"
 
-    androidTestImplementation project(path: ":testing")
-    androidTestImplementation "androidx.arch.core:core-testing:2.1.0"
     androidTestImplementation "androidx.test.espresso:espresso-core:3.3.0"
-    androidTestImplementation "androidx.test.espresso:espresso-intents:3.3.0"
     androidTestImplementation "androidx.test.ext:junit:1.1.2"
-    androidTestImplementation "androidx.test:rules:1.3.0"
-    // androidTestImplementation "androidx.work:work-testing:2.0.1"
-    androidTestImplementation("com.schibsted.spain:barista:3.6.0") {
-        exclude group: "com.android.support"
-        exclude group: "org.jetbrains.kotlin"
-    }
-    androidTestImplementation "io.mockk:mockk-android:1.10.0"
 
     kapt "com.google.dagger:dagger-android-processor:$dagger_version"
     kapt "com.google.dagger:dagger-compiler:$dagger_version"
-    kaptAndroidTest "com.google.dagger:dagger-android-processor:$dagger_version"
-    kaptAndroidTest "com.google.dagger:dagger-compiler:$dagger_version"
 }

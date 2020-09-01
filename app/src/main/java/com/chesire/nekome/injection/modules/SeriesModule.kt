@@ -2,8 +2,8 @@ package com.chesire.nekome.injection.modules
 
 import com.chesire.nekome.binders.UserProviderBinder
 import com.chesire.nekome.database.dao.SeriesDao
-import com.chesire.nekome.series.SeriesRepository
-import com.chesire.nekome.series.UserProvider
+import com.chesire.nekome.library.SeriesRepository
+import com.chesire.nekome.library.UserProvider
 import com.chesire.nekome.server.api.LibraryApi
 import dagger.Module
 import dagger.Provides
