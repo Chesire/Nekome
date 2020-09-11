@@ -8,15 +8,17 @@ updates:
   open-pull-requests-limit: 30
   assignees:
   - Chesire
-  ignore:
-  - dependency-name: com.android.tools:r8
-    versions:
-    - "> 1.6.75"
-  - dependency-name: com.squareup.okhttp3:mockwebserver
-    versions:
-    - ">= 4.a, < 5"
 
 - package-ecosystem: npm
+  directory: "/"
+  schedule:
+    interval: daily
+    time: '09:00'
+  open-pull-requests-limit: 30
+  assignees:
+  - Chesire
+
+- package-ecosystem: bundler
   directory: "/"
   schedule:
     interval: daily
