@@ -13,7 +13,7 @@ github.dismiss_out_of_range_messages
 
 # AndroidLint
 android_lint.skip_gradle_task = true
-android_lint.report_file = 'app/build/reports/lint-results-debug.xml'
+android_lint.report_file = 'build/reports/lint-results.xml'
 android_lint.gradle_task = "lintDebug"
 android_lint.filtering = true
 android_lint.lint(inline_mode: true)
