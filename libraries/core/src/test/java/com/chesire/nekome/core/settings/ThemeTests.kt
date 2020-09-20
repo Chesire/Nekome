@@ -36,4 +36,14 @@ class ThemeTests {
     fun `fromValue with Theme#Light returns expected value`() {
         assertEquals(Theme.Light, Theme.fromValue("1"))
     }
+
+    @Test
+    fun `fromValue with unexpected value returns default of System`() {
+        assertEquals(Theme.System, Theme.fromValue("999"))
+    }
+
+    @Test
+    fun `fromValue with non-numerical value returns default of System`() {
+        assertEquals(Theme.System, Theme.fromValue("parse"))
+    }
 }
