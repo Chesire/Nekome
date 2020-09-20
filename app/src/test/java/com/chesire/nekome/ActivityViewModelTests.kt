@@ -1,8 +1,6 @@
-package com.chesire.nekome.flow
+package com.chesire.nekome
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.chesire.nekome.ActivityViewModel
-import com.chesire.nekome.LogoutHandler
 import com.chesire.nekome.account.UserRepository
 import com.chesire.nekome.kitsu.AuthProvider
 import com.chesire.nekome.testing.CoroutinesMainDispatcherRule
@@ -20,6 +18,7 @@ import org.junit.Test
 class ActivityViewModelTests {
     @get:Rule
     val taskExecutorRule = InstantTaskExecutorRule()
+
     @get:Rule
     val coroutineRule = CoroutinesMainDispatcherRule()
     private val testDispatcher = coroutineRule.testDispatcher
