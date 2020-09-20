@@ -30,23 +30,27 @@ class AuthRefreshInterceptor @Inject constructor(
             val authResponse = runBlocking { auth.refresh() }
             if (authResponse is Resource.Success) {
                 chain.proceed(
-                    originRequest.newBuilder()
+                    originRequest
+                        .newBuilder()
                         .header("Authorization", "Bearer ${provider.accessToken}")
                         .build()
                 )
             } else {
-                generateFailureResponse()
+                generateFailureResponse(response)
             }
         } else {
             response
         }
     }
 
-    private fun generateFailureResponse(): Response {
+    private fun generateFailureResponse(originResponse: Response): Response {
         // If there is an unrecoverable auth failure report a 401 error for the app to logout with
         return Response
             .Builder()
+            .request(originResponse.request())
+            .protocol(originResponse.protocol())
             .code(401)
+            .message(originResponse.message())
             .build()
     }
 }
