@@ -2,6 +2,7 @@ package com.chesire.nekome.kitsu.api.trending
 
 import com.chesire.nekome.core.models.SeriesModel
 import com.chesire.nekome.server.Resource
+import com.chesire.nekome.testing.createSeriesModel
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
@@ -95,7 +96,7 @@ class KitsuTrendingTests {
 
     @Test
     fun `trendingAnime successful response with body returns Resource#Success`() = runBlocking {
-        val expected = listOf<SeriesModel>(mockk())
+        val expected = listOf(createSeriesModel())
 
         val mockResponse = mockk<Response<List<SeriesModel>>> {
             every { isSuccessful } returns true
@@ -213,7 +214,7 @@ class KitsuTrendingTests {
 
     @Test
     fun `trendingManga successful response with body returns Resource#Success`() = runBlocking {
-        val expected = listOf<SeriesModel>(mockk())
+        val expected = listOf(createSeriesModel())
 
         val mockResponse = mockk<Response<List<SeriesModel>>> {
             every { isSuccessful } returns true
