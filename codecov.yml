@@ -1,4 +1,5 @@
 ignore:
+    - "app/src/main/java/com/chesire/nekome/App.kt"
     - "app/src/main/java/com/chesire/nekome/injection/*"
     - "app/src/main/java/com/chesire/nekome/injection/**/*"
     - "testing/src/main/java/**/*"
