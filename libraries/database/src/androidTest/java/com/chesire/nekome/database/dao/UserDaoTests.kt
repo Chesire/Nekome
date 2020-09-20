@@ -5,8 +5,8 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import com.chesire.nekome.core.flags.Service
 import com.chesire.nekome.core.models.ImageModel
-import com.chesire.nekome.core.models.UserModel
 import com.chesire.nekome.database.RoomDB
+import com.chesire.nekome.testing.createUserModel
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Assert.assertEquals
@@ -67,8 +67,8 @@ class UserDaoTests {
 
     @Test
     fun duplicateCallsReplaceUser() = runBlocking {
-        val first = createUserModel(id = 1, name = "Model1", service = Service.Kitsu)
-        val second = createUserModel(id = 2, name = "Model2", service = Service.Kitsu)
+        val first = createUserModel(userId = 1, name = "Model1", service = Service.Kitsu)
+        val second = createUserModel(userId = 2, name = "Model2", service = Service.Kitsu)
 
         userDao.insert(first)
         assertEquals(first, userDao.retrieve(Service.Kitsu))
@@ -78,8 +78,8 @@ class UserDaoTests {
 
     @Test
     fun canStoreMultipleUsersBasedOnService() = runBlocking {
-        val first = createUserModel(id = 0, service = Service.Kitsu)
-        val second = createUserModel(id = 0, service = Service.Unknown)
+        val first = createUserModel(userId = 0, service = Service.Kitsu)
+        val second = createUserModel(userId = 0, service = Service.Unknown)
 
         userDao.insert(first)
         userDao.insert(second)
@@ -112,16 +112,8 @@ class UserDaoTests {
 
     @Test
     fun retrievingUserIdGetsIdIfExists() = runBlocking {
-        val model = createUserModel(id = 133, service = Service.Kitsu)
+        val model = createUserModel(userId = 133, service = Service.Kitsu)
         userDao.insert(model)
         assertEquals(133, userDao.retrieveUserId(Service.Kitsu))
     }
-
-    private fun createUserModel(
-        id: Int = 0,
-        name: String = "test",
-        avatar: ImageModel = ImageModel.empty,
-        cover: ImageModel = ImageModel.empty,
-        service: Service = Service.Unknown
-    ) = UserModel(id, name, avatar, cover, service)
 }

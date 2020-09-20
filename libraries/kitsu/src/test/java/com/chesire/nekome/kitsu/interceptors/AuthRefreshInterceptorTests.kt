@@ -1,58 +1,116 @@
 package com.chesire.nekome.kitsu.interceptors
 
+import com.chesire.nekome.kitsu.AuthProvider
+import com.chesire.nekome.server.Resource
+import com.chesire.nekome.server.api.AuthApi
+import io.mockk.coEvery
+import io.mockk.coVerify
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.verify
 import kotlinx.coroutines.runBlocking
-import okhttp3.mockwebserver.MockWebServer
-import org.junit.After
-import org.junit.Before
-import org.junit.Ignore
+import okhttp3.Interceptor
+import okhttp3.Response
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class AuthRefreshInterceptorTests {
-    private val mockWebServer = MockWebServer()
-
-    @Before
-    fun setup() = mockWebServer.start()
-
-    @After
-    fun teardown() = mockWebServer.shutdown()
-
     @Test
-    @Ignore("Come back this test later")
-    fun `successful response just returns response`() {
+    fun `successful response just returns response`() = runBlocking {
+        val mockProvider = mockk<AuthProvider>()
+        val mockAuth = mockk<AuthApi>()
+        val response = mockk<Response> {
+            every { isSuccessful } returns true
+        }
+        val mockChain = mockk<Interceptor.Chain> {
+            every { request() } returns mockk()
+            every { proceed(any()) } returns response
+        }
+        val testObject = AuthRefreshInterceptor(mockProvider, mockAuth)
+
+        val result = testObject.intercept(mockChain)
+
+        coVerify(exactly = 0) { mockAuth.refresh() }
+        assertTrue(result.isSuccessful)
     }
 
     @Test
-    @Ignore("Come back this test later")
-    fun `failure response with code !403 just returns response`() {
+    fun `failure response with code !403 just returns response`() = runBlocking {
+        val mockProvider = mockk<AuthProvider>()
+        val mockAuth = mockk<AuthApi>()
+        val response = mockk<Response> {
+            every { isSuccessful } returns false
+            every { code() } returns 404
+        }
+        val mockChain = mockk<Interceptor.Chain> {
+            every { request() } returns mockk()
+            every { proceed(any()) } returns response
+        }
+        val testObject = AuthRefreshInterceptor(mockProvider, mockAuth)
+
+        val result = testObject.intercept(mockChain)
+
+        coVerify(exactly = 0) { mockAuth.refresh() }
+        assertEquals(response, result)
     }
 
     @Test
-    @Ignore("Come back this test later")
     fun `getting new auth failure, returns error response with 401`() = runBlocking {
+        val mockProvider = mockk<AuthProvider>()
+        val mockAuth = mockk<AuthApi> {
+            coEvery {
+                refresh()
+            } coAnswers {
+                Resource.Error("Failure")
+            }
+        }
+        val response = mockk<Response> {
+            every { isSuccessful } returns false
+            every { code() } returns 403
+            every { request() } returns mockk()
+            every { protocol() } returns mockk()
+            every { message() } returns "message"
+        }
+        val mockChain = mockk<Interceptor.Chain> {
+            every { request() } returns mockk()
+            every { proceed(any()) } returns response
+        }
+        val testObject = AuthRefreshInterceptor(mockProvider, mockAuth)
+
+        val result = testObject.intercept(mockChain)
+
+        coVerify(exactly = 1) { mockAuth.refresh() }
+        assertEquals(401, result.code())
     }
 
     @Test
-    @Ignore("Come back this test later")
-    fun `getting new auth success with no body, returns error response with 401`() = runBlocking {
-    }
-
-    @Test
-    @Ignore("Come back this test later")
-    fun `getting new auth stores new accessToken`() = runBlocking {
-    }
-
-    @Test
-    @Ignore("Come back this test later")
-    fun `getting new auth stores new refreshToken`() = runBlocking {
-    }
-
-    @Test
-    @Ignore("Come back this test later")
-    fun `getting new auth adds new auth to header of next request`() = runBlocking {
-    }
-
-    @Test
-    @Ignore("Come back this test later")
     fun `getting new auth retries previous request`() = runBlocking {
+        val mockProvider = mockk<AuthProvider> {
+            every { accessToken } returns "accessToken"
+        }
+        val mockAuth = mockk<AuthApi> {
+            coEvery {
+                refresh()
+            } coAnswers {
+                Resource.Success(mockk())
+            }
+        }
+        val response = mockk<Response> {
+            every { isSuccessful } returns false
+            every { code() } returns 403
+            every { request() } returns mockk()
+            every { protocol() } returns mockk()
+            every { message() } returns "message"
+        }
+        val mockChain = mockk<Interceptor.Chain> {
+            every { request() } returns mockk(relaxed = true)
+            every { proceed(any()) } returns response
+        }
+        val testObject = AuthRefreshInterceptor(mockProvider, mockAuth)
+
+        testObject.intercept(mockChain)
+
+        verify(exactly = 2) { mockChain.proceed(any()) }
     }
 }

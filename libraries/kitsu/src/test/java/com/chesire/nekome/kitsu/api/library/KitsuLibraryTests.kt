@@ -4,6 +4,7 @@ import com.chesire.nekome.core.flags.UserSeriesStatus
 import com.chesire.nekome.core.models.SeriesModel
 import com.chesire.nekome.kitsu.api.intermediaries.Links
 import com.chesire.nekome.server.Resource
+import com.chesire.nekome.testing.createSeriesModel
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
@@ -20,7 +21,7 @@ import java.net.UnknownHostException
 class KitsuLibraryTests {
     @Test
     fun `retrieveAnime on success returns the retrieved models`() = runBlocking {
-        val expected = listOf(mockk<SeriesModel>())
+        val expected = listOf(createSeriesModel())
         val links = Links()
         val mockService = mockk<KitsuLibraryService> {
             coEvery {
@@ -44,7 +45,7 @@ class KitsuLibraryTests {
 
     @Test
     fun `retrieveAnime more items to retrieve executes again with new offset`() = runBlocking {
-        val expected = listOf(mockk<SeriesModel>())
+        val expected = listOf(createSeriesModel())
         val mockService = mockk<KitsuLibraryService> {
             coEvery {
                 retrieveAnimeAsync(1, 0, 500)
@@ -150,7 +151,7 @@ class KitsuLibraryTests {
 
     @Test
     fun `retrieveManga on success returns the retrieved models`() = runBlocking {
-        val expected = listOf(mockk<SeriesModel>())
+        val expected = listOf(createSeriesModel())
         val mockService = mockk<KitsuLibraryService> {
             coEvery {
                 retrieveMangaAsync(0, 0, 500)
@@ -172,7 +173,7 @@ class KitsuLibraryTests {
 
     @Test
     fun `retrieveManga more items to retrieve executes again with new offset`() = runBlocking {
-        val expected = listOf(mockk<SeriesModel>())
+        val expected = listOf(createSeriesModel())
         val mockService = mockk<KitsuLibraryService> {
             coEvery {
                 retrieveMangaAsync(1, 0, 500)
@@ -280,7 +281,7 @@ class KitsuLibraryTests {
 
     @Test
     fun `addAnime returns the added SeriesModel`() = runBlocking {
-        val mockModel = mockk<SeriesModel>()
+        val mockModel = createSeriesModel()
         val mockResponse = mockk<Response<SeriesModel>> {
             every { isSuccessful } returns true
             every { body() } returns mockModel
@@ -319,7 +320,7 @@ class KitsuLibraryTests {
 
     @Test
     fun `addManga returns the added SeriesModel`() = runBlocking {
-        val mockModel = mockk<SeriesModel>()
+        val mockModel = createSeriesModel()
         val mockResponse = mockk<Response<SeriesModel>> {
             every { isSuccessful } returns true
             every { body() } returns mockModel
@@ -358,7 +359,7 @@ class KitsuLibraryTests {
 
     @Test
     fun `update success returns Resource#Success with SeriesModel`() = runBlocking {
-        val mockModel = mockk<SeriesModel>()
+        val mockModel = createSeriesModel()
         val mockResponse = mockk<Response<SeriesModel>> {
             every { isSuccessful } returns true
             every { body() } returns mockModel
