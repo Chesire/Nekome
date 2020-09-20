@@ -3,46 +3,32 @@ package com.chesire.nekome.kitsu.interceptors
 import com.chesire.nekome.kitsu.AuthProvider
 import io.mockk.every
 import io.mockk.mockk
-import okhttp3.OkHttpClient
-import okhttp3.Request
-import okhttp3.mockwebserver.MockResponse
-import okhttp3.mockwebserver.MockWebServer
-import org.junit.After
+import io.mockk.slot
+import okhttp3.Interceptor
 import org.junit.Assert.assertEquals
-import org.junit.Before
 import org.junit.Test
 
 class AuthInjectionInterceptorTests {
-    private val mockWebServer = MockWebServer()
-
-    @Before
-    fun setup() = mockWebServer.start()
-
-    @After
-    fun teardown() = mockWebServer.shutdown()
-
     @Test
     fun `authorization header gets added correctly`() {
-        val token = "AccessToken"
+        val token = "AccessTokenPass"
         val expected = "Bearer $token"
         val mockProvider = mockk<AuthProvider> {
             every { accessToken } returns token
         }
-        val client = OkHttpClient()
-            .newBuilder()
-            .addInterceptor(AuthInjectionInterceptor(mockProvider))
-            .build()
+        val headerCapture = slot<String>()
+        val mockChain = mockk<Interceptor.Chain> {
+            every { request() } returns mockk {
+                every { newBuilder() } returns mockk(relaxed = true) {
+                    every { header(any(), capture(headerCapture)) } returns this
+                }
+            }
+            every { proceed(any()) } returns mockk()
+        }
+        val testObject = AuthInjectionInterceptor(mockProvider)
 
-        mockWebServer.enqueue(MockResponse())
+        testObject.intercept(mockChain)
 
-        client.newCall(
-            Request
-                .Builder()
-                .url(mockWebServer.url("/"))
-                .build()
-        ).execute()
-        val request = mockWebServer.takeRequest()
-
-        assertEquals(expected, request.headers.get("Authorization"))
+        assertEquals(expected, headerCapture.captured)
     }
 }
