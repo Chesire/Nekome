@@ -2,7 +2,7 @@ package com.chesire.nekome.app.discover.trending
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import coil.api.load
+import coil.load
 import com.chesire.nekome.core.models.SeriesModel
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.adapter_item_trending.itemTrendingImage

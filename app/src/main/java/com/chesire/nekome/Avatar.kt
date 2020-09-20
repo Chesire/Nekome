@@ -2,7 +2,7 @@ package com.chesire.nekome
 
 import android.widget.ImageView
 import android.widget.TextView
-import coil.api.load
+import coil.load
 import coil.transform.CircleCropTransformation
 import com.chesire.nekome.core.models.UserModel
 import com.google.android.material.navigation.NavigationView

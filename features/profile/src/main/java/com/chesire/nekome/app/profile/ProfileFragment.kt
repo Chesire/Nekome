@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import coil.api.load
+import coil.load
 import coil.transform.CircleCropTransformation
 import com.chesire.lifecyklelog.LogLifecykle
 import com.chesire.nekome.app.profile.databinding.FragmentProfileBinding
