@@ -2,7 +2,7 @@ package com.chesire.nekome.app.series.list.view
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import coil.api.load
+import coil.load
 import com.chesire.nekome.app.series.R
 import com.chesire.nekome.app.series.list.SeriesInteractionListener
 import com.chesire.nekome.core.extensions.hide

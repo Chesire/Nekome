@@ -2,7 +2,7 @@ package com.chesire.nekome.app.search.results
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import coil.api.load
+import coil.load
 import com.chesire.nekome.app.search.R
 import com.chesire.nekome.core.extensions.hide
 import com.chesire.nekome.core.extensions.show
