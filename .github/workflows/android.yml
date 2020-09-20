@@ -20,16 +20,6 @@ jobs:
     - name: run jacocoTestReport
       run: ./gradlew jacocoTestReport
     - uses: codecov/codecov-action@v1.0.13
-    - name: upload test results
-      uses: actions/upload-artifact@v2
-      with:
-        name: tests
-        path: app/build/reports/
-    - name: upload test xml
-      uses: actions/upload-artifact@v2
-      with:
-        name: test_xml
-        path: app/build/test-results/
 
   analyze:
     runs-on: ubuntu-latest
