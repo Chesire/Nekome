@@ -1,10 +1,10 @@
 package com.chesire.nekome.account
 
 import com.chesire.nekome.core.flags.Service
-import com.chesire.nekome.core.models.UserModel
 import com.chesire.nekome.database.dao.UserDao
 import com.chesire.nekome.server.Resource
 import com.chesire.nekome.server.api.UserApi
+import com.chesire.nekome.testing.createUserModel
 import io.mockk.Runs
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -19,7 +19,7 @@ import org.junit.Test
 class UserRepositoryTests {
     @Test
     fun `refreshUser stores userModel on success`() = runBlocking {
-        val expected = mockk<UserModel>()
+        val expected = createUserModel()
         val mockDao = mockk<UserDao> {
             coEvery { insert(expected) } just Runs
             every { getUser(Service.Kitsu) } returns mockk()
