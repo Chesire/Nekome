@@ -125,7 +125,7 @@ dependencies {
         exclude group: "com.android.support"
         exclude group: "org.jetbrains.kotlin"
     }
-    androidTestImplementation "io.mockk:mockk-android:1.10.0"
+    androidTestImplementation "io.mockk:mockk-android:1.10.2"
 
     kapt "com.google.dagger:dagger-android-processor:$dagger_version"
     kapt "com.google.dagger:dagger-compiler:$dagger_version"
