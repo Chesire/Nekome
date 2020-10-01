@@ -51,7 +51,7 @@ jobs:
       uses: actions/setup-java@v1.4.2
       with:
         java-version: 1.8
-    - uses: actions/setup-ruby@v1.1.1
+    - uses: actions/setup-ruby@v1.1.2
       with:
         ruby-version: '2.6'
     - name: install bundler 2.1.4
