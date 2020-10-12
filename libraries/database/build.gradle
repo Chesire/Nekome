@@ -53,7 +53,7 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
 
-    testImplementation "junit:junit:4.13"
+    testImplementation "junit:junit:4.13.1"
 
     androidTestImplementation project(path: ":testing")
     androidTestImplementation "androidx.room:room-testing:$room_version"

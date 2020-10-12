@@ -51,7 +51,7 @@ dependencies {
 
     testImplementation project(path: ":testing")
     testImplementation "io.mockk:mockk:1.10.2"
-    testImplementation "junit:junit:4.13"
+    testImplementation "junit:junit:4.13.1"
 
     kapt "com.google.dagger:dagger-android-processor:$dagger_version"
     kapt "com.google.dagger:dagger-compiler:$dagger_version"
