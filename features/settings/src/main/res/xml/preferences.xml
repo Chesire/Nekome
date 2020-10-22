@@ -8,6 +8,11 @@
             android:title="@string/settings_default_series_status_title" />
 
         <ListPreference
+            android:key="@string/key_default_home"
+            android:title="@string/settings_default_home_title"
+            android:summary="@string/settings_default_home_summary" />
+
+        <ListPreference
             android:key="@string/key_theme"
             android:title="@string/settings_theme"
             app:useSimpleSummaryProvider="true" />
