@@ -3,9 +3,9 @@ package com.chesire.nekome.core.settings
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.core.content.edit
-import com.chesire.nekome.core.flags.HomeScreenOptions
 import com.chesire.nekome.core.R
 import com.chesire.nekome.core.flags.UserSeriesStatus
+import com.chesire.nekome.core.flags.HomeScreenOptions
 import javax.inject.Inject
 
 /**
@@ -50,7 +50,6 @@ class ApplicationSettings @Inject constructor(
 
             return status
         }
-
 
     /**
      * Gets the default [HomeScreenOption] the home screen that shows after login
