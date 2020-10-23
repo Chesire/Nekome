@@ -6,7 +6,6 @@ import android.view.inputmethod.EditorInfo
 import androidx.annotation.StringRes
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.chesire.lifecyklelog.LogLifecykle
 import com.chesire.nekome.app.login.R
@@ -56,7 +55,7 @@ class DetailsFragment : DaggerFragment(R.layout.fragment_details) {
         binding.loginButton.setOnClickListener { executeLogin() }
 
         setupLinks()
-        viewModel.loginStatus.observe(viewLifecycleOwner, Observer { loginStatusChanged(it) })
+        viewModel.loginStatus.observe(viewLifecycleOwner) { loginStatusChanged(it) }
     }
 
     private fun setupLinks() {

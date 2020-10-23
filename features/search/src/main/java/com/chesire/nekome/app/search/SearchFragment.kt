@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.chesire.lifecyklelog.LogLifecykle
 import com.chesire.nekome.app.search.databinding.FragmentSearchBinding
@@ -76,26 +75,23 @@ class SearchFragment : DaggerFragment(R.layout.fragment_search) {
     }
 
     private fun observeSearchResults() {
-        viewModel.searchResult.observe(
-            viewLifecycleOwner,
-            Observer { result ->
-                when (result) {
-                    is AsyncState.Success -> {
-                        hideSpinner()
-                        findNavController().navigate(
-                            SearchFragmentDirections.toResultsFragment(
-                                result.data.toTypedArray()
-                            )
+        viewModel.searchResult.observe(viewLifecycleOwner) { result ->
+            when (result) {
+                is AsyncState.Success -> {
+                    hideSpinner()
+                    findNavController().navigate(
+                        SearchFragmentDirections.toResultsFragment(
+                            result.data.toTypedArray()
                         )
-                    }
-                    is AsyncState.Error -> {
-                        hideSpinner()
-                        parseSearchError(result.error)
-                    }
-                    is AsyncState.Loading -> showSpinner()
+                    )
                 }
+                is AsyncState.Error -> {
+                    hideSpinner()
+                    parseSearchError(result.error)
+                }
+                is AsyncState.Loading -> showSpinner()
             }
-        )
+        }
     }
 
     private fun parseSearchError(error: SearchError) {

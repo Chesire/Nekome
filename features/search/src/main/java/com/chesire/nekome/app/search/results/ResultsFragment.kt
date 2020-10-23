@@ -3,7 +3,6 @@ package com.chesire.nekome.app.search.results
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chesire.lifecyklelog.LogLifecykle
@@ -42,13 +41,8 @@ class ResultsFragment : DaggerFragment(R.layout.fragment_results), ResultsListen
         }
     }
 
-    private fun observeSeries() {
-        viewModel.series.observe(
-            viewLifecycleOwner,
-            Observer {
-                resultsAdapter.allSeries = it
-            }
-        )
+    private fun observeSeries() = viewModel.series.observe(viewLifecycleOwner) { series ->
+        resultsAdapter.allSeries = series
     }
 
     override fun onTrack(model: SeriesModel, callback: () -> Unit) {

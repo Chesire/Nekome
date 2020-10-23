@@ -4,7 +4,6 @@ import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import coil.load
 import coil.transform.CircleCropTransformation
 import com.chesire.lifecyklelog.LogLifecykle
@@ -44,24 +43,15 @@ class SyncingFragment : DaggerFragment(R.layout.fragment_syncing) {
     }
 
     private fun observeAvatar() {
-        viewModel.avatarUrl.observe(
-            viewLifecycleOwner,
-            Observer {
-                binding.profileImage.load(it) {
-                    transformations(CircleCropTransformation())
-                    placeholder(R.drawable.ic_account_circle)
-                    error(R.drawable.ic_account_circle)
-                }
+        viewModel.avatarUrl.observe(viewLifecycleOwner) {
+            binding.profileImage.load(it) {
+                transformations(CircleCropTransformation())
+                placeholder(R.drawable.ic_account_circle)
+                error(R.drawable.ic_account_circle)
             }
-        )
+        }
     }
 
-    private fun observeSyncStatus() {
-        viewModel.syncStatus.observe(
-            viewLifecycleOwner,
-            Observer {
-                flow.finishLogin()
-            }
-        )
-    }
+    private fun observeSyncStatus() =
+        viewModel.syncStatus.observe(viewLifecycleOwner) { flow.finishLogin() }
 }

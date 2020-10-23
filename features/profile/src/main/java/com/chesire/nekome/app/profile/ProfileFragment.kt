@@ -3,7 +3,6 @@ package com.chesire.nekome.app.profile
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import coil.load
 import coil.transform.CircleCropTransformation
 import com.chesire.lifecyklelog.LogLifecykle
@@ -33,14 +32,9 @@ class ProfileFragment : DaggerFragment(R.layout.fragment_profile) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentProfileBinding.bind(view)
 
-        viewModel.user.observe(
-            viewLifecycleOwner,
-            Observer {
-                if (it != null) {
-                    setImagery(it)
-                }
-            }
-        )
+        viewModel.user.observe(viewLifecycleOwner) { userModel ->
+            userModel?.let { setImagery(it) }
+        }
     }
 
     private fun setImagery(user: UserModel) {
