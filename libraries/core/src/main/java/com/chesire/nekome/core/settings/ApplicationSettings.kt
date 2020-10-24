@@ -52,7 +52,7 @@ class ApplicationSettings @Inject constructor(
         }
 
     /**
-     * Gets the default [HomeScreenOption] the home screen that shows after login
+     * Gets the default [HomeScreenOptions] the home screen that shows after login or when re-launching.
      */
     val defaultHomeScreen: HomeScreenOptions
         get() {
@@ -62,7 +62,7 @@ class ApplicationSettings @Inject constructor(
                     HomeScreenOptions.Anime.index.toString()
                 )
             ) {
-                "Preferences defaultSeriesState returned null, with supplied default value"
+                "Preferences defaultHomeScreen returned null, with supplied default value"
             }
 
             return HomeScreenOptions.getFromIndex(index)

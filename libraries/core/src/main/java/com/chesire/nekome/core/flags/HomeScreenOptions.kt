@@ -5,11 +5,11 @@ import androidx.annotation.StringRes
 import com.chesire.nekome.core.R
 
 /**
- * All possible types of a series.
+ * Options for default home screen
  */
 enum class HomeScreenOptions(val index: Int, @StringRes val stringId: Int) {
-    Anime(0, R.string.anime),
-    Manga(1, R.string.manga);
+    Anime(0, R.string.nav_anime),
+    Manga(1, R.string.nav_manga);
 
     companion object {
         /**
@@ -19,7 +19,7 @@ enum class HomeScreenOptions(val index: Int, @StringRes val stringId: Int) {
             .associate { it.index to context.getString(it.stringId) }
 
         /**
-         * Gets the [UserSeriesStatus] from a given [index], the [index] should be the index field
+         * Gets the [HomeScreenOptions] from a given [index], the [index] should be the index field.
          * in the the enum class, but as a string.
          */
         fun getFromIndex(index: String): HomeScreenOptions {

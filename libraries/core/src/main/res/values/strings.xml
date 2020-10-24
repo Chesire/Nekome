@@ -123,6 +123,4 @@
     <string name="results_failure">Failed to begin tracking series %s, please try again…</string>
 
     <string name="error_generic">An unknown error has occurred…</string>
-    <string name="anime">Anime</string>
-    <string name="manga">Manga</string>
 </resources>

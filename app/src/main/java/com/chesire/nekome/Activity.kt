@@ -116,15 +116,7 @@ class Activity : DaggerAppCompatActivity(), AuthCaster.AuthCasterListener, Flow 
             }
         }
 
-        if (settings.defaultHomeScreen == HomeScreenOptions.Anime) {
-            findNavController(R.id.activityNavigation).navigate(
-                OverviewNavGraphDirections.globalToAnimeFragment()
-            )
-        } else {
-            findNavController(R.id.activityNavigation).navigate(
-                OverviewNavGraphDirections.globalToMangaFragment()
-            )
-        }
+        navigateToDefaultHome()
     }
 
     override fun onSupportNavigateUp() =
@@ -179,6 +171,10 @@ class Activity : DaggerAppCompatActivity(), AuthCaster.AuthCasterListener, Flow 
     }
 
     override fun finishLogin() {
+        navigateToDefaultHome()
+    }
+
+    private fun navigateToDefaultHome() {
         if (settings.defaultHomeScreen == HomeScreenOptions.Anime) {
             findNavController(R.id.activityNavigation).navigate(
                 OverviewNavGraphDirections.globalToAnimeFragment()
