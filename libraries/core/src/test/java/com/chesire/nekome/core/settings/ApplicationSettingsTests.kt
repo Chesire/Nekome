@@ -3,6 +3,7 @@ package com.chesire.nekome.core.settings
 import android.content.Context
 import android.content.SharedPreferences
 import com.chesire.nekome.core.R
+import com.chesire.nekome.core.flags.HomeScreenOptions
 import com.chesire.nekome.core.flags.UserSeriesStatus
 import io.mockk.Runs
 import io.mockk.every
@@ -14,8 +15,42 @@ import org.junit.Test
 
 class ApplicationSettingsTests {
     private val mockContext = mockk<Context> {
+        every { getString(R.string.key_default_home) } returns "key_default_home"
         every { getString(R.string.key_default_series_state) } returns "key_default_series_state"
         every { getString(R.string.key_theme) } returns "key_theme"
+    }
+
+    @Test
+    fun `can get defaultHomeScreen`() {
+        val mockPreferences = mockk<SharedPreferences> {
+            every { getString("key_default_home", "0") } returns "1"
+        }
+        val testObject = ApplicationSettings(
+            mockContext,
+            mockPreferences
+        )
+
+        assertEquals(HomeScreenOptions.Manga, testObject.defaultHomeScreen)
+    }
+
+    @Test
+    fun `defaultHomeScreen with Unknown value returns Anime`() {
+        val mockEditor = mockk<SharedPreferences.Editor> {
+            every { putString("key_default_home", "0") } returns this
+            every { apply() } just Runs
+        }
+        val mockPreferences = mockk<SharedPreferences> {
+            every { getString("key_default_home", "0") } returns "-1"
+            every { edit() } returns mockEditor
+        }
+        val testObject = ApplicationSettings(
+            mockContext,
+            mockPreferences
+        )
+
+        val result = testObject.defaultHomeScreen
+
+        assertEquals(HomeScreenOptions.Anime, result)
     }
 
     @Test
