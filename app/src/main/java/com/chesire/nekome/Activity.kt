@@ -30,7 +30,7 @@ import javax.inject.Inject
 
 /**
  * Single host activity for the application, handles all required logic of the activity such as
- * hiding/showing the drawer.
+ * hiding/showing the drawer
  */
 @LogLifecykle
 @Suppress("TooManyFunctions")
