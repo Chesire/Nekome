@@ -10,7 +10,6 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.drawerlayout.widget.DrawerLayout.LOCK_MODE_LOCKED_CLOSED
 import androidx.drawerlayout.widget.DrawerLayout.LOCK_MODE_UNLOCKED
-import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
@@ -64,16 +63,11 @@ class Activity : DaggerAppCompatActivity(), AuthCaster.AuthCasterListener, Flow 
     }
 
     private fun observeViewModel() {
-        viewModel.user.observe(
-            this,
-            Observer { userModel ->
-                if (userModel == null) {
-                    return@Observer
-                }
-
+        viewModel.user.observe(this) { userModel ->
+            if (userModel != null) {
                 updateAvatar(findViewById(R.id.activityNavigationView), userModel)
             }
-        )
+        }
     }
 
     override fun onDestroy() {

@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import com.chesire.lifecyklelog.LogLifecykle
 import com.chesire.nekome.app.series.R
 import com.chesire.nekome.app.series.databinding.FragmentSeriesDetailBinding
@@ -87,25 +86,22 @@ class SeriesDetailSheetFragment : BottomSheetDialogFragment() {
             binding.detailConfirmation.confirmationProgress.hide(invisible = true)
         }
 
-        viewModel.updatingStatus.observe(
-            viewLifecycleOwner,
-            Observer { result ->
-                when (result) {
-                    is AsyncState.Loading -> startInProgressState()
-                    is AsyncState.Error -> {
-                        endInProgressState()
-                        view?.let { view ->
-                            Snackbar.make(
-                                view.findViewById(R.id.seriesDetailLayout),
-                                getString(R.string.series_detail_failure, result.data?.seriesName),
-                                Snackbar.LENGTH_LONG
-                            ).show()
-                        }
+        viewModel.updatingStatus.observe(viewLifecycleOwner) { result ->
+            when (result) {
+                is AsyncState.Loading -> startInProgressState()
+                is AsyncState.Error -> {
+                    endInProgressState()
+                    view?.let { view ->
+                        Snackbar.make(
+                            view.findViewById(R.id.seriesDetailLayout),
+                            getString(R.string.series_detail_failure, result.data?.seriesName),
+                            Snackbar.LENGTH_LONG
+                        ).show()
                     }
-                    is AsyncState.Success -> dismiss()
                 }
+                is AsyncState.Success -> dismiss()
             }
-        )
+        }
     }
 
     private fun setupSeriesStatusListener(model: MutableSeriesModel) {
