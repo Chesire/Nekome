@@ -3,7 +3,7 @@ name: Android CI
 on:
   push:
     branches: [ master ]
-  pull_request:
+  pull_request_target:
     branches: [ master ]
 
 jobs:
@@ -11,6 +11,9 @@ jobs:
    runs-on: ubuntu-latest
    steps:
     - uses: actions/checkout@v2
+      with:
+        ref: ${{github.event.pull_request.head.ref}}
+        repository: ${{github.event.pull_request.head.repo.full_name}}
     - name: set up JDK 1.8
       uses: actions/setup-java@v1.4.3
       with:
@@ -25,6 +28,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+      with:
+        ref: ${{github.event.pull_request.head.ref}}
+        repository: ${{github.event.pull_request.head.repo.full_name}}
     - name: set up JDK 1.8
       uses: actions/setup-java@v1.4.3
       with:
@@ -43,10 +49,13 @@ jobs:
 
   danger:
     needs: [test, analyze]
-    if: github.event_name == 'pull_request'
+    if: github.event_name == 'pull_request' || github.event_name == 'pull_request_target'
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+      with:
+        ref: ${{github.event.pull_request.head.ref}}
+        repository: ${{github.event.pull_request.head.repo.full_name}}
     - name: set up JDK 1.8
       uses: actions/setup-java@v1.4.3
       with:
@@ -68,7 +77,6 @@ jobs:
         name: lint
         path: build/reports/
     - uses: MeilCli/danger-action@v5.0.0
-      if: github.event_name == 'pull_request'
       with:
         plugins_file: 'Gemfile'
         install_path: 'vendor/bundle'
