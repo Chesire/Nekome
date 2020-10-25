@@ -5,6 +5,8 @@ on:
     branches: [ master ]
   pull_request:
     branches: [ master ]
+  pull_request_target:
+    branches: [ master ]
 
 jobs:
   test:
@@ -43,7 +45,7 @@ jobs:
 
   danger:
     needs: [test, analyze]
-    if: github.event_name == 'pull_request'
+    if: github.event_name == 'pull_request' || github.event_name == 'pull_request_target'
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -68,7 +70,6 @@ jobs:
         name: lint
         path: build/reports/
     - uses: MeilCli/danger-action@v5.0.0
-      if: github.event_name == 'pull_request'
       with:
         plugins_file: 'Gemfile'
         install_path: 'vendor/bundle'
