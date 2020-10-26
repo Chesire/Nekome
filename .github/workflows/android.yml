@@ -49,7 +49,7 @@ jobs:
         name: lint
         path: build/reports/
 
-  danger:
+  danger: 
     needs: [test, analyze]
     if: github.event_name == 'pull_request' || github.event_name == 'pull_request_target'
     runs-on: ubuntu-latest
