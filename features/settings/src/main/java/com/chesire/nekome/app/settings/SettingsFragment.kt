@@ -9,6 +9,7 @@ import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.chesire.lifecyklelog.LogLifecykle
+import com.chesire.nekome.core.flags.HomeScreenOptions
 import com.chesire.nekome.core.flags.UserSeriesStatus
 import com.chesire.nekome.core.settings.Theme
 
@@ -21,6 +22,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
     private lateinit var keyLicenses: String
     private lateinit var keyGithub: String
     private lateinit var keyDefaultSeriesState: String
+    private lateinit var keyDefaultHomeScreen: String
     private lateinit var keyTheme: String
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
@@ -29,9 +31,11 @@ class SettingsFragment : PreferenceFragmentCompat() {
         keyLicenses = getString(R.string.key_licenses)
         keyGithub = getString(R.string.key_github)
         keyDefaultSeriesState = getString(R.string.key_default_series_state)
+        keyDefaultHomeScreen = getString(R.string.key_default_home)
         keyTheme = getString(R.string.key_theme)
 
         setupDefaultSeriesState()
+        setupDefaultHomeScreen()
         setupTheme()
     }
 
@@ -42,6 +46,17 @@ class SettingsFragment : PreferenceFragmentCompat() {
             pref.entryValues = userSeriesMap.keys.map { it.toString() }.toTypedArray()
             if (pref.value == null) {
                 pref.value = UserSeriesStatus.Current.index.toString()
+            }
+        }
+    }
+
+    private fun setupDefaultHomeScreen() {
+        findPreference<ListPreference>(keyDefaultHomeScreen)?.let { pref ->
+            val homeScreenOptionsMap = HomeScreenOptions.getValueMap(requireContext())
+            pref.entries = homeScreenOptionsMap.values.toTypedArray()
+            pref.entryValues = homeScreenOptionsMap.keys.map { it.toString() }.toTypedArray()
+            if (pref.value == null) {
+                pref.value = HomeScreenOptions.Anime.index.toString()
             }
         }
     }

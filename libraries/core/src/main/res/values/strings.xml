@@ -98,6 +98,8 @@
     <string name="settings_github_url">https://github.com/Chesire/Nekome</string>
     <string name="settings_default_series_status_title">Default Series Status</string>
     <string name="settings_default_series_status_summary">Status a newly tracked series will start in</string>
+    <string name="settings_default_home_title">Default Home Screen</string>
+    <string name="settings_default_home_summary">Choose between Anime/Manga</string>
     <string name="settings_theme">Theme</string>
     <string name="settings_theme_system">Use system default</string>
     <string name="settings_theme_dark">Dark</string>

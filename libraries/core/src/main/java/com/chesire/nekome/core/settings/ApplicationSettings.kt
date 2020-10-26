@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.core.content.edit
 import com.chesire.nekome.core.R
+import com.chesire.nekome.core.flags.HomeScreenOptions
 import com.chesire.nekome.core.flags.UserSeriesStatus
 import javax.inject.Inject
 
@@ -18,6 +19,7 @@ class ApplicationSettings @Inject constructor(
 ) {
 
     private val _defaultSeriesState = context.getString(R.string.key_default_series_state)
+    private val _defaultHomeScreen = context.getString(R.string.key_default_home)
     private val _theme = context.getString(R.string.key_theme)
 
     /**
@@ -47,6 +49,23 @@ class ApplicationSettings @Inject constructor(
             }
 
             return status
+        }
+
+    /**
+     * Gets the default [HomeScreenOptions] the home screen that shows after login or when re-launching.
+     */
+    val defaultHomeScreen: HomeScreenOptions
+        get() {
+            val index = requireNotNull(
+                preferences.getString(
+                    _defaultHomeScreen,
+                    HomeScreenOptions.Anime.index.toString()
+                )
+            ) {
+                "Preferences defaultHomeScreen returned null, with supplied default value"
+            }
+
+            return HomeScreenOptions.getFromIndex(index)
         }
 
     /**

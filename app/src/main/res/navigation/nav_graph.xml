@@ -42,6 +42,12 @@
         app:popUpToInclusive="true" />
 
     <action
+        android:id="@+id/globalToMangaFragment"
+        app:destination="@id/mangaFragment"
+        app:popUpTo="@+id/overview_nav_graph"
+        app:popUpToInclusive="true" />
+
+    <action
         android:id="@+id/globalToDetailsFragment"
         app:destination="@id/login_nav_graph"
         app:popUpTo="@+id/overview_nav_graph"
