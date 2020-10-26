@@ -19,7 +19,9 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
 import com.chesire.lifecyklelog.LogLifecykle
 import com.chesire.nekome.core.AuthCaster
+import com.chesire.nekome.core.flags.HomeScreenOptions
 import com.chesire.nekome.core.nav.Flow
+import com.chesire.nekome.core.settings.ApplicationSettings
 import com.chesire.nekome.core.viewmodel.ViewModelFactory
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
@@ -37,6 +39,9 @@ import javax.inject.Inject
 class Activity : DaggerAppCompatActivity(), AuthCaster.AuthCasterListener, Flow {
     @Inject
     lateinit var authCaster: AuthCaster
+
+    @Inject
+    lateinit var settings: ApplicationSettings
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
@@ -104,6 +109,8 @@ class Activity : DaggerAppCompatActivity(), AuthCaster.AuthCasterListener, Flow 
                 }
             }
         }
+
+        navigateToDefaultHome()
     }
 
     override fun onSupportNavigateUp() =
@@ -158,8 +165,18 @@ class Activity : DaggerAppCompatActivity(), AuthCaster.AuthCasterListener, Flow 
     }
 
     override fun finishLogin() {
-        findNavController(R.id.activityNavigation).navigate(
-            OverviewNavGraphDirections.globalToAnimeFragment()
-        )
+        navigateToDefaultHome()
+    }
+
+    private fun navigateToDefaultHome() {
+        if (settings.defaultHomeScreen == HomeScreenOptions.Anime) {
+            findNavController(R.id.activityNavigation).navigate(
+                OverviewNavGraphDirections.globalToAnimeFragment()
+            )
+        } else {
+            findNavController(R.id.activityNavigation).navigate(
+                OverviewNavGraphDirections.globalToMangaFragment()
+            )
+        }
     }
 }
