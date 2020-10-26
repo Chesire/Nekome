@@ -5,7 +5,7 @@ import androidx.annotation.StringRes
 import com.chesire.nekome.core.R
 
 /**
- * Options for default home screen
+ * Options for default home screen.
  */
 enum class HomeScreenOptions(val index: Int, @StringRes val stringId: Int) {
     Anime(0, R.string.nav_anime),
