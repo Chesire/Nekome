@@ -70,7 +70,7 @@ task clean(type: Delete) {
 ext {
     appcompat_version = "1.2.0"
     coil_version = "1.0.0"
-    constraint_layout_version = "2.0.3"
+    constraint_layout_version = "2.0.4"
     corektx_version = "1.5.0-alpha04"
     coroutines_version = "1.4.0"
     dagger_version = "2.29.1"
