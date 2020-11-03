@@ -21,4 +21,5 @@
 #-renamesourcefileattribute SourceFile
 
 # Keep the flags that Moshi needs to generate adapters
+#noinspection ShrinkerUnresolvedReference
 -keep class com.chesire.nekome.core.flags.** { *; }
