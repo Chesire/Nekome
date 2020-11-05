@@ -72,7 +72,7 @@ ext {
     coil_version = "1.0.0"
     constraint_layout_version = "2.0.4"
     corektx_version = "1.5.0-alpha04"
-    coroutines_version = "1.4.0"
+    coroutines_version = "1.4.1"
     dagger_version = "2.29.1"
     fragmentctx_version = "1.2.5"
     lifecycle_version = "2.2.0"
