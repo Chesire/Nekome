@@ -68,6 +68,8 @@ task clean(type: Delete) {
 }
 
 ext {
+    sdk_version = 30
+
     appcompat_version = "1.2.0"
     coil_version = "1.0.0"
     constraint_layout_version = "2.0.4"
