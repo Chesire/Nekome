@@ -5,12 +5,12 @@ apply plugin: "kotlin-kapt"
 apply plugin: "androidx.navigation.safeargs.kotlin"
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion sdk_version
 
     defaultConfig {
         applicationId "com.chesire.nekome"
         minSdkVersion 21
-        targetSdkVersion 29
+        targetSdkVersion sdk_version
         versionCode 1
         versionName "${appVersion()}"
         testInstrumentationRunner "com.chesire.nekome.TestRunner"
