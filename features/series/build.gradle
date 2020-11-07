@@ -48,7 +48,6 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
     implementation "com.afollestad.material-dialogs:core:$materialdialog_version"
-    implementation "com.afollestad.material-dialogs:input:$materialdialog_version"
     implementation "com.afollestad.material-dialogs:lifecycle:$materialdialog_version"
     implementation "com.chesire:lifecyklelog:$lifecykle_version"
     implementation "com.chesire.lintrules:lint-gradle:$lintrules_version"
