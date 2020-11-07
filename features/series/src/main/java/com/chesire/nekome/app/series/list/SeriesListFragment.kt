@@ -43,9 +43,6 @@ abstract class SeriesListFragment :
     lateinit var viewModelFactory: ViewModelFactory
 
     @Inject
-    lateinit var dialogHandler: DialogHandler
-
-    @Inject
     lateinit var seriesPreferences: SeriesPreferences
 
     /**
@@ -106,8 +103,8 @@ abstract class SeriesListFragment :
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.menuFilter -> dialogHandler.showFilterDialog(requireContext(), viewLifecycleOwner)
-            R.id.menuSort -> dialogHandler.showSortDialog(requireContext(), viewLifecycleOwner)
+            R.id.menuFilter -> showFilterDialog(seriesPreferences)
+            R.id.menuSort -> showSortDialog(seriesPreferences)
             R.id.menuRefresh -> {
                 binding.refreshLayout.isRefreshing = true
                 startRefreshingSeries()
