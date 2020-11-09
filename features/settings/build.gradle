@@ -26,7 +26,7 @@ android {
 }
 
 dependencies {
-    def aboutlibraries_version = "8.4.3"
+    def aboutlibraries_version = "8.4.5"
 
     implementation fileTree(dir: "libs", include: ["*.jar"])
 
