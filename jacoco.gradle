@@ -9,8 +9,8 @@ tasks.withType(Test) {
 }
 
 task jacocoTestReport(
-        type: JacocoReport,
-        group: "verification"
+    type: JacocoReport,
+    group: "verification"
 ) {
     reports {
         xml.enabled = true
@@ -24,7 +24,7 @@ task jacocoTestReport(
     getSourceDirectories().setFrom(files([mainSrc]))
     getClassDirectories().setFrom(files([debugTree]))
     getExecutionData().setFrom(fileTree(dir: project.buildDir, includes: [
-            "jacoco/testDebugUnitTest.exec",
-            "outputs/code-coverage/connected/*coverage.ec"
+        "jacoco/testDebugUnitTest.exec",
+        "outputs/code-coverage/connected/*coverage.ec"
     ]))
 }
