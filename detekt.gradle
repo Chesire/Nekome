@@ -3,6 +3,7 @@ detekt {
     input = files(
             "app/src/main/java",
             "features/discover/src/main/java",
+            "features/login/src/main/java",
             "features/profile/src/main/java",
             "features/search/src/main/java",
             "features/series/src/main/java",
