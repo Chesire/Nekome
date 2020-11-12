@@ -39,18 +39,3 @@ task clean(type: Delete) {
 
 apply from: "dependencies.gradle"
 apply from: "detekt.gradle"
-
-ext.appVersion = {
-    def stdout = new ByteArrayOutputStream()
-    exec {
-        commandLine "git", "describe", "--tags", "--always"
-        standardOutput = stdout
-    }
-
-    def longTag = stdout.toString().trim()
-    if (longTag.contains('-')) {
-        return longTag.substring(longTag.indexOf('/') + 1, longTag.indexOf('-'))
-    } else {
-        return longTag
-    }
-}
