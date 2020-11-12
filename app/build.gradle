@@ -3,6 +3,7 @@ apply plugin: "kotlin-android"
 apply plugin: "kotlin-android-extensions"
 apply plugin: "kotlin-kapt"
 apply plugin: "androidx.navigation.safeargs.kotlin"
+apply from: "${project.rootDir}/ext.gradle"
 
 android {
     compileSdkVersion sdk_version
@@ -12,7 +13,7 @@ android {
         minSdkVersion 21
         targetSdkVersion sdk_version
         versionCode 1
-        versionName "${appVersion()}"
+        versionName appVersionFromTag()
         testInstrumentationRunner "com.chesire.nekome.TestRunner"
         resConfigs "en"
     }

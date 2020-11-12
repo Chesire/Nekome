@@ -33,73 +33,9 @@ subprojects {
     apply from: "${project.rootDir}/jacoco.gradle"
 }
 
-detekt {
-    config = files("detekt.yml")
-    input = files(
-            "app/src/main/java",
-            "features/discover/src/main/java",
-            "features/profile/src/main/java",
-            "features/search/src/main/java",
-            "features/series/src/main/java",
-            "features/settings/src/main/java",
-            "features/timeline/src/main/java",
-            "libraries/account/src/main/java",
-            "libraries/core/src/main/java",
-            "libraries/database/src/main/java",
-            "libraries/kitsu/src/main/java",
-            "libraries/library/src/main/java",
-            "libraries/server/src/main/java",
-            "testing/src/main/java"
-    )
-    reports {
-        xml {
-            enabled = true
-            destination = file("build/reports/detekt/detekt.xml")
-        }
-        html {
-            enabled = true
-            destination = file("build/reports/detekt/detekt.html")
-        }
-    }
-}
-
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
 
-ext {
-    sdk_version = 30
-
-    appcompat_version = "1.2.0"
-    coil_version = "1.0.0"
-    constraint_layout_version = "2.0.4"
-    corektx_version = "1.5.0-alpha04"
-    coroutines_version = "1.4.1"
-    dagger_version = "2.29.1"
-    fragmentctx_version = "1.2.5"
-    lifecycle_version = "2.2.0"
-    lifecykle_version = "3.0.0"
-    lintrules_version = "1.2.5"
-    liveevent_version = "1.2.0"
-    material_version = "1.3.0-alpha03"
-    materialdialog_version = "3.3.0"
-    moshi_version = "1.11.0"
-    preferences_version = "1.1.1"
-    room_version = "2.2.5"
-    timber_version = "4.7.1"
-}
-
-ext.appVersion = {
-    def stdout = new ByteArrayOutputStream()
-    exec {
-        commandLine "git", "describe", "--tags", "--always"
-        standardOutput = stdout
-    }
-
-    def longTag = stdout.toString().trim()
-    if (longTag.contains('-')) {
-        return longTag.substring(longTag.indexOf('/') + 1, longTag.indexOf('-'))
-    } else {
-        return longTag
-    }
-}
+apply from: "dependencies.gradle"
+apply from: "detekt.gradle"
