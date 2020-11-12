@@ -1,0 +1,29 @@
+detekt {
+    config = files("detekt.yml")
+    input = files(
+            "app/src/main/java",
+            "features/discover/src/main/java",
+            "features/profile/src/main/java",
+            "features/search/src/main/java",
+            "features/series/src/main/java",
+            "features/settings/src/main/java",
+            "features/timeline/src/main/java",
+            "libraries/account/src/main/java",
+            "libraries/core/src/main/java",
+            "libraries/database/src/main/java",
+            "libraries/kitsu/src/main/java",
+            "libraries/library/src/main/java",
+            "libraries/server/src/main/java",
+            "testing/src/main/java"
+    )
+    reports {
+        xml {
+            enabled = true
+            destination = file("build/reports/detekt/detekt.xml")
+        }
+        html {
+            enabled = true
+            destination = file("build/reports/detekt/detekt.html")
+        }
+    }
+}
