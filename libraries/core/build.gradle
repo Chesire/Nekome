@@ -46,8 +46,7 @@ dependencies {
     implementation "com.chesire.lintrules:lint-gradle:$lintrules_version"
     implementation "com.chesire.lintrules:lint-xml:$lintrules_version"
     implementation "com.google.android.material:material:$material_version"
-    implementation "com.google.dagger:dagger:$dagger_version"
-    implementation "com.google.dagger:dagger-android:$dagger_version"
+    implementation "com.google.dagger:hilt-android:$hilt_version"
     implementation "com.squareup.moshi:moshi:$moshi_version"
 
     testImplementation project(path: ":testing")
@@ -56,5 +55,6 @@ dependencies {
 
     androidTestImplementation "androidx.test.ext:junit:1.1.2"
 
+    kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
     kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshi_version"
 }

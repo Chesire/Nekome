@@ -2,6 +2,7 @@ apply plugin: "com.android.library"
 apply plugin: "kotlin-android"
 apply plugin: "kotlin-android-extensions"
 apply plugin: "kotlin-kapt"
+apply plugin: "dagger.hilt.android.plugin"
 apply plugin: "androidx.navigation.safeargs.kotlin"
 
 android {
@@ -49,9 +50,7 @@ dependencies {
     implementation "com.chesire.lintrules:lint-gradle:$lintrules_version"
     implementation "com.chesire.lintrules:lint-xml:$lintrules_version"
     implementation "com.google.android.material:material:$material_version"
-    implementation "com.google.dagger:dagger:$dagger_version"
-    implementation "com.google.dagger:dagger-android:$dagger_version"
-    implementation "com.google.dagger:dagger-android-support:$dagger_version"
+    implementation "com.google.dagger:hilt-android:$hilt_version"
     implementation "com.jakewharton.timber:timber:$timber_version"
     implementation "io.coil-kt:coil:$coil_version"
 
@@ -61,6 +60,5 @@ dependencies {
     testImplementation "junit:junit:4.13.1"
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_version"
 
-    kapt "com.google.dagger:dagger-android-processor:$dagger_version"
-    kapt "com.google.dagger:dagger-compiler:$dagger_version"
+    kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
 }
