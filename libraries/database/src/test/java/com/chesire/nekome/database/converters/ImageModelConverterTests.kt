@@ -5,6 +5,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Test
 
 class ImageModelConverterTests {
+    @Suppress("MaxLineLength")
     private val jsonString =
         """{"tiny":{"url":"tinyUrl","width":0,"height":1},"small":{"url":"smallUrl","width":2,"height":3},"medium":{"url":"mediumUrl","width":4,"height":5},"large":{"url":"largeUrl","width":6,"height":7}}""".trimIndent()
     private val model = ImageModel(
