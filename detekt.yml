@@ -47,9 +47,11 @@ complexity:
     ignoredLabels: ""
   LargeClass:
     active: true
+    excludes: "**/test/**,**/androidTest/**,**/*.Test.kt,**/*.Spec.kt,**/*.Spek.kt"
     threshold: 150
   LongMethod:
     active: true
+    excludes: "**/test/**,**/androidTest/**,**/*.Test.kt,**/*.Spec.kt,**/*.Spek.kt"
     threshold: 30
   LongParameterList:
     active: true
