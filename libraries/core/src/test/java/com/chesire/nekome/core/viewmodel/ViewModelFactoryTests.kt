@@ -1,7 +1,6 @@
-package com.chesire.nekome.flow
+package com.chesire.nekome.core.viewmodel
 
 import androidx.lifecycle.ViewModel
-import com.chesire.nekome.core.viewmodel.ViewModelFactory
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.Assert
