@@ -3,6 +3,8 @@ package com.chesire.nekome
 import android.app.Application
 import android.os.StrictMode
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.hilt.work.HiltWorkerFactory
+import androidx.work.Configuration
 import com.chesire.lifecyklelog.LifecykleLog
 import com.chesire.lifecyklelog.LogHandler
 import com.chesire.nekome.core.settings.ApplicationSettings
@@ -15,12 +17,16 @@ import javax.inject.Inject
  * Custom application to initialize anything that needs to be activated from application start.
  */
 @HiltAndroidApp
-class App : Application() {
+class App : Application(), Configuration.Provider {
+
+    @Inject
+    lateinit var settings: ApplicationSettings
+
     @Inject
     lateinit var workerQueue: WorkerQueue
 
     @Inject
-    lateinit var settings: ApplicationSettings
+    lateinit var workerFactory: HiltWorkerFactory
 
     override fun onCreate() {
         super.onCreate()
@@ -42,6 +48,11 @@ class App : Application() {
         workerQueue.enqueueSeriesRefresh()
         workerQueue.enqueueUserRefresh()
     }
+
+    override fun getWorkManagerConfiguration() =
+        Configuration.Builder()
+            .setWorkerFactory(workerFactory)
+            .build()
 
     private fun setApplicationTheme() = AppCompatDelegate.setDefaultNightMode(settings.theme.value)
 

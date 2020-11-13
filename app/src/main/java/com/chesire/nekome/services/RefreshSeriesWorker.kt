@@ -1,13 +1,14 @@
 package com.chesire.nekome.services
 
 import android.content.Context
+import androidx.hilt.Assisted
+import androidx.hilt.work.WorkerInject
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.chesire.nekome.account.UserRepository
 import com.chesire.nekome.library.SeriesRepository
 import com.chesire.nekome.server.Resource
 import timber.log.Timber
-import javax.inject.Inject
 
 /**
  * Worker object that handles updating a users Series if possible.
@@ -15,16 +16,12 @@ import javax.inject.Inject
  * When scheduled to run it will send a request to the [seriesRepo] to try to update the series,
  * letting the [seriesRepo] handle what to do with the results.
  */
-class RefreshSeriesWorker(
-    appContext: Context,
-    workerParams: WorkerParameters
+class RefreshSeriesWorker @WorkerInject constructor(
+    @Assisted appContext: Context,
+    @Assisted workerParams: WorkerParameters,
+    private val seriesRepo: SeriesRepository,
+    private val userRepo: UserRepository
 ) : CoroutineWorker(appContext, workerParams) {
-
-    @Inject
-    lateinit var seriesRepo: SeriesRepository
-
-    @Inject
-    lateinit var userRepo: UserRepository
 
     override suspend fun doWork(): Result {
         Timber.i("doWork RefreshSeriesWorker")

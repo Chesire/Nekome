@@ -61,6 +61,8 @@ android {
 }
 
 dependencies {
+    def hiltwork_version = "1.0.0-alpha02"
+
     implementation fileTree(dir: "libs", include: ["*.jar"])
 
     implementation project(path: ":features:discover")
@@ -83,6 +85,7 @@ dependencies {
     implementation "androidx.constraintlayout:constraintlayout:$constraint_layout_version"
     implementation "androidx.core:core-ktx:$corektx_version"
     implementation "androidx.fragment:fragment-ktx:$fragmentctx_version"
+    implementation "androidx.hilt:hilt-work:$hiltwork_version"
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
@@ -127,6 +130,7 @@ dependencies {
     }
     androidTestImplementation "io.mockk:mockk-android:1.10.2"
 
+    kapt "androidx.hilt:hilt-compiler:$hiltwork_version"
     kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
     kaptAndroidTest "com.google.dagger:dagger-android-processor:$dagger_version"
     kaptAndroidTest "com.google.dagger:dagger-compiler:$dagger_version"
