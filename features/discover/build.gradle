@@ -42,6 +42,7 @@ dependencies {
     implementation "androidx.constraintlayout:constraintlayout:$constraint_layout_version"
     implementation "androidx.core:core-ktx:$corektx_version"
     implementation "androidx.fragment:fragment-ktx:$fragmentctx_version"
+    implementation "androidx.hilt:hilt-lifecycle-viewmodel:$hiltx_version"
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
@@ -60,5 +61,6 @@ dependencies {
     testImplementation "junit:junit:4.13.1"
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_version"
 
+    kapt "androidx.hilt:hilt-compiler:$hiltx_version"
     kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
 }
