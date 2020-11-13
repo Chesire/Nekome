@@ -7,12 +7,14 @@ import com.chesire.nekome.library.UserProvider
 import com.chesire.nekome.server.api.LibraryApi
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ApplicationComponent
 
 /**
  * Dagger [Module] for the [com.chesire.nekome.series] package.
  */
-@Suppress("unused")
 @Module
+@InstallIn(ApplicationComponent::class)
 object SeriesModule {
     /**
      * Provides a [UserProvider] to the series repository.

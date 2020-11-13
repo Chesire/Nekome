@@ -21,7 +21,7 @@ import com.chesire.nekome.core.models.SeriesModel
 import com.chesire.nekome.core.viewmodel.ViewModelFactory
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.snackbar.Snackbar
-import dagger.android.support.AndroidSupportInjection
+import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -29,6 +29,7 @@ import javax.inject.Inject
  * Fragment to display the series detail in a [BottomSheetDialogFragment].
  */
 @LogLifecykle
+@AndroidEntryPoint
 class SeriesDetailSheetFragment : BottomSheetDialogFragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
@@ -36,11 +37,6 @@ class SeriesDetailSheetFragment : BottomSheetDialogFragment() {
     private val seriesModel by extraNotNull<SeriesModel>(MODEL_BUNDLE_ID, null)
     private var _binding: FragmentSeriesDetailBinding? = null
     private val binding get() = requireNotNull(_binding) { "Binding not set" }
-
-    override fun onAttach(context: Context) {
-        AndroidSupportInjection.inject(this)
-        super.onAttach(context)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

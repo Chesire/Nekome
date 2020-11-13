@@ -24,6 +24,8 @@ import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
 import dagger.Reusable
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ApplicationComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -32,8 +34,8 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 /**
  * Dagger [Module] for the [com.chesire.nekome.server] package.
  */
-@Suppress("unused")
 @Module
+@InstallIn(ApplicationComponent::class)
 object ServerModule {
     /**
      * Provides an instance of [OkHttpClient] with the authentication injectors pre-setup, so that

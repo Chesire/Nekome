@@ -16,8 +16,6 @@ import com.chesire.nekome.harness.FakeSearchApi
 import com.chesire.nekome.harness.FakeTrendingApi
 import com.chesire.nekome.harness.FakeUrlHandler
 import com.chesire.nekome.harness.FakeUserApi
-import com.chesire.nekome.injection.androidmodules.ActivityModule
-import com.chesire.nekome.injection.androidmodules.FragmentModule
 import com.chesire.nekome.injection.androidmodules.ViewModelModule
 import com.chesire.nekome.injection.modules.AccountModule
 import com.chesire.nekome.injection.modules.AppModule
@@ -37,13 +35,10 @@ import javax.inject.Singleton
 @Component(
     modules = [
         AccountModule::class,
-        ActivityModule::class,
-        AndroidSupportInjectionModule::class,
         AppModule::class,
         CoroutineModule::class,
         FakeKitsuModule::class,
         FakeUrlModule::class,
-        FragmentModule::class,
         MemoryDatabaseModule::class,
         SeriesModule::class,
         ServerModule::class,

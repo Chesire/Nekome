@@ -15,6 +15,8 @@ import com.chesire.nekome.core.viewmodel.ViewModelFactory
 import dagger.Binds
 import dagger.MapKey
 import dagger.Module
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ApplicationComponent
 import dagger.multibindings.IntoMap
 import kotlin.reflect.KClass
 
@@ -23,6 +25,7 @@ import kotlin.reflect.KClass
  */
 @Suppress("unused", "UndocumentedPublicFunction")
 @Module
+@InstallIn(ApplicationComponent::class)
 abstract class ViewModelModule {
     /**
      * Binds the [ViewModelFactory] into the Dagger graph.

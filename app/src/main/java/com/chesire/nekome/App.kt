@@ -1,24 +1,21 @@
 package com.chesire.nekome
 
+import android.app.Application
 import android.os.StrictMode
 import androidx.appcompat.app.AppCompatDelegate
 import com.chesire.lifecyklelog.LifecykleLog
 import com.chesire.lifecyklelog.LogHandler
 import com.chesire.nekome.core.settings.ApplicationSettings
-import com.chesire.nekome.injection.components.AppComponent
-import com.chesire.nekome.injection.components.DaggerAppComponent
 import com.chesire.nekome.services.WorkerQueue
-import dagger.android.AndroidInjector
-import dagger.android.support.DaggerApplication
+import dagger.hilt.android.HiltAndroidApp
 import timber.log.Timber
 import javax.inject.Inject
 
 /**
  * Custom application to initialize anything that needs to be activated from application start.
  */
-class App : DaggerApplication() {
-    lateinit var daggerComponent: AppComponent
-
+@HiltAndroidApp
+class App : Application() {
     @Inject
     lateinit var workerQueue: WorkerQueue
 
@@ -47,14 +44,6 @@ class App : DaggerApplication() {
     }
 
     private fun setApplicationTheme() = AppCompatDelegate.setDefaultNightMode(settings.theme.value)
-
-    override fun applicationInjector(): AndroidInjector<out DaggerApplication> {
-        return DaggerAppComponent
-            .builder()
-            .applicationContext(this)
-            .build()
-            .also { daggerComponent = it }
-    }
 
     private fun startStrictMode() {
         StrictMode.setThreadPolicy(

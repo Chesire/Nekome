@@ -2,6 +2,7 @@ package com.chesire.nekome.app.profile
 
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import coil.load
 import coil.transform.CircleCropTransformation
@@ -9,14 +10,15 @@ import com.chesire.lifecyklelog.LogLifecykle
 import com.chesire.nekome.app.profile.databinding.FragmentProfileBinding
 import com.chesire.nekome.core.models.UserModel
 import com.chesire.nekome.core.viewmodel.ViewModelFactory
-import dagger.android.support.DaggerFragment
+import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 /**
  * Fragment to display to the user information about their profile.
  */
 @LogLifecykle
-class ProfileFragment : DaggerFragment(R.layout.fragment_profile) {
+@AndroidEntryPoint
+class ProfileFragment : Fragment(R.layout.fragment_profile) {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
     private val viewModel by viewModels<ProfileViewModel> { viewModelFactory }

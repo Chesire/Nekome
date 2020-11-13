@@ -12,12 +12,14 @@ import com.chesire.nekome.server.api.TrendingApi
 import com.chesire.nekome.server.api.UserApi
 import dagger.Binds
 import dagger.Module
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ApplicationComponent
 
 /**
  * Dagger [Module] for the [com.chesire.nekome.kitsu] package.
  */
-@Suppress("unused")
 @Module
+@InstallIn(ApplicationComponent::class)
 abstract class KitsuModule {
     /**
      * Binds the instance of [KitsuAuth] to [AuthApi].

@@ -3,7 +3,6 @@ package com.chesire.nekome.services
 import android.content.Context
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
-import com.chesire.nekome.App
 import com.chesire.nekome.account.UserRepository
 import com.chesire.nekome.server.Resource
 import timber.log.Timber
@@ -22,15 +21,6 @@ class RefreshUserWorker(
 
     @Inject
     lateinit var userRepo: UserRepository
-
-    init {
-        // For now setup in the init block
-        // dagger currently doesn't support androidInjection for workers
-        Timber.i("Initializing the RefreshUserWorker")
-        if (appContext is App) {
-            appContext.daggerComponent.inject(this)
-        }
-    }
 
     override suspend fun doWork(): Result {
         Timber.i("doWork RefreshUserWorker")

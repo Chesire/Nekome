@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -11,14 +12,15 @@ import com.chesire.lifecyklelog.LogLifecykle
 import com.chesire.nekome.app.discover.trending.TrendingAdapter
 import com.chesire.nekome.core.flags.AsyncState
 import com.chesire.nekome.core.viewmodel.ViewModelFactory
-import dagger.android.support.DaggerFragment
+import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 /**
  * Fragment to aid with Series discovery.
  */
 @LogLifecykle
-class DiscoverFragment : DaggerFragment() {
+@AndroidEntryPoint
+class DiscoverFragment : Fragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
     private val viewModel by viewModels<DiscoverViewModel> { viewModelFactory }

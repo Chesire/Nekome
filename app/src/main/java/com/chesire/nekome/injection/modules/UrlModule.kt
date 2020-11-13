@@ -4,12 +4,14 @@ import com.chesire.nekome.core.url.CustomTabsUrl
 import com.chesire.nekome.core.url.UrlHandler
 import dagger.Binds
 import dagger.Module
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ApplicationComponent
 
 /**
  * Dagger [Module] to bind [UrlHandler].
  */
-@Suppress("unused")
 @Module
+@InstallIn(ApplicationComponent::class)
 abstract class UrlModule {
     /**
      * Binds the instance of [CustomTabsUrl] to [UrlHandler].

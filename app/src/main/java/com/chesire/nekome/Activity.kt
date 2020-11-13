@@ -6,6 +6,7 @@ import android.os.Looper
 import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.drawerlayout.widget.DrawerLayout.LOCK_MODE_LOCKED_CLOSED
@@ -25,7 +26,7 @@ import com.chesire.nekome.core.settings.ApplicationSettings
 import com.chesire.nekome.core.viewmodel.ViewModelFactory
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
-import dagger.android.support.DaggerAppCompatActivity
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity.activityDrawer
 import timber.log.Timber
 import javax.inject.Inject
@@ -35,8 +36,9 @@ import javax.inject.Inject
  * hiding/showing the drawer.
  */
 @LogLifecykle
+@AndroidEntryPoint
 @Suppress("TooManyFunctions")
-class Activity : DaggerAppCompatActivity(), AuthCaster.AuthCasterListener, Flow {
+class Activity : AppCompatActivity(), AuthCaster.AuthCasterListener, Flow {
     @Inject
     lateinit var authCaster: AuthCaster
 

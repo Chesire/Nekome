@@ -2,6 +2,7 @@ package com.chesire.nekome.kitsu
 
 import android.content.Context
 import com.thz.keystorehelper.KeyStoreManager
+import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
 private const val ALIAS = "kitsuPrivateAuth"
@@ -9,7 +10,7 @@ private const val ALIAS = "kitsuPrivateAuth"
 /**
  * Used to encrypt and decrypt strings using the [KeyStoreManager].
  */
-class Cryption @Inject constructor(context: Context) {
+class Cryption @Inject constructor(@ApplicationContext context: Context) {
     init {
         KeyStoreManager.init(context)
     }
