@@ -1,0 +1,49 @@
+name: Master
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  assemble:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: set up JDK 1.8
+      uses: actions/setup-java@v1.4.3
+      with:
+        java-version: 1.8
+    - name: run assemble
+      run: ./gradlew assemble
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: set up JDK 1.8
+      uses: actions/setup-java@v1.4.3
+      with:
+        java-version: 1.8
+    - name: run testDebugUnitTest
+      run: ./gradlew testDebugUnitTest
+    - name: run jacocoTestReport
+      run: ./gradlew jacocoTestReport
+    - uses: codecov/codecov-action@v1.0.14
+
+  analyze:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: set up JDK 1.8
+      uses: actions/setup-java@v1.4.3
+      with:
+        java-version: 1.8
+    - name: run lintDebug
+      run: ./gradlew app:lintDebug
+    - name: run detekt
+      run: ./gradlew detekt
+    - name: upload linting results
+      uses: actions/upload-artifact@v2
+      with:
+        name: lint
+        path: build/reports/
