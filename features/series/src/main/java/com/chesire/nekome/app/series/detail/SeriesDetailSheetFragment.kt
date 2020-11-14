@@ -11,7 +11,6 @@ import androidx.fragment.app.viewModels
 import com.chesire.lifecyklelog.LogLifecykle
 import com.chesire.nekome.app.series.R
 import com.chesire.nekome.app.series.databinding.FragmentSeriesDetailBinding
-import com.chesire.nekome.core.extensions.extraNotNull
 import com.chesire.nekome.core.extensions.hide
 import com.chesire.nekome.core.extensions.show
 import com.chesire.nekome.core.flags.AsyncState
@@ -30,7 +29,6 @@ import timber.log.Timber
 class SeriesDetailSheetFragment : BottomSheetDialogFragment() {
 
     private val viewModel by viewModels<SeriesDetailViewModel>()
-    private val seriesModel by extraNotNull<SeriesModel>(MODEL_BUNDLE_ID, null)
     private var _binding: FragmentSeriesDetailBinding? = null
     private val binding get() = requireNotNull(_binding) { "Binding not set" }
 
@@ -42,7 +40,6 @@ class SeriesDetailSheetFragment : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.setModel(seriesModel)
         initializeView()
     }
 
@@ -155,7 +152,6 @@ class SeriesDetailSheetFragment : BottomSheetDialogFragment() {
 
     companion object {
         const val TAG = "SeriesDetailSheetFragment"
-        private const val MODEL_BUNDLE_ID = "SeriesDetailSheetFragment_model"
 
         /**
          * Creates a new instance of the [SeriesDetailSheetFragment], using the [seriesModel] for
@@ -163,7 +159,7 @@ class SeriesDetailSheetFragment : BottomSheetDialogFragment() {
          */
         fun newInstance(seriesModel: SeriesModel): SeriesDetailSheetFragment {
             return SeriesDetailSheetFragment().apply {
-                arguments = bundleOf(MODEL_BUNDLE_ID to seriesModel)
+                arguments = bundleOf(MODEL_ID to seriesModel)
             }
         }
     }
