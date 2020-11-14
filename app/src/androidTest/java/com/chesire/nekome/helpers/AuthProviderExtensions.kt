@@ -8,3 +8,10 @@ import com.chesire.nekome.kitsu.AuthProvider
 fun AuthProvider.login() {
     accessToken = "fakeAccessToken"
 }
+
+/**
+ * Tells the [AuthProvider] that a user is logged out, used to enter login.
+ */
+fun AuthProvider.logout() {
+    accessToken = ""
+}
