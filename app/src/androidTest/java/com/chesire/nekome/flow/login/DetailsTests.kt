@@ -65,7 +65,6 @@ class DetailsTests {
     @Before
     fun setUp() {
         hilt.inject()
-
         authProvider.logout()
     }
 

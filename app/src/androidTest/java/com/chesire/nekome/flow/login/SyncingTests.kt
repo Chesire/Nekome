@@ -1,92 +1,73 @@
 package com.chesire.nekome.flow.login
-/*
-import androidx.test.espresso.intent.Intents
-import androidx.test.espresso.intent.Intents.intended
-import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
+
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import androidx.test.rule.ActivityTestRule
-import com.chesire.nekome.Activity
 import com.chesire.nekome.R
-import com.chesire.nekome.helpers.injector
+import com.chesire.nekome.helpers.launchActivity
+import com.chesire.nekome.helpers.logout
+import com.chesire.nekome.injection.DatabaseModule
+import com.chesire.nekome.injection.KitsuModule
 import com.chesire.nekome.kitsu.AuthProvider
 import com.chesire.nekome.server.Resource
 import com.chesire.nekome.server.api.AuthApi
 import com.chesire.nekome.server.api.LibraryApi
+import com.chesire.nekome.server.api.SearchApi
+import com.chesire.nekome.server.api.TrendingApi
 import com.chesire.nekome.server.api.UserApi
 import com.chesire.nekome.testing.createSeriesModel
 import com.chesire.nekome.testing.createUserModel
 import com.schibsted.spain.barista.interaction.BaristaClickInteractions.clickOn
 import com.schibsted.spain.barista.interaction.BaristaEditTextInteractions.writeTo
 import com.schibsted.spain.barista.interaction.BaristaKeyboardInteractions.closeKeyboard
-import com.schibsted.spain.barista.rule.cleardata.ClearPreferencesRule
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ApplicationComponent
+import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
+import dagger.hilt.android.testing.UninstallModules
 import io.mockk.coEvery
-import org.junit.After
+import io.mockk.mockk
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import javax.inject.Inject
 
+@HiltAndroidTest
+@UninstallModules(DatabaseModule::class, KitsuModule::class)
 @RunWith(AndroidJUnit4::class)
 class SyncingTests {
     @get:Rule
-    val activity = ActivityTestRule(Activity::class.java, false, false)
-
-    @get:Rule
-    val clearPreferencesRule = ClearPreferencesRule()
-
-    @Inject
-    lateinit var auth: AuthApi
-
-    @Inject
-    lateinit var user: UserApi
-
-    @Inject
-    lateinit var library: LibraryApi
+    val hilt = HiltAndroidRule(this)
 
     @Inject
     lateinit var authProvider: AuthProvider
 
+    val fakeLibrary = mockk<LibraryApi>()
+
     @Before
     fun setUp() {
-        injector.inject(this)
-
-        authProvider.accessToken = ""
-
-        coEvery {
-            auth.login("Username", "Password")
-        } coAnswers {
-            Resource.Success(Any())
-        }
-        coEvery {
-            user.getUserDetails()
-        } coAnswers {
-            Resource.Success(createUserModel())
-        }
-
-        Intents.init()
+        hilt.inject()
+        authProvider.logout()
     }
-
-    @After
-    fun tearDown() = Intents.release()
 
     @Test
     fun successFinishesLoginFlow() {
         coEvery {
-            library.retrieveAnime(any())
+            fakeLibrary.retrieveAnime(any())
         } coAnswers {
             Resource.Success(listOf(createSeriesModel()))
         }
         coEvery {
-            library.retrieveManga(any())
+            fakeLibrary.retrieveManga(any())
         } coAnswers {
             Resource.Success(listOf(createSeriesModel()))
         }
 
-        activity.launchActivity(null)
+        launchActivity()
         navigateToSyncing()
 
-        intended(hasComponent(Activity::class.java.name))
+        // Nothing to verify, if it passes it was successful
     }
 
     private fun navigateToSyncing() {
@@ -96,5 +77,36 @@ class SyncingTests {
         closeKeyboard()
         clickOn(R.id.loginButton)
     }
+
+    @Module
+    @InstallIn(ApplicationComponent::class)
+    inner class FakeKitsuModule {
+        @Provides
+        fun providesAuth() = mockk<AuthApi> {
+            coEvery {
+                login("Username", "Password")
+            } coAnswers {
+                Resource.Success(Any())
+            }
+        }
+
+        @Provides
+        fun providesLibrary() = fakeLibrary
+
+        @Provides
+        fun providesSearch() = mockk<SearchApi>()
+
+        @Provides
+        fun providesTrending() = mockk<TrendingApi>()
+
+        @Provides
+        fun providesUser() = mockk<UserApi> {
+            coEvery {
+                getUserDetails()
+            } coAnswers {
+                Resource.Success(createUserModel())
+            }
+        }
+    }
 }
-*/
+
