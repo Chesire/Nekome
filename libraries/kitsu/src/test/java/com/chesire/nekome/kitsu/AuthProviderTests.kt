@@ -1,6 +1,7 @@
 package com.chesire.nekome.kitsu
 
 import android.content.SharedPreferences
+import com.chesire.nekome.encryption.Cryption
 import io.mockk.CapturingSlot
 import io.mockk.Runs
 import io.mockk.every
@@ -21,7 +22,7 @@ class AuthProviderTests {
             every { getString(KITSU_ACCESS_TOKEN_KEY, "") } returns "token"
         }
         val mockCryption = mockk<Cryption> {
-            every { decrypt("token") } returns expected
+            every { decrypt("token", any()) } returns expected
         }
 
         val classUnderTest = AuthProvider(mockPreferences, mockCryption)
@@ -36,7 +37,7 @@ class AuthProviderTests {
             every { getString(KITSU_ACCESS_TOKEN_KEY, "") } returns ""
         }
         val mockCryption = mockk<Cryption> {
-            every { decrypt("") } returns expected
+            every { decrypt("", any()) } returns expected
         }
 
         val classUnderTest = AuthProvider(mockPreferences, mockCryption)
@@ -56,7 +57,7 @@ class AuthProviderTests {
             every { edit() } returns mockEditor
         }
         val mockCryption = mockk<Cryption> {
-            every { encrypt("newToken") } returns expected
+            every { encrypt("newToken", any()) } returns expected
         }
 
         val classUnderTest = AuthProvider(mockPreferences, mockCryption)
@@ -73,7 +74,7 @@ class AuthProviderTests {
             every { getString(KITSU_REFRESH_TOKEN_KEY, "") } returns "token"
         }
         val mockCryption = mockk<Cryption> {
-            every { decrypt("token") } returns expected
+            every { decrypt("token", any()) } returns expected
         }
 
         val classUnderTest = AuthProvider(mockPreferences, mockCryption)
@@ -88,7 +89,7 @@ class AuthProviderTests {
             every { getString(KITSU_REFRESH_TOKEN_KEY, "") } returns ""
         }
         val mockCryption = mockk<Cryption> {
-            every { decrypt("") } returns expected
+            every { decrypt("", any()) } returns expected
         }
 
         val classUnderTest = AuthProvider(mockPreferences, mockCryption)
@@ -108,7 +109,7 @@ class AuthProviderTests {
             every { edit() } returns mockEditor
         }
         val mockCryption = mockk<Cryption> {
-            every { encrypt("newToken") } returns expected
+            every { encrypt("newToken", any()) } returns expected
         }
 
         val classUnderTest = AuthProvider(mockPreferences, mockCryption)
