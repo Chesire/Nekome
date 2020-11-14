@@ -12,6 +12,7 @@ detekt {
         "libraries/account/src/",
         "libraries/core/src/",
         "libraries/database/src/",
+        "libraries/encryption/src/",
         "libraries/kitsu/src/",
         "libraries/library/src/",
         "libraries/server/src/",
