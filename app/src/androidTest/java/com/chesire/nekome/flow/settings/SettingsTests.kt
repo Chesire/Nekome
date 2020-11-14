@@ -1,5 +1,5 @@
 package com.chesire.nekome.flow.settings
-
+/*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.rule.ActivityTestRule
 import com.chesire.nekome.Activity
@@ -71,3 +71,4 @@ class SettingsTests {
     // If the version string is no longer displayed, we are not settings
     private fun verifyNotOnSettings() = assertNotContains(R.string.version)
 }
+*/

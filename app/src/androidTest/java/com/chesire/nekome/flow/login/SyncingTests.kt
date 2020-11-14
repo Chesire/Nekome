@@ -1,5 +1,5 @@
 package com.chesire.nekome.flow.login
-
+/*
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.Intents.intended
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
@@ -97,3 +97,4 @@ class SyncingTests {
         clickOn(R.id.loginButton)
     }
 }
+*/

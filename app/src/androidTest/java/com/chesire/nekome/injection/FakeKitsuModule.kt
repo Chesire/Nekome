@@ -1,5 +1,5 @@
-package com.chesire.nekome.injection.modules
-
+package com.chesire.nekome.injection
+/*
 import com.chesire.nekome.harness.FakeAuthApi
 import com.chesire.nekome.harness.FakeLibraryApi
 import com.chesire.nekome.harness.FakeSearchApi
@@ -12,9 +12,12 @@ import com.chesire.nekome.server.api.TrendingApi
 import com.chesire.nekome.server.api.UserApi
 import dagger.Binds
 import dagger.Module
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ApplicationComponent
 
 @Suppress("unused")
 @Module
+@InstallIn(ApplicationComponent::class)
 abstract class FakeKitsuModule {
     @Binds
     abstract fun providesFakeAuthApi(fakeAuthApi: FakeAuthApi): AuthApi
@@ -31,3 +34,4 @@ abstract class FakeKitsuModule {
     @Binds
     abstract fun providesFakeUserApi(fakeUserApi: FakeUserApi): UserApi
 }
+*/

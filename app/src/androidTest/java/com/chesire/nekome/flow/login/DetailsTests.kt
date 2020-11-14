@@ -1,5 +1,5 @@
 package com.chesire.nekome.flow.login
-
+/*
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
@@ -158,3 +158,4 @@ class DetailsTests {
         verify { urlHandler.launch(any(), expectedUrl) }
     }
 }
+*/

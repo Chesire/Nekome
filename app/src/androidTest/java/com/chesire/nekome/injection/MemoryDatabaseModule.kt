@@ -1,13 +1,16 @@
-package com.chesire.nekome.injection.modules
-
+package com.chesire.nekome.injection
+/*
 import android.content.Context
 import com.chesire.nekome.database.RoomDB
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ApplicationComponent
 import javax.inject.Singleton
 
 @Suppress("unused")
 @Module
+@InstallIn(ApplicationComponent::class)
 object MemoryDatabaseModule {
     @Provides
     @Singleton
@@ -21,3 +24,4 @@ object MemoryDatabaseModule {
     @Singleton
     fun provideUser(db: RoomDB) = db.user()
 }
+*/
