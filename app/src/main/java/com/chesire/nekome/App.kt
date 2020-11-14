@@ -23,10 +23,10 @@ class App : Application(), Configuration.Provider {
     lateinit var settings: ApplicationSettings
 
     @Inject
-    lateinit var workerQueue: WorkerQueue
+    lateinit var workerFactory: HiltWorkerFactory
 
     @Inject
-    lateinit var workerFactory: HiltWorkerFactory
+    lateinit var workerQueue: WorkerQueue
 
     override fun onCreate() {
         super.onCreate()
