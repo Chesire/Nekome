@@ -1,9 +1,9 @@
 package com.chesire.nekome.flow
 
-import androidx.test.core.app.ActivityScenario
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.chesire.nekome.Activity
 import com.chesire.nekome.R
+import com.chesire.nekome.helpers.launchActivity
+import com.chesire.nekome.helpers.login
 import com.chesire.nekome.injection.DatabaseModule
 import com.chesire.nekome.kitsu.AuthProvider
 import com.schibsted.spain.barista.assertion.BaristaVisibilityAssertions.assertDisplayed
@@ -32,18 +32,18 @@ class ActivityTests {
     @Before
     fun setUp() {
         hilt.inject()
-        authProvider.accessToken = "DummyToken"
+        authProvider.login()
     }
 
     @Test
     fun overviewStartsInAnimeView() {
-        launch()
+        launchActivity()
         assertDisplayed(R.string.nav_anime)
     }
 
     @Test
     fun overviewCanNavigateToAnimeView() {
-        launch()
+        launchActivity()
         assertDisplayed(R.string.nav_anime)
         openDrawer()
         clickOn(R.string.nav_manga)
@@ -55,7 +55,7 @@ class ActivityTests {
 
     @Test
     fun overviewCanNavigateToMangaView() {
-        launch()
+        launchActivity()
         openDrawer()
         clickOn(R.string.nav_manga)
         assertDisplayed(R.string.nav_manga)
@@ -63,7 +63,7 @@ class ActivityTests {
 
     @Test
     fun overviewCanNavigateToSettingsView() {
-        launch()
+        launchActivity()
         openDrawer()
         clickOn(R.string.nav_settings)
         assertDisplayed(R.string.settings_version)
@@ -71,7 +71,7 @@ class ActivityTests {
 
     @Test
     fun acceptingLogoutExits() {
-        launch()
+        launchActivity()
         openDrawer()
 
         clickOn(R.string.menu_logout)
@@ -82,7 +82,7 @@ class ActivityTests {
 
     @Test
     fun decliningLogoutRemains() {
-        launch()
+        launchActivity()
         openDrawer()
 
         clickOn(R.string.menu_logout)
@@ -90,6 +90,4 @@ class ActivityTests {
 
         assertNotExist(R.id.detailsLayout)
     }
-
-    private fun launch() = ActivityScenario.launch(Activity::class.java)
 }
