@@ -1,4 +1,6 @@
 # Nekome
+
+![Master](https://github.com/Chesire/Nekome/workflows/Master/badge.svg)
 [![Build Status](https://app.bitrise.io/app/9d4a9399b9f5d683/status.svg?token=9KwlEAgGeH0XqZ_LuwDJuA&branch=master)](https://app.bitrise.io/app/9d4a9399b9f5d683)
 [![codecov](https://codecov.io/gh/Chesire/Nekome/branch/master/graph/badge.svg)](https://codecov.io/gh/Chesire/Nekome)
 
@@ -11,12 +13,14 @@ Nekome is an Android application that helps with tracking your anime and manga w
 ![List](screenshots/list.png) ![detail](screenshots/detail.png)
 
 ## Features
+
 * Track Anime and Manga series progress
 * Quickly update progress on series
 * Search for new series to follow
 * Light and Dark themes
 
 ## Tech Stack
+
 * Support for Android 21+
 * Fully Kotlin
 * Uses [Kitsu](https://kitsu.io/) to store information, all accessed through [their API](https://kitsu.docs.apiary.io/)
@@ -29,6 +33,7 @@ Nekome is an Android application that helps with tracking your anime and manga w
 * [Detekt](https://github.com/arturbosch/detekt) & [ktlint](https://github.com/pinterest/ktlint) are used for static analysis
 
 ## Contribution
+
 For contributing to the project, please feel free to [create an issue](https://github.com/Chesire/Nekome/issues/new) or submit a pull request.
 
 ## License
