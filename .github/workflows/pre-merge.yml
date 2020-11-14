@@ -1,4 +1,4 @@
-name: Pre Merge
+name: Pre-Merge
 
 on:
   pull_request_target:
