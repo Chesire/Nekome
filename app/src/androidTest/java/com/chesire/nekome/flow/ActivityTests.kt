@@ -4,14 +4,15 @@ import androidx.test.core.app.ActivityScenario
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.chesire.nekome.Activity
 import com.chesire.nekome.R
+import com.chesire.nekome.injection.DatabaseModule
 import com.chesire.nekome.kitsu.AuthProvider
 import com.schibsted.spain.barista.assertion.BaristaVisibilityAssertions.assertDisplayed
 import com.schibsted.spain.barista.assertion.BaristaVisibilityAssertions.assertNotExist
 import com.schibsted.spain.barista.interaction.BaristaClickInteractions.clickOn
 import com.schibsted.spain.barista.interaction.BaristaDrawerInteractions.openDrawer
-import com.schibsted.spain.barista.rule.cleardata.ClearPreferencesRule
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
+import dagger.hilt.android.testing.UninstallModules
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -19,13 +20,11 @@ import org.junit.runner.RunWith
 import javax.inject.Inject
 
 @HiltAndroidTest
+@UninstallModules(DatabaseModule::class)
 @RunWith(AndroidJUnit4::class)
 class ActivityTests {
-    @get:Rule(order = 0)
+    @get:Rule
     val hilt = HiltAndroidRule(this)
-
-    @get:Rule(order = 1)
-    val clearPreferencesRule = ClearPreferencesRule()
 
     @Inject
     lateinit var authProvider: AuthProvider
