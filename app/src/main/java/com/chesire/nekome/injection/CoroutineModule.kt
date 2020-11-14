@@ -1,4 +1,4 @@
-package com.chesire.nekome.injection.modules
+package com.chesire.nekome.injection
 
 import com.chesire.nekome.core.IOContext
 import dagger.Module

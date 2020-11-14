@@ -1,4 +1,4 @@
-package com.chesire.nekome.injection.modules
+package com.chesire.nekome.injection
 
 import com.chesire.nekome.binders.UserProviderBinder
 import com.chesire.nekome.database.dao.SeriesDao

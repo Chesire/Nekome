@@ -1,4 +1,4 @@
-package com.chesire.nekome.injection.modules
+package com.chesire.nekome.injection
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -29,5 +29,6 @@ object AppModule {
      * Provides the [SeriesPreferences] wrapper around [SharedPreferences].
      */
     @Provides
-    fun provideSharedPref(sharedPreferences: SharedPreferences) = SeriesPreferences(sharedPreferences)
+    fun provideSharedPref(sharedPreferences: SharedPreferences) =
+        SeriesPreferences(sharedPreferences)
 }

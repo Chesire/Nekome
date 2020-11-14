@@ -1,4 +1,4 @@
-package com.chesire.nekome.injection.modules
+package com.chesire.nekome.injection
 
 import android.content.Context
 import com.chesire.nekome.database.RoomDB
