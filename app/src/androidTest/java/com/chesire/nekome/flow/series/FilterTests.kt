@@ -1,14 +1,13 @@
 package com.chesire.nekome.flow.series
-/*
+
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isChecked
 import androidx.test.espresso.matcher.ViewMatchers.isNotChecked
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import androidx.test.rule.ActivityTestRule
-import com.chesire.nekome.Activity
 import com.chesire.nekome.R
-import com.chesire.nekome.helpers.injector
+import com.chesire.nekome.helpers.launchActivity
 import com.chesire.nekome.helpers.login
+import com.chesire.nekome.injection.DatabaseModule
 import com.chesire.nekome.kitsu.AuthProvider
 import com.schibsted.spain.barista.assertion.BaristaEnabledAssertions.assertDisabled
 import com.schibsted.spain.barista.assertion.BaristaEnabledAssertions.assertEnabled
@@ -18,12 +17,17 @@ import com.schibsted.spain.barista.interaction.BaristaClickInteractions.clickOn
 import com.schibsted.spain.barista.interaction.BaristaListInteractions.clickListItem
 import com.schibsted.spain.barista.interaction.BaristaMenuClickInteractions.clickMenu
 import com.schibsted.spain.barista.rule.cleardata.ClearPreferencesRule
+import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
+import dagger.hilt.android.testing.UninstallModules
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import javax.inject.Inject
 
+@HiltAndroidTest
+@UninstallModules(DatabaseModule::class)
 @RunWith(AndroidJUnit4::class)
 class FilterTests {
     /*
@@ -35,7 +39,8 @@ class FilterTests {
     These tests are not exactly robust, since they assume initial state and rely on knowing the ids
     from the MaterialDialogs library, but they should do for now.
      */
-    val activity = ActivityTestRule(Activity::class.java, false, false)
+    @get:Rule
+    val hilt = HiltAndroidRule(this)
 
     @get:Rule
     val clearPreferencesRule = ClearPreferencesRule()
@@ -45,13 +50,13 @@ class FilterTests {
 
     @Before
     fun setUp() {
-        injector.inject(this)
+        hilt.inject()
         authProvider.login()
     }
 
     @Test
     fun filterDialogDisplaysWithAllOptions() {
-        activity.launchActivity(null)
+        launchActivity()
         clickMenu(R.id.menuFilter)
 
         assertDisplayedAtPosition(R.id.md_recyclerview_content, 0, R.string.filter_by_current)
@@ -63,7 +68,7 @@ class FilterTests {
 
     @Test
     fun filterDialogHasCorrectDefaultChoices() {
-        activity.launchActivity(null)
+        launchActivity()
         clickMenu(R.id.menuFilter)
 
         assertPositionState(0, true)
@@ -75,7 +80,7 @@ class FilterTests {
 
     @Test
     fun filterDialogRetainsLastChoices() {
-        activity.launchActivity(null)
+        launchActivity()
         clickMenu(R.id.menuFilter)
 
         clickListItem(R.id.md_recyclerview_content, 2)
@@ -92,7 +97,7 @@ class FilterTests {
 
     @Test
     fun filterDialogCancelsOnCancelHit() {
-        activity.launchActivity(null)
+        launchActivity()
         clickMenu(R.id.menuFilter)
 
         clickListItem(R.id.md_recyclerview_content, 2)
@@ -109,7 +114,7 @@ class FilterTests {
 
     @Test
     fun filterDialogConfirmDisabledIfNoFilter() {
-        activity.launchActivity(null)
+        launchActivity()
         clickMenu(R.id.menuFilter)
 
         assertEnabled(R.id.md_button_positive)
@@ -127,4 +132,3 @@ class FilterTests {
         )
     }
 }
-*/
