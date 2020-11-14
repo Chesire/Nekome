@@ -1,8 +1,6 @@
 package com.chesire.nekome.app.profile
 
-import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
@@ -16,7 +14,6 @@ import com.chesire.nekome.library.SeriesRepository
  * ViewModel to provide profile information to [ProfileFragment].
  */
 class ProfileViewModel @ViewModelInject constructor(
-    @Assisted private val savedStateHandle: SavedStateHandle,
     seriesRepository: SeriesRepository,
     userRepository: UserRepository
 ) : ViewModel() {

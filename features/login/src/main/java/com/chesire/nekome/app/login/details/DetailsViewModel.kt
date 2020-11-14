@@ -1,9 +1,7 @@
 package com.chesire.nekome.app.login.details
 
-import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chesire.nekome.account.UserRepository
@@ -17,7 +15,6 @@ import timber.log.Timber
  * ViewModel to aid with logging a user in via the [DetailsFragment].
  */
 class DetailsViewModel @ViewModelInject constructor(
-    @Assisted private val savedStateHandle: SavedStateHandle,
     private val auth: AuthApi,
     private val user: UserRepository
 ) : ViewModel() {

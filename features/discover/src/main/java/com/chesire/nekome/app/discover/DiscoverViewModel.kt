@@ -1,10 +1,8 @@
 package com.chesire.nekome.app.discover
 
-import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chesire.nekome.core.extensions.postError
@@ -19,7 +17,6 @@ import kotlinx.coroutines.launch
  * ViewModel to aid with performing series discovery.
  */
 class DiscoverViewModel @ViewModelInject constructor(
-    @Assisted private val savedStateHandle: SavedStateHandle,
     private val trending: TrendingApi
 ) : ViewModel() {
 
