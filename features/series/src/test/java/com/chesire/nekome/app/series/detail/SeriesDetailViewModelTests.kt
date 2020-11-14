@@ -2,6 +2,7 @@ package com.chesire.nekome.app.series.detail
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
+import androidx.lifecycle.SavedStateHandle
 import com.chesire.nekome.core.AuthCaster
 import com.chesire.nekome.core.flags.AsyncState
 import com.chesire.nekome.library.SeriesRepository
@@ -23,6 +24,7 @@ import org.junit.Test
 class SeriesDetailViewModelTests {
     @get:Rule
     val rule = InstantTaskExecutorRule()
+
     @get:Rule
     val coroutineRule = CoroutinesMainDispatcherRule()
 
@@ -33,11 +35,11 @@ class SeriesDetailViewModelTests {
         val mockAuth = mockk<AuthCaster>()
 
         val classUnderTest = SeriesDetailViewModel(
+            SavedStateHandle(mapOf(MODEL_ID to expected)),
             mockRepository,
             mockAuth,
             coroutineRule.testDispatcher
         )
-        classUnderTest.setModel(expected)
 
         assertEquals(expected.title, classUnderTest.mutableModel.seriesName)
     }
@@ -56,11 +58,11 @@ class SeriesDetailViewModelTests {
         }
 
         val classUnderTest = SeriesDetailViewModel(
+            SavedStateHandle(mapOf(MODEL_ID to createSeriesModel())),
             mockRepository,
             mockAuth,
             coroutineRule.testDispatcher
         )
-        classUnderTest.setModel(createSeriesModel())
         classUnderTest.sendUpdate(classUnderTest.mutableModel)
 
         verify { mockAuth.issueRefreshingToken() }
@@ -84,12 +86,12 @@ class SeriesDetailViewModelTests {
         }
 
         val classUnderTest = SeriesDetailViewModel(
+            SavedStateHandle(mapOf(MODEL_ID to createSeriesModel())),
             mockRepository,
             mockAuth,
             coroutineRule.testDispatcher
         )
         classUnderTest.updatingStatus.observeForever(mockObserver)
-        classUnderTest.setModel(createSeriesModel())
         classUnderTest.sendUpdate(classUnderTest.mutableModel)
 
         assertTrue(slot.captured is AsyncState.Error)
@@ -113,12 +115,12 @@ class SeriesDetailViewModelTests {
         }
 
         val classUnderTest = SeriesDetailViewModel(
+            SavedStateHandle(mapOf(MODEL_ID to createSeriesModel())),
             mockRepository,
             mockAuth,
             coroutineRule.testDispatcher
         )
         classUnderTest.updatingStatus.observeForever(mockObserver)
-        classUnderTest.setModel(createSeriesModel())
         classUnderTest.sendUpdate(classUnderTest.mutableModel)
 
         assertTrue(slot.captured is AsyncState.Success)

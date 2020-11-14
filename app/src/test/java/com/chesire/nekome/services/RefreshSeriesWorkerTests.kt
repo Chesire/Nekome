@@ -30,15 +30,13 @@ class RefreshSeriesWorkerTests {
         val mockUserRepo = mockk<UserRepository> {
             coEvery { retrieveUserId() } coAnswers { null }
         }
+        val testObject = RefreshSeriesWorker(mockContext, mockParams, mockSeriesRepo, mockUserRepo)
 
-        RefreshSeriesWorker(mockContext, mockParams).run {
-            seriesRepo = mockSeriesRepo
-            userRepo = mockUserRepo
+        val result = testObject.doWork()
 
-            assertEquals(ListenableWorker.Result.success(), doWork())
-            coVerify(exactly = 0) { mockSeriesRepo.refreshAnime() }
-            coVerify(exactly = 0) { mockSeriesRepo.refreshManga() }
-        }
+        assertEquals(ListenableWorker.Result.success(), result)
+        coVerify(exactly = 0) { mockSeriesRepo.refreshAnime() }
+        coVerify(exactly = 0) { mockSeriesRepo.refreshManga() }
     }
 
     @Test
@@ -56,13 +54,11 @@ class RefreshSeriesWorkerTests {
         val mockUserRepo = mockk<UserRepository> {
             coEvery { retrieveUserId() } coAnswers { 1 }
         }
+        val testObject = RefreshSeriesWorker(mockContext, mockParams, mockSeriesRepo, mockUserRepo)
 
-        RefreshSeriesWorker(mockContext, mockParams).run {
-            seriesRepo = mockSeriesRepo
-            userRepo = mockUserRepo
+        val result = testObject.doWork()
 
-            assertEquals(ListenableWorker.Result.success(), doWork())
-        }
+        assertEquals(ListenableWorker.Result.success(), result)
     }
 
     @Test
@@ -80,13 +76,11 @@ class RefreshSeriesWorkerTests {
         val mockUserRepo = mockk<UserRepository> {
             coEvery { retrieveUserId() } coAnswers { 1 }
         }
+        val testObject = RefreshSeriesWorker(mockContext, mockParams, mockSeriesRepo, mockUserRepo)
 
-        RefreshSeriesWorker(mockContext, mockParams).run {
-            seriesRepo = mockSeriesRepo
-            userRepo = mockUserRepo
+        val result = testObject.doWork()
 
-            assertEquals(ListenableWorker.Result.retry(), doWork())
-        }
+        assertEquals(ListenableWorker.Result.retry(), result)
     }
 
     @Test
@@ -104,13 +98,11 @@ class RefreshSeriesWorkerTests {
         val mockUserRepo = mockk<UserRepository> {
             coEvery { retrieveUserId() } coAnswers { 1 }
         }
+        val testObject = RefreshSeriesWorker(mockContext, mockParams, mockSeriesRepo, mockUserRepo)
 
-        RefreshSeriesWorker(mockContext, mockParams).run {
-            seriesRepo = mockSeriesRepo
-            userRepo = mockUserRepo
+        val result = testObject.doWork()
 
-            assertEquals(ListenableWorker.Result.retry(), doWork())
-        }
+        assertEquals(ListenableWorker.Result.retry(), result)
     }
 
     @Test
@@ -128,12 +120,10 @@ class RefreshSeriesWorkerTests {
         val mockUserRepo = mockk<UserRepository> {
             coEvery { retrieveUserId() } coAnswers { 1 }
         }
+        val testObject = RefreshSeriesWorker(mockContext, mockParams, mockSeriesRepo, mockUserRepo)
 
-        RefreshSeriesWorker(mockContext, mockParams).run {
-            seriesRepo = mockSeriesRepo
-            userRepo = mockUserRepo
+        val result = testObject.doWork()
 
-            assertEquals(ListenableWorker.Result.retry(), doWork())
-        }
+        assertEquals(ListenableWorker.Result.retry(), result)
     }
 }

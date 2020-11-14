@@ -25,13 +25,12 @@ class RefreshUserWorkerTests {
         val mockUserRepo = mockk<UserRepository> {
             coEvery { retrieveUserId() } coAnswers { null }
         }
+        val testObject = RefreshUserWorker(mockContext, mockParams, mockUserRepo)
 
-        RefreshUserWorker(mockContext, mockParams).run {
-            userRepo = mockUserRepo
+        val result = testObject.doWork()
 
-            assertEquals(ListenableWorker.Result.success(), doWork())
-            coVerify(exactly = 0) { userRepo.refreshUser() }
-        }
+        assertEquals(ListenableWorker.Result.success(), result)
+        coVerify(exactly = 0) { mockUserRepo.refreshUser() }
     }
 
     @Test
@@ -46,13 +45,12 @@ class RefreshUserWorkerTests {
             coEvery { retrieveUserId() } coAnswers { 1 }
             coEvery { refreshUser() } coAnswers { Resource.Success(mockk()) }
         }
+        val testObject = RefreshUserWorker(mockContext, mockParams, mockUserRepo)
 
-        RefreshUserWorker(mockContext, mockParams).run {
-            userRepo = mockUserRepo
+        val result = testObject.doWork()
 
-            assertEquals(ListenableWorker.Result.success(), doWork())
-            coVerify(exactly = 1) { userRepo.refreshUser() }
-        }
+        assertEquals(ListenableWorker.Result.success(), result)
+        coVerify(exactly = 1) { mockUserRepo.refreshUser() }
     }
 
     @Test
@@ -67,12 +65,11 @@ class RefreshUserWorkerTests {
             coEvery { retrieveUserId() } coAnswers { 1 }
             coEvery { refreshUser() } coAnswers { Resource.Error("") }
         }
+        val testObject = RefreshUserWorker(mockContext, mockParams, mockUserRepo)
 
-        RefreshUserWorker(mockContext, mockParams).run {
-            userRepo = mockUserRepo
+        val result = testObject.doWork()
 
-            assertEquals(ListenableWorker.Result.retry(), doWork())
-            coVerify(exactly = 1) { userRepo.refreshUser() }
-        }
+        assertEquals(ListenableWorker.Result.retry(), result)
+        coVerify(exactly = 1) { mockUserRepo.refreshUser() }
     }
 }
