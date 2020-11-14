@@ -16,7 +16,6 @@ import com.chesire.nekome.harness.FakeSearchApi
 import com.chesire.nekome.harness.FakeTrendingApi
 import com.chesire.nekome.harness.FakeUrlHandler
 import com.chesire.nekome.harness.FakeUserApi
-import com.chesire.nekome.injection.androidmodules.ViewModelModule
 import com.chesire.nekome.injection.modules.AccountModule
 import com.chesire.nekome.injection.modules.AppModule
 import com.chesire.nekome.injection.modules.CoroutineModule

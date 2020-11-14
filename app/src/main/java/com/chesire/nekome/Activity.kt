@@ -23,7 +23,6 @@ import com.chesire.nekome.core.AuthCaster
 import com.chesire.nekome.core.flags.HomeScreenOptions
 import com.chesire.nekome.core.nav.Flow
 import com.chesire.nekome.core.settings.ApplicationSettings
-import com.chesire.nekome.core.viewmodel.ViewModelFactory
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -45,9 +44,7 @@ class Activity : AppCompatActivity(), AuthCaster.AuthCasterListener, Flow {
     @Inject
     lateinit var settings: ApplicationSettings
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelFactory
-    private val viewModel by viewModels<ActivityViewModel> { viewModelFactory }
+    private val viewModel by viewModels<ActivityViewModel>()
 
     private lateinit var appBarConfiguration: AppBarConfiguration
 

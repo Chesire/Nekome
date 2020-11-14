@@ -11,9 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.chesire.lifecyklelog.LogLifecykle
 import com.chesire.nekome.app.discover.trending.TrendingAdapter
 import com.chesire.nekome.core.flags.AsyncState
-import com.chesire.nekome.core.viewmodel.ViewModelFactory
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 /**
  * Fragment to aid with Series discovery.
@@ -21,9 +19,8 @@ import javax.inject.Inject
 @LogLifecykle
 @AndroidEntryPoint
 class DiscoverFragment : Fragment() {
-    @Inject
-    lateinit var viewModelFactory: ViewModelFactory
-    private val viewModel by viewModels<DiscoverViewModel> { viewModelFactory }
+
+    private val viewModel by viewModels<DiscoverViewModel>()
     private val animeTrendingAdapter = TrendingAdapter()
     private val mangaTrendingAdapter = TrendingAdapter()
 

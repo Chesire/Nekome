@@ -1,6 +1,9 @@
 package com.chesire.nekome.app.search
 
+import androidx.hilt.Assisted
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chesire.nekome.core.AuthCaster
@@ -14,12 +17,12 @@ import com.chesire.nekome.server.Resource
 import com.chesire.nekome.server.api.SearchApi
 import com.hadilq.liveevent.LiveEvent
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 /**
  * ViewModel to aid with searching for new series for a user to follow.
  */
-class SearchViewModel @Inject constructor(
+class SearchViewModel @ViewModelInject constructor(
+    @Assisted private val savedStateHandle: SavedStateHandle,
     private val searchApi: SearchApi,
     private val authCaster: AuthCaster
 ) : ViewModel() {

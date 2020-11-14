@@ -24,7 +24,6 @@ import com.chesire.nekome.app.series.list.view.SwipeToDelete
 import com.chesire.nekome.core.flags.AsyncState
 import com.chesire.nekome.core.flags.SeriesType
 import com.chesire.nekome.core.models.SeriesModel
-import com.chesire.nekome.core.viewmodel.ViewModelFactory
 import com.chesire.nekome.server.Resource
 import com.google.android.material.snackbar.Snackbar
 import timber.log.Timber
@@ -40,9 +39,6 @@ abstract class SeriesListFragment :
     SeriesInteractionListener {
 
     @Inject
-    lateinit var viewModelFactory: ViewModelFactory
-
-    @Inject
     lateinit var seriesPreferences: SeriesPreferences
 
     /**
@@ -52,7 +48,7 @@ abstract class SeriesListFragment :
 
     private var _binding: FragmentSeriesListBinding? = null
     private val binding get() = requireNotNull(_binding) { "Binding not set" }
-    private val viewModel by viewModels<SeriesListViewModel> { viewModelFactory }
+    private val viewModel by viewModels<SeriesListViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

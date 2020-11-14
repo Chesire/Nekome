@@ -1,6 +1,9 @@
 package com.chesire.nekome.app.series.detail
 
+import androidx.hilt.Assisted
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chesire.nekome.core.AuthCaster
@@ -14,13 +17,13 @@ import com.chesire.nekome.library.SeriesRepository
 import com.chesire.nekome.server.Resource
 import com.hadilq.liveevent.LiveEvent
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
 /**
  * ViewModel to store the current series detail model, and allow interactions with its data.
  */
-class SeriesDetailViewModel @Inject constructor(
+class SeriesDetailViewModel @ViewModelInject constructor(
+    @Assisted private val savedStateHandle: SavedStateHandle,
     private val repo: SeriesRepository,
     private val authCaster: AuthCaster,
     @IOContext private val ioContext: CoroutineContext

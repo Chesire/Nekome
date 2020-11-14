@@ -1,6 +1,9 @@
 package com.chesire.nekome.app.login.syncing
 
+import androidx.hilt.Assisted
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
@@ -12,12 +15,12 @@ import com.chesire.nekome.core.flags.AsyncState
 import com.chesire.nekome.library.SeriesRepository
 import com.chesire.nekome.server.Resource
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 /**
  * ViewModel to aid with pulling down the users series via the [SyncingFragment].
  */
-class SyncingViewModel @Inject constructor(
+class SyncingViewModel @ViewModelInject constructor(
+    @Assisted private val savedStateHandle: SavedStateHandle,
     private val seriesRepo: SeriesRepository,
     userRepo: UserRepository
 ) : ViewModel() {

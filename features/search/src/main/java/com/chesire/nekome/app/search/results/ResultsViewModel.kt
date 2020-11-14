@@ -1,5 +1,8 @@
 package com.chesire.nekome.app.search.results
 
+import androidx.hilt.Assisted
+import androidx.hilt.lifecycle.ViewModelInject
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
@@ -10,12 +13,12 @@ import com.chesire.nekome.core.settings.ApplicationSettings
 import com.chesire.nekome.library.SeriesRepository
 import com.chesire.nekome.server.Resource
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 /**
  * ViewModel to aid with adding new series to track that are found through search.
  */
-class ResultsViewModel @Inject constructor(
+class ResultsViewModel @ViewModelInject constructor(
+    @Assisted private val savedStateHandle: SavedStateHandle,
     private val seriesRepo: SeriesRepository,
     private val authCaster: AuthCaster,
     private val settings: ApplicationSettings

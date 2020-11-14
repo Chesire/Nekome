@@ -9,9 +9,7 @@ import coil.transform.CircleCropTransformation
 import com.chesire.lifecyklelog.LogLifecykle
 import com.chesire.nekome.app.profile.databinding.FragmentProfileBinding
 import com.chesire.nekome.core.models.UserModel
-import com.chesire.nekome.core.viewmodel.ViewModelFactory
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 /**
  * Fragment to display to the user information about their profile.
@@ -19,9 +17,8 @@ import javax.inject.Inject
 @LogLifecykle
 @AndroidEntryPoint
 class ProfileFragment : Fragment(R.layout.fragment_profile) {
-    @Inject
-    lateinit var viewModelFactory: ViewModelFactory
-    private val viewModel by viewModels<ProfileViewModel> { viewModelFactory }
+
+    private val viewModel by viewModels<ProfileViewModel>()
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = requireNotNull(_binding) { "Binding not set" }
 

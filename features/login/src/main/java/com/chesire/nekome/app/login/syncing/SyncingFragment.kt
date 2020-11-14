@@ -11,9 +11,7 @@ import com.chesire.lifecyklelog.LogLifecykle
 import com.chesire.nekome.app.login.R
 import com.chesire.nekome.app.login.databinding.FragmentSyncingBinding
 import com.chesire.nekome.core.nav.Flow
-import com.chesire.nekome.core.viewmodel.ViewModelFactory
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 /**
  * Fragment to show a user that their series are currently being synced down.
@@ -21,9 +19,8 @@ import javax.inject.Inject
 @LogLifecykle
 @AndroidEntryPoint
 class SyncingFragment : Fragment(R.layout.fragment_syncing) {
-    @Inject
-    lateinit var viewModelFactory: ViewModelFactory
-    private val viewModel by viewModels<SyncingViewModel> { viewModelFactory }
+
+    private val viewModel by viewModels<SyncingViewModel>()
     private var _binding: FragmentSyncingBinding? = null
     private val binding get() = requireNotNull(_binding) { "Binding not set" }
     private lateinit var flow: Flow

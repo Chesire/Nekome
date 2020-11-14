@@ -16,7 +16,6 @@ import com.chesire.nekome.core.extensions.hideSystemKeyboard
 import com.chesire.nekome.core.extensions.setLinkedText
 import com.chesire.nekome.core.extensions.show
 import com.chesire.nekome.core.url.UrlHandler
-import com.chesire.nekome.core.viewmodel.ViewModelFactory
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
@@ -28,12 +27,11 @@ import javax.inject.Inject
 @LogLifecykle
 @AndroidEntryPoint
 class DetailsFragment : Fragment(R.layout.fragment_details) {
+
     @Inject
     lateinit var urlHandler: UrlHandler
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelFactory
-    private val viewModel by viewModels<DetailsViewModel> { viewModelFactory }
+    private val viewModel by viewModels<DetailsViewModel>()
     private var _binding: FragmentDetailsBinding? = null
     private val binding get() = requireNotNull(_binding) { "Binding not set" }
 

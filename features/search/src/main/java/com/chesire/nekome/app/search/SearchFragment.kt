@@ -13,7 +13,6 @@ import com.chesire.nekome.core.extensions.hideSystemKeyboard
 import com.chesire.nekome.core.extensions.show
 import com.chesire.nekome.core.flags.AsyncState
 import com.chesire.nekome.core.flags.SeriesType
-import com.chesire.nekome.core.viewmodel.ViewModelFactory
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
@@ -25,9 +24,8 @@ import javax.inject.Inject
 @LogLifecykle
 @AndroidEntryPoint
 class SearchFragment : Fragment(R.layout.fragment_search) {
-    @Inject
-    lateinit var viewModelFactory: ViewModelFactory
-    private val viewModel by viewModels<SearchViewModel> { viewModelFactory }
+
+    private val viewModel by viewModels<SearchViewModel>()
 
     @Inject
     lateinit var searchPreferences: SearchPreferences

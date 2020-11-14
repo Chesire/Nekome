@@ -1,6 +1,9 @@
 package com.chesire.nekome.app.series.list
 
+import androidx.hilt.Assisted
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
@@ -14,12 +17,12 @@ import com.chesire.nekome.library.SeriesRepository
 import com.chesire.nekome.server.Resource
 import com.hadilq.liveevent.LiveEvent
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 /**
  * ViewModel to use with the [SeriesListFragment], handles sending updates for a series.
  */
-class SeriesListViewModel @Inject constructor(
+class SeriesListViewModel @ViewModelInject constructor(
+    @Assisted private val savedStateHandle: SavedStateHandle,
     private val repo: SeriesRepository,
     private val authCaster: AuthCaster
 ) : ViewModel() {

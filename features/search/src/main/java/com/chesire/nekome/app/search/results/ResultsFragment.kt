@@ -10,19 +10,16 @@ import com.chesire.lifecyklelog.LogLifecykle
 import com.chesire.nekome.app.search.R
 import com.chesire.nekome.app.search.databinding.FragmentResultsBinding
 import com.chesire.nekome.core.models.SeriesModel
-import com.chesire.nekome.core.viewmodel.ViewModelFactory
 import com.chesire.nekome.server.Resource
 import com.google.android.material.snackbar.Snackbar
-import javax.inject.Inject
 
 /**
  * Displays the results of a search to the user, allowing them to select to track new series.
  */
 @LogLifecykle
 class ResultsFragment : Fragment(R.layout.fragment_results), ResultsListener {
-    @Inject
-    lateinit var viewModelFactory: ViewModelFactory
-    private val viewModel by viewModels<ResultsViewModel> { viewModelFactory }
+
+    private val viewModel by viewModels<ResultsViewModel>()
     private val args by navArgs<ResultsFragmentArgs>()
     private val resultsAdapter = ResultsAdapter(this)
     private var _binding: FragmentResultsBinding? = null
