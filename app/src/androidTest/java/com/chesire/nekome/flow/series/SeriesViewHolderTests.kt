@@ -1,23 +1,35 @@
 package com.chesire.nekome.flow.series
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import androidx.test.rule.ActivityTestRule
-import com.chesire.nekome.Activity
 import com.chesire.nekome.R
 import com.chesire.nekome.core.flags.Subtype
 import com.chesire.nekome.database.dao.SeriesDao
-import com.chesire.nekome.helpers.injector
+import com.chesire.nekome.helpers.launchActivity
 import com.chesire.nekome.helpers.login
+import com.chesire.nekome.injection.DatabaseModule
+import com.chesire.nekome.injection.KitsuModule
 import com.chesire.nekome.kitsu.AuthProvider
 import com.chesire.nekome.server.Resource
+import com.chesire.nekome.server.api.AuthApi
 import com.chesire.nekome.server.api.LibraryApi
+import com.chesire.nekome.server.api.SearchApi
+import com.chesire.nekome.server.api.TrendingApi
+import com.chesire.nekome.server.api.UserApi
 import com.chesire.nekome.testing.createSeriesModel
 import com.schibsted.spain.barista.assertion.BaristaListAssertions.assertDisplayedAtPosition
 import com.schibsted.spain.barista.assertion.BaristaListAssertions.assertListNotEmpty
 import com.schibsted.spain.barista.assertion.BaristaVisibilityAssertions.assertDisplayed
 import com.schibsted.spain.barista.assertion.BaristaVisibilityAssertions.assertNotDisplayed
 import com.schibsted.spain.barista.interaction.BaristaListInteractions.clickListItemChild
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ApplicationComponent
+import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
+import dagger.hilt.android.testing.UninstallModules
 import io.mockk.coEvery
+import io.mockk.mockk
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Ignore
@@ -26,10 +38,12 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import javax.inject.Inject
 
+@HiltAndroidTest
+@UninstallModules(DatabaseModule::class, KitsuModule::class)
 @RunWith(AndroidJUnit4::class)
 class SeriesViewHolderTests {
     @get:Rule
-    val activity = ActivityTestRule(Activity::class.java, false, false)
+    val hilt = HiltAndroidRule(this)
 
     @Inject
     lateinit var authProvider: AuthProvider
@@ -37,12 +51,11 @@ class SeriesViewHolderTests {
     @Inject
     lateinit var seriesDao: SeriesDao
 
-    @Inject
-    lateinit var library: LibraryApi
+    val fakeLibrary = mockk<LibraryApi>()
 
     @Before
     fun setUp() {
-        injector.inject(this)
+        hilt.inject()
         authProvider.login()
     }
 
@@ -65,7 +78,7 @@ class SeriesViewHolderTests {
                 )
             )
         }
-        activity.launchActivity(null)
+        launchActivity()
 
         assertListNotEmpty(R.id.listContent)
         assertDisplayedAtPosition(
@@ -102,7 +115,7 @@ class SeriesViewHolderTests {
         runBlocking {
             seriesDao.insert(createSeriesModel(startDate = "2020-01-31", endDate = ""))
         }
-        activity.launchActivity(null)
+        launchActivity()
 
         assertListNotEmpty(R.id.listContent)
         assertDisplayedAtPosition(
@@ -120,7 +133,7 @@ class SeriesViewHolderTests {
         runBlocking {
             seriesDao.insert(createSeriesModel(startDate = "", endDate = ""))
         }
-        activity.launchActivity(null)
+        launchActivity()
 
         assertListNotEmpty(R.id.listContent)
         assertDisplayedAtPosition(
@@ -138,7 +151,7 @@ class SeriesViewHolderTests {
         runBlocking {
             seriesDao.insert(createSeriesModel(startDate = expectedDate, endDate = expectedDate))
         }
-        activity.launchActivity(null)
+        launchActivity()
 
         assertListNotEmpty(R.id.listContent)
         assertDisplayedAtPosition(
@@ -156,7 +169,7 @@ class SeriesViewHolderTests {
         runBlocking {
             seriesDao.insert(createSeriesModel(progress = 3, totalLength = 0))
         }
-        activity.launchActivity(null)
+        launchActivity()
 
         assertListNotEmpty(R.id.listContent)
         assertDisplayedAtPosition(
@@ -172,7 +185,7 @@ class SeriesViewHolderTests {
         runBlocking {
             seriesDao.insert(createSeriesModel(progress = 3, totalLength = 3))
         }
-        activity.launchActivity(null)
+        launchActivity()
 
         assertListNotEmpty(R.id.listContent)
         assertNotDisplayed(R.id.seriesPlusOne)
@@ -185,11 +198,11 @@ class SeriesViewHolderTests {
             seriesDao.insert(createSeriesModel(progress = 1, totalLength = 3))
         }
         coEvery {
-            library.update(any(), any(), any())
+            fakeLibrary.update(any(), any(), any())
         } coAnswers {
             Resource.Error("")
         }
-        activity.launchActivity(null)
+        launchActivity()
 
         assertNotDisplayed(R.id.seriesProgressBar)
         clickListItemChild(R.id.listContent, 0, R.id.seriesPlusOne)
@@ -211,11 +224,11 @@ class SeriesViewHolderTests {
             seriesDao.insert(createSeriesModel(progress = 1, totalLength = 3))
         }
         coEvery {
-            library.update(any(), any(), any())
+            fakeLibrary.update(any(), any(), any())
         } coAnswers {
             Resource.Success(createSeriesModel(progress = 2, totalLength = 3))
         }
-        activity.launchActivity(null)
+        launchActivity()
 
         assertDisplayedAtPosition(
             R.id.listContent,
@@ -231,5 +244,24 @@ class SeriesViewHolderTests {
             R.id.seriesProgress,
             expectedProgress
         )
+    }
+
+    @Module
+    @InstallIn(ApplicationComponent::class)
+    inner class FakeKitsuModule {
+        @Provides
+        fun providesAuth() = mockk<AuthApi>()
+
+        @Provides
+        fun providesLibrary() = fakeLibrary
+
+        @Provides
+        fun providesSearch() = mockk<SearchApi>()
+
+        @Provides
+        fun providesTrending() = mockk<TrendingApi>()
+
+        @Provides
+        fun providesUser() = mockk<UserApi>()
     }
 }

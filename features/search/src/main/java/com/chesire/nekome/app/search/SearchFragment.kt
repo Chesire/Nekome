@@ -3,6 +3,7 @@ package com.chesire.nekome.app.search
 import android.os.Bundle
 import android.view.View
 import androidx.core.widget.addTextChangedListener
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.chesire.lifecyklelog.LogLifecykle
@@ -12,9 +13,8 @@ import com.chesire.nekome.core.extensions.hideSystemKeyboard
 import com.chesire.nekome.core.extensions.show
 import com.chesire.nekome.core.flags.AsyncState
 import com.chesire.nekome.core.flags.SeriesType
-import com.chesire.nekome.core.viewmodel.ViewModelFactory
 import com.google.android.material.snackbar.Snackbar
-import dagger.android.support.DaggerFragment
+import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -22,10 +22,10 @@ import javax.inject.Inject
  * Allows a user to perform a search to find new series to follow.
  */
 @LogLifecykle
-class SearchFragment : DaggerFragment(R.layout.fragment_search) {
-    @Inject
-    lateinit var viewModelFactory: ViewModelFactory
-    private val viewModel by viewModels<SearchViewModel> { viewModelFactory }
+@AndroidEntryPoint
+class SearchFragment : Fragment(R.layout.fragment_search) {
+
+    private val viewModel by viewModels<SearchViewModel>()
 
     @Inject
     lateinit var searchPreferences: SearchPreferences

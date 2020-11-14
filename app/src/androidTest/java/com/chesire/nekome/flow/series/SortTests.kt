@@ -1,38 +1,44 @@
 package com.chesire.nekome.flow.series
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import androidx.test.rule.ActivityTestRule
-import com.chesire.nekome.Activity
 import com.chesire.nekome.R
-import com.chesire.nekome.helpers.injector
+import com.chesire.nekome.helpers.launchActivity
 import com.chesire.nekome.helpers.login
+import com.chesire.nekome.injection.DatabaseModule
 import com.chesire.nekome.kitsu.AuthProvider
 import com.schibsted.spain.barista.assertion.BaristaListAssertions.assertDisplayedAtPosition
 import com.schibsted.spain.barista.assertion.BaristaVisibilityAssertions.assertDisplayed
 import com.schibsted.spain.barista.assertion.BaristaVisibilityAssertions.assertNotExist
 import com.schibsted.spain.barista.interaction.BaristaClickInteractions.clickOn
 import com.schibsted.spain.barista.interaction.BaristaMenuClickInteractions.clickMenu
+import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
+import dagger.hilt.android.testing.UninstallModules
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import javax.inject.Inject
 
+@HiltAndroidTest
+@UninstallModules(DatabaseModule::class)
 @RunWith(AndroidJUnit4::class)
 class SortTests {
-    val activity = ActivityTestRule(Activity::class.java, false, false)
+    @get:Rule
+    val hilt = HiltAndroidRule(this)
 
     @Inject
     lateinit var authProvider: AuthProvider
 
     @Before
     fun setUp() {
-        injector.inject(this)
+        hilt.inject()
         authProvider.login()
     }
 
     @Test
     fun sortDialogDisplaysWithAllOptions() {
-        activity.launchActivity(null)
+        launchActivity()
         clickMenu(R.id.menuSort)
 
         assertDisplayedAtPosition(R.id.md_recyclerview_content, 0, R.string.sort_by_default)
@@ -43,7 +49,7 @@ class SortTests {
 
     @Test
     fun sortDialogClosesOnOptionSelected() {
-        activity.launchActivity(null)
+        launchActivity()
         clickMenu(R.id.menuSort)
 
         assertDisplayed(R.string.sort_dialog_title)

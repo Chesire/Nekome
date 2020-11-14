@@ -1,48 +1,49 @@
 package com.chesire.nekome.flow
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import androidx.test.rule.ActivityTestRule
-import com.chesire.nekome.Activity
 import com.chesire.nekome.R
-import com.chesire.nekome.helpers.injector
+import com.chesire.nekome.helpers.launchActivity
+import com.chesire.nekome.helpers.login
+import com.chesire.nekome.injection.DatabaseModule
 import com.chesire.nekome.kitsu.AuthProvider
 import com.schibsted.spain.barista.assertion.BaristaVisibilityAssertions.assertDisplayed
 import com.schibsted.spain.barista.assertion.BaristaVisibilityAssertions.assertNotExist
 import com.schibsted.spain.barista.interaction.BaristaClickInteractions.clickOn
 import com.schibsted.spain.barista.interaction.BaristaDrawerInteractions.openDrawer
-import com.schibsted.spain.barista.rule.cleardata.ClearPreferencesRule
+import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
+import dagger.hilt.android.testing.UninstallModules
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import javax.inject.Inject
 
+@HiltAndroidTest
+@UninstallModules(DatabaseModule::class)
 @RunWith(AndroidJUnit4::class)
 class ActivityTests {
     @get:Rule
-    val activity = ActivityTestRule(Activity::class.java, false, false)
-
-    @get:Rule
-    val clearPreferencesRule = ClearPreferencesRule()
+    val hilt = HiltAndroidRule(this)
 
     @Inject
     lateinit var authProvider: AuthProvider
 
     @Before
     fun setUp() {
-        injector.inject(this)
-        authProvider.accessToken = "DummyToken"
+        hilt.inject()
+        authProvider.login()
     }
 
     @Test
     fun overviewStartsInAnimeView() {
-        activity.launchActivity(null)
+        launchActivity()
         assertDisplayed(R.string.nav_anime)
     }
 
     @Test
     fun overviewCanNavigateToAnimeView() {
-        activity.launchActivity(null)
+        launchActivity()
         assertDisplayed(R.string.nav_anime)
         openDrawer()
         clickOn(R.string.nav_manga)
@@ -54,7 +55,7 @@ class ActivityTests {
 
     @Test
     fun overviewCanNavigateToMangaView() {
-        activity.launchActivity(null)
+        launchActivity()
         openDrawer()
         clickOn(R.string.nav_manga)
         assertDisplayed(R.string.nav_manga)
@@ -62,7 +63,7 @@ class ActivityTests {
 
     @Test
     fun overviewCanNavigateToSettingsView() {
-        activity.launchActivity(null)
+        launchActivity()
         openDrawer()
         clickOn(R.string.nav_settings)
         assertDisplayed(R.string.settings_version)
@@ -70,7 +71,7 @@ class ActivityTests {
 
     @Test
     fun acceptingLogoutExits() {
-        activity.launchActivity(null)
+        launchActivity()
         openDrawer()
 
         clickOn(R.string.menu_logout)
@@ -81,7 +82,7 @@ class ActivityTests {
 
     @Test
     fun decliningLogoutRemains() {
-        activity.launchActivity(null)
+        launchActivity()
         openDrawer()
 
         clickOn(R.string.menu_logout)

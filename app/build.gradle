@@ -2,6 +2,7 @@ apply plugin: "com.android.application"
 apply plugin: "kotlin-android"
 apply plugin: "kotlin-android-extensions"
 apply plugin: "kotlin-kapt"
+apply plugin: "dagger.hilt.android.plugin"
 apply plugin: "androidx.navigation.safeargs.kotlin"
 apply from: "${project.rootDir}/ext.gradle"
 
@@ -82,6 +83,8 @@ dependencies {
     implementation "androidx.constraintlayout:constraintlayout:$constraint_layout_version"
     implementation "androidx.core:core-ktx:$corektx_version"
     implementation "androidx.fragment:fragment-ktx:$fragmentctx_version"
+    implementation "androidx.hilt:hilt-lifecycle-viewmodel:$hiltx_version"
+    implementation "androidx.hilt:hilt-work:$hiltx_version"
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
@@ -97,9 +100,7 @@ dependencies {
     implementation "com.chesire.lintrules:lint-xml:$lintrules_version"
     implementation "com.github.hadilq.liveevent:liveevent:$liveevent_version"
     implementation "com.google.android.material:material:$material_version"
-    implementation "com.google.dagger:dagger:$dagger_version"
-    implementation "com.google.dagger:dagger-android:$dagger_version"
-    implementation "com.google.dagger:dagger-android-support:$dagger_version"
+    implementation "com.google.dagger:hilt-android:$hilt_version"
     implementation "com.jakewharton.timber:timber:$timber_version"
     implementation "com.squareup.moshi:moshi:$moshi_version"
     implementation "com.squareup.okhttp3:logging-interceptor:4.9.0"
@@ -121,15 +122,18 @@ dependencies {
     androidTestImplementation "androidx.test.espresso:espresso-intents:3.3.0"
     androidTestImplementation "androidx.test.ext:junit:1.1.2"
     androidTestImplementation "androidx.test:rules:1.3.0"
-    // androidTestImplementation "androidx.work:work-testing:2.0.1"
+    androidTestImplementation "com.google.dagger:hilt-android-testing:$hilt_version"
     androidTestImplementation("com.schibsted.spain:barista:3.7.0") {
         exclude group: "com.android.support"
         exclude group: "org.jetbrains.kotlin"
     }
     androidTestImplementation "io.mockk:mockk-android:1.10.2"
 
-    kapt "com.google.dagger:dagger-android-processor:$dagger_version"
-    kapt "com.google.dagger:dagger-compiler:$dagger_version"
-    kaptAndroidTest "com.google.dagger:dagger-android-processor:$dagger_version"
-    kaptAndroidTest "com.google.dagger:dagger-compiler:$dagger_version"
+    kapt "androidx.hilt:hilt-compiler:$hiltx_version"
+    kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
+    kaptAndroidTest "com.google.dagger:hilt-android-compiler:$hilt_version"
+}
+
+kapt {
+    correctErrorTypes true
 }

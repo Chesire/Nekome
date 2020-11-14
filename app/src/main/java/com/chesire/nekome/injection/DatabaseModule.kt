@@ -1,4 +1,4 @@
-package com.chesire.nekome.injection.modules
+package com.chesire.nekome.injection
 
 import android.content.Context
 import com.chesire.nekome.database.RoomDB
@@ -6,20 +6,23 @@ import com.chesire.nekome.database.dao.SeriesDao
 import com.chesire.nekome.database.dao.UserDao
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ApplicationComponent
+import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Singleton
 
 /**
  * Dagger [Module] for the [com.chesire.nekome.database] package.
  */
-@Suppress("unused")
 @Module
+@InstallIn(ApplicationComponent::class)
 object DatabaseModule {
     /**
      * Provides the build [RoomDB].
      */
     @Provides
     @Singleton
-    fun provideDB(context: Context) = RoomDB.build(context)
+    fun provideDB(@ApplicationContext context: Context) = RoomDB.build(context)
 
     /**
      * Provides the [SeriesDao] table from [RoomDB].

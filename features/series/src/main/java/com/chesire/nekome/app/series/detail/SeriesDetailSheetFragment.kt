@@ -1,6 +1,5 @@
 package com.chesire.nekome.app.series.detail
 
-import android.content.Context
 import android.os.Bundle
 import android.text.InputFilter
 import android.view.LayoutInflater
@@ -12,35 +11,26 @@ import androidx.fragment.app.viewModels
 import com.chesire.lifecyklelog.LogLifecykle
 import com.chesire.nekome.app.series.R
 import com.chesire.nekome.app.series.databinding.FragmentSeriesDetailBinding
-import com.chesire.nekome.core.extensions.extraNotNull
 import com.chesire.nekome.core.extensions.hide
 import com.chesire.nekome.core.extensions.show
 import com.chesire.nekome.core.flags.AsyncState
 import com.chesire.nekome.core.flags.UserSeriesStatus
 import com.chesire.nekome.core.models.SeriesModel
-import com.chesire.nekome.core.viewmodel.ViewModelFactory
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.snackbar.Snackbar
-import dagger.android.support.AndroidSupportInjection
+import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
-import javax.inject.Inject
 
 /**
  * Fragment to display the series detail in a [BottomSheetDialogFragment].
  */
 @LogLifecykle
+@AndroidEntryPoint
 class SeriesDetailSheetFragment : BottomSheetDialogFragment() {
-    @Inject
-    lateinit var viewModelFactory: ViewModelFactory
-    private val viewModel by viewModels<SeriesDetailViewModel> { viewModelFactory }
-    private val seriesModel by extraNotNull<SeriesModel>(MODEL_BUNDLE_ID, null)
+
+    private val viewModel by viewModels<SeriesDetailViewModel>()
     private var _binding: FragmentSeriesDetailBinding? = null
     private val binding get() = requireNotNull(_binding) { "Binding not set" }
-
-    override fun onAttach(context: Context) {
-        AndroidSupportInjection.inject(this)
-        super.onAttach(context)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -50,7 +40,6 @@ class SeriesDetailSheetFragment : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.setModel(seriesModel)
         initializeView()
     }
 
@@ -163,7 +152,6 @@ class SeriesDetailSheetFragment : BottomSheetDialogFragment() {
 
     companion object {
         const val TAG = "SeriesDetailSheetFragment"
-        private const val MODEL_BUNDLE_ID = "SeriesDetailSheetFragment_model"
 
         /**
          * Creates a new instance of the [SeriesDetailSheetFragment], using the [seriesModel] for
@@ -171,7 +159,7 @@ class SeriesDetailSheetFragment : BottomSheetDialogFragment() {
          */
         fun newInstance(seriesModel: SeriesModel): SeriesDetailSheetFragment {
             return SeriesDetailSheetFragment().apply {
-                arguments = bundleOf(MODEL_BUNDLE_ID to seriesModel)
+                arguments = bundleOf(MODEL_ID to seriesModel)
             }
         }
     }

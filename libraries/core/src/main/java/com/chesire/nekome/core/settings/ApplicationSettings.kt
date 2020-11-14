@@ -6,6 +6,7 @@ import androidx.core.content.edit
 import com.chesire.nekome.core.R
 import com.chesire.nekome.core.flags.HomeScreenOptions
 import com.chesire.nekome.core.flags.UserSeriesStatus
+import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
 /**
@@ -14,7 +15,7 @@ import javax.inject.Inject
  */
 @Suppress("UseDataClass")
 class ApplicationSettings @Inject constructor(
-    context: Context,
+    @ApplicationContext context: Context,
     private val preferences: SharedPreferences
 ) {
 

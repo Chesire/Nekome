@@ -1,5 +1,6 @@
 package com.chesire.nekome.app.discover
 
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -11,12 +12,14 @@ import com.chesire.nekome.core.models.SeriesModel
 import com.chesire.nekome.server.Resource
 import com.chesire.nekome.server.api.TrendingApi
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 /**
  * ViewModel to aid with performing series discovery.
  */
-class DiscoverViewModel @Inject constructor(private val trending: TrendingApi) : ViewModel() {
+class DiscoverViewModel @ViewModelInject constructor(
+    private val trending: TrendingApi
+) : ViewModel() {
+
     private val _trendingAnime by lazy {
         val trendingData =
             MutableLiveData<AsyncState<List<SeriesModel>, DiscoverError>>(AsyncState.Loading())

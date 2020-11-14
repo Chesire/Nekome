@@ -3,6 +3,7 @@ package com.chesire.nekome.app.login.syncing
 import android.content.Context
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import coil.load
 import coil.transform.CircleCropTransformation
@@ -10,18 +11,16 @@ import com.chesire.lifecyklelog.LogLifecykle
 import com.chesire.nekome.app.login.R
 import com.chesire.nekome.app.login.databinding.FragmentSyncingBinding
 import com.chesire.nekome.core.nav.Flow
-import com.chesire.nekome.core.viewmodel.ViewModelFactory
-import dagger.android.support.DaggerFragment
-import javax.inject.Inject
+import dagger.hilt.android.AndroidEntryPoint
 
 /**
  * Fragment to show a user that their series are currently being synced down.
  */
 @LogLifecykle
-class SyncingFragment : DaggerFragment(R.layout.fragment_syncing) {
-    @Inject
-    lateinit var viewModelFactory: ViewModelFactory
-    private val viewModel by viewModels<SyncingViewModel> { viewModelFactory }
+@AndroidEntryPoint
+class SyncingFragment : Fragment(R.layout.fragment_syncing) {
+
+    private val viewModel by viewModels<SyncingViewModel>()
     private var _binding: FragmentSyncingBinding? = null
     private val binding get() = requireNotNull(_binding) { "Binding not set" }
     private lateinit var flow: Flow

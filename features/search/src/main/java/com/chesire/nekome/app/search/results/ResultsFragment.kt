@@ -2,6 +2,7 @@ package com.chesire.nekome.app.search.results
 
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -9,20 +10,18 @@ import com.chesire.lifecyklelog.LogLifecykle
 import com.chesire.nekome.app.search.R
 import com.chesire.nekome.app.search.databinding.FragmentResultsBinding
 import com.chesire.nekome.core.models.SeriesModel
-import com.chesire.nekome.core.viewmodel.ViewModelFactory
 import com.chesire.nekome.server.Resource
 import com.google.android.material.snackbar.Snackbar
-import dagger.android.support.DaggerFragment
-import javax.inject.Inject
+import dagger.hilt.android.AndroidEntryPoint
 
 /**
  * Displays the results of a search to the user, allowing them to select to track new series.
  */
 @LogLifecykle
-class ResultsFragment : DaggerFragment(R.layout.fragment_results), ResultsListener {
-    @Inject
-    lateinit var viewModelFactory: ViewModelFactory
-    private val viewModel by viewModels<ResultsViewModel> { viewModelFactory }
+@AndroidEntryPoint
+class ResultsFragment : Fragment(R.layout.fragment_results), ResultsListener {
+
+    private val viewModel by viewModels<ResultsViewModel>()
     private val args by navArgs<ResultsFragmentArgs>()
     private val resultsAdapter = ResultsAdapter(this)
     private var _binding: FragmentResultsBinding? = null

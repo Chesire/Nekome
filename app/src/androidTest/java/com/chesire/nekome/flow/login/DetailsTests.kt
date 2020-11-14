@@ -5,28 +5,40 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import androidx.test.rule.ActivityTestRule
-import com.chesire.nekome.Activity
 import com.chesire.nekome.R
 import com.chesire.nekome.core.url.UrlHandler
 import com.chesire.nekome.helpers.ToastMatcher.Companion.onToast
 import com.chesire.nekome.helpers.clickClickableSpan
 import com.chesire.nekome.helpers.getResource
-import com.chesire.nekome.helpers.injector
+import com.chesire.nekome.helpers.launchActivity
+import com.chesire.nekome.helpers.logout
+import com.chesire.nekome.injection.DatabaseModule
+import com.chesire.nekome.injection.KitsuModule
+import com.chesire.nekome.injection.UrlModule
 import com.chesire.nekome.kitsu.AuthProvider
 import com.chesire.nekome.server.Resource
 import com.chesire.nekome.server.api.AuthApi
 import com.chesire.nekome.server.api.LibraryApi
+import com.chesire.nekome.server.api.SearchApi
+import com.chesire.nekome.server.api.TrendingApi
 import com.chesire.nekome.server.api.UserApi
 import com.schibsted.spain.barista.assertion.BaristaErrorAssertions.assertError
 import com.schibsted.spain.barista.interaction.BaristaClickInteractions.clickOn
 import com.schibsted.spain.barista.interaction.BaristaEditTextInteractions.writeTo
 import com.schibsted.spain.barista.interaction.BaristaKeyboardInteractions.closeKeyboard
-import com.schibsted.spain.barista.rule.cleardata.ClearPreferencesRule
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ApplicationComponent
+import dagger.hilt.android.testing.BindValue
+import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
+import dagger.hilt.android.testing.UninstallModules
 import io.mockk.Runs
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.just
+import io.mockk.mockk
 import io.mockk.verify
 import org.junit.Before
 import org.junit.Rule
@@ -34,50 +46,31 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import javax.inject.Inject
 
+@HiltAndroidTest
+@UninstallModules(DatabaseModule::class, KitsuModule::class, UrlModule::class)
 @RunWith(AndroidJUnit4::class)
 class DetailsTests {
     @get:Rule
-    val activity = ActivityTestRule(Activity::class.java, false, false)
-
-    @get:Rule
-    val clearPreferencesRule = ClearPreferencesRule()
-
-    @Inject
-    lateinit var auth: AuthApi
-
-    @Inject
-    lateinit var user: UserApi
-
-    @Inject
-    lateinit var library: LibraryApi
+    val hilt = HiltAndroidRule(this)
 
     @Inject
     lateinit var authProvider: AuthProvider
 
-    @Inject
-    lateinit var urlHandler: UrlHandler
+    @BindValue
+    @JvmField
+    val urlHandler = mockk<UrlHandler>()
+
+    val fakeAuth = mockk<AuthApi>()
 
     @Before
     fun setUp() {
-        injector.inject(this)
-
-        authProvider.accessToken = ""
-
-        coEvery {
-            library.retrieveAnime(any())
-        } coAnswers {
-            Resource.Error("No need in this test file")
-        }
-        coEvery {
-            library.retrieveManga(any())
-        } coAnswers {
-            Resource.Error("No need in this test file")
-        }
+        hilt.inject()
+        authProvider.logout()
     }
 
     @Test
     fun emptyUsernameShowsError() {
-        activity.launchActivity(null)
+        launchActivity()
 
         writeTo(R.id.usernameText, "")
         writeTo(R.id.passwordText, "Password")
@@ -89,7 +82,7 @@ class DetailsTests {
 
     @Test
     fun emptyPasswordShowsError() {
-        activity.launchActivity(null)
+        launchActivity()
 
         writeTo(R.id.usernameText, "Username")
         writeTo(R.id.passwordText, "")
@@ -102,12 +95,12 @@ class DetailsTests {
     @Test
     fun invalidCredentialsShowsError() {
         coEvery {
-            auth.login("Username", "Password")
+            fakeAuth.login("Username", "Password")
         } coAnswers {
             Resource.Error("Unauthorized error", 401)
         }
 
-        activity.launchActivity(null)
+        launchActivity()
 
         writeTo(R.id.usernameText, "Username")
         writeTo(R.id.passwordText, "Password")
@@ -120,12 +113,12 @@ class DetailsTests {
     @Test
     fun failureToLoginShowsError() {
         coEvery {
-            auth.login("Username", "Password")
+            fakeAuth.login("Username", "Password")
         } coAnswers {
             Resource.Error("Generic error", 0)
         }
 
-        activity.launchActivity(null)
+        launchActivity()
 
         writeTo(R.id.usernameText, "Username")
         writeTo(R.id.passwordText, "Password")
@@ -140,7 +133,7 @@ class DetailsTests {
         val expectedUrl = R.string.login_forgot_password_url.getResource()
         every { urlHandler.launch(any(), any()) } just Runs
 
-        activity.launchActivity(null)
+        launchActivity()
         clickOn(R.id.forgotPasswordButton)
 
         verify { urlHandler.launch(any(), expectedUrl) }
@@ -151,10 +144,29 @@ class DetailsTests {
         val expectedUrl = R.string.login_sign_up_url.getResource()
         every { urlHandler.launch(any(), any()) } just Runs
 
-        activity.launchActivity(null)
+        launchActivity()
         onView(withId(R.id.signUp))
             .perform(clickClickableSpan(R.string.login_sign_up_link_target))
 
         verify { urlHandler.launch(any(), expectedUrl) }
+    }
+
+    @Module
+    @InstallIn(ApplicationComponent::class)
+    inner class FakeKitsuModule {
+        @Provides
+        fun providesAuth() = fakeAuth
+
+        @Provides
+        fun providesLibrary() = mockk<LibraryApi>()
+
+        @Provides
+        fun providesSearch() = mockk<SearchApi>()
+
+        @Provides
+        fun providesTrending() = mockk<TrendingApi>()
+
+        @Provides
+        fun providesUser() = mockk<UserApi>()
     }
 }

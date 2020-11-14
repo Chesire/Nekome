@@ -6,6 +6,7 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -23,10 +24,8 @@ import com.chesire.nekome.app.series.list.view.SwipeToDelete
 import com.chesire.nekome.core.flags.AsyncState
 import com.chesire.nekome.core.flags.SeriesType
 import com.chesire.nekome.core.models.SeriesModel
-import com.chesire.nekome.core.viewmodel.ViewModelFactory
 import com.chesire.nekome.server.Resource
 import com.google.android.material.snackbar.Snackbar
-import dagger.android.support.DaggerFragment
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -36,11 +35,8 @@ import javax.inject.Inject
  */
 @Suppress("TooManyFunctions")
 abstract class SeriesListFragment :
-    DaggerFragment(R.layout.fragment_series_list),
+    Fragment(R.layout.fragment_series_list),
     SeriesInteractionListener {
-
-    @Inject
-    lateinit var viewModelFactory: ViewModelFactory
 
     @Inject
     lateinit var seriesPreferences: SeriesPreferences
@@ -52,7 +48,7 @@ abstract class SeriesListFragment :
 
     private var _binding: FragmentSeriesListBinding? = null
     private val binding get() = requireNotNull(_binding) { "Binding not set" }
-    private val viewModel by viewModels<SeriesListViewModel> { viewModelFactory }
+    private val viewModel by viewModels<SeriesListViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

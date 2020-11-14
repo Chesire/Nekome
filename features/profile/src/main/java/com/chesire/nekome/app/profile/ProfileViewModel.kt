@@ -1,5 +1,6 @@
 package com.chesire.nekome.app.profile
 
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
@@ -8,12 +9,11 @@ import com.chesire.nekome.core.flags.SeriesType
 import com.chesire.nekome.core.flags.UserSeriesStatus
 import com.chesire.nekome.core.models.SeriesModel
 import com.chesire.nekome.library.SeriesRepository
-import javax.inject.Inject
 
 /**
  * ViewModel to provide profile information to [ProfileFragment].
  */
-class ProfileViewModel @Inject constructor(
+class ProfileViewModel @ViewModelInject constructor(
     seriesRepository: SeriesRepository,
     userRepository: UserRepository
 ) : ViewModel() {

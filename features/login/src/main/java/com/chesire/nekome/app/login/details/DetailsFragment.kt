@@ -5,6 +5,7 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import androidx.annotation.StringRes
 import androidx.core.widget.addTextChangedListener
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.chesire.lifecyklelog.LogLifecykle
@@ -15,9 +16,8 @@ import com.chesire.nekome.core.extensions.hideSystemKeyboard
 import com.chesire.nekome.core.extensions.setLinkedText
 import com.chesire.nekome.core.extensions.show
 import com.chesire.nekome.core.url.UrlHandler
-import com.chesire.nekome.core.viewmodel.ViewModelFactory
 import com.google.android.material.snackbar.Snackbar
-import dagger.android.support.DaggerFragment
+import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -25,13 +25,13 @@ import javax.inject.Inject
  * Fragment to allow the user to enter their login details for Kitsu.
  */
 @LogLifecykle
-class DetailsFragment : DaggerFragment(R.layout.fragment_details) {
+@AndroidEntryPoint
+class DetailsFragment : Fragment(R.layout.fragment_details) {
+
     @Inject
     lateinit var urlHandler: UrlHandler
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelFactory
-    private val viewModel by viewModels<DetailsViewModel> { viewModelFactory }
+    private val viewModel by viewModels<DetailsViewModel>()
     private var _binding: FragmentDetailsBinding? = null
     private val binding get() = requireNotNull(_binding) { "Binding not set" }
 
