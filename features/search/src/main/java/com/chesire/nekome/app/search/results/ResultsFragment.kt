@@ -12,11 +12,13 @@ import com.chesire.nekome.app.search.databinding.FragmentResultsBinding
 import com.chesire.nekome.core.models.SeriesModel
 import com.chesire.nekome.server.Resource
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 
 /**
  * Displays the results of a search to the user, allowing them to select to track new series.
  */
 @LogLifecykle
+@AndroidEntryPoint
 class ResultsFragment : Fragment(R.layout.fragment_results), ResultsListener {
 
     private val viewModel by viewModels<ResultsViewModel>()
