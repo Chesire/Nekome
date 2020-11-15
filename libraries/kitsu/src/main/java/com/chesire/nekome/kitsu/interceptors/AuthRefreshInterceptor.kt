@@ -1,7 +1,7 @@
 package com.chesire.nekome.kitsu.interceptors
 
 import com.chesire.nekome.kitsu.AuthProvider
-import com.chesire.nekome.server.Resource
+import com.chesire.nekome.core.Resource
 import com.chesire.nekome.server.api.AuthApi
 import kotlinx.coroutines.runBlocking
 import okhttp3.Interceptor

@@ -1,7 +1,7 @@
 package com.chesire.nekome.kitsu.api.trending
 
 import com.chesire.nekome.core.models.SeriesModel
-import com.chesire.nekome.server.Resource
+import com.chesire.nekome.core.Resource
 import com.chesire.nekome.testing.createSeriesModel
 import io.mockk.coEvery
 import io.mockk.every

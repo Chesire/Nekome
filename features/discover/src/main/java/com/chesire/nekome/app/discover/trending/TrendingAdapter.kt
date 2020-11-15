@@ -5,7 +5,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import com.chesire.nekome.app.discover.R
 import com.chesire.nekome.core.models.SeriesModel
-import com.chesire.nekome.server.api.TrendingApi
 
 /**
  * Adapter to aid with displaying the trending items pulled from [TrendingApi].

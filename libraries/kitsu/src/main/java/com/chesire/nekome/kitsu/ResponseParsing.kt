@@ -1,6 +1,6 @@
 package com.chesire.nekome.kitsu
 
-import com.chesire.nekome.server.Resource
+import com.chesire.nekome.core.Resource
 import retrofit2.Response
 import java.net.UnknownHostException
 

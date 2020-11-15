@@ -6,7 +6,7 @@ import com.chesire.nekome.core.AuthCaster
 import com.chesire.nekome.core.flags.AsyncState
 import com.chesire.nekome.core.flags.SeriesType
 import com.chesire.nekome.core.models.SeriesModel
-import com.chesire.nekome.server.Resource
+import com.chesire.nekome.core.Resource
 import com.chesire.nekome.server.api.SearchApi
 import com.chesire.nekome.testing.CoroutinesMainDispatcherRule
 import io.mockk.Runs

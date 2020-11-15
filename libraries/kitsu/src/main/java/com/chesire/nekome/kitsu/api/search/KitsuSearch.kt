@@ -2,7 +2,7 @@ package com.chesire.nekome.kitsu.api.search
 
 import com.chesire.nekome.core.models.SeriesModel
 import com.chesire.nekome.kitsu.parse
-import com.chesire.nekome.server.Resource
+import com.chesire.nekome.core.Resource
 import com.chesire.nekome.server.api.SearchApi
 import javax.inject.Inject
 

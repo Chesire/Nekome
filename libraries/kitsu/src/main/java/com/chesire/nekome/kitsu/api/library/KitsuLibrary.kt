@@ -6,7 +6,7 @@ import com.chesire.nekome.kitsu.createNewAddModel
 import com.chesire.nekome.kitsu.createUpdateModel
 import com.chesire.nekome.kitsu.parse
 import com.chesire.nekome.kitsu.parseError
-import com.chesire.nekome.server.Resource
+import com.chesire.nekome.core.Resource
 import com.chesire.nekome.server.api.LibraryApi
 import okhttp3.MediaType
 import okhttp3.RequestBody

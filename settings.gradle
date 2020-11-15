@@ -1,3 +1,5 @@
+include ':libraries:kitsu:trending'
+include ':libraries:server:trending'
 include ':app',
         ':features:discover',
         ':features:login',

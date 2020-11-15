@@ -1,4 +1,4 @@
-package com.chesire.nekome.server
+package com.chesire.nekome.core
 
 /**
  * Generic class to aid with receiving responses.

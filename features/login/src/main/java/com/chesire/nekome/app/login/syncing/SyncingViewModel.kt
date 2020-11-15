@@ -11,7 +11,7 @@ import com.chesire.nekome.core.extensions.postError
 import com.chesire.nekome.core.extensions.postSuccess
 import com.chesire.nekome.core.flags.AsyncState
 import com.chesire.nekome.library.SeriesRepository
-import com.chesire.nekome.server.Resource
+import com.chesire.nekome.core.Resource
 import kotlinx.coroutines.launch
 
 /**

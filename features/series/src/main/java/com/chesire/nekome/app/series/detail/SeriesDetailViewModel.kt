@@ -14,7 +14,7 @@ import com.chesire.nekome.core.extensions.postSuccess
 import com.chesire.nekome.core.flags.AsyncState
 import com.chesire.nekome.core.models.SeriesModel
 import com.chesire.nekome.library.SeriesRepository
-import com.chesire.nekome.server.Resource
+import com.chesire.nekome.core.Resource
 import com.hadilq.liveevent.LiveEvent
 import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext

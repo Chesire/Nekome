@@ -1,7 +1,7 @@
 package com.chesire.nekome.server.api
 
 import com.chesire.nekome.core.models.SeriesModel
-import com.chesire.nekome.server.Resource
+import com.chesire.nekome.core.Resource
 
 /**
  * Methods relating to search.

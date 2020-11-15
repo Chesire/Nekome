@@ -1,6 +1,6 @@
 package com.chesire.nekome.kitsu
 
-import com.chesire.nekome.server.Resource
+import com.chesire.nekome.core.Resource
 import io.mockk.every
 import io.mockk.mockk
 import okhttp3.MediaType

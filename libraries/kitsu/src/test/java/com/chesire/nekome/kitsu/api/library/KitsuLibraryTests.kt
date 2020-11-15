@@ -3,7 +3,7 @@ package com.chesire.nekome.kitsu.api.library
 import com.chesire.nekome.core.flags.UserSeriesStatus
 import com.chesire.nekome.core.models.SeriesModel
 import com.chesire.nekome.kitsu.api.intermediaries.Links
-import com.chesire.nekome.server.Resource
+import com.chesire.nekome.core.Resource
 import com.chesire.nekome.testing.createSeriesModel
 import io.mockk.coEvery
 import io.mockk.coVerify

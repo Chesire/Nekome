@@ -3,7 +3,7 @@ package com.chesire.nekome.account
 import com.chesire.nekome.core.flags.Service
 import com.chesire.nekome.core.models.UserModel
 import com.chesire.nekome.database.dao.UserDao
-import com.chesire.nekome.server.Resource
+import com.chesire.nekome.core.Resource
 import com.chesire.nekome.server.api.UserApi
 import timber.log.Timber
 

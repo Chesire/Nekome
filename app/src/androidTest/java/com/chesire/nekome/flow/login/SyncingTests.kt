@@ -7,7 +7,7 @@ import com.chesire.nekome.helpers.logout
 import com.chesire.nekome.injection.DatabaseModule
 import com.chesire.nekome.injection.KitsuModule
 import com.chesire.nekome.kitsu.AuthProvider
-import com.chesire.nekome.server.Resource
+import com.chesire.nekome.core.Resource
 import com.chesire.nekome.server.api.AuthApi
 import com.chesire.nekome.server.api.LibraryApi
 import com.chesire.nekome.server.api.SearchApi

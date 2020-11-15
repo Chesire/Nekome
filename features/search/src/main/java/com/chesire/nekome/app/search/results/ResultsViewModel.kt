@@ -9,7 +9,7 @@ import com.chesire.nekome.core.flags.SeriesType
 import com.chesire.nekome.core.models.SeriesModel
 import com.chesire.nekome.core.settings.ApplicationSettings
 import com.chesire.nekome.library.SeriesRepository
-import com.chesire.nekome.server.Resource
+import com.chesire.nekome.core.Resource
 import kotlinx.coroutines.launch
 
 /**

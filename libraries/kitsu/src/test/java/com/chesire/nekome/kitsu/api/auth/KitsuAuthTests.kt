@@ -1,7 +1,7 @@
 package com.chesire.nekome.kitsu.api.auth
 
 import com.chesire.nekome.kitsu.AuthProvider
-import com.chesire.nekome.server.Resource
+import com.chesire.nekome.core.Resource
 import io.mockk.CapturingSlot
 import io.mockk.Runs
 import io.mockk.coEvery

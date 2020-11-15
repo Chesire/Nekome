@@ -1,6 +1,6 @@
 package com.chesire.nekome.server.api
 
-import com.chesire.nekome.server.Resource
+import com.chesire.nekome.core.Resource
 
 /**
  * Methods relating to authorizing and refreshing auth tokens.

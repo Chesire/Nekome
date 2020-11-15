@@ -14,8 +14,6 @@ import com.chesire.nekome.kitsu.api.library.LibrarySeriesModelAdapter
 import com.chesire.nekome.kitsu.api.library.ParsedRetrieveResponseAdapter
 import com.chesire.nekome.kitsu.api.search.KitsuSearchService
 import com.chesire.nekome.kitsu.api.search.SearchSeriesModelAdapter
-import com.chesire.nekome.kitsu.api.trending.KitsuTrendingService
-import com.chesire.nekome.kitsu.api.trending.TrendingAdapter
 import com.chesire.nekome.kitsu.api.user.KitsuUserService
 import com.chesire.nekome.kitsu.api.user.UserModelAdapter
 import com.chesire.nekome.kitsu.interceptors.AuthInjectionInterceptor
@@ -123,28 +121,6 @@ object ServerModule {
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .build()
             .create(KitsuSearchService::class.java)
-    }
-
-    /**
-     * Builds and provides the instance of [KitsuTrendingService].
-     */
-    @Provides
-    @Reusable
-    fun providesTrendingService(httpClient: OkHttpClient): KitsuTrendingService {
-        val moshi = Moshi.Builder()
-            .add(ImageModelAdapter())
-            .add(SeriesStatusAdapter())
-            .add(SeriesTypeAdapter())
-            .add(SubtypeAdapter())
-            .add(TrendingAdapter())
-            .build()
-
-        return Retrofit.Builder()
-            .baseUrl(KITSU_URL)
-            .client(httpClient)
-            .addConverterFactory(MoshiConverterFactory.create(moshi))
-            .build()
-            .create(KitsuTrendingService::class.java)
     }
 
     /**

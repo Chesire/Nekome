@@ -9,8 +9,8 @@ import com.chesire.nekome.core.extensions.postError
 import com.chesire.nekome.core.extensions.postSuccess
 import com.chesire.nekome.core.flags.AsyncState
 import com.chesire.nekome.core.models.SeriesModel
-import com.chesire.nekome.server.Resource
-import com.chesire.nekome.server.api.TrendingApi
+import com.chesire.nekome.core.Resource
+import com.chesire.nekome.trending.api.TrendingApi
 import kotlinx.coroutines.launch
 
 /**
@@ -25,8 +25,8 @@ class DiscoverViewModel @ViewModelInject constructor(
             MutableLiveData<AsyncState<List<SeriesModel>, DiscoverError>>(AsyncState.Loading())
         viewModelScope.launch {
             when (val animeList = trending.trendingAnime()) {
-                is Resource.Success -> trendingData.postSuccess(animeList.data)
-                is Resource.Error -> trendingData.postError(DiscoverError.Error)
+                //is Resource.Success -> trendingData.postSuccess(animeList.data)
+                //is Resource.Error -> trendingData.postError(DiscoverError.Error)
             }
         }
         return@lazy trendingData
@@ -37,8 +37,8 @@ class DiscoverViewModel @ViewModelInject constructor(
             MutableLiveData<AsyncState<List<SeriesModel>, DiscoverError>>(AsyncState.Loading())
         viewModelScope.launch {
             when (val mangaList = trending.trendingManga()) {
-                is Resource.Success -> trendingData.postSuccess(mangaList.data)
-                is Resource.Error -> trendingData.postError(DiscoverError.Error)
+                //is Resource.Success -> trendingData.postSuccess(mangaList.data)
+                //is Resource.Error -> trendingData.postError(DiscoverError.Error)
             }
         }
         return@lazy trendingData
