@@ -30,5 +30,7 @@ android {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation "com.chesire.lintrules:lint-gradle:$lintrules_version"
+    implementation "com.chesire.lintrules:lint-xml:$lintrules_version"
     implementation "com.github.talhahasanzia:android-encryption-helper:0.3.1"
 }
