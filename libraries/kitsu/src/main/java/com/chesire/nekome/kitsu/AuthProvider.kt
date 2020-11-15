@@ -2,10 +2,12 @@ package com.chesire.nekome.kitsu
 
 import android.content.SharedPreferences
 import androidx.core.content.edit
+import com.chesire.nekome.encryption.Cryption
 import javax.inject.Inject
 
 private const val ACCESS_TOKEN = "KEY_KITSU_ACCESS_TOKEN"
 private const val REFRESH_TOKEN = "KEY_KITSU_REFRESH_TOKEN"
+private const val ALIAS = "kitsuPrivateAuth"
 
 /**
  * Provides authorization for Kitsu access.
@@ -23,7 +25,7 @@ class AuthProvider @Inject constructor(
         get() = decryptedToken(preferences.getString(ACCESS_TOKEN, "") ?: "")
         set(newAccessToken) {
             preferences.edit {
-                putString(ACCESS_TOKEN, cryption.encrypt(newAccessToken))
+                putString(ACCESS_TOKEN, cryption.encrypt(newAccessToken, ALIAS))
             }
         }
 
@@ -34,13 +36,13 @@ class AuthProvider @Inject constructor(
         get() = decryptedToken(preferences.getString(REFRESH_TOKEN, "") ?: "")
         set(newRefreshToken) {
             preferences.edit {
-                putString(REFRESH_TOKEN, cryption.encrypt(newRefreshToken))
+                putString(REFRESH_TOKEN, cryption.encrypt(newRefreshToken, ALIAS))
             }
         }
 
     private fun decryptedToken(preferenceValue: String): String {
         return if (preferenceValue.isNotEmpty()) {
-            cryption.decrypt(preferenceValue)
+            cryption.decrypt(preferenceValue, ALIAS)
         } else {
             ""
         }
