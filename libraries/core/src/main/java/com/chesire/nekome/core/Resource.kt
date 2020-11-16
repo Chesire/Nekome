@@ -19,10 +19,17 @@ sealed class Resource<T> {
              */
             const val GenericError = 200
 
+            const val EmptyBody = 204
+
             /**
              * Could not refresh the access token.
              */
             const val CouldNotRefresh = 401
+
+            const val CouldNotReach = 503
+
+            fun <T> emptyResponse(): Error<T> = Error("Response body is null", EmptyBody)
+            fun <T> couldNotReach(): Error<T> = Error("Could not reach service", CouldNotReach)
         }
     }
 }

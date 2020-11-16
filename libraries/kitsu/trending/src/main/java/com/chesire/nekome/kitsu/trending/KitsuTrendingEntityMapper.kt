@@ -1,6 +1,5 @@
 package com.chesire.nekome.kitsu.trending
 
-import com.chesire.nekome.kitsu.api.intermediaries.SeriesItem
 import com.chesire.nekome.trending.api.TrendingEntity
 import com.chesire.nekome.trending.api.TrendingEntityMapper
 
@@ -10,7 +9,7 @@ class KitsuTrendingEntityMapper : TrendingEntityMapper<KitsuTrendingEntity> {
         return KitsuTrendingEntity(
             entity.id,
             entity.type,
-            KitsuTrendingEntity.SeriesAttributes(
+            KitsuTrendingEntity.EntityAttributes(
                 entity.slug,
                 entity.synopsis,
                 entity.canonicalTitle,

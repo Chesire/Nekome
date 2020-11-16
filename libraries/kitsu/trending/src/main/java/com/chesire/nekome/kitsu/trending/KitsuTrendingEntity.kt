@@ -14,10 +14,10 @@ data class KitsuTrendingEntity(
     @Json(name = "type")
     val type: SeriesType,
     @Json(name = "attributes")
-    val attributes: SeriesAttributes
+    val attributes: EntityAttributes
 ) {
     @JsonClass(generateAdapter = true)
-    data class SeriesAttributes(
+    data class EntityAttributes(
         @Json(name = "slug")
         val slug: String,
         @Json(name = "synopsis")

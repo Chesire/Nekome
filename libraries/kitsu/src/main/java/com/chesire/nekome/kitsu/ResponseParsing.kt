@@ -7,7 +7,7 @@ import java.net.UnknownHostException
 /**
  * Parse out a [Response] into a [Resource] object.
  */
-internal fun <T> Response<T>.parse(): Resource<T> {
+fun <T> Response<T>.parse(): Resource<T> {
     return if (isSuccessful) {
         body()?.let {
             Resource.Success(it)
@@ -20,7 +20,7 @@ internal fun <T> Response<T>.parse(): Resource<T> {
 /**
  * Parses out the [Response] into a [Resource.Error] object.
  */
-internal fun <T> Response<T>.parseError(): Resource.Error<T> {
+fun <T> Response<T>.parseError(): Resource.Error<T> {
     return Resource.Error(
         errorBody()?.string() ?: message(),
         code()
@@ -30,15 +30,19 @@ internal fun <T> Response<T>.parseError(): Resource.Error<T> {
 /**
  * Generates a [Resource] for an empty [Response].
  */
-internal fun <T> emptyResponseError(): Resource.Error<T> =
-    Resource.Error("Response body is null", 204)
+fun <T> emptyResponseError(): Resource.Error<T> = Resource.Error.emptyResponse()
+
+fun <T, U> Response<T>.asError() = Resource.Error<U>(
+    errorBody()?.string() ?: message(),
+    code()
+)
 
 /**
  * Parses out the [Exception] providing a [Resource] for use elsewhere.
  */
-internal fun <T> Exception.parse(): Resource.Error<T> {
+fun <T> Exception.parse(): Resource.Error<T> {
     return if (this is UnknownHostException) {
-        Resource.Error("Could not reach service", 503)
+        Resource.Error.couldNotReach()
     } else {
         Resource.Error(toString(), 400)
     }

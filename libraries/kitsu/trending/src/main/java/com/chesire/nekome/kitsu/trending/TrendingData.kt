@@ -1,6 +1,5 @@
 package com.chesire.nekome.kitsu.trending
 
-import com.chesire.nekome.kitsu.api.intermediaries.SeriesItem
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
