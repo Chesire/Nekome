@@ -13,7 +13,7 @@ class KitsuTrending(
     private val mapper: TrendingEntityMapper<KitsuTrendingEntity>
 ) : TrendingApi {
 
-    override suspend fun trendingAnime(): Resource<List<TrendingEntity>> {
+    override suspend fun getTrendingAnime(): Resource<List<TrendingEntity>> {
         return try {
             parseResponse(trendingService.getTrendingAnimeAsync())
         } catch (ex: Exception) {
@@ -21,7 +21,7 @@ class KitsuTrending(
         }
     }
 
-    override suspend fun trendingManga(): Resource<List<TrendingEntity>> {
+    override suspend fun getTrendingManga(): Resource<List<TrendingEntity>> {
         return try {
             parseResponse(trendingService.getTrendingMangaAsync())
         } catch (ex: Exception) {
