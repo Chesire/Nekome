@@ -11,7 +11,7 @@ import kotlin.reflect.KSuspendFunction0
 
 class KitsuTrending @Inject constructor(
     private val trendingService: KitsuTrendingService,
-    private val mapper: TrendingEntityMapper<SeriesItem>
+    private val mapper: TrendingEntityMapper<KitsuTrendingEntity>
 ) : TrendingApi {
 
     override suspend fun trendingAnime(): Resource<List<TrendingEntity>> {

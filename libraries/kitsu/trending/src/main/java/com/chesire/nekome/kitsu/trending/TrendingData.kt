@@ -10,5 +10,5 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class TrendingData(
     @Json(name = "data")
-    val data: List<SeriesItem>
+    val data: List<KitsuTrendingEntity>
 )

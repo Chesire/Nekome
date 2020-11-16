@@ -4,13 +4,13 @@ import com.chesire.nekome.kitsu.api.intermediaries.SeriesItem
 import com.chesire.nekome.trending.api.TrendingEntity
 import com.chesire.nekome.trending.api.TrendingEntityMapper
 
-class KitsuTrendingEntityMapper : TrendingEntityMapper<SeriesItem> {
+class KitsuTrendingEntityMapper : TrendingEntityMapper<KitsuTrendingEntity> {
 
-    override fun mapFromTrendingEntity(entity: TrendingEntity): SeriesItem {
-        return SeriesItem(
+    override fun mapFromTrendingEntity(entity: TrendingEntity): KitsuTrendingEntity {
+        return KitsuTrendingEntity(
             entity.id,
             entity.type,
-            SeriesItem.SeriesAttributes(
+            KitsuTrendingEntity.SeriesAttributes(
                 entity.slug,
                 entity.synopsis,
                 entity.canonicalTitle,
@@ -27,7 +27,7 @@ class KitsuTrendingEntityMapper : TrendingEntityMapper<SeriesItem> {
         )
     }
 
-    override fun mapToTrendingEntity(item: SeriesItem): TrendingEntity {
+    override fun mapToTrendingEntity(item: KitsuTrendingEntity): TrendingEntity {
         return TrendingEntity(
             item.id,
             item.type,

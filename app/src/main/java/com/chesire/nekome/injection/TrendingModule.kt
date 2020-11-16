@@ -7,6 +7,7 @@ import com.chesire.nekome.kitsu.adapters.SeriesTypeAdapter
 import com.chesire.nekome.kitsu.adapters.SubtypeAdapter
 import com.chesire.nekome.kitsu.api.intermediaries.SeriesItem
 import com.chesire.nekome.kitsu.trending.KitsuTrending
+import com.chesire.nekome.kitsu.trending.KitsuTrendingEntity
 import com.chesire.nekome.kitsu.trending.KitsuTrendingEntityMapper
 import com.chesire.nekome.kitsu.trending.KitsuTrendingService
 import com.chesire.nekome.trending.api.TrendingApi
@@ -48,7 +49,7 @@ object TrendingModule {
 
     @Provides
     @Reusable
-    fun providesEntityMapper(): TrendingEntityMapper<SeriesItem> {
+    fun providesEntityMapper(): TrendingEntityMapper<KitsuTrendingEntity> {
         return KitsuTrendingEntityMapper()
     }
 
@@ -56,6 +57,6 @@ object TrendingModule {
     @Reusable
     fun providesTrendingApi(
         trendingService: KitsuTrendingService,
-        mapper: TrendingEntityMapper<SeriesItem>
+        mapper: TrendingEntityMapper<KitsuTrendingEntity>
     ): TrendingApi = KitsuTrending(trendingService, mapper)
 }
