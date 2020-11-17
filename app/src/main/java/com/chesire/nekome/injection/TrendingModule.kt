@@ -55,5 +55,5 @@ abstract class TrendingModule {
     abstract fun bindEntityMapper(mapper: KitsuTrendingEntityMapper): TrendingEntityMapper<KitsuTrendingEntity>
 
     @Binds
-    abstract fun bindTrendingApi(trending: KitsuTrending): TrendingApi
+    abstract fun bindApi(api: KitsuTrending): TrendingApi
 }

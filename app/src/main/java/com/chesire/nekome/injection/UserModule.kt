@@ -49,5 +49,5 @@ abstract class UserModule {
     abstract fun bindEntityMapper(mapper: KitsuUserEntityMapper): UserEntityMapper<KitsuUserEntity>
 
     @Binds
-    abstract fun bindUserApi(trending: KitsuUser): UserApi
+    abstract fun bindApi(api: KitsuUser): UserApi
 }
