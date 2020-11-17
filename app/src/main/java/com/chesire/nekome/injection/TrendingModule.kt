@@ -14,6 +14,7 @@ import com.chesire.nekome.trending.api.TrendingApi
 import com.chesire.nekome.trending.api.TrendingEntity
 import com.chesire.nekome.trending.api.TrendingEntityMapper
 import com.squareup.moshi.Moshi
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.Reusable
@@ -25,38 +26,34 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 
 @Module
 @InstallIn(ApplicationComponent::class)
-object TrendingModule {
-    /**
-     * Builds and provides the instance of [KitsuTrendingService].
-     */
-    @Provides
-    @Reusable
-    fun providesTrendingService(httpClient: OkHttpClient): KitsuTrendingService {
-        val moshi = Moshi.Builder()
-            .add(ImageModelAdapter())
-            .add(SeriesStatusAdapter())
-            .add(SeriesTypeAdapter())
-            .add(SubtypeAdapter())
-            .build()
+abstract class TrendingModule {
 
-        return Retrofit.Builder()
-            .baseUrl(KITSU_URL)
-            .client(httpClient)
-            .addConverterFactory(MoshiConverterFactory.create(moshi))
-            .build()
-            .create(KitsuTrendingService::class.java)
+    companion object {
+        /**
+         * Builds and provides the instance of [KitsuTrendingService].
+         */
+        @Provides
+        @Reusable
+        fun providesTrendingService(httpClient: OkHttpClient): KitsuTrendingService {
+            val moshi = Moshi.Builder()
+                .add(ImageModelAdapter())
+                .add(SeriesStatusAdapter())
+                .add(SeriesTypeAdapter())
+                .add(SubtypeAdapter())
+                .build()
+
+            return Retrofit.Builder()
+                .baseUrl(KITSU_URL)
+                .client(httpClient)
+                .addConverterFactory(MoshiConverterFactory.create(moshi))
+                .build()
+                .create(KitsuTrendingService::class.java)
+        }
     }
 
-    @Provides
-    @Reusable
-    fun providesEntityMapper(): TrendingEntityMapper<KitsuTrendingEntity> {
-        return KitsuTrendingEntityMapper()
-    }
+    @Binds
+    abstract fun bindEntityMapper(mapper: KitsuTrendingEntityMapper): TrendingEntityMapper<KitsuTrendingEntity>
 
-    @Provides
-    @Reusable
-    fun providesTrendingApi(
-        trendingService: KitsuTrendingService,
-        mapper: TrendingEntityMapper<KitsuTrendingEntity>
-    ): TrendingApi = KitsuTrending(trendingService, mapper)
+    @Binds
+    abstract fun bindTrendingApi(trending: KitsuTrending): TrendingApi
 }

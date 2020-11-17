@@ -7,8 +7,9 @@ import com.chesire.nekome.trending.api.TrendingApi
 import com.chesire.nekome.trending.api.TrendingEntity
 import com.chesire.nekome.trending.api.TrendingEntityMapper
 import retrofit2.Response
+import javax.inject.Inject
 
-class KitsuTrending(
+class KitsuTrending @Inject constructor(
     private val trendingService: KitsuTrendingService,
     private val mapper: TrendingEntityMapper<KitsuTrendingEntity>
 ) : TrendingApi {
