@@ -3,7 +3,6 @@ package com.chesire.nekome.injection
 import com.chesire.nekome.kitsu.BuildConfig
 import com.chesire.nekome.kitsu.KITSU_URL
 import com.chesire.nekome.kitsu.adapters.ImageModelAdapter
-import com.chesire.nekome.kitsu.adapters.RatingSystemAdapter
 import com.chesire.nekome.kitsu.adapters.SeriesStatusAdapter
 import com.chesire.nekome.kitsu.adapters.SeriesTypeAdapter
 import com.chesire.nekome.kitsu.adapters.SubtypeAdapter
@@ -14,8 +13,6 @@ import com.chesire.nekome.kitsu.api.library.LibrarySeriesModelAdapter
 import com.chesire.nekome.kitsu.api.library.ParsedRetrieveResponseAdapter
 import com.chesire.nekome.kitsu.api.search.KitsuSearchService
 import com.chesire.nekome.kitsu.api.search.SearchSeriesModelAdapter
-import com.chesire.nekome.kitsu.api.user.KitsuUserService
-import com.chesire.nekome.kitsu.api.user.UserModelAdapter
 import com.chesire.nekome.kitsu.interceptors.AuthInjectionInterceptor
 import com.chesire.nekome.kitsu.interceptors.AuthRefreshInterceptor
 import com.squareup.moshi.Moshi
@@ -121,25 +118,5 @@ object ServerModule {
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .build()
             .create(KitsuSearchService::class.java)
-    }
-
-    /**
-     * Builds and provides the instance of [KitsuUserService].
-     */
-    @Provides
-    @Reusable
-    fun providesUserService(httpClient: OkHttpClient): KitsuUserService {
-        val moshi = Moshi.Builder()
-            .add(RatingSystemAdapter())
-            .add(ImageModelAdapter())
-            .add(UserModelAdapter())
-            .build()
-
-        return Retrofit.Builder()
-            .baseUrl(KITSU_URL)
-            .client(httpClient)
-            .addConverterFactory(MoshiConverterFactory.create(moshi))
-            .build()
-            .create(KitsuUserService::class.java)
     }
 }

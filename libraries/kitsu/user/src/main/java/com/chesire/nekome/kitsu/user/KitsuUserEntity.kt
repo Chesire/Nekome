@@ -1,4 +1,4 @@
-package com.chesire.nekome.user
+package com.chesire.nekome.kitsu.user
 
 import com.chesire.nekome.core.flags.RatingSystem
 import com.chesire.nekome.core.models.ImageModel

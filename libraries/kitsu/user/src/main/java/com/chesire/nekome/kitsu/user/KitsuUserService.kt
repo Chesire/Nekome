@@ -1,4 +1,4 @@
-package com.chesire.nekome.user
+package com.chesire.nekome.kitsu.user
 
 import retrofit2.Response
 import retrofit2.http.GET

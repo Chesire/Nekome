@@ -1,5 +1,6 @@
-package com.chesire.nekome.user
+package com.chesire.nekome.kitsu.user
 
+import com.chesire.nekome.kitsu.user.KitsuUserEntity
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
