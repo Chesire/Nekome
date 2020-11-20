@@ -1,6 +1,6 @@
 package com.chesire.nekome.kitsu.interceptors
 
-import com.chesire.nekome.kitsu.auth.AuthProvider
+import com.chesire.nekome.kitsu.AuthProvider
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.slot
@@ -13,7 +13,7 @@ class AuthInjectionInterceptorTests {
     fun `authorization header gets added correctly`() {
         val token = "AccessTokenPass"
         val expected = "Bearer $token"
-        val mockProvider = mockk<com.chesire.nekome.kitsu.auth.AuthProvider> {
+        val mockProvider = mockk<AuthProvider> {
             every { accessToken } returns token
         }
         val headerCapture = slot<String>()

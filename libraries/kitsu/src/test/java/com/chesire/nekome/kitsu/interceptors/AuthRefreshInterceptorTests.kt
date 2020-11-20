@@ -1,7 +1,9 @@
 package com.chesire.nekome.kitsu.interceptors
 
-import com.chesire.nekome.kitsu.auth.AuthProvider
-import com.chesire.nekome.server.api.AuthApi
+import com.chesire.nekome.auth.api.AuthApi
+import com.chesire.nekome.core.Resource
+import com.chesire.nekome.kitsu.AuthProvider
+import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
@@ -16,7 +18,7 @@ import org.junit.Test
 class AuthRefreshInterceptorTests {
     @Test
     fun `successful response just returns response`() = runBlocking {
-        val mockProvider = mockk<com.chesire.nekome.kitsu.auth.AuthProvider>()
+        val mockProvider = mockk<AuthProvider>()
         val mockAuth = mockk<AuthApi>()
         val response = mockk<Response> {
             every { isSuccessful } returns true
@@ -35,7 +37,7 @@ class AuthRefreshInterceptorTests {
 
     @Test
     fun `failure response with code !403 just returns response`() = runBlocking {
-        val mockProvider = mockk<com.chesire.nekome.kitsu.auth.AuthProvider>()
+        val mockProvider = mockk<AuthProvider>()
         val mockAuth = mockk<AuthApi>()
         val response = mockk<Response> {
             every { isSuccessful } returns false
@@ -55,7 +57,7 @@ class AuthRefreshInterceptorTests {
 
     @Test
     fun `getting new auth failure, returns error response with 401`() = runBlocking {
-        val mockProvider = mockk<com.chesire.nekome.kitsu.auth.AuthProvider>()
+        val mockProvider = mockk<AuthProvider>()
         val mockAuth = mockk<AuthApi> {
             coEvery {
                 refresh()
@@ -84,7 +86,7 @@ class AuthRefreshInterceptorTests {
 
     @Test
     fun `getting new auth retries previous request`() = runBlocking {
-        val mockProvider = mockk<com.chesire.nekome.kitsu.auth.AuthProvider> {
+        val mockProvider = mockk<AuthProvider> {
             every { accessToken } returns "accessToken"
         }
         val mockAuth = mockk<AuthApi> {
