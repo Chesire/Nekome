@@ -2,8 +2,9 @@ package com.chesire.nekome.kitsu.trending
 
 import com.chesire.nekome.trending.api.TrendingEntity
 import com.chesire.nekome.trending.api.TrendingEntityMapper
+import javax.inject.Inject
 
-class KitsuTrendingEntityMapper : TrendingEntityMapper<KitsuTrendingEntity> {
+class KitsuTrendingEntityMapper @Inject constructor() : TrendingEntityMapper<KitsuTrendingEntity> {
 
     override fun mapFromTrendingEntity(entity: TrendingEntity): KitsuTrendingEntity {
         return KitsuTrendingEntity(

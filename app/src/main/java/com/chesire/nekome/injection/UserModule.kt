@@ -2,17 +2,16 @@ package com.chesire.nekome.injection
 
 import com.chesire.nekome.kitsu.KITSU_URL
 import com.chesire.nekome.kitsu.adapters.ImageModelAdapter
+import com.chesire.nekome.kitsu.adapters.RatingSystemAdapter
 import com.chesire.nekome.kitsu.adapters.SeriesStatusAdapter
 import com.chesire.nekome.kitsu.adapters.SeriesTypeAdapter
 import com.chesire.nekome.kitsu.adapters.SubtypeAdapter
-import com.chesire.nekome.kitsu.api.intermediaries.SeriesItem
-import com.chesire.nekome.kitsu.trending.KitsuTrending
-import com.chesire.nekome.kitsu.trending.KitsuTrendingEntity
-import com.chesire.nekome.kitsu.trending.KitsuTrendingEntityMapper
-import com.chesire.nekome.kitsu.trending.KitsuTrendingService
-import com.chesire.nekome.trending.api.TrendingApi
-import com.chesire.nekome.trending.api.TrendingEntity
-import com.chesire.nekome.trending.api.TrendingEntityMapper
+import com.chesire.nekome.kitsu.user.KitsuUser
+import com.chesire.nekome.kitsu.user.KitsuUserEntity
+import com.chesire.nekome.kitsu.user.KitsuUserEntityMapper
+import com.chesire.nekome.kitsu.user.KitsuUserService
+import com.chesire.nekome.user.api.UserApi
+import com.chesire.nekome.user.api.UserEntityMapper
 import com.squareup.moshi.Moshi
 import dagger.Binds
 import dagger.Module
@@ -26,20 +25,15 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 
 @Module
 @InstallIn(ApplicationComponent::class)
-abstract class TrendingModule {
+abstract class UserModule {
 
     companion object {
-        /**
-         * Builds and provides the instance of [KitsuTrendingService].
-         */
         @Provides
         @Reusable
-        fun providesTrendingService(httpClient: OkHttpClient): KitsuTrendingService {
+        fun providesUserService(httpClient: OkHttpClient): KitsuUserService {
             val moshi = Moshi.Builder()
+                .add(RatingSystemAdapter())
                 .add(ImageModelAdapter())
-                .add(SeriesStatusAdapter())
-                .add(SeriesTypeAdapter())
-                .add(SubtypeAdapter())
                 .build()
 
             return Retrofit.Builder()
@@ -47,13 +41,13 @@ abstract class TrendingModule {
                 .client(httpClient)
                 .addConverterFactory(MoshiConverterFactory.create(moshi))
                 .build()
-                .create(KitsuTrendingService::class.java)
+                .create(KitsuUserService::class.java)
         }
     }
 
     @Binds
-    abstract fun bindEntityMapper(mapper: KitsuTrendingEntityMapper): TrendingEntityMapper<KitsuTrendingEntity>
+    abstract fun bindEntityMapper(mapper: KitsuUserEntityMapper): UserEntityMapper<KitsuUserEntity>
 
     @Binds
-    abstract fun bindApi(api: KitsuTrending): TrendingApi
+    abstract fun bindApi(api: KitsuUser): UserApi
 }

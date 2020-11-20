@@ -7,13 +7,14 @@ import com.chesire.nekome.trending.api.TrendingApi
 import com.chesire.nekome.trending.api.TrendingEntity
 import com.chesire.nekome.trending.api.TrendingEntityMapper
 import retrofit2.Response
+import javax.inject.Inject
 
-class KitsuTrending(
+class KitsuTrending @Inject constructor(
     private val trendingService: KitsuTrendingService,
     private val mapper: TrendingEntityMapper<KitsuTrendingEntity>
 ) : TrendingApi {
 
-    override suspend fun trendingAnime(): Resource<List<TrendingEntity>> {
+    override suspend fun getTrendingAnime(): Resource<List<TrendingEntity>> {
         return try {
             parseResponse(trendingService.getTrendingAnimeAsync())
         } catch (ex: Exception) {
@@ -21,7 +22,7 @@ class KitsuTrending(
         }
     }
 
-    override suspend fun trendingManga(): Resource<List<TrendingEntity>> {
+    override suspend fun getTrendingManga(): Resource<List<TrendingEntity>> {
         return try {
             parseResponse(trendingService.getTrendingMangaAsync())
         } catch (ex: Exception) {

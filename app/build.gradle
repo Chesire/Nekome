@@ -53,6 +53,7 @@ android {
         exclude "META-INF/LGPL2.1"
         exclude "META-INF/library-core_release.kotlin_module"
         exclude "META-INF/trending_debug.kotlin_module"
+        exclude "META-INF/user_debug.kotlin_module"
     }
     lintOptions {
         checkDependencies true
@@ -79,9 +80,11 @@ dependencies {
     implementation project(path: ":libraries:encryption")
     implementation project(path: ":libraries:kitsu")
     implementation project(path: ":libraries:kitsu:trending")
+    implementation project(path: ":libraries:kitsu:user")
     implementation project(path: ":libraries:library")
     implementation project(path: ":libraries:server")
     implementation project(path: ":libraries:server:trending")
+    implementation project(path: ":libraries:server:user")
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 

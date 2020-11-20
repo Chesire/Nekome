@@ -37,7 +37,7 @@ dependencies {
 
     implementation project(path: ":libraries:core")
     implementation project(path: ':libraries:kitsu')
-    implementation project(path: ':libraries:server:trending')
+    implementation project(path: ':libraries:server:user')
 
     implementation "com.chesire.lintrules:lint-gradle:$lintrules_version"
     implementation "com.chesire.lintrules:lint-xml:$lintrules_version"

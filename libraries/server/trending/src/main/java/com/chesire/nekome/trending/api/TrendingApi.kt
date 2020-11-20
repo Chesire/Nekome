@@ -9,10 +9,10 @@ interface TrendingApi {
     /**
      * Gets the current trending anime.
      */
-    suspend fun trendingAnime(): Resource<List<TrendingEntity>>
+    suspend fun getTrendingAnime(): Resource<List<TrendingEntity>>
 
     /**
      * Gets the current trending manga.
      */
-    suspend fun trendingManga(): Resource<List<TrendingEntity>>
+    suspend fun getTrendingManga(): Resource<List<TrendingEntity>>
 }
