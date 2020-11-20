@@ -2,10 +2,8 @@ package com.chesire.nekome.injection
 
 import com.chesire.nekome.kitsu.api.auth.KitsuAuth
 import com.chesire.nekome.kitsu.api.library.KitsuLibrary
-import com.chesire.nekome.kitsu.api.search.KitsuSearch
 import com.chesire.nekome.server.api.AuthApi
 import com.chesire.nekome.server.api.LibraryApi
-import com.chesire.nekome.server.api.SearchApi
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -28,10 +26,4 @@ abstract class KitsuModule {
      */
     @Binds
     abstract fun providesLibraryApi(kitsuLibrary: KitsuLibrary): LibraryApi
-
-    /**
-     * Binds the instance of [KitsuSearch] to [SearchApi].
-     */
-    @Binds
-    abstract fun providesSearchApi(kitsuSearch: KitsuSearch): SearchApi
 }
