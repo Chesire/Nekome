@@ -1,3 +1,5 @@
+include ':libraries:kitsu:auth'
+include ':libraries:server:auth'
 include ':libraries:kitsu:search'
 include ':libraries:server:search'
 include ':libraries:kitsu:user'

@@ -1,13 +1,10 @@
-package com.chesire.nekome.kitsu.api.auth
+package com.chesire.nekome.kitsu.auth
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
-/**
- * Class to parse a response from [KitsuAuthService] into an object.
- */
 @JsonClass(generateAdapter = true)
-data class LoginResponse(
+data class KitsuAuthEntity(
     @Json(name = "access_token")
     val accessToken: String,
     @Json(name = "created_at")

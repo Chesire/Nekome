@@ -1,11 +1,8 @@
-package com.chesire.nekome.kitsu.api.auth
+package com.chesire.nekome.kitsu.auth.request
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
-/**
- * Request object for requesting an updated access token.
- */
 @JsonClass(generateAdapter = true)
 data class RefreshTokenRequest(
     @Json(name = "refresh_token")
