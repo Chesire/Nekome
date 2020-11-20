@@ -7,7 +7,6 @@ import com.chesire.nekome.kitsu.adapters.SeriesStatusAdapter
 import com.chesire.nekome.kitsu.adapters.SeriesTypeAdapter
 import com.chesire.nekome.kitsu.adapters.SubtypeAdapter
 import com.chesire.nekome.kitsu.adapters.UserSeriesStatusAdapter
-import com.chesire.nekome.kitsu.api.auth.KitsuAuthService
 import com.chesire.nekome.kitsu.api.library.KitsuLibraryService
 import com.chesire.nekome.kitsu.api.library.LibrarySeriesModelAdapter
 import com.chesire.nekome.kitsu.api.library.ParsedRetrieveResponseAdapter
@@ -54,22 +53,6 @@ object ServerModule {
                 }
             }
             .build()
-    }
-
-    /**
-     * Builds and provides the instance of [KitsuAuthService].
-     */
-    @Provides
-    @Reusable
-    fun providesAuthService(): KitsuAuthService {
-        return Retrofit.Builder()
-            .baseUrl(KITSU_URL)
-            .client(OkHttpClient())
-            .addConverterFactory(
-                MoshiConverterFactory.create(Moshi.Builder().build())
-            )
-            .build()
-            .create(KitsuAuthService::class.java)
     }
 
     /**

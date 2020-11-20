@@ -40,7 +40,7 @@ dependencies {
     implementation project(path: ":libraries:account")
     implementation project(path: ":libraries:core")
     implementation project(path: ":libraries:library")
-    implementation project(path: ":libraries:server")
+    implementation project(path: ":libraries:server:auth")
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation "androidx.appcompat:appcompat:$appcompat_version"
