@@ -25,7 +25,8 @@ class AuthProviderTests {
             every { decrypt("token", any()) } returns expected
         }
 
-        val classUnderTest = AuthProvider(mockPreferences, mockCryption)
+        val classUnderTest =
+            com.chesire.nekome.kitsu.auth.AuthProvider(mockPreferences, mockCryption)
 
         assertEquals(expected, classUnderTest.accessToken)
     }
@@ -40,7 +41,8 @@ class AuthProviderTests {
             every { decrypt("", any()) } returns expected
         }
 
-        val classUnderTest = AuthProvider(mockPreferences, mockCryption)
+        val classUnderTest =
+            com.chesire.nekome.kitsu.auth.AuthProvider(mockPreferences, mockCryption)
 
         assertEquals(expected, classUnderTest.accessToken)
     }
@@ -60,7 +62,8 @@ class AuthProviderTests {
             every { encrypt("newToken", any()) } returns expected
         }
 
-        val classUnderTest = AuthProvider(mockPreferences, mockCryption)
+        val classUnderTest =
+            com.chesire.nekome.kitsu.auth.AuthProvider(mockPreferences, mockCryption)
         classUnderTest.accessToken = "newToken"
 
         verify { mockEditor.putString(KITSU_ACCESS_TOKEN_KEY, expected) }
@@ -77,7 +80,8 @@ class AuthProviderTests {
             every { decrypt("token", any()) } returns expected
         }
 
-        val classUnderTest = AuthProvider(mockPreferences, mockCryption)
+        val classUnderTest =
+            com.chesire.nekome.kitsu.auth.AuthProvider(mockPreferences, mockCryption)
 
         assertEquals(expected, classUnderTest.refreshToken)
     }
@@ -92,7 +96,8 @@ class AuthProviderTests {
             every { decrypt("", any()) } returns expected
         }
 
-        val classUnderTest = AuthProvider(mockPreferences, mockCryption)
+        val classUnderTest =
+            com.chesire.nekome.kitsu.auth.AuthProvider(mockPreferences, mockCryption)
 
         assertEquals(expected, classUnderTest.refreshToken)
     }
@@ -112,7 +117,8 @@ class AuthProviderTests {
             every { encrypt("newToken", any()) } returns expected
         }
 
-        val classUnderTest = AuthProvider(mockPreferences, mockCryption)
+        val classUnderTest =
+            com.chesire.nekome.kitsu.auth.AuthProvider(mockPreferences, mockCryption)
         classUnderTest.refreshToken = "newToken"
 
         verify { mockEditor.putString(KITSU_REFRESH_TOKEN_KEY, expected) }
@@ -131,7 +137,8 @@ class AuthProviderTests {
         }
         val mockCryption = mockk<Cryption>()
 
-        val classUnderTest = AuthProvider(mockPreferences, mockCryption)
+        val classUnderTest =
+            com.chesire.nekome.kitsu.auth.AuthProvider(mockPreferences, mockCryption)
         classUnderTest.clearAuth()
 
         verify { mockEditor.remove(KITSU_ACCESS_TOKEN_KEY) }
@@ -149,7 +156,8 @@ class AuthProviderTests {
         }
         val mockCryption = mockk<Cryption>()
 
-        val classUnderTest = AuthProvider(mockPreferences, mockCryption)
+        val classUnderTest =
+            com.chesire.nekome.kitsu.auth.AuthProvider(mockPreferences, mockCryption)
         classUnderTest.clearAuth()
 
         verify { mockEditor.remove(KITSU_REFRESH_TOKEN_KEY) }

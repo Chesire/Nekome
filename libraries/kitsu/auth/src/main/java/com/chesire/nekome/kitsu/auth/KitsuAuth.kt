@@ -1,20 +1,19 @@
-package com.chesire.nekome.kitsu.api.auth
+package com.chesire.nekome.kitsu.auth
 
+import com.chesire.nekome.auth.api.AuthApi
 import com.chesire.nekome.core.Resource
 import com.chesire.nekome.kitsu.AuthProvider
+import com.chesire.nekome.kitsu.auth.request.LoginRequest
+import com.chesire.nekome.kitsu.auth.request.RefreshTokenRequest
 import com.chesire.nekome.kitsu.parse
-import com.chesire.nekome.server.api.AuthApi
 import retrofit2.Response
 import javax.inject.Inject
 
-/**
- * Provides an implementation of [AuthApi] to interact with [KitsuAuth] to log a user in.
- */
-@Suppress("TooGenericExceptionCaught")
 class KitsuAuth @Inject constructor(
     private val authService: KitsuAuthService,
     private val authProvider: AuthProvider
 ) : AuthApi {
+
     override suspend fun login(username: String, password: String): Resource<Any> {
         return try {
             parseResponse(authService.loginAsync(LoginRequest(username, password)))
@@ -35,7 +34,9 @@ class KitsuAuth @Inject constructor(
         }
     }
 
-    private fun parseResponse(response: Response<LoginResponse>): Resource<Any> {
+    override suspend fun clearAuth() = authProvider.clearAuth()
+
+    private fun parseResponse(response: Response<KitsuAuthEntity>): Resource<Any> {
         return when (val parsed = response.parse()) {
             is Resource.Success -> {
                 saveTokens(parsed.data)
@@ -45,12 +46,10 @@ class KitsuAuth @Inject constructor(
         }
     }
 
-    private fun saveTokens(loginResponse: LoginResponse) {
+    private fun saveTokens(entity: KitsuAuthEntity) {
         authProvider.apply {
-            accessToken = loginResponse.accessToken
-            refreshToken = loginResponse.refreshToken
+            accessToken = entity.accessToken
+            refreshToken = entity.refreshToken
         }
     }
-
-    override suspend fun clearAuth() = authProvider.clearAuth()
 }
