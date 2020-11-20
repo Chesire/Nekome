@@ -1,3 +1,4 @@
+include ':libraries:server:search'
 include ':libraries:kitsu:user'
 include ':libraries:server:user'
 include ':libraries:kitsu:trending'
