@@ -1,8 +1,8 @@
 package com.chesire.nekome.kitsu.api.auth
 
+import com.chesire.nekome.core.Resource
 import com.chesire.nekome.kitsu.AuthProvider
 import com.chesire.nekome.kitsu.parse
-import com.chesire.nekome.core.Resource
 import com.chesire.nekome.server.api.AuthApi
 import retrofit2.Response
 import javax.inject.Inject
