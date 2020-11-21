@@ -35,7 +35,7 @@ class KitsuLibrary @Inject constructor(
         performRetrieveCall(userId, libraryService::retrieveAnimeAsync)
 
     override suspend fun retrieveManga(userId: Int): Resource<List<LibraryEntity>> =
-        performRetrieveCall(userId, libraryService::retrieveAnimeAsync)
+        performRetrieveCall(userId, libraryService::retrieveMangaAsync)
 
     override suspend fun addAnime(
         userId: Int,
