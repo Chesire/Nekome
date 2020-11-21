@@ -1,5 +1,6 @@
 package com.chesire.nekome.kitsu.library
 
+import com.chesire.nekome.core.EntityMapper
 import com.chesire.nekome.core.Resource
 import com.chesire.nekome.core.flags.UserSeriesStatus
 import com.chesire.nekome.kitsu.adapters.UserSeriesStatusAdapter
@@ -11,7 +12,6 @@ import com.chesire.nekome.kitsu.parse
 import com.chesire.nekome.kitsu.parseError
 import com.chesire.nekome.library.api.LibraryApi
 import com.chesire.nekome.library.api.LibraryEntity
-import com.chesire.nekome.library.api.LibraryEntityMapper
 import okhttp3.MediaType
 import okhttp3.RequestBody
 import retrofit2.Response
@@ -25,7 +25,7 @@ private const val MANGA_TYPE = "manga"
 
 class KitsuLibrary @Inject constructor(
     private val libraryService: KitsuLibraryService,
-    private val map: LibraryEntityMapper<KitsuLibraryEntity>,
+    private val map: EntityMapper<KitsuLibraryEntity, LibraryEntity>,
     private val entityFactory: EntityFactory
 ) : LibraryApi {
 

@@ -1,5 +1,6 @@
 package com.chesire.nekome.injection
 
+import com.chesire.nekome.core.EntityMapper
 import com.chesire.nekome.kitsu.KITSU_URL
 import com.chesire.nekome.kitsu.adapters.ImageModelAdapter
 import com.chesire.nekome.kitsu.adapters.SeriesStatusAdapter
@@ -12,7 +13,7 @@ import com.chesire.nekome.kitsu.library.KitsuLibraryService
 import com.chesire.nekome.kitsu.library.entity.KitsuLibraryEntity
 import com.chesire.nekome.kitsu.trending.KitsuTrendingService
 import com.chesire.nekome.library.api.LibraryApi
-import com.chesire.nekome.library.api.LibraryEntityMapper
+import com.chesire.nekome.library.api.LibraryEntity
 import com.squareup.moshi.Moshi
 import dagger.Binds
 import dagger.Module
@@ -53,7 +54,9 @@ abstract class LibraryModule {
     }
 
     @Binds
-    abstract fun bindEntityMapper(mapper: KitsuLibraryEntityMapper): LibraryEntityMapper<KitsuLibraryEntity>
+    abstract fun bindEntityMapper(
+        mapper: KitsuLibraryEntityMapper
+    ): EntityMapper<KitsuLibraryEntity, LibraryEntity>
 
     @Binds
     abstract fun bindApi(api: KitsuLibrary): LibraryApi

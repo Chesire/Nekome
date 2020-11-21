@@ -1,17 +1,17 @@
 package com.chesire.nekome.kitsu.trending
 
+import com.chesire.nekome.core.EntityMapper
 import com.chesire.nekome.core.Resource
 import com.chesire.nekome.kitsu.asError
 import com.chesire.nekome.kitsu.parse
 import com.chesire.nekome.trending.api.TrendingApi
 import com.chesire.nekome.trending.api.TrendingEntity
-import com.chesire.nekome.trending.api.TrendingEntityMapper
 import retrofit2.Response
 import javax.inject.Inject
 
 class KitsuTrending @Inject constructor(
     private val trendingService: KitsuTrendingService,
-    private val map: TrendingEntityMapper<KitsuTrendingEntity>
+    private val map: EntityMapper<KitsuTrendingEntity, TrendingEntity>
 ) : TrendingApi {
 
     override suspend fun getTrendingAnime(): Resource<List<TrendingEntity>> {

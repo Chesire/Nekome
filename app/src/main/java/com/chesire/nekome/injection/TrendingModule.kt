@@ -1,5 +1,6 @@
 package com.chesire.nekome.injection
 
+import com.chesire.nekome.core.EntityMapper
 import com.chesire.nekome.kitsu.KITSU_URL
 import com.chesire.nekome.kitsu.adapters.ImageModelAdapter
 import com.chesire.nekome.kitsu.adapters.SeriesStatusAdapter
@@ -10,7 +11,7 @@ import com.chesire.nekome.kitsu.trending.KitsuTrendingEntity
 import com.chesire.nekome.kitsu.trending.KitsuTrendingEntityMapper
 import com.chesire.nekome.kitsu.trending.KitsuTrendingService
 import com.chesire.nekome.trending.api.TrendingApi
-import com.chesire.nekome.trending.api.TrendingEntityMapper
+import com.chesire.nekome.trending.api.TrendingEntity
 import com.squareup.moshi.Moshi
 import dagger.Binds
 import dagger.Module
@@ -50,7 +51,9 @@ abstract class TrendingModule {
     }
 
     @Binds
-    abstract fun bindEntityMapper(mapper: KitsuTrendingEntityMapper): TrendingEntityMapper<KitsuTrendingEntity>
+    abstract fun bindEntityMapper(
+        mapper: KitsuTrendingEntityMapper
+    ): EntityMapper<KitsuTrendingEntity, TrendingEntity>
 
     @Binds
     abstract fun bindApi(api: KitsuTrending): TrendingApi

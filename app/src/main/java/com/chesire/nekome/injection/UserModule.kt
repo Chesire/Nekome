@@ -1,17 +1,15 @@
 package com.chesire.nekome.injection
 
+import com.chesire.nekome.core.EntityMapper
 import com.chesire.nekome.kitsu.KITSU_URL
 import com.chesire.nekome.kitsu.adapters.ImageModelAdapter
 import com.chesire.nekome.kitsu.adapters.RatingSystemAdapter
-import com.chesire.nekome.kitsu.adapters.SeriesStatusAdapter
-import com.chesire.nekome.kitsu.adapters.SeriesTypeAdapter
-import com.chesire.nekome.kitsu.adapters.SubtypeAdapter
 import com.chesire.nekome.kitsu.user.KitsuUser
 import com.chesire.nekome.kitsu.user.KitsuUserEntity
 import com.chesire.nekome.kitsu.user.KitsuUserEntityMapper
 import com.chesire.nekome.kitsu.user.KitsuUserService
 import com.chesire.nekome.user.api.UserApi
-import com.chesire.nekome.user.api.UserEntityMapper
+import com.chesire.nekome.user.api.UserEntity
 import com.squareup.moshi.Moshi
 import dagger.Binds
 import dagger.Module
@@ -46,7 +44,7 @@ abstract class UserModule {
     }
 
     @Binds
-    abstract fun bindEntityMapper(mapper: KitsuUserEntityMapper): UserEntityMapper<KitsuUserEntity>
+    abstract fun bindEntityMapper(mapper: KitsuUserEntityMapper): EntityMapper<KitsuUserEntity, UserEntity>
 
     @Binds
     abstract fun bindApi(api: KitsuUser): UserApi

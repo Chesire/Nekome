@@ -1,5 +1,6 @@
 package com.chesire.nekome.injection
 
+import com.chesire.nekome.core.EntityMapper
 import com.chesire.nekome.kitsu.KITSU_URL
 import com.chesire.nekome.kitsu.adapters.ImageModelAdapter
 import com.chesire.nekome.kitsu.adapters.SeriesStatusAdapter
@@ -10,7 +11,7 @@ import com.chesire.nekome.kitsu.search.KitsuSearchEntity
 import com.chesire.nekome.kitsu.search.KitsuSearchEntityMapper
 import com.chesire.nekome.kitsu.search.KitsuSearchService
 import com.chesire.nekome.search.api.SearchApi
-import com.chesire.nekome.search.api.SearchEntityMapper
+import com.chesire.nekome.search.api.SearchEntity
 import com.squareup.moshi.Moshi
 import dagger.Binds
 import dagger.Module
@@ -50,7 +51,9 @@ abstract class SearchModule {
     }
 
     @Binds
-    abstract fun bindEntityMapper(mapper: KitsuSearchEntityMapper): SearchEntityMapper<KitsuSearchEntity>
+    abstract fun bindEntityMapper(
+        mapper: KitsuSearchEntityMapper
+    ): EntityMapper<KitsuSearchEntity, SearchEntity>
 
     @Binds
     abstract fun bindApi(api: KitsuSearch): SearchApi

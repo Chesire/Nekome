@@ -4,7 +4,7 @@ import com.chesire.nekome.binders.UserProviderBinder
 import com.chesire.nekome.database.dao.SeriesDao
 import com.chesire.nekome.library.SeriesRepository
 import com.chesire.nekome.library.UserProvider
-import com.chesire.nekome.server.api.LibraryApi
+import com.chesire.nekome.library.api.LibraryApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

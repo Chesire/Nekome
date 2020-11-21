@@ -1,6 +1,8 @@
 package com.chesire.nekome.kitsu.library.entity
 
-class EntityFactory {
+import javax.inject.Inject
+
+class EntityFactory @Inject constructor() {
 
     fun createAddEntity(
         userId: Int,

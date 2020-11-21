@@ -1,17 +1,17 @@
 package com.chesire.nekome.kitsu.search
 
+import com.chesire.nekome.core.EntityMapper
 import com.chesire.nekome.core.Resource
 import com.chesire.nekome.kitsu.asError
 import com.chesire.nekome.kitsu.parse
 import com.chesire.nekome.search.api.SearchApi
 import com.chesire.nekome.search.api.SearchEntity
-import com.chesire.nekome.search.api.SearchEntityMapper
 import retrofit2.Response
 import javax.inject.Inject
 
 class KitsuSearch @Inject constructor(
     private val searchService: KitsuSearchService,
-    private val map: SearchEntityMapper<KitsuSearchEntity>
+    private val map: EntityMapper<KitsuSearchEntity, SearchEntity>
 ) : SearchApi {
 
     override suspend fun searchForAnime(title: String): Resource<List<SearchEntity>> {
