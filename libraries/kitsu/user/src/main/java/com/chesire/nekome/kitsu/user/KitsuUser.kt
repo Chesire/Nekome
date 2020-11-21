@@ -11,8 +11,8 @@ import javax.inject.Inject
 
 class KitsuUser @Inject constructor(
     private val userService: KitsuUserService,
-    private val mapper: UserEntityMapper<KitsuUserEntity>
-): UserApi {
+    private val map: UserEntityMapper<KitsuUserEntity>
+) : UserApi {
 
     override suspend fun getUserDetails(): Resource<UserEntity> {
         return try {
@@ -28,7 +28,7 @@ class KitsuUser @Inject constructor(
                 ?.data
                 ?.firstOrNull()
                 ?.let { user ->
-                    Resource.Success(mapper.mapToUserEntity(user))
+                    Resource.Success(map.from(user))
                 } ?: Resource.Error.emptyResponse()
         } else {
             response.asError()

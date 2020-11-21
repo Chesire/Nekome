@@ -1,6 +1,11 @@
 package com.chesire.nekome.trending.api
 
+/**
+ * Provides functionality to map from [T] to an instance of [TrendingEntity].
+ */
 interface TrendingEntityMapper<T> {
-    fun mapFromTrendingEntity(entity: TrendingEntity): T
-    fun mapToTrendingEntity(item: T): TrendingEntity
+    /**
+     * Maps instance of [T] to an instance of [TrendingEntity].
+     */
+    fun from(item: T): TrendingEntity
 }

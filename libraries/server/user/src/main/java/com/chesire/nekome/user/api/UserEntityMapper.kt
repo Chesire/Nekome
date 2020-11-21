@@ -1,6 +1,11 @@
 package com.chesire.nekome.user.api
 
+/**
+ * Provides functionality to map from [T] to an instance of [UserEntityMapper].
+ */
 interface UserEntityMapper<T> {
-    fun mapFromUserEntity(entity: UserEntity): T
-    fun mapToUserEntity(item: T): UserEntity
+    /**
+     * Maps instance of [T] to an instance of [UserEntity].
+     */
+    fun from(item: T): UserEntity
 }

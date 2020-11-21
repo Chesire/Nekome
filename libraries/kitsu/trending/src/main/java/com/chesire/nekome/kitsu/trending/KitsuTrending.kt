@@ -11,7 +11,7 @@ import javax.inject.Inject
 
 class KitsuTrending @Inject constructor(
     private val trendingService: KitsuTrendingService,
-    private val mapper: TrendingEntityMapper<KitsuTrendingEntity>
+    private val map: TrendingEntityMapper<KitsuTrendingEntity>
 ) : TrendingApi {
 
     override suspend fun getTrendingAnime(): Resource<List<TrendingEntity>> {
@@ -33,7 +33,7 @@ class KitsuTrending @Inject constructor(
     private fun parseResponse(response: Response<TrendingData>): Resource<List<TrendingEntity>> {
         return if (response.isSuccessful) {
             response.body()?.let { trending ->
-                Resource.Success(trending.data.map { mapper.mapToTrendingEntity(it) })
+                Resource.Success(trending.data.map { map.from(it) })
             } ?: Resource.Error.emptyResponse()
         } else {
             response.asError()

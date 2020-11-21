@@ -25,7 +25,7 @@ private const val MANGA_TYPE = "manga"
 
 class KitsuLibrary @Inject constructor(
     private val libraryService: KitsuLibraryService,
-    private val mapper: LibraryEntityMapper<KitsuLibraryEntity>,
+    private val map: LibraryEntityMapper<KitsuLibraryEntity>,
     private val entityFactory: EntityFactory
 ) : LibraryApi {
 
@@ -139,7 +139,7 @@ class KitsuLibrary @Inject constructor(
             val body = response.body()
             if (response.isSuccessful && body != null) {
                 val series = body.data.map {
-                    mapper.mapToLibraryEntity(KitsuLibraryEntity(it, body.included))
+                    map.from(KitsuLibraryEntity(it, body.included))
                 }
                 models.addAll(series)
                 retries = 0
@@ -169,7 +169,7 @@ class KitsuLibrary @Inject constructor(
     private fun parseResponse(response: Response<KitsuLibraryEntity>): Resource<LibraryEntity> {
         return if (response.isSuccessful) {
             response.body()?.let { entity ->
-                Resource.Success(mapper.mapToLibraryEntity(entity))
+                Resource.Success(map.from(entity))
             } ?: Resource.Error.emptyResponse()
         } else {
             response.asError()

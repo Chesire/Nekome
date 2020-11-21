@@ -1,6 +1,11 @@
 package com.chesire.nekome.library.api
 
+/**
+ * Provides functionality to map from [T] to an instance of [LibraryEntity].
+ */
 interface LibraryEntityMapper<T> {
-    fun mapFromLibraryEntity(entity: LibraryEntity): T
-    fun mapToLibraryEntity(item: T): LibraryEntity
+    /**
+     * Maps instance of [T] to an instance of [LibraryEntity].
+     */
+    fun from(item: T): LibraryEntity
 }

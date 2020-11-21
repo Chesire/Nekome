@@ -1,6 +1,11 @@
 package com.chesire.nekome.auth.api
 
+/**
+ * Provides functionality to map from [T] to an instance of [AuthEntity].
+ */
 interface AuthEntityMapper<T> {
-    fun mapFromAuthEntity(entity: AuthEntity): T
-    fun mapToAuthEntity(item: T): AuthEntity
+    /**
+     * Maps instance of [T] to an instance of [AuthEntity].
+     */
+    fun from(item: T): AuthEntity
 }

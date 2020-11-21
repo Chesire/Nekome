@@ -11,7 +11,7 @@ import javax.inject.Inject
 
 class KitsuSearch @Inject constructor(
     private val searchService: KitsuSearchService,
-    private val mapper: SearchEntityMapper<KitsuSearchEntity>
+    private val map: SearchEntityMapper<KitsuSearchEntity>
 ) : SearchApi {
 
     override suspend fun searchForAnime(title: String): Resource<List<SearchEntity>> {
@@ -33,7 +33,7 @@ class KitsuSearch @Inject constructor(
     private fun parseResponse(response: Response<SearchData>): Resource<List<SearchEntity>> {
         return if (response.isSuccessful) {
             response.body()?.let { search ->
-                Resource.Success(search.data.map { mapper.mapToSearchEntity(it) })
+                Resource.Success(search.data.map { map.from(it) })
             } ?: Resource.Error.emptyResponse()
         } else {
             response.asError()
