@@ -1,6 +1,7 @@
-package com.chesire.nekome.kitsu.api.library
+package com.chesire.nekome.kitsu.library
 
-import com.chesire.nekome.core.models.SeriesModel
+import com.chesire.nekome.kitsu.library.entity.KitsuLibraryEntity
+import com.chesire.nekome.kitsu.library.entity.KitsuLibraryEntities
 import okhttp3.RequestBody
 import retrofit2.Response
 import retrofit2.http.Body
@@ -35,7 +36,7 @@ interface KitsuLibraryService {
         @Path("userId") userId: Int,
         @Query("page[offset]") offset: Int,
         @Query("page[limit]") limit: Int
-    ): Response<ParsedRetrieveResponse>
+    ): Response<KitsuLibraryEntities>
 
     /**
      * Retrieves all of the users manga series in their library.
@@ -52,7 +53,7 @@ interface KitsuLibraryService {
         @Path("userId") userId: Int,
         @Query("page[offset]") offset: Int,
         @Query("page[limit]") limit: Int
-    ): Response<ParsedRetrieveResponse>
+    ): Response<KitsuLibraryEntities>
 
     /**
      * Adds an anime series to the users library.
@@ -62,7 +63,7 @@ interface KitsuLibraryService {
             "?include=anime" +
             "&fields[anime]=$ANIME_FIELDS"
     )
-    suspend fun addAnimeAsync(@Body data: RequestBody): Response<SeriesModel>
+    suspend fun addAnimeAsync(@Body data: RequestBody): Response<KitsuLibraryEntity>
 
     /**
      * Adds a manga series to the users library.
@@ -72,7 +73,7 @@ interface KitsuLibraryService {
             "?include=manga" +
             "&fields[manga]=$MANGA_FIELDS"
     )
-    suspend fun addMangaAsync(@Body data: RequestBody): Response<SeriesModel>
+    suspend fun addMangaAsync(@Body data: RequestBody): Response<KitsuLibraryEntity>
 
     /**
      * Updates a series in the users library with new data.
@@ -86,7 +87,7 @@ interface KitsuLibraryService {
     suspend fun updateItemAsync(
         @Path("id") userSeriesId: Int,
         @Body data: RequestBody
-    ): Response<SeriesModel>
+    ): Response<KitsuLibraryEntity>
 
     /**
      * Deletes a series from the users library.
