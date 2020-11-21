@@ -31,10 +31,6 @@ android {
 }
 
 dependencies {
-    ext {
-        retrofit_version = "2.9.0"
-    }
-
     implementation project(path: ":libraries:core")
     implementation project(path: ':libraries:kitsu')
     implementation project(path: ':libraries:server:trending')
