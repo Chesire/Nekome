@@ -5,13 +5,11 @@ import com.chesire.nekome.kitsu.adapters.ImageModelAdapter
 import com.chesire.nekome.kitsu.adapters.SeriesStatusAdapter
 import com.chesire.nekome.kitsu.adapters.SeriesTypeAdapter
 import com.chesire.nekome.kitsu.adapters.SubtypeAdapter
-import com.chesire.nekome.kitsu.api.intermediaries.SeriesItem
 import com.chesire.nekome.kitsu.trending.KitsuTrending
 import com.chesire.nekome.kitsu.trending.KitsuTrendingEntity
 import com.chesire.nekome.kitsu.trending.KitsuTrendingEntityMapper
 import com.chesire.nekome.kitsu.trending.KitsuTrendingService
 import com.chesire.nekome.trending.api.TrendingApi
-import com.chesire.nekome.trending.api.TrendingEntity
 import com.chesire.nekome.trending.api.TrendingEntityMapper
 import com.squareup.moshi.Moshi
 import dagger.Binds
