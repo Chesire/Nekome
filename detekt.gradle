@@ -14,8 +14,18 @@ detekt {
         "libraries/database/src/",
         "libraries/encryption/src/",
         "libraries/kitsu/src/",
+        "libraries/kitsu/auth/src/",
+        "libraries/kitsu/library/src/",
+        "libraries/kitsu/search/src/",
+        "libraries/kitsu/trending/src/",
+        "libraries/kitsu/user/src/",
         "libraries/library/src/",
         "libraries/server/src/",
+        "libraries/server/auth/src/",
+        "libraries/server/library/src/",
+        "libraries/server/search/src/",
+        "libraries/server/trending/src/",
+        "libraries/server/user/src/",
         "testing/src/"
     )
     reports {
