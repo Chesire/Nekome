@@ -1,10 +1,10 @@
 package com.chesire.nekome.library
 
+import com.chesire.nekome.core.Resource
 import com.chesire.nekome.core.flags.UserSeriesStatus
 import com.chesire.nekome.core.models.SeriesModel
 import com.chesire.nekome.database.dao.SeriesDao
-import com.chesire.nekome.core.Resource
-import com.chesire.nekome.server.api.LibraryApi
+import com.chesire.nekome.library.api.LibraryApi
 import timber.log.Timber
 
 /**

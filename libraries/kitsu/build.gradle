@@ -38,7 +38,6 @@ dependencies {
 
     implementation project(path: ":libraries:core")
     implementation project(path: ":libraries:encryption")
-    implementation project(path: ":libraries:server")
     implementation project(path: ":libraries:server:auth")
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
