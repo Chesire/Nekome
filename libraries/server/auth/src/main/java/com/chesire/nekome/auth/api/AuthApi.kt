@@ -3,7 +3,7 @@ package com.chesire.nekome.auth.api
 import com.chesire.nekome.core.Resource
 
 /**
- * Provides methods related to authorization with a service.
+ * Methods relating to authorizing as a user.
  */
 interface AuthApi {
 

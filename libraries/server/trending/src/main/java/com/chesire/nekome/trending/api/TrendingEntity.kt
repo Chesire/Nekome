@@ -5,6 +5,9 @@ import com.chesire.nekome.core.flags.SeriesType
 import com.chesire.nekome.core.flags.Subtype
 import com.chesire.nekome.core.models.ImageModel
 
+/**
+ * Entity class for a trending item.
+ */
 data class TrendingEntity(
     val id: Int,
     val type: SeriesType,

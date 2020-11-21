@@ -5,6 +5,9 @@ import com.chesire.nekome.core.flags.SeriesType
 import com.chesire.nekome.core.flags.Subtype
 import com.chesire.nekome.core.models.ImageModel
 
+/**
+ * Entity related to a singular searched item.
+ */
 data class SearchEntity(
     val id: Int,
     val type: SeriesType,

@@ -6,6 +6,9 @@ import com.chesire.nekome.core.flags.Subtype
 import com.chesire.nekome.core.flags.UserSeriesStatus
 import com.chesire.nekome.core.models.ImageModel
 
+/**
+ * Entity related to a singular library item.
+ */
 data class LibraryEntity(
     val id: Int,
     val userId: Int,

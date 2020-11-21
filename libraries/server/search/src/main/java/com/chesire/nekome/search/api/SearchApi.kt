@@ -2,6 +2,9 @@ package com.chesire.nekome.search.api
 
 import com.chesire.nekome.core.Resource
 
+/**
+ * Methods relating to searching for series.
+ */
 interface SearchApi {
     /**
      * Search for the anime series [title].

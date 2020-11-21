@@ -7,12 +7,12 @@ import com.chesire.nekome.core.Resource
  */
 interface TrendingApi {
     /**
-     * Gets the current trending anime.
+     * Retrieves the current trending anime.
      */
     suspend fun getTrendingAnime(): Resource<List<TrendingEntity>>
 
     /**
-     * Gets the current trending manga.
+     * Retrieves the current trending manga.
      */
     suspend fun getTrendingManga(): Resource<List<TrendingEntity>>
 }
