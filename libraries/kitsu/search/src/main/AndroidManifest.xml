@@ -1,1 +1,5 @@
-<manifest package="com.chesire.nekome.kitsu.search" />
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.chesire.nekome.kitsu.search">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+</manifest>
