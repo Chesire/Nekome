@@ -1,10 +1,11 @@
-package com.chesire.nekome.kitsu.api.library
+package com.chesire.nekome.kitsu.library
 
-import com.chesire.nekome.core.flags.UserSeriesStatus
-import com.chesire.nekome.core.models.SeriesModel
-import com.chesire.nekome.kitsu.api.intermediaries.Links
 import com.chesire.nekome.core.Resource
-import com.chesire.nekome.testing.createSeriesModel
+import com.chesire.nekome.core.flags.SeriesType
+import com.chesire.nekome.core.flags.UserSeriesStatus
+import com.chesire.nekome.kitsu.api.intermediaries.Links
+import com.chesire.nekome.kitsu.library.entity.EntityFactory
+import com.chesire.nekome.kitsu.library.entity.KitsuLibraryEntity
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
@@ -19,21 +20,24 @@ import retrofit2.Response
 import java.net.UnknownHostException
 
 class KitsuLibraryTests {
+
+    private val map = KitsuLibraryEntityMapper()
+    private val factory = EntityFactory()
+
     @Test
     fun `retrieveAnime on success returns the retrieved models`() = runBlocking {
-        val expected = listOf(createSeriesModel())
-        val links = Links()
+        val expected = createKitsuLibraryEntities(SeriesType.Anime)
         val mockService = mockk<KitsuLibraryService> {
             coEvery {
                 retrieveAnimeAsync(1, 0, 500)
             } coAnswers {
-                mockk<Response<ParsedRetrieveResponse>> {
+                mockk {
                     every { isSuccessful } returns true
-                    every { body() } returns ParsedRetrieveResponse(expected, links)
+                    every { body() } returns expected
                 }
             }
         }
-        val classUnderTest = KitsuLibrary(mockService)
+        val classUnderTest = KitsuLibrary(mockService, map, factory)
         val actual = classUnderTest.retrieveAnime(1)
 
         coVerify(exactly = 1) { mockService.retrieveAnimeAsync(1, 0, 500) }
@@ -45,26 +49,26 @@ class KitsuLibraryTests {
 
     @Test
     fun `retrieveAnime more items to retrieve executes again with new offset`() = runBlocking {
-        val expected = listOf(createSeriesModel())
+        val expected = createKitsuLibraryEntities(SeriesType.Anime, Links(next = "next"))
         val mockService = mockk<KitsuLibraryService> {
             coEvery {
                 retrieveAnimeAsync(1, 0, 500)
             } coAnswers {
-                mockk<Response<ParsedRetrieveResponse>> {
+                mockk {
                     every { isSuccessful } returns true
-                    every { body() } returns ParsedRetrieveResponse(expected, Links(next = "next"))
+                    every { body() } returns expected
                 }
             }
             coEvery {
                 retrieveAnimeAsync(1, 500, 500)
             } coAnswers {
-                mockk<Response<ParsedRetrieveResponse>> {
+                mockk {
                     every { isSuccessful } returns true
-                    every { body() } returns ParsedRetrieveResponse(expected, Links())
+                    every { body() } returns createKitsuLibraryEntities(SeriesType.Anime)
                 }
             }
         }
-        val classUnderTest = KitsuLibrary(mockService)
+        val classUnderTest = KitsuLibrary(mockService, map, factory)
         classUnderTest.retrieveAnime(1)
 
         coVerify(exactly = 2) { mockService.retrieveAnimeAsync(any(), any(), any()) }
@@ -76,7 +80,7 @@ class KitsuLibraryTests {
             coEvery {
                 retrieveAnimeAsync(1, 0, 500)
             } coAnswers {
-                mockk<Response<ParsedRetrieveResponse>> {
+                mockk {
                     every { isSuccessful } returns false
                     every { code() } returns 0
                     every { body() } returns null
@@ -86,7 +90,7 @@ class KitsuLibraryTests {
                 }
             }
         }
-        val classUnderTest = KitsuLibrary(mockService)
+        val classUnderTest = KitsuLibrary(mockService, map, factory)
         val actual = classUnderTest.retrieveAnime(1)
 
         coVerify(exactly = 4) { mockService.retrieveAnimeAsync(1, 0, 500) }
@@ -102,10 +106,10 @@ class KitsuLibraryTests {
             coEvery {
                 retrieveAnimeAsync(1, 0, 500)
             } coAnswers {
-                mockk<Response<ParsedRetrieveResponse>> {
+                mockk {
                     every { isSuccessful } returns true
-                    every { body() } returns ParsedRetrieveResponse(
-                        listOf(mockk()),
+                    every { body() } returns createKitsuLibraryEntities(
+                        SeriesType.Anime,
                         Links(next = "next")
                     )
                 }
@@ -113,7 +117,7 @@ class KitsuLibraryTests {
             coEvery {
                 retrieveAnimeAsync(1, 500, 500)
             } coAnswers {
-                mockk<Response<ParsedRetrieveResponse>> {
+                mockk {
                     every { isSuccessful } returns false
                     every { code() } returns 0
                     every { body() } returns null
@@ -123,7 +127,7 @@ class KitsuLibraryTests {
                 }
             }
         }
-        val classUnderTest = KitsuLibrary(mockService)
+        val classUnderTest = KitsuLibrary(mockService, map, factory)
         val actual = classUnderTest.retrieveAnime(1)
 
         coVerify { mockService.retrieveAnimeAsync(1, 0, 500) }
@@ -140,7 +144,7 @@ class KitsuLibraryTests {
             coEvery { retrieveAnimeAsync(any(), any(), any()) } throws UnknownHostException()
         }
 
-        val classUnderTest = KitsuLibrary(mockService)
+        val classUnderTest = KitsuLibrary(mockService, map, factory)
         val result = classUnderTest.retrieveAnime(0)
 
         when (result) {
@@ -151,18 +155,18 @@ class KitsuLibraryTests {
 
     @Test
     fun `retrieveManga on success returns the retrieved models`() = runBlocking {
-        val expected = listOf(createSeriesModel())
+        val expected = createKitsuLibraryEntities(SeriesType.Manga)
         val mockService = mockk<KitsuLibraryService> {
             coEvery {
                 retrieveMangaAsync(0, 0, 500)
             } coAnswers {
-                mockk<Response<ParsedRetrieveResponse>> {
+                mockk {
                     every { isSuccessful } returns true
-                    every { body() } returns ParsedRetrieveResponse(expected, Links())
+                    every { body() } returns expected
                 }
             }
         }
-        val classUnderTest = KitsuLibrary(mockService)
+        val classUnderTest = KitsuLibrary(mockService, map, factory)
         val actual = classUnderTest.retrieveManga(0)
 
         when (actual) {
@@ -173,26 +177,26 @@ class KitsuLibraryTests {
 
     @Test
     fun `retrieveManga more items to retrieve executes again with new offset`() = runBlocking {
-        val expected = listOf(createSeriesModel())
+        val expected = createKitsuLibraryEntities(SeriesType.Manga, Links(next = "next"))
         val mockService = mockk<KitsuLibraryService> {
             coEvery {
                 retrieveMangaAsync(1, 0, 500)
             } coAnswers {
-                mockk<Response<ParsedRetrieveResponse>> {
+                mockk {
                     every { isSuccessful } returns true
-                    every { body() } returns ParsedRetrieveResponse(expected, Links(next = "next"))
+                    every { body() } returns expected
                 }
             }
             coEvery {
                 retrieveMangaAsync(1, 500, 500)
             } coAnswers {
-                mockk<Response<ParsedRetrieveResponse>> {
+                mockk {
                     every { isSuccessful } returns true
-                    every { body() } returns ParsedRetrieveResponse(expected, Links())
+                    every { body() } returns createKitsuLibraryEntities(SeriesType.Manga)
                 }
             }
         }
-        val classUnderTest = KitsuLibrary(mockService)
+        val classUnderTest = KitsuLibrary(mockService, map, factory)
         classUnderTest.retrieveManga(1)
 
         coVerify(exactly = 2) { mockService.retrieveMangaAsync(any(), any(), any()) }
@@ -204,7 +208,7 @@ class KitsuLibraryTests {
             coEvery {
                 retrieveMangaAsync(1, 0, 500)
             } coAnswers {
-                mockk<Response<ParsedRetrieveResponse>> {
+                mockk {
                     every { isSuccessful } returns false
                     every { code() } returns 0
                     every { body() } returns null
@@ -214,7 +218,7 @@ class KitsuLibraryTests {
                 }
             }
         }
-        val classUnderTest = KitsuLibrary(mockService)
+        val classUnderTest = KitsuLibrary(mockService, map, factory)
         val actual = classUnderTest.retrieveManga(1)
 
         coVerify(exactly = 4) { mockService.retrieveMangaAsync(1, 0, 500) }
@@ -230,10 +234,10 @@ class KitsuLibraryTests {
             coEvery {
                 retrieveMangaAsync(1, 0, 500)
             } coAnswers {
-                mockk<Response<ParsedRetrieveResponse>> {
+                mockk {
                     every { isSuccessful } returns true
-                    every { body() } returns ParsedRetrieveResponse(
-                        listOf(mockk()),
+                    every { body() } returns createKitsuLibraryEntities(
+                        SeriesType.Manga,
                         Links(next = "next")
                     )
                 }
@@ -241,7 +245,7 @@ class KitsuLibraryTests {
             coEvery {
                 retrieveMangaAsync(1, 500, 500)
             } coAnswers {
-                mockk<Response<ParsedRetrieveResponse>> {
+                mockk {
                     every { isSuccessful } returns false
                     every { code() } returns 0
                     every { body() } returns null
@@ -251,7 +255,7 @@ class KitsuLibraryTests {
                 }
             }
         }
-        val classUnderTest = KitsuLibrary(mockService)
+        val classUnderTest = KitsuLibrary(mockService, map, factory)
         val actual = classUnderTest.retrieveManga(1)
 
         coVerify { mockService.retrieveMangaAsync(1, 0, 500) }
@@ -270,7 +274,7 @@ class KitsuLibraryTests {
             } throws UnknownHostException()
         }
 
-        val classUnderTest = KitsuLibrary(mockService)
+        val classUnderTest = KitsuLibrary(mockService, map, factory)
         val result = classUnderTest.retrieveManga(0)
 
         when (result) {
@@ -281,8 +285,8 @@ class KitsuLibraryTests {
 
     @Test
     fun `addAnime returns the added SeriesModel`() = runBlocking {
-        val mockModel = createSeriesModel()
-        val mockResponse = mockk<Response<SeriesModel>> {
+        val mockModel = createKitsuLibraryEntity(SeriesType.Anime)
+        val mockResponse = mockk<Response<KitsuLibraryEntity>> {
             every { isSuccessful } returns true
             every { body() } returns mockModel
         }
@@ -294,7 +298,7 @@ class KitsuLibraryTests {
             }
         }
 
-        val classUnderTest = KitsuLibrary(mockService)
+        val classUnderTest = KitsuLibrary(mockService, map, factory)
         val actual = classUnderTest.addAnime(1, 10, UserSeriesStatus.Planned)
 
         when (actual) {
@@ -309,7 +313,7 @@ class KitsuLibraryTests {
             coEvery { addAnimeAsync(any()) } throws UnknownHostException()
         }
 
-        val classUnderTest = KitsuLibrary(mockService)
+        val classUnderTest = KitsuLibrary(mockService, map, factory)
         val result = classUnderTest.addAnime(0, 0, UserSeriesStatus.Dropped)
 
         when (result) {
@@ -320,8 +324,8 @@ class KitsuLibraryTests {
 
     @Test
     fun `addManga returns the added SeriesModel`() = runBlocking {
-        val mockModel = createSeriesModel()
-        val mockResponse = mockk<Response<SeriesModel>> {
+        val mockModel = createKitsuLibraryEntity(SeriesType.Manga)
+        val mockResponse = mockk<Response<KitsuLibraryEntity>> {
             every { isSuccessful } returns true
             every { body() } returns mockModel
         }
@@ -333,7 +337,7 @@ class KitsuLibraryTests {
             }
         }
 
-        val classUnderTest = KitsuLibrary(mockService)
+        val classUnderTest = KitsuLibrary(mockService, map, factory)
         val actual = classUnderTest.addManga(1, 10, UserSeriesStatus.Planned)
 
         when (actual) {
@@ -348,7 +352,7 @@ class KitsuLibraryTests {
             coEvery { addMangaAsync(any()) } throws UnknownHostException()
         }
 
-        val classUnderTest = KitsuLibrary(mockService)
+        val classUnderTest = KitsuLibrary(mockService, map, factory)
         val result = classUnderTest.addManga(0, 0, UserSeriesStatus.Dropped)
 
         when (result) {
@@ -359,8 +363,8 @@ class KitsuLibraryTests {
 
     @Test
     fun `update success returns Resource#Success with SeriesModel`() = runBlocking {
-        val mockModel = createSeriesModel()
-        val mockResponse = mockk<Response<SeriesModel>> {
+        val mockModel = createKitsuLibraryEntity(SeriesType.Manga)
+        val mockResponse = mockk<Response<KitsuLibraryEntity>> {
             every { isSuccessful } returns true
             every { body() } returns mockModel
         }
@@ -372,7 +376,7 @@ class KitsuLibraryTests {
             }
         }
 
-        val classUnderTest = KitsuLibrary(mockService)
+        val classUnderTest = KitsuLibrary(mockService, map, factory)
         val actual = classUnderTest.update(10, 0, UserSeriesStatus.OnHold)
 
         when (actual) {
@@ -384,7 +388,7 @@ class KitsuLibraryTests {
     @Test
     fun `update success returns Resource#Error if no body`() = runBlocking {
         val expected = "Response body is null"
-        val mockResponse = mockk<Response<SeriesModel>> {
+        val mockResponse = mockk<Response<KitsuLibraryEntity>> {
             every { isSuccessful } returns true
             every { body() } returns null
         }
@@ -396,7 +400,7 @@ class KitsuLibraryTests {
             }
         }
 
-        val classUnderTest = KitsuLibrary(mockService)
+        val classUnderTest = KitsuLibrary(mockService, map, factory)
         val actual = classUnderTest.update(10, 0, UserSeriesStatus.OnHold)
 
         when (actual) {
@@ -412,7 +416,7 @@ class KitsuLibraryTests {
         val mockResponseBody = mockk<ResponseBody> {
             every { string() } returns expected
         }
-        val mockResponse = mockk<Response<SeriesModel>> {
+        val mockResponse = mockk<Response<KitsuLibraryEntity>> {
             every { isSuccessful } returns false
             every { errorBody() } returns mockResponseBody
             every { code() } returns 0
@@ -425,7 +429,7 @@ class KitsuLibraryTests {
             }
         }
 
-        val classUnderTest = KitsuLibrary(mockService)
+        val classUnderTest = KitsuLibrary(mockService, map, factory)
         val actual = classUnderTest.update(10, 0, UserSeriesStatus.OnHold)
 
         when (actual) {
@@ -438,7 +442,7 @@ class KitsuLibraryTests {
     fun `update failure returns Resource#Error with message if null errorBody`() = runBlocking {
         val expected = "errorBodyString"
 
-        val mockResponse = mockk<Response<SeriesModel>> {
+        val mockResponse = mockk<Response<KitsuLibraryEntity>> {
             every { isSuccessful } returns false
             every { errorBody() } returns null
             every { message() } returns expected
@@ -452,7 +456,7 @@ class KitsuLibraryTests {
             }
         }
 
-        val classUnderTest = KitsuLibrary(mockService)
+        val classUnderTest = KitsuLibrary(mockService, map, factory)
         val actual = classUnderTest.update(10, 0, UserSeriesStatus.OnHold)
 
         when (actual) {
@@ -467,7 +471,7 @@ class KitsuLibraryTests {
             coEvery { updateItemAsync(any(), any()) } throws UnknownHostException()
         }
 
-        val classUnderTest = KitsuLibrary(mockService)
+        val classUnderTest = KitsuLibrary(mockService, map, factory)
         val result = classUnderTest.update(0, 0, UserSeriesStatus.Current)
 
         when (result) {
@@ -489,7 +493,7 @@ class KitsuLibraryTests {
             }
         }
 
-        val classUnderTest = KitsuLibrary(mockService)
+        val classUnderTest = KitsuLibrary(mockService, map, factory)
         val actual = classUnderTest.delete(10)
 
         when (actual) {
@@ -518,7 +522,7 @@ class KitsuLibraryTests {
             }
         }
 
-        val classUnderTest = KitsuLibrary(mockService)
+        val classUnderTest = KitsuLibrary(mockService, map, factory)
         val actual = classUnderTest.delete(10)
 
         when (actual) {
@@ -545,7 +549,7 @@ class KitsuLibraryTests {
             }
         }
 
-        val classUnderTest = KitsuLibrary(mockService)
+        val classUnderTest = KitsuLibrary(mockService, map, factory)
         val actual = classUnderTest.delete(10)
 
         when (actual) {
@@ -560,7 +564,7 @@ class KitsuLibraryTests {
             coEvery { deleteItemAsync(any()) } throws UnknownHostException()
         }
 
-        val classUnderTest = KitsuLibrary(mockService)
+        val classUnderTest = KitsuLibrary(mockService, map, factory)
         val result = classUnderTest.delete(0)
 
         when (result) {

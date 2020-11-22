@@ -1,4 +1,4 @@
-package com.chesire.nekome.kitsu.adapters
+package com.chesire.nekome.kitsu.library.adapter
 
 import com.chesire.nekome.core.flags.UserSeriesStatus
 import com.squareup.moshi.FromJson

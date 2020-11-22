@@ -3,8 +3,8 @@ package com.chesire.nekome.kitsu.library
 import com.chesire.nekome.core.EntityMapper
 import com.chesire.nekome.core.Resource
 import com.chesire.nekome.core.flags.UserSeriesStatus
-import com.chesire.nekome.kitsu.adapters.UserSeriesStatusAdapter
 import com.chesire.nekome.kitsu.asError
+import com.chesire.nekome.kitsu.library.adapter.UserSeriesStatusAdapter
 import com.chesire.nekome.kitsu.library.entity.EntityFactory
 import com.chesire.nekome.kitsu.library.entity.KitsuLibraryEntities
 import com.chesire.nekome.kitsu.library.entity.KitsuLibraryEntity

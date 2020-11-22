@@ -6,10 +6,10 @@ import com.chesire.nekome.kitsu.adapters.ImageModelAdapter
 import com.chesire.nekome.kitsu.adapters.SeriesStatusAdapter
 import com.chesire.nekome.kitsu.adapters.SeriesTypeAdapter
 import com.chesire.nekome.kitsu.adapters.SubtypeAdapter
-import com.chesire.nekome.kitsu.adapters.UserSeriesStatusAdapter
 import com.chesire.nekome.kitsu.library.KitsuLibrary
 import com.chesire.nekome.kitsu.library.KitsuLibraryEntityMapper
 import com.chesire.nekome.kitsu.library.KitsuLibraryService
+import com.chesire.nekome.kitsu.library.adapter.UserSeriesStatusAdapter
 import com.chesire.nekome.kitsu.library.entity.KitsuLibraryEntity
 import com.chesire.nekome.kitsu.trending.KitsuTrendingService
 import com.chesire.nekome.library.api.LibraryApi
