@@ -3,11 +3,11 @@ package com.chesire.nekome.injection
 import com.chesire.nekome.core.EntityMapper
 import com.chesire.nekome.kitsu.KITSU_URL
 import com.chesire.nekome.kitsu.adapters.ImageModelAdapter
-import com.chesire.nekome.kitsu.adapters.RatingSystemAdapter
 import com.chesire.nekome.kitsu.user.KitsuUser
 import com.chesire.nekome.kitsu.user.KitsuUserEntity
 import com.chesire.nekome.kitsu.user.KitsuUserEntityMapper
 import com.chesire.nekome.kitsu.user.KitsuUserService
+import com.chesire.nekome.kitsu.user.adapter.RatingSystemAdapter
 import com.chesire.nekome.user.api.UserApi
 import com.chesire.nekome.user.api.UserEntity
 import com.squareup.moshi.Moshi

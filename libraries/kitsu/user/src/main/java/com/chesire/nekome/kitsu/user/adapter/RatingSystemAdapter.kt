@@ -1,4 +1,4 @@
-package com.chesire.nekome.kitsu.adapters
+package com.chesire.nekome.kitsu.user.adapter
 
 import com.chesire.nekome.core.flags.RatingSystem
 import com.squareup.moshi.FromJson
