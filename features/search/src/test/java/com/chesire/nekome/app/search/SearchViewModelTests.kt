@@ -3,11 +3,11 @@ package com.chesire.nekome.app.search
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.chesire.nekome.core.AuthCaster
+import com.chesire.nekome.core.Resource
 import com.chesire.nekome.core.flags.AsyncState
 import com.chesire.nekome.core.flags.SeriesType
 import com.chesire.nekome.core.models.SeriesModel
-import com.chesire.nekome.core.Resource
-import com.chesire.nekome.server.api.SearchApi
+import com.chesire.nekome.search.api.SearchApi
 import com.chesire.nekome.testing.CoroutinesMainDispatcherRule
 import io.mockk.Runs
 import io.mockk.coEvery
@@ -24,6 +24,7 @@ import org.junit.Test
 class SearchViewModelTests {
     @get:Rule
     val taskExecutorRule = InstantTaskExecutorRule()
+
     @get:Rule
     val coroutineRule = CoroutinesMainDispatcherRule()
 

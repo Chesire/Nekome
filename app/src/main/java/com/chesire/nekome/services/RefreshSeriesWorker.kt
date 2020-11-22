@@ -6,8 +6,8 @@ import androidx.hilt.work.WorkerInject
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.chesire.nekome.account.UserRepository
-import com.chesire.nekome.library.SeriesRepository
 import com.chesire.nekome.core.Resource
+import com.chesire.nekome.library.SeriesRepository
 import timber.log.Timber
 
 /**

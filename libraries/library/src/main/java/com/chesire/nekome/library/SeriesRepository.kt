@@ -26,14 +26,12 @@ class SeriesRepository(
      * Adds the anime series with id [seriesId] to the users tracked list.
      */
     suspend fun addAnime(seriesId: Int, startingStatus: UserSeriesStatus): Resource<SeriesModel> {
-        return when (
-            val response =
-                libraryApi.addAnime(
-                    userProvider.provideUserId(),
-                    seriesId,
-                    startingStatus
-                )
-            ) {
+        val response = libraryApi.addAnime(
+            userProvider.provideUserId(),
+            seriesId,
+            startingStatus
+        )
+        return when (response) {
             is Resource.Success -> {
                 val newData = mapToSeriesModel(response.data)
                 seriesDao.insert(newData)
@@ -50,14 +48,12 @@ class SeriesRepository(
      * Adds the manga series with id [seriesId] to the users tracked list.
      */
     suspend fun addManga(seriesId: Int, startingStatus: UserSeriesStatus): Resource<SeriesModel> {
-        return when (
-            val response =
-                libraryApi.addManga(
-                    userProvider.provideUserId(),
-                    seriesId,
-                    startingStatus
-                )
-            ) {
+        val response = libraryApi.addManga(
+            userProvider.provideUserId(),
+            seriesId,
+            startingStatus
+        )
+        return when (response) {
             is Resource.Success -> {
                 val newData = mapToSeriesModel(response.data)
                 seriesDao.insert(newData)
@@ -89,8 +85,8 @@ class SeriesRepository(
      * Pulls and stores all of the users anime list.
      */
     suspend fun refreshAnime(): Resource<List<SeriesModel>> {
-        return when (
-            val response = libraryApi.retrieveAnime(userProvider.provideUserId())) {
+        val response = libraryApi.retrieveAnime(userProvider.provideUserId())
+        return when (response) {
             is Resource.Success -> {
                 val add = response.data.map { mapToSeriesModel(it) }
                 seriesDao.insert(add)
@@ -107,8 +103,8 @@ class SeriesRepository(
      * Pulls and stores all of the users manga list.
      */
     suspend fun refreshManga(): Resource<List<SeriesModel>> {
-        return when (
-            val response = libraryApi.retrieveManga(userProvider.provideUserId())) {
+        val response = libraryApi.retrieveManga(userProvider.provideUserId())
+        return when (response) {
             is Resource.Success -> {
                 val add = response.data.map { mapToSeriesModel(it) }
                 seriesDao.insert(add)
@@ -130,8 +126,8 @@ class SeriesRepository(
         progress: Int,
         status: UserSeriesStatus
     ): Resource<SeriesModel> {
-        return when (
-            val response = libraryApi.update(userSeriesId, progress, status)) {
+        val response = libraryApi.update(userSeriesId, progress, status)
+        return when (response) {
             is Resource.Success -> {
                 val add = mapToSeriesModel(response.data)
                 seriesDao.update(add)

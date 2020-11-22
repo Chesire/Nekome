@@ -1,10 +1,10 @@
 package com.chesire.nekome.account
 
+import com.chesire.nekome.core.Resource
 import com.chesire.nekome.core.flags.Service
 import com.chesire.nekome.database.dao.UserDao
-import com.chesire.nekome.core.Resource
-import com.chesire.nekome.server.api.UserApi
 import com.chesire.nekome.testing.createUserModel
+import com.chesire.nekome.user.api.UserApi
 import io.mockk.Runs
 import io.mockk.coEvery
 import io.mockk.coVerify

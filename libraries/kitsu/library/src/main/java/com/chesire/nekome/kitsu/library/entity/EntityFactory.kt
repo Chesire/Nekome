@@ -40,7 +40,7 @@ class EntityFactory @Inject constructor() {
     }
   }
 }
-    """.trimIndent()
+        """.trimIndent()
 
     /**
      * Creates a new JSON entity for updating a series.
@@ -61,5 +61,5 @@ class EntityFactory @Inject constructor() {
     }
   }
 }
-    """.trimIndent()
+        """.trimIndent()
 }

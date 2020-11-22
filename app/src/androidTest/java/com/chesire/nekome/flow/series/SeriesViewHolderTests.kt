@@ -2,19 +2,13 @@ package com.chesire.nekome.flow.series
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.chesire.nekome.R
+import com.chesire.nekome.core.Resource
 import com.chesire.nekome.core.flags.Subtype
 import com.chesire.nekome.database.dao.SeriesDao
 import com.chesire.nekome.helpers.launchActivity
 import com.chesire.nekome.helpers.login
 import com.chesire.nekome.injection.DatabaseModule
-import com.chesire.nekome.injection.KitsuModule
 import com.chesire.nekome.kitsu.AuthProvider
-import com.chesire.nekome.core.Resource
-import com.chesire.nekome.server.api.AuthApi
-import com.chesire.nekome.server.api.LibraryApi
-import com.chesire.nekome.server.api.SearchApi
-import com.chesire.nekome.server.api.TrendingApi
-import com.chesire.nekome.server.api.UserApi
 import com.chesire.nekome.testing.createSeriesModel
 import com.schibsted.spain.barista.assertion.BaristaListAssertions.assertDisplayedAtPosition
 import com.schibsted.spain.barista.assertion.BaristaListAssertions.assertListNotEmpty

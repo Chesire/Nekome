@@ -4,8 +4,8 @@ import android.content.Context
 import androidx.work.ListenableWorker
 import androidx.work.WorkerParameters
 import com.chesire.nekome.account.UserRepository
-import com.chesire.nekome.library.SeriesRepository
 import com.chesire.nekome.core.Resource
+import com.chesire.nekome.library.SeriesRepository
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every

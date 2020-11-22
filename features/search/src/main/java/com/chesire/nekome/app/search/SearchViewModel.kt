@@ -51,7 +51,7 @@ class SearchViewModel @ViewModelInject constructor(
             }
 
             // TODO:
-            //parseSearchResponse(response)
+            // parseSearchResponse(response)
         }
     }
 

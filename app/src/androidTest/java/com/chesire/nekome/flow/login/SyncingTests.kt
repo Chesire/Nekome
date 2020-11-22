@@ -2,19 +2,12 @@ package com.chesire.nekome.flow.login
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.chesire.nekome.R
+import com.chesire.nekome.core.Resource
 import com.chesire.nekome.helpers.launchActivity
 import com.chesire.nekome.helpers.logout
 import com.chesire.nekome.injection.DatabaseModule
-import com.chesire.nekome.injection.KitsuModule
 import com.chesire.nekome.kitsu.AuthProvider
-import com.chesire.nekome.core.Resource
-import com.chesire.nekome.server.api.AuthApi
-import com.chesire.nekome.server.api.LibraryApi
-import com.chesire.nekome.server.api.SearchApi
-import com.chesire.nekome.server.api.TrendingApi
-import com.chesire.nekome.server.api.UserApi
 import com.chesire.nekome.testing.createSeriesModel
-import com.chesire.nekome.testing.createUserModel
 import com.schibsted.spain.barista.interaction.BaristaClickInteractions.clickOn
 import com.schibsted.spain.barista.interaction.BaristaEditTextInteractions.writeTo
 import com.schibsted.spain.barista.interaction.BaristaKeyboardInteractions.closeKeyboard

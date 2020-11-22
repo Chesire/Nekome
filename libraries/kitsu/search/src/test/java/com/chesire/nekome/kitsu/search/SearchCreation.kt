@@ -5,7 +5,6 @@ import com.chesire.nekome.core.flags.SeriesType
 import com.chesire.nekome.core.flags.Subtype
 import com.chesire.nekome.core.models.ImageModel
 
-
 /**
  * Create a [KitsuSearchEntity] for tests.
  */

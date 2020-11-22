@@ -3,9 +3,9 @@ package com.chesire.nekome.app.login.syncing
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.chesire.nekome.account.UserRepository
+import com.chesire.nekome.core.Resource
 import com.chesire.nekome.core.flags.AsyncState
 import com.chesire.nekome.library.SeriesRepository
-import com.chesire.nekome.core.Resource
 import com.chesire.nekome.testing.CoroutinesMainDispatcherRule
 import io.mockk.Runs
 import io.mockk.coEvery

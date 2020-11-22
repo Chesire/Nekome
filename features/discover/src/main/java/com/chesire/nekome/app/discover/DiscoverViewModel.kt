@@ -22,8 +22,8 @@ class DiscoverViewModel @ViewModelInject constructor(
             MutableLiveData<AsyncState<List<SeriesModel>, DiscoverError>>(AsyncState.Loading())
         viewModelScope.launch {
             when (val animeList = trending.getTrendingAnime()) {
-                //is Resource.Success -> trendingData.postSuccess(animeList.data)
-                //is Resource.Error -> trendingData.postError(DiscoverError.Error)
+                // is Resource.Success -> trendingData.postSuccess(animeList.data)
+                // is Resource.Error -> trendingData.postError(DiscoverError.Error)
             }
         }
         return@lazy trendingData
@@ -34,8 +34,8 @@ class DiscoverViewModel @ViewModelInject constructor(
             MutableLiveData<AsyncState<List<SeriesModel>, DiscoverError>>(AsyncState.Loading())
         viewModelScope.launch {
             when (val mangaList = trending.getTrendingManga()) {
-                //is Resource.Success -> trendingData.postSuccess(mangaList.data)
-                //is Resource.Error -> trendingData.postError(DiscoverError.Error)
+                // is Resource.Success -> trendingData.postSuccess(mangaList.data)
+                // is Resource.Error -> trendingData.postError(DiscoverError.Error)
             }
         }
         return@lazy trendingData
