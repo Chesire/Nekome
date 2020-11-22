@@ -1,7 +1,7 @@
-package com.chesire.nekome.kitsu.api.search
+package com.chesire.nekome.kitsu.search
 
-import com.chesire.nekome.core.models.SeriesModel
 import com.chesire.nekome.core.Resource
+import com.chesire.nekome.core.flags.SeriesType
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
@@ -14,6 +14,9 @@ import retrofit2.Response
 import java.net.UnknownHostException
 
 class KitsuSearchTests {
+
+    private val map = KitsuSearchEntityMapper()
+
     @Test
     fun `searchForAnime failure response returns Resource#Error with errorBody`() = runBlocking {
         val expected = "errorBodyString"
@@ -21,7 +24,7 @@ class KitsuSearchTests {
         val mockResponseBody = mockk<ResponseBody> {
             every { string() } returns expected
         }
-        val mockResponse = mockk<Response<List<SeriesModel>>> {
+        val mockResponse = mockk<Response<SearchData>> {
             every { isSuccessful } returns false
             every { errorBody() } returns mockResponseBody
             every { code() } returns 0
@@ -34,7 +37,7 @@ class KitsuSearchTests {
             }
         }
 
-        val classUnderTest = KitsuSearch(mockService)
+        val classUnderTest = KitsuSearch(mockService, map)
         val actual = classUnderTest.searchForAnime("Anime")
 
         when (actual) {
@@ -48,7 +51,7 @@ class KitsuSearchTests {
         runBlocking {
             val expected = "responseBodyString"
 
-            val mockResponse = mockk<Response<List<SeriesModel>>> {
+            val mockResponse = mockk<Response<SearchData>> {
                 every { isSuccessful } returns false
                 every { errorBody() } returns null
                 every { message() } returns expected
@@ -62,7 +65,7 @@ class KitsuSearchTests {
                 }
             }
 
-            val classUnderTest = KitsuSearch(mockService)
+            val classUnderTest = KitsuSearch(mockService, map)
             val actual = classUnderTest.searchForAnime("Anime")
 
             when (actual) {
@@ -75,7 +78,7 @@ class KitsuSearchTests {
     fun `searchForAnime successful response with no body returns Resource#Error`() = runBlocking {
         val expected = "Response body is null"
 
-        val mockResponse = mockk<Response<List<SeriesModel>>> {
+        val mockResponse = mockk<Response<SearchData>> {
             every { isSuccessful } returns true
             every { body() } returns null
             every { message() } returns expected
@@ -88,7 +91,7 @@ class KitsuSearchTests {
             }
         }
 
-        val classUnderTest = KitsuSearch(mockService)
+        val classUnderTest = KitsuSearch(mockService, map)
         val actual = classUnderTest.searchForAnime("Anime")
 
         when (actual) {
@@ -99,9 +102,9 @@ class KitsuSearchTests {
 
     @Test
     fun `searchForAnime successful response with body returns Resource#Success`() = runBlocking {
-        val expected = listOf<SeriesModel>(mockk())
+        val expected = SearchData(listOf(createKitsuSearchingEntity(SeriesType.Anime)), mockk())
 
-        val mockResponse = mockk<Response<List<SeriesModel>>> {
+        val mockResponse = mockk<Response<SearchData>> {
             every { isSuccessful } returns true
             every { body() } returns expected
         }
@@ -113,7 +116,7 @@ class KitsuSearchTests {
             }
         }
 
-        val classUnderTest = KitsuSearch(mockService)
+        val classUnderTest = KitsuSearch(mockService, map)
         val actual = classUnderTest.searchForAnime("Anime")
 
         when (actual) {
@@ -128,7 +131,7 @@ class KitsuSearchTests {
             coEvery { searchForAnimeAsync(any()) } throws UnknownHostException()
         }
 
-        val classUnderTest = KitsuSearch(mockService)
+        val classUnderTest = KitsuSearch(mockService, map)
         val result = classUnderTest.searchForAnime("")
 
         when (result) {
@@ -144,7 +147,7 @@ class KitsuSearchTests {
         val mockResponseBody = mockk<ResponseBody> {
             every { string() } returns expected
         }
-        val mockResponse = mockk<Response<List<SeriesModel>>> {
+        val mockResponse = mockk<Response<SearchData>> {
             every { isSuccessful } returns false
             every { errorBody() } returns mockResponseBody
             every { code() } returns 0
@@ -157,7 +160,7 @@ class KitsuSearchTests {
             }
         }
 
-        val classUnderTest = KitsuSearch(mockService)
+        val classUnderTest = KitsuSearch(mockService, map)
         val actual = classUnderTest.searchForManga("Manga")
 
         when (actual) {
@@ -171,7 +174,7 @@ class KitsuSearchTests {
         runBlocking {
             val expected = "responseBodyString"
 
-            val mockResponse = mockk<Response<List<SeriesModel>>> {
+            val mockResponse = mockk<Response<SearchData>> {
                 every { isSuccessful } returns false
                 every { errorBody() } returns null
                 every { message() } returns expected
@@ -185,7 +188,7 @@ class KitsuSearchTests {
                 }
             }
 
-            val classUnderTest = KitsuSearch(mockService)
+            val classUnderTest = KitsuSearch(mockService, map)
             val actual = classUnderTest.searchForManga("Manga")
 
             when (actual) {
@@ -198,7 +201,7 @@ class KitsuSearchTests {
     fun `searchForManga successful response with no body returns Resource#Error`() = runBlocking {
         val expected = "Response body is null"
 
-        val mockResponse = mockk<Response<List<SeriesModel>>> {
+        val mockResponse = mockk<Response<SearchData>> {
             every { isSuccessful } returns true
             every { body() } returns null
             every { message() } returns expected
@@ -211,7 +214,7 @@ class KitsuSearchTests {
             }
         }
 
-        val classUnderTest = KitsuSearch(mockService)
+        val classUnderTest = KitsuSearch(mockService, map)
         val actual = classUnderTest.searchForManga("Manga")
 
         when (actual) {
@@ -222,9 +225,9 @@ class KitsuSearchTests {
 
     @Test
     fun `searchForManga successful response with body returns Resource#Success`() = runBlocking {
-        val expected = listOf<SeriesModel>(mockk())
+        val expected = SearchData(listOf(createKitsuSearchingEntity(SeriesType.Manga)), mockk())
 
-        val mockResponse = mockk<Response<List<SeriesModel>>> {
+        val mockResponse = mockk<Response<SearchData>> {
             every { isSuccessful } returns true
             every { body() } returns expected
         }
@@ -236,7 +239,7 @@ class KitsuSearchTests {
             }
         }
 
-        val classUnderTest = KitsuSearch(mockService)
+        val classUnderTest = KitsuSearch(mockService, map)
         val actual = classUnderTest.searchForManga("Manga")
 
         when (actual) {
@@ -251,7 +254,7 @@ class KitsuSearchTests {
             coEvery { searchForMangaAsync(any()) } throws UnknownHostException()
         }
 
-        val classUnderTest = KitsuSearch(mockService)
+        val classUnderTest = KitsuSearch(mockService, map)
         val result = classUnderTest.searchForManga("")
 
         when (result) {

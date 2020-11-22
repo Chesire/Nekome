@@ -1,19 +1,21 @@
-package com.chesire.nekome.kitsu.api.trending
+package com.chesire.nekome.kitsu.trending
 
-import com.chesire.nekome.core.models.SeriesModel
 import com.chesire.nekome.core.Resource
-import com.chesire.nekome.testing.createSeriesModel
+import com.chesire.nekome.core.flags.SeriesType
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.runBlocking
 import okhttp3.ResponseBody
-import org.junit.Assert
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Test
 import retrofit2.Response
 import java.net.UnknownHostException
 
 class KitsuTrendingTests {
+    private val map = KitsuTrendingEntityMapper()
+
     @Test
     fun `trendingAnime failure response returns Resource#Error with errorBody`() = runBlocking {
         val expected = "errorBodyString"
@@ -21,7 +23,7 @@ class KitsuTrendingTests {
         val mockResponseBody = mockk<ResponseBody> {
             every { string() } returns expected
         }
-        val mockResponse = mockk<Response<List<SeriesModel>>> {
+        val mockResponse = mockk<Response<TrendingData>> {
             every { isSuccessful } returns false
             every { errorBody() } returns mockResponseBody
             every { code() } returns 0
@@ -34,11 +36,11 @@ class KitsuTrendingTests {
             }
         }
 
-        val classUnderTest = KitsuTrending(mockService)
+        val classUnderTest = KitsuTrending(mockService, map)
 
-        when (val actual = classUnderTest.trendingAnime()) {
+        when (val actual = classUnderTest.getTrendingAnime()) {
             is Resource.Success -> error("Test has failed")
-            is Resource.Error -> Assert.assertEquals(expected, actual.msg)
+            is Resource.Error -> assertEquals(expected, actual.msg)
         }
     }
 
@@ -47,7 +49,7 @@ class KitsuTrendingTests {
         runBlocking {
             val expected = "responseBodyString"
 
-            val mockResponse = mockk<Response<List<SeriesModel>>> {
+            val mockResponse = mockk<Response<TrendingData>> {
                 every { isSuccessful } returns false
                 every { errorBody() } returns null
                 every { message() } returns expected
@@ -61,11 +63,11 @@ class KitsuTrendingTests {
                 }
             }
 
-            val classUnderTest = KitsuTrending(mockService)
+            val classUnderTest = KitsuTrending(mockService, map)
 
-            when (val actual = classUnderTest.trendingAnime()) {
+            when (val actual = classUnderTest.getTrendingAnime()) {
                 is Resource.Success -> error("Test has failed")
-                is Resource.Error -> Assert.assertEquals(expected, actual.msg)
+                is Resource.Error -> assertEquals(expected, actual.msg)
             }
         }
 
@@ -73,7 +75,7 @@ class KitsuTrendingTests {
     fun `trendingAnime successful response with no body returns Resource#Error`() = runBlocking {
         val expected = "Response body is null"
 
-        val mockResponse = mockk<Response<List<SeriesModel>>> {
+        val mockResponse = mockk<Response<TrendingData>> {
             every { isSuccessful } returns true
             every { body() } returns null
             every { message() } returns expected
@@ -86,19 +88,19 @@ class KitsuTrendingTests {
             }
         }
 
-        val classUnderTest = KitsuTrending(mockService)
+        val classUnderTest = KitsuTrending(mockService, map)
 
-        when (val actual = classUnderTest.trendingAnime()) {
+        when (val actual = classUnderTest.getTrendingAnime()) {
             is Resource.Success -> error("Test has failed")
-            is Resource.Error -> Assert.assertEquals(expected, actual.msg)
+            is Resource.Error -> assertEquals(expected, actual.msg)
         }
     }
 
     @Test
     fun `trendingAnime successful response with body returns Resource#Success`() = runBlocking {
-        val expected = listOf(createSeriesModel())
+        val expected = TrendingData(listOf(createKitsuTrendingEntity(SeriesType.Anime)))
 
-        val mockResponse = mockk<Response<List<SeriesModel>>> {
+        val mockResponse = mockk<Response<TrendingData>> {
             every { isSuccessful } returns true
             every { body() } returns expected
         }
@@ -110,10 +112,10 @@ class KitsuTrendingTests {
             }
         }
 
-        val classUnderTest = KitsuTrending(mockService)
+        val classUnderTest = KitsuTrending(mockService, map)
 
-        when (val actual = classUnderTest.trendingAnime()) {
-            is Resource.Success -> Assert.assertEquals(expected, actual.data)
+        when (val actual = classUnderTest.getTrendingAnime()) {
+            is Resource.Success -> assertEquals(expected, actual.data)
             is Resource.Error -> error("Test has failed")
         }
     }
@@ -124,11 +126,11 @@ class KitsuTrendingTests {
             coEvery { getTrendingAnimeAsync() } throws UnknownHostException()
         }
 
-        val classUnderTest = KitsuTrending(mockService)
+        val classUnderTest = KitsuTrending(mockService, map)
 
-        when (classUnderTest.trendingAnime()) {
+        when (classUnderTest.getTrendingAnime()) {
             is Resource.Success -> error("Test has failed")
-            is Resource.Error -> Assert.assertTrue(true)
+            is Resource.Error -> assertTrue(true)
         }
     }
 
@@ -139,7 +141,7 @@ class KitsuTrendingTests {
         val mockResponseBody = mockk<ResponseBody> {
             every { string() } returns expected
         }
-        val mockResponse = mockk<Response<List<SeriesModel>>> {
+        val mockResponse = mockk<Response<TrendingData>> {
             every { isSuccessful } returns false
             every { errorBody() } returns mockResponseBody
             every { code() } returns 0
@@ -152,11 +154,11 @@ class KitsuTrendingTests {
             }
         }
 
-        val classUnderTest = KitsuTrending(mockService)
+        val classUnderTest = KitsuTrending(mockService, map)
 
-        when (val actual = classUnderTest.trendingManga()) {
+        when (val actual = classUnderTest.getTrendingManga()) {
             is Resource.Success -> error("Test has failed")
-            is Resource.Error -> Assert.assertEquals(expected, actual.msg)
+            is Resource.Error -> assertEquals(expected, actual.msg)
         }
     }
 
@@ -165,7 +167,7 @@ class KitsuTrendingTests {
         runBlocking {
             val expected = "responseBodyString"
 
-            val mockResponse = mockk<Response<List<SeriesModel>>> {
+            val mockResponse = mockk<Response<TrendingData>> {
                 every { isSuccessful } returns false
                 every { errorBody() } returns null
                 every { message() } returns expected
@@ -179,11 +181,11 @@ class KitsuTrendingTests {
                 }
             }
 
-            val classUnderTest = KitsuTrending(mockService)
+            val classUnderTest = KitsuTrending(mockService, map)
 
-            when (val actual = classUnderTest.trendingManga()) {
+            when (val actual = classUnderTest.getTrendingManga()) {
                 is Resource.Success -> error("Test has failed")
-                is Resource.Error -> Assert.assertEquals(expected, actual.msg)
+                is Resource.Error -> assertEquals(expected, actual.msg)
             }
         }
 
@@ -191,7 +193,7 @@ class KitsuTrendingTests {
     fun `trendingManga successful response with no body returns Resource#Error`() = runBlocking {
         val expected = "Response body is null"
 
-        val mockResponse = mockk<Response<List<SeriesModel>>> {
+        val mockResponse = mockk<Response<TrendingData>> {
             every { isSuccessful } returns true
             every { body() } returns null
             every { message() } returns expected
@@ -204,19 +206,19 @@ class KitsuTrendingTests {
             }
         }
 
-        val classUnderTest = KitsuTrending(mockService)
+        val classUnderTest = KitsuTrending(mockService, map)
 
-        when (val actual = classUnderTest.trendingManga()) {
+        when (val actual = classUnderTest.getTrendingManga()) {
             is Resource.Success -> error("Test has failed")
-            is Resource.Error -> Assert.assertEquals(expected, actual.msg)
+            is Resource.Error -> assertEquals(expected, actual.msg)
         }
     }
 
     @Test
     fun `trendingManga successful response with body returns Resource#Success`() = runBlocking {
-        val expected = listOf(createSeriesModel())
+        val expected = TrendingData(listOf(createKitsuTrendingEntity(SeriesType.Manga)))
 
-        val mockResponse = mockk<Response<List<SeriesModel>>> {
+        val mockResponse = mockk<Response<TrendingData>> {
             every { isSuccessful } returns true
             every { body() } returns expected
         }
@@ -228,10 +230,10 @@ class KitsuTrendingTests {
             }
         }
 
-        val classUnderTest = KitsuTrending(mockService)
+        val classUnderTest = KitsuTrending(mockService, map)
 
-        when (val actual = classUnderTest.trendingManga()) {
-            is Resource.Success -> Assert.assertEquals(expected, actual.data)
+        when (val actual = classUnderTest.getTrendingManga()) {
+            is Resource.Success -> assertEquals(expected, actual.data)
             is Resource.Error -> error("Test has failed")
         }
     }
@@ -242,11 +244,11 @@ class KitsuTrendingTests {
             coEvery { getTrendingMangaAsync() } throws UnknownHostException()
         }
 
-        val classUnderTest = KitsuTrending(mockService)
+        val classUnderTest = KitsuTrending(mockService, map)
 
-        when (classUnderTest.trendingManga()) {
+        when (classUnderTest.getTrendingManga()) {
             is Resource.Success -> error("Test has failed")
-            is Resource.Error -> Assert.assertTrue(true)
+            is Resource.Error -> assertTrue(true)
         }
     }
 }

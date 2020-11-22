@@ -1,9 +1,14 @@
-package com.chesire.nekome.kitsu.api.auth
+package com.chesire.nekome.kitsu.auth
 
-import com.chesire.nekome.kitsu.auth.AuthProvider
 import com.chesire.nekome.core.Resource
+import com.chesire.nekome.kitsu.AuthProvider
+import com.chesire.nekome.kitsu.auth.request.LoginRequest
+import com.chesire.nekome.kitsu.auth.request.RefreshTokenRequest
 import io.mockk.CapturingSlot
+import io.mockk.Runs
+import io.mockk.coEvery
 import io.mockk.every
+import io.mockk.just
 import io.mockk.mockk
 import io.mockk.verify
 import kotlinx.coroutines.runBlocking
@@ -12,6 +17,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import retrofit2.Response
+import java.net.UnknownHostException
 
 class KitsuAuthTests {
     @Test
@@ -19,12 +25,11 @@ class KitsuAuthTests {
         val usernameInput = "username"
         val passwordInput = "password"
         val expected = "errorBodyString"
-
-        val mockProvider = mockk<com.chesire.nekome.kitsu.auth.AuthProvider>()
+        val mockProvider = mockk<AuthProvider>()
         val mockResponseBody = mockk<ResponseBody> {
             every { string() } returns expected
         }
-        val mockResponse = mockk<Response<LoginResponse>> {
+        val mockResponse = mockk<Response<KitsuAuthEntity>> {
             every { isSuccessful } returns false
             every { errorBody() } returns mockResponseBody
             every { code() } returns 0
@@ -36,8 +41,8 @@ class KitsuAuthTests {
                 mockResponse
             }
         }
-
         val classUnderTest = KitsuAuth(mockService, mockProvider)
+
         val actual = classUnderTest.login(usernameInput, passwordInput)
 
         when (actual) {
@@ -52,8 +57,8 @@ class KitsuAuthTests {
         val passwordInput = "password"
         val expected = "responseBodyString"
 
-        val mockProvider = mockk<com.chesire.nekome.kitsu.auth.AuthProvider>()
-        val mockResponse = mockk<Response<LoginResponse>> {
+        val mockProvider = mockk<AuthProvider>()
+        val mockResponse = mockk<Response<KitsuAuthEntity>> {
             every { isSuccessful } returns false
             every { errorBody() } returns null
             every { message() } returns expected
@@ -82,8 +87,8 @@ class KitsuAuthTests {
         val passwordInput = "password"
         val expected = "Response body is null"
 
-        val mockProvider = mockk<com.chesire.nekome.kitsu.auth.AuthProvider>()
-        val mockResponse = mockk<Response<LoginResponse>> {
+        val mockProvider = mockk<AuthProvider>()
+        val mockResponse = mockk<Response<KitsuAuthEntity>> {
             every { isSuccessful } returns true
             every { body() } returns null
             every { message() } returns expected
@@ -109,13 +114,14 @@ class KitsuAuthTests {
     fun `login successful response with body returns Resource#Success`() = runBlocking {
         val usernameInput = "username"
         val passwordInput = "password"
-        val loginResponse = LoginResponse("accessToken", 0, 0, "refreshToken", "scope", "tokenType")
+        val loginResponse =
+            KitsuAuthEntity("accessToken", 0, 0, "refreshToken", "scope", "tokenType")
 
-        val mockProvider = mockk<com.chesire.nekome.kitsu.auth.AuthProvider> {
+        val mockProvider = mockk<AuthProvider> {
             every { accessToken = any() } just Runs
             every { refreshToken = any() } just Runs
         }
-        val mockResponse = mockk<Response<LoginResponse>> {
+        val mockResponse = mockk<Response<KitsuAuthEntity>> {
             every { isSuccessful } returns true
             every { body() } returns loginResponse
         }
@@ -142,13 +148,13 @@ class KitsuAuthTests {
         val passwordInput = "password"
         val expected = "expectedAccessToken"
         val slot = CapturingSlot<String>()
-        val loginResponse = LoginResponse(expected, 0, 0, "refreshToken", "scope", "tokenType")
+        val loginResponse = KitsuAuthEntity(expected, 0, 0, "refreshToken", "scope", "tokenType")
 
-        val mockProvider = mockk<com.chesire.nekome.kitsu.auth.AuthProvider> {
+        val mockProvider = mockk<AuthProvider> {
             every { accessToken = capture(slot) } just Runs
             every { refreshToken = any() } just Runs
         }
-        val mockResponse = mockk<Response<LoginResponse>> {
+        val mockResponse = mockk<Response<KitsuAuthEntity>> {
             every { isSuccessful } returns true
             every { body() } returns loginResponse
         }
@@ -172,13 +178,13 @@ class KitsuAuthTests {
         val passwordInput = "password"
         val expected = "expectedRefreshToken"
         val slot = CapturingSlot<String>()
-        val loginResponse = LoginResponse("accessToken", 0, 0, expected, "scope", "tokenType")
+        val loginResponse = KitsuAuthEntity("accessToken", 0, 0, expected, "scope", "tokenType")
 
-        val mockProvider = mockk<com.chesire.nekome.kitsu.auth.AuthProvider> {
+        val mockProvider = mockk<AuthProvider> {
             every { accessToken = any() } just Runs
             every { refreshToken = capture(slot) } just Runs
         }
-        val mockResponse = mockk<Response<LoginResponse>> {
+        val mockResponse = mockk<Response<KitsuAuthEntity>> {
             every { isSuccessful } returns true
             every { body() } returns loginResponse
         }
@@ -206,7 +212,7 @@ class KitsuAuthTests {
                 loginAsync(LoginRequest(usernameInput, passwordInput))
             } throws UnknownHostException()
         }
-        val mockProvider = mockk<com.chesire.nekome.kitsu.auth.AuthProvider>()
+        val mockProvider = mockk<AuthProvider>()
 
         val classUnderTest = KitsuAuth(mockService, mockProvider)
         val result = classUnderTest.login(usernameInput, passwordInput)
@@ -221,13 +227,13 @@ class KitsuAuthTests {
     fun `refresh failure response returns Resource#Error with errorBody`() = runBlocking {
         val expected = "errorBodyString"
 
-        val mockProvider = mockk<com.chesire.nekome.kitsu.auth.AuthProvider> {
+        val mockProvider = mockk<AuthProvider> {
             every { refreshToken } returns "token"
         }
         val mockResponseBody = mockk<ResponseBody> {
             every { string() } returns expected
         }
-        val mockResponse = mockk<Response<LoginResponse>> {
+        val mockResponse = mockk<Response<KitsuAuthEntity>> {
             every { isSuccessful } returns false
             every { errorBody() } returns mockResponseBody
             every { code() } returns 0
@@ -253,10 +259,10 @@ class KitsuAuthTests {
     fun `refresh failure response returns Resource#Error with message if no error`() = runBlocking {
         val expected = "responseBodyString"
 
-        val mockProvider = mockk<com.chesire.nekome.kitsu.auth.AuthProvider> {
+        val mockProvider = mockk<AuthProvider> {
             every { refreshToken } returns "token"
         }
-        val mockResponse = mockk<Response<LoginResponse>> {
+        val mockResponse = mockk<Response<KitsuAuthEntity>> {
             every { isSuccessful } returns false
             every { errorBody() } returns null
             every { message() } returns expected
@@ -283,10 +289,10 @@ class KitsuAuthTests {
     fun `refresh successful response with no body returns Resource#Error`() = runBlocking {
         val expected = "Response body is null"
 
-        val mockProvider = mockk<com.chesire.nekome.kitsu.auth.AuthProvider> {
+        val mockProvider = mockk<AuthProvider> {
             every { refreshToken } returns "token"
         }
-        val mockResponse = mockk<Response<LoginResponse>> {
+        val mockResponse = mockk<Response<KitsuAuthEntity>> {
             every { isSuccessful } returns true
             every { body() } returns null
             every { message() } returns expected
@@ -310,14 +316,15 @@ class KitsuAuthTests {
 
     @Test
     fun `refresh successful response with body returns Resource#Success`() = runBlocking {
-        val loginResponse = LoginResponse("accessToken", 0, 0, "refreshToken", "scope", "tokenType")
+        val loginResponse =
+            KitsuAuthEntity("accessToken", 0, 0, "refreshToken", "scope", "tokenType")
 
-        val mockProvider = mockk<com.chesire.nekome.kitsu.auth.AuthProvider> {
+        val mockProvider = mockk<AuthProvider> {
             every { accessToken = any() } just Runs
             every { refreshToken } returns "token"
             every { refreshToken = any() } just Runs
         }
-        val mockResponse = mockk<Response<LoginResponse>> {
+        val mockResponse = mockk<Response<KitsuAuthEntity>> {
             every { isSuccessful } returns true
             every { body() } returns loginResponse
         }
@@ -342,14 +349,14 @@ class KitsuAuthTests {
     fun `refresh successful response with body saves an access token`() = runBlocking {
         val expected = "expectedAccessToken"
         val slot = CapturingSlot<String>()
-        val loginResponse = LoginResponse(expected, 0, 0, "refreshToken", "scope", "tokenType")
+        val loginResponse = KitsuAuthEntity(expected, 0, 0, "refreshToken", "scope", "tokenType")
 
-        val mockProvider = mockk<com.chesire.nekome.kitsu.auth.AuthProvider> {
+        val mockProvider = mockk<AuthProvider> {
             every { accessToken = capture(slot) } just Runs
             every { refreshToken } returns "token"
             every { refreshToken = any() } just Runs
         }
-        val mockResponse = mockk<Response<LoginResponse>> {
+        val mockResponse = mockk<Response<KitsuAuthEntity>> {
             every { isSuccessful } returns true
             every { body() } returns loginResponse
         }
@@ -371,14 +378,14 @@ class KitsuAuthTests {
     fun `refresh successful response with body saves a refresh token`() = runBlocking {
         val expected = "expectedRefreshToken"
         val slot = CapturingSlot<String>()
-        val loginResponse = LoginResponse("accessToken", 0, 0, expected, "scope", "tokenType")
+        val loginResponse = KitsuAuthEntity("accessToken", 0, 0, expected, "scope", "tokenType")
 
-        val mockProvider = mockk<com.chesire.nekome.kitsu.auth.AuthProvider> {
+        val mockProvider = mockk<AuthProvider> {
             every { accessToken = any() } just Runs
             every { refreshToken } returns "token"
             every { refreshToken = capture(slot) } just Runs
         }
-        val mockResponse = mockk<Response<LoginResponse>> {
+        val mockResponse = mockk<Response<KitsuAuthEntity>> {
             every { isSuccessful } returns true
             every { body() } returns loginResponse
         }
@@ -405,7 +412,7 @@ class KitsuAuthTests {
                 refreshAccessTokenAsync(RefreshTokenRequest(tokenInput))
             } throws UnknownHostException()
         }
-        val mockProvider = mockk<com.chesire.nekome.kitsu.auth.AuthProvider> {
+        val mockProvider = mockk<AuthProvider> {
             every { refreshToken } returns tokenInput
         }
 
@@ -421,7 +428,7 @@ class KitsuAuthTests {
     @Test
     fun `clearAuth clears auth in the provider`() = runBlocking {
         val mockService = mockk<KitsuAuthService>()
-        val mockProvider = mockk<com.chesire.nekome.kitsu.auth.AuthProvider> {
+        val mockProvider = mockk<AuthProvider> {
             every { clearAuth() } just Runs
         }
 

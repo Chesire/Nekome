@@ -1,9 +1,8 @@
-package com.chesire.nekome.kitsu.api.user
+package com.chesire.nekome.kitsu.user
 
-import com.chesire.nekome.core.flags.Service
-import com.chesire.nekome.core.models.ImageModel
-import com.chesire.nekome.core.models.UserModel
 import com.chesire.nekome.core.Resource
+import com.chesire.nekome.core.flags.RatingSystem
+import com.chesire.nekome.core.models.ImageModel
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
@@ -16,6 +15,9 @@ import retrofit2.Response
 import java.net.UnknownHostException
 
 class KitsuUserTests {
+
+    private val mapper = KitsuUserEntityMapper()
+
     @Test
     fun `getUserDetails failure response returns Resource#Error with errorBody`() = runBlocking {
         val expected = "errorBodyString"
@@ -23,7 +25,7 @@ class KitsuUserTests {
         val mockResponseBody = mockk<ResponseBody> {
             every { string() } returns expected
         }
-        val mockResponse = mockk<Response<UserModel>> {
+        val mockResponse = mockk<Response<UserData>> {
             every { isSuccessful } returns false
             every { errorBody() } returns mockResponseBody
             every { code() } returns 0
@@ -36,7 +38,7 @@ class KitsuUserTests {
             }
         }
 
-        val classUnderTest = KitsuUser(mockService)
+        val classUnderTest = KitsuUser(mockService, mapper)
         val actual = classUnderTest.getUserDetails()
 
         when (actual) {
@@ -50,7 +52,7 @@ class KitsuUserTests {
         runBlocking {
             val expected = "responseBodyString"
 
-            val mockResponse = mockk<Response<UserModel>> {
+            val mockResponse = mockk<Response<UserData>> {
                 every { isSuccessful } returns false
                 every { errorBody() } returns null
                 every { message() } returns expected
@@ -64,7 +66,7 @@ class KitsuUserTests {
                 }
             }
 
-            val classUnderTest = KitsuUser(mockService)
+            val classUnderTest = KitsuUser(mockService, mapper)
             val actual = classUnderTest.getUserDetails()
 
             when (actual) {
@@ -77,7 +79,7 @@ class KitsuUserTests {
     fun `getUserDetails successful response with no body returns Resource#Error`() = runBlocking {
         val expected = "Response body is null"
 
-        val mockResponse = mockk<Response<UserModel>> {
+        val mockResponse = mockk<Response<UserData>> {
             every { isSuccessful } returns true
             every { body() } returns null
             every { message() } returns expected
@@ -90,7 +92,7 @@ class KitsuUserTests {
             }
         }
 
-        val classUnderTest = KitsuUser(mockService)
+        val classUnderTest = KitsuUser(mockService, mapper)
         val actual = classUnderTest.getUserDetails()
 
         when (actual) {
@@ -101,9 +103,22 @@ class KitsuUserTests {
 
     @Test
     fun `getUserDetails successful response with body returns Resource#Success`() = runBlocking {
-        val expected = UserModel(0, "name", ImageModel.empty, ImageModel.empty, Service.Kitsu)
+        val expected = UserData(
+            listOf(
+                KitsuUserEntity(
+                    0,
+                    KitsuUserEntity.EntityAttributes(
+                        "name",
+                        "name",
+                        RatingSystem.Unknown,
+                        ImageModel.empty,
+                        ImageModel.empty
+                    )
+                )
+            )
+        )
 
-        val mockResponse = mockk<Response<UserModel>> {
+        val mockResponse = mockk<Response<UserData>> {
             every { isSuccessful } returns true
             every { body() } returns expected
         }
@@ -115,7 +130,7 @@ class KitsuUserTests {
             }
         }
 
-        val classUnderTest = KitsuUser(mockService)
+        val classUnderTest = KitsuUser(mockService, mapper)
         val actual = classUnderTest.getUserDetails()
 
         when (actual) {
@@ -130,7 +145,7 @@ class KitsuUserTests {
             coEvery { getUserDetailsAsync() } throws UnknownHostException()
         }
 
-        val classUnderTest = KitsuUser(mockService)
+        val classUnderTest = KitsuUser(mockService, mapper)
         val result = classUnderTest.getUserDetails()
 
         when (result) {
