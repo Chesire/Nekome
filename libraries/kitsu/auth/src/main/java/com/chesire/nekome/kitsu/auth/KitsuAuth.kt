@@ -9,6 +9,9 @@ import com.chesire.nekome.kitsu.parse
 import retrofit2.Response
 import javax.inject.Inject
 
+/**
+ * Implementation of the [AuthApi] for usage with the Kitsu API.
+ */
 class KitsuAuth @Inject constructor(
     private val authService: KitsuAuthService,
     private val authProvider: AuthProvider

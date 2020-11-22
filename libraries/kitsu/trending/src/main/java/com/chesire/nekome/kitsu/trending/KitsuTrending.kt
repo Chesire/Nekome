@@ -9,6 +9,9 @@ import com.chesire.nekome.trending.api.TrendingEntity
 import retrofit2.Response
 import javax.inject.Inject
 
+/**
+ * Implementation of the [TrendingApi] for usage with the Kitsu API.
+ */
 class KitsuTrending @Inject constructor(
     private val trendingService: KitsuTrendingService,
     private val map: EntityMapper<KitsuTrendingEntity, TrendingEntity>

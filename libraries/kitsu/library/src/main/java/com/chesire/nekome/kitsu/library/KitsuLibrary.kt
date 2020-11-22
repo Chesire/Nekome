@@ -23,6 +23,9 @@ private const val MAX_RETRIES = 3
 private const val ANIME_TYPE = "anime"
 private const val MANGA_TYPE = "manga"
 
+/**
+ * Implementation of the [LibraryApi] for usage with the Kitsu API.
+ */
 class KitsuLibrary @Inject constructor(
     private val libraryService: KitsuLibraryService,
     private val map: EntityMapper<KitsuLibraryEntity, LibraryEntity>,

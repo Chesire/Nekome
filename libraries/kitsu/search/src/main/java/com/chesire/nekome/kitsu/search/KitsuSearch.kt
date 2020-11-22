@@ -9,6 +9,9 @@ import com.chesire.nekome.search.api.SearchEntity
 import retrofit2.Response
 import javax.inject.Inject
 
+/**
+ * Implementation of the [SearchApi] for usage with the Kitsu API.
+ */
 class KitsuSearch @Inject constructor(
     private val searchService: KitsuSearchService,
     private val map: EntityMapper<KitsuSearchEntity, SearchEntity>

@@ -4,6 +4,9 @@ import com.chesire.nekome.core.EntityMapper
 import com.chesire.nekome.trending.api.TrendingEntity
 import javax.inject.Inject
 
+/**
+ * Provides ability to map instances of [KitsuTrendingEntity] into [TrendingEntity].
+ */
 class KitsuTrendingEntityMapper @Inject constructor() :
     EntityMapper<KitsuTrendingEntity, TrendingEntity> {
 

@@ -7,6 +7,9 @@ import com.chesire.nekome.core.models.ImageModel
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
+/**
+ * Entity for the "included" part of the library api, represents the information about a series.
+ */
 @JsonClass(generateAdapter = true)
 data class IncludedEntity(
     @Json(name = "id")
@@ -16,6 +19,9 @@ data class IncludedEntity(
     @Json(name = "attributes")
     val attributes: Attributes
 ) {
+    /**
+     * Information about the attributes of a series.
+     */
     @JsonClass(generateAdapter = true)
     data class Attributes(
         @Json(name = "slug")

@@ -4,6 +4,9 @@ import com.chesire.nekome.core.flags.UserSeriesStatus
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
+/**
+ * Entity for the "data" part of the library api, contains the user information about a series item.
+ */
 @JsonClass(generateAdapter = true)
 data class DataEntity(
     @Json(name = "id")
@@ -13,6 +16,9 @@ data class DataEntity(
     @Json(name = "relationships")
     val relationships: Relationships
 ) {
+    /**
+     * Information of the users details about a series.
+     */
     @JsonClass(generateAdapter = true)
     data class Attributes(
         @Json(name = "status")
@@ -25,6 +31,9 @@ data class DataEntity(
         val finishedAt: String?
     )
 
+    /**
+     * Information about the anime/manga relationship mappings.
+     */
     @JsonClass(generateAdapter = true)
     data class Relationships(
         @Json(name = "anime")
@@ -32,11 +41,17 @@ data class DataEntity(
         @Json(name = "manga")
         val manga: RelationshipObject? = null
     ) {
+        /**
+         * Data container for relationship data.
+         */
         @JsonClass(generateAdapter = true)
         data class RelationshipObject(
             @Json(name = "data")
             val data: RelationshipData? = null
         ) {
+            /**
+             * Contains the information for the [type] and [id] of a mapping.
+             */
             @JsonClass(generateAdapter = true)
             data class RelationshipData(
                 @Json(name = "type")

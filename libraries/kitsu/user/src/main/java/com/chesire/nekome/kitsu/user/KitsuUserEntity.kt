@@ -5,6 +5,9 @@ import com.chesire.nekome.core.models.ImageModel
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
+/**
+ * Entity from the Kitsu user endpoint.
+ */
 @JsonClass(generateAdapter = true)
 data class KitsuUserEntity(
     @Json(name = "id")
@@ -12,6 +15,9 @@ data class KitsuUserEntity(
     @Json(name = "attributes")
     val attributes: EntityAttributes
 ) {
+    /**
+     * Entity for the attributes of the user.
+     */
     @JsonClass(generateAdapter = true)
     data class EntityAttributes(
         @Json(name = "name")

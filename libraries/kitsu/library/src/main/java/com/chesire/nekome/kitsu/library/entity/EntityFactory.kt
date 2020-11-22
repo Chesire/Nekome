@@ -2,8 +2,14 @@ package com.chesire.nekome.kitsu.library.entity
 
 import javax.inject.Inject
 
+/**
+ * Factory to create JSON representations of models to send via the api.
+ */
 class EntityFactory @Inject constructor() {
 
+    /**
+     * Creates a new JSON entity for adding a new series.
+     */
     fun createAddEntity(
         userId: Int,
         seriesId: Int,
@@ -36,6 +42,9 @@ class EntityFactory @Inject constructor() {
 }
     """.trimIndent()
 
+    /**
+     * Creates a new JSON entity for updating a series.
+     */
     fun createUpdateEntity(
         userSeriesId: Int,
         newProgress: Int,

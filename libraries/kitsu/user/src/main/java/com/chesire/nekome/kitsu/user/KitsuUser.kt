@@ -9,6 +9,9 @@ import com.chesire.nekome.user.api.UserEntity
 import retrofit2.Response
 import javax.inject.Inject
 
+/**
+ * Implementation of the [UserApi] for usage with the Kitsu API.
+ */
 class KitsuUser @Inject constructor(
     private val userService: KitsuUserService,
     private val map: EntityMapper<KitsuUserEntity, UserEntity>

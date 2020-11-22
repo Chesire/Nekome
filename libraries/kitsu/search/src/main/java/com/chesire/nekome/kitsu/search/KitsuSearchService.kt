@@ -4,7 +4,11 @@ import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
 
+/**
+ * Constructed using Retrofit to interface with the Kitsu API for queries related searching series.
+ */
 interface KitsuSearchService {
+
     /**
      * Performs a search for any anime series with the title [title].
      *

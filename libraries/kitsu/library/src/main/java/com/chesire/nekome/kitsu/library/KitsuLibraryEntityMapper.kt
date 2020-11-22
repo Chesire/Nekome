@@ -6,6 +6,9 @@ import com.chesire.nekome.kitsu.library.entity.KitsuLibraryEntity
 import com.chesire.nekome.library.api.LibraryEntity
 import javax.inject.Inject
 
+/**
+ * Provides ability to map instances of [KitsuLibraryEntity] into [LibraryEntity].
+ */
 class KitsuLibraryEntityMapper @Inject constructor() :
     EntityMapper<KitsuLibraryEntity, LibraryEntity> {
 

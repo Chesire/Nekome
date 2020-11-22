@@ -1,7 +1,7 @@
 package com.chesire.nekome.kitsu.library
 
-import com.chesire.nekome.kitsu.library.entity.KitsuLibraryEntity
 import com.chesire.nekome.kitsu.library.entity.KitsuLibraryEntities
+import com.chesire.nekome.kitsu.library.entity.KitsuLibraryEntity
 import okhttp3.RequestBody
 import retrofit2.Response
 import retrofit2.http.Body
@@ -21,6 +21,7 @@ private const val MANGA_FIELDS =
  * Constructed using Retrofit to interface with the Kitsu API for queries related to users library.
  */
 interface KitsuLibraryService {
+
     /**
      * Retrieves all of the users anime series in their library.
      */

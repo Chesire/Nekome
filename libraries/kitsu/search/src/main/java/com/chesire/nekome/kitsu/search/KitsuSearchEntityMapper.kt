@@ -4,6 +4,9 @@ import com.chesire.nekome.core.EntityMapper
 import com.chesire.nekome.search.api.SearchEntity
 import javax.inject.Inject
 
+/**
+ * Provides ability to map instances of [KitsuSearchEntity] into [SearchEntity].
+ */
 class KitsuSearchEntityMapper @Inject constructor() :
     EntityMapper<KitsuSearchEntity, SearchEntity> {
 

@@ -7,6 +7,9 @@ import com.chesire.nekome.core.models.ImageModel
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
+/**
+ * Entity from the Kitsu search endpoint.
+ */
 @JsonClass(generateAdapter = true)
 data class KitsuSearchEntity(
     @Json(name = "id")
@@ -16,6 +19,9 @@ data class KitsuSearchEntity(
     @Json(name = "attributes")
     val attributes: EntityAttributes
 ) {
+    /**
+     * Entity for the attributes of the search item.
+     */
     @JsonClass(generateAdapter = true)
     data class EntityAttributes(
         @Json(name = "slug")

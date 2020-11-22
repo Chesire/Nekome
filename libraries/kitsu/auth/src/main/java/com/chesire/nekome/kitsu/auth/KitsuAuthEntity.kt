@@ -3,6 +3,9 @@ package com.chesire.nekome.kitsu.auth
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
+/**
+ * Entity from the Kitsu auth endpoint.
+ */
 @JsonClass(generateAdapter = true)
 data class KitsuAuthEntity(
     @Json(name = "access_token")

@@ -7,6 +7,9 @@ import com.chesire.nekome.core.models.ImageModel
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
+/**
+ * Entity from the Kitsu trending endpoint.
+ */
 @JsonClass(generateAdapter = true)
 data class KitsuTrendingEntity(
     @Json(name = "id")
@@ -16,6 +19,9 @@ data class KitsuTrendingEntity(
     @Json(name = "attributes")
     val attributes: EntityAttributes
 ) {
+    /**
+     * Entity for the attributes of the trending item.
+     */
     @JsonClass(generateAdapter = true)
     data class EntityAttributes(
         @Json(name = "slug")
