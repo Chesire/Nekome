@@ -10,6 +10,30 @@ import com.chesire.nekome.kitsu.library.entity.DataEntity
 import com.chesire.nekome.kitsu.library.entity.IncludedEntity
 import com.chesire.nekome.kitsu.library.entity.KitsuLibraryEntities
 import com.chesire.nekome.kitsu.library.entity.KitsuLibraryEntity
+import com.chesire.nekome.library.api.LibraryEntity
+
+/**
+ * Create a [LibraryEntity] for tests.
+ */
+fun createLibraryEntity() =
+    LibraryEntity(
+        0,
+        0,
+        SeriesType.Anime,
+        Subtype.Unknown,
+        "slug",
+        "synopsis",
+        "title",
+        SeriesStatus.Unknown,
+        UserSeriesStatus.Unknown,
+        0,
+        0,
+        ImageModel.empty,
+        ImageModel.empty,
+        false,
+        "startDate",
+        "endDate"
+    )
 
 /**
  * Create a [KitsuLibraryEntity] for tests.
