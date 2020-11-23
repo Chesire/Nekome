@@ -12,6 +12,7 @@ import javax.inject.Inject
 /**
  * Implementation of the [UserApi] for usage with the Kitsu API.
  */
+@Suppress("TooGenericExceptionCaught")
 class KitsuUser @Inject constructor(
     private val userService: KitsuUserService,
     private val map: EntityMapper<KitsuUserEntity, UserEntity>

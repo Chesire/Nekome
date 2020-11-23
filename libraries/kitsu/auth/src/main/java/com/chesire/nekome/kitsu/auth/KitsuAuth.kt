@@ -12,6 +12,7 @@ import javax.inject.Inject
 /**
  * Implementation of the [AuthApi] for usage with the Kitsu API.
  */
+@Suppress("TooGenericExceptionCaught")
 class KitsuAuth @Inject constructor(
     private val authService: KitsuAuthService,
     private val authProvider: AuthProvider

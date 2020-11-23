@@ -12,6 +12,7 @@ import javax.inject.Inject
 /**
  * Implementation of the [SearchApi] for usage with the Kitsu API.
  */
+@Suppress("TooGenericExceptionCaught")
 class KitsuSearch @Inject constructor(
     private val searchService: KitsuSearchService,
     private val map: EntityMapper<KitsuSearchEntity, SearchEntity>

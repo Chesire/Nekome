@@ -12,6 +12,7 @@ import javax.inject.Inject
 /**
  * Implementation of the [TrendingApi] for usage with the Kitsu API.
  */
+@Suppress("TooGenericExceptionCaught")
 class KitsuTrending @Inject constructor(
     private val trendingService: KitsuTrendingService,
     private val map: EntityMapper<KitsuTrendingEntity, TrendingEntity>

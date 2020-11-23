@@ -27,6 +27,7 @@ private const val MEDIA_TYPE = "application/vnd.api+json"
 /**
  * Implementation of the [LibraryApi] for usage with the Kitsu API.
  */
+@Suppress("TooGenericExceptionCaught")
 class KitsuLibrary @Inject constructor(
     private val libraryService: KitsuLibraryService,
     private val map: EntityMapper<KitsuLibraryEntity, LibraryEntity?>,
