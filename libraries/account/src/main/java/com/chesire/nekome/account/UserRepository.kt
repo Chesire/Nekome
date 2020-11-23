@@ -1,5 +1,6 @@
 package com.chesire.nekome.account
 
+import com.chesire.nekome.core.EntityMapper
 import com.chesire.nekome.core.Resource
 import com.chesire.nekome.core.flags.Service
 import com.chesire.nekome.core.models.UserModel
@@ -14,7 +15,8 @@ import javax.inject.Inject
  */
 class UserRepository @Inject constructor(
     private val userDao: UserDao,
-    private val userApi: UserApi
+    private val userApi: UserApi,
+    private val map: EntityMapper<UserEntity, UserModel>
 ) {
     /**
      * Access the user information.
@@ -28,7 +30,7 @@ class UserRepository @Inject constructor(
         val response = userApi.getUserDetails()
         return when (response) {
             is Resource.Success -> {
-                val model = response.data.toUserModel()
+                val model = map.from(response.data)
                 userDao.insert(model)
                 Resource.Success(model)
             }
@@ -43,14 +45,4 @@ class UserRepository @Inject constructor(
      * Retrieves the user id from the database.
      */
     suspend fun retrieveUserId() = userDao.retrieveUserId(Service.Kitsu)
-
-    private fun UserEntity.toUserModel(): UserModel {
-        return UserModel(
-            userId,
-            name,
-            avatar,
-            coverImage,
-            service
-        )
-    }
 }
