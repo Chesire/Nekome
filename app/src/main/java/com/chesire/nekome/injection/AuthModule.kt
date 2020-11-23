@@ -15,6 +15,9 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
+/**
+ * Provides a Hilt module for usage of [AuthApi].
+ */
 @Module
 @InstallIn(ApplicationComponent::class)
 abstract class AuthModule {
@@ -37,6 +40,9 @@ abstract class AuthModule {
         }
     }
 
+    /**
+     * Binds [api] to an instance of [AuthApi].
+     */
     @Binds
     abstract fun bindApi(api: KitsuAuth): AuthApi
 }

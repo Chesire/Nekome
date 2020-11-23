@@ -23,6 +23,9 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
+/**
+ * Provides a Hilt module for usage of [TrendingApi].
+ */
 @Module
 @InstallIn(ApplicationComponent::class)
 abstract class TrendingModule {
@@ -50,11 +53,17 @@ abstract class TrendingModule {
         }
     }
 
+    /**
+     * Binds [mapper] to an instance of [EntityMapper].
+     */
     @Binds
     abstract fun bindEntityMapper(
         mapper: KitsuTrendingEntityMapper
     ): EntityMapper<KitsuTrendingEntity, TrendingEntity>
 
+    /**
+     * Binds [api] to an instance of [TrendingApi].
+     */
     @Binds
     abstract fun bindApi(api: KitsuTrending): TrendingApi
 }

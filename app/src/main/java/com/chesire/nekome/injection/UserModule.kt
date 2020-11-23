@@ -21,11 +21,17 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
+/**
+ * Provides a Hilt module for usage of [UserApi].
+ */
 @Module
 @InstallIn(ApplicationComponent::class)
 abstract class UserModule {
 
     companion object {
+        /**
+         * Builds and provides the instance of [KitsuUserService].
+         */
         @Provides
         @Reusable
         fun providesUserService(httpClient: OkHttpClient): KitsuUserService {
@@ -43,9 +49,17 @@ abstract class UserModule {
         }
     }
 
+    /**
+     * Binds [mapper] to an instance of [EntityMapper].
+     */
     @Binds
-    abstract fun bindEntityMapper(mapper: KitsuUserEntityMapper): EntityMapper<KitsuUserEntity, UserEntity>
+    abstract fun bindEntityMapper(
+        mapper: KitsuUserEntityMapper
+    ): EntityMapper<KitsuUserEntity, UserEntity>
 
+    /**
+     * Binds [api] to an instance of [UserApi].
+     */
     @Binds
     abstract fun bindApi(api: KitsuUser): UserApi
 }

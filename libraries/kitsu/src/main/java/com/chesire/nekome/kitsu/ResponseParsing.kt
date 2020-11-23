@@ -32,6 +32,9 @@ fun <T> Response<T>.parseError(): Resource.Error<T> {
  */
 fun <T> emptyResponseError(): Resource.Error<T> = Resource.Error.emptyResponse()
 
+/**
+ * Converts the current [Response] into a [Resource.Error] with a data type of [U] instead of [T].
+ */
 fun <T, U> Response<T>.asError() = Resource.Error<U>(
     errorBody()?.string() ?: message(),
     code()

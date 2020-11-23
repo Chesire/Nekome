@@ -23,6 +23,9 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
+/**
+ * Provides a Hilt module for usage of [SearchApi].
+ */
 @Module
 @InstallIn(ApplicationComponent::class)
 abstract class SearchModule {
@@ -50,11 +53,17 @@ abstract class SearchModule {
         }
     }
 
+    /**
+     * Binds [mapper] to an instance of [EntityMapper].
+     */
     @Binds
     abstract fun bindEntityMapper(
         mapper: KitsuSearchEntityMapper
     ): EntityMapper<KitsuSearchEntity, SearchEntity>
 
+    /**
+     * Binds [api] to an instance of [SearchApi].
+     */
     @Binds
     abstract fun bindApi(api: KitsuSearch): SearchApi
 }

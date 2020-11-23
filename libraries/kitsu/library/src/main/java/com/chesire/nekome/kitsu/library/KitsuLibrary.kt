@@ -22,6 +22,7 @@ private const val LIMIT = 500
 private const val MAX_RETRIES = 3
 private const val ANIME_TYPE = "anime"
 private const val MANGA_TYPE = "manga"
+private const val MEDIA_TYPE = "application/vnd.api+json"
 
 /**
  * Implementation of the [LibraryApi] for usage with the Kitsu API.
@@ -51,7 +52,7 @@ class KitsuLibrary @Inject constructor(
             userSeriesStatusAdapter.userSeriesStatusToString(startingStatus),
             ANIME_TYPE
         )
-        val body = RequestBody.create(MediaType.parse("application/vnd.api+json"), addJson)
+        val body = RequestBody.create(MediaType.parse(MEDIA_TYPE), addJson)
 
         return try {
             return parseResponse(libraryService.addAnimeAsync(body))
@@ -71,7 +72,7 @@ class KitsuLibrary @Inject constructor(
             userSeriesStatusAdapter.userSeriesStatusToString(startingStatus),
             MANGA_TYPE
         )
-        val body = RequestBody.create(MediaType.parse("application/vnd.api+json"), addJson)
+        val body = RequestBody.create(MediaType.parse(MEDIA_TYPE), addJson)
 
         return try {
             return parseResponse(libraryService.addMangaAsync(body))
@@ -90,7 +91,7 @@ class KitsuLibrary @Inject constructor(
             progress,
             userSeriesStatusAdapter.userSeriesStatusToString(newStatus)
         )
-        val body = RequestBody.create(MediaType.parse("application/vnd.api+json"), updateJson)
+        val body = RequestBody.create(MediaType.parse(MEDIA_TYPE), updateJson)
 
         return try {
             parseResponse(libraryService.updateItemAsync(userSeriesId, body))

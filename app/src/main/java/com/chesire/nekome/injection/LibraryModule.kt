@@ -25,6 +25,9 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
+/**
+ * Provides a Hilt module for usage of [LibraryApi].
+ */
 @Module
 @InstallIn(ApplicationComponent::class)
 abstract class LibraryModule {
@@ -53,11 +56,17 @@ abstract class LibraryModule {
         }
     }
 
+    /**
+     * Binds [mapper] to an instance of [EntityMapper].
+     */
     @Binds
     abstract fun bindEntityMapper(
         mapper: KitsuLibraryEntityMapper
     ): EntityMapper<KitsuLibraryEntity, LibraryEntity?>
 
+    /**
+     * Binds [api] to an instance of [LibraryApi].
+     */
     @Binds
     abstract fun bindApi(api: KitsuLibrary): LibraryApi
 }

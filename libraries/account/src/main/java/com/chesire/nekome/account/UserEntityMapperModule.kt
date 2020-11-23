@@ -8,10 +8,16 @@ import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
 
+/**
+ * Provides a Hilt module to aid with using a [UserEntityMapper].
+ */
 @Module
 @InstallIn(ApplicationComponent::class)
 abstract class UserEntityMapperModule {
 
+    /**
+     * Binds [mapper] to an instance of [EntityMapper].
+     */
     @Binds
     abstract fun bindEntityMapper(
         mapper: UserEntityMapper
