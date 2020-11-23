@@ -51,12 +51,7 @@ android {
     packagingOptions {
         exclude "META-INF/AL2.0"
         exclude "META-INF/LGPL2.1"
-        exclude "META-INF/library-core_release.kotlin_module"
-        exclude "META-INF/auth_debug.kotlin_module"
-        exclude "META-INF/library_debug.kotlin_module"
-        exclude "META-INF/search_debug.kotlin_module"
-        exclude "META-INF/trending_debug.kotlin_module"
-        exclude "META-INF/user_debug.kotlin_module"
+        exclude "META-INF/*.kotlin_module"
     }
     lintOptions {
         checkDependencies true
