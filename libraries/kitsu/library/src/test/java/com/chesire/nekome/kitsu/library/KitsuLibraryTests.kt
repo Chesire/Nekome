@@ -1,16 +1,11 @@
 package com.chesire.nekome.kitsu.library
 
 import com.chesire.nekome.core.Resource
-import com.chesire.nekome.core.flags.SeriesStatus
 import com.chesire.nekome.core.flags.SeriesType
-import com.chesire.nekome.core.flags.Subtype
 import com.chesire.nekome.core.flags.UserSeriesStatus
-import com.chesire.nekome.core.models.ImageModel
 import com.chesire.nekome.kitsu.api.intermediaries.Links
 import com.chesire.nekome.kitsu.library.entity.EntityFactory
-import com.chesire.nekome.kitsu.library.entity.KitsuLibraryEntities
 import com.chesire.nekome.kitsu.library.entity.KitsuLibraryEntity
-import com.chesire.nekome.library.api.LibraryEntity
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
