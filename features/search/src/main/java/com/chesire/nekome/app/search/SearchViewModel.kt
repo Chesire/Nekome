@@ -11,8 +11,11 @@ import com.chesire.nekome.core.extensions.postLoading
 import com.chesire.nekome.core.extensions.postSuccess
 import com.chesire.nekome.core.flags.AsyncState
 import com.chesire.nekome.core.flags.SeriesType
+import com.chesire.nekome.core.flags.UserSeriesStatus
+import com.chesire.nekome.core.models.ImageModel
 import com.chesire.nekome.core.models.SeriesModel
 import com.chesire.nekome.search.api.SearchApi
+import com.chesire.nekome.search.api.SearchEntity
 import com.hadilq.liveevent.LiveEvent
 import kotlinx.coroutines.launch
 
@@ -50,17 +53,16 @@ class SearchViewModel @ViewModelInject constructor(
                 else -> error("Unexpected series type provided")
             }
 
-            // TODO:
-            // parseSearchResponse(response)
+            parseSearchResponse(response)
         }
     }
 
-    private fun parseSearchResponse(response: Resource<List<SeriesModel>>) = when (response) {
+    private fun parseSearchResponse(response: Resource<List<SearchEntity>>) = when (response) {
         is Resource.Success ->
             if (response.data.isEmpty()) {
                 _searchResult.postError(SearchError.NoSeriesFound)
             } else {
-                _searchResult.postSuccess(response.data)
+                _searchResult.postSuccess(response.data.toSeriesModels())
             }
         is Resource.Error ->
             if (response.code == Resource.Error.CouldNotRefresh) {
@@ -68,5 +70,28 @@ class SearchViewModel @ViewModelInject constructor(
             } else {
                 _searchResult.postError(SearchError.GenericError)
             }
+    }
+
+    private fun List<SearchEntity>.toSeriesModels(): List<SeriesModel> {
+        return map {
+            SeriesModel(
+                it.id,
+                0,
+                it.type,
+                it.subtype,
+                it.slug,
+                it.synopsis,
+                it.canonicalTitle,
+                it.status,
+                UserSeriesStatus.Unknown,
+                0,
+                0,
+                it.posterImage ?: ImageModel.empty,
+                it.coverImage ?: ImageModel.empty,
+                it.nsfw,
+                it.startDate ?: "",
+                it.endDate ?: ""
+            )
+        }
     }
 }
