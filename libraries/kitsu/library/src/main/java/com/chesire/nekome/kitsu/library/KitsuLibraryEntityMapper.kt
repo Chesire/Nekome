@@ -10,12 +10,12 @@ import javax.inject.Inject
  * Provides ability to map instances of [KitsuLibraryEntity] into [LibraryEntity].
  */
 class KitsuLibraryEntityMapper @Inject constructor() :
-    EntityMapper<KitsuLibraryEntity, LibraryEntity> {
+    EntityMapper<KitsuLibraryEntity, LibraryEntity?> {
 
-    override fun from(input: KitsuLibraryEntity): LibraryEntity {
+    override fun from(input: KitsuLibraryEntity): LibraryEntity? {
         val id = input.data.relationships.anime?.data?.id
             ?: input.data.relationships.manga?.data?.id
-            ?: error("")
+            ?: return null
 
         return input.included
             .find { it.id == id }
@@ -39,6 +39,5 @@ class KitsuLibraryEntityMapper @Inject constructor() :
                     included.attributes.endDate ?: ""
                 )
             }
-            ?: error("")
     }
 }

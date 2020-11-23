@@ -56,7 +56,7 @@ abstract class LibraryModule {
     @Binds
     abstract fun bindEntityMapper(
         mapper: KitsuLibraryEntityMapper
-    ): EntityMapper<KitsuLibraryEntity, LibraryEntity>
+    ): EntityMapper<KitsuLibraryEntity, LibraryEntity?>
 
     @Binds
     abstract fun bindApi(api: KitsuLibrary): LibraryApi
