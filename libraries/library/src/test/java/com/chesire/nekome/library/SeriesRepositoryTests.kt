@@ -2,7 +2,11 @@ package com.chesire.nekome.library
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.chesire.nekome.core.Resource
+import com.chesire.nekome.core.flags.SeriesStatus
+import com.chesire.nekome.core.flags.SeriesType
+import com.chesire.nekome.core.flags.Subtype
 import com.chesire.nekome.core.flags.UserSeriesStatus
+import com.chesire.nekome.core.models.ImageModel
 import com.chesire.nekome.core.models.SeriesModel
 import com.chesire.nekome.database.dao.SeriesDao
 import com.chesire.nekome.library.api.LibraryApi
@@ -28,7 +32,7 @@ class SeriesRepositoryTests {
 
     @Test
     fun `addAnime onSuccess saves to dao`() = runBlocking {
-        val expected = Resource.Success<LibraryEntity>(mockk())
+        val expected = Resource.Success(createLibraryEntity())
         val mockDao = mockk<SeriesDao> {
             coEvery { insert(any<SeriesModel>()) } just Runs
             every { getSeries() } returns mockk()
@@ -48,7 +52,7 @@ class SeriesRepositoryTests {
 
     @Test
     fun `addAnime onSuccess returns success`() = runBlocking {
-        val expected = Resource.Success<LibraryEntity>(mockk())
+        val expected = Resource.Success(createLibraryEntity())
         val mockDao = mockk<SeriesDao> {
             coEvery { insert(any<SeriesModel>()) } just Runs
             every { getSeries() } returns mockk()
@@ -63,7 +67,7 @@ class SeriesRepositoryTests {
         val classUnderTest = SeriesRepository(mockDao, mockApi, mockUser, map)
         val actual = classUnderTest.addAnime(0, UserSeriesStatus.Current)
 
-        assertEquals(expected, actual)
+        assertTrue(actual is Resource.Success)
     }
 
     @Test
@@ -83,12 +87,12 @@ class SeriesRepositoryTests {
         val classUnderTest = SeriesRepository(mockDao, mockApi, mockUser, map)
         val actual = classUnderTest.addAnime(0, UserSeriesStatus.Current)
 
-        assertEquals(expected, actual)
+        assertTrue(actual is Resource.Error)
     }
 
     @Test
     fun `addManga onSuccess saves to dao`() = runBlocking {
-        val expected = Resource.Success<LibraryEntity>(mockk())
+        val expected = Resource.Success(createLibraryEntity())
         val mockDao = mockk<SeriesDao> {
             coEvery { insert(any<SeriesModel>()) } just Runs
             every { getSeries() } returns mockk()
@@ -108,7 +112,7 @@ class SeriesRepositoryTests {
 
     @Test
     fun `addManga onSuccess returns success`() = runBlocking {
-        val expected = Resource.Success<LibraryEntity>(mockk())
+        val expected = Resource.Success(createLibraryEntity())
         val mockDao = mockk<SeriesDao> {
             coEvery { insert(any<SeriesModel>()) } just Runs
             every { getSeries() } returns mockk()
@@ -123,7 +127,7 @@ class SeriesRepositoryTests {
         val classUnderTest = SeriesRepository(mockDao, mockApi, mockUser, map)
         val actual = classUnderTest.addManga(0, UserSeriesStatus.Current)
 
-        assertEquals(expected, actual)
+        assertTrue(actual is Resource.Success)
     }
 
     @Test
@@ -143,7 +147,7 @@ class SeriesRepositoryTests {
         val classUnderTest = SeriesRepository(mockDao, mockApi, mockUser, map)
         val actual = classUnderTest.addManga(0, UserSeriesStatus.Current)
 
-        assertEquals(expected, actual)
+        assertTrue(actual is Resource.Error)
     }
 
     @Test
@@ -298,7 +302,7 @@ class SeriesRepositoryTests {
 
     @Test
     fun `updateSeries on success updates the dao`() = runBlocking {
-        val expected = mockk<LibraryEntity>()
+        val expected = createLibraryEntity()
         val mockDao = mockk<SeriesDao> {
             coEvery { update(any()) } just Runs
             every { getSeries() } returns mockk()
@@ -340,4 +344,24 @@ class SeriesRepositoryTests {
             is Resource.Error -> assertTrue(true)
         }
     }
+
+    private fun createLibraryEntity() =
+        LibraryEntity(
+            0,
+            0,
+            SeriesType.Anime,
+            Subtype.Unknown,
+            "slug",
+            "synopsis",
+            "title",
+            SeriesStatus.Unknown,
+            UserSeriesStatus.Unknown,
+            0,
+            0,
+            ImageModel.empty,
+            ImageModel.empty,
+            false,
+            "startDate",
+            "endDate"
+        )
 }
