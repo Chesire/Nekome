@@ -3,8 +3,8 @@ package com.chesire.nekome.app.login.details
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.chesire.nekome.account.UserRepository
+import com.chesire.nekome.auth.api.AuthApi
 import com.chesire.nekome.core.Resource
-import com.chesire.nekome.server.api.AuthApi
 import com.chesire.nekome.testing.CoroutinesMainDispatcherRule
 import com.chesire.nekome.testing.createUserModel
 import io.mockk.Runs
