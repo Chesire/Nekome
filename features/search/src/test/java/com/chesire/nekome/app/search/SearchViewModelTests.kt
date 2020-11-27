@@ -5,9 +5,13 @@ import androidx.lifecycle.Observer
 import com.chesire.nekome.core.AuthCaster
 import com.chesire.nekome.core.Resource
 import com.chesire.nekome.core.flags.AsyncState
+import com.chesire.nekome.core.flags.SeriesStatus
 import com.chesire.nekome.core.flags.SeriesType
+import com.chesire.nekome.core.flags.Subtype
+import com.chesire.nekome.core.models.ImageModel
 import com.chesire.nekome.core.models.SeriesModel
 import com.chesire.nekome.search.api.SearchApi
+import com.chesire.nekome.search.api.SearchEntity
 import com.chesire.nekome.testing.CoroutinesMainDispatcherRule
 import io.mockk.Runs
 import io.mockk.coEvery
@@ -130,7 +134,7 @@ class SearchViewModelTests {
             coEvery {
                 searchForAnime(any())
             } coAnswers {
-                Resource.Success(listOf(mockk()))
+                Resource.Success(listOf(createSearchEntity()))
             }
         }
         val mockCaster = mockk<AuthCaster>()
@@ -191,4 +195,23 @@ class SearchViewModelTests {
 
         verify { mockCaster.issueRefreshingToken() }
     }
+
+    private fun createSearchEntity() =
+        SearchEntity(
+            0,
+            SeriesType.Anime,
+            "slug",
+            "synopsis",
+            "canonicalTitle",
+            "0",
+            "startDate",
+            "endDate",
+            Subtype.Unknown,
+            SeriesStatus.Unknown,
+            ImageModel.empty,
+            ImageModel.empty,
+            0,
+            0,
+            false
+        )
 }
