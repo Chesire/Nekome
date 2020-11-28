@@ -10,6 +10,7 @@ import com.chesire.nekome.library.api.LibraryEntity
 /**
  * Creates a new [LibraryEntity].
  */
+@Suppress("LongParameterList")
 fun createLibraryEntity(
     id: Int = 0,
     userId: Int = 0,
