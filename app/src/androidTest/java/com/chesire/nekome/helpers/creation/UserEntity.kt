@@ -9,9 +9,9 @@ import com.chesire.nekome.user.api.UserEntity
  */
 fun createUserEntity() =
     UserEntity(
-        0,
+        1,
         "name",
         ImageModel.empty,
         ImageModel.empty,
-        Service.Unknown
+        Service.Kitsu
     )
