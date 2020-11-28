@@ -3,7 +3,11 @@ package com.chesire.nekome.flow.series
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.chesire.nekome.R
 import com.chesire.nekome.core.Resource
+import com.chesire.nekome.core.flags.SeriesStatus
+import com.chesire.nekome.core.flags.SeriesType
 import com.chesire.nekome.core.flags.Subtype
+import com.chesire.nekome.core.flags.UserSeriesStatus
+import com.chesire.nekome.core.models.ImageModel
 import com.chesire.nekome.database.dao.SeriesDao
 import com.chesire.nekome.helpers.creation.createLibraryEntity
 import com.chesire.nekome.helpers.launchActivity
@@ -218,12 +222,50 @@ class SeriesViewHolderTests {
         val initialProgress = "1 / 3"
         val expectedProgress = "2 / 3"
         runBlocking {
-            seriesDao.insert(createSeriesModel(progress = 1, totalLength = 3))
+            seriesDao.insert(
+                createSeriesModel(
+                    999,
+                    999,
+                    SeriesType.Anime,
+                    Subtype.TV,
+                    "slug",
+                    "synopsis",
+                    "title",
+                    SeriesStatus.Current,
+                    UserSeriesStatus.Current,
+                    1,
+                    3,
+                    ImageModel.empty,
+                    ImageModel.empty,
+                    false,
+                    "",
+                    ""
+                )
+            )
         }
         coEvery {
             fakeLibrary.update(any(), any(), any())
         } coAnswers {
-            Resource.Success(createLibraryEntity(progress = 2, totalLength = 3))
+            Resource.Success(
+                createLibraryEntity(
+                    999,
+                    999,
+                    SeriesType.Anime,
+                    Subtype.TV,
+                    "slug",
+                    "synopsis",
+                    "title",
+                    SeriesStatus.Current,
+                    UserSeriesStatus.Current,
+                    2,
+                    3,
+                    ImageModel.empty,
+                    ImageModel.empty,
+                    false,
+                    "",
+                    ""
+                )
+            )
         }
         launchActivity()
 
