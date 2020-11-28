@@ -6,6 +6,7 @@ import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.chesire.nekome.R
+import com.chesire.nekome.auth.api.AuthApi
 import com.chesire.nekome.core.Resource
 import com.chesire.nekome.core.url.UrlHandler
 import com.chesire.nekome.helpers.ToastMatcher.Companion.onToast
@@ -13,15 +14,10 @@ import com.chesire.nekome.helpers.clickClickableSpan
 import com.chesire.nekome.helpers.getResource
 import com.chesire.nekome.helpers.launchActivity
 import com.chesire.nekome.helpers.logout
+import com.chesire.nekome.injection.AuthModule
 import com.chesire.nekome.injection.DatabaseModule
-import com.chesire.nekome.injection.KitsuModule
 import com.chesire.nekome.injection.UrlModule
 import com.chesire.nekome.kitsu.AuthProvider
-import com.chesire.nekome.server.api.AuthApi
-import com.chesire.nekome.server.api.LibraryApi
-import com.chesire.nekome.server.api.SearchApi
-import com.chesire.nekome.server.api.TrendingApi
-import com.chesire.nekome.server.api.UserApi
 import com.schibsted.spain.barista.assertion.BaristaErrorAssertions.assertError
 import com.schibsted.spain.barista.interaction.BaristaClickInteractions.clickOn
 import com.schibsted.spain.barista.interaction.BaristaEditTextInteractions.writeTo
@@ -47,9 +43,10 @@ import org.junit.runner.RunWith
 import javax.inject.Inject
 
 @HiltAndroidTest
-@UninstallModules(DatabaseModule::class, KitsuModule::class, UrlModule::class)
+@UninstallModules(DatabaseModule::class, AuthModule::class, UrlModule::class)
 @RunWith(AndroidJUnit4::class)
 class DetailsTests {
+
     @get:Rule
     val hilt = HiltAndroidRule(this)
 
@@ -156,17 +153,5 @@ class DetailsTests {
     inner class FakeKitsuModule {
         @Provides
         fun providesAuth() = fakeAuth
-
-        @Provides
-        fun providesLibrary() = mockk<LibraryApi>()
-
-        @Provides
-        fun providesSearch() = mockk<SearchApi>()
-
-        @Provides
-        fun providesTrending() = mockk<TrendingApi>()
-
-        @Provides
-        fun providesUser() = mockk<UserApi>()
     }
 }

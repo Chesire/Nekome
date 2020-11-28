@@ -2,12 +2,19 @@ package com.chesire.nekome.flow.login
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.chesire.nekome.R
+import com.chesire.nekome.auth.api.AuthApi
 import com.chesire.nekome.core.Resource
+import com.chesire.nekome.helpers.creation.createLibraryEntity
+import com.chesire.nekome.helpers.creation.createUserEntity
 import com.chesire.nekome.helpers.launchActivity
 import com.chesire.nekome.helpers.logout
+import com.chesire.nekome.injection.AuthModule
 import com.chesire.nekome.injection.DatabaseModule
+import com.chesire.nekome.injection.LibraryModule
+import com.chesire.nekome.injection.UserModule
 import com.chesire.nekome.kitsu.AuthProvider
-import com.chesire.nekome.testing.createSeriesModel
+import com.chesire.nekome.library.api.LibraryApi
+import com.chesire.nekome.user.api.UserApi
 import com.schibsted.spain.barista.interaction.BaristaClickInteractions.clickOn
 import com.schibsted.spain.barista.interaction.BaristaEditTextInteractions.writeTo
 import com.schibsted.spain.barista.interaction.BaristaKeyboardInteractions.closeKeyboard
@@ -27,9 +34,10 @@ import org.junit.runner.RunWith
 import javax.inject.Inject
 
 @HiltAndroidTest
-@UninstallModules(DatabaseModule::class, KitsuModule::class)
+@UninstallModules(DatabaseModule::class, AuthModule::class, LibraryModule::class, UserModule::class)
 @RunWith(AndroidJUnit4::class)
 class SyncingTests {
+
     @get:Rule
     val hilt = HiltAndroidRule(this)
 
@@ -49,12 +57,12 @@ class SyncingTests {
         coEvery {
             fakeLibrary.retrieveAnime(any())
         } coAnswers {
-            Resource.Success(listOf(createSeriesModel()))
+            Resource.Success(listOf(createLibraryEntity()))
         }
         coEvery {
             fakeLibrary.retrieveManga(any())
         } coAnswers {
-            Resource.Success(listOf(createSeriesModel()))
+            Resource.Success(listOf(createLibraryEntity()))
         }
 
         launchActivity()
@@ -87,17 +95,11 @@ class SyncingTests {
         fun providesLibrary() = fakeLibrary
 
         @Provides
-        fun providesSearch() = mockk<SearchApi>()
-
-        @Provides
-        fun providesTrending() = mockk<TrendingApi>()
-
-        @Provides
         fun providesUser() = mockk<UserApi> {
             coEvery {
                 getUserDetails()
             } coAnswers {
-                Resource.Success(createUserModel())
+                Resource.Success(createUserEntity())
             }
         }
     }

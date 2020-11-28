@@ -5,10 +5,13 @@ import com.chesire.nekome.R
 import com.chesire.nekome.core.Resource
 import com.chesire.nekome.core.flags.Subtype
 import com.chesire.nekome.database.dao.SeriesDao
+import com.chesire.nekome.helpers.creation.createLibraryEntity
 import com.chesire.nekome.helpers.launchActivity
 import com.chesire.nekome.helpers.login
 import com.chesire.nekome.injection.DatabaseModule
+import com.chesire.nekome.injection.LibraryModule
 import com.chesire.nekome.kitsu.AuthProvider
+import com.chesire.nekome.library.api.LibraryApi
 import com.chesire.nekome.testing.createSeriesModel
 import com.schibsted.spain.barista.assertion.BaristaListAssertions.assertDisplayedAtPosition
 import com.schibsted.spain.barista.assertion.BaristaListAssertions.assertListNotEmpty
@@ -33,7 +36,7 @@ import org.junit.runner.RunWith
 import javax.inject.Inject
 
 @HiltAndroidTest
-@UninstallModules(DatabaseModule::class, KitsuModule::class)
+@UninstallModules(DatabaseModule::class, LibraryModule::class)
 @RunWith(AndroidJUnit4::class)
 class SeriesViewHolderTests {
     @get:Rule
@@ -220,7 +223,7 @@ class SeriesViewHolderTests {
         coEvery {
             fakeLibrary.update(any(), any(), any())
         } coAnswers {
-            Resource.Success(createSeriesModel(progress = 2, totalLength = 3))
+            Resource.Success(createLibraryEntity(progress = 2, totalLength = 3))
         }
         launchActivity()
 
@@ -243,19 +246,8 @@ class SeriesViewHolderTests {
     @Module
     @InstallIn(ApplicationComponent::class)
     inner class FakeKitsuModule {
-        @Provides
-        fun providesAuth() = mockk<AuthApi>()
 
         @Provides
         fun providesLibrary() = fakeLibrary
-
-        @Provides
-        fun providesSearch() = mockk<SearchApi>()
-
-        @Provides
-        fun providesTrending() = mockk<TrendingApi>()
-
-        @Provides
-        fun providesUser() = mockk<UserApi>()
     }
 }
