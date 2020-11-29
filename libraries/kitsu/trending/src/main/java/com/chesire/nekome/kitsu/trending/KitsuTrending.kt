@@ -1,10 +1,8 @@
 package com.chesire.nekome.kitsu.trending
 
-import com.chesire.nekome.core.EntityMapper
 import com.chesire.nekome.core.Resource
 import com.chesire.nekome.kitsu.asError
 import com.chesire.nekome.kitsu.parse
-import com.chesire.nekome.kitsu.trending.dto.TrendingItemDto
 import com.chesire.nekome.kitsu.trending.dto.TrendingResponseDto
 import com.chesire.nekome.trending.api.TrendingApi
 import com.chesire.nekome.trending.api.TrendingDomain
@@ -17,7 +15,7 @@ import javax.inject.Inject
 @Suppress("TooGenericExceptionCaught")
 class KitsuTrending @Inject constructor(
     private val trendingService: KitsuTrendingService,
-    private val map: EntityMapper<TrendingItemDto, TrendingDomain>
+    private val map: KitsuTrendingDtoMapper
 ) : TrendingApi {
 
     override suspend fun getTrendingAnime(): Resource<List<TrendingDomain>> {

@@ -1,10 +1,8 @@
 package com.chesire.nekome.kitsu.search
 
-import com.chesire.nekome.core.EntityMapper
 import com.chesire.nekome.core.Resource
 import com.chesire.nekome.kitsu.asError
 import com.chesire.nekome.kitsu.parse
-import com.chesire.nekome.kitsu.search.dto.SearchItemDto
 import com.chesire.nekome.kitsu.search.dto.SearchResponseDto
 import com.chesire.nekome.search.api.SearchApi
 import com.chesire.nekome.search.api.SearchDomain
@@ -17,7 +15,7 @@ import javax.inject.Inject
 @Suppress("TooGenericExceptionCaught")
 class KitsuSearch @Inject constructor(
     private val searchService: KitsuSearchService,
-    private val map: EntityMapper<SearchItemDto, SearchDomain>
+    private val map: KitsuSearchDtoMapper
 ) : SearchApi {
 
     override suspend fun searchForAnime(title: String): Resource<List<SearchDomain>> {
