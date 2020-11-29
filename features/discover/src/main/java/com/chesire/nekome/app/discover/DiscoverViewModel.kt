@@ -14,7 +14,7 @@ import com.chesire.nekome.core.flags.UserSeriesStatus
 import com.chesire.nekome.core.models.ImageModel
 import com.chesire.nekome.core.models.SeriesModel
 import com.chesire.nekome.trending.api.TrendingApi
-import com.chesire.nekome.trending.api.TrendingEntity
+import com.chesire.nekome.trending.api.TrendingDomain
 import kotlinx.coroutines.launch
 
 /**
@@ -64,7 +64,7 @@ class DiscoverViewModel @ViewModelInject constructor(
     val trendingManga: LiveData<AsyncState<List<SeriesModel>, DiscoverError>>
         get() = _trendingManga
 
-    private fun TrendingEntity.toSeriesModel(): SeriesModel = SeriesModel(
+    private fun TrendingDomain.toSeriesModel(): SeriesModel = SeriesModel(
         id,
         0,
         type,

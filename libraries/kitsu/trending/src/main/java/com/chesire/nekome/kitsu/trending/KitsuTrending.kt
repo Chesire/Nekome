@@ -4,8 +4,10 @@ import com.chesire.nekome.core.EntityMapper
 import com.chesire.nekome.core.Resource
 import com.chesire.nekome.kitsu.asError
 import com.chesire.nekome.kitsu.parse
+import com.chesire.nekome.kitsu.trending.dto.TrendingItemDto
+import com.chesire.nekome.kitsu.trending.dto.TrendingResponseDto
 import com.chesire.nekome.trending.api.TrendingApi
-import com.chesire.nekome.trending.api.TrendingEntity
+import com.chesire.nekome.trending.api.TrendingDomain
 import retrofit2.Response
 import javax.inject.Inject
 
@@ -15,10 +17,10 @@ import javax.inject.Inject
 @Suppress("TooGenericExceptionCaught")
 class KitsuTrending @Inject constructor(
     private val trendingService: KitsuTrendingService,
-    private val map: EntityMapper<KitsuTrendingEntity, TrendingEntity>
+    private val map: EntityMapper<TrendingItemDto, TrendingDomain>
 ) : TrendingApi {
 
-    override suspend fun getTrendingAnime(): Resource<List<TrendingEntity>> {
+    override suspend fun getTrendingAnime(): Resource<List<TrendingDomain>> {
         return try {
             parseResponse(trendingService.getTrendingAnimeAsync())
         } catch (ex: Exception) {
@@ -26,7 +28,7 @@ class KitsuTrending @Inject constructor(
         }
     }
 
-    override suspend fun getTrendingManga(): Resource<List<TrendingEntity>> {
+    override suspend fun getTrendingManga(): Resource<List<TrendingDomain>> {
         return try {
             parseResponse(trendingService.getTrendingMangaAsync())
         } catch (ex: Exception) {
@@ -34,7 +36,7 @@ class KitsuTrending @Inject constructor(
         }
     }
 
-    private fun parseResponse(response: Response<TrendingData>): Resource<List<TrendingEntity>> {
+    private fun parseResponse(response: Response<TrendingResponseDto>): Resource<List<TrendingDomain>> {
         return if (response.isSuccessful) {
             response.body()?.let { trending ->
                 Resource.Success(trending.data.map { map.from(it) })

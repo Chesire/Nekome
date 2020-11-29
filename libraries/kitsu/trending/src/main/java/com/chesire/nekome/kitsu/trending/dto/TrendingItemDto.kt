@@ -1,4 +1,4 @@
-package com.chesire.nekome.kitsu.trending
+package com.chesire.nekome.kitsu.trending.dto
 
 import com.chesire.nekome.core.flags.SeriesStatus
 import com.chesire.nekome.core.flags.SeriesType
@@ -11,19 +11,19 @@ import com.squareup.moshi.JsonClass
  * Entity from the Kitsu trending endpoint.
  */
 @JsonClass(generateAdapter = true)
-data class KitsuTrendingEntity(
+data class TrendingItemDto(
     @Json(name = "id")
     val id: Int,
     @Json(name = "type")
     val type: SeriesType,
     @Json(name = "attributes")
-    val attributes: EntityAttributes
+    val attributes: Attributes
 ) {
     /**
      * Entity for the attributes of the trending item.
      */
     @JsonClass(generateAdapter = true)
-    data class EntityAttributes(
+    data class Attributes(
         @Json(name = "slug")
         val slug: String,
         @Json(name = "synopsis")

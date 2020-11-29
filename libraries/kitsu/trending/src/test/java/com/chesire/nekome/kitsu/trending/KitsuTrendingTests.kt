@@ -2,6 +2,7 @@ package com.chesire.nekome.kitsu.trending
 
 import com.chesire.nekome.core.Resource
 import com.chesire.nekome.core.flags.SeriesType
+import com.chesire.nekome.kitsu.trending.dto.TrendingResponseDto
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
@@ -14,7 +15,7 @@ import retrofit2.Response
 import java.net.UnknownHostException
 
 class KitsuTrendingTests {
-    private val map = KitsuTrendingEntityMapper()
+    private val map = KitsuTrendingDtoMapper()
 
     @Test
     fun `trendingAnime failure response returns Resource#Error with errorBody`() = runBlocking {
@@ -23,7 +24,7 @@ class KitsuTrendingTests {
         val mockResponseBody = mockk<ResponseBody> {
             every { string() } returns expected
         }
-        val mockResponse = mockk<Response<TrendingData>> {
+        val mockResponse = mockk<Response<TrendingResponseDto>> {
             every { isSuccessful } returns false
             every { errorBody() } returns mockResponseBody
             every { code() } returns 0
@@ -49,7 +50,7 @@ class KitsuTrendingTests {
         runBlocking {
             val expected = "responseBodyString"
 
-            val mockResponse = mockk<Response<TrendingData>> {
+            val mockResponse = mockk<Response<TrendingResponseDto>> {
                 every { isSuccessful } returns false
                 every { errorBody() } returns null
                 every { message() } returns expected
@@ -75,7 +76,7 @@ class KitsuTrendingTests {
     fun `trendingAnime successful response with no body returns Resource#Error`() = runBlocking {
         val expected = "Response body is null"
 
-        val mockResponse = mockk<Response<TrendingData>> {
+        val mockResponse = mockk<Response<TrendingResponseDto>> {
             every { isSuccessful } returns true
             every { body() } returns null
             every { message() } returns expected
@@ -98,9 +99,9 @@ class KitsuTrendingTests {
 
     @Test
     fun `trendingAnime successful response with body returns Resource#Success`() = runBlocking {
-        val expected = TrendingData(listOf(createKitsuTrendingEntity(SeriesType.Anime)))
+        val expected = TrendingResponseDto(listOf(createKitsuTrendingDto(SeriesType.Anime)))
 
-        val mockResponse = mockk<Response<TrendingData>> {
+        val mockResponse = mockk<Response<TrendingResponseDto>> {
             every { isSuccessful } returns true
             every { body() } returns expected
         }
@@ -143,7 +144,7 @@ class KitsuTrendingTests {
         val mockResponseBody = mockk<ResponseBody> {
             every { string() } returns expected
         }
-        val mockResponse = mockk<Response<TrendingData>> {
+        val mockResponse = mockk<Response<TrendingResponseDto>> {
             every { isSuccessful } returns false
             every { errorBody() } returns mockResponseBody
             every { code() } returns 0
@@ -169,7 +170,7 @@ class KitsuTrendingTests {
         runBlocking {
             val expected = "responseBodyString"
 
-            val mockResponse = mockk<Response<TrendingData>> {
+            val mockResponse = mockk<Response<TrendingResponseDto>> {
                 every { isSuccessful } returns false
                 every { errorBody() } returns null
                 every { message() } returns expected
@@ -195,7 +196,7 @@ class KitsuTrendingTests {
     fun `trendingManga successful response with no body returns Resource#Error`() = runBlocking {
         val expected = "Response body is null"
 
-        val mockResponse = mockk<Response<TrendingData>> {
+        val mockResponse = mockk<Response<TrendingResponseDto>> {
             every { isSuccessful } returns true
             every { body() } returns null
             every { message() } returns expected
@@ -218,9 +219,9 @@ class KitsuTrendingTests {
 
     @Test
     fun `trendingManga successful response with body returns Resource#Success`() = runBlocking {
-        val expected = TrendingData(listOf(createKitsuTrendingEntity(SeriesType.Manga)))
+        val expected = TrendingResponseDto(listOf(createKitsuTrendingDto(SeriesType.Manga)))
 
-        val mockResponse = mockk<Response<TrendingData>> {
+        val mockResponse = mockk<Response<TrendingResponseDto>> {
             every { isSuccessful } returns true
             every { body() } returns expected
         }
