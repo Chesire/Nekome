@@ -1,13 +1,13 @@
-package com.chesire.nekome.kitsu.auth.request
+package com.chesire.nekome.kitsu.auth.dto
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 /**
- * Entity to use when requesting the auth token is refreshed.
+ * DTO to use when requesting to refresh the auth token.
  */
 @JsonClass(generateAdapter = true)
-data class RefreshTokenRequest(
+data class RefreshTokenRequestDto(
     @Json(name = "refresh_token")
     val refreshToken: String,
     @Json(name = "grant_type")

@@ -1,13 +1,13 @@
-package com.chesire.nekome.kitsu.auth.request
+package com.chesire.nekome.kitsu.auth.dto
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 /**
- * Entity to use when attempting to authorize as a user.
+ * DTO to use when attempting to authorize as a user.
  */
 @JsonClass(generateAdapter = true)
-data class LoginRequest(
+data class LoginRequestDto(
     @Json(name = "username")
     val username: String,
     @Json(name = "password")

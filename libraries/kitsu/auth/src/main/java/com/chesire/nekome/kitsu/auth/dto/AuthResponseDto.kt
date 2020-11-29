@@ -1,13 +1,13 @@
-package com.chesire.nekome.kitsu.auth
+package com.chesire.nekome.kitsu.auth.dto
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 /**
- * Entity from the Kitsu auth endpoint.
+ * DTO for responses from the Kitsu auth endpoints.
  */
 @JsonClass(generateAdapter = true)
-data class KitsuAuthEntity(
+data class AuthResponseDto(
     @Json(name = "access_token")
     val accessToken: String,
     @Json(name = "created_at")
