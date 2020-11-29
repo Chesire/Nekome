@@ -8,7 +8,7 @@ import com.chesire.nekome.core.Resource
 interface AuthApi {
 
     /**
-     * Logins into the service using a [username] and [password], returning the success state.
+     * Logs into the service using a [username] and [password], returning the success state.
      */
     suspend fun login(username: String, password: String): Resource<Any>
 
