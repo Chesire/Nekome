@@ -1,4 +1,4 @@
-package com.chesire.nekome.kitsu.search
+package com.chesire.nekome.kitsu.search.dto
 
 import com.chesire.nekome.kitsu.api.intermediaries.Links
 import com.squareup.moshi.Json
@@ -8,9 +8,9 @@ import com.squareup.moshi.JsonClass
  * Class to parse a response from [KitsuSearchService] into an object.
  */
 @JsonClass(generateAdapter = true)
-data class SearchData(
+data class SearchResponseDto(
     @Json(name = "data")
-    val data: List<KitsuSearchEntity>,
+    val data: List<SearchItemDto>,
     @Json(name = "links")
     val links: Links
 )

@@ -9,10 +9,10 @@ interface SearchApi {
     /**
      * Search for the anime series [title].
      */
-    suspend fun searchForAnime(title: String): Resource<List<SearchEntity>>
+    suspend fun searchForAnime(title: String): Resource<List<SearchDomain>>
 
     /**
      * Search for the manga series [title].
      */
-    suspend fun searchForManga(title: String): Resource<List<SearchEntity>>
+    suspend fun searchForManga(title: String): Resource<List<SearchDomain>>
 }

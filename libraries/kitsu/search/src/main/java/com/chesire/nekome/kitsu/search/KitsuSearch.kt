@@ -4,8 +4,10 @@ import com.chesire.nekome.core.EntityMapper
 import com.chesire.nekome.core.Resource
 import com.chesire.nekome.kitsu.asError
 import com.chesire.nekome.kitsu.parse
+import com.chesire.nekome.kitsu.search.dto.SearchItemDto
+import com.chesire.nekome.kitsu.search.dto.SearchResponseDto
 import com.chesire.nekome.search.api.SearchApi
-import com.chesire.nekome.search.api.SearchEntity
+import com.chesire.nekome.search.api.SearchDomain
 import retrofit2.Response
 import javax.inject.Inject
 
@@ -15,10 +17,10 @@ import javax.inject.Inject
 @Suppress("TooGenericExceptionCaught")
 class KitsuSearch @Inject constructor(
     private val searchService: KitsuSearchService,
-    private val map: EntityMapper<KitsuSearchEntity, SearchEntity>
+    private val map: EntityMapper<SearchItemDto, SearchDomain>
 ) : SearchApi {
 
-    override suspend fun searchForAnime(title: String): Resource<List<SearchEntity>> {
+    override suspend fun searchForAnime(title: String): Resource<List<SearchDomain>> {
         return try {
             parseResponse(searchService.searchForAnimeAsync(title))
         } catch (ex: Exception) {
@@ -26,7 +28,7 @@ class KitsuSearch @Inject constructor(
         }
     }
 
-    override suspend fun searchForManga(title: String): Resource<List<SearchEntity>> {
+    override suspend fun searchForManga(title: String): Resource<List<SearchDomain>> {
         return try {
             parseResponse(searchService.searchForMangaAsync(title))
         } catch (ex: Exception) {
@@ -34,7 +36,7 @@ class KitsuSearch @Inject constructor(
         }
     }
 
-    private fun parseResponse(response: Response<SearchData>): Resource<List<SearchEntity>> {
+    private fun parseResponse(response: Response<SearchResponseDto>): Resource<List<SearchDomain>> {
         return if (response.isSuccessful) {
             response.body()?.let { search ->
                 Resource.Success(search.data.map { map.from(it) })

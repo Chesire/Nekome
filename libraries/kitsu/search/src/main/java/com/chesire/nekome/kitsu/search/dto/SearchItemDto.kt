@@ -1,4 +1,4 @@
-package com.chesire.nekome.kitsu.search
+package com.chesire.nekome.kitsu.search.dto
 
 import com.chesire.nekome.core.flags.SeriesStatus
 import com.chesire.nekome.core.flags.SeriesType
@@ -8,22 +8,22 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 /**
- * Entity from the Kitsu search endpoint.
+ * Dto from the Kitsu search endpoint.
  */
 @JsonClass(generateAdapter = true)
-data class KitsuSearchEntity(
+data class SearchItemDto(
     @Json(name = "id")
     val id: Int,
     @Json(name = "type")
     val type: SeriesType,
     @Json(name = "attributes")
-    val attributes: EntityAttributes
+    val attributes: Attributes
 ) {
     /**
-     * Entity for the attributes of the search item.
+     * Attributes of the search item.
      */
     @JsonClass(generateAdapter = true)
-    data class EntityAttributes(
+    data class Attributes(
         @Json(name = "slug")
         val slug: String,
         @Json(name = "synopsis")

@@ -1,17 +1,13 @@
 package com.chesire.nekome.injection
 
-import com.chesire.nekome.core.EntityMapper
 import com.chesire.nekome.kitsu.KITSU_URL
 import com.chesire.nekome.kitsu.adapters.ImageModelAdapter
 import com.chesire.nekome.kitsu.adapters.SeriesStatusAdapter
 import com.chesire.nekome.kitsu.adapters.SeriesTypeAdapter
 import com.chesire.nekome.kitsu.adapters.SubtypeAdapter
 import com.chesire.nekome.kitsu.search.KitsuSearch
-import com.chesire.nekome.kitsu.search.KitsuSearchEntity
-import com.chesire.nekome.kitsu.search.KitsuSearchEntityMapper
 import com.chesire.nekome.kitsu.search.KitsuSearchService
 import com.chesire.nekome.search.api.SearchApi
-import com.chesire.nekome.search.api.SearchEntity
 import com.squareup.moshi.Moshi
 import dagger.Binds
 import dagger.Module
@@ -52,14 +48,6 @@ abstract class SearchModule {
                 .create(KitsuSearchService::class.java)
         }
     }
-
-    /**
-     * Binds [mapper] to an instance of [EntityMapper].
-     */
-    @Binds
-    abstract fun bindEntityMapper(
-        mapper: KitsuSearchEntityMapper
-    ): EntityMapper<KitsuSearchEntity, SearchEntity>
 
     /**
      * Binds [api] to an instance of [SearchApi].

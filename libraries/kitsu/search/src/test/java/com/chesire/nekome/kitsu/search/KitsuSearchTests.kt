@@ -2,6 +2,7 @@ package com.chesire.nekome.kitsu.search
 
 import com.chesire.nekome.core.Resource
 import com.chesire.nekome.core.flags.SeriesType
+import com.chesire.nekome.kitsu.search.dto.SearchResponseDto
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
@@ -15,7 +16,7 @@ import java.net.UnknownHostException
 
 class KitsuSearchTests {
 
-    private val map = KitsuSearchEntityMapper()
+    private val map = KitsuSearchDtoMapper()
 
     @Test
     fun `searchForAnime failure response returns Resource#Error with errorBody`() = runBlocking {
@@ -24,7 +25,7 @@ class KitsuSearchTests {
         val mockResponseBody = mockk<ResponseBody> {
             every { string() } returns expected
         }
-        val mockResponse = mockk<Response<SearchData>> {
+        val mockResponse = mockk<Response<SearchResponseDto>> {
             every { isSuccessful } returns false
             every { errorBody() } returns mockResponseBody
             every { code() } returns 0
@@ -51,7 +52,7 @@ class KitsuSearchTests {
         runBlocking {
             val expected = "responseBodyString"
 
-            val mockResponse = mockk<Response<SearchData>> {
+            val mockResponse = mockk<Response<SearchResponseDto>> {
                 every { isSuccessful } returns false
                 every { errorBody() } returns null
                 every { message() } returns expected
@@ -78,7 +79,7 @@ class KitsuSearchTests {
     fun `searchForAnime successful response with no body returns Resource#Error`() = runBlocking {
         val expected = "Response body is null"
 
-        val mockResponse = mockk<Response<SearchData>> {
+        val mockResponse = mockk<Response<SearchResponseDto>> {
             every { isSuccessful } returns true
             every { body() } returns null
             every { message() } returns expected
@@ -102,9 +103,9 @@ class KitsuSearchTests {
 
     @Test
     fun `searchForAnime successful response with body returns Resource#Success`() = runBlocking {
-        val expected = SearchData(listOf(createKitsuSearchingEntity(SeriesType.Anime)), mockk())
+        val expected = SearchResponseDto(listOf(createKitsuSearchingDto(SeriesType.Anime)), mockk())
 
-        val mockResponse = mockk<Response<SearchData>> {
+        val mockResponse = mockk<Response<SearchResponseDto>> {
             every { isSuccessful } returns true
             every { body() } returns expected
         }
@@ -149,7 +150,7 @@ class KitsuSearchTests {
         val mockResponseBody = mockk<ResponseBody> {
             every { string() } returns expected
         }
-        val mockResponse = mockk<Response<SearchData>> {
+        val mockResponse = mockk<Response<SearchResponseDto>> {
             every { isSuccessful } returns false
             every { errorBody() } returns mockResponseBody
             every { code() } returns 0
@@ -176,7 +177,7 @@ class KitsuSearchTests {
         runBlocking {
             val expected = "responseBodyString"
 
-            val mockResponse = mockk<Response<SearchData>> {
+            val mockResponse = mockk<Response<SearchResponseDto>> {
                 every { isSuccessful } returns false
                 every { errorBody() } returns null
                 every { message() } returns expected
@@ -203,7 +204,7 @@ class KitsuSearchTests {
     fun `searchForManga successful response with no body returns Resource#Error`() = runBlocking {
         val expected = "Response body is null"
 
-        val mockResponse = mockk<Response<SearchData>> {
+        val mockResponse = mockk<Response<SearchResponseDto>> {
             every { isSuccessful } returns true
             every { body() } returns null
             every { message() } returns expected
@@ -227,9 +228,9 @@ class KitsuSearchTests {
 
     @Test
     fun `searchForManga successful response with body returns Resource#Success`() = runBlocking {
-        val expected = SearchData(listOf(createKitsuSearchingEntity(SeriesType.Manga)), mockk())
+        val expected = SearchResponseDto(listOf(createKitsuSearchingDto(SeriesType.Manga)), mockk())
 
-        val mockResponse = mockk<Response<SearchData>> {
+        val mockResponse = mockk<Response<SearchResponseDto>> {
             every { isSuccessful } returns true
             every { body() } returns expected
         }

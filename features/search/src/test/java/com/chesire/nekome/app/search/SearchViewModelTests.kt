@@ -11,7 +11,7 @@ import com.chesire.nekome.core.flags.Subtype
 import com.chesire.nekome.core.models.ImageModel
 import com.chesire.nekome.core.models.SeriesModel
 import com.chesire.nekome.search.api.SearchApi
-import com.chesire.nekome.search.api.SearchEntity
+import com.chesire.nekome.search.api.SearchDomain
 import com.chesire.nekome.testing.CoroutinesMainDispatcherRule
 import io.mockk.Runs
 import io.mockk.coEvery
@@ -197,7 +197,7 @@ class SearchViewModelTests {
     }
 
     private fun createSearchEntity() =
-        SearchEntity(
+        SearchDomain(
             0,
             SeriesType.Anime,
             "slug",

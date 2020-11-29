@@ -1,16 +1,15 @@
 package com.chesire.nekome.kitsu.search
 
-import com.chesire.nekome.core.EntityMapper
-import com.chesire.nekome.search.api.SearchEntity
+import com.chesire.nekome.kitsu.search.dto.SearchItemDto
+import com.chesire.nekome.search.api.SearchDomain
 import javax.inject.Inject
 
 /**
- * Provides ability to map instances of [KitsuSearchEntity] into [SearchEntity].
+ * Provides ability to map instances of [SearchItemDto] into [SearchDomain].
  */
-class KitsuSearchEntityMapper @Inject constructor() :
-    EntityMapper<KitsuSearchEntity, SearchEntity> {
+class KitsuSearchDtoMapper @Inject constructor() {
 
-    override fun from(input: KitsuSearchEntity) = SearchEntity(
+    fun from(input: SearchItemDto) = SearchDomain(
         input.id,
         input.type,
         input.attributes.slug,

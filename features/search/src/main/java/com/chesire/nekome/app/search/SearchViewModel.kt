@@ -15,7 +15,7 @@ import com.chesire.nekome.core.flags.UserSeriesStatus
 import com.chesire.nekome.core.models.ImageModel
 import com.chesire.nekome.core.models.SeriesModel
 import com.chesire.nekome.search.api.SearchApi
-import com.chesire.nekome.search.api.SearchEntity
+import com.chesire.nekome.search.api.SearchDomain
 import com.hadilq.liveevent.LiveEvent
 import kotlinx.coroutines.launch
 
@@ -57,7 +57,7 @@ class SearchViewModel @ViewModelInject constructor(
         }
     }
 
-    private fun parseSearchResponse(response: Resource<List<SearchEntity>>) = when (response) {
+    private fun parseSearchResponse(response: Resource<List<SearchDomain>>) = when (response) {
         is Resource.Success ->
             if (response.data.isEmpty()) {
                 _searchResult.postError(SearchError.NoSeriesFound)
@@ -72,7 +72,7 @@ class SearchViewModel @ViewModelInject constructor(
             }
     }
 
-    private fun List<SearchEntity>.toSeriesModels(): List<SeriesModel> {
+    private fun List<SearchDomain>.toSeriesModels(): List<SeriesModel> {
         return map {
             SeriesModel(
                 it.id,
