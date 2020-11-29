@@ -2,15 +2,15 @@ package com.chesire.nekome.account
 
 import com.chesire.nekome.core.EntityMapper
 import com.chesire.nekome.core.models.UserModel
-import com.chesire.nekome.user.api.UserEntity
+import com.chesire.nekome.user.api.UserDomain
 import javax.inject.Inject
 
 /**
- * Provides ability to map instances of [UserEntity] into [UserModel].
+ * Provides ability to map instances of [UserDomain] into [UserModel].
  */
-class UserEntityMapper @Inject constructor() : EntityMapper<UserEntity, UserModel> {
+class UserDomainMapper @Inject constructor() : EntityMapper<UserDomain, UserModel> {
 
-    override fun from(input: UserEntity) =
+    override fun from(input: UserDomain) =
         UserModel(
             input.userId,
             input.name,

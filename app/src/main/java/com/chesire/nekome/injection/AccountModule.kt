@@ -1,9 +1,9 @@
 package com.chesire.nekome.injection
 
-import com.chesire.nekome.account.UserEntityMapper
+import com.chesire.nekome.account.UserDomainMapper
 import com.chesire.nekome.core.EntityMapper
 import com.chesire.nekome.core.models.UserModel
-import com.chesire.nekome.user.api.UserEntity
+import com.chesire.nekome.user.api.UserDomain
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -21,6 +21,6 @@ abstract class AccountModule {
      */
     @Binds
     abstract fun bindEntityMapper(
-        mapper: UserEntityMapper
-    ): EntityMapper<UserEntity, UserModel>
+        mapper: UserDomainMapper
+    ): EntityMapper<UserDomain, UserModel>
 }

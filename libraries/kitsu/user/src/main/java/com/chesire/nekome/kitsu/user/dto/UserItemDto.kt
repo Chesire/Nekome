@@ -1,4 +1,4 @@
-package com.chesire.nekome.kitsu.user
+package com.chesire.nekome.kitsu.user.dto
 
 import com.chesire.nekome.core.flags.RatingSystem
 import com.chesire.nekome.core.models.ImageModel
@@ -6,20 +6,20 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 /**
- * Entity from the Kitsu user endpoint.
+ * Dto from the Kitsu user endpoint.
  */
 @JsonClass(generateAdapter = true)
-data class KitsuUserEntity(
+data class UserItemDto(
     @Json(name = "id")
     val id: Int,
     @Json(name = "attributes")
-    val attributes: EntityAttributes
+    val attributes: Attributes
 ) {
     /**
-     * Entity for the attributes of the user.
+     * Dto for the attributes of the user.
      */
     @JsonClass(generateAdapter = true)
-    data class EntityAttributes(
+    data class Attributes(
         @Json(name = "name")
         val name: String,
         @Json(name = "slug")

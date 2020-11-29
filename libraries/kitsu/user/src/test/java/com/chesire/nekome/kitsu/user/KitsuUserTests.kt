@@ -3,6 +3,8 @@ package com.chesire.nekome.kitsu.user
 import com.chesire.nekome.core.Resource
 import com.chesire.nekome.core.flags.RatingSystem
 import com.chesire.nekome.core.models.ImageModel
+import com.chesire.nekome.kitsu.user.dto.UserItemDto
+import com.chesire.nekome.kitsu.user.dto.UserResponseDto
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
@@ -16,7 +18,7 @@ import java.net.UnknownHostException
 
 class KitsuUserTests {
 
-    private val mapper = KitsuUserEntityMapper()
+    private val mapper = KitsuUserDtoMapper()
 
     @Test
     fun `getUserDetails failure response returns Resource#Error with errorBody`() = runBlocking {
@@ -25,7 +27,7 @@ class KitsuUserTests {
         val mockResponseBody = mockk<ResponseBody> {
             every { string() } returns expected
         }
-        val mockResponse = mockk<Response<UserData>> {
+        val mockResponse = mockk<Response<UserResponseDto>> {
             every { isSuccessful } returns false
             every { errorBody() } returns mockResponseBody
             every { code() } returns 0
@@ -52,7 +54,7 @@ class KitsuUserTests {
         runBlocking {
             val expected = "responseBodyString"
 
-            val mockResponse = mockk<Response<UserData>> {
+            val mockResponse = mockk<Response<UserResponseDto>> {
                 every { isSuccessful } returns false
                 every { errorBody() } returns null
                 every { message() } returns expected
@@ -79,7 +81,7 @@ class KitsuUserTests {
     fun `getUserDetails successful response with no body returns Resource#Error`() = runBlocking {
         val expected = "Response body is null"
 
-        val mockResponse = mockk<Response<UserData>> {
+        val mockResponse = mockk<Response<UserResponseDto>> {
             every { isSuccessful } returns true
             every { body() } returns null
             every { message() } returns expected
@@ -103,11 +105,11 @@ class KitsuUserTests {
 
     @Test
     fun `getUserDetails successful response with body returns Resource#Success`() = runBlocking {
-        val expected = UserData(
+        val expected = UserResponseDto(
             listOf(
-                KitsuUserEntity(
+                UserItemDto(
                     0,
-                    KitsuUserEntity.EntityAttributes(
+                    UserItemDto.Attributes(
                         "name",
                         "name",
                         RatingSystem.Unknown,
@@ -118,7 +120,7 @@ class KitsuUserTests {
             )
         )
 
-        val mockResponse = mockk<Response<UserData>> {
+        val mockResponse = mockk<Response<UserResponseDto>> {
             every { isSuccessful } returns true
             every { body() } returns expected
         }

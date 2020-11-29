@@ -6,7 +6,7 @@ import com.chesire.nekome.core.flags.Service
 import com.chesire.nekome.core.models.UserModel
 import com.chesire.nekome.database.dao.UserDao
 import com.chesire.nekome.user.api.UserApi
-import com.chesire.nekome.user.api.UserEntity
+import com.chesire.nekome.user.api.UserDomain
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -16,7 +16,7 @@ import javax.inject.Inject
 class UserRepository @Inject constructor(
     private val userDao: UserDao,
     private val userApi: UserApi,
-    private val map: EntityMapper<UserEntity, UserModel>
+    private val map: EntityMapper<UserDomain, UserModel>
 ) {
     /**
      * Access the user information.

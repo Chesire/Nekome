@@ -1,15 +1,11 @@
 package com.chesire.nekome.injection
 
-import com.chesire.nekome.core.EntityMapper
 import com.chesire.nekome.kitsu.KITSU_URL
 import com.chesire.nekome.kitsu.adapters.ImageModelAdapter
 import com.chesire.nekome.kitsu.user.KitsuUser
-import com.chesire.nekome.kitsu.user.KitsuUserEntity
-import com.chesire.nekome.kitsu.user.KitsuUserEntityMapper
 import com.chesire.nekome.kitsu.user.KitsuUserService
 import com.chesire.nekome.kitsu.user.adapter.RatingSystemAdapter
 import com.chesire.nekome.user.api.UserApi
-import com.chesire.nekome.user.api.UserEntity
 import com.squareup.moshi.Moshi
 import dagger.Binds
 import dagger.Module
@@ -48,14 +44,6 @@ abstract class UserModule {
                 .create(KitsuUserService::class.java)
         }
     }
-
-    /**
-     * Binds [mapper] to an instance of [EntityMapper].
-     */
-    @Binds
-    abstract fun bindEntityMapper(
-        mapper: KitsuUserEntityMapper
-    ): EntityMapper<KitsuUserEntity, UserEntity>
 
     /**
      * Binds [api] to an instance of [UserApi].

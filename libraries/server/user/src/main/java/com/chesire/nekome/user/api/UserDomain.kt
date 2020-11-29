@@ -4,9 +4,9 @@ import com.chesire.nekome.core.flags.Service
 import com.chesire.nekome.core.models.ImageModel
 
 /**
- * Entity class for user related information.
+ * Domain class for user related information.
  */
-data class UserEntity(
+data class UserDomain(
     val userId: Int,
     val name: String,
     val avatar: ImageModel,

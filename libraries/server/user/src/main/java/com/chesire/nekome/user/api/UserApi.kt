@@ -9,5 +9,5 @@ interface UserApi {
     /**
      * Retrieves the users details.
      */
-    suspend fun getUserDetails(): Resource<UserEntity>
+    suspend fun getUserDetails(): Resource<UserDomain>
 }

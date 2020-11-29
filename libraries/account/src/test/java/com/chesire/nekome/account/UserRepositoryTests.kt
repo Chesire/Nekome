@@ -5,7 +5,7 @@ import com.chesire.nekome.core.flags.Service
 import com.chesire.nekome.core.models.ImageModel
 import com.chesire.nekome.database.dao.UserDao
 import com.chesire.nekome.user.api.UserApi
-import com.chesire.nekome.user.api.UserEntity
+import com.chesire.nekome.user.api.UserDomain
 import io.mockk.Runs
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -18,7 +18,7 @@ import org.junit.Assert.fail
 import org.junit.Test
 
 class UserRepositoryTests {
-    private val map = UserEntityMapper()
+    private val map = UserDomainMapper()
 
     @Test
     fun `refreshUser stores userModel on success`() = runBlocking {
@@ -31,7 +31,7 @@ class UserRepositoryTests {
                 getUserDetails()
             } coAnswers {
                 Resource.Success(
-                    UserEntity(
+                    UserDomain(
                         0,
                         "name",
                         ImageModel.empty,
