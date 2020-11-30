@@ -54,9 +54,12 @@ fun createRetrieveResponseDto(type: SeriesType, links: Links = Links()) =
         links
     )
 
-private fun createDataDto(type: SeriesType) =
+/**
+ * Create a [DataDto] for tests.
+ */
+fun createDataDto(type: SeriesType, id: Int = 0) =
     DataDto(
-        0,
+        id,
         DataDto.Attributes(
             UserSeriesStatus.Unknown,
             0,
@@ -64,27 +67,48 @@ private fun createDataDto(type: SeriesType) =
             "finishedAt"
         ),
         DataDto.Relationships(
-            if (type == SeriesType.Anime) DataDto.Relationships.RelationshipObject() else null,
-            if (type == SeriesType.Manga) DataDto.Relationships.RelationshipObject() else null,
+            if (type == SeriesType.Anime) DataDto.Relationships.RelationshipObject(
+                DataDto.Relationships.RelationshipObject.RelationshipData("", id)
+            ) else null,
+            if (type == SeriesType.Manga) DataDto.Relationships.RelationshipObject(
+                DataDto.Relationships.RelationshipObject.RelationshipData("", id)
+            ) else null,
         )
     )
 
-private fun createIncludedDto(type: SeriesType) =
-    IncludedDto(
-        0,
-        type,
-        IncludedDto.Attributes(
-            "slug",
-            "synopsis",
-            "canonincalTitle",
-            "startDate",
-            "endDate",
-            Subtype.Unknown,
-            SeriesStatus.Unknown,
-            ImageModel.empty,
-            ImageModel.empty,
-            0,
-            0,
-            false
-        )
+/**
+ * Create a [IncludedDto] for tests.
+ */
+fun createIncludedDto(
+    type: SeriesType,
+    id: Int = 0,
+    slug: String = "slug",
+    synopsis: String = "synopsis",
+    canonicalTitle: String = "canonicalTitle",
+    startDate: String = "startDate",
+    endDate: String = "endDate",
+    subtype: Subtype = Subtype.Unknown,
+    seriesStatus: SeriesStatus = SeriesStatus.Unknown,
+    posterImage: ImageModel = ImageModel.empty,
+    coverImage: ImageModel = ImageModel.empty,
+    chapterCount: Int = 0,
+    episodeCount: Int = 0,
+    nsfw: Boolean = false
+) = IncludedDto(
+    id,
+    type,
+    IncludedDto.Attributes(
+        slug,
+        synopsis,
+        canonicalTitle,
+        startDate,
+        endDate,
+        subtype,
+        seriesStatus,
+        posterImage,
+        coverImage,
+        chapterCount,
+        episodeCount,
+        nsfw
     )
+)

@@ -21,7 +21,7 @@ import java.net.UnknownHostException
 
 class KitsuLibraryTests {
 
-    private val map = mockk<AddResponseDtoMapper> {
+    private val map = mockk<ResponseDtoMapper> {
         every { toLibraryDomain(any()) } returns createLibraryDomain()
     }
     private val factory = DtoFactory()

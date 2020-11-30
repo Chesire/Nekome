@@ -10,7 +10,7 @@ import javax.inject.Inject
 /**
  * Provides ability to map instances of [AddResponseDto] into [LibraryDomain].
  */
-class AddResponseDtoMapper @Inject constructor() {
+class ResponseDtoMapper @Inject constructor() {
 
     /**
      * Converts an instance of [AddResponseDto] into a [LibraryDomain].
