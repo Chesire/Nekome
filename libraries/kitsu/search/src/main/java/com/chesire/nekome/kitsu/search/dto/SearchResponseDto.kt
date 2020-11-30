@@ -5,7 +5,7 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 /**
- * Class to parse a response from [KitsuSearchService] into an object.
+ * DTO for responses from the Kitsu search endpoint.
  */
 @JsonClass(generateAdapter = true)
 data class SearchResponseDto(

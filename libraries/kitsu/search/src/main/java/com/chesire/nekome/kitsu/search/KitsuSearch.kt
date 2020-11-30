@@ -15,7 +15,7 @@ import javax.inject.Inject
 @Suppress("TooGenericExceptionCaught")
 class KitsuSearch @Inject constructor(
     private val searchService: KitsuSearchService,
-    private val map: KitsuSearchDtoMapper
+    private val map: SearchItemDtoMapper
 ) : SearchApi {
 
     override suspend fun searchForAnime(title: String): Resource<List<SearchDomain>> {
@@ -37,7 +37,7 @@ class KitsuSearch @Inject constructor(
     private fun parseResponse(response: Response<SearchResponseDto>): Resource<List<SearchDomain>> {
         return if (response.isSuccessful) {
             response.body()?.let { search ->
-                Resource.Success(search.data.map { map.from(it) })
+                Resource.Success(search.data.map { map.toSearchDomain(it) })
             } ?: Resource.Error.emptyResponse()
         } else {
             response.asError()

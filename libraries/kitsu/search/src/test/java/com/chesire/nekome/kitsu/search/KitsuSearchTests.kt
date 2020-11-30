@@ -16,7 +16,7 @@ import java.net.UnknownHostException
 
 class KitsuSearchTests {
 
-    private val map = KitsuSearchDtoMapper()
+    private val map = SearchItemDtoMapper()
 
     @Test
     fun `searchForAnime failure response returns Resource#Error with errorBody`() = runBlocking {
@@ -103,7 +103,7 @@ class KitsuSearchTests {
 
     @Test
     fun `searchForAnime successful response with body returns Resource#Success`() = runBlocking {
-        val expected = SearchResponseDto(listOf(createKitsuSearchingDto(SeriesType.Anime)), mockk())
+        val expected = SearchResponseDto(listOf(createSearchItemDto(SeriesType.Anime)), mockk())
 
         val mockResponse = mockk<Response<SearchResponseDto>> {
             every { isSuccessful } returns true
@@ -228,7 +228,7 @@ class KitsuSearchTests {
 
     @Test
     fun `searchForManga successful response with body returns Resource#Success`() = runBlocking {
-        val expected = SearchResponseDto(listOf(createKitsuSearchingDto(SeriesType.Manga)), mockk())
+        val expected = SearchResponseDto(listOf(createSearchItemDto(SeriesType.Manga)), mockk())
 
         val mockResponse = mockk<Response<SearchResponseDto>> {
             every { isSuccessful } returns true

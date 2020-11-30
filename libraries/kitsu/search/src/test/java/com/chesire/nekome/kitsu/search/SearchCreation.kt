@@ -9,7 +9,7 @@ import com.chesire.nekome.kitsu.search.dto.SearchItemDto
 /**
  * Create a [SearchItemDto] for tests.
  */
-fun createKitsuSearchingDto(type: SeriesType) =
+fun createSearchItemDto(type: SeriesType) =
     SearchItemDto(
         0,
         type,

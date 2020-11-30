@@ -8,7 +8,7 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 /**
- * Dto from the Kitsu search endpoint.
+ * DTO from the Kitsu search endpoint.
  */
 @JsonClass(generateAdapter = true)
 data class SearchItemDto(
