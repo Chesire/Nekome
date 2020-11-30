@@ -1,6 +1,5 @@
 package com.chesire.nekome.kitsu.library
 
-import com.chesire.nekome.core.EntityMapper
 import com.chesire.nekome.core.Resource
 import com.chesire.nekome.core.flags.UserSeriesStatus
 import com.chesire.nekome.kitsu.asError
@@ -30,7 +29,7 @@ private const val MEDIA_TYPE = "application/vnd.api+json"
 @Suppress("TooGenericExceptionCaught")
 class KitsuLibrary @Inject constructor(
     private val libraryService: KitsuLibraryService,
-    private val map: EntityMapper<AddResponseDto, LibraryDomain?>,
+    private val map: KitsuLibraryDtoMapper,
     private val entityFactory: DtoFactory
 ) : LibraryApi {
 
