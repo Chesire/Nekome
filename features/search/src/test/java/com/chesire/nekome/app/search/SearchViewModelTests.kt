@@ -134,7 +134,7 @@ class SearchViewModelTests {
             coEvery {
                 searchForAnime(any())
             } coAnswers {
-                Resource.Success(listOf(createSearchEntity()))
+                Resource.Success(listOf(createSearchDomain()))
             }
         }
         val mockCaster = mockk<AuthCaster>()
@@ -196,7 +196,7 @@ class SearchViewModelTests {
         verify { mockCaster.issueRefreshingToken() }
     }
 
-    private fun createSearchEntity() =
+    private fun createSearchDomain() =
         SearchDomain(
             0,
             SeriesType.Anime,
