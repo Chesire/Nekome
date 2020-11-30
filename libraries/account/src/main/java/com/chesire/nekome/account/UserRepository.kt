@@ -1,12 +1,10 @@
 package com.chesire.nekome.account
 
-import com.chesire.nekome.core.EntityMapper
 import com.chesire.nekome.core.Resource
 import com.chesire.nekome.core.flags.Service
 import com.chesire.nekome.core.models.UserModel
 import com.chesire.nekome.database.dao.UserDao
 import com.chesire.nekome.user.api.UserApi
-import com.chesire.nekome.user.api.UserDomain
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -16,7 +14,7 @@ import javax.inject.Inject
 class UserRepository @Inject constructor(
     private val userDao: UserDao,
     private val userApi: UserApi,
-    private val map: EntityMapper<UserDomain, UserModel>
+    private val map: UserDomainMapper
 ) {
     /**
      * Access the user information.
@@ -27,10 +25,9 @@ class UserRepository @Inject constructor(
      * Updates the stored user in the database, data will be funneled to the [user].
      */
     suspend fun refreshUser(): Resource<UserModel> {
-        val response = userApi.getUserDetails()
-        return when (response) {
+        return when (val response = userApi.getUserDetails()) {
             is Resource.Success -> {
-                val model = map.from(response.data)
+                val model = map.toUserModel(response.data)
                 userDao.insert(model)
                 Resource.Success(model)
             }
