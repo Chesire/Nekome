@@ -8,9 +8,9 @@ import javax.inject.Inject
 class DtoFactory @Inject constructor() {
 
     /**
-     * Creates a new JSON entity for adding a new series.
+     * Creates a new JSON DTO for adding a new series.
      */
-    fun createAddEntity(
+    fun createAddDto(
         userId: Int,
         seriesId: Int,
         startingStatus: String,
@@ -43,9 +43,9 @@ class DtoFactory @Inject constructor() {
         """.trimIndent()
 
     /**
-     * Creates a new JSON entity for updating a series.
+     * Creates a new JSON DTO for updating a series.
      */
-    fun createUpdateEntity(
+    fun createUpdateDto(
         userSeriesId: Int,
         newProgress: Int,
         newStatus: String

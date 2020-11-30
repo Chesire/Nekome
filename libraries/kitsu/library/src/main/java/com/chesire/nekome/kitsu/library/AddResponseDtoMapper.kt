@@ -10,9 +10,12 @@ import javax.inject.Inject
 /**
  * Provides ability to map instances of [AddResponseDto] into [LibraryDomain].
  */
-class KitsuLibraryDtoMapper @Inject constructor() {
+class AddResponseDtoMapper @Inject constructor() {
 
-    fun from(input: AddResponseDto): LibraryDomain? {
+    /**
+     * Converts an instance of [AddResponseDto] into a [LibraryDomain].
+     */
+    fun toLibraryDomain(input: AddResponseDto): LibraryDomain? {
         val id = input.data.relationships.anime?.data?.id
             ?: input.data.relationships.manga?.data?.id
             ?: return null

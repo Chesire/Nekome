@@ -29,7 +29,7 @@ private const val MEDIA_TYPE = "application/vnd.api+json"
 @Suppress("TooGenericExceptionCaught")
 class KitsuLibrary @Inject constructor(
     private val libraryService: KitsuLibraryService,
-    private val map: KitsuLibraryDtoMapper,
+    private val map: AddResponseDtoMapper,
     private val entityFactory: DtoFactory
 ) : LibraryApi {
 
@@ -46,7 +46,7 @@ class KitsuLibrary @Inject constructor(
         seriesId: Int,
         startingStatus: UserSeriesStatus
     ): Resource<LibraryDomain> {
-        val addJson = entityFactory.createAddEntity(
+        val addJson = entityFactory.createAddDto(
             userId,
             seriesId,
             userSeriesStatusAdapter.userSeriesStatusToString(startingStatus),
@@ -66,7 +66,7 @@ class KitsuLibrary @Inject constructor(
         seriesId: Int,
         startingStatus: UserSeriesStatus
     ): Resource<LibraryDomain> {
-        val addJson = entityFactory.createAddEntity(
+        val addJson = entityFactory.createAddDto(
             userId,
             seriesId,
             userSeriesStatusAdapter.userSeriesStatusToString(startingStatus),
@@ -86,7 +86,7 @@ class KitsuLibrary @Inject constructor(
         progress: Int,
         newStatus: UserSeriesStatus
     ): Resource<LibraryDomain> {
-        val updateJson = entityFactory.createUpdateEntity(
+        val updateJson = entityFactory.createUpdateDto(
             userSeriesId,
             progress,
             userSeriesStatusAdapter.userSeriesStatusToString(newStatus)
@@ -143,7 +143,7 @@ class KitsuLibrary @Inject constructor(
             val body = response.body()
             if (response.isSuccessful && body != null) {
                 val series = body.data.map {
-                    map.from(AddResponseDto(it, body.included))
+                    map.toLibraryDomain(AddResponseDto(it, body.included))
                 }.filterNotNull()
                 models.addAll(series)
                 retries = 0
@@ -173,7 +173,7 @@ class KitsuLibrary @Inject constructor(
     private fun parseResponse(response: Response<AddResponseDto>): Resource<LibraryDomain> {
         return if (response.isSuccessful) {
             response.body()?.let { entity ->
-                Resource.Success(requireNotNull(map.from(entity)))
+                Resource.Success(requireNotNull(map.toLibraryDomain(entity)))
             } ?: Resource.Error.emptyResponse()
         } else {
             response.asError()
