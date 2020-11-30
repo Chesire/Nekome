@@ -18,7 +18,7 @@ import java.net.UnknownHostException
 
 class KitsuUserTests {
 
-    private val mapper = KitsuUserDtoMapper()
+    private val mapper = UserItemDtoMapper()
 
     @Test
     fun `getUserDetails failure response returns Resource#Error with errorBody`() = runBlocking {

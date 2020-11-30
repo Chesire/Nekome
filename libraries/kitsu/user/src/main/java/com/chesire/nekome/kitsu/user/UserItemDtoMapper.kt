@@ -9,9 +9,12 @@ import javax.inject.Inject
 /**
  * Provides ability to map instances of [UserItemDto] into [UserDomain].
  */
-class KitsuUserDtoMapper @Inject constructor() {
+class UserItemDtoMapper @Inject constructor() {
 
-    fun from(input: UserItemDto) =
+    /**
+     * Converts an instance of [UserItemDto] into a [UserDomain].
+     */
+    fun toUserDomain(input: UserItemDto) =
         UserDomain(
             input.id,
             input.attributes.name,

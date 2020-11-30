@@ -4,7 +4,7 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 /**
- * Response DTO for interacting with the Kitsu user api.
+ * DTO for responses from the Kitsu user endpoint.
  */
 @JsonClass(generateAdapter = true)
 data class UserResponseDto(

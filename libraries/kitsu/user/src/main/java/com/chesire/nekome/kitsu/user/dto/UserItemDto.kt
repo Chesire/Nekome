@@ -6,7 +6,7 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 /**
- * Dto from the Kitsu user endpoint.
+ * DTO from the Kitsu user endpoint.
  */
 @JsonClass(generateAdapter = true)
 data class UserItemDto(
@@ -16,7 +16,7 @@ data class UserItemDto(
     val attributes: Attributes
 ) {
     /**
-     * Dto for the attributes of the user.
+     * Attributes of the user item.
      */
     @JsonClass(generateAdapter = true)
     data class Attributes(

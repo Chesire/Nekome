@@ -15,7 +15,7 @@ import javax.inject.Inject
 @Suppress("TooGenericExceptionCaught")
 class KitsuUser @Inject constructor(
     private val userService: KitsuUserService,
-    private val map: KitsuUserDtoMapper
+    private val map: UserItemDtoMapper
 ) : UserApi {
 
     override suspend fun getUserDetails(): Resource<UserDomain> {
@@ -32,7 +32,7 @@ class KitsuUser @Inject constructor(
                 ?.data
                 ?.firstOrNull()
                 ?.let { user ->
-                    Resource.Success(map.from(user))
+                    Resource.Success(map.toUserDomain(user))
                 } ?: Resource.Error.emptyResponse()
         } else {
             response.asError()
