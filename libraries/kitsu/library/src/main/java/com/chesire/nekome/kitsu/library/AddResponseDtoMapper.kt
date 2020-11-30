@@ -23,11 +23,11 @@ class AddResponseDtoMapper @Inject constructor() {
         return input.included
             .find { it.id == id }
             ?.let { included ->
-                createLibraryEntity(included, input.data)
+                createLibraryDomain(included, input.data)
             }
     }
 
-    private fun createLibraryEntity(included: IncludedDto, data: DataDto) =
+    private fun createLibraryDomain(included: IncludedDto, data: DataDto) =
         LibraryDomain(
             included.id,
             data.id,
