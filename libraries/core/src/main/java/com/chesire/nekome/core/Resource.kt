@@ -12,7 +12,7 @@ sealed class Resource<T> {
         /**
          * Changes the current [Success] into a [Success] with [newData].
          */
-        fun <U> with(newData: U) = Success<U>(newData)
+        fun <U> with(newData: U) = Success(newData)
     }
 
     /**
@@ -20,9 +20,9 @@ sealed class Resource<T> {
      */
     class Error<T>(val msg: String, val code: Int = GenericError) : Resource<T>() {
         /**
-         * Morphs the [Error] of type [T] into an [Error] of type [U].
+         * Mutates this instance of [Error] of type [T] into an [Error] of type [U].
          */
-        fun <U> morph() = Error<U>(msg, code)
+        fun <U> mutate() = Error<U>(msg, code)
 
         companion object {
             /**

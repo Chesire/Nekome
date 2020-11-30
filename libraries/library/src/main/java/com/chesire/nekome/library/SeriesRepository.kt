@@ -39,7 +39,7 @@ class SeriesRepository(
             }
             is Resource.Error -> {
                 Timber.e("Error adding anime [$seriesId], ${response.msg}")
-                response.morph()
+                response.mutate()
             }
         }
     }
@@ -61,7 +61,7 @@ class SeriesRepository(
             }
             is Resource.Error -> {
                 Timber.e("Error adding manga [$seriesId], ${response.msg}")
-                response.morph()
+                response.mutate()
             }
         }
     }
@@ -94,7 +94,7 @@ class SeriesRepository(
             }
             is Resource.Error -> {
                 Timber.e("Error refreshing anime, ${response.msg}")
-                response.morph()
+                response.mutate()
             }
         }
     }
@@ -112,7 +112,7 @@ class SeriesRepository(
             }
             is Resource.Error -> {
                 Timber.e("Error refreshing manga, ${response.msg}")
-                response.morph()
+                response.mutate()
             }
         }
     }
@@ -135,7 +135,7 @@ class SeriesRepository(
             }
             is Resource.Error -> {
                 Timber.e("Error updating series [$userSeriesId], ${response.msg}")
-                response.morph()
+                response.mutate()
             }
         }
     }
