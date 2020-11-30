@@ -1,3 +1,3 @@
 package com.chesire.nekome.library
 
-class LibraryEntityMapperTests
+class LibraryDomainMapperTests

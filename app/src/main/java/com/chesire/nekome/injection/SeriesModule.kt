@@ -2,7 +2,7 @@ package com.chesire.nekome.injection
 
 import com.chesire.nekome.binders.UserProviderBinder
 import com.chesire.nekome.database.dao.SeriesDao
-import com.chesire.nekome.library.LibraryEntityMapper
+import com.chesire.nekome.library.LibraryDomainMapper
 import com.chesire.nekome.library.SeriesRepository
 import com.chesire.nekome.library.UserProvider
 import com.chesire.nekome.library.api.LibraryApi
@@ -27,6 +27,10 @@ object SeriesModule {
      * Provides the [SeriesRepository] to the dependency graph.
      */
     @Provides
-    fun provideSeriesRepository(dao: SeriesDao, api: LibraryApi, user: UserProvider) =
-        SeriesRepository(dao, api, user, LibraryEntityMapper())
+    fun provideSeriesRepository(
+        dao: SeriesDao,
+        api: LibraryApi,
+        user: UserProvider,
+        map: LibraryDomainMapper
+    ) = SeriesRepository(dao, api, user, map)
 }

@@ -28,11 +28,11 @@ class SeriesRepositoryTests {
     @get:Rule
     val rule = InstantTaskExecutorRule()
 
-    private val map = LibraryEntityMapper()
+    private val map = LibraryDomainMapper()
 
     @Test
     fun `addAnime onSuccess saves to dao`() = runBlocking {
-        val expected = Resource.Success(createLibraryEntity())
+        val expected = Resource.Success(createLibraryDomain())
         val mockDao = mockk<SeriesDao> {
             coEvery { insert(any<SeriesModel>()) } just Runs
             every { getSeries() } returns mockk()
@@ -52,7 +52,7 @@ class SeriesRepositoryTests {
 
     @Test
     fun `addAnime onSuccess returns success`() = runBlocking {
-        val expected = Resource.Success(createLibraryEntity())
+        val expected = Resource.Success(createLibraryDomain())
         val mockDao = mockk<SeriesDao> {
             coEvery { insert(any<SeriesModel>()) } just Runs
             every { getSeries() } returns mockk()
@@ -92,7 +92,7 @@ class SeriesRepositoryTests {
 
     @Test
     fun `addManga onSuccess saves to dao`() = runBlocking {
-        val expected = Resource.Success(createLibraryEntity())
+        val expected = Resource.Success(createLibraryDomain())
         val mockDao = mockk<SeriesDao> {
             coEvery { insert(any<SeriesModel>()) } just Runs
             every { getSeries() } returns mockk()
@@ -112,7 +112,7 @@ class SeriesRepositoryTests {
 
     @Test
     fun `addManga onSuccess returns success`() = runBlocking {
-        val expected = Resource.Success(createLibraryEntity())
+        val expected = Resource.Success(createLibraryDomain())
         val mockDao = mockk<SeriesDao> {
             coEvery { insert(any<SeriesModel>()) } just Runs
             every { getSeries() } returns mockk()
@@ -302,7 +302,7 @@ class SeriesRepositoryTests {
 
     @Test
     fun `updateSeries on success updates the dao`() = runBlocking {
-        val expected = createLibraryEntity()
+        val expected = createLibraryDomain()
         val mockDao = mockk<SeriesDao> {
             coEvery { update(any()) } just Runs
             every { getSeries() } returns mockk()
@@ -345,7 +345,7 @@ class SeriesRepositoryTests {
         }
     }
 
-    private fun createLibraryEntity() =
+    private fun createLibraryDomain() =
         LibraryDomain(
             0,
             0,

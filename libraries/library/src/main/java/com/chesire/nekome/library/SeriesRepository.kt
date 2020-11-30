@@ -1,12 +1,10 @@
 package com.chesire.nekome.library
 
-import com.chesire.nekome.core.EntityMapper
 import com.chesire.nekome.core.Resource
 import com.chesire.nekome.core.flags.UserSeriesStatus
 import com.chesire.nekome.core.models.SeriesModel
 import com.chesire.nekome.database.dao.SeriesDao
 import com.chesire.nekome.library.api.LibraryApi
-import com.chesire.nekome.library.api.LibraryDomain
 import timber.log.Timber
 
 /**
@@ -16,7 +14,7 @@ class SeriesRepository(
     private val seriesDao: SeriesDao,
     private val libraryApi: LibraryApi,
     private val userProvider: UserProvider,
-    private val map: EntityMapper<LibraryDomain, SeriesModel>
+    private val map: LibraryDomainMapper
 ) {
 
     /**
@@ -35,7 +33,7 @@ class SeriesRepository(
         )
         return when (response) {
             is Resource.Success -> {
-                val newData = map.from(response.data)
+                val newData = map.toSeriesModel(response.data)
                 seriesDao.insert(newData)
                 response.with(newData)
             }
@@ -57,7 +55,7 @@ class SeriesRepository(
         )
         return when (response) {
             is Resource.Success -> {
-                val newData = map.from(response.data)
+                val newData = map.toSeriesModel(response.data)
                 seriesDao.insert(newData)
                 response.with(newData)
             }
@@ -90,7 +88,7 @@ class SeriesRepository(
         val response = libraryApi.retrieveAnime(userProvider.provideUserId())
         return when (response) {
             is Resource.Success -> {
-                val add = response.data.map { map.from(it) }
+                val add = response.data.map { map.toSeriesModel(it) }
                 seriesDao.insert(add)
                 response.with(add)
             }
@@ -108,7 +106,7 @@ class SeriesRepository(
         val response = libraryApi.retrieveManga(userProvider.provideUserId())
         return when (response) {
             is Resource.Success -> {
-                val add = response.data.map { map.from(it) }
+                val add = response.data.map { map.toSeriesModel(it) }
                 seriesDao.insert(add)
                 response.with(add)
             }
@@ -131,7 +129,7 @@ class SeriesRepository(
         val response = libraryApi.update(userSeriesId, progress, status)
         return when (response) {
             is Resource.Success -> {
-                val add = map.from(response.data)
+                val add = map.toSeriesModel(response.data)
                 seriesDao.update(add)
                 response.with(add)
             }
