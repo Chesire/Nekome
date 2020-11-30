@@ -6,7 +6,7 @@ import com.chesire.nekome.core.flags.Subtype
 import com.chesire.nekome.core.models.ImageModel
 
 /**
- * DTO related to a singular searched item.
+ * Domain related to a singular searched item.
  */
 data class SearchDomain(
     val id: Int,

@@ -6,7 +6,7 @@ import com.chesire.nekome.core.flags.Subtype
 import com.chesire.nekome.core.models.ImageModel
 
 /**
- * DTO class for a trending item.
+ * Domain class for a trending item.
  */
 data class TrendingDomain(
     val id: Int,
