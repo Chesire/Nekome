@@ -8,6 +8,10 @@ import javax.inject.Inject
 /**
  * Provides ability to map instances of [AuthResponseDto] into [AuthDomain].
  */
-class KitsuAuthDtoMapper @Inject constructor() {
-    fun from(input: AuthResponseDto) = AuthDomain()
+class AuthResponseDtoMapper @Inject constructor() {
+
+    /**
+     * Converts an instance of [AuthResponseDto] to [AuthDomain].
+     */
+    fun toAuthDomain(input: AuthResponseDto) = AuthDomain()
 }
