@@ -8,7 +8,7 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 /**
- * Entity from the Kitsu trending endpoint.
+ * DTO from the Kitsu trending endpoint.
  */
 @JsonClass(generateAdapter = true)
 data class TrendingItemDto(
@@ -20,7 +20,7 @@ data class TrendingItemDto(
     val attributes: Attributes
 ) {
     /**
-     * Entity for the attributes of the trending item.
+     * Attributes of the trending item.
      */
     @JsonClass(generateAdapter = true)
     data class Attributes(

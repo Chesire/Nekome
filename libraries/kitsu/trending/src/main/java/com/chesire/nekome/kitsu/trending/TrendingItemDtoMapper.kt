@@ -7,9 +7,12 @@ import javax.inject.Inject
 /**
  * Provides ability to map instances of [TrendingItemDto] into [TrendingDomain].
  */
-class KitsuTrendingDtoMapper @Inject constructor() {
+class TrendingItemDtoMapper @Inject constructor() {
 
-    fun from(input: TrendingItemDto) =
+    /**
+     * Converts an instance of [TrendingItemDto] into a [TrendingDomain].
+     */
+    fun toTrendingDomain(input: TrendingItemDto) =
         TrendingDomain(
             input.id,
             input.type,

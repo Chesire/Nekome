@@ -15,7 +15,7 @@ import retrofit2.Response
 import java.net.UnknownHostException
 
 class KitsuTrendingTests {
-    private val map = KitsuTrendingDtoMapper()
+    private val map = TrendingItemDtoMapper()
 
     @Test
     fun `trendingAnime failure response returns Resource#Error with errorBody`() = runBlocking {
@@ -99,7 +99,7 @@ class KitsuTrendingTests {
 
     @Test
     fun `trendingAnime successful response with body returns Resource#Success`() = runBlocking {
-        val expected = TrendingResponseDto(listOf(createKitsuTrendingDto(SeriesType.Anime)))
+        val expected = TrendingResponseDto(listOf(createTrendingItemDto(SeriesType.Anime)))
 
         val mockResponse = mockk<Response<TrendingResponseDto>> {
             every { isSuccessful } returns true
@@ -219,7 +219,7 @@ class KitsuTrendingTests {
 
     @Test
     fun `trendingManga successful response with body returns Resource#Success`() = runBlocking {
-        val expected = TrendingResponseDto(listOf(createKitsuTrendingDto(SeriesType.Manga)))
+        val expected = TrendingResponseDto(listOf(createTrendingItemDto(SeriesType.Manga)))
 
         val mockResponse = mockk<Response<TrendingResponseDto>> {
             every { isSuccessful } returns true

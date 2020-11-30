@@ -9,7 +9,7 @@ import com.chesire.nekome.kitsu.trending.dto.TrendingItemDto
 /**
  * Create a [TrendingItemDto] for tests.
  */
-fun createKitsuTrendingDto(type: SeriesType) =
+fun createTrendingItemDto(type: SeriesType) =
     TrendingItemDto(
         0,
         type,

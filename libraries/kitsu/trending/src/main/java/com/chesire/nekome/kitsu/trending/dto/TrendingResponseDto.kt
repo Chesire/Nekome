@@ -4,7 +4,7 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 /**
- * Class to parse a response from [KitsuTrendingService] into an object.
+ * DTO for responses from the Kitsu trending endpoint.
  */
 @JsonClass(generateAdapter = true)
 data class TrendingResponseDto(

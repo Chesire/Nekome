@@ -15,7 +15,7 @@ import javax.inject.Inject
 @Suppress("TooGenericExceptionCaught")
 class KitsuTrending @Inject constructor(
     private val trendingService: KitsuTrendingService,
-    private val map: KitsuTrendingDtoMapper
+    private val map: TrendingItemDtoMapper
 ) : TrendingApi {
 
     override suspend fun getTrendingAnime(): Resource<List<TrendingDomain>> {
@@ -37,7 +37,7 @@ class KitsuTrending @Inject constructor(
     private fun parseResponse(response: Response<TrendingResponseDto>): Resource<List<TrendingDomain>> {
         return if (response.isSuccessful) {
             response.body()?.let { trending ->
-                Resource.Success(trending.data.map { map.from(it) })
+                Resource.Success(trending.data.map { map.toTrendingDomain(it) })
             } ?: Resource.Error.emptyResponse()
         } else {
             response.asError()
