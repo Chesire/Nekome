@@ -1,4 +1,4 @@
-package com.chesire.nekome.kitsu.library.entity
+package com.chesire.nekome.kitsu.library.dto
 
 import com.chesire.nekome.core.flags.SeriesStatus
 import com.chesire.nekome.core.flags.SeriesType
@@ -8,10 +8,10 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 /**
- * Entity for the "included" part of the library api, represents the information about a series.
+ * DTO for the "included" part of the library api, represents the information about a series.
  */
 @JsonClass(generateAdapter = true)
-data class IncludedEntity(
+data class IncludedDto(
     @Json(name = "id")
     val id: Int,
     @Json(name = "type")

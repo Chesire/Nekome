@@ -4,8 +4,8 @@ import com.chesire.nekome.core.Resource
 import com.chesire.nekome.core.flags.SeriesType
 import com.chesire.nekome.core.flags.UserSeriesStatus
 import com.chesire.nekome.kitsu.api.intermediaries.Links
-import com.chesire.nekome.kitsu.library.entity.EntityFactory
-import com.chesire.nekome.kitsu.library.entity.KitsuLibraryEntity
+import com.chesire.nekome.kitsu.library.dto.DtoFactory
+import com.chesire.nekome.kitsu.library.dto.AddResponseDto
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
@@ -21,14 +21,14 @@ import java.net.UnknownHostException
 
 class KitsuLibraryTests {
 
-    private val map = mockk<KitsuLibraryEntityMapper> {
-        every { from(any()) } returns createLibraryEntity()
+    private val map = mockk<KitsuLibraryDtoMapper> {
+        every { from(any()) } returns createLibraryDomain()
     }
-    private val factory = EntityFactory()
+    private val factory = DtoFactory()
 
     @Test
     fun `retrieveAnime on success returns the retrieved models`() = runBlocking {
-        val expected = createKitsuLibraryEntities(SeriesType.Anime)
+        val expected = createRetrieveResponseDto(SeriesType.Anime)
         val mockService = mockk<KitsuLibraryService> {
             coEvery {
                 retrieveAnimeAsync(1, 0, 500)
@@ -53,7 +53,7 @@ class KitsuLibraryTests {
 
     @Test
     fun `retrieveAnime more items to retrieve executes again with new offset`() = runBlocking {
-        val expected = createKitsuLibraryEntities(SeriesType.Anime, Links(next = "next"))
+        val expected = createRetrieveResponseDto(SeriesType.Anime, Links(next = "next"))
         val mockService = mockk<KitsuLibraryService> {
             coEvery {
                 retrieveAnimeAsync(1, 0, 500)
@@ -68,7 +68,7 @@ class KitsuLibraryTests {
             } coAnswers {
                 mockk {
                     every { isSuccessful } returns true
-                    every { body() } returns createKitsuLibraryEntities(SeriesType.Anime)
+                    every { body() } returns createRetrieveResponseDto(SeriesType.Anime)
                 }
             }
         }
@@ -112,7 +112,7 @@ class KitsuLibraryTests {
             } coAnswers {
                 mockk {
                     every { isSuccessful } returns true
-                    every { body() } returns createKitsuLibraryEntities(
+                    every { body() } returns createRetrieveResponseDto(
                         SeriesType.Anime,
                         Links(next = "next")
                     )
@@ -124,7 +124,7 @@ class KitsuLibraryTests {
                 mockk {
                     every { isSuccessful } returns false
                     every { code() } returns 0
-                    every { body() } returns createKitsuLibraryEntities(SeriesType.Anime)
+                    every { body() } returns createRetrieveResponseDto(SeriesType.Anime)
                     every { errorBody() } returns mockk {
                         every { string() } returns ""
                     }
@@ -159,7 +159,7 @@ class KitsuLibraryTests {
 
     @Test
     fun `retrieveManga on success returns Resource#Success`() = runBlocking {
-        val expected = createKitsuLibraryEntities(SeriesType.Manga)
+        val expected = createRetrieveResponseDto(SeriesType.Manga)
         val mockService = mockk<KitsuLibraryService> {
             coEvery {
                 retrieveMangaAsync(0, 0, 500)
@@ -183,7 +183,7 @@ class KitsuLibraryTests {
 
     @Test
     fun `retrieveManga more items to retrieve executes again with new offset`() = runBlocking {
-        val expected = createKitsuLibraryEntities(SeriesType.Manga, Links(next = "next"))
+        val expected = createRetrieveResponseDto(SeriesType.Manga, Links(next = "next"))
         val mockService = mockk<KitsuLibraryService> {
             coEvery {
                 retrieveMangaAsync(1, 0, 500)
@@ -198,7 +198,7 @@ class KitsuLibraryTests {
             } coAnswers {
                 mockk {
                     every { isSuccessful } returns true
-                    every { body() } returns createKitsuLibraryEntities(SeriesType.Manga)
+                    every { body() } returns createRetrieveResponseDto(SeriesType.Manga)
                 }
             }
         }
@@ -242,7 +242,7 @@ class KitsuLibraryTests {
             } coAnswers {
                 mockk {
                     every { isSuccessful } returns true
-                    every { body() } returns createKitsuLibraryEntities(
+                    every { body() } returns createRetrieveResponseDto(
                         SeriesType.Manga,
                         Links(next = "next")
                     )
@@ -254,7 +254,7 @@ class KitsuLibraryTests {
                 mockk {
                     every { isSuccessful } returns false
                     every { code() } returns 0
-                    every { body() } returns createKitsuLibraryEntities(SeriesType.Manga)
+                    every { body() } returns createRetrieveResponseDto(SeriesType.Manga)
                     every { errorBody() } returns mockk {
                         every { string() } returns ""
                     }
@@ -291,8 +291,8 @@ class KitsuLibraryTests {
 
     @Test
     fun `addAnime success return Resource#Error`() = runBlocking {
-        val mockModel = createKitsuLibraryEntity(SeriesType.Anime)
-        val mockResponse = mockk<Response<KitsuLibraryEntity>> {
+        val mockModel = createAddResponseDto(SeriesType.Anime)
+        val mockResponse = mockk<Response<AddResponseDto>> {
             every { isSuccessful } returns true
             every { body() } returns mockModel
         }
@@ -332,8 +332,8 @@ class KitsuLibraryTests {
 
     @Test
     fun `addManga on success return Resource#Error`() = runBlocking {
-        val mockModel = createKitsuLibraryEntity(SeriesType.Manga)
-        val mockResponse = mockk<Response<KitsuLibraryEntity>> {
+        val mockModel = createAddResponseDto(SeriesType.Manga)
+        val mockResponse = mockk<Response<AddResponseDto>> {
             every { isSuccessful } returns true
             every { body() } returns mockModel
         }
@@ -373,8 +373,8 @@ class KitsuLibraryTests {
 
     @Test
     fun `update success returns Resource#Success`() = runBlocking {
-        val mockModel = createKitsuLibraryEntity(SeriesType.Manga)
-        val mockResponse = mockk<Response<KitsuLibraryEntity>> {
+        val mockModel = createAddResponseDto(SeriesType.Manga)
+        val mockResponse = mockk<Response<AddResponseDto>> {
             every { isSuccessful } returns true
             every { body() } returns mockModel
         }
@@ -400,7 +400,7 @@ class KitsuLibraryTests {
     @Test
     fun `update success returns Resource#Error if no body`() = runBlocking {
         val expected = "Response body is null"
-        val mockResponse = mockk<Response<KitsuLibraryEntity>> {
+        val mockResponse = mockk<Response<AddResponseDto>> {
             every { isSuccessful } returns true
             every { body() } returns null
         }
@@ -428,7 +428,7 @@ class KitsuLibraryTests {
         val mockResponseBody = mockk<ResponseBody> {
             every { string() } returns expected
         }
-        val mockResponse = mockk<Response<KitsuLibraryEntity>> {
+        val mockResponse = mockk<Response<AddResponseDto>> {
             every { isSuccessful } returns false
             every { errorBody() } returns mockResponseBody
             every { code() } returns 0
@@ -454,7 +454,7 @@ class KitsuLibraryTests {
     fun `update failure returns Resource#Error with message if null errorBody`() = runBlocking {
         val expected = "errorBodyString"
 
-        val mockResponse = mockk<Response<KitsuLibraryEntity>> {
+        val mockResponse = mockk<Response<AddResponseDto>> {
             every { isSuccessful } returns false
             every { errorBody() } returns null
             every { message() } returns expected

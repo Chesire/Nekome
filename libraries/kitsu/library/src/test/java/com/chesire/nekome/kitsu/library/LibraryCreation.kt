@@ -6,17 +6,17 @@ import com.chesire.nekome.core.flags.Subtype
 import com.chesire.nekome.core.flags.UserSeriesStatus
 import com.chesire.nekome.core.models.ImageModel
 import com.chesire.nekome.kitsu.api.intermediaries.Links
-import com.chesire.nekome.kitsu.library.entity.DataEntity
-import com.chesire.nekome.kitsu.library.entity.IncludedEntity
-import com.chesire.nekome.kitsu.library.entity.KitsuLibraryEntities
-import com.chesire.nekome.kitsu.library.entity.KitsuLibraryEntity
-import com.chesire.nekome.library.api.LibraryEntity
+import com.chesire.nekome.kitsu.library.dto.AddResponseDto
+import com.chesire.nekome.kitsu.library.dto.DataDto
+import com.chesire.nekome.kitsu.library.dto.IncludedDto
+import com.chesire.nekome.kitsu.library.dto.RetrieveResponseDto
+import com.chesire.nekome.library.api.LibraryDomain
 
 /**
- * Create a [LibraryEntity] for tests.
+ * Create a [LibraryDomain] for tests.
  */
-fun createLibraryEntity() =
-    LibraryEntity(
+fun createLibraryDomain() =
+    LibraryDomain(
         0,
         0,
         SeriesType.Anime,
@@ -36,44 +36,44 @@ fun createLibraryEntity() =
     )
 
 /**
- * Create a [KitsuLibraryEntity] for tests.
+ * Create a [AddResponseDto] for tests.
  */
-fun createKitsuLibraryEntity(type: SeriesType) =
-    KitsuLibraryEntity(
-        createDataEntity(type),
-        listOf(createIncludedEntity(type))
+fun createAddResponseDto(type: SeriesType) =
+    AddResponseDto(
+        createDataDto(type),
+        listOf(createIncludedDto(type))
     )
 
 /**
- * Create a [KitsuLibraryEntities] for tests.
+ * Create a [RetrieveResponseDto] for tests.
  */
-fun createKitsuLibraryEntities(type: SeriesType, links: Links = Links()) =
-    KitsuLibraryEntities(
-        listOf(createDataEntity(type), createDataEntity(type)),
-        listOf(createIncludedEntity(type), createIncludedEntity(type)),
+fun createRetrieveResponseDto(type: SeriesType, links: Links = Links()) =
+    RetrieveResponseDto(
+        listOf(createDataDto(type), createDataDto(type)),
+        listOf(createIncludedDto(type), createIncludedDto(type)),
         links
     )
 
-private fun createDataEntity(type: SeriesType) =
-    DataEntity(
+private fun createDataDto(type: SeriesType) =
+    DataDto(
         0,
-        DataEntity.Attributes(
+        DataDto.Attributes(
             UserSeriesStatus.Unknown,
             0,
             "startedAt",
             "finishedAt"
         ),
-        DataEntity.Relationships(
-            if (type == SeriesType.Anime) DataEntity.Relationships.RelationshipObject() else null,
-            if (type == SeriesType.Manga) DataEntity.Relationships.RelationshipObject() else null,
+        DataDto.Relationships(
+            if (type == SeriesType.Anime) DataDto.Relationships.RelationshipObject() else null,
+            if (type == SeriesType.Manga) DataDto.Relationships.RelationshipObject() else null,
         )
     )
 
-private fun createIncludedEntity(type: SeriesType) =
-    IncludedEntity(
+private fun createIncludedDto(type: SeriesType) =
+    IncludedDto(
         0,
         type,
-        IncludedEntity.Attributes(
+        IncludedDto.Attributes(
             "slug",
             "synopsis",
             "canonincalTitle",

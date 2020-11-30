@@ -9,7 +9,7 @@ import com.chesire.nekome.core.flags.Subtype
 import com.chesire.nekome.core.flags.UserSeriesStatus
 import com.chesire.nekome.core.models.ImageModel
 import com.chesire.nekome.database.dao.SeriesDao
-import com.chesire.nekome.helpers.creation.createLibraryEntity
+import com.chesire.nekome.helpers.creation.createLibraryDomain
 import com.chesire.nekome.helpers.launchActivity
 import com.chesire.nekome.helpers.login
 import com.chesire.nekome.injection.DatabaseModule
@@ -247,7 +247,7 @@ class SeriesViewHolderTests {
             fakeLibrary.update(any(), any(), any())
         } coAnswers {
             Resource.Success(
-                createLibraryEntity(
+                createLibraryDomain(
                     999,
                     999,
                     SeriesType.Anime,

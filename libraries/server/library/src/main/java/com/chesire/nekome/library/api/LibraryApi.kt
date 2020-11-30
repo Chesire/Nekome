@@ -10,12 +10,12 @@ interface LibraryApi {
     /**
      * Retrieves all of the users anime.
      */
-    suspend fun retrieveAnime(userId: Int): Resource<List<LibraryEntity>>
+    suspend fun retrieveAnime(userId: Int): Resource<List<LibraryDomain>>
 
     /**
      * Retrieves all of the users manga.
      */
-    suspend fun retrieveManga(userId: Int): Resource<List<LibraryEntity>>
+    suspend fun retrieveManga(userId: Int): Resource<List<LibraryDomain>>
 
     /**
      * Adds the anime series with an id of [seriesId].
@@ -24,7 +24,7 @@ interface LibraryApi {
         userId: Int,
         seriesId: Int,
         startingStatus: UserSeriesStatus
-    ): Resource<LibraryEntity>
+    ): Resource<LibraryDomain>
 
     /**
      * Adds the manga series with an id of [seriesId].
@@ -33,7 +33,7 @@ interface LibraryApi {
         userId: Int,
         seriesId: Int,
         startingStatus: UserSeriesStatus
-    ): Resource<LibraryEntity>
+    ): Resource<LibraryDomain>
 
     /**
      * Updates the state of a users series, passing in the users ID for the series.
@@ -42,7 +42,7 @@ interface LibraryApi {
         userSeriesId: Int,
         progress: Int,
         newStatus: UserSeriesStatus
-    ): Resource<LibraryEntity>
+    ): Resource<LibraryDomain>
 
     /**
      * Deletes a series from the users library, passing in the users ID for the series.

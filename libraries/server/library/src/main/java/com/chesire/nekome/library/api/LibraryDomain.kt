@@ -7,9 +7,9 @@ import com.chesire.nekome.core.flags.UserSeriesStatus
 import com.chesire.nekome.core.models.ImageModel
 
 /**
- * Entity related to a singular library item.
+ * Domain related to a singular library item.
  */
-data class LibraryEntity(
+data class LibraryDomain(
     val id: Int,
     val userId: Int,
     val type: SeriesType,

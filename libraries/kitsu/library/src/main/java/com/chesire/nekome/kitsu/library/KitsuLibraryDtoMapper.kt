@@ -1,20 +1,18 @@
 package com.chesire.nekome.kitsu.library
 
-import com.chesire.nekome.core.EntityMapper
 import com.chesire.nekome.core.models.ImageModel
-import com.chesire.nekome.kitsu.library.entity.DataEntity
-import com.chesire.nekome.kitsu.library.entity.IncludedEntity
-import com.chesire.nekome.kitsu.library.entity.KitsuLibraryEntity
-import com.chesire.nekome.library.api.LibraryEntity
+import com.chesire.nekome.kitsu.library.dto.AddResponseDto
+import com.chesire.nekome.kitsu.library.dto.DataDto
+import com.chesire.nekome.kitsu.library.dto.IncludedDto
+import com.chesire.nekome.library.api.LibraryDomain
 import javax.inject.Inject
 
 /**
- * Provides ability to map instances of [KitsuLibraryEntity] into [LibraryEntity].
+ * Provides ability to map instances of [AddResponseDto] into [LibraryDomain].
  */
-class KitsuLibraryEntityMapper @Inject constructor() :
-    EntityMapper<KitsuLibraryEntity, LibraryEntity?> {
+class KitsuLibraryDtoMapper @Inject constructor() {
 
-    override fun from(input: KitsuLibraryEntity): LibraryEntity? {
+    fun from(input: AddResponseDto): LibraryDomain? {
         val id = input.data.relationships.anime?.data?.id
             ?: input.data.relationships.manga?.data?.id
             ?: return null
@@ -26,8 +24,8 @@ class KitsuLibraryEntityMapper @Inject constructor() :
             }
     }
 
-    private fun createLibraryEntity(included: IncludedEntity, data: DataEntity) =
-        LibraryEntity(
+    private fun createLibraryEntity(included: IncludedDto, data: DataDto) =
+        LibraryDomain(
             included.id,
             data.id,
             included.type,

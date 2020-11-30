@@ -5,13 +5,13 @@ import com.chesire.nekome.core.Resource
 import com.chesire.nekome.core.flags.UserSeriesStatus
 import com.chesire.nekome.kitsu.asError
 import com.chesire.nekome.kitsu.library.adapter.UserSeriesStatusAdapter
-import com.chesire.nekome.kitsu.library.entity.EntityFactory
-import com.chesire.nekome.kitsu.library.entity.KitsuLibraryEntities
-import com.chesire.nekome.kitsu.library.entity.KitsuLibraryEntity
+import com.chesire.nekome.kitsu.library.dto.AddResponseDto
+import com.chesire.nekome.kitsu.library.dto.DtoFactory
+import com.chesire.nekome.kitsu.library.dto.RetrieveResponseDto
 import com.chesire.nekome.kitsu.parse
 import com.chesire.nekome.kitsu.parseError
 import com.chesire.nekome.library.api.LibraryApi
-import com.chesire.nekome.library.api.LibraryEntity
+import com.chesire.nekome.library.api.LibraryDomain
 import okhttp3.MediaType
 import okhttp3.RequestBody
 import retrofit2.Response
@@ -30,23 +30,23 @@ private const val MEDIA_TYPE = "application/vnd.api+json"
 @Suppress("TooGenericExceptionCaught")
 class KitsuLibrary @Inject constructor(
     private val libraryService: KitsuLibraryService,
-    private val map: EntityMapper<KitsuLibraryEntity, LibraryEntity?>,
-    private val entityFactory: EntityFactory
+    private val map: EntityMapper<AddResponseDto, LibraryDomain?>,
+    private val entityFactory: DtoFactory
 ) : LibraryApi {
 
     private val userSeriesStatusAdapter = UserSeriesStatusAdapter()
 
-    override suspend fun retrieveAnime(userId: Int): Resource<List<LibraryEntity>> =
+    override suspend fun retrieveAnime(userId: Int): Resource<List<LibraryDomain>> =
         performRetrieveCall(userId, libraryService::retrieveAnimeAsync)
 
-    override suspend fun retrieveManga(userId: Int): Resource<List<LibraryEntity>> =
+    override suspend fun retrieveManga(userId: Int): Resource<List<LibraryDomain>> =
         performRetrieveCall(userId, libraryService::retrieveMangaAsync)
 
     override suspend fun addAnime(
         userId: Int,
         seriesId: Int,
         startingStatus: UserSeriesStatus
-    ): Resource<LibraryEntity> {
+    ): Resource<LibraryDomain> {
         val addJson = entityFactory.createAddEntity(
             userId,
             seriesId,
@@ -66,7 +66,7 @@ class KitsuLibrary @Inject constructor(
         userId: Int,
         seriesId: Int,
         startingStatus: UserSeriesStatus
-    ): Resource<LibraryEntity> {
+    ): Resource<LibraryDomain> {
         val addJson = entityFactory.createAddEntity(
             userId,
             seriesId,
@@ -86,7 +86,7 @@ class KitsuLibrary @Inject constructor(
         userSeriesId: Int,
         progress: Int,
         newStatus: UserSeriesStatus
-    ): Resource<LibraryEntity> {
+    ): Resource<LibraryDomain> {
         val updateJson = entityFactory.createUpdateEntity(
             userSeriesId,
             progress,
@@ -121,20 +121,20 @@ class KitsuLibrary @Inject constructor(
             @ParameterName(name = "userId") Int,
             @ParameterName(name = "offset") Int,
             @ParameterName(name = "limit") Int,
-            Response<KitsuLibraryEntities>>
-    ): Resource<List<LibraryEntity>> {
-        val models = mutableListOf<LibraryEntity>()
+            Response<RetrieveResponseDto>>
+    ): Resource<List<LibraryDomain>> {
+        val models = mutableListOf<LibraryDomain>()
 
         var offset = 0
         var page = 0
         var retries = 0
         var executeAgain: Boolean
-        var errorResponse = Resource.Error<KitsuLibraryEntities>("", 200)
+        var errorResponse = Resource.Error<RetrieveResponseDto>("", 200)
 
         do {
             executeAgain = false
 
-            val response: Response<KitsuLibraryEntities>
+            val response: Response<RetrieveResponseDto>
             try {
                 response = execute(userId, offset, LIMIT)
             } catch (ex: Exception) {
@@ -144,7 +144,7 @@ class KitsuLibrary @Inject constructor(
             val body = response.body()
             if (response.isSuccessful && body != null) {
                 val series = body.data.map {
-                    map.from(KitsuLibraryEntity(it, body.included))
+                    map.from(AddResponseDto(it, body.included))
                 }.filterNotNull()
                 models.addAll(series)
                 retries = 0
@@ -171,7 +171,7 @@ class KitsuLibrary @Inject constructor(
         }
     }
 
-    private fun parseResponse(response: Response<KitsuLibraryEntity>): Resource<LibraryEntity> {
+    private fun parseResponse(response: Response<AddResponseDto>): Resource<LibraryDomain> {
         return if (response.isSuccessful) {
             response.body()?.let { entity ->
                 Resource.Success(requireNotNull(map.from(entity)))

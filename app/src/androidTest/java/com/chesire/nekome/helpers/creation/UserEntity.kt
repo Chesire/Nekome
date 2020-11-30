@@ -7,7 +7,7 @@ import com.chesire.nekome.user.api.UserDomain
 /**
  * Creates a new [UserDomain].
  */
-fun createUserEntity() =
+fun createUserDomain() =
     UserDomain(
         1,
         "name",

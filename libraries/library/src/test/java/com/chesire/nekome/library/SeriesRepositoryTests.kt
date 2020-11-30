@@ -10,7 +10,7 @@ import com.chesire.nekome.core.models.ImageModel
 import com.chesire.nekome.core.models.SeriesModel
 import com.chesire.nekome.database.dao.SeriesDao
 import com.chesire.nekome.library.api.LibraryApi
-import com.chesire.nekome.library.api.LibraryEntity
+import com.chesire.nekome.library.api.LibraryDomain
 import io.mockk.Runs
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -72,7 +72,7 @@ class SeriesRepositoryTests {
 
     @Test
     fun `addAnime onFailure returns failure`() = runBlocking {
-        val expected = Resource.Error<LibraryEntity>("Error")
+        val expected = Resource.Error<LibraryDomain>("Error")
         val mockDao = mockk<SeriesDao> {
             coEvery { insert(any<SeriesModel>()) } just Runs
             every { getSeries() } returns mockk()
@@ -132,7 +132,7 @@ class SeriesRepositoryTests {
 
     @Test
     fun `addManga onFailure returns failure`() = runBlocking {
-        val expected = Resource.Error<LibraryEntity>("Error")
+        val expected = Resource.Error<LibraryDomain>("Error")
         val mockDao = mockk<SeriesDao> {
             coEvery { insert(any<SeriesModel>()) } just Runs
             every { getSeries() } returns mockk()
@@ -222,7 +222,7 @@ class SeriesRepositoryTests {
 
     @Test
     fun `refreshAnime on success updates the dao`() = runBlocking {
-        val response = Resource.Success(listOf<LibraryEntity>())
+        val response = Resource.Success(listOf<LibraryDomain>())
         val mockDao = mockk<SeriesDao> {
             coEvery { insert(any<List<SeriesModel>>()) } just Runs
             every { getSeries() } returns mockk()
@@ -242,7 +242,7 @@ class SeriesRepositoryTests {
 
     @Test
     fun `refreshAnime on failure doesn't update the dao`() = runBlocking {
-        val response = Resource.Error<List<LibraryEntity>>("")
+        val response = Resource.Error<List<LibraryDomain>>("")
         val mockDao = mockk<SeriesDao> {
             coEvery { insert(any<List<SeriesModel>>()) } just Runs
             every { getSeries() } returns mockk()
@@ -262,7 +262,7 @@ class SeriesRepositoryTests {
 
     @Test
     fun `refreshManga on success updates the dao`() = runBlocking {
-        val response = Resource.Success(listOf<LibraryEntity>())
+        val response = Resource.Success(listOf<LibraryDomain>())
         val mockDao = mockk<SeriesDao> {
             coEvery { insert(any<List<SeriesModel>>()) } just Runs
             every { getSeries() } returns mockk()
@@ -282,7 +282,7 @@ class SeriesRepositoryTests {
 
     @Test
     fun `refreshManga on failure doesn't update the dao`() = runBlocking {
-        val response = Resource.Error<List<LibraryEntity>>("")
+        val response = Resource.Error<List<LibraryDomain>>("")
         val mockDao = mockk<SeriesDao> {
             coEvery { insert(any<List<SeriesModel>>()) } just Runs
             every { getSeries() } returns mockk()
@@ -346,7 +346,7 @@ class SeriesRepositoryTests {
     }
 
     private fun createLibraryEntity() =
-        LibraryEntity(
+        LibraryDomain(
             0,
             0,
             SeriesType.Anime,

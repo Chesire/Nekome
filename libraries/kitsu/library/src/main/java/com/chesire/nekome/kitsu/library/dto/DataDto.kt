@@ -1,14 +1,14 @@
-package com.chesire.nekome.kitsu.library.entity
+package com.chesire.nekome.kitsu.library.dto
 
 import com.chesire.nekome.core.flags.UserSeriesStatus
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 /**
- * Entity for the "data" part of the library api, contains the user information about a series item.
+ * DTO for the "data" part of the library api, contains the user information about a series item.
  */
 @JsonClass(generateAdapter = true)
-data class DataEntity(
+data class DataDto(
     @Json(name = "id")
     val id: Int,
     @Json(name = "attributes")

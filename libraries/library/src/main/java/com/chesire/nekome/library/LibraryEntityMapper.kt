@@ -2,15 +2,15 @@ package com.chesire.nekome.library
 
 import com.chesire.nekome.core.EntityMapper
 import com.chesire.nekome.core.models.SeriesModel
-import com.chesire.nekome.library.api.LibraryEntity
+import com.chesire.nekome.library.api.LibraryDomain
 import javax.inject.Inject
 
 /**
- * Provides ability to map instances of [LibraryEntity] into [SeriesModel].
+ * Provides ability to map instances of [LibraryDomain] into [SeriesModel].
  */
-class LibraryEntityMapper @Inject constructor() : EntityMapper<LibraryEntity, SeriesModel> {
+class LibraryEntityMapper @Inject constructor() : EntityMapper<LibraryDomain, SeriesModel> {
 
-    override fun from(input: LibraryEntity) =
+    override fun from(input: LibraryDomain) =
         SeriesModel(
             input.id,
             input.userId,

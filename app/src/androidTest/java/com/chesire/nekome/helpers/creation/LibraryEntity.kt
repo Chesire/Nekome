@@ -5,13 +5,13 @@ import com.chesire.nekome.core.flags.SeriesType
 import com.chesire.nekome.core.flags.Subtype
 import com.chesire.nekome.core.flags.UserSeriesStatus
 import com.chesire.nekome.core.models.ImageModel
-import com.chesire.nekome.library.api.LibraryEntity
+import com.chesire.nekome.library.api.LibraryDomain
 
 /**
- * Creates a new [LibraryEntity].
+ * Creates a new [LibraryDomain].
  */
 @Suppress("LongParameterList")
-fun createLibraryEntity(
+fun createLibraryDomain(
     id: Int = 0,
     userId: Int = 0,
     seriesType: SeriesType = SeriesType.Anime,
@@ -28,7 +28,7 @@ fun createLibraryEntity(
     nsfw: Boolean = false,
     startDate: String = "startDate",
     endDate: String = "endDate"
-) = LibraryEntity(
+) = LibraryDomain(
     id,
     userId,
     seriesType,

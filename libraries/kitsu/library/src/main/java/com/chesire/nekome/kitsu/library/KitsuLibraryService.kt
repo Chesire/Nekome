@@ -1,7 +1,7 @@
 package com.chesire.nekome.kitsu.library
 
-import com.chesire.nekome.kitsu.library.entity.KitsuLibraryEntities
-import com.chesire.nekome.kitsu.library.entity.KitsuLibraryEntity
+import com.chesire.nekome.kitsu.library.dto.AddResponseDto
+import com.chesire.nekome.kitsu.library.dto.RetrieveResponseDto
 import okhttp3.RequestBody
 import retrofit2.Response
 import retrofit2.http.Body
@@ -37,7 +37,7 @@ interface KitsuLibraryService {
         @Path("userId") userId: Int,
         @Query("page[offset]") offset: Int,
         @Query("page[limit]") limit: Int
-    ): Response<KitsuLibraryEntities>
+    ): Response<RetrieveResponseDto>
 
     /**
      * Retrieves all of the users manga series in their library.
@@ -54,7 +54,7 @@ interface KitsuLibraryService {
         @Path("userId") userId: Int,
         @Query("page[offset]") offset: Int,
         @Query("page[limit]") limit: Int
-    ): Response<KitsuLibraryEntities>
+    ): Response<RetrieveResponseDto>
 
     /**
      * Adds an anime series to the users library.
@@ -64,7 +64,7 @@ interface KitsuLibraryService {
             "?include=anime" +
             "&fields[anime]=$ANIME_FIELDS"
     )
-    suspend fun addAnimeAsync(@Body data: RequestBody): Response<KitsuLibraryEntity>
+    suspend fun addAnimeAsync(@Body data: RequestBody): Response<AddResponseDto>
 
     /**
      * Adds a manga series to the users library.
@@ -74,7 +74,7 @@ interface KitsuLibraryService {
             "?include=manga" +
             "&fields[manga]=$MANGA_FIELDS"
     )
-    suspend fun addMangaAsync(@Body data: RequestBody): Response<KitsuLibraryEntity>
+    suspend fun addMangaAsync(@Body data: RequestBody): Response<AddResponseDto>
 
     /**
      * Updates a series in the users library with new data.
@@ -88,7 +88,7 @@ interface KitsuLibraryService {
     suspend fun updateItemAsync(
         @Path("id") userSeriesId: Int,
         @Body data: RequestBody
-    ): Response<KitsuLibraryEntity>
+    ): Response<AddResponseDto>
 
     /**
      * Deletes a series from the users library.

@@ -4,8 +4,8 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.chesire.nekome.R
 import com.chesire.nekome.auth.api.AuthApi
 import com.chesire.nekome.core.Resource
-import com.chesire.nekome.helpers.creation.createLibraryEntity
-import com.chesire.nekome.helpers.creation.createUserEntity
+import com.chesire.nekome.helpers.creation.createLibraryDomain
+import com.chesire.nekome.helpers.creation.createUserDomain
 import com.chesire.nekome.helpers.launchActivity
 import com.chesire.nekome.helpers.logout
 import com.chesire.nekome.injection.AuthModule
@@ -62,12 +62,12 @@ class SyncingTests {
         coEvery {
             fakeLibrary.retrieveAnime(any())
         } coAnswers {
-            Resource.Success(listOf(createLibraryEntity()))
+            Resource.Success(listOf(createLibraryDomain()))
         }
         coEvery {
             fakeLibrary.retrieveManga(any())
         } coAnswers {
-            Resource.Success(listOf(createLibraryEntity()))
+            Resource.Success(listOf(createLibraryDomain()))
         }
 
         launchActivity()
@@ -104,7 +104,7 @@ class SyncingTests {
             coEvery {
                 getUserDetails()
             } coAnswers {
-                Resource.Success(createUserEntity())
+                Resource.Success(createUserDomain())
             }
         }
     }

@@ -6,7 +6,7 @@ import com.chesire.nekome.core.flags.UserSeriesStatus
 import com.chesire.nekome.core.models.SeriesModel
 import com.chesire.nekome.database.dao.SeriesDao
 import com.chesire.nekome.library.api.LibraryApi
-import com.chesire.nekome.library.api.LibraryEntity
+import com.chesire.nekome.library.api.LibraryDomain
 import timber.log.Timber
 
 /**
@@ -16,7 +16,7 @@ class SeriesRepository(
     private val seriesDao: SeriesDao,
     private val libraryApi: LibraryApi,
     private val userProvider: UserProvider,
-    private val map: EntityMapper<LibraryEntity, SeriesModel>
+    private val map: EntityMapper<LibraryDomain, SeriesModel>
 ) {
 
     /**

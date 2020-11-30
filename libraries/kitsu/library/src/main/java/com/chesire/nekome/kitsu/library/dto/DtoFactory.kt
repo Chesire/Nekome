@@ -1,11 +1,11 @@
-package com.chesire.nekome.kitsu.library.entity
+package com.chesire.nekome.kitsu.library.dto
 
 import javax.inject.Inject
 
 /**
  * Factory to create JSON representations of models to send via the api.
  */
-class EntityFactory @Inject constructor() {
+class DtoFactory @Inject constructor() {
 
     /**
      * Creates a new JSON entity for adding a new series.
