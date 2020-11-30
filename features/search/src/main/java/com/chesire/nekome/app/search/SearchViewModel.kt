@@ -11,8 +11,6 @@ import com.chesire.nekome.core.extensions.postLoading
 import com.chesire.nekome.core.extensions.postSuccess
 import com.chesire.nekome.core.flags.AsyncState
 import com.chesire.nekome.core.flags.SeriesType
-import com.chesire.nekome.core.flags.UserSeriesStatus
-import com.chesire.nekome.core.models.ImageModel
 import com.chesire.nekome.core.models.SeriesModel
 import com.chesire.nekome.search.api.SearchApi
 import com.chesire.nekome.search.api.SearchDomain
@@ -24,7 +22,8 @@ import kotlinx.coroutines.launch
  */
 class SearchViewModel @ViewModelInject constructor(
     private val searchApi: SearchApi,
-    private val authCaster: AuthCaster
+    private val authCaster: AuthCaster,
+    private val map: SearchDomainMapper
 ) : ViewModel() {
 
     private val _searchResult = LiveEvent<AsyncState<List<SeriesModel>, SearchError>>()
@@ -73,25 +72,6 @@ class SearchViewModel @ViewModelInject constructor(
     }
 
     private fun List<SearchDomain>.toSeriesModels(): List<SeriesModel> {
-        return map {
-            SeriesModel(
-                it.id,
-                0,
-                it.type,
-                it.subtype,
-                it.slug,
-                it.synopsis,
-                it.canonicalTitle,
-                it.status,
-                UserSeriesStatus.Unknown,
-                0,
-                0,
-                it.posterImage ?: ImageModel.empty,
-                it.coverImage ?: ImageModel.empty,
-                it.nsfw,
-                it.startDate ?: "",
-                it.endDate ?: ""
-            )
-        }
+        return map { map.toSeriesModel(it) }
     }
 }

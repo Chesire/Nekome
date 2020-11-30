@@ -32,6 +32,8 @@ class SearchViewModelTests {
     @get:Rule
     val coroutineRule = CoroutinesMainDispatcherRule()
 
+    private val map = SearchDomainMapper()
+
     @Test
     fun `executeSearch with empty title posts error`() {
         val observerSlot = slot<AsyncState<List<SeriesModel>, SearchError>>()
@@ -40,7 +42,7 @@ class SearchViewModelTests {
         val mockObserver = mockk<Observer<AsyncState<List<SeriesModel>, SearchError>>> {
             every { onChanged(capture(observerSlot)) } just Runs
         }
-        val testObject = SearchViewModel(mockSearch, mockCaster)
+        val testObject = SearchViewModel(mockSearch, mockCaster, map)
 
         testObject.searchResult.observeForever(mockObserver)
         testObject.executeSearch(SearchData("", SeriesType.Anime))
@@ -57,7 +59,7 @@ class SearchViewModelTests {
         val mockObserver = mockk<Observer<AsyncState<List<SeriesModel>, SearchError>>> {
             every { onChanged(capture(observerSlot)) } just Runs
         }
-        val testObject = SearchViewModel(mockSearch, mockCaster)
+        val testObject = SearchViewModel(mockSearch, mockCaster, map)
 
         testObject.searchResult.observeForever(mockObserver)
         testObject.executeSearch(SearchData("New Title", SeriesType.Unknown))
@@ -76,7 +78,7 @@ class SearchViewModelTests {
             }
         }
         val mockCaster = mockk<AuthCaster>()
-        val testObject = SearchViewModel(mockSearch, mockCaster)
+        val testObject = SearchViewModel(mockSearch, mockCaster, map)
 
         testObject.executeSearch(SearchData("title", SeriesType.Anime))
 
@@ -93,7 +95,7 @@ class SearchViewModelTests {
             }
         }
         val mockCaster = mockk<AuthCaster>()
-        val testObject = SearchViewModel(mockSearch, mockCaster)
+        val testObject = SearchViewModel(mockSearch, mockCaster, map)
 
         testObject.executeSearch(SearchData("title", SeriesType.Manga))
 
@@ -114,7 +116,7 @@ class SearchViewModelTests {
             }
         }
         val mockCaster = mockk<AuthCaster>()
-        val testObject = SearchViewModel(mockSearch, mockCaster)
+        val testObject = SearchViewModel(mockSearch, mockCaster, map)
 
         testObject.searchResult.observeForever(mockObserver)
         testObject.executeSearch(SearchData("title", SeriesType.Anime))
@@ -138,7 +140,7 @@ class SearchViewModelTests {
             }
         }
         val mockCaster = mockk<AuthCaster>()
-        val testObject = SearchViewModel(mockSearch, mockCaster)
+        val testObject = SearchViewModel(mockSearch, mockCaster, map)
 
         testObject.searchResult.observeForever(mockObserver)
         testObject.executeSearch(SearchData("title", SeriesType.Anime))
@@ -162,7 +164,7 @@ class SearchViewModelTests {
             }
         }
         val mockCaster = mockk<AuthCaster>()
-        val testObject = SearchViewModel(mockSearch, mockCaster)
+        val testObject = SearchViewModel(mockSearch, mockCaster, map)
 
         testObject.searchResult.observeForever(mockObserver)
         testObject.executeSearch(SearchData("title", SeriesType.Anime))
@@ -188,7 +190,7 @@ class SearchViewModelTests {
         val mockCaster = mockk<AuthCaster> {
             every { issueRefreshingToken() } just Runs
         }
-        val testObject = SearchViewModel(mockSearch, mockCaster)
+        val testObject = SearchViewModel(mockSearch, mockCaster, map)
 
         testObject.searchResult.observeForever(mockObserver)
         testObject.executeSearch(SearchData("title", SeriesType.Anime))
