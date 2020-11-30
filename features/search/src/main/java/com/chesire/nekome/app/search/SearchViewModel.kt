@@ -71,7 +71,5 @@ class SearchViewModel @ViewModelInject constructor(
             }
     }
 
-    private fun List<SearchDomain>.toSeriesModels(): List<SeriesModel> {
-        return map { map.toSeriesModel(it) }
-    }
+    private fun List<SearchDomain>.toSeriesModels() = map { map.toSeriesModel(it) }
 }
