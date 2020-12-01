@@ -57,6 +57,6 @@ dependencies {
 
     androidTestImplementation "androidx.test.ext:junit:1.1.2"
 
-    kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
+    kapt "com.google.dagger:hilt-compiler:$hilt_version"
     kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshi_version"
 }

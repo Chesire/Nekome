@@ -7,15 +7,15 @@ import com.chesire.nekome.database.dao.UserDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ApplicationComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
 /**
  * Dagger [Module] for the [com.chesire.nekome.database] package.
  */
 @Module
-@InstallIn(ApplicationComponent::class)
+@InstallIn(SingletonComponent::class)
 object DatabaseModule {
     /**
      * Provides the build [RoomDB].

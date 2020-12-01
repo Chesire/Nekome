@@ -9,13 +9,13 @@ import com.chesire.nekome.library.api.LibraryApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ApplicationComponent
+import dagger.hilt.components.SingletonComponent
 
 /**
  * Dagger [Module] for the [com.chesire.nekome.series] package.
  */
 @Module
-@InstallIn(ApplicationComponent::class)
+@InstallIn(SingletonComponent::class)
 object SeriesModule {
     /**
      * Provides a [UserProvider] to the series repository.
