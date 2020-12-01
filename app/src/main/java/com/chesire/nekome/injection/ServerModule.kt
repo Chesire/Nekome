@@ -7,7 +7,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.Reusable
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ApplicationComponent
+import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 
@@ -15,7 +15,7 @@ import okhttp3.logging.HttpLoggingInterceptor
  * Dagger [Module] for the [com.chesire.nekome.server] package.
  */
 @Module
-@InstallIn(ApplicationComponent::class)
+@InstallIn(SingletonComponent::class)
 object ServerModule {
     /**
      * Provides an instance of [OkHttpClient] with the authentication injectors pre-setup, so that

@@ -25,11 +25,11 @@ import com.schibsted.spain.barista.interaction.BaristaKeyboardInteractions.close
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ApplicationComponent
 import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.UninstallModules
+import dagger.hilt.components.SingletonComponent
 import io.mockk.Runs
 import io.mockk.coEvery
 import io.mockk.every
@@ -149,7 +149,7 @@ class DetailsTests {
     }
 
     @Module
-    @InstallIn(ApplicationComponent::class)
+    @InstallIn(SingletonComponent::class)
     inner class FakeKitsuModule {
         @Provides
         fun providesAuth() = fakeAuth
