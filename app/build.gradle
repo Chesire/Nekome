@@ -130,7 +130,7 @@ dependencies {
         exclude group: "com.android.support"
         exclude group: "org.jetbrains.kotlin"
     }
-    androidTestImplementation "io.mockk:mockk-android:1.10.2"
+    androidTestImplementation "io.mockk:mockk-android:1.10.3"
 
     kapt "androidx.hilt:hilt-compiler:$hiltx_version"
     kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
