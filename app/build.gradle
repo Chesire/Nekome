@@ -1,7 +1,6 @@
 plugins {
     id "com.android.application"
     id "kotlin-android"
-    id "kotlin-android-extensions"
     id "kotlin-kapt"
     id "dagger.hilt.android.plugin"
     id "androidx.navigation.safeargs.kotlin"
@@ -34,9 +33,6 @@ android {
         buildTypes.each {
             it.resValue("string", "version", defaultConfig.versionName)
         }
-    }
-    androidExtensions {
-        experimental true
     }
     buildFeatures {
         viewBinding true
