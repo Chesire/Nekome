@@ -52,6 +52,6 @@ dependencies {
     testImplementation "io.mockk:mockk:1.10.2"
     testImplementation "junit:junit:4.13.1"
 
-    kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
+    kapt "com.google.dagger:hilt-compiler:$hilt_version"
     kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshi_version"
 }

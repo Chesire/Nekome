@@ -144,7 +144,7 @@ dependencies {
     androidTestImplementation "io.mockk:mockk-android:1.10.2"
 
     kapt "androidx.hilt:hilt-compiler:$hiltx_version"
-    kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
+    kapt "com.google.dagger:hilt-compiler:$hilt_version"
     kaptAndroidTest "com.google.dagger:hilt-android-compiler:$hilt_version"
 }
 
