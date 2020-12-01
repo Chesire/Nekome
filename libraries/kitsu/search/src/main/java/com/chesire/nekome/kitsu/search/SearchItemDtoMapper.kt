@@ -19,7 +19,6 @@ class SearchItemDtoMapper @Inject constructor() {
             input.attributes.slug,
             input.attributes.synopsis,
             input.attributes.canonicalTitle,
-            "",
             input.attributes.startDate,
             input.attributes.endDate,
             input.attributes.subtype,

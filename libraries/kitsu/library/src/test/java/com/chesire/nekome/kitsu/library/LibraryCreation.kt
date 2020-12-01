@@ -69,14 +69,14 @@ fun createDataDto(type: SeriesType, id: Int = 0) =
         DataDto.Relationships(
             if (type == SeriesType.Anime) {
                 DataDto.Relationships.RelationshipObject(
-                    DataDto.Relationships.RelationshipObject.RelationshipData("", id)
+                    DataDto.Relationships.RelationshipObject.RelationshipData(id)
                 )
             } else {
                 null
             },
             if (type == SeriesType.Manga) {
                 DataDto.Relationships.RelationshipObject(
-                    DataDto.Relationships.RelationshipObject.RelationshipData("", id)
+                    DataDto.Relationships.RelationshipObject.RelationshipData(id)
                 )
             } else {
                 null

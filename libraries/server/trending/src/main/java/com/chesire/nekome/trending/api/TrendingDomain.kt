@@ -14,7 +14,6 @@ data class TrendingDomain(
     val slug: String,
     val synopsis: String,
     val canonicalTitle: String,
-    val averageRating: String,
     val startDate: String?,
     val endDate: String?,
     val subtype: Subtype,

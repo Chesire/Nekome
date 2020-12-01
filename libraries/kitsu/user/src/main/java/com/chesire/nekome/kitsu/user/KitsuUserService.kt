@@ -13,6 +13,6 @@ interface KitsuUserService {
      * Gets the details about a user.
      * This requires an auth token set in the header to get the correct user.
      */
-    @GET("api/edge/users?filter[self]=true&fields[users]=id,name,slug,ratingSystem,avatar,coverImage")
+    @GET("api/edge/users?filter[self]=true&fields[users]=id,name,avatar,coverImage")
     suspend fun getUserDetailsAsync(): Response<UserResponseDto>
 }

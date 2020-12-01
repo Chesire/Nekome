@@ -53,7 +53,6 @@ class SearchItemDtoMapperTests {
         assertEquals(input.attributes.slug, output.slug)
         assertEquals(input.attributes.synopsis, output.synopsis)
         assertEquals(input.attributes.canonicalTitle, output.canonicalTitle)
-        assertEquals("", output.averageRating)
         assertEquals(input.attributes.startDate, output.startDate)
         assertEquals(input.attributes.endDate, output.endDate)
         assertEquals(input.attributes.subtype, output.subtype)

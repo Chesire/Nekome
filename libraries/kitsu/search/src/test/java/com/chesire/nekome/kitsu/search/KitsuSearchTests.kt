@@ -103,7 +103,7 @@ class KitsuSearchTests {
 
     @Test
     fun `searchForAnime successful response with body returns Resource#Success`() = runBlocking {
-        val expected = SearchResponseDto(listOf(createSearchItemDto(SeriesType.Anime)), mockk())
+        val expected = SearchResponseDto(listOf(createSearchItemDto(SeriesType.Anime)))
 
         val mockResponse = mockk<Response<SearchResponseDto>> {
             every { isSuccessful } returns true
@@ -228,7 +228,7 @@ class KitsuSearchTests {
 
     @Test
     fun `searchForManga successful response with body returns Resource#Success`() = runBlocking {
-        val expected = SearchResponseDto(listOf(createSearchItemDto(SeriesType.Manga)), mockk())
+        val expected = SearchResponseDto(listOf(createSearchItemDto(SeriesType.Manga)))
 
         val mockResponse = mockk<Response<SearchResponseDto>> {
             every { isSuccessful } returns true
