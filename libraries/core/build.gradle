@@ -52,7 +52,7 @@ dependencies {
     implementation "com.squareup.moshi:moshi:$moshi_version"
 
     testImplementation project(path: ":testing")
-    testImplementation "io.mockk:mockk:1.10.2"
+    testImplementation "io.mockk:mockk:1.10.3-jdk8"
     testImplementation "junit:junit:4.13.1"
 
     androidTestImplementation "androidx.test.ext:junit:1.1.2"

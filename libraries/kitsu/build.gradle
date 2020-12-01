@@ -49,7 +49,7 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
 
     testImplementation project(path: ":testing")
-    testImplementation "io.mockk:mockk:1.10.2"
+    testImplementation "io.mockk:mockk:1.10.3-jdk8"
     testImplementation "junit:junit:4.13.1"
 
     kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
