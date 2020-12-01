@@ -60,9 +60,9 @@ dependencies {
     implementation "io.coil-kt:coil:$coil_version"
 
     testImplementation project(path: ":testing")
-    testImplementation "androidx.arch.core:core-testing:2.1.0"
-    testImplementation "io.mockk:mockk:1.10.2"
-    testImplementation "junit:junit:4.13.1"
+    testImplementation "androidx.arch.core:core-testing:$coretesting_version"
+    testImplementation "io.mockk:mockk:$mockk_version"
+    testImplementation "junit:junit:$junit_version"
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_version"
 
     kapt "androidx.hilt:hilt-compiler:$hiltx_version"

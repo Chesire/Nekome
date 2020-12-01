@@ -45,8 +45,8 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
 
     testImplementation project(path: ":testing")
-    testImplementation "io.mockk:mockk:1.10.2"
-    testImplementation "junit:junit:4.13.1"
+    testImplementation "io.mockk:mockk:$mockk_version"
+    testImplementation "junit:junit:$junit_version"
 
     kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshi_version"
 }
