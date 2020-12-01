@@ -1,10 +1,11 @@
 package com.chesire.nekome.account
 
+import com.chesire.nekome.core.Resource
 import com.chesire.nekome.core.flags.Service
+import com.chesire.nekome.core.models.ImageModel
 import com.chesire.nekome.database.dao.UserDao
-import com.chesire.nekome.server.Resource
-import com.chesire.nekome.server.api.UserApi
-import com.chesire.nekome.testing.createUserModel
+import com.chesire.nekome.user.api.UserApi
+import com.chesire.nekome.user.api.UserDomain
 import io.mockk.Runs
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -17,21 +18,34 @@ import org.junit.Assert.fail
 import org.junit.Test
 
 class UserRepositoryTests {
+    private val map = UserDomainMapper()
+
     @Test
     fun `refreshUser stores userModel on success`() = runBlocking {
-        val expected = createUserModel()
         val mockDao = mockk<UserDao> {
-            coEvery { insert(expected) } just Runs
+            coEvery { insert(any()) } just Runs
             every { getUser(Service.Kitsu) } returns mockk()
         }
         val mockApi = mockk<UserApi> {
-            coEvery { getUserDetails() } coAnswers { Resource.Success(expected) }
+            coEvery {
+                getUserDetails()
+            } coAnswers {
+                Resource.Success(
+                    UserDomain(
+                        0,
+                        "name",
+                        ImageModel.empty,
+                        ImageModel.empty,
+                        Service.Kitsu
+                    )
+                )
+            }
         }
 
-        val classUnderTest = UserRepository(mockDao, mockApi)
+        val classUnderTest = UserRepository(mockDao, mockApi, map)
 
         when (classUnderTest.refreshUser()) {
-            is Resource.Success -> coVerify { mockDao.insert(expected) }
+            is Resource.Success -> coVerify { mockDao.insert(any()) }
             is Resource.Error -> fail()
         }
     }
@@ -46,7 +60,7 @@ class UserRepositoryTests {
             coEvery { getUserDetails() } coAnswers { Resource.Error(expected) }
         }
 
-        val classUnderTest = UserRepository(mockDao, mockApi)
+        val classUnderTest = UserRepository(mockDao, mockApi, map)
 
         when (val result = classUnderTest.refreshUser()) {
             is Resource.Success -> fail()
@@ -63,7 +77,7 @@ class UserRepositoryTests {
         }
         val mockApi = mockk<UserApi>()
 
-        val classUnderTest = UserRepository(mockDao, mockApi)
+        val classUnderTest = UserRepository(mockDao, mockApi, map)
 
         assertEquals(expected, classUnderTest.retrieveUserId())
     }

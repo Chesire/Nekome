@@ -1,12 +1,12 @@
 package com.chesire.nekome.app.search.results
 
 import com.chesire.nekome.core.AuthCaster
+import com.chesire.nekome.core.Resource
 import com.chesire.nekome.core.flags.SeriesType
 import com.chesire.nekome.core.flags.UserSeriesStatus
 import com.chesire.nekome.core.models.SeriesModel
 import com.chesire.nekome.core.settings.ApplicationSettings
 import com.chesire.nekome.library.SeriesRepository
-import com.chesire.nekome.server.Resource
 import com.chesire.nekome.testing.CoroutinesMainDispatcherRule
 import com.chesire.nekome.testing.createSeriesModel
 import io.mockk.Runs

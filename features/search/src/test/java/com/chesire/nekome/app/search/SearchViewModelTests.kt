@@ -3,11 +3,15 @@ package com.chesire.nekome.app.search
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.chesire.nekome.core.AuthCaster
+import com.chesire.nekome.core.Resource
 import com.chesire.nekome.core.flags.AsyncState
+import com.chesire.nekome.core.flags.SeriesStatus
 import com.chesire.nekome.core.flags.SeriesType
+import com.chesire.nekome.core.flags.Subtype
+import com.chesire.nekome.core.models.ImageModel
 import com.chesire.nekome.core.models.SeriesModel
-import com.chesire.nekome.server.Resource
-import com.chesire.nekome.server.api.SearchApi
+import com.chesire.nekome.search.api.SearchApi
+import com.chesire.nekome.search.api.SearchDomain
 import com.chesire.nekome.testing.CoroutinesMainDispatcherRule
 import io.mockk.Runs
 import io.mockk.coEvery
@@ -24,8 +28,11 @@ import org.junit.Test
 class SearchViewModelTests {
     @get:Rule
     val taskExecutorRule = InstantTaskExecutorRule()
+
     @get:Rule
     val coroutineRule = CoroutinesMainDispatcherRule()
+
+    private val map = SearchDomainMapper()
 
     @Test
     fun `executeSearch with empty title posts error`() {
@@ -35,7 +42,7 @@ class SearchViewModelTests {
         val mockObserver = mockk<Observer<AsyncState<List<SeriesModel>, SearchError>>> {
             every { onChanged(capture(observerSlot)) } just Runs
         }
-        val testObject = SearchViewModel(mockSearch, mockCaster)
+        val testObject = SearchViewModel(mockSearch, mockCaster, map)
 
         testObject.searchResult.observeForever(mockObserver)
         testObject.executeSearch(SearchData("", SeriesType.Anime))
@@ -52,7 +59,7 @@ class SearchViewModelTests {
         val mockObserver = mockk<Observer<AsyncState<List<SeriesModel>, SearchError>>> {
             every { onChanged(capture(observerSlot)) } just Runs
         }
-        val testObject = SearchViewModel(mockSearch, mockCaster)
+        val testObject = SearchViewModel(mockSearch, mockCaster, map)
 
         testObject.searchResult.observeForever(mockObserver)
         testObject.executeSearch(SearchData("New Title", SeriesType.Unknown))
@@ -71,7 +78,7 @@ class SearchViewModelTests {
             }
         }
         val mockCaster = mockk<AuthCaster>()
-        val testObject = SearchViewModel(mockSearch, mockCaster)
+        val testObject = SearchViewModel(mockSearch, mockCaster, map)
 
         testObject.executeSearch(SearchData("title", SeriesType.Anime))
 
@@ -88,7 +95,7 @@ class SearchViewModelTests {
             }
         }
         val mockCaster = mockk<AuthCaster>()
-        val testObject = SearchViewModel(mockSearch, mockCaster)
+        val testObject = SearchViewModel(mockSearch, mockCaster, map)
 
         testObject.executeSearch(SearchData("title", SeriesType.Manga))
 
@@ -109,7 +116,7 @@ class SearchViewModelTests {
             }
         }
         val mockCaster = mockk<AuthCaster>()
-        val testObject = SearchViewModel(mockSearch, mockCaster)
+        val testObject = SearchViewModel(mockSearch, mockCaster, map)
 
         testObject.searchResult.observeForever(mockObserver)
         testObject.executeSearch(SearchData("title", SeriesType.Anime))
@@ -129,11 +136,11 @@ class SearchViewModelTests {
             coEvery {
                 searchForAnime(any())
             } coAnswers {
-                Resource.Success(listOf(mockk()))
+                Resource.Success(listOf(createSearchDomain()))
             }
         }
         val mockCaster = mockk<AuthCaster>()
-        val testObject = SearchViewModel(mockSearch, mockCaster)
+        val testObject = SearchViewModel(mockSearch, mockCaster, map)
 
         testObject.searchResult.observeForever(mockObserver)
         testObject.executeSearch(SearchData("title", SeriesType.Anime))
@@ -157,7 +164,7 @@ class SearchViewModelTests {
             }
         }
         val mockCaster = mockk<AuthCaster>()
-        val testObject = SearchViewModel(mockSearch, mockCaster)
+        val testObject = SearchViewModel(mockSearch, mockCaster, map)
 
         testObject.searchResult.observeForever(mockObserver)
         testObject.executeSearch(SearchData("title", SeriesType.Anime))
@@ -183,11 +190,30 @@ class SearchViewModelTests {
         val mockCaster = mockk<AuthCaster> {
             every { issueRefreshingToken() } just Runs
         }
-        val testObject = SearchViewModel(mockSearch, mockCaster)
+        val testObject = SearchViewModel(mockSearch, mockCaster, map)
 
         testObject.searchResult.observeForever(mockObserver)
         testObject.executeSearch(SearchData("title", SeriesType.Anime))
 
         verify { mockCaster.issueRefreshingToken() }
     }
+
+    private fun createSearchDomain() =
+        SearchDomain(
+            0,
+            SeriesType.Anime,
+            "slug",
+            "synopsis",
+            "canonicalTitle",
+            "0",
+            "startDate",
+            "endDate",
+            Subtype.Unknown,
+            SeriesStatus.Unknown,
+            ImageModel.empty,
+            ImageModel.empty,
+            0,
+            0,
+            false
+        )
 }

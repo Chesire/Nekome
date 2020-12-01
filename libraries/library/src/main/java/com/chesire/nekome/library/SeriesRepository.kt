@@ -1,10 +1,10 @@
 package com.chesire.nekome.library
 
+import com.chesire.nekome.core.Resource
 import com.chesire.nekome.core.flags.UserSeriesStatus
 import com.chesire.nekome.core.models.SeriesModel
 import com.chesire.nekome.database.dao.SeriesDao
-import com.chesire.nekome.server.Resource
-import com.chesire.nekome.server.api.LibraryApi
+import com.chesire.nekome.library.api.LibraryApi
 import timber.log.Timber
 
 /**
@@ -13,8 +13,10 @@ import timber.log.Timber
 class SeriesRepository(
     private val seriesDao: SeriesDao,
     private val libraryApi: LibraryApi,
-    private val userProvider: UserProvider
+    private val userProvider: UserProvider,
+    private val map: LibraryDomainMapper
 ) {
+
     /**
      * Observable list of all the users series (Anime + Manga).
      */
@@ -24,26 +26,44 @@ class SeriesRepository(
      * Adds the anime series with id [seriesId] to the users tracked list.
      */
     suspend fun addAnime(seriesId: Int, startingStatus: UserSeriesStatus): Resource<SeriesModel> {
-        val response = libraryApi.addAnime(userProvider.provideUserId(), seriesId, startingStatus)
-        when (response) {
-            is Resource.Success -> seriesDao.insert(response.data)
-            is Resource.Error -> Timber.e("Error adding anime [$seriesId], ${response.msg}")
+        val response = libraryApi.addAnime(
+            userProvider.provideUserId(),
+            seriesId,
+            startingStatus
+        )
+        return when (response) {
+            is Resource.Success -> {
+                val newData = map.toSeriesModel(response.data)
+                seriesDao.insert(newData)
+                response.with(newData)
+            }
+            is Resource.Error -> {
+                Timber.e("Error adding anime [$seriesId], ${response.msg}")
+                response.mutate()
+            }
         }
-
-        return response
     }
 
     /**
      * Adds the manga series with id [seriesId] to the users tracked list.
      */
     suspend fun addManga(seriesId: Int, startingStatus: UserSeriesStatus): Resource<SeriesModel> {
-        val response = libraryApi.addManga(userProvider.provideUserId(), seriesId, startingStatus)
-        when (response) {
-            is Resource.Success -> seriesDao.insert(response.data)
-            is Resource.Error -> Timber.e("Error adding manga [$seriesId], ${response.msg}")
+        val response = libraryApi.addManga(
+            userProvider.provideUserId(),
+            seriesId,
+            startingStatus
+        )
+        return when (response) {
+            is Resource.Success -> {
+                val newData = map.toSeriesModel(response.data)
+                seriesDao.insert(newData)
+                response.with(newData)
+            }
+            is Resource.Error -> {
+                Timber.e("Error adding manga [$seriesId], ${response.msg}")
+                response.mutate()
+            }
         }
-
-        return response
     }
 
     /**
@@ -66,12 +86,17 @@ class SeriesRepository(
      */
     suspend fun refreshAnime(): Resource<List<SeriesModel>> {
         val response = libraryApi.retrieveAnime(userProvider.provideUserId())
-        when (response) {
-            is Resource.Success -> seriesDao.insert(response.data)
-            is Resource.Error -> Timber.e("Error refreshing anime, ${response.msg}")
+        return when (response) {
+            is Resource.Success -> {
+                val add = response.data.map { map.toSeriesModel(it) }
+                seriesDao.insert(add)
+                response.with(add)
+            }
+            is Resource.Error -> {
+                Timber.e("Error refreshing anime, ${response.msg}")
+                response.mutate()
+            }
         }
-
-        return response
     }
 
     /**
@@ -79,12 +104,17 @@ class SeriesRepository(
      */
     suspend fun refreshManga(): Resource<List<SeriesModel>> {
         val response = libraryApi.retrieveManga(userProvider.provideUserId())
-        when (response) {
-            is Resource.Success -> seriesDao.insert(response.data)
-            is Resource.Error -> Timber.e("Error refreshing manga, ${response.msg}")
+        return when (response) {
+            is Resource.Success -> {
+                val add = response.data.map { map.toSeriesModel(it) }
+                seriesDao.insert(add)
+                response.with(add)
+            }
+            is Resource.Error -> {
+                Timber.e("Error refreshing manga, ${response.msg}")
+                response.mutate()
+            }
         }
-
-        return response
     }
 
     /**
@@ -97,11 +127,16 @@ class SeriesRepository(
         status: UserSeriesStatus
     ): Resource<SeriesModel> {
         val response = libraryApi.update(userSeriesId, progress, status)
-        when (response) {
-            is Resource.Success -> seriesDao.update(response.data)
-            is Resource.Error -> Timber.e("Error updating series [$userSeriesId], ${response.msg}")
+        return when (response) {
+            is Resource.Success -> {
+                val add = map.toSeriesModel(response.data)
+                seriesDao.update(add)
+                response.with(add)
+            }
+            is Resource.Error -> {
+                Timber.e("Error updating series [$userSeriesId], ${response.msg}")
+                response.mutate()
+            }
         }
-
-        return response
     }
 }

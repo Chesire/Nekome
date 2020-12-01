@@ -4,9 +4,9 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import androidx.lifecycle.SavedStateHandle
 import com.chesire.nekome.core.AuthCaster
+import com.chesire.nekome.core.Resource
 import com.chesire.nekome.core.flags.AsyncState
 import com.chesire.nekome.library.SeriesRepository
-import com.chesire.nekome.server.Resource
 import com.chesire.nekome.testing.CoroutinesMainDispatcherRule
 import com.chesire.nekome.testing.createSeriesModel
 import io.mockk.Runs

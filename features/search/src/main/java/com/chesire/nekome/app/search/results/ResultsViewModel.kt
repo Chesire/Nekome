@@ -5,11 +5,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.chesire.nekome.core.AuthCaster
+import com.chesire.nekome.core.Resource
 import com.chesire.nekome.core.flags.SeriesType
 import com.chesire.nekome.core.models.SeriesModel
 import com.chesire.nekome.core.settings.ApplicationSettings
 import com.chesire.nekome.library.SeriesRepository
-import com.chesire.nekome.server.Resource
 import kotlinx.coroutines.launch
 
 /**

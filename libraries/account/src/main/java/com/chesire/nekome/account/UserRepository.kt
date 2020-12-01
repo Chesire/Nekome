@@ -1,18 +1,20 @@
 package com.chesire.nekome.account
 
+import com.chesire.nekome.core.Resource
 import com.chesire.nekome.core.flags.Service
 import com.chesire.nekome.core.models.UserModel
 import com.chesire.nekome.database.dao.UserDao
-import com.chesire.nekome.server.Resource
-import com.chesire.nekome.server.api.UserApi
+import com.chesire.nekome.user.api.UserApi
 import timber.log.Timber
+import javax.inject.Inject
 
 /**
  * Repository to interact with user data.
  */
-class UserRepository(
+class UserRepository @Inject constructor(
     private val userDao: UserDao,
-    private val userApi: UserApi
+    private val userApi: UserApi,
+    private val map: UserDomainMapper
 ) {
     /**
      * Access the user information.
@@ -23,13 +25,17 @@ class UserRepository(
      * Updates the stored user in the database, data will be funneled to the [user].
      */
     suspend fun refreshUser(): Resource<UserModel> {
-        val response = userApi.getUserDetails()
-        when (response) {
-            is Resource.Success -> userDao.insert(response.data)
-            is Resource.Error -> Timber.e("Error refreshing user")
+        return when (val response = userApi.getUserDetails()) {
+            is Resource.Success -> {
+                val model = map.toUserModel(response.data)
+                userDao.insert(model)
+                Resource.Success(model)
+            }
+            is Resource.Error -> {
+                Timber.e("Error refreshing user")
+                Resource.Error(response.msg)
+            }
         }
-
-        return response
     }
 
     /**

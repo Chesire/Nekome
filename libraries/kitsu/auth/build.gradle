@@ -1,0 +1,54 @@
+plugins {
+    id "com.android.library"
+    id "kotlin-android"
+    id "kotlin-android-extensions"
+    id "kotlin-kapt"
+}
+
+android {
+    compileSdkVersion sdk_version
+
+    defaultConfig {
+        minSdkVersion 21
+        targetSdkVersion sdk_version
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}
+
+dependencies {
+    implementation project(path: ":libraries:core")
+    implementation project(path: ":libraries:encryption")
+    implementation project(path: ':libraries:kitsu')
+    implementation project(path: ':libraries:server:auth')
+
+    implementation "androidx.core:core-ktx:$corektx_version"
+    implementation "com.chesire.lintrules:lint-gradle:$lintrules_version"
+    implementation "com.chesire.lintrules:lint-xml:$lintrules_version"
+    implementation "com.google.dagger:hilt-android:$hilt_version"
+    implementation "com.jakewharton.timber:timber:$timber_version"
+    implementation "com.squareup.retrofit2:converter-moshi:$retrofit_version"
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
+
+    testImplementation project(path: ":testing")
+    testImplementation "io.mockk:mockk:1.10.2"
+    testImplementation "junit:junit:4.13.1"
+
+    kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshi_version"
+}

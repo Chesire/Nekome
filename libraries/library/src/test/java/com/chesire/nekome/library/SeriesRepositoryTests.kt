@@ -1,11 +1,16 @@
 package com.chesire.nekome.library
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import com.chesire.nekome.core.Resource
+import com.chesire.nekome.core.flags.SeriesStatus
+import com.chesire.nekome.core.flags.SeriesType
+import com.chesire.nekome.core.flags.Subtype
 import com.chesire.nekome.core.flags.UserSeriesStatus
+import com.chesire.nekome.core.models.ImageModel
 import com.chesire.nekome.core.models.SeriesModel
 import com.chesire.nekome.database.dao.SeriesDao
-import com.chesire.nekome.server.Resource
-import com.chesire.nekome.server.api.LibraryApi
+import com.chesire.nekome.library.api.LibraryApi
+import com.chesire.nekome.library.api.LibraryDomain
 import io.mockk.Runs
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -23,9 +28,11 @@ class SeriesRepositoryTests {
     @get:Rule
     val rule = InstantTaskExecutorRule()
 
+    private val map = LibraryDomainMapper()
+
     @Test
     fun `addAnime onSuccess saves to dao`() = runBlocking {
-        val expected = Resource.Success<SeriesModel>(mockk())
+        val expected = Resource.Success(createLibraryDomain())
         val mockDao = mockk<SeriesDao> {
             coEvery { insert(any<SeriesModel>()) } just Runs
             every { getSeries() } returns mockk()
@@ -37,7 +44,7 @@ class SeriesRepositoryTests {
             coEvery { provideUserId() } returns 1
         }
 
-        val classUnderTest = SeriesRepository(mockDao, mockApi, mockUser)
+        val classUnderTest = SeriesRepository(mockDao, mockApi, mockUser, map)
         classUnderTest.addAnime(0, UserSeriesStatus.Current)
 
         coVerify { mockDao.insert(any<SeriesModel>()) }
@@ -45,7 +52,7 @@ class SeriesRepositoryTests {
 
     @Test
     fun `addAnime onSuccess returns success`() = runBlocking {
-        val expected = Resource.Success<SeriesModel>(mockk())
+        val expected = Resource.Success(createLibraryDomain())
         val mockDao = mockk<SeriesDao> {
             coEvery { insert(any<SeriesModel>()) } just Runs
             every { getSeries() } returns mockk()
@@ -57,15 +64,15 @@ class SeriesRepositoryTests {
             coEvery { provideUserId() } returns 1
         }
 
-        val classUnderTest = SeriesRepository(mockDao, mockApi, mockUser)
+        val classUnderTest = SeriesRepository(mockDao, mockApi, mockUser, map)
         val actual = classUnderTest.addAnime(0, UserSeriesStatus.Current)
 
-        assertEquals(expected, actual)
+        assertTrue(actual is Resource.Success)
     }
 
     @Test
     fun `addAnime onFailure returns failure`() = runBlocking {
-        val expected = Resource.Error<SeriesModel>("Error")
+        val expected = Resource.Error<LibraryDomain>("Error")
         val mockDao = mockk<SeriesDao> {
             coEvery { insert(any<SeriesModel>()) } just Runs
             every { getSeries() } returns mockk()
@@ -77,15 +84,15 @@ class SeriesRepositoryTests {
             coEvery { provideUserId() } returns 1
         }
 
-        val classUnderTest = SeriesRepository(mockDao, mockApi, mockUser)
+        val classUnderTest = SeriesRepository(mockDao, mockApi, mockUser, map)
         val actual = classUnderTest.addAnime(0, UserSeriesStatus.Current)
 
-        assertEquals(expected, actual)
+        assertTrue(actual is Resource.Error)
     }
 
     @Test
     fun `addManga onSuccess saves to dao`() = runBlocking {
-        val expected = Resource.Success<SeriesModel>(mockk())
+        val expected = Resource.Success(createLibraryDomain())
         val mockDao = mockk<SeriesDao> {
             coEvery { insert(any<SeriesModel>()) } just Runs
             every { getSeries() } returns mockk()
@@ -97,7 +104,7 @@ class SeriesRepositoryTests {
             coEvery { provideUserId() } returns 1
         }
 
-        val classUnderTest = SeriesRepository(mockDao, mockApi, mockUser)
+        val classUnderTest = SeriesRepository(mockDao, mockApi, mockUser, map)
         classUnderTest.addManga(0, UserSeriesStatus.Current)
 
         coVerify { mockDao.insert(any<SeriesModel>()) }
@@ -105,7 +112,7 @@ class SeriesRepositoryTests {
 
     @Test
     fun `addManga onSuccess returns success`() = runBlocking {
-        val expected = Resource.Success<SeriesModel>(mockk())
+        val expected = Resource.Success(createLibraryDomain())
         val mockDao = mockk<SeriesDao> {
             coEvery { insert(any<SeriesModel>()) } just Runs
             every { getSeries() } returns mockk()
@@ -117,15 +124,15 @@ class SeriesRepositoryTests {
             coEvery { provideUserId() } returns 1
         }
 
-        val classUnderTest = SeriesRepository(mockDao, mockApi, mockUser)
+        val classUnderTest = SeriesRepository(mockDao, mockApi, mockUser, map)
         val actual = classUnderTest.addManga(0, UserSeriesStatus.Current)
 
-        assertEquals(expected, actual)
+        assertTrue(actual is Resource.Success)
     }
 
     @Test
     fun `addManga onFailure returns failure`() = runBlocking {
-        val expected = Resource.Error<SeriesModel>("Error")
+        val expected = Resource.Error<LibraryDomain>("Error")
         val mockDao = mockk<SeriesDao> {
             coEvery { insert(any<SeriesModel>()) } just Runs
             every { getSeries() } returns mockk()
@@ -137,10 +144,10 @@ class SeriesRepositoryTests {
             coEvery { provideUserId() } returns 1
         }
 
-        val classUnderTest = SeriesRepository(mockDao, mockApi, mockUser)
+        val classUnderTest = SeriesRepository(mockDao, mockApi, mockUser, map)
         val actual = classUnderTest.addManga(0, UserSeriesStatus.Current)
 
-        assertEquals(expected, actual)
+        assertTrue(actual is Resource.Error)
     }
 
     @Test
@@ -159,7 +166,7 @@ class SeriesRepositoryTests {
             coEvery { provideUserId() } returns 1
         }
 
-        val classUnderTest = SeriesRepository(mockDao, mockApi, mockUser)
+        val classUnderTest = SeriesRepository(mockDao, mockApi, mockUser, map)
         classUnderTest.deleteSeries(expected)
 
         coVerify { mockDao.delete(expected) }
@@ -179,7 +186,7 @@ class SeriesRepositoryTests {
             coEvery { provideUserId() } returns 1
         }
 
-        val classUnderTest = SeriesRepository(mockDao, mockApi, mockUser)
+        val classUnderTest = SeriesRepository(mockDao, mockApi, mockUser, map)
         val actual = classUnderTest.deleteSeries(
             mockk {
                 every { userId } returns 5
@@ -203,7 +210,7 @@ class SeriesRepositoryTests {
             coEvery { provideUserId() } returns 1
         }
 
-        val classUnderTest = SeriesRepository(mockDao, mockApi, mockUser)
+        val classUnderTest = SeriesRepository(mockDao, mockApi, mockUser, map)
         val actual = classUnderTest.deleteSeries(
             mockk {
                 every { userId } returns 5
@@ -215,7 +222,7 @@ class SeriesRepositoryTests {
 
     @Test
     fun `refreshAnime on success updates the dao`() = runBlocking {
-        val response = Resource.Success(listOf<SeriesModel>())
+        val response = Resource.Success(listOf<LibraryDomain>())
         val mockDao = mockk<SeriesDao> {
             coEvery { insert(any<List<SeriesModel>>()) } just Runs
             every { getSeries() } returns mockk()
@@ -227,7 +234,7 @@ class SeriesRepositoryTests {
             coEvery { provideUserId() } returns 1
         }
 
-        val classUnderTest = SeriesRepository(mockDao, mockApi, mockUser)
+        val classUnderTest = SeriesRepository(mockDao, mockApi, mockUser, map)
         classUnderTest.refreshAnime()
 
         coVerify { mockDao.insert(any<List<SeriesModel>>()) }
@@ -235,7 +242,7 @@ class SeriesRepositoryTests {
 
     @Test
     fun `refreshAnime on failure doesn't update the dao`() = runBlocking {
-        val response = Resource.Error<List<SeriesModel>>("")
+        val response = Resource.Error<List<LibraryDomain>>("")
         val mockDao = mockk<SeriesDao> {
             coEvery { insert(any<List<SeriesModel>>()) } just Runs
             every { getSeries() } returns mockk()
@@ -247,7 +254,7 @@ class SeriesRepositoryTests {
             coEvery { provideUserId() } returns 1
         }
 
-        val classUnderTest = SeriesRepository(mockDao, mockApi, mockUser)
+        val classUnderTest = SeriesRepository(mockDao, mockApi, mockUser, map)
         classUnderTest.refreshAnime()
 
         coVerify(exactly = 0) { mockDao.insert(any<List<SeriesModel>>()) }
@@ -255,7 +262,7 @@ class SeriesRepositoryTests {
 
     @Test
     fun `refreshManga on success updates the dao`() = runBlocking {
-        val response = Resource.Success(listOf<SeriesModel>())
+        val response = Resource.Success(listOf<LibraryDomain>())
         val mockDao = mockk<SeriesDao> {
             coEvery { insert(any<List<SeriesModel>>()) } just Runs
             every { getSeries() } returns mockk()
@@ -267,7 +274,7 @@ class SeriesRepositoryTests {
             coEvery { provideUserId() } returns 1
         }
 
-        val classUnderTest = SeriesRepository(mockDao, mockApi, mockUser)
+        val classUnderTest = SeriesRepository(mockDao, mockApi, mockUser, map)
         classUnderTest.refreshManga()
 
         coVerify { mockDao.insert(any<List<SeriesModel>>()) }
@@ -275,7 +282,7 @@ class SeriesRepositoryTests {
 
     @Test
     fun `refreshManga on failure doesn't update the dao`() = runBlocking {
-        val response = Resource.Error<List<SeriesModel>>("")
+        val response = Resource.Error<List<LibraryDomain>>("")
         val mockDao = mockk<SeriesDao> {
             coEvery { insert(any<List<SeriesModel>>()) } just Runs
             every { getSeries() } returns mockk()
@@ -287,7 +294,7 @@ class SeriesRepositoryTests {
             coEvery { provideUserId() } returns 1
         }
 
-        val classUnderTest = SeriesRepository(mockDao, mockApi, mockUser)
+        val classUnderTest = SeriesRepository(mockDao, mockApi, mockUser, map)
         classUnderTest.refreshManga()
 
         coVerify(exactly = 0) { mockDao.insert(any<List<SeriesModel>>()) }
@@ -295,9 +302,9 @@ class SeriesRepositoryTests {
 
     @Test
     fun `updateSeries on success updates the dao`() = runBlocking {
-        val expected = mockk<SeriesModel>()
+        val expected = createLibraryDomain()
         val mockDao = mockk<SeriesDao> {
-            coEvery { update(expected) } just Runs
+            coEvery { update(any()) } just Runs
             every { getSeries() } returns mockk()
         }
         val mockApi = mockk<LibraryApi> {
@@ -309,10 +316,10 @@ class SeriesRepositoryTests {
         }
         val mockUser = mockk<UserProvider>()
 
-        val classUnderTest = SeriesRepository(mockDao, mockApi, mockUser)
+        val classUnderTest = SeriesRepository(mockDao, mockApi, mockUser, map)
         classUnderTest.updateSeries(0, 0, UserSeriesStatus.Current)
 
-        coVerify { mockDao.update(expected) }
+        coVerify { mockDao.update(any()) }
     }
 
     @Test
@@ -329,7 +336,7 @@ class SeriesRepositoryTests {
         }
         val mockUser = mockk<UserProvider>()
 
-        val classUnderTest = SeriesRepository(mockDao, mockApi, mockUser)
+        val classUnderTest = SeriesRepository(mockDao, mockApi, mockUser, map)
         val result = classUnderTest.updateSeries(0, 0, UserSeriesStatus.Current)
 
         when (result) {
@@ -337,4 +344,24 @@ class SeriesRepositoryTests {
             is Resource.Error -> assertTrue(true)
         }
     }
+
+    private fun createLibraryDomain() =
+        LibraryDomain(
+            0,
+            0,
+            SeriesType.Anime,
+            Subtype.Unknown,
+            "slug",
+            "synopsis",
+            "title",
+            SeriesStatus.Unknown,
+            UserSeriesStatus.Unknown,
+            0,
+            0,
+            ImageModel.empty,
+            ImageModel.empty,
+            false,
+            "startDate",
+            "endDate"
+        )
 }

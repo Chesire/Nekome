@@ -36,7 +36,7 @@ dependencies {
 
     implementation project(path: ":libraries:core")
     implementation project(path: ":libraries:library")
-    implementation project(path: ":libraries:server")
+    implementation project(path: ":libraries:server:trending")
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 

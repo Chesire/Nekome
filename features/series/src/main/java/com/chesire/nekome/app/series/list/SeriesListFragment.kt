@@ -21,10 +21,10 @@ import com.chesire.nekome.app.series.list.anime.AnimeFragment
 import com.chesire.nekome.app.series.list.manga.MangaFragment
 import com.chesire.nekome.app.series.list.view.SeriesAdapter
 import com.chesire.nekome.app.series.list.view.SwipeToDelete
+import com.chesire.nekome.core.Resource
 import com.chesire.nekome.core.flags.AsyncState
 import com.chesire.nekome.core.flags.SeriesType
 import com.chesire.nekome.core.models.SeriesModel
-import com.chesire.nekome.server.Resource
 import com.google.android.material.snackbar.Snackbar
 import timber.log.Timber
 import javax.inject.Inject

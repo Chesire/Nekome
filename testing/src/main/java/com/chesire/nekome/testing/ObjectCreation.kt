@@ -59,3 +59,13 @@ fun createUserModel(
     coverImage: ImageModel = ImageModel.empty,
     service: Service = Service.Kitsu
 ) = UserModel(userId, name, avatar, coverImage, service)
+
+/**
+ * Creates a new instance of [ImageModel] with default data.
+ */
+fun createImageModel(
+    tiny: ImageModel.ImageData = ImageModel.ImageData.empty,
+    small: ImageModel.ImageData = ImageModel.ImageData.empty,
+    medium: ImageModel.ImageData = ImageModel.ImageData.empty,
+    large: ImageModel.ImageData = ImageModel.ImageData.empty
+) = ImageModel(tiny, small, medium, large)

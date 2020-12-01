@@ -1,8 +1,8 @@
 package com.chesire.nekome.kitsu.interceptors
 
+import com.chesire.nekome.auth.api.AuthApi
+import com.chesire.nekome.core.Resource
 import com.chesire.nekome.kitsu.AuthProvider
-import com.chesire.nekome.server.Resource
-import com.chesire.nekome.server.api.AuthApi
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every

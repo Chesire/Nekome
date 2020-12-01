@@ -9,8 +9,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.chesire.lifecyklelog.LogLifecykle
 import com.chesire.nekome.app.search.R
 import com.chesire.nekome.app.search.databinding.FragmentResultsBinding
+import com.chesire.nekome.core.Resource
 import com.chesire.nekome.core.models.SeriesModel
-import com.chesire.nekome.server.Resource
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
