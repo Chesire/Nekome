@@ -54,7 +54,6 @@ class DetailsTests {
     lateinit var authProvider: AuthProvider
 
     @BindValue
-    @JvmField
     val urlHandler = mockk<UrlHandler>()
 
     val fakeAuth = mockk<AuthApi>()
