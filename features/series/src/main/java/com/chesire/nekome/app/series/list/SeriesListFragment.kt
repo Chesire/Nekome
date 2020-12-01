@@ -77,7 +77,7 @@ abstract class SeriesListFragment :
             if (binding.listContent.emptyView == null) {
                 // Set the empty view here so it doesn't show on load before we get series
                 Timber.d("Setting in the RecyclerViews empty view")
-                binding.listContent.emptyView = binding.listEmpty.root
+                binding.listContent.emptyView = binding.listEmpty.rootView
             }
         }
 

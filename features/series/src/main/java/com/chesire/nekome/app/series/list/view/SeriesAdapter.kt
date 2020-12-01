@@ -5,8 +5,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.chesire.nekome.app.series.R
 import com.chesire.nekome.app.series.SeriesPreferences
+import com.chesire.nekome.app.series.databinding.AdapterItemSeriesBinding
 import com.chesire.nekome.app.series.list.SeriesInteractionListener
 import com.chesire.nekome.core.flags.SortOption
 import com.chesire.nekome.core.models.SeriesModel
@@ -67,7 +67,7 @@ class SeriesAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SeriesViewHolder {
         return SeriesViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.adapter_item_series, parent, false)
+            AdapterItemSeriesBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         ).apply {
             bindListener(listener)
         }
