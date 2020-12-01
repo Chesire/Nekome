@@ -125,9 +125,9 @@ dependencies {
     debugImplementation "com.squareup.leakcanary:leakcanary-android:2.5"
 
     testImplementation project(path: ":testing")
-    testImplementation "androidx.arch.core:core-testing:2.1.0"
-    testImplementation "io.mockk:mockk:1.10.2"
-    testImplementation "junit:junit:4.13.1"
+    testImplementation "androidx.arch.core:core-testing:$coretesting_version"
+    testImplementation "io.mockk:mockk:$mockk_version"
+    testImplementation "junit:junit:$junit_version"
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_version"
 
     androidTestImplementation project(path: ":testing")
@@ -141,7 +141,7 @@ dependencies {
         exclude group: "com.android.support"
         exclude group: "org.jetbrains.kotlin"
     }
-    androidTestImplementation "io.mockk:mockk-android:1.10.2"
+    androidTestImplementation "io.mockk:mockk-android:$mockk_version"
 
     kapt "androidx.hilt:hilt-compiler:$hiltx_version"
     kapt "com.google.dagger:hilt-android-compiler:$hilt_version"

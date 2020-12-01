@@ -44,7 +44,7 @@ dependencies {
     implementation "com.chesire.lintrules:lint-xml:$lintrules_version"
     implementation "com.google.dagger:hilt-android:$hilt_version"
 
-    testImplementation "junit:junit:4.13.1"
+    testImplementation "junit:junit:$junit_version"
 
     androidTestImplementation "androidx.test.espresso:espresso-core:3.3.0"
     androidTestImplementation "androidx.test.ext:junit:1.1.2"
