@@ -81,5 +81,4 @@ class ResponseDtoMapperTests {
         assertEquals(expected.id, output?.id)
         assertEquals(expected.attributes.canonicalTitle, output?.title)
     }
-
 }

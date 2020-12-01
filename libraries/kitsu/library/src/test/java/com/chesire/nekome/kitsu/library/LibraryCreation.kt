@@ -67,18 +67,27 @@ fun createDataDto(type: SeriesType, id: Int = 0) =
             "finishedAt"
         ),
         DataDto.Relationships(
-            if (type == SeriesType.Anime) DataDto.Relationships.RelationshipObject(
-                DataDto.Relationships.RelationshipObject.RelationshipData("", id)
-            ) else null,
-            if (type == SeriesType.Manga) DataDto.Relationships.RelationshipObject(
-                DataDto.Relationships.RelationshipObject.RelationshipData("", id)
-            ) else null,
+            if (type == SeriesType.Anime) {
+                DataDto.Relationships.RelationshipObject(
+                    DataDto.Relationships.RelationshipObject.RelationshipData("", id)
+                )
+            } else {
+                null
+            },
+            if (type == SeriesType.Manga) {
+                DataDto.Relationships.RelationshipObject(
+                    DataDto.Relationships.RelationshipObject.RelationshipData("", id)
+                )
+            } else {
+                null
+            },
         )
     )
 
 /**
  * Create a [IncludedDto] for tests.
  */
+@Suppress("LongParameterList")
 fun createIncludedDto(
     type: SeriesType,
     id: Int = 0,
