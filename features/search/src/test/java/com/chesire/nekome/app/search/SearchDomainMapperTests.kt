@@ -34,7 +34,6 @@ class SearchDomainMapperTests {
             "slug",
             "synopsis",
             "canonicalTitle",
-            "averageRating",
             "startDate",
             "endDate",
             Subtype.Manhua,
