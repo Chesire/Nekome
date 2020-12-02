@@ -205,7 +205,6 @@ class SearchViewModelTests {
             "slug",
             "synopsis",
             "canonicalTitle",
-            "0",
             "startDate",
             "endDate",
             Subtype.Unknown,

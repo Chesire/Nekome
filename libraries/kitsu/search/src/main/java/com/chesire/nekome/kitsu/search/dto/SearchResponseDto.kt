@@ -1,6 +1,5 @@
 package com.chesire.nekome.kitsu.search.dto
 
-import com.chesire.nekome.kitsu.api.intermediaries.Links
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
@@ -10,7 +9,5 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class SearchResponseDto(
     @Json(name = "data")
-    val data: List<SearchItemDto>,
-    @Json(name = "links")
-    val links: Links
+    val data: List<SearchItemDto>
 )

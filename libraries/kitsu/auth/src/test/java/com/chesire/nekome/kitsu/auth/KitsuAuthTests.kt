@@ -116,8 +116,7 @@ class KitsuAuthTests {
     fun `login successful response with body returns Resource#Success`() = runBlocking {
         val usernameInput = "username"
         val passwordInput = "password"
-        val loginResponse =
-            AuthResponseDto("accessToken", 0, 0, "refreshToken", "scope", "tokenType")
+        val loginResponse = AuthResponseDto("accessToken", "refreshToken")
 
         val mockProvider = mockk<AuthProvider> {
             every { accessToken = any() } just Runs
@@ -150,7 +149,7 @@ class KitsuAuthTests {
         val passwordInput = "password"
         val expected = "expectedAccessToken"
         val slot = CapturingSlot<String>()
-        val loginResponse = AuthResponseDto(expected, 0, 0, "refreshToken", "scope", "tokenType")
+        val loginResponse = AuthResponseDto(expected, "refreshToken")
 
         val mockProvider = mockk<AuthProvider> {
             every { accessToken = capture(slot) } just Runs
@@ -180,7 +179,7 @@ class KitsuAuthTests {
         val passwordInput = "password"
         val expected = "expectedRefreshToken"
         val slot = CapturingSlot<String>()
-        val loginResponse = AuthResponseDto("accessToken", 0, 0, expected, "scope", "tokenType")
+        val loginResponse = AuthResponseDto("accessToken", expected)
 
         val mockProvider = mockk<AuthProvider> {
             every { accessToken = any() } just Runs
@@ -319,7 +318,7 @@ class KitsuAuthTests {
     @Test
     fun `refresh successful response with body returns Resource#Success`() = runBlocking {
         val loginResponse =
-            AuthResponseDto("accessToken", 0, 0, "refreshToken", "scope", "tokenType")
+            AuthResponseDto("accessToken", "refreshToken")
 
         val mockProvider = mockk<AuthProvider> {
             every { accessToken = any() } just Runs
@@ -351,7 +350,7 @@ class KitsuAuthTests {
     fun `refresh successful response with body saves an access token`() = runBlocking {
         val expected = "expectedAccessToken"
         val slot = CapturingSlot<String>()
-        val loginResponse = AuthResponseDto(expected, 0, 0, "refreshToken", "scope", "tokenType")
+        val loginResponse = AuthResponseDto(expected, "refreshToken")
 
         val mockProvider = mockk<AuthProvider> {
             every { accessToken = capture(slot) } just Runs
@@ -380,7 +379,7 @@ class KitsuAuthTests {
     fun `refresh successful response with body saves a refresh token`() = runBlocking {
         val expected = "expectedRefreshToken"
         val slot = CapturingSlot<String>()
-        val loginResponse = AuthResponseDto("accessToken", 0, 0, expected, "scope", "tokenType")
+        val loginResponse = AuthResponseDto("accessToken", expected)
 
         val mockProvider = mockk<AuthProvider> {
             every { accessToken = any() } just Runs

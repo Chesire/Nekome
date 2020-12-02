@@ -1,7 +1,6 @@
 package com.chesire.nekome.kitsu.user
 
 import com.chesire.nekome.core.Resource
-import com.chesire.nekome.core.flags.RatingSystem
 import com.chesire.nekome.core.models.ImageModel
 import com.chesire.nekome.kitsu.user.dto.UserItemDto
 import com.chesire.nekome.kitsu.user.dto.UserResponseDto
@@ -111,8 +110,6 @@ class KitsuUserTests {
                     0,
                     UserItemDto.Attributes(
                         "name",
-                        "name",
-                        RatingSystem.Unknown,
                         ImageModel.empty,
                         ImageModel.empty
                     )

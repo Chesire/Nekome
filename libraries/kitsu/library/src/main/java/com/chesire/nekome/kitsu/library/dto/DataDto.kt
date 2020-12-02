@@ -54,8 +54,6 @@ data class DataDto(
              */
             @JsonClass(generateAdapter = true)
             data class RelationshipData(
-                @Json(name = "type")
-                val type: String,
                 @Json(name = "id")
                 val id: Int
             )

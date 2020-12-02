@@ -1,6 +1,5 @@
 package com.chesire.nekome.kitsu.user
 
-import com.chesire.nekome.core.flags.RatingSystem
 import com.chesire.nekome.core.flags.Service
 import com.chesire.nekome.core.models.ImageModel
 import com.chesire.nekome.kitsu.user.dto.UserItemDto
@@ -30,8 +29,6 @@ class UserItemDtoMapperTests {
             10,
             UserItemDto.Attributes(
                 "name",
-                "slug",
-                RatingSystem.Advanced,
                 avatarImageInput,
                 coverImageInput
             )
