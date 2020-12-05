@@ -1,4 +1,4 @@
-package com.chesire.nekome.app.search
+package com.chesire.nekome.app.search.domain
 
 import com.chesire.nekome.core.flags.UserSeriesStatus
 import com.chesire.nekome.core.models.ImageModel

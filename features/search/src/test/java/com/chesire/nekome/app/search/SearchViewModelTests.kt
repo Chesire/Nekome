@@ -2,6 +2,7 @@ package com.chesire.nekome.app.search
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
+import com.chesire.nekome.app.search.domain.SearchDomainMapper
 import com.chesire.nekome.core.AuthCaster
 import com.chesire.nekome.core.Resource
 import com.chesire.nekome.core.flags.AsyncState
