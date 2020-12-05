@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chesire.nekome.app.search.domain.SearchDomainMapper
+import com.chesire.nekome.app.search.domain.SearchModel
 import com.chesire.nekome.core.AuthCaster
 import com.chesire.nekome.core.Resource
 import com.chesire.nekome.core.extensions.postError
@@ -12,7 +13,6 @@ import com.chesire.nekome.core.extensions.postLoading
 import com.chesire.nekome.core.extensions.postSuccess
 import com.chesire.nekome.core.flags.AsyncState
 import com.chesire.nekome.core.flags.SeriesType
-import com.chesire.nekome.core.models.SeriesModel
 import com.chesire.nekome.search.api.SearchApi
 import com.chesire.nekome.search.api.SearchDomain
 import com.hadilq.liveevent.LiveEvent
@@ -24,11 +24,11 @@ import kotlinx.coroutines.launch
 class SearchViewModel @ViewModelInject constructor(
     private val searchApi: SearchApi,
     private val authCaster: AuthCaster,
-    private val map: SearchDomainMapper
+    private val mapper: SearchDomainMapper
 ) : ViewModel() {
 
-    private val _searchResult = LiveEvent<AsyncState<List<SeriesModel>, SearchError>>()
-    val searchResult: LiveData<AsyncState<List<SeriesModel>, SearchError>> = _searchResult
+    private val _searchResult = LiveEvent<AsyncState<List<SearchModel>, SearchError>>()
+    val searchResult: LiveData<AsyncState<List<SearchModel>, SearchError>> = _searchResult
 
     /**
      * Executes a search request using the data stored in [model], the result is posted to
@@ -62,7 +62,7 @@ class SearchViewModel @ViewModelInject constructor(
             if (response.data.isEmpty()) {
                 _searchResult.postError(SearchError.NoSeriesFound)
             } else {
-                _searchResult.postSuccess(response.data.toSeriesModels())
+                _searchResult.postSuccess(response.data.map { mapper.toSearchModel(it) })
             }
         is Resource.Error ->
             if (response.code == Resource.Error.CouldNotRefresh) {
@@ -71,6 +71,4 @@ class SearchViewModel @ViewModelInject constructor(
                 _searchResult.postError(SearchError.GenericError)
             }
     }
-
-    private fun List<SearchDomain>.toSeriesModels() = map { map.toSeriesModel(it) }
 }

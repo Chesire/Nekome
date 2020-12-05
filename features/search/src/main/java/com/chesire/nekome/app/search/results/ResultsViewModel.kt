@@ -7,9 +7,9 @@ import androidx.lifecycle.viewModelScope
 import com.chesire.nekome.core.AuthCaster
 import com.chesire.nekome.core.Resource
 import com.chesire.nekome.core.flags.SeriesType
-import com.chesire.nekome.core.models.SeriesModel
 import com.chesire.nekome.core.settings.ApplicationSettings
 import com.chesire.nekome.library.SeriesRepository
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 /**
@@ -21,31 +21,37 @@ class ResultsViewModel @ViewModelInject constructor(
     private val settings: ApplicationSettings
 ) : ViewModel() {
 
-    val series = seriesRepo.getSeries().asLiveData()
+    /**
+     * A list of series IDs.
+     */
+    val seriesIds = seriesRepo
+        .getSeries()
+        .map { it.map { it.id } }
+        .asLiveData()
 
     /**
-     * Adds [newSeries] to the list of tracked series.
+     * Adds [data] to the list of tracked series.
      */
     fun trackNewSeries(
-        newSeries: SeriesModel,
-        callback: (Resource<SeriesModel>) -> Unit
+        data: ResultsData,
+        callback: (successful: Boolean) -> Unit
     ) = viewModelScope.launch {
-        val response = when (newSeries.type) {
+        val response = when (data.type) {
             SeriesType.Anime -> seriesRepo.addAnime(
-                newSeries.id,
+                data.id,
                 settings.defaultSeriesState
             )
             SeriesType.Manga -> seriesRepo.addManga(
-                newSeries.id,
+                data.id,
                 settings.defaultSeriesState
             )
-            else -> error("Unknown SeriesType: ${newSeries.type}")
+            else -> error("Unknown SeriesType: ${data.type}")
         }
 
         if (response is Resource.Error && response.code == Resource.Error.CouldNotRefresh) {
             authCaster.issueRefreshingToken()
         } else {
-            callback(response)
+            callback(response is Resource.Success)
         }
     }
 }

@@ -1,36 +1,24 @@
 package com.chesire.nekome.app.search.domain
 
-import com.chesire.nekome.core.flags.UserSeriesStatus
 import com.chesire.nekome.core.models.ImageModel
-import com.chesire.nekome.core.models.SeriesModel
 import com.chesire.nekome.search.api.SearchDomain
 import javax.inject.Inject
 
 /**
- * Provides ability to map instances of [SearchDomain] into [SeriesModel].
+ * Provides ability to map from instances of [SearchDomain].
  */
 class SearchDomainMapper @Inject constructor() {
 
     /**
-     * Converts an instance of [SearchDomain] into a [SeriesModel].
+     * Converts an instance of [SearchDomain] into a [SearchModel].
      */
-    fun toSeriesModel(input: SearchDomain) =
-        SeriesModel(
+    fun toSearchModel(input: SearchDomain) =
+        SearchModel(
             input.id,
-            0,
             input.type,
-            input.subtype,
-            input.slug,
             input.synopsis,
             input.canonicalTitle,
-            input.status,
-            UserSeriesStatus.Unknown,
-            0,
-            0,
-            input.posterImage ?: ImageModel.empty,
-            input.coverImage ?: ImageModel.empty,
-            input.nsfw,
-            input.startDate ?: "",
-            input.endDate ?: ""
+            input.subtype,
+            input.posterImage ?: ImageModel.empty
         )
 }

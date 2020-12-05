@@ -4,7 +4,6 @@ import com.chesire.nekome.app.search.domain.SearchDomainMapper
 import com.chesire.nekome.core.flags.SeriesStatus
 import com.chesire.nekome.core.flags.SeriesType
 import com.chesire.nekome.core.flags.Subtype
-import com.chesire.nekome.core.flags.UserSeriesStatus
 import com.chesire.nekome.core.models.ImageModel
 import com.chesire.nekome.search.api.SearchDomain
 import com.chesire.nekome.testing.createImageModel
@@ -46,23 +45,13 @@ class SearchDomainMapperTests {
             true
         )
 
-        val output = map.toSeriesModel(input)
+        val output = map.toSearchModel(input)
 
         assertEquals(input.id, output.id)
-        assertEquals(0, output.userId) // Remove this later on
         assertEquals(input.type, output.type)
         assertEquals(input.subtype, output.subtype)
-        assertEquals(input.slug, output.slug)
         assertEquals(input.synopsis, output.synopsis)
-        assertEquals(input.canonicalTitle, output.title)
-        assertEquals(input.status, output.seriesStatus)
-        assertEquals(UserSeriesStatus.Unknown, output.userSeriesStatus) // Remove this later on
-        assertEquals(0, output.progress) // Remove this later on
-        assertEquals(0, output.totalLength) // Remove this later on
         assertEquals(input.posterImage, output.posterImage)
-        assertEquals(input.coverImage, output.coverImage)
-        assertEquals(input.nsfw, output.nsfw)
-        assertEquals(input.startDate, output.startDate)
-        assertEquals(input.endDate, output.endDate)
+        assertEquals(input.canonicalTitle, output.canonicalTitle)
     }
 }

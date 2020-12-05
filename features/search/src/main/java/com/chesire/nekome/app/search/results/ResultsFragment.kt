@@ -9,8 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.chesire.lifecyklelog.LogLifecykle
 import com.chesire.nekome.app.search.R
 import com.chesire.nekome.app.search.databinding.FragmentResultsBinding
-import com.chesire.nekome.core.Resource
-import com.chesire.nekome.core.models.SeriesModel
+import com.chesire.nekome.app.search.domain.SearchModel
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -40,19 +39,22 @@ class ResultsFragment : Fragment(R.layout.fragment_results), ResultsListener {
         }
     }
 
-    private fun observeSeries() = viewModel.series.observe(viewLifecycleOwner) { series ->
-        resultsAdapter.allSeries = series
+    private fun observeSeries() = viewModel.seriesIds.observe(viewLifecycleOwner) { series ->
+        resultsAdapter.storedSeriesIds = series
     }
 
-    override fun onTrack(model: SeriesModel, callback: () -> Unit) {
-        viewModel.trackNewSeries(model) {
-            if (it is Resource.Error) {
+    override fun onTrack(model: SearchModel, callback: () -> Unit) {
+        viewModel.trackNewSeries(
+            ResultsData(model.id, model.type)
+        ) { successful ->
+            if (!successful) {
                 Snackbar.make(
                     binding.resultsLayout,
-                    getString(R.string.results_failure, model.title),
+                    getString(R.string.results_failure, model.canonicalTitle),
                     Snackbar.LENGTH_LONG
                 ).show()
             }
+
             callback()
         }
     }

@@ -4,19 +4,20 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import com.chesire.nekome.app.search.R
-import com.chesire.nekome.core.models.SeriesModel
+import com.chesire.nekome.app.search.domain.DiffCallback
+import com.chesire.nekome.app.search.domain.SearchModel
 
 /**
  * Adapter to aid with displaying the search results.
  */
 class ResultsAdapter(
     private val resultsListener: ResultsListener
-) : ListAdapter<SeriesModel, ResultsViewHolder>(SeriesModel.DiffCallback()) {
+) : ListAdapter<SearchModel, ResultsViewHolder>(DiffCallback()) {
 
     /**
-     * Stores all currently known series.
+     * Stores all currently known series ids.
      */
-    var allSeries: List<SeriesModel>? = null
+    var storedSeriesIds: List<Int>? = null
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -32,6 +33,6 @@ class ResultsAdapter(
 
     override fun onBindViewHolder(holder: ResultsViewHolder, position: Int) {
         val data = getItem(position)
-        holder.bind(data, allSeries?.any { it.id == data.id } ?: false)
+        holder.bind(data, storedSeriesIds?.any { it == data.id } ?: false)
     }
 }
