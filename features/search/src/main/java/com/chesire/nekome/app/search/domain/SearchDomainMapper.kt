@@ -1,6 +1,5 @@
 package com.chesire.nekome.app.search.domain
 
-import com.chesire.nekome.core.models.ImageModel
 import com.chesire.nekome.search.api.SearchDomain
 import javax.inject.Inject
 
@@ -19,6 +18,6 @@ class SearchDomainMapper @Inject constructor() {
             input.synopsis,
             input.canonicalTitle,
             input.subtype,
-            input.posterImage ?: ImageModel.empty
+            input.posterImage
         )
 }

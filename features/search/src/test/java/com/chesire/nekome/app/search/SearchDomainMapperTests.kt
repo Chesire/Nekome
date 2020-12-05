@@ -1,7 +1,6 @@
 package com.chesire.nekome.app.search
 
 import com.chesire.nekome.app.search.domain.SearchDomainMapper
-import com.chesire.nekome.core.flags.SeriesStatus
 import com.chesire.nekome.core.flags.SeriesType
 import com.chesire.nekome.core.flags.Subtype
 import com.chesire.nekome.core.models.ImageModel
@@ -22,27 +21,13 @@ class SearchDomainMapperTests {
             ImageModel.ImageData("posterMedium", 30, 15),
             ImageModel.ImageData("posterLarge", 40, 20),
         )
-        val coverImageInput = createImageModel(
-            ImageModel.ImageData("coverTiny", 5, 10),
-            ImageModel.ImageData("coverSmall", 10, 20),
-            ImageModel.ImageData("coverMedium", 15, 30),
-            ImageModel.ImageData("coverLarge", 20, 40),
-        )
         val input = SearchDomain(
             25,
             SeriesType.Manga,
-            "slug",
             "synopsis",
             "canonicalTitle",
-            "startDate",
-            "endDate",
             Subtype.Manhua,
-            SeriesStatus.Finished,
-            posterImageInput,
-            coverImageInput,
-            10,
-            0,
-            true
+            posterImageInput
         )
 
         val output = map.toSearchModel(input)

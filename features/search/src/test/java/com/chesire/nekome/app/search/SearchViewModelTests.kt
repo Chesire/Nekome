@@ -7,7 +7,6 @@ import com.chesire.nekome.app.search.domain.SearchModel
 import com.chesire.nekome.core.AuthCaster
 import com.chesire.nekome.core.Resource
 import com.chesire.nekome.core.flags.AsyncState
-import com.chesire.nekome.core.flags.SeriesStatus
 import com.chesire.nekome.core.flags.SeriesType
 import com.chesire.nekome.core.flags.Subtype
 import com.chesire.nekome.core.models.ImageModel
@@ -203,17 +202,9 @@ class SearchViewModelTests {
         SearchDomain(
             0,
             SeriesType.Anime,
-            "slug",
             "synopsis",
             "canonicalTitle",
-            "startDate",
-            "endDate",
             Subtype.Unknown,
-            SeriesStatus.Unknown,
-            ImageModel.empty,
-            ImageModel.empty,
-            0,
-            0,
-            false
+            ImageModel.empty
         )
 }
