@@ -2,14 +2,14 @@ package com.chesire.nekome.app.search
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
+import com.chesire.nekome.app.search.domain.SearchDomainMapper
+import com.chesire.nekome.app.search.domain.SearchModel
 import com.chesire.nekome.core.AuthCaster
 import com.chesire.nekome.core.Resource
 import com.chesire.nekome.core.flags.AsyncState
-import com.chesire.nekome.core.flags.SeriesStatus
 import com.chesire.nekome.core.flags.SeriesType
 import com.chesire.nekome.core.flags.Subtype
 import com.chesire.nekome.core.models.ImageModel
-import com.chesire.nekome.core.models.SeriesModel
 import com.chesire.nekome.search.api.SearchApi
 import com.chesire.nekome.search.api.SearchDomain
 import com.chesire.nekome.testing.CoroutinesMainDispatcherRule
@@ -36,10 +36,10 @@ class SearchViewModelTests {
 
     @Test
     fun `executeSearch with empty title posts error`() {
-        val observerSlot = slot<AsyncState<List<SeriesModel>, SearchError>>()
+        val observerSlot = slot<AsyncState<List<SearchModel>, SearchError>>()
         val mockSearch = mockk<SearchApi>()
         val mockCaster = mockk<AuthCaster>()
-        val mockObserver = mockk<Observer<AsyncState<List<SeriesModel>, SearchError>>> {
+        val mockObserver = mockk<Observer<AsyncState<List<SearchModel>, SearchError>>> {
             every { onChanged(capture(observerSlot)) } just Runs
         }
         val testObject = SearchViewModel(mockSearch, mockCaster, map)
@@ -53,10 +53,10 @@ class SearchViewModelTests {
 
     @Test
     fun `executeSearch with unknown seriesType posts error`() {
-        val observerSlot = slot<AsyncState<List<SeriesModel>, SearchError>>()
+        val observerSlot = slot<AsyncState<List<SearchModel>, SearchError>>()
         val mockSearch = mockk<SearchApi>()
         val mockCaster = mockk<AuthCaster>()
-        val mockObserver = mockk<Observer<AsyncState<List<SeriesModel>, SearchError>>> {
+        val mockObserver = mockk<Observer<AsyncState<List<SearchModel>, SearchError>>> {
             every { onChanged(capture(observerSlot)) } just Runs
         }
         val testObject = SearchViewModel(mockSearch, mockCaster, map)
@@ -104,8 +104,8 @@ class SearchViewModelTests {
 
     @Test
     fun `executeSearch on success but no data posts error`() {
-        val observerSlot = slot<AsyncState<List<SeriesModel>, SearchError>>()
-        val mockObserver = mockk<Observer<AsyncState<List<SeriesModel>, SearchError>>> {
+        val observerSlot = slot<AsyncState<List<SearchModel>, SearchError>>()
+        val mockObserver = mockk<Observer<AsyncState<List<SearchModel>, SearchError>>> {
             every { onChanged(capture(observerSlot)) } just Runs
         }
         val mockSearch = mockk<SearchApi> {
@@ -128,8 +128,8 @@ class SearchViewModelTests {
 
     @Test
     fun `executeSearch on success posts the data`() {
-        val observerSlot = slot<AsyncState<List<SeriesModel>, SearchError>>()
-        val mockObserver = mockk<Observer<AsyncState<List<SeriesModel>, SearchError>>> {
+        val observerSlot = slot<AsyncState<List<SearchModel>, SearchError>>()
+        val mockObserver = mockk<Observer<AsyncState<List<SearchModel>, SearchError>>> {
             every { onChanged(capture(observerSlot)) } just Runs
         }
         val mockSearch = mockk<SearchApi> {
@@ -152,8 +152,8 @@ class SearchViewModelTests {
 
     @Test
     fun `executeSearch on failure posts error`() {
-        val observerSlot = slot<AsyncState<List<SeriesModel>, SearchError>>()
-        val mockObserver = mockk<Observer<AsyncState<List<SeriesModel>, SearchError>>> {
+        val observerSlot = slot<AsyncState<List<SearchModel>, SearchError>>()
+        val mockObserver = mockk<Observer<AsyncState<List<SearchModel>, SearchError>>> {
             every { onChanged(capture(observerSlot)) } just Runs
         }
         val mockSearch = mockk<SearchApi> {
@@ -176,8 +176,8 @@ class SearchViewModelTests {
 
     @Test
     fun `executeSearch on CouldNotRefresh failure posts to AuthCaster`() {
-        val observerSlot = slot<AsyncState<List<SeriesModel>, SearchError>>()
-        val mockObserver = mockk<Observer<AsyncState<List<SeriesModel>, SearchError>>> {
+        val observerSlot = slot<AsyncState<List<SearchModel>, SearchError>>()
+        val mockObserver = mockk<Observer<AsyncState<List<SearchModel>, SearchError>>> {
             every { onChanged(capture(observerSlot)) } just Runs
         }
         val mockSearch = mockk<SearchApi> {
@@ -202,17 +202,9 @@ class SearchViewModelTests {
         SearchDomain(
             0,
             SeriesType.Anime,
-            "slug",
             "synopsis",
             "canonicalTitle",
-            "startDate",
-            "endDate",
             Subtype.Unknown,
-            SeriesStatus.Unknown,
-            ImageModel.empty,
-            ImageModel.empty,
-            0,
-            0,
-            false
+            ImageModel.empty
         )
 }

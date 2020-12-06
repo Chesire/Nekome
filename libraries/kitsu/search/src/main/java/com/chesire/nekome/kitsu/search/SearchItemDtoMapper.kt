@@ -1,5 +1,6 @@
 package com.chesire.nekome.kitsu.search
 
+import com.chesire.nekome.core.models.ImageModel
 import com.chesire.nekome.kitsu.search.dto.SearchItemDto
 import com.chesire.nekome.search.api.SearchDomain
 import javax.inject.Inject
@@ -16,17 +17,9 @@ class SearchItemDtoMapper @Inject constructor() {
         SearchDomain(
             input.id,
             input.type,
-            input.attributes.slug,
             input.attributes.synopsis,
             input.attributes.canonicalTitle,
-            input.attributes.startDate,
-            input.attributes.endDate,
             input.attributes.subtype,
-            input.attributes.status,
-            input.attributes.posterImage,
-            input.attributes.coverImage,
-            input.attributes.chapterCount,
-            input.attributes.episodeCount,
-            input.attributes.nsfw
+            input.attributes.posterImage ?: ImageModel.empty
         )
 }

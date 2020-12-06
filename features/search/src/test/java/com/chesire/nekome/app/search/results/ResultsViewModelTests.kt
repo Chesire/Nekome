@@ -4,11 +4,9 @@ import com.chesire.nekome.core.AuthCaster
 import com.chesire.nekome.core.Resource
 import com.chesire.nekome.core.flags.SeriesType
 import com.chesire.nekome.core.flags.UserSeriesStatus
-import com.chesire.nekome.core.models.SeriesModel
 import com.chesire.nekome.core.settings.ApplicationSettings
 import com.chesire.nekome.library.SeriesRepository
 import com.chesire.nekome.testing.CoroutinesMainDispatcherRule
-import com.chesire.nekome.testing.createSeriesModel
 import io.mockk.Runs
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -39,7 +37,7 @@ class ResultsViewModelTests {
         }
         val testObject = ResultsViewModel(mockRepo, mockCaster, mockSettings)
 
-        testObject.trackNewSeries(createSeriesModel(seriesType = SeriesType.Anime)) {}
+        testObject.trackNewSeries(ResultsData(0, SeriesType.Anime)) {}
 
         coVerify { mockRepo.addAnime(any(), any()) }
     }
@@ -60,7 +58,7 @@ class ResultsViewModelTests {
         }
         val testObject = ResultsViewModel(mockRepo, mockCaster, mockSettings)
 
-        testObject.trackNewSeries(createSeriesModel(seriesType = SeriesType.Manga)) {}
+        testObject.trackNewSeries(ResultsData(0, SeriesType.Manga)) {}
 
         coVerify { mockRepo.addManga(any(), any()) }
     }
@@ -83,7 +81,7 @@ class ResultsViewModelTests {
         }
         val testObject = ResultsViewModel(mockRepo, mockCaster, mockSettings)
 
-        testObject.trackNewSeries(createSeriesModel(seriesType = SeriesType.Manga)) {}
+        testObject.trackNewSeries(ResultsData(0, SeriesType.Manga)) {}
 
         verify { mockCaster.issueRefreshingToken() }
     }
@@ -99,13 +97,13 @@ class ResultsViewModelTests {
             every { getSeries() } returns mockk()
         }
         val mockCaster = mockk<AuthCaster>()
-        val mockCallback = mockk<(Resource<SeriesModel>) -> Unit>()
+        val mockCallback = mockk<(Boolean) -> Unit>(relaxed = true)
         val mockSettings = mockk<ApplicationSettings> {
             every { defaultSeriesState } returns UserSeriesStatus.Current
         }
         val testObject = ResultsViewModel(mockRepo, mockCaster, mockSettings)
 
-        testObject.trackNewSeries(createSeriesModel(seriesType = SeriesType.Anime), mockCallback)
+        testObject.trackNewSeries(ResultsData(0, SeriesType.Anime), mockCallback)
 
         verify { mockCallback.invoke(any()) }
     }
