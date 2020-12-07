@@ -1,5 +1,6 @@
 package com.chesire.nekome.kitsu.trending
 
+import com.chesire.nekome.core.models.ImageModel
 import com.chesire.nekome.kitsu.trending.dto.TrendingItemDto
 import com.chesire.nekome.trending.api.TrendingDomain
 import javax.inject.Inject
@@ -23,8 +24,8 @@ class TrendingItemDtoMapper @Inject constructor() {
             input.attributes.endDate,
             input.attributes.subtype,
             input.attributes.status,
-            input.attributes.posterImage,
-            input.attributes.coverImage,
+            input.attributes.posterImage ?: ImageModel.empty,
+            input.attributes.coverImage ?: ImageModel.empty,
             input.attributes.chapterCount,
             input.attributes.episodeCount,
             input.attributes.nsfw
