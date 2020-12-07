@@ -1,6 +1,5 @@
 package com.chesire.nekome.app.discover.domain
 
-import com.chesire.nekome.core.models.ImageModel
 import com.chesire.nekome.trending.api.TrendingDomain
 import javax.inject.Inject
 
@@ -17,6 +16,6 @@ class DiscoverDomainMapper @Inject constructor() {
             input.id,
             input.type,
             input.canonicalTitle,
-            input.posterImage ?: ImageModel.empty
+            input.posterImage
         )
 }

@@ -17,17 +17,7 @@ class TrendingItemDtoMapper @Inject constructor() {
         TrendingDomain(
             input.id,
             input.type,
-            input.attributes.slug,
-            input.attributes.synopsis,
             input.attributes.canonicalTitle,
-            input.attributes.startDate,
-            input.attributes.endDate,
-            input.attributes.subtype,
-            input.attributes.status,
-            input.attributes.posterImage ?: ImageModel.empty,
-            input.attributes.coverImage ?: ImageModel.empty,
-            input.attributes.chapterCount,
-            input.attributes.episodeCount,
-            input.attributes.nsfw
+            input.attributes.posterImage ?: ImageModel.empty
         )
 }
