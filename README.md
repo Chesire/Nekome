@@ -25,7 +25,7 @@ Nekome is an Android application that helps with tracking your anime and manga w
 * Fully Kotlin
 * Uses [Kitsu](https://kitsu.io/) to store information, all accessed through [their API](https://kitsu.docs.apiary.io/)
 * [Architecture components](https://developer.android.com/topic/libraries/architecture) (LiveData, ViewModels, Room)
-* [Dagger](https://github.com/google/dagger) for dependency injection
+* [Hilt](https://dagger.dev/hilt/) for dependency injection
 * [Retrofit](https://github.com/square/retrofit) to aid with API communicaton
 * [Moshi](https://github.com/square/moshi) for parsing JSON
 * [Coroutines](https://github.com/Kotlin/kotlinx.coroutines) to perform async tasks
