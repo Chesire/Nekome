@@ -3,4 +3,3 @@ ignore:
     - "app/src/main/java/com/chesire/nekome/injection/*"
     - "app/src/main/java/com/chesire/nekome/injection/**/*"
     - "testing/src/main/java/**/*"
-    - "**/*Fragment*"
