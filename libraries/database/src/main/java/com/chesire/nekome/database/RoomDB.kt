@@ -5,7 +5,6 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.chesire.nekome.core.models.SeriesModel
 import com.chesire.nekome.core.models.UserModel
 import com.chesire.nekome.database.converters.ImageModelConverter
 import com.chesire.nekome.database.converters.SeriesStatusConverter
@@ -15,13 +14,14 @@ import com.chesire.nekome.database.converters.SubtypeConverter
 import com.chesire.nekome.database.converters.UserSeriesStatusConverter
 import com.chesire.nekome.database.dao.SeriesDao
 import com.chesire.nekome.database.dao.UserDao
+import com.chesire.nekome.database.entity.SeriesEntity
 
 /**
  * Database for usage throughout the application, contains daos for interacting with the data.
  */
 @Database(
-    entities = [SeriesModel::class, UserModel::class],
-    version = 2
+    entities = [SeriesEntity::class, UserModel::class],
+    version = 3
 )
 @TypeConverters(
     ImageModelConverter::class,
@@ -50,7 +50,7 @@ abstract class RoomDB : RoomDatabase() {
             return Room
                 .databaseBuilder(context, RoomDB::class.java, databaseName)
                 .addMigrations(MIGRATION_1_2)
-                .fallbackToDestructiveMigration()
+                .fallbackToDestructiveMigration() // Destroy the data going to v3
                 .build()
         }
 
