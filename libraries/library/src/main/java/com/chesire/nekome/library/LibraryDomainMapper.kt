@@ -32,6 +32,9 @@ class LibraryDomainMapper @Inject constructor() {
             input.endDate
         )
 
+    /**
+     * Converts an instance of [SeriesModel] into a [SeriesEntity].
+     */
     fun toSeriesEntity(input: SeriesModel) =
         SeriesEntity(
             input.id,
@@ -51,22 +54,21 @@ class LibraryDomainMapper @Inject constructor() {
             input.endDate
         )
 
-    fun toSeriesModel(input: SeriesEntity) =
-        SeriesModel(
+    /**
+     * Converts an instance of [SeriesEntity] into a [SeriesDomain].
+     */
+    fun toSeriesDomain(input: SeriesEntity) =
+        SeriesDomain(
             input.id,
             input.userId,
             input.type,
             input.subtype,
-            input.slug,
-            "",
             input.title,
             input.seriesStatus,
             input.userSeriesStatus,
             input.progress,
             input.totalLength,
             input.posterImage,
-            input.coverImage,
-            input.nsfw,
             input.startDate,
             input.endDate
         )

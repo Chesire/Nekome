@@ -23,12 +23,12 @@ class SeriesRepository(
      */
     fun getSeries() = seriesDao
         .getSeries()
-        .map { it.map { map.toSeriesModel(it) } }
+        .map { it.map { map.toSeriesDomain(it) } }
 
     /**
      * Adds the anime series with id [seriesId] to the users tracked list.
      */
-    suspend fun addAnime(seriesId: Int, startingStatus: UserSeriesStatus): Resource<SeriesModel> {
+    suspend fun addAnime(seriesId: Int, startingStatus: UserSeriesStatus): Resource<SeriesDomain> {
         val idResult = userProvider.provideUserId()
         if (idResult !is UserProvider.UserIdResult.Success) {
             return Resource.Error.invalidAuth()
@@ -43,7 +43,7 @@ class SeriesRepository(
             is Resource.Success -> {
                 val entity = map.toSeriesEntity(response.data)
                 seriesDao.insert(entity)
-                response.with(map.toSeriesModel(entity))
+                response.with(map.toSeriesDomain(entity))
             }
             is Resource.Error -> {
                 Timber.e("Error adding anime [$seriesId], ${response.msg}")
@@ -55,7 +55,7 @@ class SeriesRepository(
     /**
      * Adds the manga series with id [seriesId] to the users tracked list.
      */
-    suspend fun addManga(seriesId: Int, startingStatus: UserSeriesStatus): Resource<SeriesModel> {
+    suspend fun addManga(seriesId: Int, startingStatus: UserSeriesStatus): Resource<SeriesDomain> {
         val idResult = userProvider.provideUserId()
         if (idResult !is UserProvider.UserIdResult.Success) {
             return Resource.Error.invalidAuth()
@@ -70,7 +70,7 @@ class SeriesRepository(
             is Resource.Success -> {
                 val entity = map.toSeriesEntity(response.data)
                 seriesDao.insert(entity)
-                response.with(map.toSeriesModel(entity))
+                response.with(map.toSeriesDomain(entity))
             }
             is Resource.Error -> {
                 Timber.e("Error adding manga [$seriesId], ${response.msg}")
@@ -97,7 +97,7 @@ class SeriesRepository(
     /**
      * Pulls and stores all of the users anime list.
      */
-    suspend fun refreshAnime(): Resource<List<SeriesModel>> {
+    suspend fun refreshAnime(): Resource<List<SeriesDomain>> {
         val idResult = userProvider.provideUserId()
         if (idResult !is UserProvider.UserIdResult.Success) {
             return Resource.Error.invalidAuth()
@@ -107,7 +107,7 @@ class SeriesRepository(
             is Resource.Success -> {
                 val add = response.data.map { map.toSeriesEntity(it) }
                 seriesDao.insert(add)
-                response.with(add.map { map.toSeriesModel(it) })
+                response.with(add.map { map.toSeriesDomain(it) })
             }
             is Resource.Error -> {
                 Timber.e("Error refreshing anime, ${response.msg}")
@@ -119,7 +119,7 @@ class SeriesRepository(
     /**
      * Pulls and stores all of the users manga list.
      */
-    suspend fun refreshManga(): Resource<List<SeriesModel>> {
+    suspend fun refreshManga(): Resource<List<SeriesDomain>> {
         val idResult = userProvider.provideUserId()
         if (idResult !is UserProvider.UserIdResult.Success) {
             return Resource.Error.invalidAuth()
@@ -129,7 +129,7 @@ class SeriesRepository(
             is Resource.Success -> {
                 val add = response.data.map { map.toSeriesEntity(it) }
                 seriesDao.insert(add)
-                response.with(add.map { map.toSeriesModel(it) })
+                response.with(add.map { map.toSeriesDomain(it) })
             }
             is Resource.Error -> {
                 Timber.e("Error refreshing manga, ${response.msg}")
@@ -146,12 +146,12 @@ class SeriesRepository(
         userSeriesId: Int,
         progress: Int,
         status: UserSeriesStatus
-    ): Resource<SeriesModel> {
+    ): Resource<SeriesDomain> {
         return when (val response = libraryApi.update(userSeriesId, progress, status)) {
             is Resource.Success -> {
                 val add = map.toSeriesEntity(response.data)
                 seriesDao.update(add)
-                response.with(map.toSeriesModel(add))
+                response.with(map.toSeriesDomain(add))
             }
             is Resource.Error -> {
                 Timber.e("Error updating series [$userSeriesId], ${response.msg}")
