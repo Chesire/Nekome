@@ -29,8 +29,13 @@ class SeriesRepository(
      * Adds the anime series with id [seriesId] to the users tracked list.
      */
     suspend fun addAnime(seriesId: Int, startingStatus: UserSeriesStatus): Resource<SeriesModel> {
+        val idResult = userProvider.provideUserId()
+        if (idResult !is UserProvider.UserIdResult.Success) {
+            return Resource.Error.invalidAuth()
+        }
+
         val response = libraryApi.addAnime(
-            userProvider.provideUserId(),
+            idResult.id,
             seriesId,
             startingStatus
         )
@@ -51,8 +56,13 @@ class SeriesRepository(
      * Adds the manga series with id [seriesId] to the users tracked list.
      */
     suspend fun addManga(seriesId: Int, startingStatus: UserSeriesStatus): Resource<SeriesModel> {
+        val idResult = userProvider.provideUserId()
+        if (idResult !is UserProvider.UserIdResult.Success) {
+            return Resource.Error.invalidAuth()
+        }
+
         val response = libraryApi.addManga(
-            userProvider.provideUserId(),
+            idResult.id,
             seriesId,
             startingStatus
         )
@@ -88,7 +98,12 @@ class SeriesRepository(
      * Pulls and stores all of the users anime list.
      */
     suspend fun refreshAnime(): Resource<List<SeriesModel>> {
-        return when (val response = libraryApi.retrieveAnime(userProvider.provideUserId())) {
+        val idResult = userProvider.provideUserId()
+        if (idResult !is UserProvider.UserIdResult.Success) {
+            return Resource.Error.invalidAuth()
+        }
+
+        return when (val response = libraryApi.retrieveAnime(idResult.id)) {
             is Resource.Success -> {
                 val add = response.data.map { map.toSeriesEntity(it) }
                 seriesDao.insert(add)
@@ -105,7 +120,12 @@ class SeriesRepository(
      * Pulls and stores all of the users manga list.
      */
     suspend fun refreshManga(): Resource<List<SeriesModel>> {
-        return when (val response = libraryApi.retrieveManga(userProvider.provideUserId())) {
+        val idResult = userProvider.provideUserId()
+        if (idResult !is UserProvider.UserIdResult.Success) {
+            return Resource.Error.invalidAuth()
+        }
+
+        return when (val response = libraryApi.retrieveManga(idResult.id)) {
             is Resource.Success -> {
                 val add = response.data.map { map.toSeriesEntity(it) }
                 seriesDao.insert(add)

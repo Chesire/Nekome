@@ -7,5 +7,20 @@ interface UserProvider {
     /**
      * Executes an async command to acquire the users id.
      */
-    suspend fun provideUserId(): Int
+    suspend fun provideUserId(): UserIdResult
+
+    /**
+     * Represents different result states that [provideUserId] can provide.
+     */
+    sealed class UserIdResult {
+        /**
+         * Success state containing the user id.
+         */
+        data class Success(val id: Int) : UserIdResult()
+
+        /**
+         * Failure state when id could not be retrieved.
+         */
+        object Failure : UserIdResult()
+    }
 }
