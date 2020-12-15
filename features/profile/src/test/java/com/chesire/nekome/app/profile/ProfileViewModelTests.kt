@@ -7,7 +7,7 @@ import com.chesire.nekome.core.flags.SeriesType
 import com.chesire.nekome.core.flags.UserSeriesStatus
 import com.chesire.nekome.library.SeriesRepository
 import com.chesire.nekome.testing.CoroutinesMainDispatcherRule
-import com.chesire.nekome.testing.createSeriesModel
+import com.chesire.nekome.testing.createSeriesDomain
 import io.mockk.Runs
 import io.mockk.every
 import io.mockk.just
@@ -27,7 +27,7 @@ class ProfileViewModelTests {
     @Test
     fun `anime gets updated with seriesRepository anime series`() {
         val mockSeriesRepo = mockk<SeriesRepository> {
-            every { getSeries() } returns flowOf(listOf(createSeriesModel(seriesType = SeriesType.Anime)))
+            every { getSeries() } returns flowOf(listOf(createSeriesDomain(seriesType = SeriesType.Anime)))
         }
         val mockUserRepo = mockk<UserRepository> {
             every { user } returns mockk()
@@ -45,7 +45,7 @@ class ProfileViewModelTests {
     @Test
     fun `manga gets updated with seriesRepository manga series`() {
         val mockSeriesRepo = mockk<SeriesRepository> {
-            every { getSeries() } returns flowOf(listOf(createSeriesModel(seriesType = SeriesType.Manga)))
+            every { getSeries() } returns flowOf(listOf(createSeriesDomain(seriesType = SeriesType.Manga)))
         }
         val mockUserRepo = mockk<UserRepository> {
             every { user } returns mockk()
@@ -65,10 +65,10 @@ class ProfileViewModelTests {
         val mockSeriesRepo = mockk<SeriesRepository> {
             every { getSeries() } returns flowOf(
                 listOf(
-                    createSeriesModel(userSeriesStatus = UserSeriesStatus.Planned),
-                    createSeriesModel(userSeriesStatus = UserSeriesStatus.Planned),
-                    createSeriesModel(userSeriesStatus = UserSeriesStatus.Dropped),
-                    createSeriesModel(userSeriesStatus = UserSeriesStatus.Dropped)
+                    createSeriesDomain(userSeriesStatus = UserSeriesStatus.Planned),
+                    createSeriesDomain(userSeriesStatus = UserSeriesStatus.Planned),
+                    createSeriesDomain(userSeriesStatus = UserSeriesStatus.Dropped),
+                    createSeriesDomain(userSeriesStatus = UserSeriesStatus.Dropped)
                 )
             )
         }
@@ -90,10 +90,10 @@ class ProfileViewModelTests {
         val mockSeriesRepo = mockk<SeriesRepository> {
             every { getSeries() } returns flowOf(
                 listOf(
-                    createSeriesModel(userSeriesStatus = UserSeriesStatus.Current),
-                    createSeriesModel(userSeriesStatus = UserSeriesStatus.Planned),
-                    createSeriesModel(userSeriesStatus = UserSeriesStatus.Dropped),
-                    createSeriesModel(userSeriesStatus = UserSeriesStatus.Dropped)
+                    createSeriesDomain(userSeriesStatus = UserSeriesStatus.Current),
+                    createSeriesDomain(userSeriesStatus = UserSeriesStatus.Planned),
+                    createSeriesDomain(userSeriesStatus = UserSeriesStatus.Dropped),
+                    createSeriesDomain(userSeriesStatus = UserSeriesStatus.Dropped)
                 )
             )
         }
@@ -115,10 +115,10 @@ class ProfileViewModelTests {
         val mockSeriesRepo = mockk<SeriesRepository> {
             every { getSeries() } returns flowOf(
                 listOf(
-                    createSeriesModel(userSeriesStatus = UserSeriesStatus.Completed),
-                    createSeriesModel(userSeriesStatus = UserSeriesStatus.Completed),
-                    createSeriesModel(userSeriesStatus = UserSeriesStatus.Dropped),
-                    createSeriesModel(userSeriesStatus = UserSeriesStatus.Dropped)
+                    createSeriesDomain(userSeriesStatus = UserSeriesStatus.Completed),
+                    createSeriesDomain(userSeriesStatus = UserSeriesStatus.Completed),
+                    createSeriesDomain(userSeriesStatus = UserSeriesStatus.Dropped),
+                    createSeriesDomain(userSeriesStatus = UserSeriesStatus.Dropped)
                 )
             )
         }
@@ -140,10 +140,10 @@ class ProfileViewModelTests {
         val mockSeriesRepo = mockk<SeriesRepository> {
             every { getSeries() } returns flowOf(
                 listOf(
-                    createSeriesModel(userSeriesStatus = UserSeriesStatus.OnHold),
-                    createSeriesModel(userSeriesStatus = UserSeriesStatus.OnHold),
-                    createSeriesModel(userSeriesStatus = UserSeriesStatus.OnHold),
-                    createSeriesModel(userSeriesStatus = UserSeriesStatus.OnHold)
+                    createSeriesDomain(userSeriesStatus = UserSeriesStatus.OnHold),
+                    createSeriesDomain(userSeriesStatus = UserSeriesStatus.OnHold),
+                    createSeriesDomain(userSeriesStatus = UserSeriesStatus.OnHold),
+                    createSeriesDomain(userSeriesStatus = UserSeriesStatus.OnHold)
                 )
             )
         }
@@ -165,10 +165,10 @@ class ProfileViewModelTests {
         val mockSeriesRepo = mockk<SeriesRepository> {
             every { getSeries() } returns flowOf(
                 listOf(
-                    createSeriesModel(userSeriesStatus = UserSeriesStatus.OnHold),
-                    createSeriesModel(userSeriesStatus = UserSeriesStatus.OnHold),
-                    createSeriesModel(userSeriesStatus = UserSeriesStatus.OnHold),
-                    createSeriesModel(userSeriesStatus = UserSeriesStatus.OnHold)
+                    createSeriesDomain(userSeriesStatus = UserSeriesStatus.OnHold),
+                    createSeriesDomain(userSeriesStatus = UserSeriesStatus.OnHold),
+                    createSeriesDomain(userSeriesStatus = UserSeriesStatus.OnHold),
+                    createSeriesDomain(userSeriesStatus = UserSeriesStatus.OnHold)
                 )
             )
         }
@@ -190,10 +190,10 @@ class ProfileViewModelTests {
         val mockSeriesRepo = mockk<SeriesRepository> {
             every { getSeries() } returns flowOf(
                 listOf(
-                    createSeriesModel(userSeriesStatus = UserSeriesStatus.OnHold),
-                    createSeriesModel(userSeriesStatus = UserSeriesStatus.OnHold),
-                    createSeriesModel(userSeriesStatus = UserSeriesStatus.OnHold),
-                    createSeriesModel(userSeriesStatus = UserSeriesStatus.Planned)
+                    createSeriesDomain(userSeriesStatus = UserSeriesStatus.OnHold),
+                    createSeriesDomain(userSeriesStatus = UserSeriesStatus.OnHold),
+                    createSeriesDomain(userSeriesStatus = UserSeriesStatus.OnHold),
+                    createSeriesDomain(userSeriesStatus = UserSeriesStatus.Planned)
                 )
             )
         }
@@ -215,10 +215,10 @@ class ProfileViewModelTests {
         val mockSeriesRepo = mockk<SeriesRepository> {
             every { getSeries() } returns flowOf(
                 listOf(
-                    createSeriesModel(userSeriesStatus = UserSeriesStatus.OnHold),
-                    createSeriesModel(userSeriesStatus = UserSeriesStatus.Unknown),
-                    createSeriesModel(userSeriesStatus = UserSeriesStatus.OnHold),
-                    createSeriesModel(userSeriesStatus = UserSeriesStatus.Unknown)
+                    createSeriesDomain(userSeriesStatus = UserSeriesStatus.OnHold),
+                    createSeriesDomain(userSeriesStatus = UserSeriesStatus.Unknown),
+                    createSeriesDomain(userSeriesStatus = UserSeriesStatus.OnHold),
+                    createSeriesDomain(userSeriesStatus = UserSeriesStatus.Unknown)
                 )
             )
         }

@@ -2,13 +2,12 @@ package com.chesire.nekome.database
 
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
-import com.chesire.nekome.core.models.SeriesModel
 
 /**
  * Provides a migration from version 1 to version 2 of the database.
  *
  * Changes:
- * * [SeriesModel.synopsis] was added to the seriesmodel table
+ * * synopsis was added to the seriesmodel table
  */
 internal val MIGRATION_1_2 = object : Migration(1, 2) {
     override fun migrate(database: SupportSQLiteDatabase) {

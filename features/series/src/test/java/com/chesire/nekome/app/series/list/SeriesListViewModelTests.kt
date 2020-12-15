@@ -6,10 +6,10 @@ import com.chesire.nekome.core.AuthCaster
 import com.chesire.nekome.core.Resource
 import com.chesire.nekome.core.flags.AsyncState
 import com.chesire.nekome.core.flags.UserSeriesStatus
-import com.chesire.nekome.core.models.SeriesModel
+import com.chesire.nekome.library.SeriesDomain
 import com.chesire.nekome.library.SeriesRepository
 import com.chesire.nekome.testing.CoroutinesMainDispatcherRule
-import com.chesire.nekome.testing.createSeriesModel
+import com.chesire.nekome.testing.createSeriesDomain
 import io.mockk.Runs
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -120,7 +120,7 @@ class SeriesListViewModelTests {
         }
 
         val classUnderTest = SeriesListViewModel(mockRepo, mockAuthCaster)
-        classUnderTest.deleteSeries(createSeriesModel())
+        classUnderTest.deleteSeries(createSeriesDomain())
 
         verify { mockAuthCaster.issueRefreshingToken() }
     }
@@ -136,13 +136,13 @@ class SeriesListViewModelTests {
             every { getSeries() } returns mockk()
         }
         val mockAuthCaster = mockk<AuthCaster>()
-        val mockObserver = mockk<Observer<AsyncState<SeriesModel, SeriesListDeleteError>>>() {
+        val mockObserver = mockk<Observer<AsyncState<SeriesDomain, SeriesListDeleteError>>>() {
             every { onChanged(any()) } just Runs
         }
 
         val classUnderTest = SeriesListViewModel(mockRepo, mockAuthCaster)
         classUnderTest.deletionStatus.observeForever(mockObserver)
-        classUnderTest.deleteSeries(createSeriesModel())
+        classUnderTest.deleteSeries(createSeriesDomain())
 
         verify { mockObserver.onChanged(any()) }
     }
