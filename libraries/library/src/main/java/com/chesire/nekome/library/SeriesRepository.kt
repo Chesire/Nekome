@@ -2,7 +2,6 @@ package com.chesire.nekome.library
 
 import com.chesire.nekome.core.Resource
 import com.chesire.nekome.core.flags.UserSeriesStatus
-import com.chesire.nekome.core.models.SeriesModel
 import com.chesire.nekome.database.dao.SeriesDao
 import com.chesire.nekome.library.api.LibraryApi
 import kotlinx.coroutines.flow.map
@@ -82,7 +81,7 @@ class SeriesRepository(
     /**
      * Removes the series [seriesToRemove] from being tracked.
      */
-    suspend fun deleteSeries(seriesToRemove: SeriesModel): Resource<Any> {
+    suspend fun deleteSeries(seriesToRemove: SeriesDomain): Resource<Any> {
         val response = libraryApi.delete(seriesToRemove.userId)
         when (response) {
             is Resource.Success -> seriesDao.delete(map.toSeriesEntity(seriesToRemove))

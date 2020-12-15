@@ -15,10 +15,13 @@ import com.chesire.nekome.core.extensions.hide
 import com.chesire.nekome.core.extensions.show
 import com.chesire.nekome.core.flags.AsyncState
 import com.chesire.nekome.core.flags.UserSeriesStatus
-import com.chesire.nekome.core.models.SeriesModel
+import com.chesire.nekome.library.SeriesDomain
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.view_series_detail_confirmation.view.confirmationConfirm
+import kotlinx.android.synthetic.main.view_series_detail_confirmation.view.confirmationProgress
+import kotlinx.android.synthetic.main.view_series_detail_series_status.view.statusGroup
 import timber.log.Timber
 
 /**
@@ -157,7 +160,7 @@ class SeriesDetailSheetFragment : BottomSheetDialogFragment() {
          * Creates a new instance of the [SeriesDetailSheetFragment], using the [seriesModel] for
          * data.
          */
-        fun newInstance(seriesModel: SeriesModel): SeriesDetailSheetFragment {
+        fun newInstance(seriesModel: SeriesDomain): SeriesDetailSheetFragment {
             return SeriesDetailSheetFragment().apply {
                 arguments = bundleOf(MODEL_ID to seriesModel)
             }

@@ -1,6 +1,5 @@
 package com.chesire.nekome.library
 
-import com.chesire.nekome.core.models.SeriesModel
 import com.chesire.nekome.database.entity.SeriesEntity
 import com.chesire.nekome.library.api.LibraryDomain
 import javax.inject.Inject
@@ -26,30 +25,26 @@ class LibraryDomainMapper @Inject constructor() {
             input.progress,
             input.totalLength,
             input.posterImage,
-            input.coverImage,
-            input.nsfw,
             input.startDate,
             input.endDate
         )
 
     /**
-     * Converts an instance of [SeriesModel] into a [SeriesEntity].
+     * Converts an instance of [SeriesDomain] into a [SeriesEntity].
      */
-    fun toSeriesEntity(input: SeriesModel) =
+    fun toSeriesEntity(input: SeriesDomain) =
         SeriesEntity(
             input.id,
             input.userId,
             input.type,
             input.subtype,
             input.slug,
-            input.title,
+            input.canonicalTitle,
             input.seriesStatus,
             input.userSeriesStatus,
             input.progress,
             input.totalLength,
             input.posterImage,
-            input.coverImage,
-            input.nsfw,
             input.startDate,
             input.endDate
         )
@@ -63,6 +58,7 @@ class LibraryDomainMapper @Inject constructor() {
             input.userId,
             input.type,
             input.subtype,
+            input.slug,
             input.title,
             input.seriesStatus,
             input.userSeriesStatus,

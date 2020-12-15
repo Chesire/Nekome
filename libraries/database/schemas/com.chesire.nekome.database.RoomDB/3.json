@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 3,
-    "identityHash": "ffa45070cdbb0b77f132aa6b40ac5f93",
+    "identityHash": "f376338342bdd2add497d2bd2af1ec4d",
     "entities": [
       {
         "tableName": "SeriesEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `userId` INTEGER NOT NULL, `type` TEXT NOT NULL, `subtype` TEXT NOT NULL, `slug` TEXT NOT NULL, `title` TEXT NOT NULL, `seriesStatus` TEXT NOT NULL, `userSeriesStatus` TEXT NOT NULL, `progress` INTEGER NOT NULL, `totalLength` INTEGER NOT NULL, `posterImage` TEXT NOT NULL, `coverImage` TEXT NOT NULL, `nsfw` INTEGER NOT NULL, `startDate` TEXT NOT NULL, `endDate` TEXT NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `userId` INTEGER NOT NULL, `type` TEXT NOT NULL, `subtype` TEXT NOT NULL, `slug` TEXT NOT NULL, `title` TEXT NOT NULL, `seriesStatus` TEXT NOT NULL, `userSeriesStatus` TEXT NOT NULL, `progress` INTEGER NOT NULL, `totalLength` INTEGER NOT NULL, `posterImage` TEXT NOT NULL, `startDate` TEXT NOT NULL, `endDate` TEXT NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -72,18 +72,6 @@
             "fieldPath": "posterImage",
             "columnName": "posterImage",
             "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "coverImage",
-            "columnName": "coverImage",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "nsfw",
-            "columnName": "nsfw",
-            "affinity": "INTEGER",
             "notNull": true
           },
           {
@@ -156,7 +144,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'ffa45070cdbb0b77f132aa6b40ac5f93')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'f376338342bdd2add497d2bd2af1ec4d')"
     ]
   }
 }

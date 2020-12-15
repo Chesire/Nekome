@@ -2,6 +2,7 @@ package com.chesire.nekome.app.series.detail
 
 import com.chesire.nekome.core.flags.UserSeriesStatus
 import com.chesire.nekome.core.models.SeriesModel
+import com.chesire.nekome.library.SeriesDomain
 
 /**
  * Provides an object based on [SeriesModel] that allows modifying values for series detail.
@@ -21,9 +22,9 @@ data class MutableSeriesModel(
         /**
          * Creates an instance of [MutableSeriesModel] from an instance of [SeriesModel].
          */
-        fun from(model: SeriesModel) = MutableSeriesModel(
+        fun from(model: SeriesDomain) = MutableSeriesModel(
             model.userId,
-            model.title,
+            model.canonicalTitle,
             model.progress,
             model.totalLength,
             if (model.lengthKnown) model.totalLength.toString() else "-",

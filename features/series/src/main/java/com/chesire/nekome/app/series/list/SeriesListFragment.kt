@@ -24,7 +24,7 @@ import com.chesire.nekome.app.series.list.view.SwipeToDelete
 import com.chesire.nekome.core.Resource
 import com.chesire.nekome.core.flags.AsyncState
 import com.chesire.nekome.core.flags.SeriesType
-import com.chesire.nekome.core.models.SeriesModel
+import com.chesire.nekome.library.SeriesDomain
 import com.google.android.material.snackbar.Snackbar
 import timber.log.Timber
 import javax.inject.Inject
@@ -109,7 +109,7 @@ abstract class SeriesListFragment :
         return super.onOptionsItemSelected(item)
     }
 
-    override fun seriesSelected(imageView: ImageView, model: SeriesModel) {
+    override fun seriesSelected(imageView: ImageView, model: SeriesDomain) {
         Timber.i("seriesSelected called with Model ${model.slug}")
 
         SeriesDetailSheetFragment
@@ -117,13 +117,13 @@ abstract class SeriesListFragment :
             .show(parentFragmentManager, SeriesDetailSheetFragment.TAG)
     }
 
-    override fun onPlusOne(model: SeriesModel, callback: () -> Unit) {
+    override fun onPlusOne(model: SeriesDomain, callback: () -> Unit) {
         Timber.i("Model ${model.slug} onPlusOne called")
         viewModel.updateSeries(model.userId, model.progress.inc(), model.userSeriesStatus) {
             if (it is Resource.Error) {
                 Snackbar.make(
                     binding.seriesListLayout,
-                    getString(R.string.series_list_try_again, model.title),
+                    getString(R.string.series_list_try_again, model.canonicalTitle),
                     Snackbar.LENGTH_LONG
                 ).show()
             }
@@ -131,9 +131,9 @@ abstract class SeriesListFragment :
         }
     }
 
-    override fun seriesDelete(model: SeriesModel, callback: (Boolean) -> Unit) {
+    override fun seriesDelete(model: SeriesDomain, callback: (Boolean) -> Unit) {
         MaterialDialog(requireContext()).show {
-            title(text = getString(R.string.series_list_delete_title, model.title))
+            title(text = getString(R.string.series_list_delete_title, model.canonicalTitle))
             positiveButton(R.string.series_list_delete_confirm) {
                 Timber.d("Deletion confirmed for series ${model.slug}")
                 callback(true)

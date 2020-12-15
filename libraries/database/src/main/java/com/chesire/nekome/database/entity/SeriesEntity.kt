@@ -25,8 +25,6 @@ data class SeriesEntity(
     val progress: Int,
     val totalLength: Int,
     val posterImage: ImageModel,
-    val coverImage: ImageModel,
-    val nsfw: Boolean,
     val startDate: String,
     val endDate: String
 )

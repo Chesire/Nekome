@@ -11,7 +11,7 @@ import com.chesire.nekome.core.extensions.postError
 import com.chesire.nekome.core.extensions.postSuccess
 import com.chesire.nekome.core.flags.AsyncState
 import com.chesire.nekome.core.flags.UserSeriesStatus
-import com.chesire.nekome.core.models.SeriesModel
+import com.chesire.nekome.library.SeriesDomain
 import com.chesire.nekome.library.SeriesRepository
 import com.hadilq.liveevent.LiveEvent
 import kotlinx.coroutines.launch
@@ -25,8 +25,8 @@ class SeriesListViewModel @ViewModelInject constructor(
 ) : ViewModel() {
 
     val series = repo.getSeries().asLiveData()
-    private val _deletionStatus = LiveEvent<AsyncState<SeriesModel, SeriesListDeleteError>>()
-    val deletionStatus: LiveData<AsyncState<SeriesModel, SeriesListDeleteError>> = _deletionStatus
+    private val _deletionStatus = LiveEvent<AsyncState<SeriesDomain, SeriesListDeleteError>>()
+    val deletionStatus: LiveData<AsyncState<SeriesDomain, SeriesListDeleteError>> = _deletionStatus
 
     private val _refreshStatus = LiveEvent<AsyncState<Any, Any>>()
     val refreshStatus: LiveData<AsyncState<Any, Any>>
@@ -39,7 +39,7 @@ class SeriesListViewModel @ViewModelInject constructor(
         userSeriesId: Int,
         newProgress: Int,
         newUserSeriesStatus: UserSeriesStatus,
-        callback: (Resource<SeriesModel>) -> Unit
+        callback: (Resource<SeriesDomain>) -> Unit
     ) = viewModelScope.launch {
         val response = repo.updateSeries(userSeriesId, newProgress, newUserSeriesStatus)
         if (response is Resource.Error && response.code == Resource.Error.CouldNotRefresh) {
@@ -53,7 +53,7 @@ class SeriesListViewModel @ViewModelInject constructor(
      * Sends a delete request to the repository, will notify status on [deletionStatus] with
      * [SeriesListDeleteError.DeletionFailure] if a failure occurs.
      */
-    fun deleteSeries(seriesModel: SeriesModel) = viewModelScope.launch {
+    fun deleteSeries(seriesModel: SeriesDomain) = viewModelScope.launch {
         val response = repo.deleteSeries(seriesModel)
         if (response is Resource.Error) {
             if (response.code == Resource.Error.CouldNotRefresh) {

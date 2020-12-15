@@ -9,7 +9,7 @@ import com.chesire.nekome.core.extensions.hide
 import com.chesire.nekome.core.extensions.show
 import com.chesire.nekome.core.extensions.toAlpha
 import com.chesire.nekome.core.extensions.visibleIf
-import com.chesire.nekome.core.models.SeriesModel
+import com.chesire.nekome.library.SeriesDomain
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.adapter_item_series.seriesDate
 import kotlinx.android.synthetic.main.adapter_item_series.seriesImage
@@ -23,21 +23,21 @@ import kotlinx.android.synthetic.main.adapter_item_series.seriesTitle
  * ViewHolder for Series items in the Anime or Manga list.
  */
 class SeriesViewHolder(view: View) : RecyclerView.ViewHolder(view), LayoutContainer {
-    private lateinit var seriesModel: SeriesModel
+    private lateinit var series: SeriesDomain
     override val containerView: View
         get() = itemView
 
     /**
      * Binds the [model] data to the view.
      */
-    fun bind(model: SeriesModel) {
-        seriesModel = model
+    fun bind(model: SeriesDomain) {
+        series = model
 
         seriesImage.load(model.posterImage.smallest?.url) {
             placeholder(R.drawable.ic_insert_photo)
             error(R.drawable.ic_insert_photo)
         }
-        seriesTitle.text = model.title
+        seriesTitle.text = model.canonicalTitle
         seriesSubtype.text = model.subtype.name
         seriesProgress.text = containerView.context.getString(
             R.string.series_list_length,
@@ -50,7 +50,7 @@ class SeriesViewHolder(view: View) : RecyclerView.ViewHolder(view), LayoutContai
         }
     }
 
-    private fun setupDateString(model: SeriesModel) {
+    private fun setupDateString(model: SeriesDomain) {
         val dateString = with(containerView.context) {
             when {
                 model.startDate.isEmpty() && model.endDate.isEmpty() -> getString(R.string.series_list_unknown)
@@ -73,12 +73,12 @@ class SeriesViewHolder(view: View) : RecyclerView.ViewHolder(view), LayoutContai
         containerView.setOnClickListener {
             listener.seriesSelected(
                 seriesImage,
-                seriesModel
+                series
             )
         }
         seriesPlusOne.setOnClickListener {
             startUpdatingSeries()
-            listener.onPlusOne(seriesModel) {
+            listener.onPlusOne(series) {
                 finishUpdatingSeries()
             }
         }

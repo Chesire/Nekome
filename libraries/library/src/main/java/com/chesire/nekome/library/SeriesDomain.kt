@@ -14,6 +14,7 @@ data class SeriesDomain(
     val userId: Int,
     val type: SeriesType,
     val subtype: Subtype,
+    val slug: String,
     val canonicalTitle: String,
     val seriesStatus: SeriesStatus,
     val userSeriesStatus: UserSeriesStatus,
@@ -22,4 +23,6 @@ data class SeriesDomain(
     val posterImage: ImageModel,
     val startDate: String,
     val endDate: String
-)
+) {
+    val lengthKnown = totalLength != 0
+}

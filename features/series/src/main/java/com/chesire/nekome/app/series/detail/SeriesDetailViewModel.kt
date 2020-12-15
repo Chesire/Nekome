@@ -13,7 +13,7 @@ import com.chesire.nekome.core.extensions.postError
 import com.chesire.nekome.core.extensions.postLoading
 import com.chesire.nekome.core.extensions.postSuccess
 import com.chesire.nekome.core.flags.AsyncState
-import com.chesire.nekome.core.models.SeriesModel
+import com.chesire.nekome.library.SeriesDomain
 import com.chesire.nekome.library.SeriesRepository
 import com.hadilq.liveevent.LiveEvent
 import kotlinx.coroutines.launch
@@ -32,7 +32,7 @@ class SeriesDetailViewModel @ViewModelInject constructor(
 ) : ViewModel() {
 
     val mutableModel = MutableSeriesModel.from(
-        requireNotNull(savedStateHandle.get<SeriesModel>(MODEL_ID)) { "No MODEL_ID in state" }
+        requireNotNull(savedStateHandle.get<SeriesDomain>(MODEL_ID)) { "No MODEL_ID in state" }
     )
 
     private val _updatingStatus = LiveEvent<AsyncState<MutableSeriesModel, SeriesDetailError>>()
