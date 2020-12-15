@@ -8,8 +8,8 @@ import com.chesire.nekome.core.flags.SeriesType
 import com.chesire.nekome.core.flags.Subtype
 import com.chesire.nekome.core.flags.UserSeriesStatus
 import com.chesire.nekome.core.models.ImageModel
-import com.chesire.nekome.core.models.SeriesModel
 import com.chesire.nekome.database.RoomDB
+import com.chesire.nekome.database.entity.SeriesEntity
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Assert.assertTrue
@@ -49,7 +49,7 @@ class SeriesDaoTests {
 
     @Test
     fun deleteWithModelRemovesFromDatabase() = runBlocking {
-        val model = createSeriesModel()
+        val model = createSeriesEntity()
         seriesDao.insert(model)
         assertTrue(seriesDao.retrieve().contains(model))
         seriesDao.delete(model)
@@ -58,7 +58,7 @@ class SeriesDaoTests {
 
     @Test
     fun insertWithSingleModelReplacesMatchingItem() = runBlocking {
-        val model = createSeriesModel()
+        val model = createSeriesEntity()
         seriesDao.insert(model)
         assertTrue(seriesDao.retrieve().count() == 1)
         seriesDao.insert(model)
@@ -69,9 +69,9 @@ class SeriesDaoTests {
     fun insertWithListOfItemsAddsNewItems() = runBlocking {
         seriesDao.insert(
             listOf(
-                createSeriesModel(id = 0),
-                createSeriesModel(id = 1),
-                createSeriesModel(id = 2)
+                createSeriesEntity(id = 0),
+                createSeriesEntity(id = 1),
+                createSeriesEntity(id = 2)
             )
         )
         assertTrue(seriesDao.retrieve().count() == 3)
@@ -81,17 +81,17 @@ class SeriesDaoTests {
     fun insertWithListOfItemsReplacesMatchingItems() = runBlocking {
         seriesDao.insert(
             listOf(
-                createSeriesModel(id = 0, userId = 0),
-                createSeriesModel(id = 1),
-                createSeriesModel(id = 2)
+                createSeriesEntity(id = 0, userId = 0),
+                createSeriesEntity(id = 1),
+                createSeriesEntity(id = 2)
             )
         )
         assertTrue(seriesDao.retrieve().count() == 3)
         seriesDao.insert(
             listOf(
-                createSeriesModel(id = 0, userId = 1),
-                createSeriesModel(id = 1),
-                createSeriesModel(id = 2)
+                createSeriesEntity(id = 0, userId = 1),
+                createSeriesEntity(id = 1),
+                createSeriesEntity(id = 2)
             )
         )
         assertTrue(seriesDao.retrieve().count() == 3)
@@ -102,16 +102,16 @@ class SeriesDaoTests {
     fun retrieveGetsAllCurrentItems() = runBlocking {
         seriesDao.insert(
             listOf(
-                createSeriesModel(id = 0),
-                createSeriesModel(id = 1),
-                createSeriesModel(id = 2)
+                createSeriesEntity(id = 0),
+                createSeriesEntity(id = 1),
+                createSeriesEntity(id = 2)
             )
         )
         seriesDao.insert(
             listOf(
-                createSeriesModel(id = 3),
-                createSeriesModel(id = 4),
-                createSeriesModel(id = 5)
+                createSeriesEntity(id = 3),
+                createSeriesEntity(id = 4),
+                createSeriesEntity(id = 5)
             )
         )
         assertTrue(seriesDao.retrieve().count() == 6)
@@ -121,12 +121,12 @@ class SeriesDaoTests {
     fun retrieveGetsAllCurrentItemsBasedOnType() = runBlocking {
         seriesDao.insert(
             listOf(
-                createSeriesModel(id = 0, type = SeriesType.Anime),
-                createSeriesModel(id = 1, type = SeriesType.Manga),
-                createSeriesModel(id = 2, type = SeriesType.Anime),
-                createSeriesModel(id = 3, type = SeriesType.Manga),
-                createSeriesModel(id = 4, type = SeriesType.Anime),
-                createSeriesModel(id = 5, type = SeriesType.Manga)
+                createSeriesEntity(id = 0, type = SeriesType.Anime),
+                createSeriesEntity(id = 1, type = SeriesType.Manga),
+                createSeriesEntity(id = 2, type = SeriesType.Anime),
+                createSeriesEntity(id = 3, type = SeriesType.Manga),
+                createSeriesEntity(id = 4, type = SeriesType.Anime),
+                createSeriesEntity(id = 5, type = SeriesType.Manga)
             )
         )
         assertTrue(seriesDao.retrieve().count() == 6)
@@ -135,31 +135,28 @@ class SeriesDaoTests {
 
     @Test
     fun updateUpdatesAnyMatchingModel() = runBlocking {
-        seriesDao.insert(createSeriesModel(id = 0, userId = 0))
+        seriesDao.insert(createSeriesEntity(id = 0, userId = 0))
         assertTrue(seriesDao.retrieve().count() == 1)
-        seriesDao.update(createSeriesModel(id = 0, userId = 1))
+        seriesDao.update(createSeriesEntity(id = 0, userId = 1))
         assertTrue(seriesDao.retrieve().first().userId == 1)
     }
 
-    private fun createSeriesModel(
+    private fun createSeriesEntity(
         id: Int = 0,
         userId: Int = 0,
         type: SeriesType = SeriesType.Unknown
-    ) = SeriesModel(
+    ) = SeriesEntity(
         id,
         userId,
         type,
         Subtype.Unknown,
         "slug",
-        "synopsis",
         "title",
         SeriesStatus.Unknown,
         UserSeriesStatus.Unknown,
         0,
         0,
         ImageModel.empty,
-        ImageModel.empty,
-        false,
         "",
         ""
     )

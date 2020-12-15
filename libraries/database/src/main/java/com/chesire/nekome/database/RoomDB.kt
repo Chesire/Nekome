@@ -50,7 +50,7 @@ abstract class RoomDB : RoomDatabase() {
             return Room
                 .databaseBuilder(context, RoomDB::class.java, databaseName)
                 .addMigrations(MIGRATION_1_2, MIGRATION_2_3)
-                .fallbackToDestructiveMigration() // Destroy the data going to v3
+                .fallbackToDestructiveMigration()
                 .build()
         }
 

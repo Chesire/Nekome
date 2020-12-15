@@ -36,7 +36,7 @@ interface SeriesDao {
     /**
      * Gets all the [SeriesEntity], and subscribes to updates.
      */
-    @Query("SELECT * FROM seriesentity")
+    @Query("SELECT * FROM SeriesEntity")
     fun getSeries(): Flow<List<SeriesEntity>>
 
     /**
@@ -50,6 +50,6 @@ interface SeriesDao {
      * Retrieves all [SeriesEntity].
      */
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    @Query("SELECT * FROM seriesentity")
+    @Query("SELECT * FROM SeriesEntity")
     suspend fun retrieve(): List<SeriesEntity>
 }
