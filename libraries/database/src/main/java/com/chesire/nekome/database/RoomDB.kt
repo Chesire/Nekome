@@ -49,7 +49,7 @@ abstract class RoomDB : RoomDatabase() {
         fun build(context: Context, databaseName: String = "nekome_database.db"): RoomDB {
             return Room
                 .databaseBuilder(context, RoomDB::class.java, databaseName)
-                .addMigrations(MIGRATION_1_2)
+                .addMigrations(MIGRATION_1_2, MIGRATION_2_3)
                 .fallbackToDestructiveMigration() // Destroy the data going to v3
                 .build()
         }
