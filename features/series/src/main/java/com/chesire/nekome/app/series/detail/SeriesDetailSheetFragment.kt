@@ -19,9 +19,6 @@ import com.chesire.nekome.library.SeriesDomain
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.view_series_detail_confirmation.view.confirmationConfirm
-import kotlinx.android.synthetic.main.view_series_detail_confirmation.view.confirmationProgress
-import kotlinx.android.synthetic.main.view_series_detail_series_status.view.statusGroup
 import timber.log.Timber
 
 /**
@@ -157,12 +154,11 @@ class SeriesDetailSheetFragment : BottomSheetDialogFragment() {
         const val TAG = "SeriesDetailSheetFragment"
 
         /**
-         * Creates a new instance of the [SeriesDetailSheetFragment], using the [seriesModel] for
-         * data.
+         * Creates a new instance of the [SeriesDetailSheetFragment], using the [domain] for data.
          */
-        fun newInstance(seriesModel: SeriesDomain): SeriesDetailSheetFragment {
+        fun newInstance(domain: SeriesDomain): SeriesDetailSheetFragment {
             return SeriesDetailSheetFragment().apply {
-                arguments = bundleOf(MODEL_ID to seriesModel)
+                arguments = bundleOf(MODEL_ID to domain)
             }
         }
     }
