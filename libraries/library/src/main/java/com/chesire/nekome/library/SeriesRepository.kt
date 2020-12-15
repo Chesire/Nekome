@@ -104,9 +104,9 @@ class SeriesRepository(
 
         return when (val response = libraryApi.retrieveAnime(idResult.id)) {
             is Resource.Success -> {
-                val add = response.data.map { map.toSeriesEntity(it) }
-                seriesDao.insert(add)
-                response.with(add.map { map.toSeriesDomain(it) })
+                val entities = response.data.map { map.toSeriesEntity(it) }
+                seriesDao.insert(entities)
+                response.with(entities.map { map.toSeriesDomain(it) })
             }
             is Resource.Error -> {
                 Timber.e("Error refreshing anime, ${response.msg}")
@@ -126,9 +126,9 @@ class SeriesRepository(
 
         return when (val response = libraryApi.retrieveManga(idResult.id)) {
             is Resource.Success -> {
-                val add = response.data.map { map.toSeriesEntity(it) }
-                seriesDao.insert(add)
-                response.with(add.map { map.toSeriesDomain(it) })
+                val entities = response.data.map { map.toSeriesEntity(it) }
+                seriesDao.insert(entities)
+                response.with(entities.map { map.toSeriesDomain(it) })
             }
             is Resource.Error -> {
                 Timber.e("Error refreshing manga, ${response.msg}")
@@ -148,9 +148,9 @@ class SeriesRepository(
     ): Resource<SeriesDomain> {
         return when (val response = libraryApi.update(userSeriesId, progress, status)) {
             is Resource.Success -> {
-                val add = map.toSeriesEntity(response.data)
-                seriesDao.update(add)
-                response.with(map.toSeriesDomain(add))
+                val entity = map.toSeriesEntity(response.data)
+                seriesDao.update(entity)
+                response.with(map.toSeriesDomain(entity))
             }
             is Resource.Error -> {
                 Timber.e("Error updating series [$userSeriesId], ${response.msg}")
