@@ -26,6 +26,4 @@ data class SeriesDomain(
     val posterImage: ImageModel,
     val startDate: String,
     val endDate: String
-) : Parcelable {
-    val lengthKnown = totalLength != 0
-}
+) : Parcelable

@@ -1,5 +1,6 @@
 package com.chesire.nekome.app.series.detail
 
+import com.chesire.nekome.app.series.list.lengthKnown
 import com.chesire.nekome.core.flags.UserSeriesStatus
 import com.chesire.nekome.library.SeriesDomain
 

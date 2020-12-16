@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.chesire.nekome.app.series.R
 import com.chesire.nekome.app.series.list.SeriesInteractionListener
+import com.chesire.nekome.app.series.list.lengthKnown
 import com.chesire.nekome.core.extensions.hide
 import com.chesire.nekome.core.extensions.show
 import com.chesire.nekome.core.extensions.toAlpha
