@@ -15,15 +15,12 @@ data class LibraryDomain(
     val type: SeriesType,
     val subtype: Subtype,
     val slug: String,
-    val synopsis: String,
     val title: String,
     val seriesStatus: SeriesStatus,
     val userSeriesStatus: UserSeriesStatus,
     val progress: Int,
     val totalLength: Int,
     val posterImage: ImageModel,
-    val coverImage: ImageModel,
-    val nsfw: Boolean,
     val startDate: String,
     val endDate: String
 )
