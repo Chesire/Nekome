@@ -6,7 +6,7 @@ import org.junit.Test
 
 class MutableSeriesModelTests {
     @Test
-    fun `can generate MutableSeriesModel from SeriesModel`() {
+    fun `can generate MutableSeriesModel from SeriesDomain`() {
         val originalModel = createSeriesDomain(userId = 99)
         val classUnderTest = MutableSeriesModel.from(originalModel)
 

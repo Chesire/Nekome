@@ -53,14 +53,14 @@ class SeriesListViewModel @ViewModelInject constructor(
      * Sends a delete request to the repository, will notify status on [deletionStatus] with
      * [SeriesListDeleteError.DeletionFailure] if a failure occurs.
      */
-    fun deleteSeries(seriesModel: SeriesDomain) = viewModelScope.launch {
-        val response = repo.deleteSeries(seriesModel)
+    fun deleteSeries(seriesDomain: SeriesDomain) = viewModelScope.launch {
+        val response = repo.deleteSeries(seriesDomain)
         if (response is Resource.Error) {
             if (response.code == Resource.Error.CouldNotRefresh) {
                 authCaster.issueRefreshingToken()
             } else {
                 _deletionStatus.postError(
-                    seriesModel,
+                    seriesDomain,
                     SeriesListDeleteError.DeletionFailure
                 )
             }

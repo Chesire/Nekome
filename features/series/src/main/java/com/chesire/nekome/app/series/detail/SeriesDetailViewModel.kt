@@ -19,7 +19,7 @@ import com.hadilq.liveevent.LiveEvent
 import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
 
-const val MODEL_ID = "SeriesDetail_seriesModel"
+const val MODEL_ID = "SeriesDetail_seriesDomain"
 
 /**
  * ViewModel to store the current series detail model, and allow interactions with its data.

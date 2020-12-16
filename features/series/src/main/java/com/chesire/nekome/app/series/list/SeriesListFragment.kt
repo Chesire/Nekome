@@ -157,8 +157,8 @@ abstract class SeriesListFragment :
                     R.string.series_list_delete_failure,
                     Snackbar.LENGTH_INDEFINITE
                 ).setAction(R.string.series_list_delete_retry) {
-                    state.data?.let { seriesModel ->
-                        viewModel.deleteSeries(seriesModel)
+                    state.data?.let { seriesDomain ->
+                        viewModel.deleteSeries(seriesDomain)
                     }
                 }.show()
             }
