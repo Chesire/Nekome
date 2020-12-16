@@ -9,7 +9,7 @@ import com.chesire.nekome.app.series.R
 import com.chesire.nekome.app.series.SeriesPreferences
 import com.chesire.nekome.app.series.list.SeriesInteractionListener
 import com.chesire.nekome.core.flags.SortOption
-import com.chesire.nekome.core.models.SeriesModel
+import com.chesire.nekome.library.SeriesDomain
 import timber.log.Timber
 
 /**
@@ -18,7 +18,7 @@ import timber.log.Timber
 class SeriesAdapter(
     private val listener: SeriesInteractionListener,
     private val seriesPreferences: SeriesPreferences
-) : ListAdapter<SeriesModel, SeriesViewHolder>(SeriesModel.DiffCallback()),
+) : ListAdapter<SeriesDomain, SeriesViewHolder>(SeriesDomainDiffCallback()),
     SharedPreferences.OnSharedPreferenceChangeListener {
 
     init {
@@ -26,7 +26,7 @@ class SeriesAdapter(
     }
 
     private var container: RecyclerView? = null
-    private var completeList = listOf<SeriesModel>()
+    private var completeList = listOf<SeriesDomain>()
 
     /**
      * Execute when an item has been swiped away in the adapter.
@@ -45,7 +45,7 @@ class SeriesAdapter(
         }
     }
 
-    override fun submitList(list: List<SeriesModel>?) {
+    override fun submitList(list: List<SeriesDomain>?) {
         if (list == null) {
             Timber.w("Null list attempted to be passed to submitList")
             super.submitList(list)
@@ -84,14 +84,14 @@ class SeriesAdapter(
         }
     }
 
-    private fun executeFilter(items: List<SeriesModel>) = items.filter {
+    private fun executeFilter(items: List<SeriesDomain>) = items.filter {
         seriesPreferences.filterPreference[it.userSeriesStatus.index] ?: false
     }
 
-    private fun executeSort(items: List<SeriesModel>) = items.sortedWith(
+    private fun executeSort(items: List<SeriesDomain>) = items.sortedWith(
         when (seriesPreferences.sortPreference) {
             SortOption.Default -> compareBy { it.userId }
-            SortOption.Title -> compareBy { it.title }
+            SortOption.Title -> compareBy { it.canonicalTitle }
             SortOption.StartDate -> compareBy { it.startDate }
             SortOption.EndDate -> compareBy { it.endDate }
         }

@@ -7,7 +7,7 @@ import androidx.lifecycle.asLiveData
 import com.chesire.nekome.account.UserRepository
 import com.chesire.nekome.core.flags.SeriesType
 import com.chesire.nekome.core.flags.UserSeriesStatus
-import com.chesire.nekome.core.models.SeriesModel
+import com.chesire.nekome.library.SeriesDomain
 import com.chesire.nekome.library.SeriesRepository
 
 /**
@@ -26,7 +26,7 @@ class ProfileViewModel @ViewModelInject constructor(
         createSeriesProgress(it.filter { it.type == SeriesType.Manga })
     }
 
-    private fun createSeriesProgress(items: List<SeriesModel>): SeriesProgress {
+    private fun createSeriesProgress(items: List<SeriesDomain>): SeriesProgress {
         val mapped = items.groupBy { it.userSeriesStatus }
         return SeriesProgress(
             total = items.count().toString(),
@@ -39,7 +39,7 @@ class ProfileViewModel @ViewModelInject constructor(
         )
     }
 
-    private fun Map<UserSeriesStatus, List<SeriesModel>>.getCountAsString(
+    private fun Map<UserSeriesStatus, List<SeriesDomain>>.getCountAsString(
         userStatus: UserSeriesStatus
     ) = this[userStatus]?.count()?.toString() ?: "0"
 }

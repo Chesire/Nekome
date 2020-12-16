@@ -1,10 +1,11 @@
 package com.chesire.nekome.app.series.detail
 
+import com.chesire.nekome.app.series.list.lengthKnown
 import com.chesire.nekome.core.flags.UserSeriesStatus
-import com.chesire.nekome.core.models.SeriesModel
+import com.chesire.nekome.library.SeriesDomain
 
 /**
- * Provides an object based on [SeriesModel] that allows modifying values for series detail.
+ * Provides an object based on [SeriesDomain] that allows modifying values for series detail.
  */
 data class MutableSeriesModel(
     val userSeriesId: Int,
@@ -19,11 +20,11 @@ data class MutableSeriesModel(
 ) {
     companion object {
         /**
-         * Creates an instance of [MutableSeriesModel] from an instance of [SeriesModel].
+         * Creates an instance of [MutableSeriesModel] from an instance of [SeriesDomain].
          */
-        fun from(model: SeriesModel) = MutableSeriesModel(
+        fun from(model: SeriesDomain) = MutableSeriesModel(
             model.userId,
-            model.title,
+            model.canonicalTitle,
             model.progress,
             model.totalLength,
             if (model.lengthKnown) model.totalLength.toString() else "-",

@@ -11,7 +11,12 @@ class UserProviderBinder @Inject constructor(
     private val userRepository: UserRepository
 ) : UserProvider {
 
-    override suspend fun provideUserId() = requireNotNull(userRepository.retrieveUserId()) {
-        "UserID should not be null in the database"
+    override suspend fun provideUserId(): UserProvider.UserIdResult {
+        val id = userRepository.retrieveUserId()
+        return if (id == null) {
+            UserProvider.UserIdResult.Failure
+        } else {
+            UserProvider.UserIdResult.Success(id)
+        }
     }
 }

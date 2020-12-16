@@ -51,6 +51,11 @@ sealed class Resource<T> {
             fun <T> emptyResponse(): Error<T> = Error("Response body is null", EmptyBody)
 
             /**
+             * Creates an [Error] for invalid auth.
+             */
+            fun <T> invalidAuth(): Error<T> = Error("Auth provided is not valid", CouldNotRefresh)
+
+            /**
              * Creates an [Error] for being unable to reach the server.
              */
             fun <T> couldNotReach(): Error<T> = Error("Could not reach service", CouldNotReach)

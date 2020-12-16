@@ -8,7 +8,7 @@ import com.chesire.nekome.core.Resource
 import com.chesire.nekome.core.flags.AsyncState
 import com.chesire.nekome.library.SeriesRepository
 import com.chesire.nekome.testing.CoroutinesMainDispatcherRule
-import com.chesire.nekome.testing.createSeriesModel
+import com.chesire.nekome.testing.createSeriesDomain
 import io.mockk.Runs
 import io.mockk.coEvery
 import io.mockk.every
@@ -30,7 +30,7 @@ class SeriesDetailViewModelTests {
 
     @Test
     fun `updateModel updates the currently stored model`() {
-        val expected = createSeriesModel()
+        val expected = createSeriesDomain()
         val mockRepository = mockk<SeriesRepository>()
         val mockAuth = mockk<AuthCaster>()
 
@@ -41,7 +41,7 @@ class SeriesDetailViewModelTests {
             coroutineRule.testDispatcher
         )
 
-        assertEquals(expected.title, classUnderTest.mutableModel.seriesName)
+        assertEquals(expected.canonicalTitle, classUnderTest.mutableModel.seriesName)
     }
 
     @Test
@@ -58,7 +58,7 @@ class SeriesDetailViewModelTests {
         }
 
         val classUnderTest = SeriesDetailViewModel(
-            SavedStateHandle(mapOf(MODEL_ID to createSeriesModel())),
+            SavedStateHandle(mapOf(MODEL_ID to createSeriesDomain())),
             mockRepository,
             mockAuth,
             coroutineRule.testDispatcher
@@ -86,7 +86,7 @@ class SeriesDetailViewModelTests {
         }
 
         val classUnderTest = SeriesDetailViewModel(
-            SavedStateHandle(mapOf(MODEL_ID to createSeriesModel())),
+            SavedStateHandle(mapOf(MODEL_ID to createSeriesDomain())),
             mockRepository,
             mockAuth,
             coroutineRule.testDispatcher
@@ -104,7 +104,7 @@ class SeriesDetailViewModelTests {
             coEvery {
                 updateSeries(any(), any(), any())
             } coAnswers {
-                Resource.Success(createSeriesModel())
+                Resource.Success(createSeriesDomain())
             }
         }
         val mockAuth = mockk<AuthCaster> {
@@ -115,7 +115,7 @@ class SeriesDetailViewModelTests {
         }
 
         val classUnderTest = SeriesDetailViewModel(
-            SavedStateHandle(mapOf(MODEL_ID to createSeriesModel())),
+            SavedStateHandle(mapOf(MODEL_ID to createSeriesDomain())),
             mockRepository,
             mockAuth,
             coroutineRule.testDispatcher

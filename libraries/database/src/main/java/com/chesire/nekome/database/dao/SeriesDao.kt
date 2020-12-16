@@ -7,7 +7,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
-import com.chesire.nekome.core.models.SeriesModel
+import com.chesire.nekome.database.entity.SeriesEntity
 import kotlinx.coroutines.flow.Flow
 
 /**
@@ -19,37 +19,37 @@ interface SeriesDao {
      * Deletes [series] from the dao.
      */
     @Delete
-    suspend fun delete(series: SeriesModel)
+    suspend fun delete(series: SeriesEntity)
 
     /**
      * Inserts [series], replacing it if it already exists.
      */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(series: SeriesModel)
+    suspend fun insert(series: SeriesEntity)
 
     /**
      * Inserts all [series], replacing items where appropriate.
      */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(series: List<SeriesModel>)
+    suspend fun insert(series: List<SeriesEntity>)
 
     /**
-     * Gets all the [SeriesModel], and subscribes to updates.
+     * Gets all the [SeriesEntity], and subscribes to updates.
      */
-    @Query("SELECT * FROM seriesmodel")
-    fun getSeries(): Flow<List<SeriesModel>>
+    @Query("SELECT * FROM SeriesEntity")
+    fun getSeries(): Flow<List<SeriesEntity>>
 
     /**
      * Updates the [series].
      */
     @Update
-    suspend fun update(series: SeriesModel)
+    suspend fun update(series: SeriesEntity)
 
     // This method only exists to allow easier testing of the SeriesDao.
     /**
-     * Retrieves all [SeriesModel].
+     * Retrieves all [SeriesEntity].
      */
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    @Query("SELECT * FROM seriesmodel")
-    suspend fun retrieve(): List<SeriesModel>
+    @Query("SELECT * FROM SeriesEntity")
+    suspend fun retrieve(): List<SeriesEntity>
 }

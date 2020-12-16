@@ -13,13 +13,13 @@ import com.chesire.nekome.core.extensions.postError
 import com.chesire.nekome.core.extensions.postLoading
 import com.chesire.nekome.core.extensions.postSuccess
 import com.chesire.nekome.core.flags.AsyncState
-import com.chesire.nekome.core.models.SeriesModel
+import com.chesire.nekome.library.SeriesDomain
 import com.chesire.nekome.library.SeriesRepository
 import com.hadilq.liveevent.LiveEvent
 import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
 
-const val MODEL_ID = "SeriesDetail_seriesModel"
+const val MODEL_ID = "SeriesDetail_seriesDomain"
 
 /**
  * ViewModel to store the current series detail model, and allow interactions with its data.
@@ -32,7 +32,7 @@ class SeriesDetailViewModel @ViewModelInject constructor(
 ) : ViewModel() {
 
     val mutableModel = MutableSeriesModel.from(
-        requireNotNull(savedStateHandle.get<SeriesModel>(MODEL_ID)) { "No MODEL_ID in state" }
+        requireNotNull(savedStateHandle.get<SeriesDomain>(MODEL_ID)) { "No MODEL_ID in state" }
     )
 
     private val _updatingStatus = LiveEvent<AsyncState<MutableSeriesModel, SeriesDetailError>>()

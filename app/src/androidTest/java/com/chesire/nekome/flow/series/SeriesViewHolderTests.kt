@@ -16,7 +16,7 @@ import com.chesire.nekome.injection.DatabaseModule
 import com.chesire.nekome.injection.LibraryModule
 import com.chesire.nekome.kitsu.AuthProvider
 import com.chesire.nekome.library.api.LibraryApi
-import com.chesire.nekome.testing.createSeriesModel
+import com.chesire.nekome.testing.createSeriesEntity
 import com.schibsted.spain.barista.assertion.BaristaListAssertions.assertDisplayedAtPosition
 import com.schibsted.spain.barista.assertion.BaristaListAssertions.assertListNotEmpty
 import com.schibsted.spain.barista.assertion.BaristaVisibilityAssertions.assertDisplayed
@@ -69,7 +69,7 @@ class SeriesViewHolderTests {
 
         runBlocking {
             seriesDao.insert(
-                createSeriesModel(
+                createSeriesEntity(
                     title = expectedTitle,
                     subType = expectedSubtype,
                     progress = 3,
@@ -114,7 +114,7 @@ class SeriesViewHolderTests {
         val expectedDate = "2020-01-31 - ONGOING"
 
         runBlocking {
-            seriesDao.insert(createSeriesModel(startDate = "2020-01-31", endDate = ""))
+            seriesDao.insert(createSeriesEntity(startDate = "2020-01-31", endDate = ""))
         }
         launchActivity()
 
@@ -132,7 +132,7 @@ class SeriesViewHolderTests {
         val expectedDate = "UNKNOWN"
 
         runBlocking {
-            seriesDao.insert(createSeriesModel(startDate = "", endDate = ""))
+            seriesDao.insert(createSeriesEntity(startDate = "", endDate = ""))
         }
         launchActivity()
 
@@ -150,7 +150,7 @@ class SeriesViewHolderTests {
         val expectedDate = "2020-01-31"
 
         runBlocking {
-            seriesDao.insert(createSeriesModel(startDate = expectedDate, endDate = expectedDate))
+            seriesDao.insert(createSeriesEntity(startDate = expectedDate, endDate = expectedDate))
         }
         launchActivity()
 
@@ -168,7 +168,7 @@ class SeriesViewHolderTests {
         val expectedProgress = "3 / -"
 
         runBlocking {
-            seriesDao.insert(createSeriesModel(progress = 3, totalLength = 0))
+            seriesDao.insert(createSeriesEntity(progress = 3, totalLength = 0))
         }
         launchActivity()
 
@@ -184,7 +184,7 @@ class SeriesViewHolderTests {
     @Test
     fun itemProgressMaxedHidesIncrementButton() {
         runBlocking {
-            seriesDao.insert(createSeriesModel(progress = 3, totalLength = 3))
+            seriesDao.insert(createSeriesEntity(progress = 3, totalLength = 3))
         }
         launchActivity()
 
@@ -196,7 +196,7 @@ class SeriesViewHolderTests {
     @Ignore("Leave for now as unsure how to ensure that the progress bar appears")
     fun itemChangesToLoadingViewWhileUpdating() {
         runBlocking {
-            seriesDao.insert(createSeriesModel(progress = 1, totalLength = 3))
+            seriesDao.insert(createSeriesEntity(progress = 1, totalLength = 3))
         }
         coEvery {
             fakeLibrary.update(any(), any(), any())
@@ -223,21 +223,18 @@ class SeriesViewHolderTests {
         val expectedProgress = "2 / 3"
         runBlocking {
             seriesDao.insert(
-                createSeriesModel(
+                createSeriesEntity(
                     999,
                     999,
                     SeriesType.Anime,
                     Subtype.TV,
                     "slug",
-                    "synopsis",
                     "title",
                     SeriesStatus.Current,
                     UserSeriesStatus.Current,
                     1,
                     3,
                     ImageModel.empty,
-                    ImageModel.empty,
-                    false,
                     "",
                     ""
                 )

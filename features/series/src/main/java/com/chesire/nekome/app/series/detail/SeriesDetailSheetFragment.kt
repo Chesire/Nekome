@@ -15,7 +15,7 @@ import com.chesire.nekome.core.extensions.hide
 import com.chesire.nekome.core.extensions.show
 import com.chesire.nekome.core.flags.AsyncState
 import com.chesire.nekome.core.flags.UserSeriesStatus
-import com.chesire.nekome.core.models.SeriesModel
+import com.chesire.nekome.library.SeriesDomain
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -154,12 +154,11 @@ class SeriesDetailSheetFragment : BottomSheetDialogFragment() {
         const val TAG = "SeriesDetailSheetFragment"
 
         /**
-         * Creates a new instance of the [SeriesDetailSheetFragment], using the [seriesModel] for
-         * data.
+         * Creates a new instance of the [SeriesDetailSheetFragment], using the [domain] for data.
          */
-        fun newInstance(seriesModel: SeriesModel): SeriesDetailSheetFragment {
+        fun newInstance(domain: SeriesDomain): SeriesDetailSheetFragment {
             return SeriesDetailSheetFragment().apply {
-                arguments = bundleOf(MODEL_ID to seriesModel)
+                arguments = bundleOf(MODEL_ID to domain)
             }
         }
     }
