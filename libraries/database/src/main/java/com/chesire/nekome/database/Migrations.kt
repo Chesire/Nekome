@@ -1,3 +1,4 @@
+@file:Suppress("LongMethod", "MaxLineLength")
 package com.chesire.nekome.database
 
 import androidx.room.migration.Migration
