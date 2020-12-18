@@ -60,7 +60,7 @@ ext {
     moshi_version = "1.11.0"
     preferences_version = "1.1.1"
     retrofit_version = "2.9.0"
-    room_version = "2.2.5"
+    room_version = "2.2.6"
     timber_version = "4.7.1"
 
     // Tests
