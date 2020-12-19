@@ -22,15 +22,12 @@ class LibraryDomainMapperTests {
             SeriesType.Manga,
             Subtype.Manhwa,
             "slug",
-            "synopsis",
             "title",
             SeriesStatus.Upcoming,
             UserSeriesStatus.Planned,
             0,
             12,
             ImageModel.empty,
-            ImageModel.empty,
-            false,
             "startDate",
             "endDate"
         )
