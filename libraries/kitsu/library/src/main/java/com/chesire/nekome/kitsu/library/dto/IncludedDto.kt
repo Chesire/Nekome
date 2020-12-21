@@ -26,8 +26,6 @@ data class IncludedDto(
     data class Attributes(
         @Json(name = "slug")
         val slug: String,
-        @Json(name = "synopsis")
-        val synopsis: String,
         @Json(name = "canonicalTitle")
         val canonicalTitle: String,
         @Json(name = "startDate")
@@ -40,13 +38,9 @@ data class IncludedDto(
         val status: SeriesStatus,
         @Json(name = "posterImage")
         val posterImage: ImageModel?,
-        @Json(name = "coverImage")
-        val coverImage: ImageModel?,
         @Json(name = "chapterCount")
         val chapterCount: Int?,
         @Json(name = "episodeCount")
-        val episodeCount: Int?,
-        @Json(name = "nsfw")
-        val nsfw: Boolean = false
+        val episodeCount: Int?
     )
 }

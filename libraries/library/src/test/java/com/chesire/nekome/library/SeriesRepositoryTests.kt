@@ -349,15 +349,12 @@ class SeriesRepositoryTests {
             SeriesType.Anime,
             Subtype.Unknown,
             "slug",
-            "synopsis",
             "title",
             SeriesStatus.Unknown,
             UserSeriesStatus.Unknown,
             0,
             0,
             ImageModel.empty,
-            ImageModel.empty,
-            false,
             "startDate",
             "endDate"
         )

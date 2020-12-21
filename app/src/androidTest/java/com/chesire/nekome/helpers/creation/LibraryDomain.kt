@@ -17,15 +17,12 @@ fun createLibraryDomain(
     seriesType: SeriesType = SeriesType.Anime,
     subtype: Subtype = Subtype.Unknown,
     slug: String = "slug",
-    synopsis: String = "synopsis",
     title: String = "title",
     seriesStatus: SeriesStatus = SeriesStatus.Unknown,
     userSeriesStatus: UserSeriesStatus = UserSeriesStatus.Unknown,
     progress: Int = 0,
     totalLength: Int = 0,
     posterImage: ImageModel = ImageModel.empty,
-    coverImage: ImageModel = ImageModel.empty,
-    nsfw: Boolean = false,
     startDate: String = "startDate",
     endDate: String = "endDate"
 ) = LibraryDomain(
@@ -34,15 +31,12 @@ fun createLibraryDomain(
     type = seriesType,
     subtype = subtype,
     slug = slug,
-    synopsis = synopsis,
     title = title,
     seriesStatus = seriesStatus,
     userSeriesStatus = userSeriesStatus,
     progress = progress,
     totalLength = totalLength,
     posterImage = posterImage,
-    coverImage = coverImage,
-    nsfw = nsfw,
     startDate = startDate,
     endDate = endDate
 )

@@ -22,15 +22,12 @@ fun createLibraryDomain() =
         SeriesType.Anime,
         Subtype.Unknown,
         "slug",
-        "synopsis",
         "title",
         SeriesStatus.Unknown,
         UserSeriesStatus.Unknown,
         0,
         0,
         ImageModel.empty,
-        ImageModel.empty,
-        false,
         "startDate",
         "endDate"
     )
@@ -92,32 +89,26 @@ fun createIncludedDto(
     type: SeriesType,
     id: Int = 0,
     slug: String = "slug",
-    synopsis: String = "synopsis",
     canonicalTitle: String = "canonicalTitle",
     startDate: String = "startDate",
     endDate: String = "endDate",
     subtype: Subtype = Subtype.Unknown,
     seriesStatus: SeriesStatus = SeriesStatus.Unknown,
     posterImage: ImageModel = ImageModel.empty,
-    coverImage: ImageModel = ImageModel.empty,
     chapterCount: Int = 0,
-    episodeCount: Int = 0,
-    nsfw: Boolean = false
+    episodeCount: Int = 0
 ) = IncludedDto(
     id,
     type,
     IncludedDto.Attributes(
         slug,
-        synopsis,
         canonicalTitle,
         startDate,
         endDate,
         subtype,
         seriesStatus,
         posterImage,
-        coverImage,
         chapterCount,
-        episodeCount,
-        nsfw
+        episodeCount
     )
 )

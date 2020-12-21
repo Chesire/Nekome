@@ -34,15 +34,12 @@ class ResponseDtoMapper @Inject constructor() {
             included.type,
             included.attributes.subtype,
             included.attributes.slug,
-            included.attributes.synopsis,
             included.attributes.canonicalTitle,
             included.attributes.status,
             data.attributes.status,
             data.attributes.progress,
             included.attributes.episodeCount ?: included.attributes.chapterCount ?: 0,
             included.attributes.posterImage ?: ImageModel.empty,
-            included.attributes.coverImage ?: ImageModel.empty,
-            included.attributes.nsfw,
             included.attributes.startDate ?: "",
             included.attributes.endDate ?: ""
         )

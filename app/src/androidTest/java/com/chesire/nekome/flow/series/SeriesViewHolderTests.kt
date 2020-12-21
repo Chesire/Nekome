@@ -250,15 +250,12 @@ class SeriesViewHolderTests {
                     SeriesType.Anime,
                     Subtype.TV,
                     "slug",
-                    "synopsis",
                     "title",
                     SeriesStatus.Current,
                     UserSeriesStatus.Current,
                     2,
                     3,
                     ImageModel.empty,
-                    ImageModel.empty,
-                    false,
                     "",
                     ""
                 )
