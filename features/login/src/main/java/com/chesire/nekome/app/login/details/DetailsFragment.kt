@@ -8,7 +8,6 @@ import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.chesire.lifecyklelog.LogLifecykle
 import com.chesire.nekome.app.login.R
 import com.chesire.nekome.app.login.databinding.FragmentDetailsBinding
 import com.chesire.nekome.core.extensions.hide
@@ -24,7 +23,6 @@ import javax.inject.Inject
 /**
  * Fragment to allow the user to enter their login details for Kitsu.
  */
-@LogLifecykle
 @AndroidEntryPoint
 class DetailsFragment : Fragment(R.layout.fragment_details) {
 

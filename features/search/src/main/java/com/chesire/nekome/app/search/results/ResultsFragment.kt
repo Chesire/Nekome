@@ -6,7 +6,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.chesire.lifecyklelog.LogLifecykle
 import com.chesire.nekome.app.search.R
 import com.chesire.nekome.app.search.databinding.FragmentResultsBinding
 import com.chesire.nekome.app.search.domain.SearchModel
@@ -16,7 +15,6 @@ import dagger.hilt.android.AndroidEntryPoint
 /**
  * Displays the results of a search to the user, allowing them to select to track new series.
  */
-@LogLifecykle
 @AndroidEntryPoint
 class ResultsFragment : Fragment(R.layout.fragment_results), ResultsListener {
 

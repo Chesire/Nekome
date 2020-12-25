@@ -6,14 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
-import com.chesire.lifecyklelog.LogLifecykle
 import com.chesire.nekome.app.settings.R
 import com.mikepenz.aboutlibraries.LibsBuilder
 
 /**
  * Fragment that displays information about open source licenses that are used.
  */
-@LogLifecykle
 class OssFragment : Fragment() {
     // Commented out libraries are pulled in automatically, because the library already includes the
     // xml file required, or it is supplied manually. We only need to specify the libraries that the
