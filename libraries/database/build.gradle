@@ -45,7 +45,6 @@ dependencies {
 
     implementation project(path: ":libraries:core")
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation "androidx.appcompat:appcompat:$appcompat_version"
     implementation "androidx.core:core-ktx:$corektx_version"
     implementation "androidx.room:room-ktx:$room_version"
