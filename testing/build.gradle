@@ -32,13 +32,10 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: "libs", include: ["*.jar"])
-
     implementation project(path: ":libraries:core")
     implementation project(path: ":libraries:database")
     implementation project(path: ":libraries:library")
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation "com.chesire.lintrules:lint-gradle:$lintrules_version"
     implementation "com.chesire.lintrules:lint-xml:$lintrules_version"
     implementation "junit:junit:$junit_version"

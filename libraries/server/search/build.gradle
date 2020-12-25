@@ -31,7 +31,6 @@ android {
 dependencies {
     implementation project(path: ':libraries:core')
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation "com.chesire.lintrules:lint-gradle:$lintrules_version"
     implementation "com.chesire.lintrules:lint-xml:$lintrules_version"
 }
