@@ -31,8 +31,6 @@ android {
 dependencies {
     def aboutlibraries_version = "8.6.3"
 
-    implementation fileTree(dir: "libs", include: ["*.jar"])
-
     implementation project(path: ":libraries:core")
 
     implementation "androidx.appcompat:appcompat:$appcompat_version"
