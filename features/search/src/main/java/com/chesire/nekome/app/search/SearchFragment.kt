@@ -6,7 +6,6 @@ import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.chesire.lifecyklelog.LogLifecykle
 import com.chesire.nekome.app.search.databinding.FragmentSearchBinding
 import com.chesire.nekome.core.extensions.hide
 import com.chesire.nekome.core.extensions.hideSystemKeyboard
@@ -21,7 +20,6 @@ import javax.inject.Inject
 /**
  * Allows a user to perform a search to find new series to follow.
  */
-@LogLifecykle
 @AndroidEntryPoint
 class SearchFragment : Fragment(R.layout.fragment_search) {
 

@@ -52,7 +52,6 @@ dependencies {
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
     implementation "com.afollestad.material-dialogs:core:$materialdialog_version"
     implementation "com.afollestad.material-dialogs:lifecycle:$materialdialog_version"
-    implementation "com.chesire:lifecyklelog:$lifecykle_version"
     implementation "com.chesire.lintrules:lint-gradle:$lintrules_version"
     implementation "com.chesire.lintrules:lint-xml:$lintrules_version"
     implementation "com.github.hadilq.liveevent:liveevent:$liveevent_version"

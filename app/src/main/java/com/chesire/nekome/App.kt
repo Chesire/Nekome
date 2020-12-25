@@ -35,6 +35,7 @@ class App : Application(), Configuration.Provider {
             Timber.plant(Timber.DebugTree())
             LifecykleLog.apply {
                 initialize(this@App)
+                requireAnnotation = false
                 logHandler = LogHandler { clazz, lifecycleEvent, bundle ->
                     Timber.tag(clazz)
                     Timber.d("-> $lifecycleEvent ${bundle?.let { "- $it" } ?: ""}")

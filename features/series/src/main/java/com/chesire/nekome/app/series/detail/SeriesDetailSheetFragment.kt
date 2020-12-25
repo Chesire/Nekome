@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
-import com.chesire.lifecyklelog.LogLifecykle
 import com.chesire.nekome.app.series.R
 import com.chesire.nekome.app.series.databinding.FragmentSeriesDetailBinding
 import com.chesire.nekome.core.extensions.hide
@@ -24,7 +23,6 @@ import timber.log.Timber
 /**
  * Fragment to display the series detail in a [BottomSheetDialogFragment].
  */
-@LogLifecykle
 @AndroidEntryPoint
 class SeriesDetailSheetFragment : BottomSheetDialogFragment() {
 

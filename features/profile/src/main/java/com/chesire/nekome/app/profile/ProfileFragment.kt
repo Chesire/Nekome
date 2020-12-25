@@ -6,7 +6,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import coil.load
 import coil.transform.CircleCropTransformation
-import com.chesire.lifecyklelog.LogLifecykle
 import com.chesire.nekome.app.profile.databinding.FragmentProfileBinding
 import com.chesire.nekome.core.models.UserModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -14,7 +13,6 @@ import dagger.hilt.android.AndroidEntryPoint
 /**
  * Fragment to display to the user information about their profile.
  */
-@LogLifecykle
 @AndroidEntryPoint
 class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
