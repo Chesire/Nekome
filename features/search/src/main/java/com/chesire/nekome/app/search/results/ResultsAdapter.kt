@@ -3,7 +3,7 @@ package com.chesire.nekome.app.search.results
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
-import com.chesire.nekome.app.search.R
+import com.chesire.nekome.app.search.databinding.ItemResultBinding
 import com.chesire.nekome.app.search.domain.DiffCallback
 import com.chesire.nekome.app.search.domain.SearchModel
 
@@ -25,7 +25,7 @@ class ResultsAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ResultsViewHolder {
         return ResultsViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.item_result, parent, false)
+            ItemResultBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         ).apply {
             bindListener(resultsListener)
         }
