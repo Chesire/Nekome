@@ -6,7 +6,7 @@ import androidx.test.platform.app.InstrumentationRegistry
 import com.chesire.nekome.core.flags.Service
 import com.chesire.nekome.core.models.ImageModel
 import com.chesire.nekome.database.RoomDB
-import com.chesire.nekome.testing.createUserModel
+import com.chesire.nekome.testing.createUserEntity
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Assert.assertEquals
@@ -48,7 +48,7 @@ class UserDaoTests {
 
     @Test
     fun canRetrieveKitsuUser() = runBlocking {
-        userDao.insert(createUserModel(service = Service.Kitsu))
+        userDao.insert(createUserEntity(service = Service.Kitsu))
         assertNotNull(userDao.retrieve(Service.Kitsu))
     }
 
@@ -60,15 +60,15 @@ class UserDaoTests {
             ImageModel.ImageData("mediumUrl", 4, 5),
             ImageModel.ImageData("largeUrl", 6, 7)
         )
-        userDao.insert(createUserModel(avatar = expected, service = Service.Kitsu))
+        userDao.insert(createUserEntity(avatar = expected, service = Service.Kitsu))
 
         assertEquals(expected, userDao.retrieve(Service.Kitsu).avatar)
     }
 
     @Test
     fun duplicateCallsReplaceUser() = runBlocking {
-        val first = createUserModel(userId = 1, name = "Model1", service = Service.Kitsu)
-        val second = createUserModel(userId = 2, name = "Model2", service = Service.Kitsu)
+        val first = createUserEntity(userId = 1, name = "Model1", service = Service.Kitsu)
+        val second = createUserEntity(userId = 2, name = "Model2", service = Service.Kitsu)
 
         userDao.insert(first)
         assertEquals(first, userDao.retrieve(Service.Kitsu))
@@ -78,8 +78,8 @@ class UserDaoTests {
 
     @Test
     fun canStoreMultipleUsersBasedOnService() = runBlocking {
-        val first = createUserModel(userId = 0, service = Service.Kitsu)
-        val second = createUserModel(userId = 0, service = Service.Unknown)
+        val first = createUserEntity(userId = 0, service = Service.Kitsu)
+        val second = createUserEntity(userId = 0, service = Service.Unknown)
 
         userDao.insert(first)
         userDao.insert(second)
@@ -89,7 +89,7 @@ class UserDaoTests {
 
     @Test
     fun deletingUsingUserModelRemoves() = runBlocking {
-        val model = createUserModel(service = Service.Kitsu)
+        val model = createUserEntity(service = Service.Kitsu)
         userDao.insert(model)
         assertEquals(model, userDao.retrieve(Service.Kitsu))
         userDao.delete(model)
@@ -98,7 +98,7 @@ class UserDaoTests {
 
     @Test
     fun deletingUsingServiceRemoves() = runBlocking {
-        val model = createUserModel(service = Service.Kitsu)
+        val model = createUserEntity(service = Service.Kitsu)
         userDao.insert(model)
         assertEquals(model, userDao.retrieve(Service.Kitsu))
         userDao.delete(Service.Kitsu)
@@ -112,7 +112,7 @@ class UserDaoTests {
 
     @Test
     fun retrievingUserIdGetsIdIfExists() = runBlocking {
-        val model = createUserModel(userId = 133, service = Service.Kitsu)
+        val model = createUserEntity(userId = 133, service = Service.Kitsu)
         userDao.insert(model)
         assertEquals(133, userDao.retrieveUserId(Service.Kitsu))
     }

@@ -8,6 +8,7 @@ import com.chesire.nekome.core.flags.UserSeriesStatus
 import com.chesire.nekome.core.models.ImageModel
 import com.chesire.nekome.core.models.UserModel
 import com.chesire.nekome.database.entity.SeriesEntity
+import com.chesire.nekome.database.entity.UserEntity
 import com.chesire.nekome.library.SeriesDomain
 
 /**
@@ -88,6 +89,17 @@ fun createUserModel(
     coverImage: ImageModel = ImageModel.empty,
     service: Service = Service.Kitsu
 ) = UserModel(userId, name, avatar, coverImage, service)
+
+/**
+ * Creates a new instance of [UserEntity] with default data.
+ */
+fun createUserEntity(
+    userId: Int = 0,
+    name: String = "name",
+    avatar: ImageModel = ImageModel.empty,
+    coverImage: ImageModel = ImageModel.empty,
+    service: Service = Service.Kitsu
+) = UserEntity(userId, name, avatar, coverImage, service)
 
 /**
  * Creates a new instance of [ImageModel] with default data.
