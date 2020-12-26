@@ -26,7 +26,6 @@ import com.chesire.nekome.core.settings.ApplicationSettings
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.activity.activityDrawer
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -46,12 +45,14 @@ class Activity : AppCompatActivity(), AuthCaster.AuthCasterListener, Flow {
 
     private val viewModel by viewModels<ActivityViewModel>()
 
+    private lateinit var activityDrawer: DrawerLayout
     private lateinit var appBarConfiguration: AppBarConfiguration
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.AppTheme_NoActionBar)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity)
+        activityDrawer = findViewById(R.id.activityDrawer)
         setSupportActionBar(findViewById(R.id.appBarToolbar))
         setupNavController()
         observeViewModel()
