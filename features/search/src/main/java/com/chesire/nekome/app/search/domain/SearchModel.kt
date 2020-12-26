@@ -5,7 +5,7 @@ import androidx.recyclerview.widget.DiffUtil
 import com.chesire.nekome.core.flags.SeriesType
 import com.chesire.nekome.core.flags.Subtype
 import com.chesire.nekome.core.models.ImageModel
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 
 /**
  * Model containing information to show for a searched item.
