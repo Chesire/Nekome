@@ -1,12 +1,12 @@
 package com.chesire.nekome.testing
 
+import com.chesire.nekome.account.UserDomain
 import com.chesire.nekome.core.flags.SeriesStatus
 import com.chesire.nekome.core.flags.SeriesType
 import com.chesire.nekome.core.flags.Service
 import com.chesire.nekome.core.flags.Subtype
 import com.chesire.nekome.core.flags.UserSeriesStatus
 import com.chesire.nekome.core.models.ImageModel
-import com.chesire.nekome.core.models.UserModel
 import com.chesire.nekome.database.entity.SeriesEntity
 import com.chesire.nekome.database.entity.UserEntity
 import com.chesire.nekome.library.SeriesDomain
@@ -80,15 +80,14 @@ fun createSeriesEntity(
 )
 
 /**
- * Creates a new instance of [UserModel] with default data.
+ * Creates a new instance of [UserDomain] with default data.
  */
-fun createUserModel(
+fun createUserDomain(
     userId: Int = 0,
     name: String = "name",
     avatar: ImageModel = ImageModel.empty,
-    coverImage: ImageModel = ImageModel.empty,
-    service: Service = Service.Kitsu
-) = UserModel(userId, name, avatar, coverImage, service)
+    coverImage: ImageModel = ImageModel.empty
+) = UserDomain(userId, name, avatar, coverImage)
 
 /**
  * Creates a new instance of [UserEntity] with default data.

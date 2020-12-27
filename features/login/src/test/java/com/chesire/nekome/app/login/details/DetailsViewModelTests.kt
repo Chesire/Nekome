@@ -6,7 +6,7 @@ import com.chesire.nekome.account.UserRepository
 import com.chesire.nekome.auth.api.AuthApi
 import com.chesire.nekome.core.Resource
 import com.chesire.nekome.testing.CoroutinesMainDispatcherRule
-import com.chesire.nekome.testing.createUserModel
+import com.chesire.nekome.testing.createUserDomain
 import io.mockk.Runs
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -130,7 +130,7 @@ class DetailsViewModelTests {
 
     @Test
     fun `getUser success produces LoginStatus#Success`() {
-        val expectedModel = createUserModel()
+        val expectedModel = createUserDomain()
         val mockAuth = mockk<AuthApi> {
             coEvery {
                 login(any(), any())
@@ -139,7 +139,7 @@ class DetailsViewModelTests {
             }
         }
         val mockRepo = mockk<UserRepository> {
-            coEvery { refreshUser() } coAnswers { Resource.Success(expectedModel) }
+            coEvery { refreshUser() } coAnswers { Resource.Success(Unit) }
         }
         val mockObserver = mockk<Observer<LoginStatus>> {
             every { onChanged(any()) } just Runs
