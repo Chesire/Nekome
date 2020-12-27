@@ -130,7 +130,6 @@ class DetailsViewModelTests {
 
     @Test
     fun `getUser success produces LoginStatus#Success`() {
-        val expectedModel = createUserDomain()
         val mockAuth = mockk<AuthApi> {
             coEvery {
                 login(any(), any())
