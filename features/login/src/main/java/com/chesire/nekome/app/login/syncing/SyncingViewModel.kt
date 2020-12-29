@@ -6,6 +6,7 @@ import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
+import com.chesire.nekome.account.User
 import com.chesire.nekome.account.UserRepository
 import com.chesire.nekome.core.Resource
 import com.chesire.nekome.core.extensions.postError
@@ -24,7 +25,13 @@ class SyncingViewModel @ViewModelInject constructor(
 
     private val _syncStatus = MutableLiveData<AsyncState<Any, Any>>()
     val syncStatus = _syncStatus
-    val avatarUrl = Transformations.map(userRepo.user.asLiveData()) { it.avatar.largest?.url }
+    val avatarUrl = Transformations.map(userRepo.user.asLiveData()) { user ->
+        if (user is User.Found) {
+            user.domain.avatar.largest?.url
+        } else {
+            ""
+        }
+    }
 
     /**
      * Sets off the process for pulling down and storing the users series.
