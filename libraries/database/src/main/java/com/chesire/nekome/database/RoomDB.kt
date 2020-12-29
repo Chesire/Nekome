@@ -5,7 +5,6 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.chesire.nekome.core.models.UserModel
 import com.chesire.nekome.database.converters.ImageModelConverter
 import com.chesire.nekome.database.converters.SeriesStatusConverter
 import com.chesire.nekome.database.converters.SeriesTypeConverter
@@ -15,12 +14,13 @@ import com.chesire.nekome.database.converters.UserSeriesStatusConverter
 import com.chesire.nekome.database.dao.SeriesDao
 import com.chesire.nekome.database.dao.UserDao
 import com.chesire.nekome.database.entity.SeriesEntity
+import com.chesire.nekome.database.entity.UserEntity
 
 /**
  * Database for usage throughout the application, contains daos for interacting with the data.
  */
 @Database(
-    entities = [SeriesEntity::class, UserModel::class],
+    entities = [SeriesEntity::class, UserEntity::class],
     version = 3
 )
 @TypeConverters(

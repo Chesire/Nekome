@@ -19,6 +19,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
 import com.chesire.lifecyklelog.LogLifecykle
+import com.chesire.nekome.account.User
 import com.chesire.nekome.core.AuthCaster
 import com.chesire.nekome.core.flags.HomeScreenOptions
 import com.chesire.nekome.core.nav.Flow
@@ -68,9 +69,9 @@ class Activity : AppCompatActivity(), AuthCaster.AuthCasterListener, Flow {
     }
 
     private fun observeViewModel() {
-        viewModel.user.observe(this) { userModel ->
-            if (userModel != null) {
-                updateAvatar(findViewById(R.id.activityNavigationView), userModel)
+        viewModel.user.observe(this) { user ->
+            if (user is User.Found) {
+                updateAvatar(findViewById(R.id.activityNavigationView), user.domain)
             }
         }
     }

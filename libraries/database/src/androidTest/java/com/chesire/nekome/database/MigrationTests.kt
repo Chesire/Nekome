@@ -148,7 +148,7 @@ class MigrationTests {
         db = helper.runMigrationsAndValidate(testDB, 3, true, MIGRATION_2_3)
 
         // Ensure that the data is still valid.
-        with(db.query("SELECT * FROM usermodel WHERE rowid = ?", arrayOf(userId))) {
+        with(db.query("SELECT * FROM UserEntity WHERE rowid = ?", arrayOf(userId))) {
             assertThat(this, Is(notNullValue()))
             moveToFirst()
 

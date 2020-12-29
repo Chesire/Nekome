@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 3,
-    "identityHash": "f376338342bdd2add497d2bd2af1ec4d",
+    "identityHash": "25eb4122daae2a97a6e84b3730bbe76b",
     "entities": [
       {
         "tableName": "SeriesEntity",
@@ -97,7 +97,7 @@
         "foreignKeys": []
       },
       {
-        "tableName": "UserModel",
+        "tableName": "UserEntity",
         "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`userId` INTEGER NOT NULL, `name` TEXT NOT NULL, `avatar` TEXT NOT NULL, `coverImage` TEXT NOT NULL, `service` TEXT NOT NULL, PRIMARY KEY(`service`))",
         "fields": [
           {
@@ -144,7 +144,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'f376338342bdd2add497d2bd2af1ec4d')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '25eb4122daae2a97a6e84b3730bbe76b')"
     ]
   }
 }
