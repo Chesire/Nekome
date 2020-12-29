@@ -62,7 +62,7 @@ class UserDaoTests {
         )
         userDao.insert(createUserEntity(avatar = expected, service = Service.Kitsu))
 
-        assertEquals(expected, userDao.retrieve(Service.Kitsu).avatar)
+        assertEquals(expected, userDao.retrieve(Service.Kitsu)?.avatar)
     }
 
     @Test

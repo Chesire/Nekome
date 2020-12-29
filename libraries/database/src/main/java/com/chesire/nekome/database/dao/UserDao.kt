@@ -36,7 +36,7 @@ interface UserDao {
      * Retrieves the user based on the [service].
      */
     @Query("SELECT * FROM UserEntity WHERE service == :service")
-    suspend fun retrieve(service: Service): UserEntity
+    suspend fun retrieve(service: Service): UserEntity?
 
     /**
      * Retrieves the userID based on the [service].
@@ -48,5 +48,5 @@ interface UserDao {
      * Provides an observable for the type of [service].
      */
     @Query("SELECT * FROM UserEntity WHERE service == :service")
-    fun getUser(service: Service): Flow<UserEntity>
+    fun getUser(service: Service): Flow<UserEntity?>
 }
