@@ -1,7 +1,7 @@
 package com.chesire.nekome.app.series.list.manga
 
 import com.chesire.nekome.app.series.list.SeriesListFragment
-import com.chesire.nekome.core.flags.SeriesType
+import com.chesire.nekome.dataflags.SeriesType
 import dagger.hilt.android.AndroidEntryPoint
 
 /**

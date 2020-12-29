@@ -1,4 +1,4 @@
-package com.chesire.nekome.core.flags
+package com.chesire.nekome.dataflags
 
 /**
  * Wrapper around the possible configurations for the ratings.

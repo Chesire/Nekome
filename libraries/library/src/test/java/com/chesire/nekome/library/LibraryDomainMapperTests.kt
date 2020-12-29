@@ -1,11 +1,11 @@
 package com.chesire.nekome.library
 
-import com.chesire.nekome.core.flags.SeriesStatus
-import com.chesire.nekome.core.flags.SeriesType
-import com.chesire.nekome.core.flags.Subtype
-import com.chesire.nekome.core.flags.UserSeriesStatus
 import com.chesire.nekome.core.models.ImageModel
 import com.chesire.nekome.database.entity.SeriesEntity
+import com.chesire.nekome.dataflags.SeriesStatus
+import com.chesire.nekome.dataflags.SeriesType
+import com.chesire.nekome.dataflags.Subtype
+import com.chesire.nekome.dataflags.UserSeriesStatus
 import com.chesire.nekome.library.api.LibraryDomain
 import org.junit.Assert.assertEquals
 import org.junit.Test

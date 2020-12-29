@@ -1,8 +1,7 @@
-package com.chesire.nekome.core.flags
+package com.chesire.nekome.dataflags
 
 import android.content.Context
 import androidx.annotation.StringRes
-import com.chesire.nekome.core.R
 
 /**
  * List of possible states a series can be in for a user.

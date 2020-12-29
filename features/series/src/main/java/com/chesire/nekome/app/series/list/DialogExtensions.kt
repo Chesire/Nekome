@@ -8,7 +8,7 @@ import com.afollestad.materialdialogs.list.listItemsMultiChoice
 import com.chesire.nekome.app.series.SeriesPreferences
 import com.chesire.nekome.core.R
 import com.chesire.nekome.core.flags.SortOption
-import com.chesire.nekome.core.flags.UserSeriesStatus
+import com.chesire.nekome.dataflags.UserSeriesStatus
 
 /**
  * Shows the filter dialog, allowing the user to choose how to filter their series list.

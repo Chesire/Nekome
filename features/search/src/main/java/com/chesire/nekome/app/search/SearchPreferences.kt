@@ -2,7 +2,7 @@ package com.chesire.nekome.app.search
 
 import android.content.SharedPreferences
 import androidx.core.content.edit
-import com.chesire.nekome.core.flags.SeriesType
+import com.chesire.nekome.dataflags.SeriesType
 import javax.inject.Inject
 
 /**

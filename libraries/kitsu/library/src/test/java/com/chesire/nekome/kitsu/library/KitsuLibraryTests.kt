@@ -1,8 +1,8 @@
 package com.chesire.nekome.kitsu.library
 
 import com.chesire.nekome.core.Resource
-import com.chesire.nekome.core.flags.SeriesType
-import com.chesire.nekome.core.flags.UserSeriesStatus
+import com.chesire.nekome.dataflags.SeriesType
+import com.chesire.nekome.dataflags.UserSeriesStatus
 import com.chesire.nekome.kitsu.api.intermediaries.Links
 import com.chesire.nekome.kitsu.library.dto.AddResponseDto
 import com.chesire.nekome.kitsu.library.dto.DtoFactory

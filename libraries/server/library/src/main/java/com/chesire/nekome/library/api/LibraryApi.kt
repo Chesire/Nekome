@@ -1,7 +1,7 @@
 package com.chesire.nekome.library.api
 
 import com.chesire.nekome.core.Resource
-import com.chesire.nekome.core.flags.UserSeriesStatus
+import com.chesire.nekome.dataflags.UserSeriesStatus
 
 /**
  * Methods relating to interacting with the users library.

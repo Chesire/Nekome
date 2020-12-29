@@ -7,9 +7,9 @@ import com.chesire.nekome.app.search.domain.SearchModel
 import com.chesire.nekome.core.AuthCaster
 import com.chesire.nekome.core.Resource
 import com.chesire.nekome.core.flags.AsyncState
-import com.chesire.nekome.core.flags.SeriesType
-import com.chesire.nekome.core.flags.Subtype
 import com.chesire.nekome.core.models.ImageModel
+import com.chesire.nekome.dataflags.SeriesType
+import com.chesire.nekome.dataflags.Subtype
 import com.chesire.nekome.search.api.SearchApi
 import com.chesire.nekome.search.api.SearchDomain
 import com.chesire.nekome.testing.CoroutinesMainDispatcherRule

@@ -1,4 +1,4 @@
-package com.chesire.nekome.core.flags
+package com.chesire.nekome.dataflags
 
 /**
  * All possible states of a series.

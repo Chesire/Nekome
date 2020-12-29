@@ -5,7 +5,7 @@ import androidx.lifecycle.Observer
 import com.chesire.nekome.core.AuthCaster
 import com.chesire.nekome.core.Resource
 import com.chesire.nekome.core.flags.AsyncState
-import com.chesire.nekome.core.flags.UserSeriesStatus
+import com.chesire.nekome.dataflags.UserSeriesStatus
 import com.chesire.nekome.library.SeriesDomain
 import com.chesire.nekome.library.SeriesRepository
 import com.chesire.nekome.testing.CoroutinesMainDispatcherRule

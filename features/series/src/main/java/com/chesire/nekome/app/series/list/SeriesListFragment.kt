@@ -23,7 +23,7 @@ import com.chesire.nekome.app.series.list.view.SeriesAdapter
 import com.chesire.nekome.app.series.list.view.SwipeToDelete
 import com.chesire.nekome.core.Resource
 import com.chesire.nekome.core.flags.AsyncState
-import com.chesire.nekome.core.flags.SeriesType
+import com.chesire.nekome.dataflags.SeriesType
 import com.chesire.nekome.library.SeriesDomain
 import com.google.android.material.snackbar.Snackbar
 import timber.log.Timber

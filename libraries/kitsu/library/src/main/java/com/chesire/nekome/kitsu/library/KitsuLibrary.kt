@@ -1,7 +1,7 @@
 package com.chesire.nekome.kitsu.library
 
 import com.chesire.nekome.core.Resource
-import com.chesire.nekome.core.flags.UserSeriesStatus
+import com.chesire.nekome.dataflags.UserSeriesStatus
 import com.chesire.nekome.kitsu.asError
 import com.chesire.nekome.kitsu.library.adapter.UserSeriesStatusAdapter
 import com.chesire.nekome.kitsu.library.dto.AddResponseDto
@@ -142,9 +142,9 @@ class KitsuLibrary @Inject constructor(
 
             val body = response.body()
             if (response.isSuccessful && body != null) {
-                val series = body.data.map {
+                val series = body.data.mapNotNull {
                     map.toLibraryDomain(AddResponseDto(it, body.included))
-                }.filterNotNull()
+                }
                 models.addAll(series)
                 retries = 0
 

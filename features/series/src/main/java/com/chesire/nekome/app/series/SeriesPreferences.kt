@@ -3,7 +3,7 @@ package com.chesire.nekome.app.series
 import android.content.SharedPreferences
 import androidx.core.content.edit
 import com.chesire.nekome.core.flags.SortOption
-import com.chesire.nekome.core.flags.UserSeriesStatus
+import com.chesire.nekome.dataflags.UserSeriesStatus
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
 

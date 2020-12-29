@@ -1,6 +1,6 @@
 package com.chesire.nekome.kitsu.adapters
 
-import com.chesire.nekome.core.flags.Subtype
+import com.chesire.nekome.dataflags.Subtype
 import org.junit.Assert.assertEquals
 import org.junit.Test
 

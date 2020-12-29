@@ -11,7 +11,7 @@ import com.chesire.nekome.core.extensions.hide
 import com.chesire.nekome.core.extensions.hideSystemKeyboard
 import com.chesire.nekome.core.extensions.show
 import com.chesire.nekome.core.flags.AsyncState
-import com.chesire.nekome.core.flags.SeriesType
+import com.chesire.nekome.dataflags.SeriesType
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber

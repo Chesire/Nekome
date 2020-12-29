@@ -1,7 +1,6 @@
-package com.chesire.nekome.core.flags
+package com.chesire.nekome.dataflags
 
 import android.content.Context
-import com.chesire.nekome.core.R
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.Assert.assertEquals

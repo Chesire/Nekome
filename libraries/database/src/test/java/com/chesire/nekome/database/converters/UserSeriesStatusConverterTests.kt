@@ -1,6 +1,6 @@
 package com.chesire.nekome.database.converters
 
-import com.chesire.nekome.core.flags.UserSeriesStatus
+import com.chesire.nekome.dataflags.UserSeriesStatus
 import org.junit.Assert.assertEquals
 import org.junit.Test
 

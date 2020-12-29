@@ -1,7 +1,7 @@
 package com.chesire.nekome.kitsu.trending.dto
 
-import com.chesire.nekome.core.flags.SeriesType
 import com.chesire.nekome.core.models.ImageModel
+import com.chesire.nekome.dataflags.SeriesType
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 

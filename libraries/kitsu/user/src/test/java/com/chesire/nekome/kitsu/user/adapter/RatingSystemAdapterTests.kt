@@ -1,6 +1,6 @@
 package com.chesire.nekome.kitsu.user.adapter
 
-import com.chesire.nekome.core.flags.RatingSystem
+import com.chesire.nekome.dataflags.RatingSystem
 import org.junit.Assert.assertEquals
 import org.junit.Test
 

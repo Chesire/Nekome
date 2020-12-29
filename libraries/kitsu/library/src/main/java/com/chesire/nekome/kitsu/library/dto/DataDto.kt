@@ -1,6 +1,6 @@
 package com.chesire.nekome.kitsu.library.dto
 
-import com.chesire.nekome.core.flags.UserSeriesStatus
+import com.chesire.nekome.dataflags.UserSeriesStatus
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
@@ -50,7 +50,7 @@ data class DataDto(
             val data: RelationshipData? = null
         ) {
             /**
-             * Contains the information for the [type] and [id] of a mapping.
+             * Contains the information for the [id] of a mapping.
              */
             @JsonClass(generateAdapter = true)
             data class RelationshipData(

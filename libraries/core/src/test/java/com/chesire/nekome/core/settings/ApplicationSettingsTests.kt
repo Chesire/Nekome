@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import com.chesire.nekome.core.R
 import com.chesire.nekome.core.flags.HomeScreenOptions
-import com.chesire.nekome.core.flags.UserSeriesStatus
+import com.chesire.nekome.dataflags.UserSeriesStatus
 import io.mockk.Runs
 import io.mockk.every
 import io.mockk.just
@@ -63,7 +63,7 @@ class ApplicationSettingsTests {
             mockPreferences
         )
 
-        assertEquals(UserSeriesStatus.OnHold, testObject.defaultSeriesState)
+        assertEquals(com.chesire.nekome.dataflags.UserSeriesStatus.OnHold, testObject.defaultSeriesState)
     }
 
     @Test
@@ -103,7 +103,7 @@ class ApplicationSettingsTests {
 
         val result = testObject.defaultSeriesState
 
-        assertEquals(UserSeriesStatus.Current, result)
+        assertEquals(com.chesire.nekome.dataflags.UserSeriesStatus.Current, result)
     }
 
     @Test

@@ -31,6 +31,7 @@ dependencies {
     def aboutlibraries_version = "8.6.3"
 
     implementation project(path: ":libraries:core")
+    implementation project(path: ":libraries:dataflags")
 
     implementation "androidx.appcompat:appcompat:$appcompat_version"
     implementation "androidx.browser:browser:1.3.0"

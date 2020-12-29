@@ -1,6 +1,6 @@
 package com.chesire.nekome.kitsu.adapters
 
-import com.chesire.nekome.core.flags.SeriesType
+import com.chesire.nekome.dataflags.SeriesType
 import com.squareup.moshi.FromJson
 import com.squareup.moshi.ToJson
 

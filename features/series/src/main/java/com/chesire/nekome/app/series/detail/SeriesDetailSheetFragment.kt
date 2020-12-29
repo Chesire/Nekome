@@ -13,7 +13,7 @@ import com.chesire.nekome.app.series.databinding.FragmentSeriesDetailBinding
 import com.chesire.nekome.core.extensions.hide
 import com.chesire.nekome.core.extensions.show
 import com.chesire.nekome.core.flags.AsyncState
-import com.chesire.nekome.core.flags.UserSeriesStatus
+import com.chesire.nekome.dataflags.UserSeriesStatus
 import com.chesire.nekome.library.SeriesDomain
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.snackbar.Snackbar

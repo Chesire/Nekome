@@ -12,7 +12,7 @@ import com.chesire.nekome.core.extensions.postError
 import com.chesire.nekome.core.extensions.postLoading
 import com.chesire.nekome.core.extensions.postSuccess
 import com.chesire.nekome.core.flags.AsyncState
-import com.chesire.nekome.core.flags.SeriesType
+import com.chesire.nekome.dataflags.SeriesType
 import com.chesire.nekome.search.api.SearchApi
 import com.chesire.nekome.search.api.SearchDomain
 import com.hadilq.liveevent.LiveEvent

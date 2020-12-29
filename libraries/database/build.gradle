@@ -41,6 +41,7 @@ android {
 
 dependencies {
     implementation project(path: ":libraries:core")
+    implementation project(path: ":libraries:dataflags")
 
     implementation "androidx.appcompat:appcompat:$appcompat_version"
     implementation "androidx.core:core-ktx:$corektx_version"

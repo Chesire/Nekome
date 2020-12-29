@@ -31,6 +31,7 @@ android {
 
 dependencies {
     implementation project(path: ":libraries:core")
+    implementation project(path: ":libraries:dataflags")
     implementation project(path: ':libraries:kitsu')
     implementation project(path: ':libraries:server:library')
 

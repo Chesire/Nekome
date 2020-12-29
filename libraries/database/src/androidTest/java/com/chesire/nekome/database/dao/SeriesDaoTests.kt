@@ -3,13 +3,13 @@ package com.chesire.nekome.database.dao
 import androidx.room.Room
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
-import com.chesire.nekome.core.flags.SeriesStatus
-import com.chesire.nekome.core.flags.SeriesType
-import com.chesire.nekome.core.flags.Subtype
-import com.chesire.nekome.core.flags.UserSeriesStatus
 import com.chesire.nekome.core.models.ImageModel
 import com.chesire.nekome.database.RoomDB
 import com.chesire.nekome.database.entity.SeriesEntity
+import com.chesire.nekome.dataflags.SeriesStatus
+import com.chesire.nekome.dataflags.SeriesType
+import com.chesire.nekome.dataflags.Subtype
+import com.chesire.nekome.dataflags.UserSeriesStatus
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Assert.assertTrue

@@ -5,8 +5,8 @@ import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import com.chesire.nekome.account.UserRepository
-import com.chesire.nekome.core.flags.SeriesType
-import com.chesire.nekome.core.flags.UserSeriesStatus
+import com.chesire.nekome.dataflags.SeriesType
+import com.chesire.nekome.dataflags.UserSeriesStatus
 import com.chesire.nekome.library.SeriesDomain
 import com.chesire.nekome.library.SeriesRepository
 
