@@ -1,4 +1,5 @@
 include ':app',
+    ':data:seriesflags',
     ':features:discover',
     ':features:login',
     ':features:profile',

@@ -1,7 +1,7 @@
 package com.chesire.nekome.database.converters
 
 import androidx.room.TypeConverter
-import com.chesire.nekome.dataflags.Subtype
+import com.chesire.nekome.seriesflags.Subtype
 
 /**
  * Converter for [Subtype] -> [String].

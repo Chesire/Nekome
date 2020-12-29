@@ -1,11 +1,11 @@
 package com.chesire.nekome.kitsu.library
 
 import com.chesire.nekome.core.Resource
-import com.chesire.nekome.dataflags.SeriesType
-import com.chesire.nekome.dataflags.UserSeriesStatus
 import com.chesire.nekome.kitsu.api.intermediaries.Links
 import com.chesire.nekome.kitsu.library.dto.AddResponseDto
 import com.chesire.nekome.kitsu.library.dto.DtoFactory
+import com.chesire.nekome.seriesflags.SeriesType
+import com.chesire.nekome.seriesflags.UserSeriesStatus
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every

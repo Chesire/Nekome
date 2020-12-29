@@ -3,9 +3,9 @@ package com.chesire.nekome.app.search.results
 import com.chesire.nekome.core.AuthCaster
 import com.chesire.nekome.core.Resource
 import com.chesire.nekome.core.settings.ApplicationSettings
-import com.chesire.nekome.dataflags.SeriesType
-import com.chesire.nekome.dataflags.UserSeriesStatus
 import com.chesire.nekome.library.SeriesRepository
+import com.chesire.nekome.seriesflags.SeriesType
+import com.chesire.nekome.seriesflags.UserSeriesStatus
 import com.chesire.nekome.testing.CoroutinesMainDispatcherRule
 import io.mockk.Runs
 import io.mockk.coEvery

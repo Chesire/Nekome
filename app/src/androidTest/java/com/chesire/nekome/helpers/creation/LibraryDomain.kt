@@ -1,11 +1,11 @@
 package com.chesire.nekome.helpers.creation
 
 import com.chesire.nekome.core.models.ImageModel
-import com.chesire.nekome.dataflags.SeriesStatus
-import com.chesire.nekome.dataflags.SeriesType
-import com.chesire.nekome.dataflags.Subtype
-import com.chesire.nekome.dataflags.UserSeriesStatus
 import com.chesire.nekome.library.api.LibraryDomain
+import com.chesire.nekome.seriesflags.SeriesStatus
+import com.chesire.nekome.seriesflags.SeriesType
+import com.chesire.nekome.seriesflags.Subtype
+import com.chesire.nekome.seriesflags.UserSeriesStatus
 
 /**
  * Creates a new [LibraryDomain].

@@ -1,4 +1,4 @@
-package com.chesire.nekome.dataflags
+package com.chesire.nekome.seriesflags
 
 /**
  * List of all possible series sub types.

@@ -7,8 +7,8 @@ import androidx.lifecycle.viewModelScope
 import com.chesire.nekome.core.AuthCaster
 import com.chesire.nekome.core.Resource
 import com.chesire.nekome.core.settings.ApplicationSettings
-import com.chesire.nekome.dataflags.SeriesType
 import com.chesire.nekome.library.SeriesRepository
+import com.chesire.nekome.seriesflags.SeriesType
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 

@@ -31,10 +31,10 @@ android {
 }
 
 dependencies {
+    implementation project(path: ":data:seriesflags")
     implementation project(path: ":libraries:account")
     implementation project(path: ":libraries:core")
     implementation project(path: ":libraries:database")
-    implementation project(path: ":libraries:dataflags")
     implementation project(path: ":libraries:library")
 
     implementation "com.chesire.lintrules:lint-gradle:$lintrules_version"

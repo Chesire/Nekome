@@ -6,10 +6,10 @@ import androidx.test.platform.app.InstrumentationRegistry
 import com.chesire.nekome.core.models.ImageModel
 import com.chesire.nekome.database.RoomDB
 import com.chesire.nekome.database.entity.SeriesEntity
-import com.chesire.nekome.dataflags.SeriesStatus
-import com.chesire.nekome.dataflags.SeriesType
-import com.chesire.nekome.dataflags.Subtype
-import com.chesire.nekome.dataflags.UserSeriesStatus
+import com.chesire.nekome.seriesflags.SeriesStatus
+import com.chesire.nekome.seriesflags.SeriesType
+import com.chesire.nekome.seriesflags.Subtype
+import com.chesire.nekome.seriesflags.UserSeriesStatus
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Assert.assertTrue

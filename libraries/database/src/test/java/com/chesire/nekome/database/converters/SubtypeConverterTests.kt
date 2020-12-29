@@ -1,6 +1,6 @@
 package com.chesire.nekome.database.converters
 
-import com.chesire.nekome.dataflags.Subtype
+import com.chesire.nekome.seriesflags.Subtype
 import org.junit.Assert.assertEquals
 import org.junit.Test
 

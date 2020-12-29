@@ -1,9 +1,9 @@
 package com.chesire.nekome.kitsu.search
 
 import com.chesire.nekome.core.models.ImageModel
-import com.chesire.nekome.dataflags.SeriesType
-import com.chesire.nekome.dataflags.Subtype
 import com.chesire.nekome.kitsu.search.dto.SearchItemDto
+import com.chesire.nekome.seriesflags.SeriesType
+import com.chesire.nekome.seriesflags.Subtype
 
 /**
  * Create a [SearchItemDto] for tests.

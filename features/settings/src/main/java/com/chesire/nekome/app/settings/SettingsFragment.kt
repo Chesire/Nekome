@@ -10,7 +10,7 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.chesire.nekome.core.flags.HomeScreenOptions
 import com.chesire.nekome.core.settings.Theme
-import com.chesire.nekome.dataflags.UserSeriesStatus
+import com.chesire.nekome.seriesflags.UserSeriesStatus
 
 /**
  * [SettingsFragment] hosts the configuration options for the application.

@@ -1,4 +1,4 @@
-package com.chesire.nekome.dataflags
+package com.chesire.nekome.seriesflags
 
 import android.content.Context
 import androidx.annotation.StringRes

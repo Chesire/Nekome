@@ -3,7 +3,7 @@ package com.chesire.nekome.app.discover.domain
 import android.os.Parcelable
 import androidx.recyclerview.widget.DiffUtil
 import com.chesire.nekome.core.models.ImageModel
-import com.chesire.nekome.dataflags.SeriesType
+import com.chesire.nekome.seriesflags.SeriesType
 import kotlinx.parcelize.Parcelize
 
 /**

@@ -5,10 +5,6 @@ import com.chesire.nekome.R
 import com.chesire.nekome.core.Resource
 import com.chesire.nekome.core.models.ImageModel
 import com.chesire.nekome.database.dao.SeriesDao
-import com.chesire.nekome.dataflags.SeriesStatus
-import com.chesire.nekome.dataflags.SeriesType
-import com.chesire.nekome.dataflags.Subtype
-import com.chesire.nekome.dataflags.UserSeriesStatus
 import com.chesire.nekome.helpers.creation.createLibraryDomain
 import com.chesire.nekome.helpers.launchActivity
 import com.chesire.nekome.helpers.login
@@ -16,6 +12,10 @@ import com.chesire.nekome.injection.DatabaseModule
 import com.chesire.nekome.injection.LibraryModule
 import com.chesire.nekome.kitsu.AuthProvider
 import com.chesire.nekome.library.api.LibraryApi
+import com.chesire.nekome.seriesflags.SeriesStatus
+import com.chesire.nekome.seriesflags.SeriesType
+import com.chesire.nekome.seriesflags.Subtype
+import com.chesire.nekome.seriesflags.UserSeriesStatus
 import com.chesire.nekome.testing.createSeriesEntity
 import com.schibsted.spain.barista.assertion.BaristaListAssertions.assertDisplayedAtPosition
 import com.schibsted.spain.barista.assertion.BaristaListAssertions.assertListNotEmpty

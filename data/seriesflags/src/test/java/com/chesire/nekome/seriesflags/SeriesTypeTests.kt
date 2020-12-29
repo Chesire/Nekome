@@ -1,4 +1,4 @@
-package com.chesire.nekome.dataflags
+package com.chesire.nekome.seriesflags
 
 import org.junit.Assert.assertEquals
 import org.junit.Test

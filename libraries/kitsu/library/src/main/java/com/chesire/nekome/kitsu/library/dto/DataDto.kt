@@ -1,6 +1,6 @@
 package com.chesire.nekome.kitsu.library.dto
 
-import com.chesire.nekome.dataflags.UserSeriesStatus
+import com.chesire.nekome.seriesflags.UserSeriesStatus
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 

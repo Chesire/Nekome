@@ -1,6 +1,6 @@
 package com.chesire.nekome.app.search.results
 
-import com.chesire.nekome.dataflags.SeriesType
+import com.chesire.nekome.seriesflags.SeriesType
 
 /**
  * Aids with storing the required details that the [ResultsFragment] can send on to the

@@ -59,6 +59,7 @@ android {
 }
 
 dependencies {
+    implementation project(path: ":data:seriesflags")
     implementation project(path: ":features:discover")
     implementation project(path: ":features:login")
     implementation project(path: ":features:profile")
@@ -69,7 +70,6 @@ dependencies {
     implementation project(path: ":libraries:account")
     implementation project(path: ":libraries:core")
     implementation project(path: ":libraries:database")
-    implementation project(path: ":libraries:dataflags")
     implementation project(path: ":libraries:encryption")
     implementation project(path: ":libraries:kitsu")
     implementation project(path: ":libraries:kitsu:auth")

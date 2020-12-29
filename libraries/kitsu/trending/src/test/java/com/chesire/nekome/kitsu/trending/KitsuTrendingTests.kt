@@ -1,8 +1,8 @@
 package com.chesire.nekome.kitsu.trending
 
 import com.chesire.nekome.core.Resource
-import com.chesire.nekome.dataflags.SeriesType
 import com.chesire.nekome.kitsu.trending.dto.TrendingResponseDto
+import com.chesire.nekome.seriesflags.SeriesType
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk

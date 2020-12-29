@@ -5,7 +5,7 @@ import android.content.SharedPreferences
 import androidx.core.content.edit
 import com.chesire.nekome.core.R
 import com.chesire.nekome.core.flags.HomeScreenOptions
-import com.chesire.nekome.dataflags.UserSeriesStatus
+import com.chesire.nekome.seriesflags.UserSeriesStatus
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 

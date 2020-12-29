@@ -2,8 +2,8 @@ package com.chesire.nekome.library
 
 import com.chesire.nekome.core.Resource
 import com.chesire.nekome.database.dao.SeriesDao
-import com.chesire.nekome.dataflags.UserSeriesStatus
 import com.chesire.nekome.library.api.LibraryApi
+import com.chesire.nekome.seriesflags.UserSeriesStatus
 import kotlinx.coroutines.flow.map
 import timber.log.Timber
 

@@ -30,9 +30,9 @@ android {
 }
 
 dependencies {
+    implementation project(path: ":data:seriesflags")
     implementation project(path: ":libraries:account")
     implementation project(path: ":libraries:core")
-    implementation project(path: ":libraries:dataflags")
     implementation project(path: ":libraries:library")
 
     implementation "androidx.appcompat:appcompat:$appcompat_version"

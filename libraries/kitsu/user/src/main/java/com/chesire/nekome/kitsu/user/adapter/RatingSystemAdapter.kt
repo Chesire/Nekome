@@ -1,6 +1,6 @@
 package com.chesire.nekome.kitsu.user.adapter
 
-import com.chesire.nekome.dataflags.RatingSystem
+import com.chesire.nekome.seriesflags.RatingSystem
 import com.squareup.moshi.FromJson
 import com.squareup.moshi.ToJson
 

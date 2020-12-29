@@ -1,8 +1,8 @@
 package com.chesire.nekome.kitsu.search
 
 import com.chesire.nekome.core.Resource
-import com.chesire.nekome.dataflags.SeriesType
 import com.chesire.nekome.kitsu.search.dto.SearchResponseDto
+import com.chesire.nekome.seriesflags.SeriesType
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk

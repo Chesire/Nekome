@@ -2,9 +2,9 @@ package com.chesire.nekome.app.search
 
 import com.chesire.nekome.app.search.domain.SearchDomainMapper
 import com.chesire.nekome.core.models.ImageModel
-import com.chesire.nekome.dataflags.SeriesType
-import com.chesire.nekome.dataflags.Subtype
 import com.chesire.nekome.search.api.SearchDomain
+import com.chesire.nekome.seriesflags.SeriesType
+import com.chesire.nekome.seriesflags.Subtype
 import com.chesire.nekome.testing.createImageModel
 import org.junit.Assert.assertEquals
 import org.junit.Test

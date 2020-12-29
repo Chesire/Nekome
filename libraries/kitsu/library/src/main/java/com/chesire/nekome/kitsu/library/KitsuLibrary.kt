@@ -1,7 +1,6 @@
 package com.chesire.nekome.kitsu.library
 
 import com.chesire.nekome.core.Resource
-import com.chesire.nekome.dataflags.UserSeriesStatus
 import com.chesire.nekome.kitsu.asError
 import com.chesire.nekome.kitsu.library.adapter.UserSeriesStatusAdapter
 import com.chesire.nekome.kitsu.library.dto.AddResponseDto
@@ -11,6 +10,7 @@ import com.chesire.nekome.kitsu.parse
 import com.chesire.nekome.kitsu.parseError
 import com.chesire.nekome.library.api.LibraryApi
 import com.chesire.nekome.library.api.LibraryDomain
+import com.chesire.nekome.seriesflags.UserSeriesStatus
 import okhttp3.MediaType
 import okhttp3.RequestBody
 import retrofit2.Response

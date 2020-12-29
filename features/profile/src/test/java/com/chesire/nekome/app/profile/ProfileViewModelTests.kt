@@ -3,9 +3,9 @@ package com.chesire.nekome.app.profile
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.chesire.nekome.account.UserRepository
-import com.chesire.nekome.dataflags.SeriesType
-import com.chesire.nekome.dataflags.UserSeriesStatus
 import com.chesire.nekome.library.SeriesRepository
+import com.chesire.nekome.seriesflags.SeriesType
+import com.chesire.nekome.seriesflags.UserSeriesStatus
 import com.chesire.nekome.testing.CoroutinesMainDispatcherRule
 import com.chesire.nekome.testing.createSeriesDomain
 import io.mockk.Runs

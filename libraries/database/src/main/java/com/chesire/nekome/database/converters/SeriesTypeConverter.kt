@@ -1,7 +1,7 @@
 package com.chesire.nekome.database.converters
 
 import androidx.room.TypeConverter
-import com.chesire.nekome.dataflags.SeriesType
+import com.chesire.nekome.seriesflags.SeriesType
 
 /**
  * Converter for [SeriesType] -> [String].
