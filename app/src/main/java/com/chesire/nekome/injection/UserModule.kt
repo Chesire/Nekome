@@ -4,7 +4,6 @@ import com.chesire.nekome.kitsu.KITSU_URL
 import com.chesire.nekome.kitsu.adapters.ImageModelAdapter
 import com.chesire.nekome.kitsu.user.KitsuUser
 import com.chesire.nekome.kitsu.user.KitsuUserService
-import com.chesire.nekome.kitsu.user.adapter.RatingSystemAdapter
 import com.chesire.nekome.user.api.UserApi
 import com.squareup.moshi.Moshi
 import dagger.Binds
@@ -32,7 +31,6 @@ abstract class UserModule {
         @Reusable
         fun providesUserService(httpClient: OkHttpClient): KitsuUserService {
             val moshi = Moshi.Builder()
-                .add(RatingSystemAdapter())
                 .add(ImageModelAdapter())
                 .build()
 
