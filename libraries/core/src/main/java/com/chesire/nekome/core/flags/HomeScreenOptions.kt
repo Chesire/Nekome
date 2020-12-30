@@ -15,7 +15,7 @@ enum class HomeScreenOptions(val index: Int, @StringRes val stringId: Int) {
         /**
          * Gets a map of [index] to the string acquired from the [stringId].
          */
-        fun getValueMap(context: Context) = HomeScreenOptions.values()
+        fun getValueMap(context: Context) = values()
             .associate { it.index to context.getString(it.stringId) }
 
         /**

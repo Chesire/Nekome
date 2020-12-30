@@ -33,7 +33,6 @@ android {
 
 dependencies {
     implementation project(path: ":data:seriesflags")
-    implementation project(path: ":libraries:core")
     implementation project(path: ":libraries:library")
     implementation project(path: ":libraries:server:trending")
 
