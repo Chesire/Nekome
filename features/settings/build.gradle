@@ -47,6 +47,7 @@ dependencies {
     implementation "com.mikepenz:aboutlibraries:$aboutlibraries_version"
     implementation "com.mikepenz:aboutlibraries-definitions:$aboutlibraries_version"
 
+    testImplementation "io.mockk:mockk:$mockk_version"
     testImplementation "junit:junit:$junit_version"
 
     androidTestImplementation "androidx.test.espresso:espresso-core:3.3.0"

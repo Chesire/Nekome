@@ -6,16 +6,16 @@ import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
 import com.afollestad.materialdialogs.list.listItems
 import com.afollestad.materialdialogs.list.listItemsMultiChoice
 import com.chesire.nekome.app.series.SeriesPreferences
+import com.chesire.nekome.app.series.extensions.UserSeriesStatusExtensions
 import com.chesire.nekome.core.R
 import com.chesire.nekome.core.flags.SortOption
-import com.chesire.nekome.seriesflags.UserSeriesStatus
 
 /**
  * Shows the filter dialog, allowing the user to choose how to filter their series list.
  */
 fun Fragment.showFilterDialog(preferences: SeriesPreferences) {
     val context = context ?: return
-    val filterOptionMap = UserSeriesStatus.getValueMap(context)
+    val filterOptionMap = UserSeriesStatusExtensions.getValueMap(context)
 
     MaterialDialog(context).show {
         title(R.string.filter_dialog_title)

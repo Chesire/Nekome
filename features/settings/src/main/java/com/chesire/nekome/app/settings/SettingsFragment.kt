@@ -8,6 +8,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
+import com.chesire.nekome.app.settings.extensions.UserSeriesStatusExtensions
 import com.chesire.nekome.core.flags.HomeScreenOptions
 import com.chesire.nekome.core.settings.Theme
 import com.chesire.nekome.seriesflags.UserSeriesStatus
@@ -39,7 +40,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
     private fun setupDefaultSeriesState() {
         findPreference<ListPreference>(keyDefaultSeriesState)?.let { pref ->
-            val userSeriesMap = UserSeriesStatus.getValueMap(requireContext())
+            val userSeriesMap = UserSeriesStatusExtensions.getValueMap(requireContext())
             pref.entries = userSeriesMap.values.toTypedArray()
             pref.entryValues = userSeriesMap.keys.map { it.toString() }.toTypedArray()
             if (pref.value == null) {

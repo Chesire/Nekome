@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import com.chesire.nekome.core.R
 import com.chesire.nekome.core.flags.HomeScreenOptions
+import com.chesire.nekome.seriesflags.UserSeriesStatus
 import io.mockk.Runs
 import io.mockk.every
 import io.mockk.just
@@ -62,7 +63,10 @@ class ApplicationSettingsTests {
             mockPreferences
         )
 
-        assertEquals(com.chesire.nekome.seriesflags.UserSeriesStatus.OnHold, testObject.defaultSeriesState)
+        assertEquals(
+            UserSeriesStatus.OnHold,
+            testObject.defaultSeriesState
+        )
     }
 
     @Test
@@ -86,6 +90,26 @@ class ApplicationSettingsTests {
     }
 
     @Test
+    fun `defaultSeriesState with Planned value returns Planned`() {
+        val mockEditor = mockk<SharedPreferences.Editor> {
+            every { putString("key_default_series_state", "0") } returns this
+            every { apply() } just Runs
+        }
+        val mockPreferences = mockk<SharedPreferences> {
+            every { getString("key_default_series_state", "0") } returns "4"
+            every { edit() } returns mockEditor
+        }
+        val testObject = ApplicationSettings(
+            mockContext,
+            mockPreferences
+        )
+
+        val result = testObject.defaultSeriesState
+
+        assertEquals(UserSeriesStatus.Planned, result)
+    }
+
+    @Test
     fun `defaultSeriesState with Unknown value returns Current`() {
         val mockEditor = mockk<SharedPreferences.Editor> {
             every { putString("key_default_series_state", "0") } returns this
@@ -102,7 +126,7 @@ class ApplicationSettingsTests {
 
         val result = testObject.defaultSeriesState
 
-        assertEquals(com.chesire.nekome.seriesflags.UserSeriesStatus.Current, result)
+        assertEquals(UserSeriesStatus.Current, result)
     }
 
     @Test

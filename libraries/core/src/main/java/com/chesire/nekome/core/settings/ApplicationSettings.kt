@@ -36,7 +36,7 @@ class ApplicationSettings @Inject constructor(
             ) {
                 "Preferences defaultSeriesState returned null, with supplied default value"
             }
-            var status = UserSeriesStatus.getFromIndex(index)
+            var status = index.toUserSeriesStatus()
             if (status == UserSeriesStatus.Unknown) {
                 // Something has gone wrong, this shouldn't be possible.
                 // Reset the state of the setting and return "Current".
@@ -83,4 +83,10 @@ class ApplicationSettings @Inject constructor(
                 "Preferences theme returned null, with supplied default value"
             }
         )
+
+    private fun String.toUserSeriesStatus(): UserSeriesStatus {
+        return toIntOrNull()?.let { intIndex ->
+            UserSeriesStatus.values().find { it.index == intIndex } ?: UserSeriesStatus.Unknown
+        } ?: UserSeriesStatus.Unknown
+    }
 }
