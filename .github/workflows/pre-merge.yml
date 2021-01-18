@@ -1,18 +1,13 @@
 name: Pre-Merge
 
 on:
-  pull_request_target:
-    branches: [ '*' ]
+  pull_request:
 
 jobs:
   assemble:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-      with:
-        ref: ${{github.event.pull_request.head.ref}}
-        repository: ${{github.event.pull_request.head.repo.full_name}}
-        fetch-depth: 0
     - name: set up JDK 1.8
       uses: actions/setup-java@v1.4.3
       with:
@@ -24,10 +19,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-      with:
-        ref: ${{github.event.pull_request.head.ref}}
-        repository: ${{github.event.pull_request.head.repo.full_name}}
-        fetch-depth: 0
     - name: set up JDK 1.8
       uses: actions/setup-java@v1.4.3
       with:
@@ -38,20 +29,25 @@ jobs:
       run: ./gradlew jacocoTestReport
     - uses: codecov/codecov-action@v1.2.1
 
-  analyze:
+  ktlint:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-      with:
-        ref: ${{github.event.pull_request.head.ref}}
-        repository: ${{github.event.pull_request.head.repo.full_name}}
-        fetch-depth: 0
     - name: set up JDK 1.8
       uses: actions/setup-java@v1.4.3
       with:
         java-version: 1.8
     - name: run ktlintCheck
       run: ./gradlew ktlintCheck
+
+  analyze:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: set up JDK 1.8
+      uses: actions/setup-java@v1.4.3
+      with:
+        java-version: 1.8
     - name: run lintDebug
       run: ./gradlew app:lintDebug
     - name: run detekt
@@ -64,18 +60,9 @@ jobs:
 
   danger:
     needs: [test, analyze]
-    if: github.event_name == 'pull_request' || github.event_name == 'pull_request_target'
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-      with:
-        ref: ${{github.event.pull_request.head.ref}}
-        repository: ${{github.event.pull_request.head.repo.full_name}}
-        fetch-depth: 0
-    - name: set up JDK 1.8
-      uses: actions/setup-java@v1.4.3
-      with:
-        java-version: 1.8
     - uses: actions/setup-ruby@v1.1.2
       with:
         ruby-version: '2.6'
