@@ -15,7 +15,6 @@ import okhttp3.MediaType
 import okhttp3.RequestBody
 import retrofit2.Response
 import javax.inject.Inject
-import kotlin.reflect.KSuspendFunction3
 
 private const val LIMIT = 500
 private const val MAX_RETRIES = 3
@@ -116,11 +115,7 @@ class KitsuLibrary @Inject constructor(
     @Suppress("ComplexMethod", "LongMethod")
     private suspend fun performRetrieveCall(
         userId: Int,
-        execute: KSuspendFunction3<
-            @ParameterName(name = "userId") Int,
-            @ParameterName(name = "offset") Int,
-            @ParameterName(name = "limit") Int,
-            Response<RetrieveResponseDto>>
+        execute: suspend (userId: Int, offset: Int, limit: Int) -> Response<RetrieveResponseDto>
     ): Resource<List<LibraryDomain>> {
         val models = mutableListOf<LibraryDomain>()
 
