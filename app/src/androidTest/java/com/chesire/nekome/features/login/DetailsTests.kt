@@ -30,7 +30,11 @@ import org.junit.runner.RunWith
 import javax.inject.Inject
 
 @HiltAndroidTest
-@UninstallModules(DatabaseModule::class, AuthModule::class, UrlModule::class)
+@UninstallModules(
+    AuthModule::class,
+    DatabaseModule::class,
+    UrlModule::class
+)
 @RunWith(AndroidJUnit4::class)
 class DetailsTests {
 

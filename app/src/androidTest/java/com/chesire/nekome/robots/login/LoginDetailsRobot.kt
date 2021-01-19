@@ -8,6 +8,7 @@ import com.chesire.nekome.R
 import com.chesire.nekome.helpers.ToastMatcher.Companion.onToast
 import com.chesire.nekome.helpers.clickClickableSpan
 import com.schibsted.spain.barista.assertion.BaristaErrorAssertions.assertError
+import com.schibsted.spain.barista.assertion.BaristaVisibilityAssertions.assertDisplayed
 import com.schibsted.spain.barista.interaction.BaristaClickInteractions.clickOn
 import com.schibsted.spain.barista.interaction.BaristaEditTextInteractions.writeTo
 
@@ -68,6 +69,13 @@ class LoginDetailsRobot {
  * Robot to check the results for the login details screen.
  */
 class LoginDetailsResultRobot {
+
+    /**
+     * Asserts the login details screen is shown.
+     */
+    fun isVisible() {
+        assertDisplayed(R.id.detailsLayout)
+    }
 
     /**
      * Asserts the error for an empty email field.
