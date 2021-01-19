@@ -1,16 +1,10 @@
 package com.chesire.nekome.features.login
 
-import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
-import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.chesire.nekome.R
 import com.chesire.nekome.auth.api.AuthApi
 import com.chesire.nekome.core.Resource
 import com.chesire.nekome.core.url.UrlHandler
-import com.chesire.nekome.helpers.ToastMatcher.Companion.onToast
-import com.chesire.nekome.helpers.clickClickableSpan
 import com.chesire.nekome.helpers.getResource
 import com.chesire.nekome.helpers.launchActivity
 import com.chesire.nekome.helpers.logout
@@ -18,18 +12,11 @@ import com.chesire.nekome.injection.AuthModule
 import com.chesire.nekome.injection.DatabaseModule
 import com.chesire.nekome.injection.UrlModule
 import com.chesire.nekome.kitsu.AuthProvider
-import com.schibsted.spain.barista.assertion.BaristaErrorAssertions.assertError
-import com.schibsted.spain.barista.interaction.BaristaClickInteractions.clickOn
-import com.schibsted.spain.barista.interaction.BaristaEditTextInteractions.writeTo
-import com.schibsted.spain.barista.interaction.BaristaKeyboardInteractions.closeKeyboard
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
+import com.chesire.nekome.robots.login.loginDetails
 import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.UninstallModules
-import dagger.hilt.components.SingletonComponent
 import io.mockk.Runs
 import io.mockk.coEvery
 import io.mockk.every
@@ -58,7 +45,7 @@ class DetailsTests {
 
     @BindValue
     val fakeAuth = mockk<AuthApi>()
-    
+
     @Before
     fun setUp() {
         hilt.inject()
@@ -69,24 +56,26 @@ class DetailsTests {
     fun emptyUsernameShowsError() {
         launchActivity()
 
-        writeTo(R.id.usernameText, "")
-        writeTo(R.id.passwordText, "Password")
-        closeKeyboard()
-        clickOn(R.id.loginButton)
-
-        assertError(R.id.usernameLayout, R.string.login_error_empty_username)
+        loginDetails {
+            enterUsername("")
+            enterPassword("Password")
+            clickLogin()
+        } validate {
+            isEmptyEmailError()
+        }
     }
 
     @Test
     fun emptyPasswordShowsError() {
         launchActivity()
 
-        writeTo(R.id.usernameText, "Username")
-        writeTo(R.id.passwordText, "")
-        closeKeyboard()
-        clickOn(R.id.loginButton)
-
-        assertError(R.id.passwordLayout, R.string.login_error_empty_password)
+        loginDetails {
+            enterUsername("Username")
+            enterPassword("")
+            clickLogin()
+        } validate {
+            isEmptyPasswordError()
+        }
     }
 
     @Test
@@ -94,17 +83,18 @@ class DetailsTests {
         coEvery {
             fakeAuth.login("Username", "Password")
         } coAnswers {
-            Resource.Error("Unauthorized error", 401)
+            Resource.Error.invalidAuth()
         }
 
         launchActivity()
 
-        writeTo(R.id.usernameText, "Username")
-        writeTo(R.id.passwordText, "Password")
-        closeKeyboard()
-        clickOn(R.id.loginButton)
-
-        onToast(R.string.login_error_credentials).check(matches(isDisplayed()))
+        loginDetails {
+            enterUsername("Username")
+            enterPassword("Password")
+            clickLogin()
+        } validate {
+            isInvalidCredentialsError()
+        }
     }
 
     @Test
@@ -112,17 +102,18 @@ class DetailsTests {
         coEvery {
             fakeAuth.login("Username", "Password")
         } coAnswers {
-            Resource.Error("Generic error", 0)
+            Resource.Error("Generic error", Resource.Error.GenericError)
         }
 
         launchActivity()
 
-        writeTo(R.id.usernameText, "Username")
-        writeTo(R.id.passwordText, "Password")
-        closeKeyboard()
-        clickOn(R.id.loginButton)
-
-        onToast(R.string.login_error_generic).check(matches(isDisplayed()))
+        loginDetails {
+            enterUsername("Username")
+            enterPassword("Password")
+            clickLogin()
+        } validate {
+            isGenericError()
+        }
     }
 
     @Test
@@ -131,9 +122,12 @@ class DetailsTests {
         every { urlHandler.launch(any(), any()) } just Runs
 
         launchActivity()
-        clickOn(R.id.forgotPasswordButton)
 
-        verify { urlHandler.launch(any(), expectedUrl) }
+        loginDetails {
+            clickForgotPassword()
+        } validate {
+            verify { urlHandler.launch(any(), expectedUrl) }
+        }
     }
 
     @Test
@@ -142,9 +136,11 @@ class DetailsTests {
         every { urlHandler.launch(any(), any()) } just Runs
 
         launchActivity()
-        onView(withId(R.id.signUp))
-            .perform(clickClickableSpan(R.string.login_sign_up_link_target))
 
-        verify { urlHandler.launch(any(), expectedUrl) }
+        loginDetails {
+            clickSignUp()
+        } validate {
+            verify { urlHandler.launch(any(), expectedUrl) }
+        }
     }
 }
