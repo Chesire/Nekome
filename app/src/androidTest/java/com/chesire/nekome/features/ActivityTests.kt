@@ -1,4 +1,4 @@
-package com.chesire.nekome.flow
+package com.chesire.nekome.features
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.chesire.nekome.R

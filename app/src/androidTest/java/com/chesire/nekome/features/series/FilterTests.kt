@@ -1,4 +1,4 @@
-package com.chesire.nekome.flow.series
+package com.chesire.nekome.features.series
 
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isChecked

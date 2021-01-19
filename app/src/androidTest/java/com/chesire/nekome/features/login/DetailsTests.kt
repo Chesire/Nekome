@@ -1,4 +1,4 @@
-package com.chesire.nekome.flow.login
+package com.chesire.nekome.features.login
 
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
@@ -56,8 +56,9 @@ class DetailsTests {
     @BindValue
     val urlHandler = mockk<UrlHandler>()
 
+    @BindValue
     val fakeAuth = mockk<AuthApi>()
-
+    
     @Before
     fun setUp() {
         hilt.inject()
@@ -145,12 +146,5 @@ class DetailsTests {
             .perform(clickClickableSpan(R.string.login_sign_up_link_target))
 
         verify { urlHandler.launch(any(), expectedUrl) }
-    }
-
-    @Module
-    @InstallIn(SingletonComponent::class)
-    inner class FakeKitsuModule {
-        @Provides
-        fun providesAuth() = fakeAuth
     }
 }
