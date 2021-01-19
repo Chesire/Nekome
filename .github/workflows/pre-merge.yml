@@ -79,7 +79,7 @@ jobs:
       with:
         name: lint
         path: build/reports/
-    - uses: MeilCli/danger-action@v5.0.3
+    - uses: MeilCli/danger-action@v5.0.4
       with:
         plugins_file: 'Gemfile'
         install_path: 'vendor/bundle'
