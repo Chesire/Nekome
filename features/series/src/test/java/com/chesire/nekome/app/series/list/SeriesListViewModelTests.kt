@@ -194,6 +194,36 @@ class SeriesListViewModelTests {
     }
 
     @Test
+    fun `refreshAllSeries notifies authCaster on failed refreshing token`() {
+        val slot = slot<AsyncState<Any, Any>>()
+        val mockRepo = mockk<SeriesRepository> {
+            coEvery {
+                refreshAnime()
+            } coAnswers {
+                Resource.Error.invalidAuth()
+            }
+            coEvery {
+                refreshManga()
+            } coAnswers {
+                Resource.Error.invalidAuth()
+            }
+            every { getSeries() } returns mockk()
+        }
+        val mockAuthCaster = mockk<AuthCaster> {
+            every { issueRefreshingToken() } just Runs
+        }
+        val mockObserver = mockk<Observer<AsyncState<Any, Any>>>() {
+            every { onChanged(capture(slot)) } just Runs
+        }
+
+        val classUnderTest = SeriesListViewModel(mockRepo, mockAuthCaster)
+        classUnderTest.refreshStatus.observeForever(mockObserver)
+        classUnderTest.refreshAllSeries()
+
+        verify { mockAuthCaster.issueRefreshingToken() }
+    }
+
+    @Test
     fun `refreshAllSeries posts error if anime call fails`() {
         val slot = slot<AsyncState<Any, Any>>()
         val mockRepo = mockk<SeriesRepository> {
