@@ -77,7 +77,11 @@ class SeriesListViewModel @ViewModelInject constructor(
         )
 
         if (syncCommands.any { it is Resource.Error }) {
-            _refreshStatus.postError(Any())
+            if (syncCommands.any { it is Resource.Error && it.code == Resource.Error.CouldNotRefresh }) {
+                authCaster.issueRefreshingToken()
+            } else {
+                _refreshStatus.postError(Any())
+            }
         } else {
             _refreshStatus.postSuccess(Any())
         }
