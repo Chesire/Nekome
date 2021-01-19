@@ -6,6 +6,8 @@ import com.chesire.nekome.helpers.launchActivity
 import com.chesire.nekome.helpers.login
 import com.chesire.nekome.injection.DatabaseModule
 import com.chesire.nekome.kitsu.AuthProvider
+import com.chesire.nekome.robots.activity
+import com.chesire.nekome.robots.login.loginDetails
 import com.schibsted.spain.barista.assertion.BaristaVisibilityAssertions.assertDisplayed
 import com.schibsted.spain.barista.assertion.BaristaVisibilityAssertions.assertNotExist
 import com.schibsted.spain.barista.interaction.BaristaClickInteractions.clickOn
@@ -72,22 +74,27 @@ class ActivityTests {
     @Test
     fun acceptingLogoutExits() {
         launchActivity()
-        openDrawer()
 
-        clickOn(R.string.menu_logout)
-        clickOn(R.string.menu_logout_prompt_confirm)
-
-        assertDisplayed(R.id.detailsLayout)
+        activity {
+            logout {
+                confirm()
+            }
+        }
+        loginDetails {
+            validate { isVisible() }
+        }
     }
 
     @Test
     fun decliningLogoutRemains() {
         launchActivity()
-        openDrawer()
 
-        clickOn(R.string.menu_logout)
-        clickOn(R.string.menu_logout_prompt_cancel)
-
-        assertNotExist(R.id.detailsLayout)
+        activity {
+            logout {
+                cancel()
+            }
+        } validate {
+            isVisible()
+        }
     }
 }
