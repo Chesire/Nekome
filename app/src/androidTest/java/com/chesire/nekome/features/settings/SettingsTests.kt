@@ -1,20 +1,16 @@
 package com.chesire.nekome.features.settings
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.chesire.nekome.R
 import com.chesire.nekome.helpers.launchActivity
 import com.chesire.nekome.helpers.login
 import com.chesire.nekome.injection.DatabaseModule
 import com.chesire.nekome.kitsu.AuthProvider
-import com.schibsted.spain.barista.assertion.BaristaVisibilityAssertions.assertContains
-import com.schibsted.spain.barista.assertion.BaristaVisibilityAssertions.assertNotContains
-import com.schibsted.spain.barista.interaction.BaristaClickInteractions.clickOn
-import com.schibsted.spain.barista.interaction.BaristaDrawerInteractions.openDrawer
+import com.chesire.nekome.robots.activity
+import com.chesire.nekome.robots.settings.settings
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.UninstallModules
 import org.junit.Before
-import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -24,6 +20,7 @@ import javax.inject.Inject
 @UninstallModules(DatabaseModule::class)
 @RunWith(AndroidJUnit4::class)
 class SettingsTests {
+
     @get:Rule
     val hilt = HiltAndroidRule(this)
 
@@ -39,36 +36,37 @@ class SettingsTests {
     @Test
     fun canReachSettings() {
         launchActivity()
-        navigateToSettings()
 
-        verifyOnSettings()
+        activity {
+            goToSettings()
+        }
+        settings {
+            validate { isVisible() }
+        }
     }
 
     @Test
-    @Ignore("Can't make this work without UIAutomator it looks like")
-    fun privacyPolicyOpensNewPage() {
+    fun openSeriesState() {
         launchActivity()
-        navigateToSettings()
 
-        clickOn(R.string.settings_privacy_policy)
-
-        verifyNotOnSettings()
+        activity {
+            goToSettings()
+        }
+        settings {
+            changeDefaultSeriesState()
+            // change settings, verify it worked
+        }
     }
 
     @Test
-    @Ignore("NYI")
-    fun licensesOpensLicensesScreen() {
-        // NYI
+    fun openOSS() {
+        launchActivity()
+
+        activity {
+            goToSettings()
+        }
+        settings {
+            clickLicenses()
+        }
     }
-
-    private fun navigateToSettings() {
-        openDrawer()
-        clickOn(R.string.nav_settings)
-    }
-
-    // If the version string is displayed, we are on settings
-    private fun verifyOnSettings() = assertContains(R.string.version)
-
-    // If the version string is no longer displayed, we are not settings
-    private fun verifyNotOnSettings() = assertNotContains(R.string.version)
 }
