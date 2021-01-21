@@ -46,15 +46,42 @@ class SettingsTests {
     }
 
     @Test
-    fun openSeriesState() {
+    fun changeDefaultSeriesState() {
         launchActivity()
 
         activity {
             goToSettings()
         }
         settings {
-            changeDefaultSeriesState()
-            // change settings, verify it worked
+            defaultSeriesState {
+                chooseCurrent()
+            } validate {
+                currentIsSelected()
+            }
+
+            defaultSeriesState {
+                chooseCompleted()
+            } validate {
+                completedIsSelected()
+            }
+
+            defaultSeriesState {
+                chooseOnHold()
+            } validate {
+                onHoldIsSelected()
+            }
+
+            defaultSeriesState {
+                chooseDropped()
+            } validate {
+                droppedIsSelected()
+            }
+
+            defaultSeriesState {
+                choosePlanned()
+            } validate {
+                plannedIsSelected()
+            }
         }
     }
 
