@@ -14,14 +14,17 @@ class SettingsRobot {
     fun defaultSeriesState(func: DefaultSeriesStateRobot.() -> Unit) =
         DefaultSeriesStateRobot().apply { func() }
 
-    fun changeDefaultHomeScreen() = clickOn(R.string.settings_default_home_title)
+    /**
+     * Options for selecting the default home screen.
+     */
+    fun defaultHomeScreen(func: DefaultHomeScreenRobot.() -> Unit) =
+        DefaultHomeScreenRobot().apply { func() }
 
     fun changeTheme() = clickOn(R.string.settings_theme)
 
     fun clickGithub() = clickOn(R.string.settings_github)
 
     fun clickLicenses() = clickOn(R.string.settings_licenses)
-
 
     /**
      * Executes validation steps.

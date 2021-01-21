@@ -86,6 +86,28 @@ class SettingsTests {
     }
 
     @Test
+    fun changeDefaultHomeScreenState() {
+        launchActivity()
+
+        activity {
+            goToSettings()
+        }
+        settings {
+            defaultHomeScreen {
+                chooseAnime()
+            } validate {
+                animeIsSelected()
+            }
+
+            defaultHomeScreen {
+                chooseManga()
+            } validate {
+                mangaIsSelected()
+            }
+        }
+    }
+
+    @Test
     fun openOSS() {
         launchActivity()
 
