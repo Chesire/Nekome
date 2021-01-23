@@ -20,6 +20,7 @@ import org.junit.Assert.assertTrue
 import org.junit.Assert.fail
 import org.junit.Test
 
+@Suppress("SwallowedException")
 class AuthRefreshInterceptorTests {
 
     @Test
@@ -91,7 +92,7 @@ class AuthRefreshInterceptorTests {
 
         try {
             testObject.intercept(mockChain)
-        } catch (ex: Exception) {
+        } catch (ex: AuthException) {
             // Ignore the crash
         }
 

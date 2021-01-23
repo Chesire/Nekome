@@ -127,7 +127,6 @@ empty-blocks:
 
 exceptions:
   active: true
-  excludes: "**/test/**,**/androidTest/**,**/*.Test.kt,**/*.Spec.kt,**/*.Spek.kt"
   ExceptionRaisedInUnexpectedLocation:
     active: true
     methodNames: 'toString,hashCode,equals,finalize'
