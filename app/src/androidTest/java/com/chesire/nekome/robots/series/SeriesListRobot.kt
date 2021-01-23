@@ -4,8 +4,10 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import com.chesire.nekome.R
 import com.chesire.nekome.helpers.ToastMatcher.Companion.onToast
+import com.schibsted.spain.barista.assertion.BaristaListAssertions.assertDisplayedAtPosition
 import com.schibsted.spain.barista.assertion.BaristaRecyclerViewAssertions.assertRecyclerViewItemCount
 import com.schibsted.spain.barista.assertion.BaristaVisibilityAssertions.assertDisplayed
+import com.schibsted.spain.barista.interaction.BaristaListInteractions.clickListItemChild
 import com.schibsted.spain.barista.interaction.BaristaSwipeRefreshInteractions.refresh
 
 /**
@@ -24,6 +26,12 @@ class SeriesListRobot {
     fun refreshList() {
         refresh(R.id.refreshLayout)
     }
+
+    /**
+     * Presses the increment watched button on the series at position [itemPosition].
+     */
+    fun incrementSeriesByOne(itemPosition: Int) =
+        clickListItemChild(R.id.listContent, itemPosition, R.id.seriesPlusOne)
 
     /**
      * Executes validation steps.
@@ -64,4 +72,16 @@ class SeriesListResultRobot {
     fun isRefreshSeriesError() {
         onToast(R.string.series_list_refresh_error).check(matches(isDisplayed()))
     }
+
+    /**
+     * Asserts that the series progress at [itemPosition] is the expected value of
+     * "[expectedProgress] / [totalLength]".
+     */
+    fun seriesProgress(itemPosition: Int, expectedProgress: Int, totalLength: Int) =
+        assertDisplayedAtPosition(
+            R.id.listContent,
+            itemPosition,
+            R.id.seriesProgress,
+            "$expectedProgress / $totalLength"
+        )
 }

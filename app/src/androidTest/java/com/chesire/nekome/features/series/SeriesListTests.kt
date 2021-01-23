@@ -180,4 +180,45 @@ class SeriesListTests {
             isRefreshSeriesError()
         }
     }
+
+    @Test
+    fun canIncrementSeriesProgress() {
+        libraryApi.apply {
+            coEvery {
+                update(0, 1, UserSeriesStatus.Current)
+            } coAnswers {
+                Resource.Success(
+                    createLibraryDomain(
+                        id = 0,
+                        userId = 0,
+                        title = "Series 0",
+                        seriesType = SeriesType.Anime,
+                        userSeriesStatus = UserSeriesStatus.Current,
+                        progress = 1,
+                        totalLength = 24
+                    )
+                )
+            }
+        }
+        runBlocking {
+            series.insert(
+                createSeriesEntity(
+                    id = 0,
+                    userId = 0,
+                    title = "Series 0",
+                    seriesType = SeriesType.Anime,
+                    userSeriesStatus = UserSeriesStatus.Current,
+                    progress = 0,
+                    totalLength = 24
+                )
+            )
+        }
+        launchActivity()
+
+        seriesList {
+            incrementSeriesByOne(0)
+        } validate {
+            seriesProgress(0, 1, 24)
+        }
+    }
 }
