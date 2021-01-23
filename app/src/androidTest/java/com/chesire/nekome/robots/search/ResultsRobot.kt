@@ -20,6 +20,9 @@ class ResultsRobot {
     }
 }
 
+/**
+ * Robot to check the results for the results screen.
+ */
 class ResultsResultRobot {
 
     /**
