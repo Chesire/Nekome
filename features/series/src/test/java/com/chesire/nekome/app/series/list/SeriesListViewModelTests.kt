@@ -2,7 +2,6 @@ package com.chesire.nekome.app.series.list
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
-import com.chesire.nekome.core.AuthCaster
 import com.chesire.nekome.core.Resource
 import com.chesire.nekome.core.flags.AsyncState
 import com.chesire.nekome.core.flags.UserSeriesStatus
@@ -23,6 +22,7 @@ import org.junit.Rule
 import org.junit.Test
 
 class SeriesListViewModelTests {
+
     @get:Rule
     val taskExecutorRule = InstantTaskExecutorRule()
 
@@ -39,48 +39,26 @@ class SeriesListViewModelTests {
             }
             every { getSeries() } returns mockk()
         }
-        val mockAuthCaster = mockk<AuthCaster>()
 
-        val classUnderTest = SeriesListViewModel(mockRepo, mockAuthCaster)
+        val classUnderTest = SeriesListViewModel(mockRepo)
         classUnderTest.updateSeries(0, 0, UserSeriesStatus.Current, { })
 
         coVerify { mockRepo.updateSeries(0, 0, UserSeriesStatus.Current) }
     }
 
     @Test
-    fun `updateSeries CouldNotRefresh failure notifies through AuthCaster`() {
-        val mockRepo = mockk<SeriesRepository> {
-            coEvery {
-                updateSeries(0, 0, UserSeriesStatus.Current)
-            } coAnswers {
-                Resource.Error("error", Resource.Error.CouldNotRefresh)
-            }
-            every { getSeries() } returns mockk()
-        }
-        val mockAuthCaster = mockk<AuthCaster> {
-            every { issueRefreshingToken() } just Runs
-        }
-
-        val classUnderTest = SeriesListViewModel(mockRepo, mockAuthCaster)
-        classUnderTest.updateSeries(0, 0, UserSeriesStatus.Current, { })
-
-        verify { mockAuthCaster.issueRefreshingToken() }
-    }
-
-    @Test
-    fun `updateSeries failure not CouldNotRefresh invokes callback`() {
+    fun `updateSeries failure invokes callback`() {
         var condition = false
         val mockRepo = mockk<SeriesRepository> {
             coEvery {
                 updateSeries(0, 0, UserSeriesStatus.Current)
             } coAnswers {
-                Resource.Error("error", Resource.Error.GenericError)
+                Resource.Error.badRequest("error")
             }
             every { getSeries() } returns mockk()
         }
-        val mockAuthCaster = mockk<AuthCaster>()
 
-        val classUnderTest = SeriesListViewModel(mockRepo, mockAuthCaster)
+        val classUnderTest = SeriesListViewModel(mockRepo)
         classUnderTest.updateSeries(0, 0, UserSeriesStatus.Current) { condition = true }
 
         assertTrue(condition)
@@ -97,50 +75,28 @@ class SeriesListViewModelTests {
             }
             every { getSeries() } returns mockk()
         }
-        val mockAuthCaster = mockk<AuthCaster>()
 
-        val classUnderTest = SeriesListViewModel(mockRepo, mockAuthCaster)
+        val classUnderTest = SeriesListViewModel(mockRepo)
         classUnderTest.updateSeries(0, 0, UserSeriesStatus.Current) { condition = true }
 
         assertTrue(condition)
     }
 
     @Test
-    fun `deleteSeries CouldNotRefresh failure notifies through AuthCaster`() {
+    fun `deleteSeries failure updates live data`() {
         val mockRepo = mockk<SeriesRepository> {
             coEvery {
                 deleteSeries(any())
             } coAnswers {
-                Resource.Error("error", Resource.Error.CouldNotRefresh)
+                Resource.Error.badRequest("error")
             }
             every { getSeries() } returns mockk()
         }
-        val mockAuthCaster = mockk<AuthCaster> {
-            every { issueRefreshingToken() } just Runs
-        }
-
-        val classUnderTest = SeriesListViewModel(mockRepo, mockAuthCaster)
-        classUnderTest.deleteSeries(createSeriesDomain())
-
-        verify { mockAuthCaster.issueRefreshingToken() }
-    }
-
-    @Test
-    fun `deleteSeries not CouldNotRefresh failure updates live data`() {
-        val mockRepo = mockk<SeriesRepository> {
-            coEvery {
-                deleteSeries(any())
-            } coAnswers {
-                Resource.Error("error", Resource.Error.GenericError)
-            }
-            every { getSeries() } returns mockk()
-        }
-        val mockAuthCaster = mockk<AuthCaster>()
         val mockObserver = mockk<Observer<AsyncState<SeriesDomain, SeriesListDeleteError>>>() {
             every { onChanged(any()) } just Runs
         }
 
-        val classUnderTest = SeriesListViewModel(mockRepo, mockAuthCaster)
+        val classUnderTest = SeriesListViewModel(mockRepo)
         classUnderTest.deletionStatus.observeForever(mockObserver)
         classUnderTest.deleteSeries(createSeriesDomain())
 
@@ -162,9 +118,8 @@ class SeriesListViewModelTests {
             }
             every { getSeries() } returns mockk()
         }
-        val mockAuthCaster = mockk<AuthCaster>()
 
-        val classUnderTest = SeriesListViewModel(mockRepo, mockAuthCaster)
+        val classUnderTest = SeriesListViewModel(mockRepo)
         classUnderTest.refreshAllSeries()
 
         coVerify { mockRepo.refreshAnime() }
@@ -185,42 +140,11 @@ class SeriesListViewModelTests {
             }
             every { getSeries() } returns mockk()
         }
-        val mockAuthCaster = mockk<AuthCaster>()
 
-        val classUnderTest = SeriesListViewModel(mockRepo, mockAuthCaster)
+        val classUnderTest = SeriesListViewModel(mockRepo)
         classUnderTest.refreshAllSeries()
 
         coVerify { mockRepo.refreshManga() }
-    }
-
-    @Test
-    fun `refreshAllSeries notifies authCaster on failed refreshing token`() {
-        val slot = slot<AsyncState<Any, Any>>()
-        val mockRepo = mockk<SeriesRepository> {
-            coEvery {
-                refreshAnime()
-            } coAnswers {
-                Resource.Error.invalidAuth()
-            }
-            coEvery {
-                refreshManga()
-            } coAnswers {
-                Resource.Error.invalidAuth()
-            }
-            every { getSeries() } returns mockk()
-        }
-        val mockAuthCaster = mockk<AuthCaster> {
-            every { issueRefreshingToken() } just Runs
-        }
-        val mockObserver = mockk<Observer<AsyncState<Any, Any>>>() {
-            every { onChanged(capture(slot)) } just Runs
-        }
-
-        val classUnderTest = SeriesListViewModel(mockRepo, mockAuthCaster)
-        classUnderTest.refreshStatus.observeForever(mockObserver)
-        classUnderTest.refreshAllSeries()
-
-        verify { mockAuthCaster.issueRefreshingToken() }
     }
 
     @Test
@@ -239,12 +163,11 @@ class SeriesListViewModelTests {
             }
             every { getSeries() } returns mockk()
         }
-        val mockAuthCaster = mockk<AuthCaster>()
         val mockObserver = mockk<Observer<AsyncState<Any, Any>>>() {
             every { onChanged(capture(slot)) } just Runs
         }
 
-        val classUnderTest = SeriesListViewModel(mockRepo, mockAuthCaster)
+        val classUnderTest = SeriesListViewModel(mockRepo)
         classUnderTest.refreshStatus.observeForever(mockObserver)
         classUnderTest.refreshAllSeries()
 
@@ -267,12 +190,11 @@ class SeriesListViewModelTests {
             }
             every { getSeries() } returns mockk()
         }
-        val mockAuthCaster = mockk<AuthCaster>()
         val mockObserver = mockk<Observer<AsyncState<Any, Any>>>() {
             every { onChanged(capture(slot)) } just Runs
         }
 
-        val classUnderTest = SeriesListViewModel(mockRepo, mockAuthCaster)
+        val classUnderTest = SeriesListViewModel(mockRepo)
         classUnderTest.refreshStatus.observeForever(mockObserver)
         classUnderTest.refreshAllSeries()
 
@@ -295,12 +217,11 @@ class SeriesListViewModelTests {
             }
             every { getSeries() } returns mockk()
         }
-        val mockAuthCaster = mockk<AuthCaster>()
         val mockObserver = mockk<Observer<AsyncState<Any, Any>>>() {
             every { onChanged(capture(slot)) } just Runs
         }
 
-        val classUnderTest = SeriesListViewModel(mockRepo, mockAuthCaster)
+        val classUnderTest = SeriesListViewModel(mockRepo)
         classUnderTest.refreshStatus.observeForever(mockObserver)
         classUnderTest.refreshAllSeries()
 

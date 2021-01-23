@@ -4,7 +4,6 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.chesire.nekome.core.AuthCaster
 import com.chesire.nekome.core.Resource
 import com.chesire.nekome.core.flags.SeriesType
 import com.chesire.nekome.core.settings.ApplicationSettings
@@ -17,7 +16,6 @@ import kotlinx.coroutines.launch
  */
 class ResultsViewModel @ViewModelInject constructor(
     private val seriesRepo: SeriesRepository,
-    private val authCaster: AuthCaster,
     private val settings: ApplicationSettings
 ) : ViewModel() {
 
@@ -48,10 +46,6 @@ class ResultsViewModel @ViewModelInject constructor(
             else -> error("Unknown SeriesType: ${data.type}")
         }
 
-        if (response is Resource.Error && response.code == Resource.Error.CouldNotRefresh) {
-            authCaster.issueRefreshingToken()
-        } else {
-            callback(response is Resource.Success)
-        }
+        callback(response is Resource.Success)
     }
 }

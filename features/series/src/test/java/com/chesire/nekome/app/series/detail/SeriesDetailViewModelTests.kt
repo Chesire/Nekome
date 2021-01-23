@@ -3,7 +3,6 @@ package com.chesire.nekome.app.series.detail
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import androidx.lifecycle.SavedStateHandle
-import com.chesire.nekome.core.AuthCaster
 import com.chesire.nekome.core.Resource
 import com.chesire.nekome.core.flags.AsyncState
 import com.chesire.nekome.library.SeriesRepository
@@ -15,13 +14,13 @@ import io.mockk.every
 import io.mockk.just
 import io.mockk.mockk
 import io.mockk.slot
-import io.mockk.verify
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Rule
 import org.junit.Test
 
 class SeriesDetailViewModelTests {
+
     @get:Rule
     val rule = InstantTaskExecutorRule()
 
@@ -32,40 +31,14 @@ class SeriesDetailViewModelTests {
     fun `updateModel updates the currently stored model`() {
         val expected = createSeriesDomain()
         val mockRepository = mockk<SeriesRepository>()
-        val mockAuth = mockk<AuthCaster>()
 
         val classUnderTest = SeriesDetailViewModel(
             SavedStateHandle(mapOf(MODEL_ID to expected)),
             mockRepository,
-            mockAuth,
             coroutineRule.testDispatcher
         )
 
         assertEquals(expected.canonicalTitle, classUnderTest.mutableModel.seriesName)
-    }
-
-    @Test
-    fun `sendUpdate on CouldNotRefresh error, notifies AuthCaster`() {
-        val mockRepository = mockk<SeriesRepository> {
-            coEvery {
-                updateSeries(any(), any(), any())
-            } coAnswers {
-                Resource.Error("", Resource.Error.CouldNotRefresh)
-            }
-        }
-        val mockAuth = mockk<AuthCaster> {
-            every { issueRefreshingToken() } just Runs
-        }
-
-        val classUnderTest = SeriesDetailViewModel(
-            SavedStateHandle(mapOf(MODEL_ID to createSeriesDomain())),
-            mockRepository,
-            mockAuth,
-            coroutineRule.testDispatcher
-        )
-        classUnderTest.sendUpdate(classUnderTest.mutableModel)
-
-        verify { mockAuth.issueRefreshingToken() }
     }
 
     @Test
@@ -75,11 +48,8 @@ class SeriesDetailViewModelTests {
             coEvery {
                 updateSeries(any(), any(), any())
             } coAnswers {
-                Resource.Error("", Resource.Error.GenericError)
+                Resource.Error.badRequest("")
             }
-        }
-        val mockAuth = mockk<AuthCaster> {
-            every { issueRefreshingToken() } just Runs
         }
         val mockObserver = mockk<Observer<AsyncState<MutableSeriesModel, SeriesDetailError>>> {
             every { onChanged(capture(slot)) } just Runs
@@ -88,7 +58,6 @@ class SeriesDetailViewModelTests {
         val classUnderTest = SeriesDetailViewModel(
             SavedStateHandle(mapOf(MODEL_ID to createSeriesDomain())),
             mockRepository,
-            mockAuth,
             coroutineRule.testDispatcher
         )
         classUnderTest.updatingStatus.observeForever(mockObserver)
@@ -107,9 +76,6 @@ class SeriesDetailViewModelTests {
                 Resource.Success(createSeriesDomain())
             }
         }
-        val mockAuth = mockk<AuthCaster> {
-            every { issueRefreshingToken() } just Runs
-        }
         val mockObserver = mockk<Observer<AsyncState<MutableSeriesModel, SeriesDetailError>>> {
             every { onChanged(capture(slot)) } just Runs
         }
@@ -117,7 +83,6 @@ class SeriesDetailViewModelTests {
         val classUnderTest = SeriesDetailViewModel(
             SavedStateHandle(mapOf(MODEL_ID to createSeriesDomain())),
             mockRepository,
-            mockAuth,
             coroutineRule.testDispatcher
         )
         classUnderTest.updatingStatus.observeForever(mockObserver)

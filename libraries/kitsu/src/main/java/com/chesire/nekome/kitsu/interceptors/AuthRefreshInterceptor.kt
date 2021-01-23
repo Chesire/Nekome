@@ -1,11 +1,14 @@
 package com.chesire.nekome.kitsu.interceptors
 
 import com.chesire.nekome.auth.api.AuthApi
+import com.chesire.nekome.core.AuthCaster
 import com.chesire.nekome.core.Resource
+import com.chesire.nekome.kitsu.AuthException
 import com.chesire.nekome.kitsu.AuthProvider
 import kotlinx.coroutines.runBlocking
 import okhttp3.Interceptor
 import okhttp3.Response
+import java.net.HttpURLConnection
 import javax.inject.Inject
 
 /**
@@ -20,13 +23,15 @@ import javax.inject.Inject
  */
 class AuthRefreshInterceptor @Inject constructor(
     private val provider: AuthProvider,
-    private val auth: AuthApi
+    private val auth: AuthApi,
+    private val authCaster: AuthCaster
 ) : Interceptor {
+
     override fun intercept(chain: Interceptor.Chain): Response {
         val originRequest = chain.request()
         val response = chain.proceed(originRequest)
 
-        return if (!response.isSuccessful && response.code() == 403) {
+        return if (!response.isSuccessful && response.code() == HttpURLConnection.HTTP_FORBIDDEN) {
             val authResponse = runBlocking { auth.refresh() }
             if (authResponse is Resource.Success) {
                 chain.proceed(
@@ -36,21 +41,11 @@ class AuthRefreshInterceptor @Inject constructor(
                         .build()
                 )
             } else {
-                generateFailureResponse(response)
+                authCaster.issueRefreshingToken()
+                throw AuthException()
             }
         } else {
             response
         }
-    }
-
-    private fun generateFailureResponse(originResponse: Response): Response {
-        // If there is an unrecoverable auth failure report a 401 error for the app to logout with
-        return Response
-            .Builder()
-            .request(originResponse.request())
-            .protocol(originResponse.protocol())
-            .code(401)
-            .message(originResponse.message())
-            .build()
     }
 }

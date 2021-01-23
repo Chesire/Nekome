@@ -1,5 +1,10 @@
 package com.chesire.nekome.core
 
+import java.net.HttpURLConnection.HTTP_BAD_REQUEST
+import java.net.HttpURLConnection.HTTP_FORBIDDEN
+import java.net.HttpURLConnection.HTTP_NO_CONTENT
+import java.net.HttpURLConnection.HTTP_UNAVAILABLE
+
 /**
  * Generic class to aid with receiving responses.
  */
@@ -18,47 +23,33 @@ sealed class Resource<T> {
     /**
      * Response was a failure, with the [msg] & [code] containing information on why.
      */
-    class Error<T>(val msg: String, val code: Int = GenericError) : Resource<T>() {
+    class Error<T>(val msg: String, val code: Int = HTTP_BAD_REQUEST) : Resource<T>() {
         /**
          * Mutates this instance of [Error] of type [T] into an [Error] of type [U].
          */
         fun <U> mutate() = Error<U>(msg, code)
 
         companion object {
-            /**
-             * Generic error.
-             */
-            const val GenericError = 200
 
             /**
-             * Empty body() object.
+             * Creates an [Error] for a bad request.
              */
-            const val EmptyBody = 204
-
-            /**
-             * Could not refresh the access token.
-             */
-            const val CouldNotRefresh = 401
-
-            /**
-             * Unable to reach the server.
-             */
-            const val CouldNotReach = 503
+            fun <T> badRequest(body: String): Error<T> = Error(body, HTTP_BAD_REQUEST)
 
             /**
              * Creates an [Error] for an empty response.
              */
-            fun <T> emptyResponse(): Error<T> = Error("Response body is null", EmptyBody)
+            fun <T> emptyResponse(): Error<T> = Error("Response body is null", HTTP_NO_CONTENT)
 
             /**
              * Creates an [Error] for invalid auth.
              */
-            fun <T> invalidAuth(): Error<T> = Error("Auth provided is not valid", CouldNotRefresh)
+            fun <T> couldNotRefresh(): Error<T> = Error("Could not refresh auth", HTTP_FORBIDDEN)
 
             /**
              * Creates an [Error] for being unable to reach the server.
              */
-            fun <T> couldNotReach(): Error<T> = Error("Could not reach service", CouldNotReach)
+            fun <T> couldNotReach(): Error<T> = Error("Could not reach service", HTTP_UNAVAILABLE)
         }
     }
 }

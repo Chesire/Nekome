@@ -30,7 +30,7 @@ class SeriesRepository(
     suspend fun addAnime(seriesId: Int, startingStatus: UserSeriesStatus): Resource<SeriesDomain> {
         val idResult = userProvider.provideUserId()
         if (idResult !is UserProvider.UserIdResult.Success) {
-            return Resource.Error.invalidAuth()
+            return Resource.Error.couldNotRefresh()
         }
 
         val response = libraryApi.addAnime(
@@ -57,7 +57,7 @@ class SeriesRepository(
     suspend fun addManga(seriesId: Int, startingStatus: UserSeriesStatus): Resource<SeriesDomain> {
         val idResult = userProvider.provideUserId()
         if (idResult !is UserProvider.UserIdResult.Success) {
-            return Resource.Error.invalidAuth()
+            return Resource.Error.couldNotRefresh()
         }
 
         val response = libraryApi.addManga(
@@ -99,7 +99,7 @@ class SeriesRepository(
     suspend fun refreshAnime(): Resource<List<SeriesDomain>> {
         val idResult = userProvider.provideUserId()
         if (idResult !is UserProvider.UserIdResult.Success) {
-            return Resource.Error.invalidAuth()
+            return Resource.Error.couldNotRefresh()
         }
 
         return when (val response = libraryApi.retrieveAnime(idResult.id)) {
@@ -121,7 +121,7 @@ class SeriesRepository(
     suspend fun refreshManga(): Resource<List<SeriesDomain>> {
         val idResult = userProvider.provideUserId()
         if (idResult !is UserProvider.UserIdResult.Success) {
-            return Resource.Error.invalidAuth()
+            return Resource.Error.couldNotRefresh()
         }
 
         return when (val response = libraryApi.retrieveManga(idResult.id)) {

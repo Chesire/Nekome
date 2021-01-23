@@ -44,9 +44,9 @@ fun <T, U> Response<T>.asError() = Resource.Error<U>(
  * Parses out the [Exception] providing a [Resource] for use elsewhere.
  */
 fun <T> Exception.parse(): Resource.Error<T> {
-    return if (this is UnknownHostException) {
-        Resource.Error.couldNotReach()
-    } else {
-        Resource.Error(toString(), 400)
+    return when (this) {
+        is UnknownHostException -> Resource.Error.couldNotReach()
+        is AuthException -> Resource.Error.couldNotRefresh()
+        else -> Resource.Error.badRequest(toString())
     }
 }
