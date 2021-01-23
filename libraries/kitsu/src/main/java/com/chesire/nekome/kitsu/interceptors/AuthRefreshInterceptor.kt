@@ -18,8 +18,8 @@ import javax.inject.Inject
  * done as an interceptor instead as the official way expects a 401 to be returned if auth fails,
  * but Kitsu returns a 403 which won't work.
  *
- * If we still cannot refresh the token after attempting here, force a 401 to be returned back to
- * the calling layer and let that handle it.
+ * If we still cannot refresh the token after attempting here, notify the [AuthCaster] so it can
+ * tell any listeners of the failure.
  */
 class AuthRefreshInterceptor @Inject constructor(
     private val provider: AuthProvider,
