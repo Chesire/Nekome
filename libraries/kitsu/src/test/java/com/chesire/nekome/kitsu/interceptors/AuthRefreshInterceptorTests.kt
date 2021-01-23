@@ -16,7 +16,9 @@ import kotlinx.coroutines.runBlocking
 import okhttp3.Interceptor
 import okhttp3.Response
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
+import org.junit.Assert.fail
 import org.junit.Test
 
 class AuthRefreshInterceptorTests {
@@ -99,7 +101,7 @@ class AuthRefreshInterceptorTests {
     }
 
     @Test(expected = AuthException::class)
-    fun `getting new auth failure, throws AuthException`(): Unit = runBlocking {
+    fun `getting new auth failure, throws AuthException`() = runBlocking {
         val mockProvider = mockk<AuthProvider>()
         val mockAuth = mockk<AuthApi> {
             coEvery {
@@ -125,6 +127,8 @@ class AuthRefreshInterceptorTests {
         val testObject = AuthRefreshInterceptor(mockProvider, mockAuth, mockAuthCaster)
 
         testObject.intercept(mockChain)
+
+        fail("Exception not thrown")
     }
 
     @Test
