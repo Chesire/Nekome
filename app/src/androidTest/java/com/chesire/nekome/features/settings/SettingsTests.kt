@@ -11,6 +11,7 @@ import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.UninstallModules
 import org.junit.Before
+import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -108,6 +109,48 @@ class SettingsTests {
     }
 
     @Test
+    fun changeThemeSetting() {
+        launchActivity()
+
+        activity {
+            goToSettings()
+        }
+        settings {
+            changeTheme {
+                chooseDark()
+                activity { goToSettings() }
+            } validate {
+                darkIsSelected()
+            }
+
+            changeTheme {
+                chooseLight()
+                activity { goToSettings() }
+            } validate {
+                lightIsSelected()
+            }
+
+            changeTheme {
+                chooseSystem()
+            } validate {
+                systemIsSelected()
+            }
+        }
+    }
+
+    @Test
+    fun openingGitHubHasNoIssue() {
+        launchActivity()
+
+        activity {
+            goToSettings()
+        }
+        settings {
+            openGitHub()
+        }
+    }
+
+    @Test
     fun openOSS() {
         launchActivity()
 
@@ -115,7 +158,7 @@ class SettingsTests {
             goToSettings()
         }
         settings {
-            clickLicenses()
+            goToLicenses()
         }
     }
 }

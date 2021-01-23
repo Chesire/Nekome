@@ -51,7 +51,5 @@ class SearchResultRobot {
     /**
      * Asserts the search screen is shown.
      */
-    fun isVisible() {
-        assertDisplayed(R.id.searchLayout)
-    }
+    fun isVisible() = assertDisplayed(R.id.searchLayout)
 }

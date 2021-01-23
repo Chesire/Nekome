@@ -4,8 +4,14 @@ import com.chesire.nekome.R
 import com.schibsted.spain.barista.assertion.BaristaVisibilityAssertions.assertDisplayed
 import com.schibsted.spain.barista.interaction.BaristaClickInteractions.clickOn
 
+/**
+ * Method to interact with the [SettingsRobot].
+ */
 fun settings(func: SettingsRobot.() -> Unit) = SettingsRobot().apply { func() }
 
+/**
+ * Robot to interact with the settings screen.
+ */
 class SettingsRobot {
 
     /**
@@ -20,11 +26,20 @@ class SettingsRobot {
     fun defaultHomeScreen(func: DefaultHomeScreenRobot.() -> Unit) =
         DefaultHomeScreenRobot().apply { func() }
 
-    fun changeTheme() = clickOn(R.string.settings_theme)
+    /**
+     * Options for selecting the theme.
+     */
+    fun changeTheme(func: ThemeRobot.() -> Unit) = ThemeRobot().apply { func() }
 
-    fun clickGithub() = clickOn(R.string.settings_github)
+    /**
+     * Clicks the link to go to the GitHub page.
+     */
+    fun openGitHub() = clickOn(R.string.settings_github)
 
-    fun clickLicenses() = clickOn(R.string.settings_licenses)
+    /**
+     * Open the licenses screen.
+     */
+    fun goToLicenses() = clickOn(R.string.settings_licenses)
 
     /**
      * Executes validation steps.
@@ -34,9 +49,13 @@ class SettingsRobot {
     }
 }
 
+/**
+ * Robot to check the results for the settings screen.
+ */
 class SettingsResultRobot {
 
-    fun isVisible() {
-        assertDisplayed(R.string.settings_default_series_status_title)
-    }
+    /**
+     * Asserts the settings screen is shown.
+     */
+    fun isVisible() = assertDisplayed(R.string.settings_default_series_status_title)
 }
