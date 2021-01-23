@@ -2,12 +2,14 @@ package com.chesire.nekome.features.search
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.chesire.nekome.core.Resource
+import com.chesire.nekome.helpers.creation.createSearchDomain
 import com.chesire.nekome.helpers.launchActivity
 import com.chesire.nekome.helpers.login
 import com.chesire.nekome.injection.DatabaseModule
 import com.chesire.nekome.injection.SearchModule
 import com.chesire.nekome.kitsu.AuthProvider
 import com.chesire.nekome.robots.activity
+import com.chesire.nekome.robots.search.results
 import com.chesire.nekome.robots.search.search
 import com.chesire.nekome.search.api.SearchApi
 import dagger.hilt.android.testing.BindValue
@@ -22,8 +24,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import javax.inject.Inject
 
-private const val GENERIC_ERROR = "GENERIC_ERROR"
-private const val NO_RESULTS_ERROR = "NO_RESULTS_ERROR"
+private const val DEFAULT_VALUES = "DEFAULT_VALUES"
 
 @HiltAndroidTest
 @UninstallModules(
@@ -31,7 +32,7 @@ private const val NO_RESULTS_ERROR = "NO_RESULTS_ERROR"
     SearchModule::class
 )
 @RunWith(AndroidJUnit4::class)
-class SearchTests {
+class ResultsTests {
 
     @get:Rule
     val hilt = HiltAndroidRule(this)
@@ -42,14 +43,9 @@ class SearchTests {
     @BindValue
     val searchApi = mockk<SearchApi> {
         coEvery {
-            searchForAnime(GENERIC_ERROR)
+            searchForAnime(DEFAULT_VALUES)
         } coAnswers {
-            Resource.Error("")
-        }
-        coEvery {
-            searchForAnime(NO_RESULTS_ERROR)
-        } coAnswers {
-            Resource.Success(listOf())
+            Resource.Success(listOf(createSearchDomain()))
         }
     }
 
@@ -60,62 +56,19 @@ class SearchTests {
     }
 
     @Test
-    fun canReachSearch() {
+    fun canReachResults() {
         launchActivity()
 
         activity {
             goToSearch()
         }
         search {
+            searchTerm(DEFAULT_VALUES)
+            clickSearch()
+        }
+        results {
             validate { isVisible() }
         }
     }
-
-    @Test
-    fun emptySearchTermShowsError() {
-        launchActivity()
-
-        activity {
-            goToSearch()
-        }
-        search {
-            searchTerm("")
-            selectAnime()
-            clickSearch()
-        } validate {
-            isEmptySearchError()
-        }
-    }
-
-    @Test
-    fun genericErrorFromSearchShowsError() {
-        launchActivity()
-
-        activity {
-            goToSearch()
-        }
-        search {
-            searchTerm(GENERIC_ERROR)
-            selectAnime()
-            clickSearch()
-        } validate {
-            isGenericError()
-        }
-    }
-
-    @Test
-    fun noSeriesFoundErrorFromSearchShowsError() {
-        launchActivity()
-
-        activity {
-            goToSearch()
-        }
-        search {
-            searchTerm(NO_RESULTS_ERROR)
-            selectAnime()
-            clickSearch()
-        } validate {
-            isNoSeriesFoundError()
-        }
-    }
 }
+

@@ -1,6 +1,10 @@
 package com.chesire.nekome.robots.search
 
+import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import com.chesire.nekome.R
+import com.chesire.nekome.helpers.ToastMatcher.Companion.onToast
+import com.schibsted.spain.barista.assertion.BaristaErrorAssertions.assertError
 import com.schibsted.spain.barista.assertion.BaristaVisibilityAssertions.assertDisplayed
 import com.schibsted.spain.barista.interaction.BaristaClickInteractions.clickOn
 import com.schibsted.spain.barista.interaction.BaristaEditTextInteractions.writeTo
@@ -52,4 +56,23 @@ class SearchResultRobot {
      * Asserts the search screen is shown.
      */
     fun isVisible() = assertDisplayed(R.id.searchLayout)
+
+    /**
+     * Asserts the error for having no search term.
+     */
+    fun isEmptySearchError() = assertError(R.id.searchTextLayout, R.string.search_error_no_text)
+
+    /**
+     * Asserts the generic error message.
+     */
+    fun isGenericError() {
+        onToast(R.string.error_generic).check(matches(isDisplayed()))
+    }
+
+    /**
+     * Asserts the error for no series found.
+     */
+    fun isNoSeriesFoundError() {
+        onToast(R.string.search_error_no_series_found).check(matches(isDisplayed()))
+    }
 }
