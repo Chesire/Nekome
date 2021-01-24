@@ -1,20 +1,17 @@
 package com.chesire.nekome.features.login
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.chesire.nekome.ActivityTest
 import com.chesire.nekome.R
 import com.chesire.nekome.auth.api.AuthApi
 import com.chesire.nekome.core.Resource
 import com.chesire.nekome.core.url.UrlHandler
 import com.chesire.nekome.helpers.getResource
-import com.chesire.nekome.helpers.launchActivity
-import com.chesire.nekome.helpers.logout
 import com.chesire.nekome.injection.AuthModule
 import com.chesire.nekome.injection.DatabaseModule
 import com.chesire.nekome.injection.UrlModule
-import com.chesire.nekome.kitsu.AuthProvider
 import com.chesire.nekome.robots.login.loginDetails
 import dagger.hilt.android.testing.BindValue
-import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.UninstallModules
 import io.mockk.Runs
@@ -23,11 +20,8 @@ import io.mockk.every
 import io.mockk.just
 import io.mockk.mockk
 import io.mockk.verify
-import org.junit.Before
-import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import javax.inject.Inject
 
 @HiltAndroidTest
 @UninstallModules(
@@ -36,25 +30,15 @@ import javax.inject.Inject
     UrlModule::class
 )
 @RunWith(AndroidJUnit4::class)
-class DetailsTests {
+class DetailsTests : ActivityTest() {
 
-    @get:Rule
-    val hilt = HiltAndroidRule(this)
-
-    @Inject
-    lateinit var authProvider: AuthProvider
+    override val startLoggedIn = false
 
     @BindValue
     val urlHandler = mockk<UrlHandler>()
 
     @BindValue
-    val fakeAuth = mockk<AuthApi>()
-
-    @Before
-    fun setUp() {
-        hilt.inject()
-        authProvider.logout()
-    }
+    val userApi = mockk<AuthApi>()
 
     @Test
     fun emptyUsernameShowsError() {
@@ -85,7 +69,7 @@ class DetailsTests {
     @Test
     fun invalidCredentialsShowsError() {
         coEvery {
-            fakeAuth.login("Username", "Password")
+            userApi.login("Username", "Password")
         } coAnswers {
             Resource.Error.invalidAuth()
         }
@@ -104,7 +88,7 @@ class DetailsTests {
     @Test
     fun failureToLoginShowsError() {
         coEvery {
-            fakeAuth.login("Username", "Password")
+            userApi.login("Username", "Password")
         } coAnswers {
             Resource.Error("Generic error", Resource.Error.GenericError)
         }
