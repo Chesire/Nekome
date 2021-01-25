@@ -34,6 +34,11 @@ class SeriesListRobot {
         clickListItemChild(R.id.listContent, itemPosition, R.id.seriesPlusOne)
 
     /**
+     * Options for changing the sort option.
+     */
+    fun sortSeries(func: SortOptionRobot.() -> Unit) = SortOptionRobot().apply { func() }
+
+    /**
      * Executes validation steps.
      */
     infix fun validate(func: SeriesListResultRobot.() -> Unit): SeriesListResultRobot {
