@@ -1,6 +1,6 @@
 package com.chesire.nekome.features.series
 
-import com.chesire.nekome.ActivityTest
+import com.chesire.nekome.UITest
 import com.chesire.nekome.core.Resource
 import com.chesire.nekome.core.flags.SeriesType
 import com.chesire.nekome.core.flags.UserSeriesStatus
@@ -23,7 +23,7 @@ import org.junit.Test
     DatabaseModule::class,
     LibraryModule::class
 )
-class SeriesListTests : ActivityTest() {
+class SeriesListTests : UITest() {
 
     @BindValue
     val libraryApi = mockk<LibraryApi>()

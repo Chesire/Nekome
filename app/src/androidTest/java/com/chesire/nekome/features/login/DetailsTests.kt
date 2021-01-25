@@ -1,7 +1,7 @@
 package com.chesire.nekome.features.login
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.chesire.nekome.ActivityTest
+import com.chesire.nekome.UITest
 import com.chesire.nekome.R
 import com.chesire.nekome.auth.api.AuthApi
 import com.chesire.nekome.core.Resource
@@ -30,7 +30,7 @@ import org.junit.runner.RunWith
     UrlModule::class
 )
 @RunWith(AndroidJUnit4::class)
-class DetailsTests : ActivityTest() {
+class DetailsTests : UITest() {
 
     override val startLoggedIn = false
 

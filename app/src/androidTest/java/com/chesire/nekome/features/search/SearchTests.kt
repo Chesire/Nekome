@@ -1,6 +1,6 @@
 package com.chesire.nekome.features.search
 
-import com.chesire.nekome.ActivityTest
+import com.chesire.nekome.UITest
 import com.chesire.nekome.core.Resource
 import com.chesire.nekome.injection.DatabaseModule
 import com.chesire.nekome.injection.SearchModule
@@ -22,7 +22,7 @@ private const val NO_RESULTS_ERROR = "NO_RESULTS_ERROR"
     DatabaseModule::class,
     SearchModule::class
 )
-class SearchTests() : ActivityTest() {
+class SearchTests() : UITest() {
 
     @BindValue
     val searchApi = mockk<SearchApi> {

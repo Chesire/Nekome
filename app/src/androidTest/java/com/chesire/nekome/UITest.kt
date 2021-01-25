@@ -20,8 +20,9 @@ import javax.inject.Inject
  * Provides a base class to use for all UI tests.
  */
 @RunWith(AndroidJUnit4::class)
-abstract class ActivityTest {
+abstract class UITest {
 
+    @Suppress("LeakingThis")
     @get:Rule
     val hilt = HiltAndroidRule(this)
 

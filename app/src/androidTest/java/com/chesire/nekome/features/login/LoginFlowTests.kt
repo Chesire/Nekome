@@ -1,6 +1,6 @@
 package com.chesire.nekome.features.login
 
-import com.chesire.nekome.ActivityTest
+import com.chesire.nekome.UITest
 import com.chesire.nekome.auth.api.AuthApi
 import com.chesire.nekome.core.Resource
 import com.chesire.nekome.helpers.creation.createLibraryDomain
@@ -28,7 +28,7 @@ import org.junit.Test
     LibraryModule::class,
     UserModule::class
 )
-class LoginFlowTests : ActivityTest() {
+class LoginFlowTests : UITest() {
 
     override val startLoggedIn = false
 

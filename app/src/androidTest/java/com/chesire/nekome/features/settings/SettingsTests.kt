@@ -1,6 +1,6 @@
 package com.chesire.nekome.features.settings
 
-import com.chesire.nekome.ActivityTest
+import com.chesire.nekome.UITest
 import com.chesire.nekome.injection.DatabaseModule
 import com.chesire.nekome.robots.activity
 import com.chesire.nekome.robots.settings.settings
@@ -10,7 +10,7 @@ import org.junit.Test
 
 @UninstallModules(DatabaseModule::class)
 @HiltAndroidTest
-class SettingsTests : ActivityTest() {
+class SettingsTests : UITest() {
 
     @Test
     fun canReachSettings() {

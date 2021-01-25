@@ -1,6 +1,6 @@
 package com.chesire.nekome.features.search
 
-import com.chesire.nekome.ActivityTest
+import com.chesire.nekome.UITest
 import com.chesire.nekome.core.Resource
 import com.chesire.nekome.helpers.creation.createSearchDomain
 import com.chesire.nekome.injection.DatabaseModule
@@ -23,7 +23,7 @@ private const val DEFAULT_VALUES = "DEFAULT_VALUES"
     DatabaseModule::class,
     SearchModule::class
 )
-class ResultsTests : ActivityTest() {
+class ResultsTests : UITest() {
 
     override val startLoggedIn = true
 
