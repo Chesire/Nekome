@@ -74,6 +74,16 @@ class SeriesListResultRobot {
     }
 
     /**
+     * Asserts that the current screen is the [AnimeFragment].
+     */
+    fun isAnimeScreen() = assertDisplayed(R.string.nav_anime)
+
+    /**
+     * Asserts that the current screen is the [MangaFragment].
+     */
+    fun isMangaScreen() = assertDisplayed(R.string.nav_manga)
+
+    /**
      * Asserts that the series progress at [itemPosition] is the expected value of
      * "[expectedProgress] / [totalLength]".
      */

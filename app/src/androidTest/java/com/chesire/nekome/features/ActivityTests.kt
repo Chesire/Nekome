@@ -1,74 +1,97 @@
 package com.chesire.nekome.features
 
-import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.chesire.nekome.R
-import com.chesire.nekome.helpers.launchActivity
-import com.chesire.nekome.helpers.login
+import com.chesire.nekome.UITest
+import com.chesire.nekome.core.flags.HomeScreenOptions
+import com.chesire.nekome.core.settings.ApplicationSettings
 import com.chesire.nekome.injection.DatabaseModule
-import com.chesire.nekome.kitsu.AuthProvider
 import com.chesire.nekome.robots.activity
 import com.chesire.nekome.robots.login.loginDetails
-import com.schibsted.spain.barista.assertion.BaristaVisibilityAssertions.assertDisplayed
-import com.schibsted.spain.barista.assertion.BaristaVisibilityAssertions.assertNotExist
-import com.schibsted.spain.barista.interaction.BaristaClickInteractions.clickOn
-import com.schibsted.spain.barista.interaction.BaristaDrawerInteractions.openDrawer
-import dagger.hilt.android.testing.HiltAndroidRule
+import com.chesire.nekome.robots.search.search
+import com.chesire.nekome.robots.series.seriesList
+import com.chesire.nekome.robots.settings.settings
+import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.UninstallModules
-import org.junit.Before
-import org.junit.Rule
+import io.mockk.every
+import io.mockk.mockk
 import org.junit.Test
-import org.junit.runner.RunWith
 import javax.inject.Inject
 
 @HiltAndroidTest
 @UninstallModules(DatabaseModule::class)
-@RunWith(AndroidJUnit4::class)
-class ActivityTests {
-    @get:Rule
-    val hilt = HiltAndroidRule(this)
+class ActivityTests : UITest() {
 
     @Inject
-    lateinit var authProvider: AuthProvider
+    lateinit var applicationSettings: ApplicationSettings
 
-    @Before
-    fun setUp() {
-        hilt.inject()
-        authProvider.login()
+    @Test
+    fun overviewCanStartInAnimeView() {
+        applicationSettings.defaultHomeScreen = HomeScreenOptions.Anime
+        launchActivity()
+
+        seriesList {
+            validate { isAnimeScreen() }
+        }
     }
 
     @Test
-    fun overviewStartsInAnimeView() {
+    fun overviewCanStartInMangaView() {
+        applicationSettings.defaultHomeScreen = HomeScreenOptions.Manga
         launchActivity()
-        assertDisplayed(R.string.nav_anime)
+
+        seriesList {
+            validate { isMangaScreen() }
+        }
     }
 
     @Test
     fun overviewCanNavigateToAnimeView() {
+        applicationSettings.defaultHomeScreen = HomeScreenOptions.Manga
         launchActivity()
-        assertDisplayed(R.string.nav_anime)
-        openDrawer()
-        clickOn(R.string.nav_manga)
-        assertDisplayed(R.string.nav_manga)
-        openDrawer()
-        clickOn(R.string.nav_anime)
-        assertDisplayed(R.string.nav_anime)
+
+        activity {
+            goToAnime()
+        }
+        seriesList {
+            validate { isAnimeScreen() }
+        }
     }
 
     @Test
     fun overviewCanNavigateToMangaView() {
+        applicationSettings.defaultHomeScreen = HomeScreenOptions.Anime
         launchActivity()
-        openDrawer()
-        clickOn(R.string.nav_manga)
-        assertDisplayed(R.string.nav_manga)
+
+        activity {
+            goToManga()
+        }
+        seriesList {
+            validate { isMangaScreen() }
+        }
+    }
+
+    @Test
+    fun overviewCanNavigateToSearch() {
+        launchActivity()
+
+        activity {
+            goToSearch()
+        }
+        search {
+            validate { isVisible() }
+        }
     }
 
     @Test
     fun overviewCanNavigateToSettingsView() {
         launchActivity()
-        openDrawer()
-        clickOn(R.string.nav_settings)
-        assertDisplayed(R.string.settings_version)
+
+        activity {
+            goToSettings()
+        }
+        settings {
+            validate { isVisible() }
+        }
     }
 
     @Test

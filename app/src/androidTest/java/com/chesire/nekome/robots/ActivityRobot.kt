@@ -15,26 +15,41 @@ fun activity(func: ActivityRobot.() -> Unit) = ActivityRobot().apply { func() }
  */
 class ActivityRobot {
 
+    /**
+     * Executes navigation to the Anime screen.
+     */
     fun goToAnime() {
         openDrawer()
         clickOn(R.string.nav_anime)
     }
 
+    /**
+     * Executes navigation to the Manga screen.
+     */
     fun goToManga() {
         openDrawer()
         clickOn(R.string.nav_manga)
     }
 
+    /**
+     * Executes navigation to the Search screen.
+     */
     fun goToSearch() {
         openDrawer()
         clickOn(R.string.nav_search)
     }
 
+    /**
+     * Executes navigation to the Settings screen.
+     */
     fun goToSettings() {
         openDrawer()
         clickOn(R.string.nav_settings)
     }
 
+    /**
+     * Executes logout from the navigation drawer, then executes the chosen [ActivityLogoutChoices].
+     */
     infix fun logout(func: ActivityLogoutChoices.() -> Unit): ActivityLogoutChoices {
         openDrawer()
         clickOn(R.string.menu_logout)
@@ -49,15 +64,20 @@ class ActivityRobot {
     }
 }
 
+/**
+ * Choices to take once the logout dialog has appeared.
+ */
 class ActivityLogoutChoices {
 
-    fun confirm() {
-        clickOn(R.string.menu_logout_prompt_confirm)
-    }
+    /**
+     * Confirm user logout.
+     */
+    fun confirm() = clickOn(R.string.menu_logout_prompt_confirm)
 
-    fun cancel() {
-        clickOn(R.string.menu_logout_prompt_cancel)
-    }
+    /**
+     * Cancel user logout.
+     */
+    fun cancel() = clickOn(R.string.menu_logout_prompt_cancel)
 }
 
 /**
@@ -68,7 +88,5 @@ class ActivityResultRobot {
     /**
      * Asserts the login details screen is shown.
      */
-    fun isVisible() {
-        assertDisplayed(R.id.activityNavigation)
-    }
+    fun isVisible() = assertDisplayed(R.id.activityNavigation)
 }
