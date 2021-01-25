@@ -3,12 +3,9 @@ package com.chesire.nekome.features.series
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isChecked
 import androidx.test.espresso.matcher.ViewMatchers.isNotChecked
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.chesire.nekome.R
-import com.chesire.nekome.helpers.launchActivity
-import com.chesire.nekome.helpers.login
+import com.chesire.nekome.UITest
 import com.chesire.nekome.injection.DatabaseModule
-import com.chesire.nekome.kitsu.AuthProvider
 import com.schibsted.spain.barista.assertion.BaristaEnabledAssertions.assertDisabled
 import com.schibsted.spain.barista.assertion.BaristaEnabledAssertions.assertEnabled
 import com.schibsted.spain.barista.assertion.BaristaListAssertions.assertCustomAssertionAtPosition
@@ -16,20 +13,13 @@ import com.schibsted.spain.barista.assertion.BaristaListAssertions.assertDisplay
 import com.schibsted.spain.barista.interaction.BaristaClickInteractions.clickOn
 import com.schibsted.spain.barista.interaction.BaristaListInteractions.clickListItem
 import com.schibsted.spain.barista.interaction.BaristaMenuClickInteractions.clickMenu
-import com.schibsted.spain.barista.rule.cleardata.ClearPreferencesRule
-import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.UninstallModules
-import org.junit.Before
-import org.junit.Rule
 import org.junit.Test
-import org.junit.runner.RunWith
-import javax.inject.Inject
 
 @HiltAndroidTest
 @UninstallModules(DatabaseModule::class)
-@RunWith(AndroidJUnit4::class)
-class FilterTests {
+class FilterTests : UITest() {
     /*
     Since the MaterialDialogs library is being used, the way to access parts of the dialog needs to
     be slightly different, since the library uses a bunch of custom views, such as a control of a
@@ -39,20 +29,6 @@ class FilterTests {
     These tests are not exactly robust, since they assume initial state and rely on knowing the ids
     from the MaterialDialogs library, but they should do for now.
      */
-    @get:Rule
-    val hilt = HiltAndroidRule(this)
-
-    @get:Rule
-    val clearPreferencesRule = ClearPreferencesRule()
-
-    @Inject
-    lateinit var authProvider: AuthProvider
-
-    @Before
-    fun setUp() {
-        hilt.inject()
-        authProvider.login()
-    }
 
     @Test
     fun filterDialogDisplaysWithAllOptions() {

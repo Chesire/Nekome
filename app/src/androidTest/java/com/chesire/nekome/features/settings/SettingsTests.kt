@@ -8,8 +8,8 @@ import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.UninstallModules
 import org.junit.Test
 
-@UninstallModules(DatabaseModule::class)
 @HiltAndroidTest
+@UninstallModules(DatabaseModule::class)
 class SettingsTests : UITest() {
 
     @Test
