@@ -99,4 +99,19 @@ class SeriesListResultRobot {
             R.id.seriesProgress,
             "$expectedProgress / $totalLength"
         )
+
+    /**
+     * Asserts that the series are listed in the expected order. A list of the series titles must be
+     * passed in, so that we can validate that the order is as expected.
+     */
+    fun isInOrder(titles: List<String>) {
+        titles.forEachIndexed { index, text ->
+            assertDisplayedAtPosition(
+                R.id.listContent,
+                index,
+                R.id.seriesTitle,
+                text
+            )
+        }
+    }
 }
