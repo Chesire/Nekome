@@ -54,6 +54,31 @@ class ApplicationSettingsTests {
     }
 
     @Test
+    fun `can set defaultHomeScreen`() {
+        val mockEditor = mockk<SharedPreferences.Editor> {
+            every { putString("key_default_home", any()) } returns this
+            every { apply() } just Runs
+        }
+        val mockPreferences = mockk<SharedPreferences> {
+            every { getString("key_default_home", "0") } returns "-1"
+            every { edit() } returns mockEditor
+        }
+        val testObject = ApplicationSettings(
+            mockContext,
+            mockPreferences
+        )
+
+        testObject.defaultHomeScreen = HomeScreenOptions.Manga
+
+        verify {
+            mockEditor.putString(
+                "key_default_home",
+                HomeScreenOptions.Manga.index.toString()
+            )
+        }
+    }
+
+    @Test
     fun `can get defaultSeriesState`() {
         val mockPreferences = mockk<SharedPreferences> {
             every { getString("key_default_series_state", "0") } returns "2"
