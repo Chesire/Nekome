@@ -43,7 +43,7 @@ class DetailsViewModel @ViewModelInject constructor(
             is Resource.Success -> executeGetUser()
             is Resource.Error -> {
                 Timber.e("Error logging in - [${result.code}] ${result.msg}")
-                if (result.code == Resource.Error.CouldNotRefresh) {
+                if (result.code == Resource.Error.InvalidCredentials) {
                     _loginStatus.postValue(LoginStatus.InvalidCredentials)
                 } else {
                     _loginStatus.postValue(LoginStatus.Error)

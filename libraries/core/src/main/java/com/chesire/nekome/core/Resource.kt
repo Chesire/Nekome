@@ -3,6 +3,7 @@ package com.chesire.nekome.core
 import java.net.HttpURLConnection.HTTP_BAD_REQUEST
 import java.net.HttpURLConnection.HTTP_FORBIDDEN
 import java.net.HttpURLConnection.HTTP_NO_CONTENT
+import java.net.HttpURLConnection.HTTP_UNAUTHORIZED
 import java.net.HttpURLConnection.HTTP_UNAVAILABLE
 
 /**
@@ -30,6 +31,11 @@ sealed class Resource<T> {
         fun <U> mutate() = Error<U>(msg, code)
 
         companion object {
+
+            /**
+             * Constant value for when credentials are invalid.
+             */
+            const val InvalidCredentials = HTTP_UNAUTHORIZED
 
             /**
              * Creates an [Error] for a bad request.
