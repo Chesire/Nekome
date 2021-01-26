@@ -5,7 +5,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.chesire.nekome.core.AuthCaster
 import com.chesire.nekome.core.Resource
 import com.chesire.nekome.core.extensions.postError
 import com.chesire.nekome.core.extensions.postSuccess
@@ -20,8 +19,7 @@ import kotlinx.coroutines.launch
  * ViewModel to use with the [SeriesListFragment], handles sending updates for a series.
  */
 class SeriesListViewModel @ViewModelInject constructor(
-    private val repo: SeriesRepository,
-    private val authCaster: AuthCaster
+    private val repo: SeriesRepository
 ) : ViewModel() {
 
     val series = repo.getSeries().asLiveData()
@@ -42,11 +40,7 @@ class SeriesListViewModel @ViewModelInject constructor(
         callback: (Resource<SeriesDomain>) -> Unit
     ) = viewModelScope.launch {
         val response = repo.updateSeries(userSeriesId, newProgress, newUserSeriesStatus)
-        if (response is Resource.Error && response.code == Resource.Error.CouldNotRefresh) {
-            authCaster.issueRefreshingToken()
-        } else {
-            callback(response)
-        }
+        callback(response)
     }
 
     /**
@@ -56,14 +50,10 @@ class SeriesListViewModel @ViewModelInject constructor(
     fun deleteSeries(seriesDomain: SeriesDomain) = viewModelScope.launch {
         val response = repo.deleteSeries(seriesDomain)
         if (response is Resource.Error) {
-            if (response.code == Resource.Error.CouldNotRefresh) {
-                authCaster.issueRefreshingToken()
-            } else {
-                _deletionStatus.postError(
-                    seriesDomain,
-                    SeriesListDeleteError.DeletionFailure
-                )
-            }
+            _deletionStatus.postError(
+                seriesDomain,
+                SeriesListDeleteError.DeletionFailure
+            )
         }
     }
 
@@ -77,11 +67,7 @@ class SeriesListViewModel @ViewModelInject constructor(
         )
 
         if (syncCommands.any { it is Resource.Error }) {
-            if (syncCommands.any { it is Resource.Error && it.code == Resource.Error.CouldNotRefresh }) {
-                authCaster.issueRefreshingToken()
-            } else {
-                _refreshStatus.postError(Any())
-            }
+            _refreshStatus.postError(Any())
         } else {
             _refreshStatus.postSuccess(Any())
         }

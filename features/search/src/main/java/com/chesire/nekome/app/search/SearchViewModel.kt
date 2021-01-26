@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chesire.nekome.app.search.domain.SearchDomainMapper
 import com.chesire.nekome.app.search.domain.SearchModel
-import com.chesire.nekome.core.AuthCaster
 import com.chesire.nekome.core.Resource
 import com.chesire.nekome.core.extensions.postError
 import com.chesire.nekome.core.extensions.postLoading
@@ -23,7 +22,6 @@ import kotlinx.coroutines.launch
  */
 class SearchViewModel @ViewModelInject constructor(
     private val searchApi: SearchApi,
-    private val authCaster: AuthCaster,
     private val mapper: SearchDomainMapper
 ) : ViewModel() {
 
@@ -64,11 +62,6 @@ class SearchViewModel @ViewModelInject constructor(
             } else {
                 _searchResult.postSuccess(response.data.map { mapper.toSearchModel(it) })
             }
-        is Resource.Error ->
-            if (response.code == Resource.Error.CouldNotRefresh) {
-                authCaster.issueRefreshingToken()
-            } else {
-                _searchResult.postError(SearchError.GenericError)
-            }
+        is Resource.Error -> _searchResult.postError(SearchError.GenericError)
     }
 }

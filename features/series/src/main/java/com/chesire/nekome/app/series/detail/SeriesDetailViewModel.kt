@@ -6,7 +6,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.chesire.nekome.core.AuthCaster
 import com.chesire.nekome.core.IOContext
 import com.chesire.nekome.core.Resource
 import com.chesire.nekome.core.extensions.postError
@@ -27,7 +26,6 @@ const val MODEL_ID = "SeriesDetail_seriesDomain"
 class SeriesDetailViewModel @ViewModelInject constructor(
     @Assisted private val savedStateHandle: SavedStateHandle,
     private val repo: SeriesRepository,
-    private val authCaster: AuthCaster,
     @IOContext private val ioContext: CoroutineContext
 ) : ViewModel() {
 
@@ -51,9 +49,7 @@ class SeriesDetailViewModel @ViewModelInject constructor(
                 target.seriesProgress,
                 target.userSeriesStatus
             )
-            if (response is Resource.Error && response.code == Resource.Error.CouldNotRefresh) {
-                authCaster.issueRefreshingToken()
-            } else if (response is Resource.Error) {
+            if (response is Resource.Error) {
                 _updatingStatus.postError(
                     target,
                     SeriesDetailError.Error
