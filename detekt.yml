@@ -1,5 +1,5 @@
 build:
-  maxIssues: 10
+  maxIssues: 50
 
 processors:
   active: true
