@@ -16,13 +16,11 @@ import org.junit.Test
 @UninstallModules(DatabaseModule::class)
 class SortTests : UITest() {
 
-    private val seriesData = InitialSeriesData()
+    private val seriesData = InitialSortSeriesData()
 
     override fun setUp() {
         super.setUp()
-        runBlocking {
-            series.insert(seriesData.all)
-        }
+        runBlocking { series.insert(seriesData.all) }
     }
 
     @Test
@@ -142,7 +140,7 @@ class SortTests : UITest() {
 // Make an initial set of series items to compare sort with.
 // The details don't make much sense, but we only do a compareBy, so this just validates
 // that the compareBy works as we expect.
-private data class InitialSeriesData(
+private data class InitialSortSeriesData(
     val series0: SeriesEntity = createSeriesEntity(
         id = 0,
         userId = 0,

@@ -111,12 +111,14 @@ class SeriesListResultRobot {
      */
     fun isInOrder(titles: List<String>) {
         titles.forEachIndexed { index, text ->
-            assertDisplayedAtPosition(
-                R.id.listContent,
-                index,
-                R.id.seriesTitle,
-                text
-            )
+            checkSeriesAtIndex(index, text)
         }
     }
+
+    /**
+     * Asserts that the series at index [index] contains the title [title].
+     * Use this to verify that the list is in the correct order/filtered.
+     */
+    fun checkSeriesAtIndex(index: Int, title: String) =
+        assertDisplayedAtPosition(R.id.listContent, index, R.id.seriesTitle, title)
 }
