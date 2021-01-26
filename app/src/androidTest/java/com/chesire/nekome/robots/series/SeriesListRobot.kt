@@ -39,6 +39,11 @@ class SeriesListRobot {
     fun sortSeries(func: SortOptionRobot.() -> Unit) = SortOptionRobot().apply { func() }
 
     /**
+     * Options for changing the filter option.
+     */
+    fun filterSeries(func: FilterOptionsRobot.() -> Unit) = FilterOptionsRobot().apply { func() }
+
+    /**
      * Executes validation steps.
      */
     infix fun validate(func: SeriesListResultRobot.() -> Unit): SeriesListResultRobot {
