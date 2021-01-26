@@ -75,25 +75,25 @@ class DefaultSeriesStateResultRobot {
     /**
      * Checks if the "Current" option is checked.
      */
-    fun currentIsSelected() = assertChecked(UserSeriesStatus.Current.stringId);
+    fun currentIsSelected() = assertChecked(UserSeriesStatus.Current.stringId)
 
     /**
      * Checks if the "Completed" option is checked.
      */
-    fun completedIsSelected() = assertChecked(UserSeriesStatus.Completed.stringId);
+    fun completedIsSelected() = assertChecked(UserSeriesStatus.Completed.stringId)
 
     /**
      * Checks if the "On hold" option is checked.
      */
-    fun onHoldIsSelected() = assertChecked(UserSeriesStatus.OnHold.stringId);
+    fun onHoldIsSelected() = assertChecked(UserSeriesStatus.OnHold.stringId)
 
     /**
      * Checks if the "Dropped" option is checked.
      */
-    fun droppedIsSelected() = assertChecked(UserSeriesStatus.Dropped.stringId);
+    fun droppedIsSelected() = assertChecked(UserSeriesStatus.Dropped.stringId)
 
     /**
      * Checks if the "Planned" option is checked.
      */
-    fun plannedIsSelected() = assertChecked(UserSeriesStatus.Planned.stringId);
+    fun plannedIsSelected() = assertChecked(UserSeriesStatus.Planned.stringId)
 }

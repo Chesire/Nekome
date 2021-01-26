@@ -51,10 +51,10 @@ class DefaultHomeScreenResultRobot {
     /**
      * Checks if the "Anime" option is checked.
      */
-    fun animeIsSelected() = assertChecked(HomeScreenOptions.Anime.stringId);
+    fun animeIsSelected() = assertChecked(HomeScreenOptions.Anime.stringId)
 
     /**
      * Checks if the "Manga" option is checked.
      */
-    fun mangaIsSelected() = assertChecked(HomeScreenOptions.Manga.stringId);
+    fun mangaIsSelected() = assertChecked(HomeScreenOptions.Manga.stringId)
 }
