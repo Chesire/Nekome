@@ -25,8 +25,6 @@ private const val DEFAULT_VALUES = "DEFAULT_VALUES"
 )
 class ResultsTests : UITest() {
 
-    override val startLoggedIn = true
-
     @BindValue
     val searchApi = mockk<SearchApi> {
         coEvery {
