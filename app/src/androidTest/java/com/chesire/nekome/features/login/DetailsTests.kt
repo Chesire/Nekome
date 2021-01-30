@@ -68,7 +68,7 @@ class DetailsTests : UITest() {
         coEvery {
             userApi.login("Username", "Password")
         } coAnswers {
-            Resource.Error.invalidAuth()
+            Resource.Error("", Resource.Error.InvalidCredentials)
         }
 
         launchActivity()
@@ -87,7 +87,7 @@ class DetailsTests : UITest() {
         coEvery {
             userApi.login("Username", "Password")
         } coAnswers {
-            Resource.Error("Generic error", Resource.Error.GenericError)
+            Resource.Error("Generic error")
         }
 
         launchActivity()
