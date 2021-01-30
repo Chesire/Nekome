@@ -1,7 +1,5 @@
 package com.chesire.nekome.app.series.detail
 
-import androidx.hilt.Assisted
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -15,7 +13,9 @@ import com.chesire.nekome.core.flags.AsyncState
 import com.chesire.nekome.library.SeriesDomain
 import com.chesire.nekome.library.SeriesRepository
 import com.hadilq.liveevent.LiveEvent
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
 const val MODEL_ID = "SeriesDetail_seriesDomain"
@@ -23,8 +23,9 @@ const val MODEL_ID = "SeriesDetail_seriesDomain"
 /**
  * ViewModel to store the current series detail model, and allow interactions with its data.
  */
-class SeriesDetailViewModel @ViewModelInject constructor(
-    @Assisted private val savedStateHandle: SavedStateHandle,
+@HiltViewModel
+class SeriesDetailViewModel @Inject constructor(
+    savedStateHandle: SavedStateHandle,
     private val repo: SeriesRepository,
     @IOContext private val ioContext: CoroutineContext
 ) : ViewModel() {

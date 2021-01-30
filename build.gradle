@@ -1,8 +1,8 @@
 buildscript {
-    ext.hilt_version = "2.30.1-alpha"
+    ext.hilt_version = "2.31.2-alpha"
     ext.jacoco_version = "0.8.6"
     ext.kotlin_version = "1.4.21"
-    ext.nav_version = "2.3.2"
+    ext.nav_version = "2.3.3"
     repositories {
         google()
         jcenter()
@@ -50,7 +50,7 @@ ext {
     coroutines_version = "1.4.1"
     dagger_version = "2.29.1"
     fragmentctx_version = "1.2.5"
-    hiltx_version = "1.0.0-alpha02"
+    hiltx_version = "1.0.0-alpha03"
     lifecycle_version = "2.2.0"
     lintrules_version = "1.2.5"
     liveevent_version = "1.2.0"

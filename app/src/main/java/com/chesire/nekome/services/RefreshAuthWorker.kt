@@ -1,13 +1,14 @@
 package com.chesire.nekome.services
 
 import android.content.Context
-import androidx.hilt.Assisted
-import androidx.hilt.work.WorkerInject
+import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.chesire.nekome.account.UserRepository
 import com.chesire.nekome.auth.api.AuthApi
 import com.chesire.nekome.core.Resource
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedInject
 import timber.log.Timber
 
 /**
@@ -16,7 +17,8 @@ import timber.log.Timber
  * When scheduled to run it will send a request to the [userRepo] to try to refresh the current
  * user.
  */
-class RefreshAuthWorker @WorkerInject constructor(
+@HiltWorker
+class RefreshAuthWorker @AssistedInject constructor(
     @Assisted appContext: Context,
     @Assisted workerParams: WorkerParameters,
     private val userRepo: UserRepository,
