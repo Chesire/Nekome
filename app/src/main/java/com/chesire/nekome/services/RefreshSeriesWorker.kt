@@ -1,13 +1,14 @@
 package com.chesire.nekome.services
 
 import android.content.Context
-import androidx.hilt.Assisted
-import androidx.hilt.work.WorkerInject
+import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.chesire.nekome.account.UserRepository
 import com.chesire.nekome.core.Resource
 import com.chesire.nekome.library.SeriesRepository
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedInject
 import timber.log.Timber
 
 /**
@@ -16,7 +17,8 @@ import timber.log.Timber
  * When scheduled to run it will send a request to the [seriesRepo] to try to update the series,
  * letting the [seriesRepo] handle what to do with the results.
  */
-class RefreshSeriesWorker @WorkerInject constructor(
+@HiltWorker
+class RefreshSeriesWorker @AssistedInject constructor(
     @Assisted appContext: Context,
     @Assisted workerParams: WorkerParameters,
     private val seriesRepo: SeriesRepository,

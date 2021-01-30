@@ -1,6 +1,5 @@
 package com.chesire.nekome.app.series.detail
 
-import androidx.hilt.Assisted
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -26,7 +25,7 @@ const val MODEL_ID = "SeriesDetail_seriesDomain"
  */
 @HiltViewModel
 class SeriesDetailViewModel @Inject constructor(
-    @Assisted private val savedStateHandle: SavedStateHandle,
+    savedStateHandle: SavedStateHandle,
     private val repo: SeriesRepository,
     @IOContext private val ioContext: CoroutineContext
 ) : ViewModel() {
