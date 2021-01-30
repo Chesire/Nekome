@@ -38,7 +38,6 @@ dependencies {
     implementation "androidx.constraintlayout:constraintlayout:$constraint_layout_version"
     implementation "androidx.core:core-ktx:$corektx_version"
     implementation "androidx.fragment:fragment-ktx:$fragmentctx_version"
-    implementation "androidx.hilt:hilt-lifecycle-viewmodel:$hiltx_version"
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
@@ -57,6 +56,5 @@ dependencies {
     androidTestImplementation "androidx.test.espresso:espresso-core:3.3.0"
     androidTestImplementation "androidx.test.ext:junit:1.1.2"
 
-    kapt "androidx.hilt:hilt-compiler:$hiltx_version"
     kapt "com.google.dagger:hilt-compiler:$hilt_version"
 }
