@@ -50,7 +50,7 @@ ext {
     coroutines_version = "1.4.1"
     dagger_version = "2.29.1"
     fragmentctx_version = "1.2.5"
-    hiltx_version = "1.0.0-alpha02"
+    hiltx_version = "1.0.0-alpha03"
     lifecycle_version = "2.2.0"
     lintrules_version = "1.2.5"
     liveevent_version = "1.2.0"
