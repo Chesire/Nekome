@@ -1,6 +1,5 @@
 package com.chesire.nekome.app.login.details
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -8,13 +7,16 @@ import com.chesire.nekome.account.UserRepository
 import com.chesire.nekome.auth.api.AuthApi
 import com.chesire.nekome.core.Resource
 import com.hadilq.liveevent.LiveEvent
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import javax.inject.Inject
 
 /**
  * ViewModel to aid with logging a user in via the [DetailsFragment].
  */
-class DetailsViewModel @ViewModelInject constructor(
+@HiltViewModel
+class DetailsViewModel @Inject constructor(
     private val auth: AuthApi,
     private val user: UserRepository
 ) : ViewModel() {
