@@ -1,6 +1,5 @@
 package com.chesire.nekome.app.series.list
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
@@ -13,12 +12,15 @@ import com.chesire.nekome.core.flags.UserSeriesStatus
 import com.chesire.nekome.library.SeriesDomain
 import com.chesire.nekome.library.SeriesRepository
 import com.hadilq.liveevent.LiveEvent
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 /**
  * ViewModel to use with the [SeriesListFragment], handles sending updates for a series.
  */
-class SeriesListViewModel @ViewModelInject constructor(
+@HiltViewModel
+class SeriesListViewModel @Inject constructor(
     private val repo: SeriesRepository
 ) : ViewModel() {
 
