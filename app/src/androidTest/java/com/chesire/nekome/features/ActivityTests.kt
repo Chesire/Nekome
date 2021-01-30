@@ -9,11 +9,8 @@ import com.chesire.nekome.robots.login.loginDetails
 import com.chesire.nekome.robots.search.search
 import com.chesire.nekome.robots.series.seriesList
 import com.chesire.nekome.robots.settings.settings
-import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.UninstallModules
-import io.mockk.every
-import io.mockk.mockk
 import org.junit.Test
 import javax.inject.Inject
 
