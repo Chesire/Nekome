@@ -70,9 +70,8 @@ class FilterOptionsRobot {
      * Executes validation steps.
      * Requires opening the dialog, performing the check.
      */
-    infix fun validate(func: FilterOptionsResultsRobot.() -> Unit): FilterOptionsResultsRobot {
-        return FilterOptionsResultsRobot().apply { func() }
-    }
+    infix fun validate(func: FilterOptionsResultsRobot.() -> Unit) =
+        FilterOptionsResultsRobot().apply { func() }
 }
 
 /**

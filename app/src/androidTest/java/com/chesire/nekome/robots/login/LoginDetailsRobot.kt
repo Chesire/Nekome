@@ -60,9 +60,8 @@ class LoginDetailsRobot {
     /**
      * Executes validation steps.
      */
-    infix fun validate(func: LoginDetailsResultRobot.() -> Unit): LoginDetailsResultRobot {
-        return LoginDetailsResultRobot().apply { func() }
-    }
+    infix fun validate(func: LoginDetailsResultRobot.() -> Unit) =
+        LoginDetailsResultRobot().apply { func() }
 }
 
 /**

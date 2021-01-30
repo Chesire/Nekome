@@ -15,9 +15,7 @@ class ResultsRobot {
     /**
      * Executes validation steps.
      */
-    infix fun validate(func: ResultsResultRobot.() -> Unit): ResultsResultRobot {
-        return ResultsResultRobot().apply { func() }
-    }
+    infix fun validate(func: ResultsResultRobot.() -> Unit) = ResultsResultRobot().apply { func() }
 }
 
 /**

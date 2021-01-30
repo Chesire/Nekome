@@ -46,9 +46,8 @@ class SeriesListRobot {
     /**
      * Executes validation steps.
      */
-    infix fun validate(func: SeriesListResultRobot.() -> Unit): SeriesListResultRobot {
-        return SeriesListResultRobot().apply { func() }
-    }
+    infix fun validate(func: SeriesListResultRobot.() -> Unit) =
+        SeriesListResultRobot().apply { func() }
 }
 
 /**

@@ -42,9 +42,7 @@ class SearchRobot {
     /**
      * Executes validation steps.
      */
-    infix fun validate(func: SearchResultRobot.() -> Unit): SearchResultRobot {
-        return SearchResultRobot().apply { func() }
-    }
+    infix fun validate(func: SearchResultRobot.() -> Unit) = SearchResultRobot().apply { func() }
 }
 
 /**

@@ -22,7 +22,7 @@ private const val NO_RESULTS_ERROR = "NO_RESULTS_ERROR"
     DatabaseModule::class,
     SearchModule::class
 )
-class SearchTests() : UITest() {
+class SearchTests : UITest() {
 
     @BindValue
     val searchApi = mockk<SearchApi> {

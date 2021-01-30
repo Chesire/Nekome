@@ -59,9 +59,8 @@ class ActivityRobot {
     /**
      * Executes validation steps.
      */
-    infix fun validate(func: ActivityResultRobot.() -> Unit): ActivityResultRobot {
-        return ActivityResultRobot().apply { func() }
-    }
+    infix fun validate(func: ActivityResultRobot.() -> Unit) =
+        ActivityResultRobot().apply { func() }
 }
 
 /**

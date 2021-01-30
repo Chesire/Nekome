@@ -16,9 +16,8 @@ class LoginSyncingRobot {
     /**
      * Executes validation steps.
      */
-    infix fun validate(func: LoginSyncingResultRobot.() -> Unit): LoginSyncingResultRobot {
-        return LoginSyncingResultRobot().apply { func() }
-    }
+    infix fun validate(func: LoginSyncingResultRobot.() -> Unit) =
+        LoginSyncingResultRobot().apply { func() }
 }
 
 /**

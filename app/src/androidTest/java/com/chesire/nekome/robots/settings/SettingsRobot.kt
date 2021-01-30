@@ -44,9 +44,8 @@ class SettingsRobot {
     /**
      * Executes validation steps.
      */
-    infix fun validate(func: SettingsResultRobot.() -> Unit): SettingsResultRobot {
-        return SettingsResultRobot().apply { func() }
-    }
+    infix fun validate(func: SettingsResultRobot.() -> Unit) =
+        SettingsResultRobot().apply { func() }
 }
 
 /**

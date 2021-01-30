@@ -41,9 +41,8 @@ class SortOptionRobot {
      * Executes validation steps.
      * Requires opening the dialog, performing the check.
      */
-    infix fun validate(func: SortOptionResultsRobot.() -> Unit): SortOptionResultsRobot {
-        return SortOptionResultsRobot().apply { func() }
-    }
+    infix fun validate(func: SortOptionResultsRobot.() -> Unit) =
+        SortOptionResultsRobot().apply { func() }
 }
 
 /**
