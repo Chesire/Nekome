@@ -2,7 +2,6 @@ package com.chesire.nekome.features.search
 
 import com.chesire.nekome.UITest
 import com.chesire.nekome.core.Resource
-import com.chesire.nekome.injection.DatabaseModule
 import com.chesire.nekome.injection.SearchModule
 import com.chesire.nekome.robots.activity
 import com.chesire.nekome.robots.search.search
@@ -18,10 +17,7 @@ private const val GENERIC_ERROR = "GENERIC_ERROR"
 private const val NO_RESULTS_ERROR = "NO_RESULTS_ERROR"
 
 @HiltAndroidTest
-@UninstallModules(
-    DatabaseModule::class,
-    SearchModule::class
-)
+@UninstallModules(SearchModule::class)
 class SearchTests : UITest() {
 
     @BindValue

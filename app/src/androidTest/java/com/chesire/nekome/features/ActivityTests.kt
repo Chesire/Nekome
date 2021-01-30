@@ -3,19 +3,16 @@ package com.chesire.nekome.features
 import com.chesire.nekome.UITest
 import com.chesire.nekome.core.flags.HomeScreenOptions
 import com.chesire.nekome.core.settings.ApplicationSettings
-import com.chesire.nekome.injection.DatabaseModule
 import com.chesire.nekome.robots.activity
 import com.chesire.nekome.robots.login.loginDetails
 import com.chesire.nekome.robots.search.search
 import com.chesire.nekome.robots.series.seriesList
 import com.chesire.nekome.robots.settings.settings
 import dagger.hilt.android.testing.HiltAndroidTest
-import dagger.hilt.android.testing.UninstallModules
 import org.junit.Test
 import javax.inject.Inject
 
 @HiltAndroidTest
-@UninstallModules(DatabaseModule::class)
 class ActivityTests : UITest() {
 
     @Inject

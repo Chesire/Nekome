@@ -7,7 +7,6 @@ import com.chesire.nekome.core.Resource
 import com.chesire.nekome.core.url.UrlHandler
 import com.chesire.nekome.helpers.getResource
 import com.chesire.nekome.injection.AuthModule
-import com.chesire.nekome.injection.DatabaseModule
 import com.chesire.nekome.injection.UrlModule
 import com.chesire.nekome.robots.login.loginDetails
 import dagger.hilt.android.testing.BindValue
@@ -24,7 +23,6 @@ import org.junit.Test
 @HiltAndroidTest
 @UninstallModules(
     AuthModule::class,
-    DatabaseModule::class,
     UrlModule::class
 )
 class DetailsTests : UITest() {

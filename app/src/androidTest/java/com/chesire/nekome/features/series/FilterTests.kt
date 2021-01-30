@@ -4,16 +4,13 @@ import com.chesire.nekome.UITest
 import com.chesire.nekome.core.flags.SeriesType
 import com.chesire.nekome.core.flags.UserSeriesStatus
 import com.chesire.nekome.database.entity.SeriesEntity
-import com.chesire.nekome.injection.DatabaseModule
 import com.chesire.nekome.robots.series.seriesList
 import com.chesire.nekome.testing.createSeriesEntity
 import dagger.hilt.android.testing.HiltAndroidTest
-import dagger.hilt.android.testing.UninstallModules
 import kotlinx.coroutines.runBlocking
 import org.junit.Test
 
 @HiltAndroidTest
-@UninstallModules(DatabaseModule::class)
 class FilterTests : UITest() {
 
     private val seriesData = InitialFilterSeriesData()

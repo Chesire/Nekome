@@ -3,7 +3,6 @@ package com.chesire.nekome.features.search
 import com.chesire.nekome.UITest
 import com.chesire.nekome.core.Resource
 import com.chesire.nekome.helpers.creation.createSearchDomain
-import com.chesire.nekome.injection.DatabaseModule
 import com.chesire.nekome.injection.SearchModule
 import com.chesire.nekome.robots.activity
 import com.chesire.nekome.robots.search.results
@@ -19,10 +18,7 @@ import org.junit.Test
 private const val DEFAULT_VALUES = "DEFAULT_VALUES"
 
 @HiltAndroidTest
-@UninstallModules(
-    DatabaseModule::class,
-    SearchModule::class
-)
+@UninstallModules(SearchModule::class)
 class ResultsTests : UITest() {
 
     @BindValue

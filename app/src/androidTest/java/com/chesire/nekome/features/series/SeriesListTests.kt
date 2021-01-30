@@ -5,7 +5,6 @@ import com.chesire.nekome.core.Resource
 import com.chesire.nekome.core.flags.SeriesType
 import com.chesire.nekome.core.flags.UserSeriesStatus
 import com.chesire.nekome.helpers.creation.createLibraryDomain
-import com.chesire.nekome.injection.DatabaseModule
 import com.chesire.nekome.injection.LibraryModule
 import com.chesire.nekome.library.api.LibraryApi
 import com.chesire.nekome.robots.series.seriesList
@@ -19,10 +18,7 @@ import kotlinx.coroutines.runBlocking
 import org.junit.Test
 
 @HiltAndroidTest
-@UninstallModules(
-    DatabaseModule::class,
-    LibraryModule::class
-)
+@UninstallModules(LibraryModule::class)
 class SeriesListTests : UITest() {
 
     @BindValue

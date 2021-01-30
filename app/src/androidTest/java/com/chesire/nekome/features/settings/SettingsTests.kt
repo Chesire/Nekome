@@ -1,15 +1,12 @@
 package com.chesire.nekome.features.settings
 
 import com.chesire.nekome.UITest
-import com.chesire.nekome.injection.DatabaseModule
 import com.chesire.nekome.robots.activity
 import com.chesire.nekome.robots.settings.settings
 import dagger.hilt.android.testing.HiltAndroidTest
-import dagger.hilt.android.testing.UninstallModules
 import org.junit.Test
 
 @HiltAndroidTest
-@UninstallModules(DatabaseModule::class)
 class SettingsTests : UITest() {
 
     @Test

@@ -6,7 +6,6 @@ import com.chesire.nekome.core.Resource
 import com.chesire.nekome.helpers.creation.createLibraryDomain
 import com.chesire.nekome.helpers.creation.createUserDomain
 import com.chesire.nekome.injection.AuthModule
-import com.chesire.nekome.injection.DatabaseModule
 import com.chesire.nekome.injection.LibraryModule
 import com.chesire.nekome.injection.UserModule
 import com.chesire.nekome.library.api.LibraryApi
@@ -24,7 +23,6 @@ import org.junit.Test
 @HiltAndroidTest
 @UninstallModules(
     AuthModule::class,
-    DatabaseModule::class,
     LibraryModule::class,
     UserModule::class
 )

@@ -9,7 +9,6 @@ import com.chesire.nekome.core.flags.Subtype
 import com.chesire.nekome.core.flags.UserSeriesStatus
 import com.chesire.nekome.core.models.ImageModel
 import com.chesire.nekome.helpers.creation.createLibraryDomain
-import com.chesire.nekome.injection.DatabaseModule
 import com.chesire.nekome.injection.LibraryModule
 import com.chesire.nekome.library.api.LibraryApi
 import com.chesire.nekome.testing.createSeriesEntity
@@ -28,7 +27,7 @@ import org.junit.Ignore
 import org.junit.Test
 
 @HiltAndroidTest
-@UninstallModules(DatabaseModule::class, LibraryModule::class)
+@UninstallModules(LibraryModule::class)
 class SeriesViewHolderTests : UITest() {
 
     @BindValue
