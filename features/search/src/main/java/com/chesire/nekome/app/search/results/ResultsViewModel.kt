@@ -1,6 +1,5 @@
 package com.chesire.nekome.app.search.results
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
@@ -8,13 +7,16 @@ import com.chesire.nekome.core.Resource
 import com.chesire.nekome.core.flags.SeriesType
 import com.chesire.nekome.core.settings.ApplicationSettings
 import com.chesire.nekome.library.SeriesRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 /**
  * ViewModel to aid with adding new series to track that are found through search.
  */
-class ResultsViewModel @ViewModelInject constructor(
+@HiltViewModel
+class ResultsViewModel @Inject constructor(
     private val seriesRepo: SeriesRepository,
     private val settings: ApplicationSettings
 ) : ViewModel() {
