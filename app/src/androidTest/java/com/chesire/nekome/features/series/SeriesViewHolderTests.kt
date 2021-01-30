@@ -1,20 +1,15 @@
-package com.chesire.nekome.flow.series
+package com.chesire.nekome.features.series
 
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.chesire.nekome.R
+import com.chesire.nekome.UITest
 import com.chesire.nekome.core.Resource
 import com.chesire.nekome.core.flags.SeriesStatus
 import com.chesire.nekome.core.flags.SeriesType
 import com.chesire.nekome.core.flags.Subtype
 import com.chesire.nekome.core.flags.UserSeriesStatus
 import com.chesire.nekome.core.models.ImageModel
-import com.chesire.nekome.database.dao.SeriesDao
 import com.chesire.nekome.helpers.creation.createLibraryDomain
-import com.chesire.nekome.helpers.launchActivity
-import com.chesire.nekome.helpers.login
-import com.chesire.nekome.injection.DatabaseModule
 import com.chesire.nekome.injection.LibraryModule
-import com.chesire.nekome.kitsu.AuthProvider
 import com.chesire.nekome.library.api.LibraryApi
 import com.chesire.nekome.testing.createSeriesEntity
 import com.schibsted.spain.barista.assertion.BaristaListAssertions.assertDisplayedAtPosition
@@ -22,43 +17,21 @@ import com.schibsted.spain.barista.assertion.BaristaListAssertions.assertListNot
 import com.schibsted.spain.barista.assertion.BaristaVisibilityAssertions.assertDisplayed
 import com.schibsted.spain.barista.assertion.BaristaVisibilityAssertions.assertNotDisplayed
 import com.schibsted.spain.barista.interaction.BaristaListInteractions.clickListItemChild
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.UninstallModules
-import dagger.hilt.components.SingletonComponent
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.runBlocking
-import org.junit.Before
 import org.junit.Ignore
-import org.junit.Rule
 import org.junit.Test
-import org.junit.runner.RunWith
-import javax.inject.Inject
 
 @HiltAndroidTest
-@UninstallModules(DatabaseModule::class, LibraryModule::class)
-@RunWith(AndroidJUnit4::class)
-class SeriesViewHolderTests {
-    @get:Rule
-    val hilt = HiltAndroidRule(this)
+@UninstallModules(LibraryModule::class)
+class SeriesViewHolderTests : UITest() {
 
-    @Inject
-    lateinit var authProvider: AuthProvider
-
-    @Inject
-    lateinit var seriesDao: SeriesDao
-
-    val fakeLibrary = mockk<LibraryApi>()
-
-    @Before
-    fun setUp() {
-        hilt.inject()
-        authProvider.login()
-    }
+    @BindValue
+    val libraryApi = mockk<LibraryApi>()
 
     @Test
     fun itemDisplaysCorrectly() {
@@ -68,7 +41,7 @@ class SeriesViewHolderTests {
         val expectedProgress = "3 / 10"
 
         runBlocking {
-            seriesDao.insert(
+            series.insert(
                 createSeriesEntity(
                     title = expectedTitle,
                     subType = expectedSubtype,
@@ -114,7 +87,7 @@ class SeriesViewHolderTests {
         val expectedDate = "2020-01-31 - ONGOING"
 
         runBlocking {
-            seriesDao.insert(createSeriesEntity(startDate = "2020-01-31", endDate = ""))
+            series.insert(createSeriesEntity(startDate = "2020-01-31", endDate = ""))
         }
         launchActivity()
 
@@ -132,7 +105,7 @@ class SeriesViewHolderTests {
         val expectedDate = "UNKNOWN"
 
         runBlocking {
-            seriesDao.insert(createSeriesEntity(startDate = "", endDate = ""))
+            series.insert(createSeriesEntity(startDate = "", endDate = ""))
         }
         launchActivity()
 
@@ -150,7 +123,7 @@ class SeriesViewHolderTests {
         val expectedDate = "2020-01-31"
 
         runBlocking {
-            seriesDao.insert(createSeriesEntity(startDate = expectedDate, endDate = expectedDate))
+            series.insert(createSeriesEntity(startDate = expectedDate, endDate = expectedDate))
         }
         launchActivity()
 
@@ -168,7 +141,7 @@ class SeriesViewHolderTests {
         val expectedProgress = "3 / -"
 
         runBlocking {
-            seriesDao.insert(createSeriesEntity(progress = 3, totalLength = 0))
+            series.insert(createSeriesEntity(progress = 3, totalLength = 0))
         }
         launchActivity()
 
@@ -184,7 +157,7 @@ class SeriesViewHolderTests {
     @Test
     fun itemProgressMaxedHidesIncrementButton() {
         runBlocking {
-            seriesDao.insert(createSeriesEntity(progress = 3, totalLength = 3))
+            series.insert(createSeriesEntity(progress = 3, totalLength = 3))
         }
         launchActivity()
 
@@ -196,10 +169,10 @@ class SeriesViewHolderTests {
     @Ignore("Leave for now as unsure how to ensure that the progress bar appears")
     fun itemChangesToLoadingViewWhileUpdating() {
         runBlocking {
-            seriesDao.insert(createSeriesEntity(progress = 1, totalLength = 3))
+            series.insert(createSeriesEntity(progress = 1, totalLength = 3))
         }
         coEvery {
-            fakeLibrary.update(any(), any(), any())
+            libraryApi.update(any(), any(), any())
         } coAnswers {
             Resource.Error("")
         }
@@ -222,7 +195,7 @@ class SeriesViewHolderTests {
         val initialProgress = "1 / 3"
         val expectedProgress = "2 / 3"
         runBlocking {
-            seriesDao.insert(
+            series.insert(
                 createSeriesEntity(
                     999,
                     999,
@@ -241,7 +214,7 @@ class SeriesViewHolderTests {
             )
         }
         coEvery {
-            fakeLibrary.update(any(), any(), any())
+            libraryApi.update(any(), any(), any())
         } coAnswers {
             Resource.Success(
                 createLibraryDomain(
@@ -277,13 +250,5 @@ class SeriesViewHolderTests {
             R.id.seriesProgress,
             expectedProgress
         )
-    }
-
-    @Module
-    @InstallIn(SingletonComponent::class)
-    inner class FakeKitsuModule {
-
-        @Provides
-        fun providesLibrary() = fakeLibrary
     }
 }

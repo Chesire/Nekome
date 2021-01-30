@@ -55,7 +55,7 @@ class ApplicationSettings @Inject constructor(
     /**
      * Gets the default [HomeScreenOptions] the home screen that shows after login or when re-launching.
      */
-    val defaultHomeScreen: HomeScreenOptions
+    var defaultHomeScreen: HomeScreenOptions
         get() {
             val index = requireNotNull(
                 preferences.getString(
@@ -67,6 +67,11 @@ class ApplicationSettings @Inject constructor(
             }
 
             return HomeScreenOptions.getFromIndex(index)
+        }
+        set(value) {
+            preferences.edit {
+                putString(_defaultHomeScreen, value.index.toString())
+            }
         }
 
     /**
