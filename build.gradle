@@ -65,7 +65,7 @@ ext {
     // Tests
     coretesting_version = "2.1.0"
     junit_version = "4.13.1"
-    mockk_version = "1.10.0"
+    mockk_version = "1.10.5"
 }
 
 apply from: "detekt.gradle"
