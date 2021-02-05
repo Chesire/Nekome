@@ -28,7 +28,7 @@ android {
 }
 
 dependencies {
-    def aboutlibraries_version = "8.7.1"
+    def aboutlibraries_version = "8.8.0"
 
     implementation project(path: ":libraries:core")
 
