@@ -18,4 +18,10 @@
 
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
+
 #-renamesourcefileattribute SourceFile
+
+# Keep Parcelable and Serializable classes as they are required by the navigation component.
+# https://developer.android.com/guide/navigation/navigation-pass-data#use_keepnames_rules
+-keepnames class * extends android.os.Parcelable
+-keepnames class * extends java.io.Serializable
