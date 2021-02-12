@@ -9,7 +9,7 @@ failure "Please provide a summary in the Pull Request description" if github.pr_
 warn "This PR does not have any assignees yet." unless github.pr_json["assignee"]
 can_merge = github.pr_json["mergeable"]
 warn("This PR cannot be merged yet.", sticky: false) unless can_merge
-#github.dismiss_out_of_range_messages
+github.dismiss_out_of_range_messages
 
 # AndroidLint
 lint_dir = "**/reports/lint-results*.xml"
