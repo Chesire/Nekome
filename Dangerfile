@@ -12,11 +12,13 @@ warn("This PR cannot be merged yet.", sticky: false) unless can_merge
 github.dismiss_out_of_range_messages
 
 # AndroidLint
-android_lint.skip_gradle_task = true
-android_lint.report_file = 'build/reports/lint-results.xml'
-android_lint.gradle_task = "lintDebug"
-android_lint.filtering = true
-android_lint.lint(inline_mode: true)
+lint_dir = "**/reports/lint-results*.xml"
+Dir[lint_dir].each do |file_name|
+  android_lint.skip_gradle_task = true
+  android_lint.filtering = true
+  android_lint.report_file = file_name
+  android_lint.lint(inline_mode: true)
+end
 
 # CheckstyleFormat
 checkstyle_format.base_path = Dir.pwd
