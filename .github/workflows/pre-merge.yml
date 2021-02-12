@@ -49,7 +49,7 @@ jobs:
       with:
         java-version: 1.8
     - name: run lintDebug
-      run: ./gradlew app:lintDebug
+      run: ./gradlew lintDebug
     - name: run detekt
       run: ./gradlew detekt
     - name: upload linting results
