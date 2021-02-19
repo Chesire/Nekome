@@ -24,11 +24,4 @@ object AppModule {
     @Reusable
     fun provideSharedPreferences(@ApplicationContext context: Context): SharedPreferences =
         PreferenceManager.getDefaultSharedPreferences(context)
-
-    /**
-     * Provides the [SeriesPreferences] wrapper around [SharedPreferences].
-     */
-    @Provides
-    fun provideSharedPref(sharedPreferences: SharedPreferences) =
-        SeriesPreferences(sharedPreferences)
 }
