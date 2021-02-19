@@ -119,7 +119,21 @@ abstract class SeriesListFragment :
 
     override fun onPlusOne(model: SeriesDomain, callback: () -> Unit) {
         Timber.i("Model ${model.slug} onPlusOne called")
-        viewModel.updateSeries(model.userId, model.progress.inc(), model.userSeriesStatus) {
+
+        if (shouldDisplayRatingDialog(model)) {
+            showRateDialog() { rating ->
+                updateSeries(model, rating, callback)
+            }
+        } else {
+            updateSeries(model, null, callback)
+        }
+    }
+
+    private fun shouldDisplayRatingDialog(model: SeriesDomain): Boolean =
+        seriesPreferences.rateSeriesOnCompletion && model.progress + 1 == model.totalLength
+
+    private fun updateSeries(model: SeriesDomain, rating: Float?, callback: () -> Unit) {
+        viewModel.updateSeries(model.userId, model.progress.inc(), model.userSeriesStatus, rating) {
             if (it is Resource.Error) {
                 Snackbar.make(
                     binding.seriesListLayout,

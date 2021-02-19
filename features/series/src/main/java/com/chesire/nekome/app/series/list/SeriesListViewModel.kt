@@ -39,8 +39,10 @@ class SeriesListViewModel @Inject constructor(
         userSeriesId: Int,
         newProgress: Int,
         newUserSeriesStatus: UserSeriesStatus,
+        rating: Float?,
         callback: (Resource<SeriesDomain>) -> Unit
     ) = viewModelScope.launch {
+        // convert the rating here? or in repo?
         val response = repo.updateSeries(userSeriesId, newProgress, newUserSeriesStatus)
         callback(response)
     }

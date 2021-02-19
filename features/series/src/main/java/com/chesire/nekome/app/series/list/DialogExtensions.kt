@@ -2,13 +2,17 @@ package com.chesire.nekome.app.series.list
 
 import androidx.fragment.app.Fragment
 import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.callbacks.onCancel
+import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
 import com.afollestad.materialdialogs.list.listItems
 import com.afollestad.materialdialogs.list.listItemsMultiChoice
+import com.chesire.nekome.app.series.R
 import com.chesire.nekome.app.series.SeriesPreferences
-import com.chesire.nekome.core.R
 import com.chesire.nekome.core.flags.SortOption
 import com.chesire.nekome.core.flags.UserSeriesStatus
+import com.google.android.material.slider.Slider
+import java.text.NumberFormat
 
 /**
  * Shows the filter dialog, allowing the user to choose how to filter their series list.
@@ -50,6 +54,30 @@ fun Fragment.showSortDialog(preferences: SeriesPreferences) {
                 preferences.sortPreference = SortOption.forIndex(it)
             }
         }
+        lifecycleOwner(viewLifecycleOwner)
+    }
+}
+
+fun Fragment.showRateDialog(onFinish: (Float?) -> Unit) {
+    val context = context ?: return
+
+    var slider: Slider
+    MaterialDialog(context).show {
+        title(R.string.series_list_rate_title)
+        customView(R.layout.view_rate_series).apply {
+            findViewById<Slider>(R.id.ratingSlider)
+                .apply {
+                    slider = this
+                    setLabelFormatter {
+                        NumberFormat.getInstance()
+                            .apply { maximumFractionDigits = 1 }
+                            .format(it)
+                    }
+                }
+        }
+        positiveButton(R.string.series_list_rate_confirm) { onFinish(slider.value) }
+        negativeButton(R.string.series_list_rate_cancel) { onFinish(null) }
+        onCancel { onFinish(null) }
         lifecycleOwner(viewLifecycleOwner)
     }
 }
