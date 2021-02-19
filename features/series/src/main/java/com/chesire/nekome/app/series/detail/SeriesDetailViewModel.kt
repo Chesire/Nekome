@@ -48,7 +48,8 @@ class SeriesDetailViewModel @Inject constructor(
             val response = repo.updateSeries(
                 target.userSeriesId,
                 target.seriesProgress,
-                target.userSeriesStatus
+                target.userSeriesStatus,
+                0f
             )
             if (response is Resource.Error) {
                 _updatingStatus.postError(

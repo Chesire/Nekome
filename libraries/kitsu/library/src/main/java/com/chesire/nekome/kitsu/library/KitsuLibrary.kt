@@ -83,12 +83,14 @@ class KitsuLibrary @Inject constructor(
     override suspend fun update(
         userSeriesId: Int,
         progress: Int,
-        newStatus: UserSeriesStatus
+        newStatus: UserSeriesStatus,
+        rating: Int
     ): Resource<LibraryDomain> {
         val updateJson = entityFactory.createUpdateDto(
             userSeriesId,
             progress,
-            userSeriesStatusAdapter.userSeriesStatusToString(newStatus)
+            userSeriesStatusAdapter.userSeriesStatusToString(newStatus),
+            rating
         )
         val body = RequestBody.create(MediaType.parse(MEDIA_TYPE), updateJson)
 

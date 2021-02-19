@@ -41,7 +41,8 @@ interface LibraryApi {
     suspend fun update(
         userSeriesId: Int,
         progress: Int,
-        newStatus: UserSeriesStatus
+        newStatus: UserSeriesStatus,
+        rating: Int
     ): Resource<LibraryDomain>
 
     /**

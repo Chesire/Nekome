@@ -58,7 +58,7 @@ fun Fragment.showSortDialog(preferences: SeriesPreferences) {
     }
 }
 
-fun Fragment.showRateDialog(onFinish: (Float?) -> Unit) {
+fun Fragment.showRateDialog(onFinish: (Float) -> Unit) {
     val context = context ?: return
 
     var slider: Slider
@@ -76,8 +76,8 @@ fun Fragment.showRateDialog(onFinish: (Float?) -> Unit) {
                 }
         }
         positiveButton(R.string.series_list_rate_confirm) { onFinish(slider.value) }
-        negativeButton(R.string.series_list_rate_cancel) { onFinish(null) }
-        onCancel { onFinish(null) }
+        negativeButton(R.string.series_list_rate_cancel) { onFinish(0f) }
+        onCancel { onFinish(0f) }
         lifecycleOwner(viewLifecycleOwner)
     }
 }

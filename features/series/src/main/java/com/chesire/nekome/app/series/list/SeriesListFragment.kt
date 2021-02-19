@@ -125,14 +125,14 @@ abstract class SeriesListFragment :
                 updateSeries(model, rating, callback)
             }
         } else {
-            updateSeries(model, null, callback)
+            updateSeries(model, 0f, callback)
         }
     }
 
     private fun shouldDisplayRatingDialog(model: SeriesDomain): Boolean =
         seriesPreferences.rateSeriesOnCompletion && model.progress + 1 == model.totalLength
 
-    private fun updateSeries(model: SeriesDomain, rating: Float?, callback: () -> Unit) {
+    private fun updateSeries(model: SeriesDomain, rating: Float, callback: () -> Unit) {
         viewModel.updateSeries(model.userId, model.progress.inc(), model.userSeriesStatus, rating) {
             if (it is Resource.Error) {
                 Snackbar.make(

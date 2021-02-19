@@ -144,9 +144,13 @@ class SeriesRepository(
     suspend fun updateSeries(
         userSeriesId: Int,
         progress: Int,
-        status: UserSeriesStatus
+        status: UserSeriesStatus,
+        rating: Float
     ): Resource<SeriesDomain> {
-        return when (val response = libraryApi.update(userSeriesId, progress, status)) {
+        val actualRating = (rating * 2).toInt()
+        return when (
+            val response = libraryApi.update(userSeriesId, progress, status, actualRating)
+        ) {
             is Resource.Success -> {
                 val entity = map.toSeriesEntity(response.data)
                 seriesDao.update(entity)

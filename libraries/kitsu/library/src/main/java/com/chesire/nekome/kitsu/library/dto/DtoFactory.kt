@@ -48,7 +48,8 @@ class DtoFactory @Inject constructor() {
     fun createUpdateDto(
         userSeriesId: Int,
         newProgress: Int,
-        newStatus: String
+        newStatus: String,
+        rating: Int
     ) =
         """
 {
@@ -57,7 +58,8 @@ class DtoFactory @Inject constructor() {
     "type": "libraryEntries",
     "attributes": {
       "progress": $newProgress,
-      "status": "$newStatus"
+      "status": "$newStatus",
+      "ratingTwenty": $rating
     }
   }
 }
