@@ -28,7 +28,7 @@ interface KitsuLibraryService {
     @GET(
         "api/edge/users/{userId}/library-entries" +
             "?include=anime" +
-            "&fields[libraryEntries]=status,progress,anime,startedAt,finishedAt" +
+            "&fields[libraryEntries]=status,progress,anime,startedAt,finishedAt,ratingTwenty" +
             "&fields[anime]=$ANIME_FIELDS" +
             "&filter[kind]=anime" +
             "&sort=anime.titles.canonical"
@@ -45,7 +45,7 @@ interface KitsuLibraryService {
     @GET(
         "api/edge/users/{userId}/library-entries" +
             "?include=manga" +
-            "&fields[libraryEntries]=status,progress,manga,startedAt,finishedAt" +
+            "&fields[libraryEntries]=status,progress,manga,startedAt,finishedAt,ratingTwenty" +
             "&fields[manga]=$MANGA_FIELDS" +
             "&filter[kind]=manga" +
             "&sort=manga.titles.canonical"

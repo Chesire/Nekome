@@ -23,6 +23,7 @@ data class SeriesDomain(
     val userSeriesStatus: UserSeriesStatus,
     val progress: Int,
     val totalLength: Int,
+    val rating: Int,
     val posterImage: ImageModel,
     val startDate: String,
     val endDate: String
