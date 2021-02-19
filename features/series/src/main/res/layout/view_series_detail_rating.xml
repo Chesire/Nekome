@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/ratingTitle"
+        style="@style/BottomSheetSectionTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/series_detail_rating" />
 
     <com.chesire.nekome.app.series.list.view.RatingSlider
         android:id="@+id/ratingSlider"
@@ -16,4 +24,4 @@
         app:thumbColor="@color/colorAccent"
         app:trackColor="@color/colorAccent" />
 
-</FrameLayout>
+</LinearLayout>

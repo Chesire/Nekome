@@ -26,6 +26,10 @@
             layout="@layout/view_series_detail_progress" />
 
         <include
+            android:id="@+id/detailRating"
+            layout="@layout/view_series_detail_rating" />
+
+        <include
             android:id="@+id/detailConfirmation"
             layout="@layout/view_series_detail_confirmation" />
 

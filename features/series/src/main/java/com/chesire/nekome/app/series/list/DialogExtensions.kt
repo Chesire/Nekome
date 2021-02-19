@@ -65,15 +65,7 @@ fun Fragment.showRateDialog(onFinish: (Float) -> Unit) {
     MaterialDialog(context).show {
         title(R.string.series_list_rate_title)
         customView(R.layout.view_rate_series).apply {
-            findViewById<Slider>(R.id.ratingSlider)
-                .apply {
-                    slider = this
-                    setLabelFormatter {
-                        NumberFormat.getInstance()
-                            .apply { maximumFractionDigits = 1 }
-                            .format(it)
-                    }
-                }
+            slider = findViewById(R.id.ratingSlider)
         }
         positiveButton(R.string.series_list_rate_confirm) { onFinish(slider.value) }
         negativeButton(R.string.series_list_rate_cancel) { onFinish(0f) }
