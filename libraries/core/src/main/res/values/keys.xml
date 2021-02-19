@@ -3,4 +3,5 @@
     <string name="key_default_series_state" translatable="false">keyDefaultSeriesState</string>
     <string name="key_default_home" translatable="false">keyDefaultHomeScreen</string>
     <string name="key_theme" translatable="false">keyTheme</string>
+    <string name="key_rate_on_completion" translatable="false">keyRateOnCompletion</string>
 </resources>

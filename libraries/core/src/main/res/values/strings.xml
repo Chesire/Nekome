@@ -89,8 +89,9 @@
     <!-- Point to a privacy policy in Github repo -->
     <string name="privacy_policy_url">http://www.google.com</string>
 
-    <string name="settings_about_category">About</string>
-    <string name="settings_general_category">General</string>
+    <string name="settings_category_about">About</string>
+    <string name="settings_category_application">Application</string>
+    <string name="settings_category_series">Series</string>
     <string name="settings_version">Version</string>
     <string name="settings_licenses">Licenses</string>
     <string name="settings_privacy_policy">Privacy Policy</string>
@@ -100,6 +101,8 @@
     <string name="settings_default_series_status_summary">Status a newly tracked series will start in</string>
     <string name="settings_default_home_title">Default Home Screen</string>
     <string name="settings_default_home_summary">Choose between Anime/Manga</string>
+    <string name="settings_rate_on_completion_title">Rate series when completing</string>
+    <string name="settings_rate_on_completion_summary">When completing a series, add a rating?</string>
     <string name="settings_theme">Theme</string>
     <string name="settings_theme_system">Use system default</string>
     <string name="settings_theme_dark">Dark</string>
