@@ -146,7 +146,7 @@ class SeriesListTests : UITest() {
     fun canIncrementSeriesProgress() {
         libraryApi.apply {
             coEvery {
-                update(0, 1, UserSeriesStatus.Current)
+                update(0, 1, UserSeriesStatus.Current, 0)
             } coAnswers {
                 Resource.Success(
                     createLibraryDomain(
