@@ -46,7 +46,7 @@ class SeriesDetailViewModelTests {
         val slot = slot<AsyncState<MutableSeriesModel, SeriesDetailError>>()
         val mockRepository = mockk<SeriesRepository> {
             coEvery {
-                updateSeries(any(), any(), any())
+                updateSeries(any(), any(), any(), any())
             } coAnswers {
                 Resource.Error.badRequest("")
             }
@@ -71,7 +71,7 @@ class SeriesDetailViewModelTests {
         val slot = slot<AsyncState<MutableSeriesModel, SeriesDetailError>>()
         val mockRepository = mockk<SeriesRepository> {
             coEvery {
-                updateSeries(any(), any(), any())
+                updateSeries(any(), any(), any(), any())
             } coAnswers {
                 Resource.Success(createSeriesDomain())
             }

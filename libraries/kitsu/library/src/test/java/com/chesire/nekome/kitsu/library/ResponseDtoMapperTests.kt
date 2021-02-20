@@ -20,6 +20,7 @@ class ResponseDtoMapperTests {
                 DataDto.Attributes(
                     UserSeriesStatus.Unknown,
                     0,
+                    0,
                     "startedAt",
                     "finishedAt"
                 ),

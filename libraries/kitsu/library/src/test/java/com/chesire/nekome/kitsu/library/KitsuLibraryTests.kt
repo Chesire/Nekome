@@ -387,7 +387,7 @@ class KitsuLibraryTests {
         }
 
         val classUnderTest = KitsuLibrary(mockService, map, factory)
-        val actual = classUnderTest.update(10, 0, UserSeriesStatus.OnHold)
+        val actual = classUnderTest.update(10, 0, UserSeriesStatus.OnHold, 0)
 
         when (actual) {
             is Resource.Success -> {
@@ -413,7 +413,7 @@ class KitsuLibraryTests {
         }
 
         val classUnderTest = KitsuLibrary(mockService, map, factory)
-        val actual = classUnderTest.update(10, 0, UserSeriesStatus.OnHold)
+        val actual = classUnderTest.update(10, 0, UserSeriesStatus.OnHold, 0)
 
         when (actual) {
             is Resource.Success -> error("Test has failed")
@@ -442,7 +442,7 @@ class KitsuLibraryTests {
         }
 
         val classUnderTest = KitsuLibrary(mockService, map, factory)
-        val actual = classUnderTest.update(10, 0, UserSeriesStatus.OnHold)
+        val actual = classUnderTest.update(10, 0, UserSeriesStatus.OnHold, 0)
 
         when (actual) {
             is Resource.Success -> error("Test has failed")
@@ -469,7 +469,7 @@ class KitsuLibraryTests {
         }
 
         val classUnderTest = KitsuLibrary(mockService, map, factory)
-        val actual = classUnderTest.update(10, 0, UserSeriesStatus.OnHold)
+        val actual = classUnderTest.update(10, 0, UserSeriesStatus.OnHold, 0)
 
         when (actual) {
             is Resource.Success -> error("Test has failed")
@@ -484,7 +484,7 @@ class KitsuLibraryTests {
         }
 
         val classUnderTest = KitsuLibrary(mockService, map, factory)
-        val result = classUnderTest.update(0, 0, UserSeriesStatus.Current)
+        val result = classUnderTest.update(0, 0, UserSeriesStatus.Current, 0)
 
         when (result) {
             is Resource.Success -> error("Test has failed")
