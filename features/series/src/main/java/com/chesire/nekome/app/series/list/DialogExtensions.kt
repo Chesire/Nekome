@@ -57,6 +57,10 @@ fun Fragment.showSortDialog(preferences: SeriesPreferences) {
     }
 }
 
+/**
+ * Shows the rating dialog, allowing the user to choose a rating for the series. On pressing confirm
+ * the rating value is sent back in [onFinish], if it is cancelled then the value 0 is sent instead.
+ */
 fun Fragment.showRateDialog(onFinish: (Int) -> Unit) {
     val context = context ?: return
 
