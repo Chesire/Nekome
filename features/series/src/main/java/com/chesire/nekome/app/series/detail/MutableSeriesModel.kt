@@ -16,7 +16,8 @@ data class MutableSeriesModel(
     val seriesType: String,
     val seriesSubType: String,
     var userSeriesStatus: UserSeriesStatus,
-    val seriesStatus: String
+    val seriesStatus: String,
+    var rating: Float
 ) {
     companion object {
         /**
@@ -31,7 +32,8 @@ data class MutableSeriesModel(
             model.type.name,
             model.subtype.name,
             model.userSeriesStatus,
-            model.seriesStatus.name
+            model.seriesStatus.name,
+            model.rating.toFloat() / 2
         )
     }
 }

@@ -56,6 +56,7 @@ class SeriesDetailSheetFragment : BottomSheetDialogFragment() {
             setupSeriesStatusListener(this)
             setupInitialSeriesStatus(this)
             setupProgress(this)
+            setupRating(this)
         }
         setupConfirmation()
     }
@@ -141,6 +142,15 @@ class SeriesDetailSheetFragment : BottomSheetDialogFragment() {
         binding.detailProgress.progressOutOf.text = getString(
             R.string.series_detail_progress_out_of, model.seriesLength
         )
+    }
+
+    private fun setupRating(model: MutableSeriesModel) {
+        binding.detailRating.ratingSlider.apply {
+            value = model.rating
+            addOnChangeListener { _, value, _ ->
+                model.rating = value
+            }
+        }
     }
 
     private fun setupConfirmation() =

@@ -49,7 +49,7 @@ class SeriesDetailViewModel @Inject constructor(
                 target.userSeriesId,
                 target.seriesProgress,
                 target.userSeriesStatus,
-                0f
+                target.rating
             )
             if (response is Resource.Error) {
                 _updatingStatus.postError(
