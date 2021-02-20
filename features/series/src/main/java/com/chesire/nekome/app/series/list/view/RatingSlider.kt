@@ -7,7 +7,7 @@ import com.google.android.material.slider.Slider
 import java.text.NumberFormat
 
 /**
- * Provides an instance of [Slider] which a label formatter already setup.
+ * Provides an instance of [Slider] with a label formatter already setup.
  *
  * This does some internal managing of the value for the [Slider] to work with what Kitsu expects
  * the values to be.
