@@ -145,11 +145,10 @@ class SeriesRepository(
         userSeriesId: Int,
         progress: Int,
         status: UserSeriesStatus,
-        rating: Float
+        rating: Int
     ): Resource<SeriesDomain> {
-        val actualRating = (rating * 2).toInt()
         return when (
-            val response = libraryApi.update(userSeriesId, progress, status, actualRating)
+            val response = libraryApi.update(userSeriesId, progress, status, rating)
         ) {
             is Resource.Success -> {
                 val entity = map.toSeriesEntity(response.data)

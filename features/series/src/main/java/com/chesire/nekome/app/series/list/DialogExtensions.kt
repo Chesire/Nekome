@@ -12,7 +12,6 @@ import com.chesire.nekome.app.series.SeriesPreferences
 import com.chesire.nekome.core.flags.SortOption
 import com.chesire.nekome.core.flags.UserSeriesStatus
 import com.google.android.material.slider.Slider
-import java.text.NumberFormat
 
 /**
  * Shows the filter dialog, allowing the user to choose how to filter their series list.
@@ -58,7 +57,7 @@ fun Fragment.showSortDialog(preferences: SeriesPreferences) {
     }
 }
 
-fun Fragment.showRateDialog(onFinish: (Float) -> Unit) {
+fun Fragment.showRateDialog(onFinish: (Int) -> Unit) {
     val context = context ?: return
 
     var slider: Slider
@@ -67,9 +66,9 @@ fun Fragment.showRateDialog(onFinish: (Float) -> Unit) {
         customView(R.layout.view_rate_series).apply {
             slider = findViewById(R.id.ratingSlider)
         }
-        positiveButton(R.string.series_list_rate_confirm) { onFinish(slider.value) }
-        negativeButton(R.string.series_list_rate_cancel) { onFinish(0f) }
-        onCancel { onFinish(0f) }
+        positiveButton(R.string.series_list_rate_confirm) { onFinish(slider.value.toInt()) }
+        negativeButton(R.string.series_list_rate_cancel) { onFinish(0) }
+        onCancel { onFinish(0) }
         lifecycleOwner(viewLifecycleOwner)
     }
 }

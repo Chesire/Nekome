@@ -146,9 +146,9 @@ class SeriesDetailSheetFragment : BottomSheetDialogFragment() {
 
     private fun setupRating(model: MutableSeriesModel) {
         binding.detailRating.ratingSlider.apply {
-            value = model.rating
+            value = model.rating.toFloat()
             addOnChangeListener { _, value, _ ->
-                model.rating = value
+                model.rating = value.toInt()
             }
         }
     }
