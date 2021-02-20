@@ -125,7 +125,7 @@ abstract class SeriesListFragment :
                 updateSeries(model, rating, callback)
             }
         } else {
-            updateSeries(model, 0f, callback)
+            updateSeries(model, 0, callback)
         }
     }
 

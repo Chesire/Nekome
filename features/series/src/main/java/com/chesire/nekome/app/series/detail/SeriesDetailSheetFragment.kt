@@ -101,7 +101,6 @@ class SeriesDetailSheetFragment : BottomSheetDialogFragment() {
                 return@setOnCheckedChangeListener
             }
             lastCheckedId = checkedId
-            Timber.d("Chip checked, selected is now $checkedId")
 
             when (checkedId) {
                 R.id.statusChipCurrent -> model.userSeriesStatus = UserSeriesStatus.Current
@@ -110,6 +109,7 @@ class SeriesDetailSheetFragment : BottomSheetDialogFragment() {
                 R.id.statusChipOnHold -> model.userSeriesStatus = UserSeriesStatus.OnHold
                 R.id.statusChipPlanned -> model.userSeriesStatus = UserSeriesStatus.Planned
             }
+            Timber.d("Chip checked, selected is now [${model.userSeriesStatus}]")
         }
     }
 
