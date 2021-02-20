@@ -34,4 +34,14 @@
         <item name="android:background">@color/bottomSheetDrag</item>
     </style>
 
+    <style name="RatingSliderStyle">
+        <item name="android:layout_margin">@dimen/full_margin</item>
+        <item name="android:stepSize">1</item>
+        <item name="android:value">0</item>
+        <item name="android:valueFrom">0</item>
+        <item name="android:valueTo">20</item>
+        <item name="thumbColor">@color/colorAccent</item>
+        <item name="trackColor">@color/colorAccent</item>
+    </style>
+
 </resources>
