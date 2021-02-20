@@ -3,7 +3,6 @@ package com.chesire.nekome.injection
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.preference.PreferenceManager
-import com.chesire.nekome.app.series.SeriesPreferences
 import dagger.Module
 import dagger.Provides
 import dagger.Reusable
