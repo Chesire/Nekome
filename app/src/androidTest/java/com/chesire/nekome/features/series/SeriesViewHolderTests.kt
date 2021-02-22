@@ -229,6 +229,7 @@ class SeriesViewHolderTests : UITest() {
                     UserSeriesStatus.Current,
                     2,
                     3,
+                    5,
                     ImageModel.empty,
                     "",
                     ""

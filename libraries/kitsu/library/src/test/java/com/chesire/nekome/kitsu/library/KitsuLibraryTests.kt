@@ -24,7 +24,10 @@ class KitsuLibraryTests {
     private val map = mockk<ResponseDtoMapper> {
         every { toLibraryDomain(any()) } returns createLibraryDomain()
     }
-    private val factory = DtoFactory()
+    private val factory = mockk<DtoFactory> {
+        every { createAddDto(any(), any(), any(), any()) } returns ""
+        every { createUpdateDto(any(), any(), any(), any()) } returns ""
+    }
 
     @Test
     fun `retrieveAnime on success returns the retrieved models`() = runBlocking {
