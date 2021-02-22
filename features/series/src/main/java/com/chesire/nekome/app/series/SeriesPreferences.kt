@@ -72,8 +72,11 @@ class SeriesPreferences @Inject constructor(
     /**
      * Preference value for if a rating dialog should be displayed on completing a series.
      */
-    val rateSeriesOnCompletion: Boolean
+    var rateSeriesOnCompletion: Boolean
         get() = sharedPreferences.getBoolean(rateOnCompletionKey, false)
+        set(value) = sharedPreferences.edit {
+            putBoolean(rateOnCompletionKey, value)
+        }
 
     /**
      * Subscribe to changes in the [SharedPreferences].

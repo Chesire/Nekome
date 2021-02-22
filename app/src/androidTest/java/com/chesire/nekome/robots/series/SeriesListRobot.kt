@@ -7,6 +7,7 @@ import com.chesire.nekome.helpers.ToastMatcher.Companion.onToast
 import com.schibsted.spain.barista.assertion.BaristaListAssertions.assertDisplayedAtPosition
 import com.schibsted.spain.barista.assertion.BaristaRecyclerViewAssertions.assertRecyclerViewItemCount
 import com.schibsted.spain.barista.assertion.BaristaVisibilityAssertions.assertDisplayed
+import com.schibsted.spain.barista.assertion.BaristaVisibilityAssertions.assertNotExist
 import com.schibsted.spain.barista.interaction.BaristaListInteractions.clickListItemChild
 import com.schibsted.spain.barista.interaction.BaristaSwipeRefreshInteractions.refresh
 
@@ -120,4 +121,14 @@ class SeriesListResultRobot {
      */
     fun checkSeriesAtIndex(index: Int, title: String) =
         assertDisplayedAtPosition(R.id.listContent, index, R.id.seriesTitle, title)
+
+    /**
+     * Asserts that the rating dialog is currently displayed.
+     */
+    fun isRatingDialogDisplayed() = assertDisplayed(R.string.rate_dialog_title)
+
+    /**
+     * Asserts that the rating dialog is not currently displayed.
+     */
+    fun isRatingDialogNotDisplayed() = assertNotExist(R.id.ratingDialog)
 }

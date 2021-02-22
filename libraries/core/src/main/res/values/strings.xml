@@ -53,7 +53,7 @@
     <string name="series_list_empty">No series found with the current filter</string>
     <string name="series_list_refresh">Refresh series</string>
     <string name="series_list_refresh_error">Encountered error trying to refresh series list, please try again…</string>
-    <string name="series_list_rate_title">Rate Series</string>
+    <string name="rate_dialog_title">Rate Series</string>
     <string name="series_list_rate_cancel">Cancel</string>
     <string name="series_list_rate_confirm">Confirm</string>
 

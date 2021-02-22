@@ -132,6 +132,24 @@ class SeriesPreferencesTests {
     }
 
     @Test
+    fun `rateSeriesOnCompletion can set value`() {
+        val mockEditor = mockk<SharedPreferences.Editor> {
+            every {
+                putBoolean(RATE_ON_COMPLETION_KEY, true)
+            } returns this
+            every { apply() } just Runs
+        }
+        val mockPreferences = mockk<SharedPreferences> {
+            every { edit() } returns mockEditor
+        }
+
+        val classUnderTest = SeriesPreferences(mockPreferences, mockContext)
+        classUnderTest.rateSeriesOnCompletion = true
+
+        verify { mockEditor.putBoolean(RATE_ON_COMPLETION_KEY, true) }
+    }
+
+    @Test
     fun `subscribeToChanges sets up change listener`() {
         val listener = mockk<SharedPreferences.OnSharedPreferenceChangeListener>()
         val mockPreferences = mockk<SharedPreferences> {

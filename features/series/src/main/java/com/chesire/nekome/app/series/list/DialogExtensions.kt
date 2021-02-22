@@ -66,7 +66,7 @@ fun Fragment.showRateDialog(onFinish: (Int) -> Unit) {
 
     var slider: Slider
     MaterialDialog(context).show {
-        title(R.string.series_list_rate_title)
+        title(R.string.rate_dialog_title)
         customView(R.layout.view_rate_series).apply {
             slider = findViewById(R.id.ratingSlider)
         }
