@@ -114,6 +114,18 @@ class SettingsTests : UITest() {
     }
 
     @Test
+    fun changeRateOnCompletionSetting() {
+        launchActivity()
+
+        activity {
+            goToSettings()
+        }
+        settings {
+            changeRateOnComplete()
+        }
+    }
+
+    @Test
     fun openingGitHubHasNoIssue() {
         launchActivity()
 

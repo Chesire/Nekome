@@ -32,6 +32,11 @@ class SettingsRobot {
     fun changeTheme(func: ThemeRobot.() -> Unit) = ThemeRobot().apply { func() }
 
     /**
+     * Toggles the rate on completion setting.
+     */
+    fun changeRateOnComplete() = clickOn(R.string.settings_rate_on_completion_summary)
+
+    /**
      * Clicks the link to go to the GitHub page.
      */
     fun openGitHub() = clickOn(R.string.settings_github)
