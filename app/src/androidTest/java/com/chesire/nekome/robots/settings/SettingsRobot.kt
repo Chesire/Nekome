@@ -3,6 +3,7 @@ package com.chesire.nekome.robots.settings
 import com.chesire.nekome.R
 import com.schibsted.spain.barista.assertion.BaristaVisibilityAssertions.assertDisplayed
 import com.schibsted.spain.barista.interaction.BaristaClickInteractions.clickOn
+import com.schibsted.spain.barista.interaction.BaristaScrollInteractions.scrollTo
 
 /**
  * Method to interact with the [SettingsRobot].
@@ -39,12 +40,18 @@ class SettingsRobot {
     /**
      * Clicks the link to go to the GitHub page.
      */
-    fun openGitHub() = clickOn(R.string.settings_github)
+    fun openGitHub() {
+        scrollTo(R.string.settings_github)
+        clickOn(R.string.settings_github)
+    }
 
     /**
      * Open the licenses screen.
      */
-    fun goToLicenses() = clickOn(R.string.settings_licenses)
+    fun goToLicenses() {
+        scrollTo(R.string.settings_licenses)
+        clickOn(R.string.settings_licenses)
+    }
 
     /**
      * Executes validation steps.
