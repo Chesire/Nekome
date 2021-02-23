@@ -1,7 +1,7 @@
 package com.chesire.nekome.database.dao
 
+import android.os.Build
 import androidx.room.Room
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import com.chesire.nekome.core.flags.Service
 import com.chesire.nekome.core.models.ImageModel
@@ -15,8 +15,11 @@ import org.junit.Assert.assertNull
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.robolectric.RobolectricTestRunner
+import org.robolectric.annotation.Config
 
-@RunWith(AndroidJUnit4::class)
+@RunWith(RobolectricTestRunner::class)
+@Config(sdk = [Build.VERSION_CODES.O_MR1])
 class UserDaoTests {
     private lateinit var db: RoomDB
     private lateinit var userDao: UserDao
@@ -28,6 +31,7 @@ class UserDaoTests {
                 InstrumentationRegistry.getInstrumentation().context,
                 RoomDB::class.java
             )
+            .allowMainThreadQueries()
             .fallbackToDestructiveMigration()
             .build()
             .also {
