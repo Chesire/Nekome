@@ -23,8 +23,8 @@ class SearchViewModel @Inject constructor(
     private val mapper: SearchDomainMapper
 ) : ViewModel() {
 
-    private val _searchResult = LiveEvent<SearchState>()
-    val searchState: LiveData<SearchState> = _searchResult
+    private val _searchState = LiveEvent<SearchState>()
+    val searchState: LiveData<SearchState> = _searchState
 
     /**
      * Executes a search request using the data stored in [model], the result is posted to
@@ -32,15 +32,15 @@ class SearchViewModel @Inject constructor(
      */
     fun executeSearch(model: SearchData) {
         if (model.title.isEmpty()) {
-            _searchResult.postValue(SearchState.EmptyTitle)
+            _searchState.postValue(SearchState.EmptyTitle)
             return
         }
         if (model.seriesType == SeriesType.Unknown) {
-            _searchResult.postValue(SearchState.NoTypeSelected)
+            _searchState.postValue(SearchState.NoTypeSelected)
             return
         }
 
-        _searchResult.postValue(SearchState.Loading)
+        _searchState.postValue(SearchState.Loading)
 
         viewModelScope.launch {
             val response = when (model.seriesType) {
@@ -59,16 +59,16 @@ class SearchViewModel @Inject constructor(
     ) = when (response) {
         is Resource.Success ->
             if (response.data.isEmpty()) {
-                _searchResult.postValue(SearchState.NoSeriesFound)
+                _searchState.postValue(SearchState.NoSeriesFound)
             } else {
-                _searchResult.postValue(
+                _searchState.postValue(
                     SearchState.Success(
                         model.title,
                         response.data.map { mapper.toSearchModel(it) }
                     )
                 )
             }
-        is Resource.Error -> _searchResult.postValue(SearchState.GenericError)
+        is Resource.Error -> _searchState.postValue(SearchState.GenericError)
     }
 }
 
