@@ -1,5 +1,10 @@
 package com.chesire.nekome.robots.search
 
+import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.matcher.ViewMatchers.hasDescendant
+import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.espresso.matcher.ViewMatchers.withText
 import com.chesire.nekome.R
 import com.schibsted.spain.barista.assertion.BaristaVisibilityAssertions.assertDisplayed
 
@@ -27,4 +32,13 @@ class ResultsResultRobot {
      * Asserts the search screen is shown.
      */
     fun isVisible() = assertDisplayed(R.id.resultsLayout)
+
+    /**
+     * Verifies the title of the results page is [value].
+     */
+    fun titleIs(value: String){
+        onView(withId(R.id.appBarToolbar))
+            .check(matches(hasDescendant(withText(value))));
+
+    }
 }

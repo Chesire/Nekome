@@ -79,6 +79,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
                     hideSpinner()
                     findNavController().navigate(
                         SearchFragmentDirections.toResultsFragment(
+                            binding.searchText.text.toString(),
                             result.data.toTypedArray()
                         )
                     )

@@ -19,8 +19,11 @@
     <fragment
         android:id="@+id/resultsFragment"
         android:name="com.chesire.nekome.app.search.results.ResultsFragment"
-        android:label="@string/nav_results"
+        android:label="{searchTerm}"
         tools:layout="@layout/fragment_results">
+        <argument
+            android:name="searchTerm"
+            app:argType="string" />
         <argument
             android:name="searchResults"
             app:argType="com.chesire.nekome.app.search.domain.SearchModel[]" />
