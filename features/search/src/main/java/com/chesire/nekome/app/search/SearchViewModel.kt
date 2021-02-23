@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chesire.nekome.app.search.domain.SearchDomainMapper
-import com.chesire.nekome.app.search.domain.SearchModel
 import com.chesire.nekome.core.Resource
 import com.chesire.nekome.core.flags.SeriesType
 import com.chesire.nekome.search.api.SearchApi
@@ -70,16 +69,4 @@ class SearchViewModel @Inject constructor(
             }
         is Resource.Error -> _searchState.postValue(SearchState.GenericError)
     }
-}
-
-/**
- * Different states that can occur from searching for a series.
- */
-sealed class SearchState {
-    object Loading : SearchState()
-    data class Success(val searchTerm: String, val data: List<SearchModel>) : SearchState()
-    object EmptyTitle : SearchState()
-    object NoTypeSelected : SearchState()
-    object NoSeriesFound : SearchState()
-    object GenericError : SearchState()
 }
