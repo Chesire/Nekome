@@ -1,23 +1,22 @@
 package com.chesire.nekome.database.dao
 
+import android.os.Build
 import androidx.room.Room
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
-import com.chesire.nekome.core.flags.SeriesStatus
 import com.chesire.nekome.core.flags.SeriesType
-import com.chesire.nekome.core.flags.Subtype
-import com.chesire.nekome.core.flags.UserSeriesStatus
-import com.chesire.nekome.core.models.ImageModel
 import com.chesire.nekome.database.RoomDB
-import com.chesire.nekome.database.entity.SeriesEntity
+import com.chesire.nekome.testing.createSeriesEntity
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.robolectric.RobolectricTestRunner
+import org.robolectric.annotation.Config
 
-@RunWith(AndroidJUnit4::class)
+@RunWith(RobolectricTestRunner::class)
+@Config(sdk = [Build.VERSION_CODES.O_MR1])
 class SeriesDaoTests {
     private lateinit var db: RoomDB
     private lateinit var seriesDao: SeriesDao
@@ -29,6 +28,7 @@ class SeriesDaoTests {
                 InstrumentationRegistry.getInstrumentation().context,
                 RoomDB::class.java
             )
+            .allowMainThreadQueries()
             .fallbackToDestructiveMigration()
             .build()
             .also {
@@ -121,12 +121,12 @@ class SeriesDaoTests {
     fun retrieveGetsAllCurrentItemsBasedOnType() = runBlocking {
         seriesDao.insert(
             listOf(
-                createSeriesEntity(id = 0, type = SeriesType.Anime),
-                createSeriesEntity(id = 1, type = SeriesType.Manga),
-                createSeriesEntity(id = 2, type = SeriesType.Anime),
-                createSeriesEntity(id = 3, type = SeriesType.Manga),
-                createSeriesEntity(id = 4, type = SeriesType.Anime),
-                createSeriesEntity(id = 5, type = SeriesType.Manga)
+                createSeriesEntity(id = 0, seriesType = SeriesType.Anime),
+                createSeriesEntity(id = 1, seriesType = SeriesType.Manga),
+                createSeriesEntity(id = 2, seriesType = SeriesType.Anime),
+                createSeriesEntity(id = 3, seriesType = SeriesType.Manga),
+                createSeriesEntity(id = 4, seriesType = SeriesType.Anime),
+                createSeriesEntity(id = 5, seriesType = SeriesType.Manga)
             )
         )
         assertTrue(seriesDao.retrieve().count() == 6)
@@ -140,25 +140,4 @@ class SeriesDaoTests {
         seriesDao.update(createSeriesEntity(id = 0, userId = 1))
         assertTrue(seriesDao.retrieve().first().userId == 1)
     }
-
-    private fun createSeriesEntity(
-        id: Int = 0,
-        userId: Int = 0,
-        type: SeriesType = SeriesType.Unknown
-    ) = SeriesEntity(
-        id,
-        userId,
-        type,
-        Subtype.Unknown,
-        "slug",
-        "title",
-        SeriesStatus.Unknown,
-        UserSeriesStatus.Unknown,
-        0,
-        0,
-        0,
-        ImageModel.empty,
-        "",
-        ""
-    )
 }
