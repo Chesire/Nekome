@@ -2,6 +2,7 @@ package com.chesire.nekome.app.search
 
 import android.os.Bundle
 import android.view.View
+import androidx.annotation.StringRes
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -10,7 +11,6 @@ import com.chesire.nekome.app.search.databinding.FragmentSearchBinding
 import com.chesire.nekome.core.extensions.hide
 import com.chesire.nekome.core.extensions.hideSystemKeyboard
 import com.chesire.nekome.core.extensions.show
-import com.chesire.nekome.core.flags.AsyncState
 import com.chesire.nekome.core.flags.SeriesType
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -73,46 +73,33 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
     }
 
     private fun observeSearchResults() {
-        viewModel.searchResult.observe(viewLifecycleOwner) { result ->
+        viewModel.searchState.observe(viewLifecycleOwner) { result ->
             when (result) {
-                is AsyncState.Success -> {
+                SearchState.Loading -> showSpinner()
+                SearchState.EmptyTitle ->
+                    binding.searchTextLayout.error = getString(R.string.search_error_no_text)
+                SearchState.GenericError ->
+                    showErrorSnackbar(R.string.error_generic)
+                SearchState.NoSeriesFound ->
+                    showErrorSnackbar(R.string.search_error_no_series_found)
+                SearchState.NoTypeSelected ->
+                    showErrorSnackbar(R.string.search_error_no_type_selected)
+                is SearchState.Success -> {
                     findNavController().navigate(
                         SearchFragmentDirections.toResultsFragment(
-                            binding.searchText.text.toString(),
+                            result.searchTerm,
                             result.data.toTypedArray()
                         )
                     )
                     hideSpinner()
                 }
-                is AsyncState.Error -> {
-                    hideSpinner()
-                    parseSearchError(result.error)
-                }
-                is AsyncState.Loading -> showSpinner()
             }
         }
     }
 
-    private fun parseSearchError(error: SearchError) {
-        when (error) {
-            SearchError.EmptyTitle ->
-                binding.searchTextLayout.error = getString(R.string.search_error_no_text)
-            SearchError.GenericError -> Snackbar.make(
-                binding.searchLayout,
-                R.string.error_generic,
-                Snackbar.LENGTH_LONG
-            ).show()
-            SearchError.NoTypeSelected -> Snackbar.make(
-                binding.searchLayout,
-                R.string.search_error_no_type_selected,
-                Snackbar.LENGTH_LONG
-            ).show()
-            SearchError.NoSeriesFound -> Snackbar.make(
-                binding.searchLayout,
-                R.string.search_error_no_series_found,
-                Snackbar.LENGTH_LONG
-            ).show()
-        }
+    private fun showErrorSnackbar(@StringRes resId: Int) {
+        Snackbar.make(binding.searchLayout, resId, Snackbar.LENGTH_LONG).show()
+        hideSpinner()
     }
 
     private fun showSpinner() {

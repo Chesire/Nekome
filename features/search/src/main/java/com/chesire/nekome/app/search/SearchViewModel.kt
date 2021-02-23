@@ -6,10 +6,6 @@ import androidx.lifecycle.viewModelScope
 import com.chesire.nekome.app.search.domain.SearchDomainMapper
 import com.chesire.nekome.app.search.domain.SearchModel
 import com.chesire.nekome.core.Resource
-import com.chesire.nekome.core.extensions.postError
-import com.chesire.nekome.core.extensions.postLoading
-import com.chesire.nekome.core.extensions.postSuccess
-import com.chesire.nekome.core.flags.AsyncState
 import com.chesire.nekome.core.flags.SeriesType
 import com.chesire.nekome.search.api.SearchApi
 import com.chesire.nekome.search.api.SearchDomain
@@ -27,24 +23,24 @@ class SearchViewModel @Inject constructor(
     private val mapper: SearchDomainMapper
 ) : ViewModel() {
 
-    private val _searchResult = LiveEvent<AsyncState<List<SearchModel>, SearchError>>()
-    val searchResult: LiveData<AsyncState<List<SearchModel>, SearchError>> = _searchResult
+    private val _searchResult = LiveEvent<SearchState>()
+    val searchState: LiveData<SearchState> = _searchResult
 
     /**
      * Executes a search request using the data stored in [model], the result is posted to
-     * [searchResult].
+     * [searchState].
      */
     fun executeSearch(model: SearchData) {
         if (model.title.isEmpty()) {
-            _searchResult.postError(SearchError.EmptyTitle)
+            _searchResult.postValue(SearchState.EmptyTitle)
             return
         }
         if (model.seriesType == SeriesType.Unknown) {
-            _searchResult.postError(SearchError.NoTypeSelected)
+            _searchResult.postValue(SearchState.NoTypeSelected)
             return
         }
 
-        _searchResult.postLoading()
+        _searchResult.postValue(SearchState.Loading)
 
         viewModelScope.launch {
             val response = when (model.seriesType) {
@@ -53,17 +49,37 @@ class SearchViewModel @Inject constructor(
                 else -> error("Unexpected series type provided")
             }
 
-            parseSearchResponse(response)
+            parseSearchResponse(model, response)
         }
     }
 
-    private fun parseSearchResponse(response: Resource<List<SearchDomain>>) = when (response) {
+    private fun parseSearchResponse(
+        model: SearchData,
+        response: Resource<List<SearchDomain>>
+    ) = when (response) {
         is Resource.Success ->
             if (response.data.isEmpty()) {
-                _searchResult.postError(SearchError.NoSeriesFound)
+                _searchResult.postValue(SearchState.NoSeriesFound)
             } else {
-                _searchResult.postSuccess(response.data.map { mapper.toSearchModel(it) })
+                _searchResult.postValue(
+                    SearchState.Success(
+                        model.title,
+                        response.data.map { mapper.toSearchModel(it) }
+                    )
+                )
             }
-        is Resource.Error -> _searchResult.postError(SearchError.GenericError)
+        is Resource.Error -> _searchResult.postValue(SearchState.GenericError)
     }
+}
+
+/**
+ * Different states that can occur from searching for a series.
+ */
+sealed class SearchState {
+    object Loading : SearchState()
+    data class Success(val searchTerm: String, val data: List<SearchModel>) : SearchState()
+    object EmptyTitle : SearchState()
+    object NoTypeSelected : SearchState()
+    object NoSeriesFound : SearchState()
+    object GenericError : SearchState()
 }
