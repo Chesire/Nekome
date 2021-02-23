@@ -1,9 +1,15 @@
 package com.chesire.nekome.robots.settings
 
+import androidx.recyclerview.widget.RecyclerView
+import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.contrib.RecyclerViewActions.actionOnItem
+import androidx.test.espresso.matcher.ViewMatchers.hasDescendant
+import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.espresso.matcher.ViewMatchers.withText
 import com.chesire.nekome.R
 import com.schibsted.spain.barista.assertion.BaristaVisibilityAssertions.assertDisplayed
 import com.schibsted.spain.barista.interaction.BaristaClickInteractions.clickOn
-import com.schibsted.spain.barista.interaction.BaristaScrollInteractions.scrollTo
 
 /**
  * Method to interact with the [SettingsRobot].
@@ -41,16 +47,26 @@ class SettingsRobot {
      * Clicks the link to go to the GitHub page.
      */
     fun openGitHub() {
-        scrollTo(R.string.settings_github)
-        clickOn(R.string.settings_github)
+        onView(withId(androidx.preference.R.id.recycler_view))
+            .perform(
+                actionOnItem<RecyclerView.ViewHolder>(
+                    hasDescendant(withText(R.string.settings_github)),
+                    click()
+                )
+            )
     }
 
     /**
      * Open the licenses screen.
      */
     fun goToLicenses() {
-        scrollTo(R.string.settings_licenses)
-        clickOn(R.string.settings_licenses)
+        onView(withId(androidx.preference.R.id.recycler_view))
+            .perform(
+                actionOnItem<RecyclerView.ViewHolder>(
+                    hasDescendant(withText(R.string.settings_licenses)),
+                    click()
+                )
+            )
     }
 
     /**
