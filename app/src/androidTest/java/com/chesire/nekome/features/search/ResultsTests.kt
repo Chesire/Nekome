@@ -45,4 +45,20 @@ class ResultsTests : UITest() {
             validate { isVisible() }
         }
     }
+
+    @Test
+    fun resultsTitleMatchesInput() {
+        launchActivity()
+
+        activity {
+            goToSearch()
+        }
+        search {
+            searchTerm(DEFAULT_VALUES)
+            clickSearch()
+        }
+        results {
+            validate { titleIs(DEFAULT_VALUES) }
+        }
+    }
 }
