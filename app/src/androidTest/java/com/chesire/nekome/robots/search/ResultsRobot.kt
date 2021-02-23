@@ -36,9 +36,8 @@ class ResultsResultRobot {
     /**
      * Verifies the title of the results page is [value].
      */
-    fun titleIs(value: String){
+    fun titleIs(value: String) {
         onView(withId(R.id.appBarToolbar))
-            .check(matches(hasDescendant(withText(value))));
-
+            .check(matches(hasDescendant(withText(value))))
     }
 }
