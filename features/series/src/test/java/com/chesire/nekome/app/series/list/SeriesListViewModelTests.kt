@@ -33,7 +33,7 @@ class SeriesListViewModelTests {
     fun `updateSeries sends request through the repository`() {
         val mockRepo = mockk<SeriesRepository> {
             coEvery {
-                updateSeries(0, 0, UserSeriesStatus.Current)
+                updateSeries(0, 0, UserSeriesStatus.Current, 0)
             } coAnswers {
                 mockk()
             }
@@ -41,9 +41,9 @@ class SeriesListViewModelTests {
         }
 
         val classUnderTest = SeriesListViewModel(mockRepo)
-        classUnderTest.updateSeries(0, 0, UserSeriesStatus.Current, { })
+        classUnderTest.updateSeries(0, 0, UserSeriesStatus.Current, 0, { })
 
-        coVerify { mockRepo.updateSeries(0, 0, UserSeriesStatus.Current) }
+        coVerify { mockRepo.updateSeries(0, 0, UserSeriesStatus.Current, 0) }
     }
 
     @Test
@@ -51,7 +51,7 @@ class SeriesListViewModelTests {
         var condition = false
         val mockRepo = mockk<SeriesRepository> {
             coEvery {
-                updateSeries(0, 0, UserSeriesStatus.Current)
+                updateSeries(0, 0, UserSeriesStatus.Current, 0)
             } coAnswers {
                 Resource.Error.badRequest("error")
             }
@@ -59,7 +59,7 @@ class SeriesListViewModelTests {
         }
 
         val classUnderTest = SeriesListViewModel(mockRepo)
-        classUnderTest.updateSeries(0, 0, UserSeriesStatus.Current) { condition = true }
+        classUnderTest.updateSeries(0, 0, UserSeriesStatus.Current, 0) { condition = true }
 
         assertTrue(condition)
     }
@@ -69,7 +69,7 @@ class SeriesListViewModelTests {
         var condition = false
         val mockRepo = mockk<SeriesRepository> {
             coEvery {
-                updateSeries(0, 0, UserSeriesStatus.Current)
+                updateSeries(0, 0, UserSeriesStatus.Current, 0)
             } coAnswers {
                 Resource.Success(mockk())
             }
@@ -77,7 +77,7 @@ class SeriesListViewModelTests {
         }
 
         val classUnderTest = SeriesListViewModel(mockRepo)
-        classUnderTest.updateSeries(0, 0, UserSeriesStatus.Current) { condition = true }
+        classUnderTest.updateSeries(0, 0, UserSeriesStatus.Current, 0) { condition = true }
 
         assertTrue(condition)
     }

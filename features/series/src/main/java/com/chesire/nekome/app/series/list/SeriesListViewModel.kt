@@ -39,9 +39,10 @@ class SeriesListViewModel @Inject constructor(
         userSeriesId: Int,
         newProgress: Int,
         newUserSeriesStatus: UserSeriesStatus,
+        rating: Int,
         callback: (Resource<SeriesDomain>) -> Unit
     ) = viewModelScope.launch {
-        val response = repo.updateSeries(userSeriesId, newProgress, newUserSeriesStatus)
+        val response = repo.updateSeries(userSeriesId, newProgress, newUserSeriesStatus, rating)
         callback(response)
     }
 

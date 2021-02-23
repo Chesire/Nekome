@@ -1,6 +1,7 @@
 package com.chesire.nekome.features.series
 
 import com.chesire.nekome.UITest
+import com.chesire.nekome.app.series.SeriesPreferences
 import com.chesire.nekome.core.Resource
 import com.chesire.nekome.core.flags.SeriesType
 import com.chesire.nekome.core.flags.UserSeriesStatus
@@ -16,6 +17,7 @@ import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.runBlocking
 import org.junit.Test
+import javax.inject.Inject
 
 @HiltAndroidTest
 @UninstallModules(LibraryModule::class)
@@ -23,6 +25,9 @@ class SeriesListTests : UITest() {
 
     @BindValue
     val libraryApi = mockk<LibraryApi>()
+
+    @Inject
+    lateinit var seriesPreferences: SeriesPreferences
 
     @Test
     fun canReachSeriesList() {
@@ -144,22 +149,20 @@ class SeriesListTests : UITest() {
 
     @Test
     fun canIncrementSeriesProgress() {
-        libraryApi.apply {
-            coEvery {
-                update(0, 1, UserSeriesStatus.Current)
-            } coAnswers {
-                Resource.Success(
-                    createLibraryDomain(
-                        id = 0,
-                        userId = 0,
-                        title = "Series 0",
-                        seriesType = SeriesType.Anime,
-                        userSeriesStatus = UserSeriesStatus.Current,
-                        progress = 1,
-                        totalLength = 24
-                    )
+        coEvery {
+            libraryApi.update(0, 1, UserSeriesStatus.Current, 0)
+        } coAnswers {
+            Resource.Success(
+                createLibraryDomain(
+                    id = 0,
+                    userId = 0,
+                    title = "Series 0",
+                    seriesType = SeriesType.Anime,
+                    userSeriesStatus = UserSeriesStatus.Current,
+                    progress = 1,
+                    totalLength = 24
                 )
-            }
+            )
         }
         runBlocking {
             series.insert(
@@ -180,6 +183,86 @@ class SeriesListTests : UITest() {
             incrementSeriesByOne(0)
         } validate {
             seriesProgress(0, 1, 24)
+        }
+    }
+
+    @Test
+    fun completingSeriesWithoutRateOnCompletionSettingShowsNoDialog() {
+        coEvery {
+            libraryApi.update(0, 24, UserSeriesStatus.Current, 0)
+        } coAnswers {
+            Resource.Success(
+                createLibraryDomain(
+                    id = 0,
+                    userId = 0,
+                    title = "Series 0",
+                    seriesType = SeriesType.Anime,
+                    userSeriesStatus = UserSeriesStatus.Completed,
+                    progress = 24,
+                    totalLength = 24
+                )
+            )
+        }
+        runBlocking {
+            series.insert(
+                createSeriesEntity(
+                    id = 0,
+                    userId = 0,
+                    title = "Series 0",
+                    seriesType = SeriesType.Anime,
+                    userSeriesStatus = UserSeriesStatus.Current,
+                    progress = 23,
+                    totalLength = 24
+                )
+            )
+        }
+        seriesPreferences.rateSeriesOnCompletion = false
+        launchActivity()
+
+        seriesList {
+            incrementSeriesByOne(0)
+        } validate {
+            isRatingDialogNotDisplayed()
+        }
+    }
+
+    @Test
+    fun completingSeriesWithRateOnCompletionSettingShowsRateDialog() {
+        coEvery {
+            libraryApi.update(0, 24, UserSeriesStatus.Current, 0)
+        } coAnswers {
+            Resource.Success(
+                createLibraryDomain(
+                    id = 0,
+                    userId = 0,
+                    title = "Series 0",
+                    seriesType = SeriesType.Anime,
+                    userSeriesStatus = UserSeriesStatus.Completed,
+                    progress = 24,
+                    totalLength = 24
+                )
+            )
+        }
+        runBlocking {
+            series.insert(
+                createSeriesEntity(
+                    id = 0,
+                    userId = 0,
+                    title = "Series 0",
+                    seriesType = SeriesType.Anime,
+                    userSeriesStatus = UserSeriesStatus.Current,
+                    progress = 23,
+                    totalLength = 24
+                )
+            )
+        }
+        seriesPreferences.rateSeriesOnCompletion = true
+        launchActivity()
+
+        seriesList {
+            incrementSeriesByOne(0)
+        } validate {
+            isRatingDialogDisplayed()
         }
     }
 }

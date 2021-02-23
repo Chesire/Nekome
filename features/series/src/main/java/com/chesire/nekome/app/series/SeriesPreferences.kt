@@ -1,16 +1,24 @@
 package com.chesire.nekome.app.series
 
+import android.content.Context
 import android.content.SharedPreferences
 import androidx.core.content.edit
 import com.chesire.nekome.core.flags.SortOption
 import com.chesire.nekome.core.flags.UserSeriesStatus
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
+import dagger.hilt.android.qualifiers.ApplicationContext
+import javax.inject.Inject
 
 /**
  * Provides a wrapper around the [SharedPreferences] to aid with getting and setting values into it.
  */
-class SeriesPreferences(private val sharedPreferences: SharedPreferences) {
+class SeriesPreferences @Inject constructor(
+    private val sharedPreferences: SharedPreferences,
+    @ApplicationContext context: Context
+) {
+    private val rateOnCompletionKey = context.getString(R.string.key_rate_on_completion)
+
     private val filterAdapter by lazy {
         Moshi.Builder()
             .build()
@@ -59,6 +67,15 @@ class SeriesPreferences(private val sharedPreferences: SharedPreferences) {
         }
         set(value) = sharedPreferences.edit {
             putString(FILTER_PREFERENCE, filterAdapter.toJson(value))
+        }
+
+    /**
+     * Preference value for if a rating dialog should be displayed on completing a series.
+     */
+    var rateSeriesOnCompletion: Boolean
+        get() = sharedPreferences.getBoolean(rateOnCompletionKey, false)
+        set(value) = sharedPreferences.edit {
+            putBoolean(rateOnCompletionKey, value)
         }
 
     /**

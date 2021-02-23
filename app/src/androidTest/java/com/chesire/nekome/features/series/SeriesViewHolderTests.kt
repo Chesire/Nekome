@@ -172,7 +172,7 @@ class SeriesViewHolderTests : UITest() {
             series.insert(createSeriesEntity(progress = 1, totalLength = 3))
         }
         coEvery {
-            libraryApi.update(any(), any(), any())
+            libraryApi.update(any(), any(), any(), any())
         } coAnswers {
             Resource.Error("")
         }
@@ -207,6 +207,7 @@ class SeriesViewHolderTests : UITest() {
                     UserSeriesStatus.Current,
                     1,
                     3,
+                    0,
                     ImageModel.empty,
                     "",
                     ""
@@ -214,7 +215,7 @@ class SeriesViewHolderTests : UITest() {
             )
         }
         coEvery {
-            libraryApi.update(any(), any(), any())
+            libraryApi.update(any(), any(), any(), any())
         } coAnswers {
             Resource.Success(
                 createLibraryDomain(
@@ -228,6 +229,7 @@ class SeriesViewHolderTests : UITest() {
                     UserSeriesStatus.Current,
                     2,
                     3,
+                    5,
                     ImageModel.empty,
                     "",
                     ""

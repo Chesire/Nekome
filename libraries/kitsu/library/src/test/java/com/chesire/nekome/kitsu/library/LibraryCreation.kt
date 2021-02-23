@@ -27,6 +27,7 @@ fun createLibraryDomain() =
         UserSeriesStatus.Unknown,
         0,
         0,
+        0,
         ImageModel.empty,
         "startDate",
         "endDate"
@@ -59,6 +60,7 @@ fun createDataDto(type: SeriesType, id: Int = 0) =
         id,
         DataDto.Attributes(
             UserSeriesStatus.Unknown,
+            0,
             0,
             "startedAt",
             "finishedAt"

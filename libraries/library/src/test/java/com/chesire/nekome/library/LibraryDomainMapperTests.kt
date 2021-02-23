@@ -27,6 +27,7 @@ class LibraryDomainMapperTests {
             UserSeriesStatus.Planned,
             0,
             12,
+            0,
             ImageModel.empty,
             "startDate",
             "endDate"
@@ -44,6 +45,7 @@ class LibraryDomainMapperTests {
         assertEquals(input.userSeriesStatus, output.userSeriesStatus)
         assertEquals(input.progress, output.progress)
         assertEquals(input.totalLength, output.totalLength)
+        assertEquals(input.rating, output.rating)
         assertEquals(input.posterImage, output.posterImage)
         assertEquals(input.startDate, output.startDate)
         assertEquals(input.endDate, output.endDate)
@@ -62,6 +64,7 @@ class LibraryDomainMapperTests {
             UserSeriesStatus.Planned,
             0,
             12,
+            0,
             ImageModel.empty,
             "startDate",
             "endDate"
@@ -79,6 +82,7 @@ class LibraryDomainMapperTests {
         assertEquals(input.userSeriesStatus, output.userSeriesStatus)
         assertEquals(input.progress, output.progress)
         assertEquals(input.totalLength, output.totalLength)
+        assertEquals(input.rating, output.rating)
         assertEquals(input.posterImage, output.posterImage)
         assertEquals(input.startDate, output.startDate)
         assertEquals(input.endDate, output.endDate)
@@ -97,6 +101,7 @@ class LibraryDomainMapperTests {
             UserSeriesStatus.Planned,
             0,
             12,
+            0,
             ImageModel.empty,
             "startDate",
             "endDate"
@@ -114,6 +119,7 @@ class LibraryDomainMapperTests {
         assertEquals(input.userSeriesStatus, output.userSeriesStatus)
         assertEquals(input.progress, output.progress)
         assertEquals(input.totalLength, output.totalLength)
+        assertEquals(input.rating, output.rating)
         assertEquals(input.posterImage, output.posterImage)
         assertEquals(input.startDate, output.startDate)
         assertEquals(input.endDate, output.endDate)

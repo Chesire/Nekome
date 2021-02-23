@@ -24,6 +24,7 @@ class LibraryDomainMapper @Inject constructor() {
             input.userSeriesStatus,
             input.progress,
             input.totalLength,
+            input.rating,
             input.posterImage,
             input.startDate,
             input.endDate
@@ -44,6 +45,7 @@ class LibraryDomainMapper @Inject constructor() {
             input.userSeriesStatus,
             input.progress,
             input.totalLength,
+            input.rating,
             input.posterImage,
             input.startDate,
             input.endDate
@@ -64,6 +66,7 @@ class LibraryDomainMapper @Inject constructor() {
             input.userSeriesStatus,
             input.progress,
             input.totalLength,
+            input.rating,
             input.posterImage,
             input.startDate,
             input.endDate

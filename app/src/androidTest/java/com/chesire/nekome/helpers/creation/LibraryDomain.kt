@@ -22,6 +22,7 @@ fun createLibraryDomain(
     userSeriesStatus: UserSeriesStatus = UserSeriesStatus.Unknown,
     progress: Int = 0,
     totalLength: Int = 0,
+    rating: Int = 0,
     posterImage: ImageModel = ImageModel.empty,
     startDate: String = "startDate",
     endDate: String = "endDate"
@@ -36,6 +37,7 @@ fun createLibraryDomain(
     userSeriesStatus = userSeriesStatus,
     progress = progress,
     totalLength = totalLength,
+    rating = rating,
     posterImage = posterImage,
     startDate = startDate,
     endDate = endDate

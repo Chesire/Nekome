@@ -26,6 +26,7 @@ fun createSeriesDomain(
     userSeriesStatus: UserSeriesStatus = UserSeriesStatus.Current,
     progress: Int = 0,
     totalLength: Int = 0,
+    rating: Int = 0,
     posterImage: ImageModel = ImageModel.empty,
     startDate: String = "",
     endDate: String = ""
@@ -40,6 +41,7 @@ fun createSeriesDomain(
     userSeriesStatus,
     progress,
     totalLength,
+    rating,
     posterImage,
     startDate,
     endDate
@@ -60,6 +62,7 @@ fun createSeriesEntity(
     userSeriesStatus: UserSeriesStatus = UserSeriesStatus.Current,
     progress: Int = 0,
     totalLength: Int = 0,
+    rating: Int = 0,
     posterImage: ImageModel = ImageModel.empty,
     startDate: String = "",
     endDate: String = ""
@@ -74,6 +77,7 @@ fun createSeriesEntity(
     userSeriesStatus,
     progress,
     totalLength,
+    rating,
     posterImage,
     startDate,
     endDate

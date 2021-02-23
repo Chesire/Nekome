@@ -31,9 +31,9 @@ android {
 }
 
 dependencies {
-    implementation project(path: ":libraries:account")
-    implementation project(path: ":libraries:core")
-    implementation project(path: ":libraries:library")
+    implementation project(":libraries:account")
+    implementation project(":libraries:core")
+    implementation project(":libraries:library")
 
     implementation "androidx.appcompat:appcompat:$appcompat_version"
     implementation "androidx.constraintlayout:constraintlayout:$constraint_layout_version"

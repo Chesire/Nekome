@@ -156,6 +156,7 @@ class SeriesDaoTests {
         UserSeriesStatus.Unknown,
         0,
         0,
+        0,
         ImageModel.empty,
         "",
         ""

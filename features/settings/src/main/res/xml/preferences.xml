@@ -1,32 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <PreferenceCategory android:title="@string/settings_general_category">
+
+    <PreferenceCategory android:title="@string/settings_category_application">
         <ListPreference
-            android:key="@string/key_default_series_state"
-            android:summary="@string/settings_default_series_status_summary"
-            android:title="@string/settings_default_series_status_title" />
+            android:key="@string/key_theme"
+            android:title="@string/settings_theme"
+            app:useSimpleSummaryProvider="true" />
 
         <ListPreference
             android:key="@string/key_default_home"
             android:summary="@string/settings_default_home_summary"
             android:title="@string/settings_default_home_title" />
-
-        <ListPreference
-            android:key="@string/key_theme"
-            android:title="@string/settings_theme"
-            app:useSimpleSummaryProvider="true" />
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="@string/settings_about_category">
+    <PreferenceCategory android:title="@string/settings_category_series">
+        <ListPreference
+            android:key="@string/key_default_series_state"
+            android:summary="@string/settings_default_series_status_summary"
+            android:title="@string/settings_default_series_status_title" />
+
+        <CheckBoxPreference
+            android:key="@string/key_rate_on_completion"
+            android:summary="@string/settings_rate_on_completion_summary"
+            android:title="@string/settings_rate_on_completion_title" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/settings_category_about">
         <Preference
             android:summary="@string/version"
             android:title="@string/settings_version" />
-        <!--
-        <Preference
-            android:key="@string/key_privacy_policy"
-            android:title="@string/settings_privacy_policy" />
-        -->
 
         <Preference
             android:key="@string/key_github"

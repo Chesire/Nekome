@@ -1,5 +1,6 @@
 package com.chesire.nekome.kitsu.library.dto
 
+import org.json.JSONObject
 import javax.inject.Inject
 
 /**
@@ -48,18 +49,21 @@ class DtoFactory @Inject constructor() {
     fun createUpdateDto(
         userSeriesId: Int,
         newProgress: Int,
-        newStatus: String
-    ) =
-        """
-{
-  "data": {
-    "id": $userSeriesId,
-    "type": "libraryEntries",
-    "attributes": {
-      "progress": $newProgress,
-      "status": "$newStatus"
+        newStatus: String,
+        rating: Int
+    ): String {
+        val attributesObject = JSONObject()
+            .apply {
+                put("progress", newProgress)
+                put("status", newStatus)
+                if (rating > 1) put("ratingTwenty", rating)
+            }
+        val dataObject = JSONObject()
+            .apply {
+                put("id", userSeriesId)
+                put("type", "libraryEntries")
+                put("attributes", attributesObject)
+            }
+        return JSONObject().put("data", dataObject).toString()
     }
-  }
-}
-        """.trimIndent()
 }

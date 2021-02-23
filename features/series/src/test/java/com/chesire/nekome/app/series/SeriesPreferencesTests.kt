@@ -1,5 +1,6 @@
 package com.chesire.nekome.app.series
 
+import android.content.Context
 import android.content.SharedPreferences
 import com.chesire.nekome.core.flags.SortOption
 import io.mockk.Runs
@@ -8,7 +9,10 @@ import io.mockk.just
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Test
+
+private const val RATE_ON_COMPLETION_KEY = "rateOnCompletionKey"
 
 class SeriesPreferencesTests {
 
@@ -16,6 +20,10 @@ class SeriesPreferencesTests {
         """
 {"0":true,"1":false,"2":false,"3":false,"4":false}
         """.trimIndent()
+
+    private val mockContext = mockk<Context> {
+        every { getString(R.string.key_rate_on_completion) } returns RATE_ON_COMPLETION_KEY
+    }
 
     @Test
     fun `sortPreference returns expected SortOption`() {
@@ -28,7 +36,7 @@ class SeriesPreferencesTests {
             } returns SortOption.Title.index
         }
 
-        val classUnderTest = SeriesPreferences(mockPreferences)
+        val classUnderTest = SeriesPreferences(mockPreferences, mockContext)
 
         assertEquals(SortOption.Title, classUnderTest.sortPreference)
     }
@@ -48,7 +56,7 @@ class SeriesPreferencesTests {
             every { edit() } returns mockEditor
         }
 
-        val classUnderTest = SeriesPreferences(mockPreferences)
+        val classUnderTest = SeriesPreferences(mockPreferences, mockContext)
         classUnderTest.sortPreference = SortOption.EndDate
 
         verify {
@@ -75,7 +83,7 @@ class SeriesPreferencesTests {
             } returns expectedJson
         }
 
-        val classUnderTest = SeriesPreferences(mockPreferences)
+        val classUnderTest = SeriesPreferences(mockPreferences, mockContext)
 
         assertEquals(expectedMap, classUnderTest.filterPreference)
     }
@@ -100,7 +108,7 @@ class SeriesPreferencesTests {
             every { edit() } returns mockEditor
         }
 
-        val classUnderTest = SeriesPreferences(mockPreferences)
+        val classUnderTest = SeriesPreferences(mockPreferences, mockContext)
         classUnderTest.filterPreference = expectedMap
 
         verify {
@@ -112,13 +120,43 @@ class SeriesPreferencesTests {
     }
 
     @Test
+    fun `rateSeriesOnCompletion returns value as expected`() {
+        val mockPreferences = mockk<SharedPreferences> {
+            every { getBoolean(RATE_ON_COMPLETION_KEY, false) } returns true
+        }
+
+        val classUnderTest = SeriesPreferences(mockPreferences, mockContext)
+        val actual = classUnderTest.rateSeriesOnCompletion
+
+        assertTrue(actual)
+    }
+
+    @Test
+    fun `rateSeriesOnCompletion can set value`() {
+        val mockEditor = mockk<SharedPreferences.Editor> {
+            every {
+                putBoolean(RATE_ON_COMPLETION_KEY, true)
+            } returns this
+            every { apply() } just Runs
+        }
+        val mockPreferences = mockk<SharedPreferences> {
+            every { edit() } returns mockEditor
+        }
+
+        val classUnderTest = SeriesPreferences(mockPreferences, mockContext)
+        classUnderTest.rateSeriesOnCompletion = true
+
+        verify { mockEditor.putBoolean(RATE_ON_COMPLETION_KEY, true) }
+    }
+
+    @Test
     fun `subscribeToChanges sets up change listener`() {
         val listener = mockk<SharedPreferences.OnSharedPreferenceChangeListener>()
         val mockPreferences = mockk<SharedPreferences> {
             every { registerOnSharedPreferenceChangeListener(any()) } just Runs
         }
 
-        val classUnderTest = SeriesPreferences(mockPreferences)
+        val classUnderTest = SeriesPreferences(mockPreferences, mockContext)
         classUnderTest.subscribeToChanges(listener)
 
         verify { mockPreferences.registerOnSharedPreferenceChangeListener(listener) }

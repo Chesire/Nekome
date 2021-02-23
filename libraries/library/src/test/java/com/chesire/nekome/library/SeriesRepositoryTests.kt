@@ -306,7 +306,7 @@ class SeriesRepositoryTests {
         }
         val mockApi = mockk<LibraryApi> {
             coEvery {
-                update(0, 0, UserSeriesStatus.Current)
+                update(0, 0, UserSeriesStatus.Current, 0)
             } coAnswers {
                 Resource.Success(expected)
             }
@@ -314,7 +314,7 @@ class SeriesRepositoryTests {
         val mockUser = mockk<UserProvider>()
 
         val classUnderTest = SeriesRepository(mockDao, mockApi, mockUser, map)
-        classUnderTest.updateSeries(0, 0, UserSeriesStatus.Current)
+        classUnderTest.updateSeries(0, 0, UserSeriesStatus.Current, 0)
 
         coVerify { mockDao.update(any()) }
     }
@@ -326,7 +326,7 @@ class SeriesRepositoryTests {
         }
         val mockApi = mockk<LibraryApi> {
             coEvery {
-                update(0, 0, UserSeriesStatus.Current)
+                update(0, 0, UserSeriesStatus.Current, 0)
             } coAnswers {
                 Resource.Error("")
             }
@@ -334,9 +334,8 @@ class SeriesRepositoryTests {
         val mockUser = mockk<UserProvider>()
 
         val classUnderTest = SeriesRepository(mockDao, mockApi, mockUser, map)
-        val result = classUnderTest.updateSeries(0, 0, UserSeriesStatus.Current)
 
-        when (result) {
+        when (classUnderTest.updateSeries(0, 0, UserSeriesStatus.Current, 0)) {
             is Resource.Success -> fail("Expected Resource.Error")
             is Resource.Error -> assertTrue(true)
         }
@@ -352,6 +351,7 @@ class SeriesRepositoryTests {
             "title",
             SeriesStatus.Unknown,
             UserSeriesStatus.Unknown,
+            0,
             0,
             0,
             ImageModel.empty,

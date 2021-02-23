@@ -39,6 +39,7 @@ class ResponseDtoMapper @Inject constructor() {
             data.attributes.status,
             data.attributes.progress,
             included.attributes.episodeCount ?: included.attributes.chapterCount ?: 0,
+            data.attributes.rating ?: 0,
             included.attributes.posterImage ?: ImageModel.empty,
             included.attributes.startDate ?: "",
             included.attributes.endDate ?: ""
