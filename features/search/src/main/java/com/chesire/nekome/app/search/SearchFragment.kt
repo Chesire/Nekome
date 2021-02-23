@@ -76,13 +76,13 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
         viewModel.searchResult.observe(viewLifecycleOwner) { result ->
             when (result) {
                 is AsyncState.Success -> {
-                    hideSpinner()
                     findNavController().navigate(
                         SearchFragmentDirections.toResultsFragment(
                             binding.searchText.text.toString(),
                             result.data.toTypedArray()
                         )
                     )
+                    hideSpinner()
                 }
                 is AsyncState.Error -> {
                     hideSpinner()
