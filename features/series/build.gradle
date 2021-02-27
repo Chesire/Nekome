@@ -54,7 +54,7 @@ dependencies {
     implementation "com.squareup.moshi:moshi:$moshi_version"
     implementation "io.coil-kt:coil:$coil_version"
 
-    testImplementation project(path: ":testing")
+    testImplementation project(":testing")
     testImplementation "androidx.arch.core:core-testing:$coretesting_version"
     testImplementation "io.mockk:mockk:$mockk_version"
     testImplementation "junit:junit:$junit_version"
