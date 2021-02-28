@@ -30,9 +30,9 @@ android {
 }
 
 dependencies {
-    implementation project(path: ":libraries:account")
-    implementation project(path: ":libraries:core")
-    implementation project(path: ":libraries:library")
+    implementation project(":libraries:account")
+    implementation project(":libraries:core")
+    implementation project(":libraries:library")
 
     implementation "androidx.appcompat:appcompat:$appcompat_version"
     implementation "androidx.constraintlayout:constraintlayout:$constraint_layout_version"
@@ -47,7 +47,7 @@ dependencies {
     implementation "com.google.dagger:hilt-android:$hilt_version"
     implementation "io.coil-kt:coil:$coil_version"
 
-    testImplementation project(path: ":testing")
+    testImplementation project(":testing")
     testImplementation "androidx.arch.core:core-testing:$coretesting_version"
     testImplementation "io.mockk:mockk:$mockk_version"
     testImplementation "junit:junit:$junit_version"

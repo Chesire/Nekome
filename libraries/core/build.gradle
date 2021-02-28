@@ -44,7 +44,7 @@ dependencies {
     implementation "com.google.dagger:hilt-android:$hilt_version"
     implementation "com.squareup.moshi:moshi:$moshi_version"
 
-    testImplementation project(path: ":testing")
+    testImplementation project(":testing")
     testImplementation "io.mockk:mockk:$mockk_version"
     testImplementation "junit:junit:$junit_version"
 

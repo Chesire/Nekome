@@ -30,10 +30,10 @@ android {
 }
 
 dependencies {
-    implementation project(path: ":libraries:core")
-    implementation project(path: ":libraries:encryption")
-    implementation project(path: ':libraries:kitsu')
-    implementation project(path: ':libraries:server:auth')
+    implementation project(":libraries:core")
+    implementation project(":libraries:encryption")
+    implementation project(':libraries:kitsu')
+    implementation project(':libraries:server:auth')
 
     implementation "androidx.core:core-ktx:$corektx_version"
     implementation "com.chesire.lintrules:lint-gradle:$lintrules_version"
@@ -45,7 +45,7 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
 
-    testImplementation project(path: ":testing")
+    testImplementation project(":testing")
     testImplementation "io.mockk:mockk:$mockk_version"
     testImplementation "junit:junit:$junit_version"
 

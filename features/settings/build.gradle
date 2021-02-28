@@ -30,7 +30,7 @@ android {
 dependencies {
     def aboutlibraries_version = "8.8.0"
 
-    implementation project(path: ":libraries:core")
+    implementation project(":libraries:core")
 
     implementation "androidx.appcompat:appcompat:$appcompat_version"
     implementation "androidx.browser:browser:1.3.0"
