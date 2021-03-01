@@ -68,11 +68,19 @@ dependencies {
     implementation project(":libraries:datasource:trending")
     implementation project(":libraries:datasource:user")
     implementation project(":libraries:kitsu")
+    implementation project(":libraries:kitsu:activity")
     implementation project(":libraries:kitsu:auth")
     implementation project(":libraries:kitsu:library")
     implementation project(":libraries:kitsu:search")
     implementation project(":libraries:kitsu:trending")
     implementation project(":libraries:kitsu:user")
+    implementation project(":libraries:library")
+    //implementation project(":libraries:server:activity")
+    implementation project(":libraries:server:auth")
+    implementation project(":libraries:server:library")
+    implementation project(":libraries:server:search")
+    implementation project(":libraries:server:trending")
+    implementation project(":libraries:server:user")
 
     implementation "androidx.appcompat:appcompat:$appcompat_version"
     implementation "androidx.constraintlayout:constraintlayout:$constraintlayout_version"
