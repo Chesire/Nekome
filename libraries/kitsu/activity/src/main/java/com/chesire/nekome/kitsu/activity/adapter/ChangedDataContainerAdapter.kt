@@ -1,7 +1,7 @@
 package com.chesire.nekome.kitsu.activity.adapter
 
 import com.chesire.nekome.kitsu.activity.dto.ChangedData
-import com.chesire.nekome.kitsu.activity.dto.Event
+import com.chesire.nekome.kitsu.activity.dto.ChangedDataContainer
 import com.squareup.moshi.FromJson
 import com.squareup.moshi.JsonReader
 import com.squareup.moshi.ToJson
@@ -10,10 +10,10 @@ private const val RATING = "rating"
 private const val PROGRESS = "progress"
 private const val STATUS = "status"
 
-class EventAdapter {
+class ChangedDataContainerAdapter {
 
     @FromJson
-    fun eventFromString(jsonReader: JsonReader): Event {
+    fun changedDataContainerFromString(jsonReader: JsonReader): ChangedDataContainer {
         val dataSets = mutableListOf<ChangedData>()
         jsonReader.beginObject()
         while (jsonReader.peek() == JsonReader.Token.NAME) {
@@ -21,12 +21,12 @@ class EventAdapter {
         }
         jsonReader.endObject()
 
-        return Event(dataSets)
+        return ChangedDataContainer(dataSets)
     }
 
     @ToJson
-    fun eventToString(event: Event): String {
-        error("Unable to convert com.chesire.nekome.kitsu.activity.adapter.Event to String")
+    fun changedDataContainerToString(event: ChangedDataContainer): String {
+        error("Unable to convert ChangedDataContainer to String")
     }
 
     private fun createChangedDataItem(jsonReader: JsonReader): ChangedData {
@@ -44,6 +44,7 @@ class EventAdapter {
         }
     }
 
+    @Suppress("UNCHECKED_CAST")
     private fun <T> Any?.cast(): T {
         return when (this) {
             null -> ""
