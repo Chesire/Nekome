@@ -2,6 +2,7 @@ package com.chesire.nekome.injection
 
 import com.chesire.nekome.kitsu.KITSU_URL
 import com.chesire.nekome.kitsu.activity.KitsuActivityService
+import com.chesire.nekome.kitsu.activity.adapter.EventAdapter
 import com.chesire.nekome.kitsu.activity.adapter.KindAdapter
 import com.squareup.moshi.Moshi
 import dagger.Module
@@ -23,6 +24,7 @@ abstract class ActivityModule {
         @Reusable
         fun providesActivityService(httpClient: OkHttpClient): KitsuActivityService {
             val moshi = Moshi.Builder()
+                .add(EventAdapter())
                 .add(KindAdapter())
                 .build()
 
