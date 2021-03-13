@@ -1,7 +1,7 @@
 package com.chesire.nekome.kitsu.activity
 
-import com.chesire.nekome.activity.api.ActivityDomain
-import com.chesire.nekome.activity.api.Event
+import com.chesire.nekome.datasource.activity.ActivityDomain
+import com.chesire.nekome.datasource.activity.Event
 import com.chesire.nekome.kitsu.activity.dto.ChangedDataContainer
 import com.chesire.nekome.kitsu.activity.dto.RetrieveActivityDto
 import javax.inject.Inject

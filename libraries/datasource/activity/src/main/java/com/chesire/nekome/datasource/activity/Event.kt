@@ -1,4 +1,4 @@
-package com.chesire.nekome.activity.api
+package com.chesire.nekome.datasource.activity
 
 /**
  * Represents a single activity event.
