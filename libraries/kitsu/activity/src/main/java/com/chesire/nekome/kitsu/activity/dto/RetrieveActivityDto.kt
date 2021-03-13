@@ -22,9 +22,7 @@ data class RetrieveActivityDto(
             @Json(name = "updatedAt")
             val updatedAt: String,
             @Json(name = "changedData")
-            val changedData: ChangedDataContainer,
-            @Json(name = "kind")
-            val kind: Kind
+            val changedData: ChangedDataContainer
         )
     }
 }

@@ -1,13 +1,39 @@
 package com.chesire.nekome.kitsu.activity
 
+import com.chesire.nekome.activity.api.ActivityApi
+import com.chesire.nekome.activity.api.ActivityDomain
+import com.chesire.nekome.core.Resource
+import com.chesire.nekome.kitsu.activity.dto.RetrieveActivityDto
+import com.chesire.nekome.kitsu.asError
+import com.chesire.nekome.kitsu.parse
+import retrofit2.Response
 import javax.inject.Inject
 
+/**
+ * Implementation of the [ActivityApi] for usage with the Kitsu API.
+ */
 class KitsuActivity @Inject constructor(
     private val activityService: KitsuActivityService,
-) {
+    private val map: RetrieveActivityDtoMapper
+) : ActivityApi {
 
-    suspend fun retrieveActivity() {
-        val result = activityService.retrieveActivity()
-        val ey = result
+    override suspend fun retrieveActivity(): Resource<List<ActivityDomain>> {
+        return try {
+            parseResponse(activityService.retrieveLibraryEvents())
+        } catch (ex: Exception) {
+            ex.parse()
+        }
+    }
+
+    private fun parseResponse(
+        response: Response<RetrieveActivityDto>
+    ): Resource<List<ActivityDomain>> {
+        return if (response.isSuccessful) {
+            response.body()?.let { activity ->
+                Resource.Success(activity.data.map { map.toActivityDomain(it) })
+            } ?: Resource.Error.emptyResponse()
+        } else {
+            response.asError()
+        }
     }
 }

@@ -6,12 +6,14 @@ import com.squareup.moshi.FromJson
 import com.squareup.moshi.JsonReader
 import com.squareup.moshi.ToJson
 
-private const val RATING = "rating"
-private const val PROGRESS = "progress"
-private const val STATUS = "status"
-
+/**
+ * Adapter to read from a [JsonReader] to create instances of a [ChangedDataContainer].
+ */
 class ChangedDataContainerAdapter {
 
+    /**
+     * Reads the data from [jsonReader] and creates a new [ChangedDataContainer].
+     */
     @FromJson
     fun changedDataContainerFromString(jsonReader: JsonReader): ChangedDataContainer {
         val dataSets = mutableListOf<ChangedData>()
@@ -24,6 +26,9 @@ class ChangedDataContainerAdapter {
         return ChangedDataContainer(dataSets)
     }
 
+    /**
+     * Not implemented.
+     */
     @ToJson
     fun changedDataContainerToString(event: ChangedDataContainer): String {
         error("Unable to convert ChangedDataContainer to String")
@@ -36,22 +41,15 @@ class ChangedDataContainerAdapter {
         val to = jsonReader.readJsonValue()
         jsonReader.endArray()
 
-        return when (name) {
-            RATING -> ChangedData.Rating(from.cast(), to.cast())
-            PROGRESS -> ChangedData.Progress(from.cast(), to.cast())
-            STATUS -> ChangedData.Status(from.cast(), to.cast())
-            else -> error("Unexpected event name found")
-        }
+        return ChangedData(name, from.stringify(), to.stringify())
     }
 
     @Suppress("UNCHECKED_CAST")
-    private fun <T> Any?.cast(): T {
+    private fun Any?.stringify(): String {
         return when (this) {
             null -> ""
-            is String -> toString() // maybe could cast to series status?
-            is Double -> toInt()
-            is Int -> this
-            else -> error("Invalid data type provided")
-        } as T
+            is Double -> toInt().toString()
+            else -> toString()
+        }
     }
 }

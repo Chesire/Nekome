@@ -75,7 +75,7 @@ dependencies {
     implementation project(":libraries:kitsu:trending")
     implementation project(":libraries:kitsu:user")
     implementation project(":libraries:library")
-    //implementation project(":libraries:server:activity")
+    implementation project(":libraries:server:activity")
     implementation project(":libraries:server:auth")
     implementation project(":libraries:server:library")
     implementation project(":libraries:server:search")
