@@ -1,6 +1,6 @@
 package com.chesire.nekome.injection
 
-import com.chesire.nekome.activity.api.ActivityApi
+import com.chesire.nekome.datasource.activity.remote.ActivityApi
 import com.chesire.nekome.kitsu.KITSU_URL
 import com.chesire.nekome.kitsu.activity.KitsuActivity
 import com.chesire.nekome.kitsu.activity.KitsuActivityService

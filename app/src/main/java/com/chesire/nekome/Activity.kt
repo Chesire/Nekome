@@ -96,7 +96,8 @@ class Activity : AppCompatActivity(), AuthCaster.AuthCasterListener, Flow {
                 R.id.animeFragment,
                 R.id.mangaFragment,
                 R.id.discoverFragment,
-                R.id.searchFragment
+                R.id.searchFragment,
+                R.id.timelineFragment
             ),
             findViewById<DrawerLayout>(R.id.activityDrawer)
         )
