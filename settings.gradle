@@ -6,9 +6,11 @@ include ':app',
     ':features:series',
     ':features:settings',
     ':features:timeline',
+
     ':libraries:account',
     ':libraries:core',
     ':libraries:database',
+    ':libraries:datasource:user',
     ':libraries:encryption',
     ':libraries:kitsu',
     ':libraries:kitsu:auth',
@@ -22,4 +24,5 @@ include ':app',
     ':libraries:server:search',
     ':libraries:server:trending',
     ':libraries:server:user',
+
     ':testing'
