@@ -9,9 +9,9 @@ import com.chesire.nekome.core.Resource
 import com.chesire.nekome.core.extensions.postError
 import com.chesire.nekome.core.extensions.postSuccess
 import com.chesire.nekome.core.flags.AsyncState
+import com.chesire.nekome.datasource.series.SeriesRepository
 import com.chesire.nekome.datasource.user.User
 import com.chesire.nekome.datasource.user.UserRepository
-import com.chesire.nekome.library.SeriesRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch

@@ -31,8 +31,8 @@ android {
 
 dependencies {
     implementation project(":libraries:core")
+    implementation project(':libraries:datasource:series')
     implementation project(':libraries:kitsu')
-    implementation project(':libraries:server:library')
 
     implementation "com.chesire.lintrules:lint-gradle:$lintrules_version"
     implementation "com.chesire.lintrules:lint-xml:$lintrules_version"

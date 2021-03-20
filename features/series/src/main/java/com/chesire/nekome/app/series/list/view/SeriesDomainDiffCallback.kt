@@ -1,7 +1,7 @@
 package com.chesire.nekome.app.series.list.view
 
 import androidx.recyclerview.widget.DiffUtil
-import com.chesire.nekome.library.SeriesDomain
+import com.chesire.nekome.datasource.series.SeriesDomain
 
 /**
  * Provides a [DiffUtil.ItemCallback] class for use with the [SeriesDomain].

@@ -10,7 +10,7 @@ import com.chesire.nekome.core.extensions.hide
 import com.chesire.nekome.core.extensions.show
 import com.chesire.nekome.core.extensions.toAlpha
 import com.chesire.nekome.core.extensions.visibleIf
-import com.chesire.nekome.library.SeriesDomain
+import com.chesire.nekome.datasource.series.SeriesDomain
 
 /**
  * ViewHolder for Series items in the Anime or Manga list.

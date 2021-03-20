@@ -3,13 +3,13 @@ package com.chesire.nekome.features.login
 import com.chesire.nekome.UITest
 import com.chesire.nekome.auth.api.AuthApi
 import com.chesire.nekome.core.Resource
+import com.chesire.nekome.datasource.series.remote.SeriesApi
 import com.chesire.nekome.datasource.user.remote.UserApi
-import com.chesire.nekome.helpers.creation.createLibraryDomain
+import com.chesire.nekome.helpers.creation.createSeriesDomain
 import com.chesire.nekome.helpers.creation.createUserDomain
 import com.chesire.nekome.injection.AuthModule
 import com.chesire.nekome.injection.LibraryModule
 import com.chesire.nekome.injection.UserModule
-import com.chesire.nekome.library.api.LibraryApi
 import com.chesire.nekome.robots.activity
 import com.chesire.nekome.robots.login.loginDetails
 import com.chesire.nekome.robots.login.loginSyncing
@@ -40,16 +40,16 @@ class LoginFlowTests : UITest() {
     }
 
     @BindValue
-    val libraryApi = mockk<LibraryApi> {
+    val seriesApi = mockk<SeriesApi> {
         coEvery {
             retrieveAnime(any())
         } coAnswers {
-            Resource.Success(listOf(createLibraryDomain()))
+            Resource.Success(listOf(createSeriesDomain()))
         }
         coEvery {
             retrieveManga(any())
         } coAnswers {
-            Resource.Success(listOf(createLibraryDomain()))
+            Resource.Success(listOf(createSeriesDomain()))
         }
     }
 

@@ -2,6 +2,8 @@ package com.chesire.nekome.kitsu.library
 
 import com.chesire.nekome.core.Resource
 import com.chesire.nekome.core.flags.UserSeriesStatus
+import com.chesire.nekome.datasource.series.SeriesDomain
+import com.chesire.nekome.datasource.series.remote.SeriesApi
 import com.chesire.nekome.kitsu.asError
 import com.chesire.nekome.kitsu.library.adapter.UserSeriesStatusAdapter
 import com.chesire.nekome.kitsu.library.dto.AddResponseDto
@@ -9,8 +11,6 @@ import com.chesire.nekome.kitsu.library.dto.DtoFactory
 import com.chesire.nekome.kitsu.library.dto.RetrieveResponseDto
 import com.chesire.nekome.kitsu.parse
 import com.chesire.nekome.kitsu.parseError
-import com.chesire.nekome.library.api.LibraryApi
-import com.chesire.nekome.library.api.LibraryDomain
 import okhttp3.MediaType
 import okhttp3.RequestBody
 import retrofit2.Response
@@ -23,28 +23,28 @@ private const val MANGA_TYPE = "manga"
 private const val MEDIA_TYPE = "application/vnd.api+json"
 
 /**
- * Implementation of the [LibraryApi] for usage with the Kitsu API.
+ * Implementation of the [SeriesApi] for usage with the Kitsu API.
  */
 @Suppress("TooGenericExceptionCaught")
 class KitsuLibrary @Inject constructor(
     private val libraryService: KitsuLibraryService,
     private val map: ResponseDtoMapper,
     private val entityFactory: DtoFactory
-) : LibraryApi {
+) : SeriesApi {
 
     private val userSeriesStatusAdapter = UserSeriesStatusAdapter()
 
-    override suspend fun retrieveAnime(userId: Int): Resource<List<LibraryDomain>> =
+    override suspend fun retrieveAnime(userId: Int): Resource<List<SeriesDomain>> =
         performRetrieveCall(userId, libraryService::retrieveAnimeAsync)
 
-    override suspend fun retrieveManga(userId: Int): Resource<List<LibraryDomain>> =
+    override suspend fun retrieveManga(userId: Int): Resource<List<SeriesDomain>> =
         performRetrieveCall(userId, libraryService::retrieveMangaAsync)
 
     override suspend fun addAnime(
         userId: Int,
         seriesId: Int,
         startingStatus: UserSeriesStatus
-    ): Resource<LibraryDomain> {
+    ): Resource<SeriesDomain> {
         val addJson = entityFactory.createAddDto(
             userId,
             seriesId,
@@ -64,7 +64,7 @@ class KitsuLibrary @Inject constructor(
         userId: Int,
         seriesId: Int,
         startingStatus: UserSeriesStatus
-    ): Resource<LibraryDomain> {
+    ): Resource<SeriesDomain> {
         val addJson = entityFactory.createAddDto(
             userId,
             seriesId,
@@ -85,7 +85,7 @@ class KitsuLibrary @Inject constructor(
         progress: Int,
         newStatus: UserSeriesStatus,
         rating: Int
-    ): Resource<LibraryDomain> {
+    ): Resource<SeriesDomain> {
         val updateJson = entityFactory.createUpdateDto(
             userSeriesId,
             progress,
@@ -118,8 +118,8 @@ class KitsuLibrary @Inject constructor(
     private suspend fun performRetrieveCall(
         userId: Int,
         execute: suspend (userId: Int, offset: Int, limit: Int) -> Response<RetrieveResponseDto>
-    ): Resource<List<LibraryDomain>> {
-        val models = mutableListOf<LibraryDomain>()
+    ): Resource<List<SeriesDomain>> {
+        val models = mutableListOf<SeriesDomain>()
 
         var offset = 0
         var page = 0
@@ -139,9 +139,9 @@ class KitsuLibrary @Inject constructor(
 
             val body = response.body()
             if (response.isSuccessful && body != null) {
-                val series = body.data.map {
-                    map.toLibraryDomain(AddResponseDto(it, body.included))
-                }.filterNotNull()
+                val series = body.data.mapNotNull {
+                    map.toSeriesDomain(AddResponseDto(it, body.included))
+                }
                 models.addAll(series)
                 retries = 0
 
@@ -167,10 +167,10 @@ class KitsuLibrary @Inject constructor(
         }
     }
 
-    private fun parseResponse(response: Response<AddResponseDto>): Resource<LibraryDomain> {
+    private fun parseResponse(response: Response<AddResponseDto>): Resource<SeriesDomain> {
         return if (response.isSuccessful) {
             response.body()?.let { entity ->
-                Resource.Success(requireNotNull(map.toLibraryDomain(entity)))
+                Resource.Success(requireNotNull(map.toSeriesDomain(entity)))
             } ?: Resource.Error.emptyResponse()
         } else {
             response.asError()

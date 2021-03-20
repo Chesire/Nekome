@@ -33,7 +33,7 @@ android {
 
 dependencies {
     implementation project(":libraries:core")
-    implementation project(":libraries:library")
+    implementation project(":libraries:datasource:series")
     implementation project(":libraries:server:search")
 
     implementation "androidx.appcompat:appcompat:$appcompat_version"

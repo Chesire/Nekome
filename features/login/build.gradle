@@ -32,8 +32,8 @@ android {
 
 dependencies {
     implementation project(":libraries:core")
+    implementation project(":libraries:datasource:series")
     implementation project(":libraries:datasource:user")
-    implementation project(":libraries:library")
     implementation project(":libraries:server:auth")
 
     implementation "androidx.appcompat:appcompat:$appcompat_version"

@@ -32,7 +32,6 @@ dependencies {
     implementation project(':libraries:core')
     implementation project(":libraries:database")
 
-    implementation "androidx.appcompat:appcompat:$appcompat_version"
     implementation "com.chesire.lintrules:lint-gradle:$lintrules_version"
     implementation "com.chesire.lintrules:lint-xml:$lintrules_version"
     implementation "com.google.dagger:hilt-android:$hilt_version"

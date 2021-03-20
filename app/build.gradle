@@ -63,6 +63,7 @@ dependencies {
     implementation project(":features:timeline")
     implementation project(":libraries:core")
     implementation project(":libraries:database")
+    implementation project(":libraries:datasource:series")
     implementation project(":libraries:datasource:user")
     implementation project(":libraries:encryption")
     implementation project(":libraries:kitsu")
@@ -71,9 +72,7 @@ dependencies {
     implementation project(":libraries:kitsu:search")
     implementation project(":libraries:kitsu:trending")
     implementation project(":libraries:kitsu:user")
-    implementation project(":libraries:library")
     implementation project(":libraries:server:auth")
-    implementation project(":libraries:server:library")
     implementation project(":libraries:server:search")
     implementation project(":libraries:server:trending")
 

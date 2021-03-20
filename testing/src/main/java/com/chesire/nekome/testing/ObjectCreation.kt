@@ -8,8 +8,8 @@ import com.chesire.nekome.core.flags.UserSeriesStatus
 import com.chesire.nekome.core.models.ImageModel
 import com.chesire.nekome.database.entity.SeriesEntity
 import com.chesire.nekome.database.entity.UserEntity
+import com.chesire.nekome.datasource.series.SeriesDomain
 import com.chesire.nekome.datasource.user.UserDomain
-import com.chesire.nekome.library.SeriesDomain
 
 /**
  * Creates a new instance of [SeriesDomain] with default data.

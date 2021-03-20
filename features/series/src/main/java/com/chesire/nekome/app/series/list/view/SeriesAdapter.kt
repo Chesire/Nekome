@@ -9,7 +9,7 @@ import com.chesire.nekome.app.series.SeriesPreferences
 import com.chesire.nekome.app.series.databinding.AdapterItemSeriesBinding
 import com.chesire.nekome.app.series.list.SeriesInteractionListener
 import com.chesire.nekome.core.flags.SortOption
-import com.chesire.nekome.library.SeriesDomain
+import com.chesire.nekome.datasource.series.SeriesDomain
 import timber.log.Timber
 
 /**
