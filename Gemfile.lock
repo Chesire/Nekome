@@ -36,7 +36,7 @@ GEM
       highline (~> 1.7.2)
     cork (0.3.0)
       colored2 (~> 3.1)
-    danger (8.2.2)
+    danger (8.2.3)
       claide (~> 1.0)
       claide-plugins (>= 0.9.2)
       colored2 (~> 3.1)
@@ -48,7 +48,7 @@ GEM
       kramdown-parser-gfm (~> 1.0)
       no_proxy_fix
       octokit (~> 4.7)
-      terminal-table (~> 1)
+      terminal-table (>= 1, < 4)
     danger-android_lint (0.0.8)
       danger-plugin-api (~> 1.0)
       oga
