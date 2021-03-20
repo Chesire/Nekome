@@ -1,4 +1,4 @@
-package com.chesire.nekome.account
+package com.chesire.nekome.datasource.user
 
 /**
  * Possible results for accessing the user object from the [UserRepository].

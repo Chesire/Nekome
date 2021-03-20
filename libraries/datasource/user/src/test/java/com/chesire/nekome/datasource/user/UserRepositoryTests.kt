@@ -1,12 +1,10 @@
-package com.chesire.nekome.account
+package com.chesire.nekome.datasource.user
 
 import com.chesire.nekome.core.Resource
 import com.chesire.nekome.core.flags.Service
 import com.chesire.nekome.core.models.ImageModel
 import com.chesire.nekome.database.dao.UserDao
 import com.chesire.nekome.testing.createUserEntity
-import com.chesire.nekome.user.api.UserApi
-import com.chesire.nekome.user.api.UserDomain
 import io.mockk.Runs
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -22,7 +20,8 @@ import org.junit.Assert.fail
 import org.junit.Test
 
 class UserRepositoryTests {
-    private val map = UserDomainMapper()
+
+    private val map = UserMapper()
 
     @Test
     fun `user with a valid model returns User#Found`() = runBlocking {
@@ -30,7 +29,7 @@ class UserRepositoryTests {
             coEvery { insert(any()) } just Runs
             every { getUser(Service.Kitsu) } returns flowOf(createUserEntity())
         }
-        val classUnderTest = UserRepository(mockDao, mockk(), UserDomainMapper())
+        val classUnderTest = UserRepository(mockDao, mockk(), UserMapper())
 
         lateinit var result: User
         classUnderTest.user.collect {
@@ -46,7 +45,7 @@ class UserRepositoryTests {
             coEvery { insert(any()) } just Runs
             every { getUser(Service.Kitsu) } returns flowOf(null)
         }
-        val classUnderTest = UserRepository(mockDao, mockk(), UserDomainMapper())
+        val classUnderTest = UserRepository(mockDao, mockk(), UserMapper())
 
         lateinit var result: User
         classUnderTest.user.collect {
@@ -62,7 +61,7 @@ class UserRepositoryTests {
             coEvery { insert(any()) } just Runs
             every { getUser(Service.Kitsu) } returns mockk()
         }
-        val mockApi = mockk<UserApi> {
+        val mockApi = mockk<com.chesire.nekome.datasource.user.remote.UserApi> {
             coEvery {
                 getUserDetails()
             } coAnswers {
@@ -92,7 +91,7 @@ class UserRepositoryTests {
         val mockDao = mockk<UserDao> {
             every { getUser(Service.Kitsu) } returns mockk()
         }
-        val mockApi = mockk<UserApi> {
+        val mockApi = mockk<com.chesire.nekome.datasource.user.remote.UserApi> {
             coEvery { getUserDetails() } coAnswers { Resource.Error(expected) }
         }
 
@@ -111,7 +110,7 @@ class UserRepositoryTests {
             coEvery { retrieveUserId(Service.Kitsu) } coAnswers { expected }
             every { getUser(Service.Kitsu) } returns mockk()
         }
-        val mockApi = mockk<UserApi>()
+        val mockApi = mockk<com.chesire.nekome.datasource.user.remote.UserApi>()
 
         val classUnderTest = UserRepository(mockDao, mockApi, map)
 

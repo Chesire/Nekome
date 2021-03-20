@@ -1,16 +1,21 @@
-package com.chesire.nekome.account
+package com.chesire.nekome.datasource.user
 
 import com.chesire.nekome.core.flags.Service
 import com.chesire.nekome.core.models.ImageModel
 import com.chesire.nekome.database.entity.UserEntity
 import com.chesire.nekome.testing.createImageModel
-import com.chesire.nekome.user.api.UserDomain
 import org.junit.Assert.assertEquals
+import org.junit.Before
 import org.junit.Test
 
-class UserDomainMapperTests {
+class UserMapperTests {
 
-    private val map = UserDomainMapper()
+    private lateinit var map: UserMapper
+
+    @Before
+    fun setup() {
+        map = UserMapper()
+    }
 
     @Test
     fun `toUserModel converts UserDomain to UserEntity`() {

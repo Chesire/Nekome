@@ -1,13 +1,12 @@
-package com.chesire.nekome.account
+package com.chesire.nekome.datasource.user
 
 import com.chesire.nekome.database.entity.UserEntity
-import com.chesire.nekome.user.api.UserDomain
 import javax.inject.Inject
 
 /**
  * Provides ability to map instances of [UserDomain].
  */
-class UserDomainMapper @Inject constructor() {
+class UserMapper @Inject constructor() {
 
     /**
      * Converts an instance of [UserDomain] into an instance of [UserEntity].
@@ -29,6 +28,7 @@ class UserDomainMapper @Inject constructor() {
             input.userId,
             input.name,
             input.avatar,
-            input.coverImage
+            input.coverImage,
+            input.service
         )
 }

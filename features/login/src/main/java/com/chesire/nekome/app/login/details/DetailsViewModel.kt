@@ -3,9 +3,9 @@ package com.chesire.nekome.app.login.details
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.chesire.nekome.account.UserRepository
 import com.chesire.nekome.auth.api.AuthApi
 import com.chesire.nekome.core.Resource
+import com.chesire.nekome.datasource.user.UserRepository
 import com.hadilq.liveevent.LiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch

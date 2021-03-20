@@ -31,7 +31,6 @@ android {
 }
 
 dependencies {
-    implementation project(":libraries:account")
     implementation project(":libraries:core")
     implementation project(":libraries:library")
 

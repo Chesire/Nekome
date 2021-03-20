@@ -1,9 +1,9 @@
-package com.chesire.nekome.account
+package com.chesire.nekome.datasource.user
 
 import com.chesire.nekome.core.Resource
 import com.chesire.nekome.core.flags.Service
 import com.chesire.nekome.database.dao.UserDao
-import com.chesire.nekome.user.api.UserApi
+import com.chesire.nekome.datasource.user.remote.UserApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
@@ -16,8 +16,9 @@ import javax.inject.Inject
 class UserRepository @Inject constructor(
     private val userDao: UserDao,
     private val userApi: UserApi,
-    private val map: UserDomainMapper
+    private val map: UserMapper
 ) {
+
     /**
      * Retrieve the information about a user.
      */

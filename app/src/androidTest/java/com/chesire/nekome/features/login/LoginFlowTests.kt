@@ -3,6 +3,7 @@ package com.chesire.nekome.features.login
 import com.chesire.nekome.UITest
 import com.chesire.nekome.auth.api.AuthApi
 import com.chesire.nekome.core.Resource
+import com.chesire.nekome.datasource.user.remote.UserApi
 import com.chesire.nekome.helpers.creation.createLibraryDomain
 import com.chesire.nekome.helpers.creation.createUserDomain
 import com.chesire.nekome.injection.AuthModule
@@ -12,7 +13,6 @@ import com.chesire.nekome.library.api.LibraryApi
 import com.chesire.nekome.robots.activity
 import com.chesire.nekome.robots.login.loginDetails
 import com.chesire.nekome.robots.login.loginSyncing
-import com.chesire.nekome.user.api.UserApi
 import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.UninstallModules

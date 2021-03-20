@@ -31,9 +31,9 @@ android {
 }
 
 dependencies {
-    implementation project(":libraries:account")
     implementation project(":libraries:core")
     implementation project(":libraries:database")
+    implementation project(":libraries:datasource:user")
     implementation project(":libraries:library")
 
     implementation "com.chesire.lintrules:lint-gradle:$lintrules_version"

@@ -1,6 +1,6 @@
 package com.chesire.nekome.binders
 
-import com.chesire.nekome.account.UserRepository
+import com.chesire.nekome.datasource.user.UserRepository
 import com.chesire.nekome.library.UserProvider
 import javax.inject.Inject
 

@@ -1,4 +1,4 @@
-package com.chesire.nekome.user.api
+package com.chesire.nekome.datasource.user
 
 import com.chesire.nekome.core.flags.Service
 import com.chesire.nekome.core.models.ImageModel

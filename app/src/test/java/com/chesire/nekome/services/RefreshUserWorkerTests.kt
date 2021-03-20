@@ -3,8 +3,8 @@ package com.chesire.nekome.services
 import android.content.Context
 import androidx.work.ListenableWorker
 import androidx.work.WorkerParameters
-import com.chesire.nekome.account.UserRepository
 import com.chesire.nekome.core.Resource
+import com.chesire.nekome.datasource.user.UserRepository
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
@@ -14,6 +14,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Test
 
 class RefreshUserWorkerTests {
+
     @Test
     fun `doWork null userId returns Result#success early`() = runBlocking {
         val mockContext = mockk<Context>()

@@ -10,6 +10,7 @@ import io.mockk.verifyAll
 import org.junit.Test
 
 class LogoutHandlerTests {
+
     @Test
     fun `executeLogout clears db`() {
         val mockAuthProvider = mockk<AuthProvider> {

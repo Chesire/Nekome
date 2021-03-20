@@ -31,8 +31,8 @@ android {
 }
 
 dependencies {
-    implementation project(":libraries:account")
     implementation project(":libraries:core")
+    implementation project(":libraries:datasource:user")
     implementation project(":libraries:library")
     implementation project(":libraries:server:auth")
 

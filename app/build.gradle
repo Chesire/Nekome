@@ -61,9 +61,9 @@ dependencies {
     implementation project(":features:series")
     implementation project(":features:settings")
     implementation project(":features:timeline")
-    implementation project(":libraries:account")
     implementation project(":libraries:core")
     implementation project(":libraries:database")
+    implementation project(":libraries:datasource:user")
     implementation project(":libraries:encryption")
     implementation project(":libraries:kitsu")
     implementation project(":libraries:kitsu:auth")
@@ -76,7 +76,6 @@ dependencies {
     implementation project(":libraries:server:library")
     implementation project(":libraries:server:search")
     implementation project(":libraries:server:trending")
-    implementation project(":libraries:server:user")
 
     implementation "androidx.appcompat:appcompat:$appcompat_version"
     implementation "androidx.constraintlayout:constraintlayout:$constraint_layout_version"
