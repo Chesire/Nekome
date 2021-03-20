@@ -32,7 +32,7 @@ fun createSeriesDomain(
     type = seriesType,
     subtype = subtype,
     slug = slug,
-    canonicalTitle = title,
+    title = title,
     seriesStatus = seriesStatus,
     userSeriesStatus = userSeriesStatus,
     progress = progress,

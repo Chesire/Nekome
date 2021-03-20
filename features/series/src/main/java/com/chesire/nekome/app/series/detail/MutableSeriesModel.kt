@@ -26,7 +26,7 @@ data class MutableSeriesModel(
          */
         fun from(model: SeriesDomain) = MutableSeriesModel(
             model.userId,
-            model.canonicalTitle,
+            model.title,
             model.progress,
             model.totalLength,
             if (model.lengthKnown) model.totalLength.toString() else "-",

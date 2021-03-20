@@ -28,7 +28,7 @@ class SeriesViewHolder(
         series = model
 
         binding.apply {
-            seriesTitle.text = model.canonicalTitle
+            seriesTitle.text = model.title
             seriesSubtype.text = model.subtype.name
             seriesProgress.text = seriesProgress.context.getString(
                 R.string.series_list_length,

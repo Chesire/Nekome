@@ -18,7 +18,7 @@ data class SeriesDomain(
     val type: SeriesType,
     val subtype: Subtype,
     val slug: String,
-    val canonicalTitle: String,
+    val title: String,
     val seriesStatus: SeriesStatus,
     val userSeriesStatus: UserSeriesStatus,
     val progress: Int,

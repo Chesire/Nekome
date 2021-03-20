@@ -137,7 +137,7 @@ abstract class SeriesListFragment :
             if (it is Resource.Error) {
                 Snackbar.make(
                     binding.seriesListLayout,
-                    getString(R.string.series_list_try_again, model.canonicalTitle),
+                    getString(R.string.series_list_try_again, model.title),
                     Snackbar.LENGTH_LONG
                 ).show()
             }
@@ -147,7 +147,7 @@ abstract class SeriesListFragment :
 
     override fun seriesDelete(model: SeriesDomain, callback: (Boolean) -> Unit) {
         MaterialDialog(requireContext()).show {
-            title(text = getString(R.string.series_list_delete_title, model.canonicalTitle))
+            title(text = getString(R.string.series_list_delete_title, model.title))
             positiveButton(R.string.series_list_delete_confirm) {
                 Timber.d("Deletion confirmed for series ${model.slug}")
                 callback(true)

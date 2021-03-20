@@ -18,7 +18,7 @@ class SeriesMapper @Inject constructor() {
             input.type,
             input.subtype,
             input.slug,
-            input.canonicalTitle,
+            input.title,
             input.seriesStatus,
             input.userSeriesStatus,
             input.progress,

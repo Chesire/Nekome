@@ -91,7 +91,7 @@ class SeriesAdapter(
     private fun executeSort(items: List<SeriesDomain>) = items.sortedWith(
         when (seriesPreferences.sortPreference) {
             SortOption.Default -> compareBy { it.userId }
-            SortOption.Title -> compareBy { it.canonicalTitle }
+            SortOption.Title -> compareBy { it.title }
             SortOption.StartDate -> compareBy { it.startDate }
             SortOption.EndDate -> compareBy { it.endDate }
         }

@@ -86,6 +86,6 @@ class ResponseDtoMapperTests {
         val output = map.toSeriesDomain(input)
 
         assertEquals(expected.id, output?.id)
-        assertEquals(expected.attributes.canonicalTitle, output?.canonicalTitle)
+        assertEquals(expected.attributes.canonicalTitle, output?.title)
     }
 }

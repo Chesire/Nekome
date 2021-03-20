@@ -38,7 +38,7 @@ class SeriesDetailViewModelTests {
             coroutineRule.testDispatcher
         )
 
-        assertEquals(expected.canonicalTitle, classUnderTest.mutableModel.seriesName)
+        assertEquals(expected.title, classUnderTest.mutableModel.seriesName)
     }
 
     @Test
