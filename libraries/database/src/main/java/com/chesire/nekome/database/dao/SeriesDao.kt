@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.Flow
  */
 @Dao
 interface SeriesDao {
+
     /**
      * Deletes [series] from the dao.
      */

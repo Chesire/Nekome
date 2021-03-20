@@ -14,6 +14,7 @@ import kotlinx.coroutines.flow.Flow
  */
 @Dao
 interface UserDao {
+
     /**
      * Deletes the user [user].
      */

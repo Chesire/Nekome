@@ -53,15 +53,5 @@ abstract class RoomDB : RoomDatabase() {
                 .fallbackToDestructiveMigration()
                 .build()
         }
-
-        /**
-         * Builds a memory database for usage.
-         */
-        fun buildMemory(context: Context): RoomDB {
-            return Room
-                .inMemoryDatabaseBuilder(context, RoomDB::class.java)
-                .fallbackToDestructiveMigration()
-                .build()
-        }
     }
 }
