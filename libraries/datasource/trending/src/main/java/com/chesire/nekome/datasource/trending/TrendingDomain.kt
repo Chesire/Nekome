@@ -1,4 +1,4 @@
-package com.chesire.nekome.trending.api
+package com.chesire.nekome.datasource.trending
 
 import com.chesire.nekome.core.flags.SeriesType
 import com.chesire.nekome.core.models.ImageModel

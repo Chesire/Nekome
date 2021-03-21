@@ -34,7 +34,7 @@ android {
 dependencies {
     implementation project(":libraries:core")
     implementation project(":libraries:datasource:series")
-    implementation project(":libraries:server:trending")
+    implementation project(":libraries:datasource:trending")
 
     implementation "androidx.appcompat:appcompat:$appcompat_version"
     implementation "androidx.constraintlayout:constraintlayout:$constraint_layout_version"
