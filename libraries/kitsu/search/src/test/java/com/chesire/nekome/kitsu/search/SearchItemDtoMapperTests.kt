@@ -6,11 +6,17 @@ import com.chesire.nekome.core.models.ImageModel
 import com.chesire.nekome.kitsu.search.dto.SearchItemDto
 import com.chesire.nekome.testing.createImageModel
 import org.junit.Assert.assertEquals
+import org.junit.Before
 import org.junit.Test
 
 class SearchItemDtoMapperTests {
 
-    private val map = SearchItemDtoMapper()
+    private lateinit var map: SearchItemDtoMapper
+
+    @Before
+    fun setup() {
+        map = SearchItemDtoMapper()
+    }
 
     @Test
     fun `toSearchDomain converts SearchItemDto to SearchDomain`() {

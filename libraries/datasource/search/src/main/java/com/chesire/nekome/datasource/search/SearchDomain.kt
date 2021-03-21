@@ -1,4 +1,4 @@
-package com.chesire.nekome.search.api
+package com.chesire.nekome.datasource.search
 
 import com.chesire.nekome.core.flags.SeriesType
 import com.chesire.nekome.core.flags.Subtype

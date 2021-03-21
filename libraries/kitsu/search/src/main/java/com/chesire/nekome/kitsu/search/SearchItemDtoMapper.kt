@@ -1,8 +1,8 @@
 package com.chesire.nekome.kitsu.search
 
 import com.chesire.nekome.core.models.ImageModel
+import com.chesire.nekome.datasource.search.SearchDomain
 import com.chesire.nekome.kitsu.search.dto.SearchItemDto
-import com.chesire.nekome.search.api.SearchDomain
 import javax.inject.Inject
 
 /**

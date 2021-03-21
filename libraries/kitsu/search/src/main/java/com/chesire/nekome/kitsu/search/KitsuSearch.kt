@@ -1,11 +1,11 @@
 package com.chesire.nekome.kitsu.search
 
 import com.chesire.nekome.core.Resource
+import com.chesire.nekome.datasource.search.SearchDomain
+import com.chesire.nekome.datasource.search.remote.SearchApi
 import com.chesire.nekome.kitsu.asError
 import com.chesire.nekome.kitsu.parse
 import com.chesire.nekome.kitsu.search.dto.SearchResponseDto
-import com.chesire.nekome.search.api.SearchApi
-import com.chesire.nekome.search.api.SearchDomain
 import retrofit2.Response
 import javax.inject.Inject
 

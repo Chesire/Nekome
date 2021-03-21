@@ -2,10 +2,10 @@ package com.chesire.nekome.features.search
 
 import com.chesire.nekome.UITest
 import com.chesire.nekome.core.Resource
+import com.chesire.nekome.datasource.search.remote.SearchApi
 import com.chesire.nekome.injection.SearchModule
 import com.chesire.nekome.robots.activity
 import com.chesire.nekome.robots.search.search
-import com.chesire.nekome.search.api.SearchApi
 import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.UninstallModules

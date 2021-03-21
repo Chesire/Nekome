@@ -1,6 +1,6 @@
 package com.chesire.nekome.app.search.domain
 
-import com.chesire.nekome.search.api.SearchDomain
+import com.chesire.nekome.datasource.search.SearchDomain
 import javax.inject.Inject
 
 /**
