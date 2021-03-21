@@ -1,8 +1,8 @@
 package com.chesire.nekome.kitsu.interceptors
 
-import com.chesire.nekome.auth.api.AuthApi
 import com.chesire.nekome.core.AuthCaster
 import com.chesire.nekome.core.Resource
+import com.chesire.nekome.datasource.auth.remote.AuthApi
 import com.chesire.nekome.kitsu.AuthException
 import com.chesire.nekome.kitsu.AuthProvider
 import kotlinx.coroutines.runBlocking

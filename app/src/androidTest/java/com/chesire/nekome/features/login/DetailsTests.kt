@@ -2,9 +2,9 @@ package com.chesire.nekome.features.login
 
 import com.chesire.nekome.R
 import com.chesire.nekome.UITest
-import com.chesire.nekome.auth.api.AuthApi
 import com.chesire.nekome.core.Resource
 import com.chesire.nekome.core.url.UrlHandler
+import com.chesire.nekome.datasource.auth.remote.AuthApi
 import com.chesire.nekome.helpers.getResource
 import com.chesire.nekome.injection.AuthModule
 import com.chesire.nekome.injection.UrlModule

@@ -1,4 +1,4 @@
-package com.chesire.nekome.auth.api
+package com.chesire.nekome.datasource.auth.remote
 
 import com.chesire.nekome.core.Resource
 

@@ -31,9 +31,9 @@ android {
 
 dependencies {
     implementation project(":libraries:core")
+    implementation project(':libraries:datasource:auth')
     implementation project(":libraries:encryption")
     implementation project(':libraries:kitsu')
-    implementation project(':libraries:server:auth')
 
     implementation "androidx.core:core-ktx:$corektx_version"
     implementation "com.chesire.lintrules:lint-gradle:$lintrules_version"

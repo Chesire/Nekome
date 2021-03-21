@@ -1,7 +1,7 @@
 package com.chesire.nekome.kitsu.auth
 
-import com.chesire.nekome.auth.api.AuthApi
 import com.chesire.nekome.core.Resource
+import com.chesire.nekome.datasource.auth.remote.AuthApi
 import com.chesire.nekome.kitsu.AuthProvider
 import com.chesire.nekome.kitsu.auth.dto.AuthResponseDto
 import com.chesire.nekome.kitsu.auth.dto.LoginRequestDto
