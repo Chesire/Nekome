@@ -32,7 +32,6 @@ android {
 dependencies {
     implementation project(":libraries:core")
     implementation project(":libraries:datasource:auth")
-    implementation project(":libraries:encryption")
 
     implementation "androidx.appcompat:appcompat:$appcompat_version"
     implementation "androidx.core:core-ktx:$corektx_version"

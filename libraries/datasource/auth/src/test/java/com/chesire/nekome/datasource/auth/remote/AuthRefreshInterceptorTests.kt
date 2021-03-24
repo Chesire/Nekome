@@ -1,10 +1,9 @@
-package com.chesire.nekome.kitsu.interceptors
+package com.chesire.nekome.datasource.auth.remote
 
 import com.chesire.nekome.core.AuthCaster
 import com.chesire.nekome.core.Resource
-import com.chesire.nekome.datasource.auth.remote.AuthApi
-import com.chesire.nekome.kitsu.AuthException
-import com.chesire.nekome.kitsu.AuthProvider
+import com.chesire.nekome.datasource.auth.AuthException
+import com.chesire.nekome.datasource.auth.local.AuthProvider
 import io.mockk.Runs
 import io.mockk.coEvery
 import io.mockk.coVerify

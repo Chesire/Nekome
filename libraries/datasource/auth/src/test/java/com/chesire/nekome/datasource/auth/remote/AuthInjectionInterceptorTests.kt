@@ -1,6 +1,6 @@
-package com.chesire.nekome.kitsu.interceptors
+package com.chesire.nekome.datasource.auth.remote
 
-import com.chesire.nekome.kitsu.AuthProvider
+import com.chesire.nekome.datasource.auth.local.AuthProvider
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.slot
@@ -9,6 +9,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Test
 
 class AuthInjectionInterceptorTests {
+
     @Test
     fun `authorization header gets added correctly`() {
         val token = "AccessTokenPass"

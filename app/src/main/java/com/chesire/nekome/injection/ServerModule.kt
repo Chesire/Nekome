@@ -1,8 +1,8 @@
 package com.chesire.nekome.injection
 
 import com.chesire.nekome.kitsu.BuildConfig
-import com.chesire.nekome.kitsu.interceptors.AuthInjectionInterceptor
-import com.chesire.nekome.kitsu.interceptors.AuthRefreshInterceptor
+import com.chesire.nekome.datasource.auth.remote.AuthInjectionInterceptor
+import com.chesire.nekome.datasource.auth.remote.AuthRefreshInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.Reusable

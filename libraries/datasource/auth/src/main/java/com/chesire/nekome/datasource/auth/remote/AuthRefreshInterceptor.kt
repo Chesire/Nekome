@@ -1,10 +1,9 @@
-package com.chesire.nekome.kitsu.interceptors
+package com.chesire.nekome.datasource.auth.remote
 
 import com.chesire.nekome.core.AuthCaster
 import com.chesire.nekome.core.Resource
-import com.chesire.nekome.datasource.auth.remote.AuthApi
-import com.chesire.nekome.kitsu.AuthException
-import com.chesire.nekome.kitsu.AuthProvider
+import com.chesire.nekome.datasource.auth.AuthException
+import com.chesire.nekome.datasource.auth.local.AuthProvider
 import kotlinx.coroutines.runBlocking
 import okhttp3.Interceptor
 import okhttp3.Response
@@ -14,9 +13,9 @@ import javax.inject.Inject
 /**
  * Interceptor to handle refreshing access tokens if required.
  *
- * There is an official way to do this using OkHttp or Retrofit, but unfortunately this has to be
- * done as an interceptor instead as the official way expects a 401 to be returned if auth fails,
- * but Kitsu returns a 403 which won't work.
+ * There is an official way to do this using OkHttp or Retrofit, but unfortunately it has to be done
+ * this way in an interceptor as some apis return a 403, and the official way only works if your api
+ * returns a 403.
  *
  * If we still cannot refresh the token after attempting here, notify the [AuthCaster] so it can
  * tell any listeners of the failure.

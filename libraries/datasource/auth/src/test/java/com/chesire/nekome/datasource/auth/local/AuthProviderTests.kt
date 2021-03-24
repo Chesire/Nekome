@@ -1,4 +1,4 @@
-package com.chesire.nekome.kitsu
+package com.chesire.nekome.datasource.auth.local
 
 import android.content.SharedPreferences
 import com.chesire.nekome.encryption.Cryption
@@ -15,6 +15,7 @@ private const val KITSU_ACCESS_TOKEN_KEY = "KEY_KITSU_ACCESS_TOKEN"
 private const val KITSU_REFRESH_TOKEN_KEY = "KEY_KITSU_REFRESH_TOKEN"
 
 class AuthProviderTests {
+
     @Test
     fun `accessToken#get returns the decrypted token`() {
         val expected = "accessToken"
