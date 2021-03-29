@@ -1,9 +1,9 @@
 package com.chesire.nekome.datasource.auth.remote
 
 import com.chesire.nekome.core.AuthCaster
-import com.chesire.nekome.core.Resource
+import com.chesire.nekome.datasource.auth.AccessTokenRepository
+import com.chesire.nekome.datasource.auth.AccessTokenResult
 import com.chesire.nekome.datasource.auth.AuthException
-import com.chesire.nekome.datasource.auth.local.AuthProvider
 import kotlinx.coroutines.runBlocking
 import okhttp3.Interceptor
 import okhttp3.Response
@@ -21,8 +21,7 @@ import javax.inject.Inject
  * tell any listeners of the failure.
  */
 class AuthRefreshInterceptor @Inject constructor(
-    private val provider: AuthProvider,
-    private val auth: AuthApi,
+    private val repo: AccessTokenRepository,
     private val authCaster: AuthCaster
 ) : Interceptor {
 
@@ -31,12 +30,12 @@ class AuthRefreshInterceptor @Inject constructor(
         val response = chain.proceed(originRequest)
 
         return if (!response.isSuccessful && response.code() == HttpURLConnection.HTTP_FORBIDDEN) {
-            val authResponse = runBlocking { auth.refresh() }
-            if (authResponse is Resource.Success) {
+            val refreshResponse = runBlocking { repo.refresh() }
+            if (refreshResponse is AccessTokenResult.Success) {
                 chain.proceed(
                     originRequest
                         .newBuilder()
-                        .header("Authorization", "Bearer ${provider.accessToken}")
+                        .header("Authorization", "Bearer ${repo.accessToken}")
                         .build()
                 )
             } else {

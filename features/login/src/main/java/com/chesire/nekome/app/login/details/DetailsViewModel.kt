@@ -4,7 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chesire.nekome.core.Resource
-import com.chesire.nekome.datasource.auth.remote.AuthApi
+import com.chesire.nekome.datasource.auth.AccessTokenRepository
+import com.chesire.nekome.datasource.auth.AccessTokenResult
 import com.chesire.nekome.datasource.user.UserRepository
 import com.hadilq.liveevent.LiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,12 +18,13 @@ import javax.inject.Inject
  */
 @HiltViewModel
 class DetailsViewModel @Inject constructor(
-    private val auth: AuthApi,
+    private val auth: AccessTokenRepository,
     private val user: UserRepository
 ) : ViewModel() {
 
     private val _loginStatus = LiveEvent<LoginStatus>()
-    val loginStatus: LiveData<LoginStatus> = _loginStatus
+    val loginStatus: LiveData<LoginStatus>
+        get() = _loginStatus
 
     /**
      * Send a login request to Kitsu, with the credentials of [username] and [password].
@@ -41,16 +43,14 @@ class DetailsViewModel @Inject constructor(
     }
 
     private suspend fun executeLogin(name: String, pw: String) {
-        when (val result = auth.login(name, pw)) {
-            is Resource.Success -> executeGetUser()
-            is Resource.Error -> {
-                Timber.e("Error logging in - [${result.code}] ${result.msg}")
-                if (result.code == Resource.Error.InvalidCredentials) {
-                    _loginStatus.postValue(LoginStatus.InvalidCredentials)
-                } else {
-                    _loginStatus.postValue(LoginStatus.Error)
-                }
-            }
+        val result = auth.login(name, pw)
+        Timber.d("executeLogin result - [$result]")
+        when (result) {
+            AccessTokenResult.Success -> executeGetUser()
+            AccessTokenResult.InvalidCredentials ->
+                _loginStatus.postValue(LoginStatus.InvalidCredentials)
+            AccessTokenResult.CommunicationError ->
+                _loginStatus.postValue(LoginStatus.Error)
         }
     }
 
@@ -59,7 +59,7 @@ class DetailsViewModel @Inject constructor(
             is Resource.Success -> _loginStatus.postValue(LoginStatus.Success)
             is Resource.Error -> {
                 Timber.e("Error getting user - [${result.code}] ${result.msg}")
-                auth.clearAuth()
+                auth.clear()
                 _loginStatus.postValue(LoginStatus.Error)
             }
         }
