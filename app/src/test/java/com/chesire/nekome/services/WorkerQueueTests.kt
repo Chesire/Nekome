@@ -8,6 +8,7 @@ import io.mockk.verify
 import org.junit.Test
 
 class WorkerQueueTests {
+
     @Test
     fun `enqueueAuthRefresh enqueues the request on the manager`() {
         val mockWorkManager = mockk<WorkManager> {

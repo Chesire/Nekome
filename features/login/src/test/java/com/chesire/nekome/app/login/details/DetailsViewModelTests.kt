@@ -2,9 +2,9 @@ package com.chesire.nekome.app.login.details
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
-import com.chesire.nekome.account.UserRepository
-import com.chesire.nekome.auth.api.AuthApi
 import com.chesire.nekome.core.Resource
+import com.chesire.nekome.datasource.auth.remote.AuthApi
+import com.chesire.nekome.datasource.user.UserRepository
 import com.chesire.nekome.testing.CoroutinesMainDispatcherRule
 import io.mockk.Runs
 import io.mockk.coEvery
@@ -19,6 +19,7 @@ import org.junit.Test
 
 @ExperimentalCoroutinesApi
 class DetailsViewModelTests {
+
     @get:Rule
     val taskExecutorRule = InstantTaskExecutorRule()
 

@@ -3,7 +3,7 @@ package com.chesire.nekome.helpers.creation
 import com.chesire.nekome.core.flags.SeriesType
 import com.chesire.nekome.core.flags.Subtype
 import com.chesire.nekome.core.models.ImageModel
-import com.chesire.nekome.search.api.SearchDomain
+import com.chesire.nekome.datasource.search.SearchDomain
 
 /**
  * Creates a new [SearchDomain].
@@ -16,4 +16,11 @@ fun createSearchDomain(
     canonicalTitle: String = "canonicalTitle",
     subtype: Subtype = Subtype.TV,
     posterImage: ImageModel = ImageModel.empty
-) = SearchDomain(id, type, synopsis, canonicalTitle, subtype, posterImage)
+) = SearchDomain(
+    id,
+    type,
+    synopsis,
+    canonicalTitle,
+    subtype,
+    posterImage
+)

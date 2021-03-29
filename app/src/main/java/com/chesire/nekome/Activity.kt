@@ -19,11 +19,11 @@ import androidx.navigation.ui.setupWithNavController
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
 import com.chesire.lifecyklelog.LogLifecykle
-import com.chesire.nekome.account.User
 import com.chesire.nekome.core.AuthCaster
 import com.chesire.nekome.core.flags.HomeScreenOptions
 import com.chesire.nekome.core.nav.Flow
 import com.chesire.nekome.core.settings.ApplicationSettings
+import com.chesire.nekome.datasource.user.User
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -38,6 +38,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 @Suppress("TooManyFunctions")
 class Activity : AppCompatActivity(), AuthCaster.AuthCasterListener, Flow {
+
     @Inject
     lateinit var authCaster: AuthCaster
 

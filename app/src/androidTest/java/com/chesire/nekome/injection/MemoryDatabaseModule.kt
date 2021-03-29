@@ -1,6 +1,7 @@
 package com.chesire.nekome.injection
 
 import android.content.Context
+import androidx.room.Room
 import com.chesire.nekome.database.RoomDB
 import dagger.Module
 import dagger.Provides
@@ -15,9 +16,13 @@ import javax.inject.Singleton
     replaces = [DatabaseModule::class]
 )
 object MemoryDatabaseModule {
+
     @Provides
     @Singleton
-    fun provideDB(@ApplicationContext context: Context): RoomDB = RoomDB.buildMemory(context)
+    fun provideDB(@ApplicationContext context: Context): RoomDB =
+        Room.inMemoryDatabaseBuilder(context, RoomDB::class.java)
+            .fallbackToDestructiveMigration()
+            .build()
 
     @Provides
     @Singleton

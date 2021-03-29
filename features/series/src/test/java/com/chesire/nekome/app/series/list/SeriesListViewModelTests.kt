@@ -5,8 +5,8 @@ import androidx.lifecycle.Observer
 import com.chesire.nekome.core.Resource
 import com.chesire.nekome.core.flags.AsyncState
 import com.chesire.nekome.core.flags.UserSeriesStatus
-import com.chesire.nekome.library.SeriesDomain
-import com.chesire.nekome.library.SeriesRepository
+import com.chesire.nekome.datasource.series.SeriesDomain
+import com.chesire.nekome.datasource.series.SeriesRepository
 import com.chesire.nekome.testing.CoroutinesMainDispatcherRule
 import com.chesire.nekome.testing.createSeriesDomain
 import io.mockk.Runs
@@ -41,7 +41,7 @@ class SeriesListViewModelTests {
         }
 
         val classUnderTest = SeriesListViewModel(mockRepo)
-        classUnderTest.updateSeries(0, 0, UserSeriesStatus.Current, 0, { })
+        classUnderTest.updateSeries(0, 0, UserSeriesStatus.Current, 0) {}
 
         coVerify { mockRepo.updateSeries(0, 0, UserSeriesStatus.Current, 0) }
     }
@@ -92,7 +92,7 @@ class SeriesListViewModelTests {
             }
             every { getSeries() } returns mockk()
         }
-        val mockObserver = mockk<Observer<AsyncState<SeriesDomain, SeriesListDeleteError>>>() {
+        val mockObserver = mockk<Observer<AsyncState<SeriesDomain, SeriesListDeleteError>>> {
             every { onChanged(any()) } just Runs
         }
 
@@ -163,7 +163,7 @@ class SeriesListViewModelTests {
             }
             every { getSeries() } returns mockk()
         }
-        val mockObserver = mockk<Observer<AsyncState<Any, Any>>>() {
+        val mockObserver = mockk<Observer<AsyncState<Any, Any>>> {
             every { onChanged(capture(slot)) } just Runs
         }
 
@@ -190,7 +190,7 @@ class SeriesListViewModelTests {
             }
             every { getSeries() } returns mockk()
         }
-        val mockObserver = mockk<Observer<AsyncState<Any, Any>>>() {
+        val mockObserver = mockk<Observer<AsyncState<Any, Any>>> {
             every { onChanged(capture(slot)) } just Runs
         }
 
@@ -217,7 +217,7 @@ class SeriesListViewModelTests {
             }
             every { getSeries() } returns mockk()
         }
-        val mockObserver = mockk<Observer<AsyncState<Any, Any>>>() {
+        val mockObserver = mockk<Observer<AsyncState<Any, Any>>> {
             every { onChanged(capture(slot)) } just Runs
         }
 

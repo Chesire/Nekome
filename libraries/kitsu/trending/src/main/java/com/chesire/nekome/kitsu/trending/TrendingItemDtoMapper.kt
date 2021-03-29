@@ -1,8 +1,8 @@
 package com.chesire.nekome.kitsu.trending
 
 import com.chesire.nekome.core.models.ImageModel
+import com.chesire.nekome.datasource.trending.TrendingDomain
 import com.chesire.nekome.kitsu.trending.dto.TrendingItemDto
-import com.chesire.nekome.trending.api.TrendingDomain
 import javax.inject.Inject
 
 /**

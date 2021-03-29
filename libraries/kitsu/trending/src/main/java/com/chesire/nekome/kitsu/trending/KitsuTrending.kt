@@ -1,11 +1,11 @@
 package com.chesire.nekome.kitsu.trending
 
 import com.chesire.nekome.core.Resource
+import com.chesire.nekome.datasource.trending.TrendingDomain
+import com.chesire.nekome.datasource.trending.remote.TrendingApi
 import com.chesire.nekome.kitsu.asError
 import com.chesire.nekome.kitsu.parse
 import com.chesire.nekome.kitsu.trending.dto.TrendingResponseDto
-import com.chesire.nekome.trending.api.TrendingApi
-import com.chesire.nekome.trending.api.TrendingDomain
 import retrofit2.Response
 import javax.inject.Inject
 

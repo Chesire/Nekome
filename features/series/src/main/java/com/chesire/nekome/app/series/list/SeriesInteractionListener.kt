@@ -1,12 +1,13 @@
 package com.chesire.nekome.app.series.list
 
 import android.widget.ImageView
-import com.chesire.nekome.library.SeriesDomain
+import com.chesire.nekome.datasource.series.SeriesDomain
 
 /**
  * Listener for events happening when interacting with the series list.
  */
 interface SeriesInteractionListener {
+
     /**
      * Executed when a series has been selected.
      */

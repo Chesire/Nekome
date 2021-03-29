@@ -24,7 +24,7 @@ import com.chesire.nekome.app.series.list.view.SwipeToDelete
 import com.chesire.nekome.core.Resource
 import com.chesire.nekome.core.flags.AsyncState
 import com.chesire.nekome.core.flags.SeriesType
-import com.chesire.nekome.library.SeriesDomain
+import com.chesire.nekome.datasource.series.SeriesDomain
 import com.google.android.material.snackbar.Snackbar
 import timber.log.Timber
 import javax.inject.Inject
@@ -137,7 +137,7 @@ abstract class SeriesListFragment :
             if (it is Resource.Error) {
                 Snackbar.make(
                     binding.seriesListLayout,
-                    getString(R.string.series_list_try_again, model.canonicalTitle),
+                    getString(R.string.series_list_try_again, model.title),
                     Snackbar.LENGTH_LONG
                 ).show()
             }
@@ -147,7 +147,7 @@ abstract class SeriesListFragment :
 
     override fun seriesDelete(model: SeriesDomain, callback: (Boolean) -> Unit) {
         MaterialDialog(requireContext()).show {
-            title(text = getString(R.string.series_list_delete_title, model.canonicalTitle))
+            title(text = getString(R.string.series_list_delete_title, model.title))
             positiveButton(R.string.series_list_delete_confirm) {
                 Timber.d("Deletion confirmed for series ${model.slug}")
                 callback(true)

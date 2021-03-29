@@ -2,7 +2,7 @@ package com.chesire.nekome.app.series.detail
 
 import com.chesire.nekome.app.series.list.lengthKnown
 import com.chesire.nekome.core.flags.UserSeriesStatus
-import com.chesire.nekome.library.SeriesDomain
+import com.chesire.nekome.datasource.series.SeriesDomain
 
 /**
  * Provides an object based on [SeriesDomain] that allows modifying values for series detail.
@@ -20,12 +20,13 @@ data class MutableSeriesModel(
     var rating: Int
 ) {
     companion object {
+
         /**
          * Creates an instance of [MutableSeriesModel] from an instance of [SeriesDomain].
          */
         fun from(model: SeriesDomain) = MutableSeriesModel(
             model.userId,
-            model.canonicalTitle,
+            model.title,
             model.progress,
             model.totalLength,
             if (model.lengthKnown) model.totalLength.toString() else "-",

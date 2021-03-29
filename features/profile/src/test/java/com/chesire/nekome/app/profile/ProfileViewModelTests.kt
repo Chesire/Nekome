@@ -2,10 +2,10 @@ package com.chesire.nekome.app.profile
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
-import com.chesire.nekome.account.UserRepository
 import com.chesire.nekome.core.flags.SeriesType
 import com.chesire.nekome.core.flags.UserSeriesStatus
-import com.chesire.nekome.library.SeriesRepository
+import com.chesire.nekome.datasource.series.SeriesRepository
+import com.chesire.nekome.datasource.user.UserRepository
 import com.chesire.nekome.testing.CoroutinesMainDispatcherRule
 import com.chesire.nekome.testing.createSeriesDomain
 import io.mockk.Runs
@@ -19,8 +19,10 @@ import org.junit.Rule
 import org.junit.Test
 
 class ProfileViewModelTests {
+
     @get:Rule
     val taskExecutorRule = InstantTaskExecutorRule()
+
     @get:Rule
     val coroutineRule = CoroutinesMainDispatcherRule()
 

@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.chesire.nekome.core.Resource
 import com.chesire.nekome.core.flags.SeriesType
 import com.chesire.nekome.core.settings.ApplicationSettings
-import com.chesire.nekome.library.SeriesRepository
+import com.chesire.nekome.datasource.series.SeriesRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch

@@ -1,5 +1,6 @@
 package com.chesire.nekome.injection
 
+import com.chesire.nekome.datasource.series.remote.SeriesApi
 import com.chesire.nekome.kitsu.KITSU_URL
 import com.chesire.nekome.kitsu.adapters.ImageModelAdapter
 import com.chesire.nekome.kitsu.adapters.SeriesStatusAdapter
@@ -9,7 +10,6 @@ import com.chesire.nekome.kitsu.library.KitsuLibrary
 import com.chesire.nekome.kitsu.library.KitsuLibraryService
 import com.chesire.nekome.kitsu.library.adapter.UserSeriesStatusAdapter
 import com.chesire.nekome.kitsu.trending.KitsuTrendingService
-import com.chesire.nekome.library.api.LibraryApi
 import com.squareup.moshi.Moshi
 import dagger.Binds
 import dagger.Module
@@ -22,7 +22,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
 /**
- * Provides a Hilt module for usage of [LibraryApi].
+ * Provides a Hilt module for usage of [SeriesApi].
  */
 @Module
 @InstallIn(SingletonComponent::class)
@@ -53,8 +53,8 @@ abstract class LibraryModule {
     }
 
     /**
-     * Binds [api] to an instance of [LibraryApi].
+     * Binds [api] to an instance of [SeriesApi].
      */
     @Binds
-    abstract fun bindApi(api: KitsuLibrary): LibraryApi
+    abstract fun bindApi(api: KitsuLibrary): SeriesApi
 }

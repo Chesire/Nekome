@@ -7,8 +7,8 @@ import com.chesire.nekome.core.Resource
 import com.chesire.nekome.core.flags.SeriesType
 import com.chesire.nekome.core.flags.Subtype
 import com.chesire.nekome.core.models.ImageModel
-import com.chesire.nekome.search.api.SearchApi
-import com.chesire.nekome.search.api.SearchDomain
+import com.chesire.nekome.datasource.search.SearchDomain
+import com.chesire.nekome.datasource.search.remote.SearchApi
 import com.chesire.nekome.testing.CoroutinesMainDispatcherRule
 import io.mockk.Runs
 import io.mockk.coEvery

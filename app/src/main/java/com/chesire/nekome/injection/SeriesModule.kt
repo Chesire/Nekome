@@ -2,10 +2,10 @@ package com.chesire.nekome.injection
 
 import com.chesire.nekome.binders.UserProviderBinder
 import com.chesire.nekome.database.dao.SeriesDao
-import com.chesire.nekome.library.LibraryDomainMapper
-import com.chesire.nekome.library.SeriesRepository
-import com.chesire.nekome.library.UserProvider
-import com.chesire.nekome.library.api.LibraryApi
+import com.chesire.nekome.datasource.series.SeriesMapper
+import com.chesire.nekome.datasource.series.SeriesRepository
+import com.chesire.nekome.datasource.series.UserProvider
+import com.chesire.nekome.datasource.series.remote.SeriesApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -17,6 +17,7 @@ import dagger.hilt.components.SingletonComponent
 @Module
 @InstallIn(SingletonComponent::class)
 object SeriesModule {
+
     /**
      * Provides a [UserProvider] to the series repository.
      */
@@ -29,8 +30,8 @@ object SeriesModule {
     @Provides
     fun provideSeriesRepository(
         dao: SeriesDao,
-        api: LibraryApi,
+        api: SeriesApi,
         user: UserProvider,
-        map: LibraryDomainMapper
+        map: SeriesMapper
     ) = SeriesRepository(dao, api, user, map)
 }

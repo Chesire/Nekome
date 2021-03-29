@@ -1,6 +1,6 @@
 package com.chesire.nekome.injection
 
-import com.chesire.nekome.auth.api.AuthApi
+import com.chesire.nekome.datasource.auth.remote.AuthApi
 import com.chesire.nekome.kitsu.KITSU_URL
 import com.chesire.nekome.kitsu.auth.KitsuAuth
 import com.chesire.nekome.kitsu.auth.KitsuAuthService

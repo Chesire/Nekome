@@ -22,7 +22,7 @@ import java.net.UnknownHostException
 class KitsuLibraryTests {
 
     private val map = mockk<ResponseDtoMapper> {
-        every { toLibraryDomain(any()) } returns createLibraryDomain()
+        every { toSeriesDomain(any()) } returns createSeriesDomain()
     }
     private val factory = mockk<DtoFactory> {
         every { createAddDto(any(), any(), any(), any()) } returns ""

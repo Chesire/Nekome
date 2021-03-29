@@ -1,7 +1,7 @@
 package com.chesire.nekome
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.chesire.nekome.account.UserRepository
+import com.chesire.nekome.datasource.user.UserRepository
 import com.chesire.nekome.kitsu.AuthProvider
 import com.chesire.nekome.testing.CoroutinesMainDispatcherRule
 import io.mockk.Runs
@@ -16,6 +16,7 @@ import org.junit.Rule
 import org.junit.Test
 
 class ActivityViewModelTests {
+
     @get:Rule
     val taskExecutorRule = InstantTaskExecutorRule()
 

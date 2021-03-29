@@ -3,11 +3,11 @@ package com.chesire.nekome.app.profile
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
-import com.chesire.nekome.account.UserRepository
 import com.chesire.nekome.core.flags.SeriesType
 import com.chesire.nekome.core.flags.UserSeriesStatus
-import com.chesire.nekome.library.SeriesDomain
-import com.chesire.nekome.library.SeriesRepository
+import com.chesire.nekome.datasource.series.SeriesDomain
+import com.chesire.nekome.datasource.series.SeriesRepository
+import com.chesire.nekome.datasource.user.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

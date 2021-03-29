@@ -2,7 +2,7 @@ package com.chesire.nekome.helpers.creation
 
 import com.chesire.nekome.core.flags.Service
 import com.chesire.nekome.core.models.ImageModel
-import com.chesire.nekome.user.api.UserDomain
+import com.chesire.nekome.datasource.user.UserDomain
 
 /**
  * Creates a new [UserDomain].

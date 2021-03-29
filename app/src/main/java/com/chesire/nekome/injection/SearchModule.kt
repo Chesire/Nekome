@@ -1,5 +1,6 @@
 package com.chesire.nekome.injection
 
+import com.chesire.nekome.datasource.search.remote.SearchApi
 import com.chesire.nekome.kitsu.KITSU_URL
 import com.chesire.nekome.kitsu.adapters.ImageModelAdapter
 import com.chesire.nekome.kitsu.adapters.SeriesStatusAdapter
@@ -7,7 +8,6 @@ import com.chesire.nekome.kitsu.adapters.SeriesTypeAdapter
 import com.chesire.nekome.kitsu.adapters.SubtypeAdapter
 import com.chesire.nekome.kitsu.search.KitsuSearch
 import com.chesire.nekome.kitsu.search.KitsuSearchService
-import com.chesire.nekome.search.api.SearchApi
 import com.squareup.moshi.Moshi
 import dagger.Binds
 import dagger.Module

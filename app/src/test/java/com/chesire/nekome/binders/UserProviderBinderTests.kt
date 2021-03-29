@@ -1,8 +1,8 @@
 package com.chesire.nekome.binders
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.chesire.nekome.account.UserRepository
-import com.chesire.nekome.library.UserProvider
+import com.chesire.nekome.datasource.series.UserProvider
+import com.chesire.nekome.datasource.user.UserRepository
 import com.chesire.nekome.testing.CoroutinesMainDispatcherRule
 import io.mockk.coEvery
 import io.mockk.mockk
@@ -15,6 +15,7 @@ import org.junit.Test
 
 @ExperimentalCoroutinesApi
 class UserProviderBinderTests {
+
     @get:Rule
     val taskExecutorRule = InstantTaskExecutorRule()
 

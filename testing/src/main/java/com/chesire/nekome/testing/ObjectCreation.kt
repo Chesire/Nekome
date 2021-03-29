@@ -1,6 +1,5 @@
 package com.chesire.nekome.testing
 
-import com.chesire.nekome.account.UserDomain
 import com.chesire.nekome.core.flags.SeriesStatus
 import com.chesire.nekome.core.flags.SeriesType
 import com.chesire.nekome.core.flags.Service
@@ -9,7 +8,8 @@ import com.chesire.nekome.core.flags.UserSeriesStatus
 import com.chesire.nekome.core.models.ImageModel
 import com.chesire.nekome.database.entity.SeriesEntity
 import com.chesire.nekome.database.entity.UserEntity
-import com.chesire.nekome.library.SeriesDomain
+import com.chesire.nekome.datasource.series.SeriesDomain
+import com.chesire.nekome.datasource.user.UserDomain
 
 /**
  * Creates a new instance of [SeriesDomain] with default data.
@@ -90,8 +90,9 @@ fun createUserDomain(
     userId: Int = 0,
     name: String = "name",
     avatar: ImageModel = ImageModel.empty,
-    coverImage: ImageModel = ImageModel.empty
-) = UserDomain(userId, name, avatar, coverImage)
+    coverImage: ImageModel = ImageModel.empty,
+    service: Service = Service.Kitsu
+) = UserDomain(userId, name, avatar, coverImage, service)
 
 /**
  * Creates a new instance of [UserEntity] with default data.

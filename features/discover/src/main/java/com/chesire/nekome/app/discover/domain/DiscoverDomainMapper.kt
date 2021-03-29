@@ -1,6 +1,6 @@
 package com.chesire.nekome.app.discover.domain
 
-import com.chesire.nekome.trending.api.TrendingDomain
+import com.chesire.nekome.datasource.trending.TrendingDomain
 import javax.inject.Inject
 
 /**

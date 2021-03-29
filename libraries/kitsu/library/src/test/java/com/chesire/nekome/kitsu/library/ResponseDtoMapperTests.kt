@@ -6,14 +6,20 @@ import com.chesire.nekome.kitsu.library.dto.AddResponseDto
 import com.chesire.nekome.kitsu.library.dto.DataDto
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
+import org.junit.Before
 import org.junit.Test
 
 class ResponseDtoMapperTests {
 
-    private val map = ResponseDtoMapper()
+    private lateinit var map: ResponseDtoMapper
+
+    @Before
+    fun setup() {
+        map = ResponseDtoMapper()
+    }
 
     @Test
-    fun `toLibraryDomain with no relationships, returns null`() {
+    fun `toSeriesDomain with no relationships, returns null`() {
         val input = AddResponseDto(
             DataDto(
                 0,
@@ -31,13 +37,13 @@ class ResponseDtoMapperTests {
             )
         )
 
-        val output = map.toLibraryDomain(input)
+        val output = map.toSeriesDomain(input)
 
         assertNull(output)
     }
 
     @Test
-    fun `toLibraryDomain with no matching ids, returns null`() {
+    fun `toSeriesDomain with no matching ids, returns null`() {
         val input = AddResponseDto(
             createDataDto(SeriesType.Anime, 15),
             listOf(
@@ -45,13 +51,13 @@ class ResponseDtoMapperTests {
             )
         )
 
-        val output = map.toLibraryDomain(input)
+        val output = map.toSeriesDomain(input)
 
         assertNull(output)
     }
 
     @Test
-    fun `toLibraryDomain converts AddResponseDto to LibraryDomain`() {
+    fun `toSeriesDomain converts AddResponseDto to LibraryDomain`() {
         val expected = createIncludedDto(
             SeriesType.Anime,
             15,
@@ -77,7 +83,7 @@ class ResponseDtoMapperTests {
             )
         )
 
-        val output = map.toLibraryDomain(input)
+        val output = map.toSeriesDomain(input)
 
         assertEquals(expected.id, output?.id)
         assertEquals(expected.attributes.canonicalTitle, output?.title)

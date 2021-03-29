@@ -5,7 +5,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.SavedStateHandle
 import com.chesire.nekome.core.Resource
 import com.chesire.nekome.core.flags.AsyncState
-import com.chesire.nekome.library.SeriesRepository
+import com.chesire.nekome.datasource.series.SeriesRepository
 import com.chesire.nekome.testing.CoroutinesMainDispatcherRule
 import com.chesire.nekome.testing.createSeriesDomain
 import io.mockk.Runs
@@ -38,7 +38,7 @@ class SeriesDetailViewModelTests {
             coroutineRule.testDispatcher
         )
 
-        assertEquals(expected.canonicalTitle, classUnderTest.mutableModel.seriesName)
+        assertEquals(expected.title, classUnderTest.mutableModel.seriesName)
     }
 
     @Test

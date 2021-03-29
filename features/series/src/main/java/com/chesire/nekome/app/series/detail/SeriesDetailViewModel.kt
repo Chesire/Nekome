@@ -10,8 +10,8 @@ import com.chesire.nekome.core.extensions.postError
 import com.chesire.nekome.core.extensions.postLoading
 import com.chesire.nekome.core.extensions.postSuccess
 import com.chesire.nekome.core.flags.AsyncState
-import com.chesire.nekome.library.SeriesDomain
-import com.chesire.nekome.library.SeriesRepository
+import com.chesire.nekome.datasource.series.SeriesDomain
+import com.chesire.nekome.datasource.series.SeriesRepository
 import com.hadilq.liveevent.LiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch

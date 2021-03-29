@@ -5,9 +5,9 @@ import com.chesire.nekome.app.series.SeriesPreferences
 import com.chesire.nekome.core.Resource
 import com.chesire.nekome.core.flags.SeriesType
 import com.chesire.nekome.core.flags.UserSeriesStatus
-import com.chesire.nekome.helpers.creation.createLibraryDomain
+import com.chesire.nekome.datasource.series.remote.SeriesApi
+import com.chesire.nekome.helpers.creation.createSeriesDomain
 import com.chesire.nekome.injection.LibraryModule
-import com.chesire.nekome.library.api.LibraryApi
 import com.chesire.nekome.robots.series.seriesList
 import com.chesire.nekome.testing.createSeriesEntity
 import dagger.hilt.android.testing.BindValue
@@ -24,7 +24,7 @@ import javax.inject.Inject
 class SeriesListTests : UITest() {
 
     @BindValue
-    val libraryApi = mockk<LibraryApi>()
+    val seriesApi = mockk<SeriesApi>()
 
     @Inject
     lateinit var seriesPreferences: SeriesPreferences
@@ -64,20 +64,20 @@ class SeriesListTests : UITest() {
 
     @Test
     fun refreshingLayoutAddsNewItems() {
-        libraryApi.apply {
+        seriesApi.apply {
             coEvery {
                 retrieveAnime(any())
             } coAnswers {
                 Resource.Success(
                     listOf(
-                        createLibraryDomain(
+                        createSeriesDomain(
                             id = 0,
                             userId = 0,
                             title = "Series 0",
                             seriesType = SeriesType.Anime,
                             userSeriesStatus = UserSeriesStatus.Current
                         ),
-                        createLibraryDomain(
+                        createSeriesDomain(
                             id = 1,
                             userId = 1,
                             title = "Series 1",
@@ -115,7 +115,7 @@ class SeriesListTests : UITest() {
 
     @Test
     fun failureToRefreshSeriesShowsError() {
-        libraryApi.apply {
+        seriesApi.apply {
             coEvery {
                 retrieveAnime(any())
             } coAnswers {
@@ -150,10 +150,10 @@ class SeriesListTests : UITest() {
     @Test
     fun canIncrementSeriesProgress() {
         coEvery {
-            libraryApi.update(0, 1, UserSeriesStatus.Current, 0)
+            seriesApi.update(0, 1, UserSeriesStatus.Current, 0)
         } coAnswers {
             Resource.Success(
-                createLibraryDomain(
+                createSeriesDomain(
                     id = 0,
                     userId = 0,
                     title = "Series 0",
@@ -189,10 +189,10 @@ class SeriesListTests : UITest() {
     @Test
     fun completingSeriesWithoutRateOnCompletionSettingShowsNoDialog() {
         coEvery {
-            libraryApi.update(0, 24, UserSeriesStatus.Current, 0)
+            seriesApi.update(0, 24, UserSeriesStatus.Current, 0)
         } coAnswers {
             Resource.Success(
-                createLibraryDomain(
+                createSeriesDomain(
                     id = 0,
                     userId = 0,
                     title = "Series 0",
@@ -229,10 +229,10 @@ class SeriesListTests : UITest() {
     @Test
     fun completingSeriesWithRateOnCompletionSettingShowsRateDialog() {
         coEvery {
-            libraryApi.update(0, 24, UserSeriesStatus.Current, 0)
+            seriesApi.update(0, 24, UserSeriesStatus.Current, 0)
         } coAnswers {
             Resource.Success(
-                createLibraryDomain(
+                createSeriesDomain(
                     id = 0,
                     userId = 0,
                     title = "Series 0",

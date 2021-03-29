@@ -6,9 +6,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import coil.load
 import coil.transform.CircleCropTransformation
-import com.chesire.nekome.account.User
-import com.chesire.nekome.account.UserDomain
 import com.chesire.nekome.app.profile.databinding.FragmentProfileBinding
+import com.chesire.nekome.datasource.user.User
+import com.chesire.nekome.datasource.user.UserDomain
 import dagger.hilt.android.AndroidEntryPoint
 
 /**
@@ -31,7 +31,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         _binding = FragmentProfileBinding.bind(view)
 
         viewModel.user.observe(viewLifecycleOwner) { userModel ->
-            userModel?.let { user ->
+            userModel.let { user ->
                 if (user is User.Found) {
                     setImagery(user.domain)
                 }

@@ -4,7 +4,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import coil.load
 import coil.transform.CircleCropTransformation
-import com.chesire.nekome.account.UserDomain
+import com.chesire.nekome.datasource.user.UserDomain
 import com.google.android.material.navigation.NavigationView
 import timber.log.Timber
 

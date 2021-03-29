@@ -3,8 +3,8 @@ package com.chesire.nekome
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.chesire.nekome.account.UserRepository
 import com.chesire.nekome.core.IOContext
+import com.chesire.nekome.datasource.user.UserRepository
 import com.chesire.nekome.kitsu.AuthProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch

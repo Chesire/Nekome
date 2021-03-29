@@ -1,21 +1,21 @@
 package com.chesire.nekome.kitsu.library
 
 import com.chesire.nekome.core.models.ImageModel
+import com.chesire.nekome.datasource.series.SeriesDomain
 import com.chesire.nekome.kitsu.library.dto.AddResponseDto
 import com.chesire.nekome.kitsu.library.dto.DataDto
 import com.chesire.nekome.kitsu.library.dto.IncludedDto
-import com.chesire.nekome.library.api.LibraryDomain
 import javax.inject.Inject
 
 /**
- * Provides ability to map instances of [AddResponseDto] into [LibraryDomain].
+ * Provides ability to map instances of [AddResponseDto] into [SeriesDomain].
  */
 class ResponseDtoMapper @Inject constructor() {
 
     /**
-     * Converts an instance of [AddResponseDto] into a [LibraryDomain].
+     * Converts an instance of [AddResponseDto] into a [SeriesDomain].
      */
-    fun toLibraryDomain(input: AddResponseDto): LibraryDomain? {
+    fun toSeriesDomain(input: AddResponseDto): SeriesDomain? {
         val id = input.data.relationships.anime?.data?.id
             ?: input.data.relationships.manga?.data?.id
             ?: return null
@@ -23,12 +23,12 @@ class ResponseDtoMapper @Inject constructor() {
         return input.included
             .find { it.id == id }
             ?.let { included ->
-                createLibraryDomain(included, input.data)
+                createSeriesDomain(included, input.data)
             }
     }
 
-    private fun createLibraryDomain(included: IncludedDto, data: DataDto) =
-        LibraryDomain(
+    private fun createSeriesDomain(included: IncludedDto, data: DataDto) =
+        SeriesDomain(
             included.id,
             data.id,
             included.type,

@@ -4,14 +4,20 @@ import com.chesire.nekome.app.search.domain.SearchDomainMapper
 import com.chesire.nekome.core.flags.SeriesType
 import com.chesire.nekome.core.flags.Subtype
 import com.chesire.nekome.core.models.ImageModel
-import com.chesire.nekome.search.api.SearchDomain
+import com.chesire.nekome.datasource.search.SearchDomain
 import com.chesire.nekome.testing.createImageModel
 import org.junit.Assert.assertEquals
+import org.junit.Before
 import org.junit.Test
 
 class SearchDomainMapperTests {
 
-    private val map = SearchDomainMapper()
+    private lateinit var map: SearchDomainMapper
+
+    @Before
+    fun setup() {
+        map = SearchDomainMapper()
+    }
 
     @Test
     fun `toSeriesModel converts SearchDomain to SeriesModel`() {

@@ -8,9 +8,9 @@ import com.chesire.nekome.core.flags.SeriesType
 import com.chesire.nekome.core.flags.Subtype
 import com.chesire.nekome.core.flags.UserSeriesStatus
 import com.chesire.nekome.core.models.ImageModel
-import com.chesire.nekome.helpers.creation.createLibraryDomain
+import com.chesire.nekome.datasource.series.remote.SeriesApi
+import com.chesire.nekome.helpers.creation.createSeriesDomain
 import com.chesire.nekome.injection.LibraryModule
-import com.chesire.nekome.library.api.LibraryApi
 import com.chesire.nekome.testing.createSeriesEntity
 import com.schibsted.spain.barista.assertion.BaristaListAssertions.assertDisplayedAtPosition
 import com.schibsted.spain.barista.assertion.BaristaListAssertions.assertListNotEmpty
@@ -31,7 +31,7 @@ import org.junit.Test
 class SeriesViewHolderTests : UITest() {
 
     @BindValue
-    val libraryApi = mockk<LibraryApi>()
+    val seriesApi = mockk<SeriesApi>()
 
     @Test
     fun itemDisplaysCorrectly() {
@@ -172,7 +172,7 @@ class SeriesViewHolderTests : UITest() {
             series.insert(createSeriesEntity(progress = 1, totalLength = 3))
         }
         coEvery {
-            libraryApi.update(any(), any(), any(), any())
+            seriesApi.update(any(), any(), any(), any())
         } coAnswers {
             Resource.Error("")
         }
@@ -215,10 +215,10 @@ class SeriesViewHolderTests : UITest() {
             )
         }
         coEvery {
-            libraryApi.update(any(), any(), any(), any())
+            seriesApi.update(any(), any(), any(), any())
         } coAnswers {
             Resource.Success(
-                createLibraryDomain(
+                createSeriesDomain(
                     999,
                     999,
                     SeriesType.Anime,

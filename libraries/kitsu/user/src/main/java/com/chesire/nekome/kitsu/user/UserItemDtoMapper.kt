@@ -2,8 +2,8 @@ package com.chesire.nekome.kitsu.user
 
 import com.chesire.nekome.core.flags.Service
 import com.chesire.nekome.core.models.ImageModel
+import com.chesire.nekome.datasource.user.UserDomain
 import com.chesire.nekome.kitsu.user.dto.UserItemDto
-import com.chesire.nekome.user.api.UserDomain
 import javax.inject.Inject
 
 /**

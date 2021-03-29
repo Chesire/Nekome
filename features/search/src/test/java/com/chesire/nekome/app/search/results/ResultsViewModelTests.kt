@@ -4,7 +4,7 @@ import com.chesire.nekome.core.Resource
 import com.chesire.nekome.core.flags.SeriesType
 import com.chesire.nekome.core.flags.UserSeriesStatus
 import com.chesire.nekome.core.settings.ApplicationSettings
-import com.chesire.nekome.library.SeriesRepository
+import com.chesire.nekome.datasource.series.SeriesRepository
 import com.chesire.nekome.testing.CoroutinesMainDispatcherRule
 import io.mockk.coEvery
 import io.mockk.coVerify

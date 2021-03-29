@@ -1,11 +1,11 @@
 package com.chesire.nekome.kitsu.user
 
 import com.chesire.nekome.core.Resource
+import com.chesire.nekome.datasource.user.UserDomain
+import com.chesire.nekome.datasource.user.remote.UserApi
 import com.chesire.nekome.kitsu.asError
 import com.chesire.nekome.kitsu.parse
 import com.chesire.nekome.kitsu.user.dto.UserResponseDto
-import com.chesire.nekome.user.api.UserApi
-import com.chesire.nekome.user.api.UserDomain
 import retrofit2.Response
 import javax.inject.Inject
 
