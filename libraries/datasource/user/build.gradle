@@ -29,7 +29,7 @@ android {
 }
 
 dependencies {
-    implementation project(':libraries:core')
+    implementation project(":libraries:core")
     implementation project(":libraries:database")
 
     implementation "com.chesire.lintrules:lint-gradle:$lintrules_version"
