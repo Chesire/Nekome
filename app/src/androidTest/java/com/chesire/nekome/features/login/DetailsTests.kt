@@ -5,6 +5,7 @@ import com.chesire.nekome.UITest
 import com.chesire.nekome.core.Resource
 import com.chesire.nekome.core.url.UrlHandler
 import com.chesire.nekome.datasource.auth.remote.AuthApi
+import com.chesire.nekome.datasource.auth.remote.AuthResult
 import com.chesire.nekome.helpers.getResource
 import com.chesire.nekome.injection.AuthModule
 import com.chesire.nekome.injection.UrlModule
@@ -33,7 +34,7 @@ class DetailsTests : UITest() {
     val urlHandler = mockk<UrlHandler>()
 
     @BindValue
-    val userApi = mockk<AuthApi>()
+    val authApi = mockk<AuthApi>()
 
     @Test
     fun emptyUsernameShowsError() {
@@ -64,9 +65,9 @@ class DetailsTests : UITest() {
     @Test
     fun invalidCredentialsShowsError() {
         coEvery {
-            userApi.login("Username", "Password")
+            authApi.login("Username", "Password")
         } coAnswers {
-            Resource.Error("", Resource.Error.InvalidCredentials)
+            AuthResult.InvalidCredentials
         }
 
         launchActivity()
@@ -83,9 +84,9 @@ class DetailsTests : UITest() {
     @Test
     fun failureToLoginShowsError() {
         coEvery {
-            userApi.login("Username", "Password")
+            authApi.login("Username", "Password")
         } coAnswers {
-            Resource.Error("Generic error")
+            AuthResult.BadRequest
         }
 
         launchActivity()

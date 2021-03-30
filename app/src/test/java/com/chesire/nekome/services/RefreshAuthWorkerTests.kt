@@ -3,8 +3,8 @@ package com.chesire.nekome.services
 import android.content.Context
 import androidx.work.ListenableWorker
 import androidx.work.WorkerParameters
-import com.chesire.nekome.core.Resource
-import com.chesire.nekome.datasource.auth.remote.AuthApi
+import com.chesire.nekome.datasource.auth.AccessTokenRepository
+import com.chesire.nekome.datasource.auth.AccessTokenResult
 import com.chesire.nekome.datasource.user.UserRepository
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -46,15 +46,15 @@ class RefreshAuthWorkerTests {
         val mockUserRepo = mockk<UserRepository> {
             coEvery { retrieveUserId() } coAnswers { 1 }
         }
-        val mockAuthApi = mockk<AuthApi> {
-            coEvery { refresh() } coAnswers { Resource.Success(mockk()) }
+        val mockRepository = mockk<AccessTokenRepository> {
+            coEvery { refresh() } returns AccessTokenResult.Success
         }
-        val testObject = RefreshAuthWorker(mockContext, mockParams, mockUserRepo, mockAuthApi)
+        val testObject = RefreshAuthWorker(mockContext, mockParams, mockUserRepo, mockRepository)
 
         val result = testObject.doWork()
 
         assertEquals(ListenableWorker.Result.success(), result)
-        coVerify(exactly = 1) { mockAuthApi.refresh() }
+        coVerify(exactly = 1) { mockRepository.refresh() }
     }
 
     @Test
@@ -68,14 +68,14 @@ class RefreshAuthWorkerTests {
         val mockUserRepo = mockk<UserRepository> {
             coEvery { retrieveUserId() } coAnswers { 1 }
         }
-        val mockAuthApi = mockk<AuthApi> {
-            coEvery { refresh() } coAnswers { Resource.Error("") }
+        val mockRepository = mockk<AccessTokenRepository> {
+            coEvery { refresh() } returns AccessTokenResult.CommunicationError
         }
-        val testObject = RefreshAuthWorker(mockContext, mockParams, mockUserRepo, mockAuthApi)
+        val testObject = RefreshAuthWorker(mockContext, mockParams, mockUserRepo, mockRepository)
 
         val result = testObject.doWork()
 
         assertEquals(ListenableWorker.Result.retry(), result)
-        coVerify(exactly = 1) { mockAuthApi.refresh() }
+        coVerify(exactly = 1) { mockRepository.refresh() }
     }
 }

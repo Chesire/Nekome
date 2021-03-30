@@ -1,6 +1,6 @@
 package com.chesire.nekome.datasource.auth.remote
 
-import com.chesire.nekome.datasource.auth.local.AuthProvider
+import com.chesire.nekome.datasource.auth.AccessTokenRepository
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.slot
@@ -14,7 +14,7 @@ class AuthInjectionInterceptorTests {
     fun `authorization header gets added correctly`() {
         val token = "AccessTokenPass"
         val expected = "Bearer $token"
-        val mockProvider = mockk<AuthProvider> {
+        val mockRepo = mockk<AccessTokenRepository> {
             every { accessToken } returns token
         }
         val headerCapture = slot<String>()
@@ -26,7 +26,7 @@ class AuthInjectionInterceptorTests {
             }
             every { proceed(any()) } returns mockk()
         }
-        val testObject = AuthInjectionInterceptor(mockProvider)
+        val testObject = AuthInjectionInterceptor(mockRepo)
 
         testObject.intercept(mockChain)
 
