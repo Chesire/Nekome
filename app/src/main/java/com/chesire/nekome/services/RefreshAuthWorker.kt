@@ -4,8 +4,8 @@ import android.content.Context
 import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
-import com.chesire.nekome.core.Resource
-import com.chesire.nekome.datasource.auth.remote.AuthApi
+import com.chesire.nekome.datasource.auth.AccessTokenRepository
+import com.chesire.nekome.datasource.auth.AccessTokenResult
 import com.chesire.nekome.datasource.user.UserRepository
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
@@ -22,7 +22,7 @@ class RefreshAuthWorker @AssistedInject constructor(
     @Assisted appContext: Context,
     @Assisted workerParams: WorkerParameters,
     private val userRepo: UserRepository,
-    private val auth: AuthApi
+    private val auth: AccessTokenRepository
 ) : CoroutineWorker(appContext, workerParams) {
 
     override suspend fun doWork(): Result {
@@ -34,7 +34,7 @@ class RefreshAuthWorker @AssistedInject constructor(
         }
 
         Timber.i("doWork userId found, beginning to refresh")
-        return if (auth.refresh() is Resource.Error) {
+        return if (auth.refresh() !is AccessTokenResult.Success) {
             Result.retry()
         } else {
             Result.success()
