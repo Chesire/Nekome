@@ -247,7 +247,7 @@ class KitsuAuthTests {
         val mockService = mockk<KitsuAuthService> {
             coEvery {
                 refreshAccessTokenAsync(RefreshTokenRequestDto(REFRESH_TOKEN_INPUT))
-            } throws java.lang.IllegalArgumentException()
+            } throws IllegalArgumentException()
         }
         val classUnderTest = KitsuAuth(mockService)
 
