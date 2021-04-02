@@ -13,6 +13,7 @@ import okhttp3.ResponseBody
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import retrofit2.Response
+import java.net.HttpURLConnection
 import java.net.UnknownHostException
 
 private const val USERNAME_INPUT = "username"
@@ -42,6 +43,29 @@ class KitsuAuthTests {
 
         assertEquals(AuthResult.BadRequest, actual)
     }
+
+    @Test
+    fun `login failure response for InvalidCredentials returns AuthResult#InvalidCredentials`() =
+        runBlocking {
+            val mockResponseBody = mockk<ResponseBody> {
+                every { string() } returns "errorBodyString"
+            }
+            val mockResponse = mockk<Response<AuthResponseDto>> {
+                every { isSuccessful } returns false
+                every { errorBody() } returns mockResponseBody
+                every { code() } returns HttpURLConnection.HTTP_UNAUTHORIZED
+            }
+            val mockService = mockk<KitsuAuthService> {
+                coEvery {
+                    loginAsync(LoginRequestDto(USERNAME_INPUT, PASSWORD_INPUT))
+                } returns mockResponse
+            }
+            val classUnderTest = KitsuAuth(mockService)
+
+            val actual = classUnderTest.login(USERNAME_INPUT, PASSWORD_INPUT)
+
+            assertEquals(AuthResult.InvalidCredentials, actual)
+        }
 
     @Test
     fun `login successful response with no body returns AuthResult#BadRequest`() = runBlocking {
