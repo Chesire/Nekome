@@ -30,11 +30,19 @@ class AccessTokenRepositoryTest {
     @Before
     fun setup() {
         authProvider = mockk(relaxed = true) {
+            every { accessToken } returns ACCESS_TOKEN
             every { refreshToken } returns REFRESH_TOKEN_INPUT
         }
         authApi = mockk()
 
         accessTokenRepository = AccessTokenRepository(authProvider, authApi)
+    }
+
+    @Test
+    fun `accessToken returns from the provider`() {
+        val actual = accessTokenRepository.accessToken
+
+        assertEquals(ACCESS_TOKEN, actual)
     }
 
     @Test
