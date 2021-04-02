@@ -15,7 +15,7 @@ import javax.inject.Inject
  *
  * There is an official way to do this using OkHttp or Retrofit, but unfortunately it has to be done
  * this way in an interceptor as some apis return a 403, and the official way only works if your api
- * returns a 403.
+ * returns a 401.
  *
  * If we still cannot refresh the token after attempting here, notify the [AuthCaster] so it can
  * tell any listeners of the failure.
