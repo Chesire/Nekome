@@ -55,19 +55,18 @@ jobs:
     - uses: actions/setup-ruby@v1.1.3
       with:
         ruby-version: '2.6'
-    - name: install bundler 2.1.4
-      run: gem install bundler:2.1.4
     - uses: actions/cache@v2.1.4
       with:
         path: vendor/bundle
-        key: ${{ runner.os }}-gems-${{ hashFiles('Gemfile') }}
+        key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
         restore-keys: |
           ${{ runner.os }}-gems-
-    - uses: MeilCli/danger-action@v5.1.1
-      with:
-        plugins_file: 'Gemfile'
-        install_path: 'vendor/bundle'
-        danger_file: 'Dangerfile'
-        danger_id: 'danger-ci'
+    - name: bundle install
+      run: |
+        gem install bundler
+        bundle config path vendor/bundle
+        bundle install --without=documentation --jobs 4 --retry 3
+    - name: danger
+      run: bundle exec danger
       env:
         DANGER_GITHUB_API_TOKEN: ${{ secrets.DANGER_GITHUB_API_TOKEN }}
