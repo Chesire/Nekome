@@ -3,6 +3,7 @@ package com.chesire.nekome.features.login
 import com.chesire.nekome.UITest
 import com.chesire.nekome.core.Resource
 import com.chesire.nekome.datasource.auth.remote.AuthApi
+import com.chesire.nekome.datasource.auth.remote.AuthResult
 import com.chesire.nekome.datasource.series.remote.SeriesApi
 import com.chesire.nekome.datasource.user.remote.UserApi
 import com.chesire.nekome.helpers.creation.createSeriesDomain
@@ -35,7 +36,7 @@ class LoginFlowTests : UITest() {
         coEvery {
             login("Username", "Password")
         } coAnswers {
-            Resource.Success(Any())
+            AuthResult.Success("accessToken", "refreshToken")
         }
     }
 

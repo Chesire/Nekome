@@ -1,4 +1,4 @@
-package com.chesire.nekome.kitsu
+package com.chesire.nekome.datasource.auth.local
 
 import android.content.SharedPreferences
 import androidx.core.content.edit

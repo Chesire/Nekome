@@ -11,6 +11,7 @@ import retrofit2.Response
 import java.net.UnknownHostException
 
 class ResponseParsingTests {
+
     @Test
     fun `Response#parse !isSuccessful false returns Resource#Error`() {
         val response = Response.error<Any>(

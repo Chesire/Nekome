@@ -3,7 +3,8 @@ package com.chesire.nekome.app.login.details
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.chesire.nekome.core.Resource
-import com.chesire.nekome.datasource.auth.remote.AuthApi
+import com.chesire.nekome.datasource.auth.AccessTokenRepository
+import com.chesire.nekome.datasource.auth.AccessTokenResult
 import com.chesire.nekome.datasource.user.UserRepository
 import com.chesire.nekome.testing.CoroutinesMainDispatcherRule
 import io.mockk.Runs
@@ -28,13 +29,13 @@ class DetailsViewModelTests {
 
     @Test
     fun `empty username produces LoginStatus#EmptyUsername`() {
-        val mockAuth = mockk<AuthApi>()
+        val mockAccessTokenRepo = mockk<AccessTokenRepository>()
         val mockRepo = mockk<UserRepository>()
         val mockObserver = mockk<Observer<LoginStatus>> {
             every { onChanged(any()) } just Runs
         }
 
-        DetailsViewModel(mockAuth, mockRepo)
+        DetailsViewModel(mockAccessTokenRepo, mockRepo)
             .run {
                 loginStatus.observeForever(mockObserver)
                 login("", "password")
@@ -45,13 +46,13 @@ class DetailsViewModelTests {
 
     @Test
     fun `empty password produces LoginStatus#EmptyPassword`() {
-        val mockAuth = mockk<AuthApi>()
+        val mockAccessTokenRepo = mockk<AccessTokenRepository>()
         val mockRepo = mockk<UserRepository>()
         val mockObserver = mockk<Observer<LoginStatus>> {
             every { onChanged(any()) } just Runs
         }
 
-        DetailsViewModel(mockAuth, mockRepo)
+        DetailsViewModel(mockAccessTokenRepo, mockRepo)
             .run {
                 loginStatus.observeForever(mockObserver)
                 login("username", "")
@@ -62,17 +63,15 @@ class DetailsViewModelTests {
 
     @Test
     fun `login failure 401 produces LoginStatus#InvalidCredentials`() {
-        val mockAuth = mockk<AuthApi> {
-            coEvery { login(any(), any()) } coAnswers {
-                Resource.Error("", 401)
-            }
+        val mockAccessTokenRepo = mockk<AccessTokenRepository> {
+            coEvery { login(any(), any()) } returns AccessTokenResult.InvalidCredentials
         }
         val mockRepo = mockk<UserRepository>()
         val mockObserver = mockk<Observer<LoginStatus>> {
             every { onChanged(any()) } just Runs
         }
 
-        DetailsViewModel(mockAuth, mockRepo)
+        DetailsViewModel(mockAccessTokenRepo, mockRepo)
             .run {
                 loginStatus.observeForever(mockObserver)
                 login("username", "password")
@@ -83,17 +82,15 @@ class DetailsViewModelTests {
 
     @Test
     fun `login failure produces LoginStatus#Error`() {
-        val mockAuth = mockk<AuthApi> {
-            coEvery { login(any(), any()) } coAnswers {
-                Resource.Error("", 0)
-            }
+        val mockAccessTokenRepo = mockk<AccessTokenRepository> {
+            coEvery { login(any(), any()) } returns AccessTokenResult.CommunicationError
         }
         val mockRepo = mockk<UserRepository>()
         val mockObserver = mockk<Observer<LoginStatus>> {
             every { onChanged(any()) } just Runs
         }
 
-        DetailsViewModel(mockAuth, mockRepo)
+        DetailsViewModel(mockAccessTokenRepo, mockRepo)
             .run {
                 loginStatus.observeForever(mockObserver)
                 login("username", "password")
@@ -104,13 +101,9 @@ class DetailsViewModelTests {
 
     @Test
     fun `login success begins to getUser`() {
-        val mockAuth = mockk<AuthApi> {
-            coEvery {
-                login(any(), any())
-            } coAnswers {
-                Resource.Success(Any())
-            }
-            coEvery { clearAuth() } just Runs
+        val mockAccessTokenRepo = mockk<AccessTokenRepository> {
+            coEvery { login(any(), any()) } returns AccessTokenResult.Success
+            coEvery { clear() } just Runs
         }
         val mockRepo = mockk<UserRepository> {
             coEvery {
@@ -120,7 +113,7 @@ class DetailsViewModelTests {
             }
         }
 
-        DetailsViewModel(mockAuth, mockRepo)
+        DetailsViewModel(mockAccessTokenRepo, mockRepo)
             .run {
                 login("username", "password")
             }
@@ -130,12 +123,8 @@ class DetailsViewModelTests {
 
     @Test
     fun `getUser success produces LoginStatus#Success`() {
-        val mockAuth = mockk<AuthApi> {
-            coEvery {
-                login(any(), any())
-            } coAnswers {
-                Resource.Success(Any())
-            }
+        val mockAccessTokenRepo = mockk<AccessTokenRepository> {
+            coEvery { login(any(), any()) } returns AccessTokenResult.Success
         }
         val mockRepo = mockk<UserRepository> {
             coEvery { refreshUser() } coAnswers { Resource.Success(Unit) }
@@ -144,7 +133,7 @@ class DetailsViewModelTests {
             every { onChanged(any()) } just Runs
         }
 
-        DetailsViewModel(mockAuth, mockRepo)
+        DetailsViewModel(mockAccessTokenRepo, mockRepo)
             .run {
                 loginStatus.observeForever(mockObserver)
                 login("username", "password")
@@ -155,13 +144,9 @@ class DetailsViewModelTests {
 
     @Test
     fun `getUser failure clears stored auth`() {
-        val mockAuth = mockk<AuthApi> {
-            coEvery {
-                login(any(), any())
-            } coAnswers {
-                Resource.Success(Any())
-            }
-            coEvery { clearAuth() } coAnswers { }
+        val mockAccessTokenRepo = mockk<AccessTokenRepository> {
+            coEvery { login(any(), any()) } returns AccessTokenResult.Success
+            coEvery { clear() } just Runs
         }
         val mockRepo = mockk<UserRepository> {
             coEvery { refreshUser() } coAnswers { Resource.Error("") }
@@ -170,24 +155,20 @@ class DetailsViewModelTests {
             every { onChanged(any()) } just Runs
         }
 
-        DetailsViewModel(mockAuth, mockRepo)
+        DetailsViewModel(mockAccessTokenRepo, mockRepo)
             .run {
                 loginStatus.observeForever(mockObserver)
                 login("username", "password")
             }
 
-        coVerify { mockAuth.clearAuth() }
+        coVerify { mockAccessTokenRepo.clear() }
     }
 
     @Test
     fun `getUser failure produces LoginStatus#Error`() {
-        val mockAuth = mockk<AuthApi> {
-            coEvery {
-                login(any(), any())
-            } coAnswers {
-                Resource.Success(Any())
-            }
-            coEvery { clearAuth() } coAnswers { }
+        val mockAccessTokenRepo = mockk<AccessTokenRepository> {
+            coEvery { login(any(), any()) } returns AccessTokenResult.Success
+            coEvery { clear() } just Runs
         }
         val mockRepo = mockk<UserRepository> {
             coEvery { refreshUser() } coAnswers { Resource.Error("") }
@@ -196,7 +177,7 @@ class DetailsViewModelTests {
             every { onChanged(any()) } just Runs
         }
 
-        DetailsViewModel(mockAuth, mockRepo)
+        DetailsViewModel(mockAccessTokenRepo, mockRepo)
             .run {
                 loginStatus.observeForever(mockObserver)
                 login("username", "password")

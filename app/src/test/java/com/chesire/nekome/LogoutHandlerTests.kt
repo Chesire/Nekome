@@ -1,7 +1,7 @@
 package com.chesire.nekome
 
 import com.chesire.nekome.database.RoomDB
-import com.chesire.nekome.kitsu.AuthProvider
+import com.chesire.nekome.datasource.auth.AccessTokenRepository
 import io.mockk.Runs
 import io.mockk.every
 import io.mockk.just
@@ -13,14 +13,14 @@ class LogoutHandlerTests {
 
     @Test
     fun `executeLogout clears db`() {
-        val mockAuthProvider = mockk<AuthProvider> {
-            every { clearAuth() } just Runs
+        val mockAccessTokenRepository = mockk<AccessTokenRepository> {
+            every { clear() } just Runs
         }
         val mockDb = mockk<RoomDB> {
             every { clearAllTables() } just Runs
         }
 
-        LogoutHandler(mockAuthProvider, mockDb).run {
+        LogoutHandler(mockAccessTokenRepository, mockDb).run {
             executeLogout()
         }
 
@@ -29,17 +29,17 @@ class LogoutHandlerTests {
 
     @Test
     fun `executeLogout clears authProvider`() {
-        val mockAuthProvider = mockk<AuthProvider> {
-            every { clearAuth() } just Runs
+        val mockAccessTokenRepository = mockk<AccessTokenRepository> {
+            every { clear() } just Runs
         }
         val mockDb = mockk<RoomDB> {
             every { clearAllTables() } just Runs
         }
 
-        LogoutHandler(mockAuthProvider, mockDb).run {
+        LogoutHandler(mockAccessTokenRepository, mockDb).run {
             executeLogout()
         }
 
-        verifyAll { mockAuthProvider.clearAuth() }
+        verifyAll { mockAccessTokenRepository.clear() }
     }
 }

@@ -4,8 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.chesire.nekome.core.IOContext
+import com.chesire.nekome.datasource.auth.AccessTokenRepository
 import com.chesire.nekome.datasource.user.UserRepository
-import com.chesire.nekome.kitsu.AuthProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -18,7 +18,7 @@ import kotlin.coroutines.CoroutineContext
  */
 @HiltViewModel
 class ActivityViewModel @Inject constructor(
-    private val authProvider: AuthProvider,
+    private val repo: AccessTokenRepository,
     private val logoutHandler: LogoutHandler,
     @IOContext private val ioContext: CoroutineContext,
     userRepository: UserRepository
@@ -33,7 +33,7 @@ class ActivityViewModel @Inject constructor(
      * Checks if the user is currently logged in.
      */
     val userLoggedIn: Boolean
-        get() = authProvider.accessToken.isNotEmpty()
+        get() = repo.accessToken.isNotEmpty()
 
     /**
      * Logs the user out and returns the user back to entering the login details. [callback] is

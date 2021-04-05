@@ -1,7 +1,7 @@
 package com.chesire.nekome
 
 import com.chesire.nekome.database.RoomDB
-import com.chesire.nekome.kitsu.AuthProvider
+import com.chesire.nekome.datasource.auth.AccessTokenRepository
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -9,7 +9,7 @@ import javax.inject.Inject
  * Handles clearing out resources for when a log out occurs.
  */
 class LogoutHandler @Inject constructor(
-    private val authProvider: AuthProvider,
+    private val repo: AccessTokenRepository,
     private val db: RoomDB
 ) {
 
@@ -21,6 +21,6 @@ class LogoutHandler @Inject constructor(
         Timber.d("Clearing database tables")
         db.clearAllTables()
         Timber.d("Clearing auth")
-        authProvider.clearAuth()
+        repo.clear()
     }
 }
