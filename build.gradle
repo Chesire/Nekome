@@ -1,5 +1,5 @@
 buildscript {
-    ext.hilt_version = "2.34-beta"
+    ext.hilt_version = "2.34.1-beta"
     ext.jacoco_version = "0.8.6"
     ext.kotlin_version = "1.4.21"
     ext.nav_version = "2.3.5"
