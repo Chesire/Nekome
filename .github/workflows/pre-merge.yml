@@ -54,8 +54,8 @@ jobs:
         java-version: 8
     - name: run lintDebug
       run: ./gradlew lintDebug
-    - name: run detekt
-      run: ./gradlew detekt
+    - name: run detektCheck
+      run: ./gradlew detektCheck
     - uses: actions/setup-ruby@v1.1.3
       with:
         ruby-version: '2.6'
