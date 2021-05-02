@@ -50,6 +50,17 @@ task clean(type: Delete) {
     delete rootProject.buildDir
 }
 
+task detektCheck(type: io.gitlab.arturbosch.detekt.Detekt) {
+    parallel = true
+    source = files(projectDir)
+    include "**/*.kt"
+    include "**/*.kts"
+    exclude "**/resources/**"
+    exclude "**/build/**"
+    config.setFrom(files("$rootDir/detekt.yml"))
+    buildUponDefaultConfig = false
+}
+
 ext {
     sdk_version = 30
 
@@ -78,5 +89,3 @@ ext {
     junit_version = "4.13.2"
     mockk_version = "1.11.0"
 }
-
-apply from: "detekt.gradle"
