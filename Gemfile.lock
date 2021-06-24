@@ -49,7 +49,7 @@ GEM
       no_proxy_fix
       octokit (~> 4.7)
       terminal-table (>= 1, < 4)
-    danger-android_lint (0.0.8)
+    danger-android_lint (0.0.9)
       danger-plugin-api (~> 1.0)
       oga
     danger-checkstyle_format (0.1.1)
@@ -186,7 +186,7 @@ GEM
     nap (1.1.0)
     naturally (2.2.1)
     no_proxy_fix (0.1.2)
-    octokit (4.20.0)
+    octokit (4.21.0)
       faraday (>= 0.9)
       sawyer (~> 0.8.0, >= 0.5.3)
     oga (3.3)
