@@ -1,0 +1,27 @@
+/**
+ * Retrieve the value required for the version name.
+ * Value will be pulled from the current git tag.
+ */
+ext.retrieveVersionName = {
+    def stdout = new ByteArrayOutputStream()
+    exec {
+        commandLine 'git', 'describe', '--tags', '--always'
+        standardOutput = stdout
+    }
+
+    def fullTag = stdout.toString().trim()
+    def result = fullTag.contains('-') ? fullTag.substring(0, fullTag.indexOf('-')) : fullTag
+    println("Current tag : $fullTag")
+    println("Version name: $result")
+    return result
+}
+
+/**
+ * Retrieve the value required for the version code.
+ * Value will be pulled from the current date.
+ */
+ext.retrieveVersionCode = {
+    def formattedDate = new Date().format('yyMMddHH').toInteger()
+    println("Version code: $formattedDate")
+    return formattedDate
+}

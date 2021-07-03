@@ -5,6 +5,7 @@ plugins {
     id "dagger.hilt.android.plugin"
     id "androidx.navigation.safeargs.kotlin"
 }
+apply from: "./ext.gradle"
 
 android {
     compileSdkVersion sdk_version
@@ -13,8 +14,8 @@ android {
         applicationId "com.chesire.nekome"
         minSdkVersion 21
         targetSdkVersion sdk_version
-        versionCode 1
-        versionName "0"
+        versionCode retrieveVersionCode()
+        versionName "${retrieveVersionName()}"
         testInstrumentationRunner "com.chesire.nekome.TestRunner"
         resConfigs "en"
     }
