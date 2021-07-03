@@ -49,7 +49,7 @@ dependencies {
     testImplementation "junit:junit:$junit_version"
 
     androidTestImplementation "androidx.test.espresso:espresso-core:3.4.0"
-    androidTestImplementation "androidx.test.ext:junit:1.1.2"
+    androidTestImplementation "androidx.test.ext:junit:1.1.3"
 
     kapt "com.google.dagger:hilt-compiler:$hilt_version"
 }
