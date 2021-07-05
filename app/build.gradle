@@ -14,8 +14,8 @@ android {
         applicationId "com.chesire.nekome"
         minSdkVersion 21
         targetSdkVersion sdk_version
-        versionCode retrieveVersionCode()
-        versionName "${retrieveVersionName()}"
+        versionCode 21070417 // Date of build formatted as 'yyMMddHH'
+        versionName "1.4.1"
         testInstrumentationRunner "com.chesire.nekome.TestRunner"
         resConfigs "en"
     }
