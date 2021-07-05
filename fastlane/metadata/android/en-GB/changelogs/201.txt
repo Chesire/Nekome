@@ -1,0 +1,3 @@
+* Add a link to the open source repo on GitHub from the settings.
+* Update the results screen to show a bit more information about each series.
+* Update the login and syncing screens UI.
