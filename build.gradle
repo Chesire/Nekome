@@ -82,7 +82,7 @@ ext {
     retrofit_version = "2.9.0"
     room_version = "2.3.0"
     timber_version = "4.7.1"
-    viewmodel_version = "2.2.0"
+    viewmodel_version = "2.3.1"
 
     // Tests
     coretesting_version = "2.1.0"
