@@ -33,7 +33,7 @@ android {
 dependencies {
     implementation "androidx.appcompat:appcompat:$appcompat_version"
     implementation "androidx.browser:browser:1.3.0"
-    implementation "androidx.core:core-ktx:$corektx_version"
+    implementation "androidx.core:core-ktx:$core_version"
     implementation "androidx.room:room-runtime:$room_version"
     implementation "com.afollestad.material-dialogs:core:$materialdialog_version"
     implementation "com.afollestad.material-dialogs:input:$materialdialog_version"
