@@ -34,7 +34,7 @@ dependencies {
     implementation project(':libraries:datasource:auth')
     implementation project(':libraries:kitsu')
 
-    implementation "androidx.core:core-ktx:$corektx_version"
+    implementation "androidx.core:core-ktx:$core_version"
     implementation "com.chesire.lintrules:lint-gradle:$lintrules_version"
     implementation "com.chesire.lintrules:lint-xml:$lintrules_version"
     implementation "com.google.dagger:hilt-android:$hilt_version"

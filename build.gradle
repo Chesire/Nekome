@@ -66,13 +66,13 @@ ext {
     // App
     appcompat_version = "1.3.0"
     coil_version = "1.3.0"
-    constraint_layout_version = "2.0.4"
-    corektx_version = "1.6.0-rc01"
+    constraintlayout_version = "2.0.4"
+    core_version = "1.6.0"
     coroutines_version = "1.5.1"
-    dagger_version = "2.29.1"
-    fragmentctx_version = "1.3.5"
+    fragment_version = "1.3.5"
     hiltx_version = "1.0.0"
     lifecycle_version = "2.2.0"
+    livedata_version = "2.2.0"
     lintrules_version = "1.2.6"
     liveevent_version = "1.3.0"
     material_version = "1.4.0"
@@ -82,6 +82,7 @@ ext {
     retrofit_version = "2.9.0"
     room_version = "2.3.0"
     timber_version = "4.7.1"
+    viewmodel_version = "2.2.0"
 
     // Tests
     coretesting_version = "2.1.0"
