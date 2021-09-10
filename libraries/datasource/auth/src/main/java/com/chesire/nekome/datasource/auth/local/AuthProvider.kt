@@ -1,10 +1,12 @@
 package com.chesire.nekome.datasource.auth.local
 
 import javax.inject.Inject
+import javax.inject.Singleton
 
 /**
  * Provides authorization for Kitsu access.
  */
+@Singleton // TODO: Keep as a singleton while we need to do the migration
 class AuthProvider @Inject constructor(
     private val v1Auth: LocalAuthV1,
     private val v2Auth: LocalAuthV2
@@ -26,7 +28,10 @@ class AuthProvider @Inject constructor(
             v2Auth.refreshToken = value
         }
 
-    fun clearAuth() = v2Auth.clear()
+    fun clearAuth() {
+        v1Auth.clear()
+        v2Auth.clear()
+    }
 
     private fun migrateFromV1ToV2() {
         if (!v1Auth.hasCredentials) {
