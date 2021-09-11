@@ -36,6 +36,11 @@ android {
     buildFeatures {
         viewBinding true
     }
+    lintOptions {
+        abortOnError false
+        checkAllWarnings true
+        checkDependencies true
+    }
     testOptions {
         animationsDisabled true
     }
