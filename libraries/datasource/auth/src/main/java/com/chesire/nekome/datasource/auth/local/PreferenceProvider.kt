@@ -3,7 +3,6 @@ package com.chesire.nekome.datasource.auth.local
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Build
-import androidx.core.content.edit
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKeys
 import com.chesire.nekome.core.extensions.migrateTo
