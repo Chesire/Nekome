@@ -1,3 +1,5 @@
+import io.gitlab.arturbosch.detekt.Detekt
+
 buildscript {
     ext.hilt_version = "2.38.1"
     ext.jacoco_version = "0.8.7"
@@ -32,24 +34,13 @@ allprojects {
 subprojects {
     apply plugin: "org.jlleitschuh.gradle.ktlint"
     apply from: "${project.rootDir}/jacoco.gradle"
-
-    afterEvaluate {
-        if (getPlugins().hasPlugin('android') ||
-            getPlugins().hasPlugin('android-library')
-        ) {
-            configure(android.lintOptions) {
-                abortOnError false
-                checkAllWarnings true
-            }
-        }
-    }
 }
 
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
 
-task detektCheck(type: io.gitlab.arturbosch.detekt.Detekt) {
+task detektCheck(type: Detekt) {
     parallel = true
     source = files(projectDir)
     include "**/*.kt"

@@ -5,15 +5,14 @@ plugins {
     id "dagger.hilt.android.plugin"
     id "androidx.navigation.safeargs.kotlin"
 }
-apply from: "./ext.gradle"
 
 android {
-    compileSdkVersion sdk_version
+    compileSdk sdk_version
 
     defaultConfig {
         applicationId "com.chesire.nekome"
-        minSdkVersion 21
-        targetSdkVersion sdk_version
+        minSdk 21
+        targetSdk sdk_version
         versionCode 21091120 // Date of build formatted as 'yyMMddHH'
         versionName "1.5.0"
         testInstrumentationRunner "com.chesire.nekome.TestRunner"
@@ -37,15 +36,13 @@ android {
     buildFeatures {
         viewBinding true
     }
+    lintOptions {
+        abortOnError false
+        checkAllWarnings true
+        checkDependencies true
+    }
     testOptions {
         animationsDisabled true
-    }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-    kotlinOptions {
-        jvmTarget = "1.8"
     }
     packagingOptions {
         exclude "META-INF/AL2.0"

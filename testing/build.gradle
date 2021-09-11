@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    compileSdkVersion sdk_version
+    compileSdk sdk_version
 
     defaultConfig {
-        minSdkVersion 21
-        targetSdkVersion sdk_version
+        minSdk 21
+        targetSdk sdk_version
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -18,10 +18,6 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
         }
-    }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
     }
     packagingOptions {
         exclude "META-INF/AL2.0"

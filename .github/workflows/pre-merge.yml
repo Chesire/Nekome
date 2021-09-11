@@ -52,8 +52,8 @@ jobs:
       with:
         distribution: 'adopt'
         java-version: 11
-    - name: run lintDebug
-      run: ./gradlew lintDebug
+    - name: run lint
+      run: ./gradlew :app:lint
     - name: run detektCheck
       run: ./gradlew detektCheck
     - uses: actions/setup-ruby@v1.1.3

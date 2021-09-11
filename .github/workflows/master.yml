@@ -42,7 +42,7 @@ jobs:
         distribution: 'adopt'
         java-version: 11
     - name: run lintDebug
-      run: ./gradlew app:lintDebug
+      run: ./gradlew :app:lint
     - name: run detektCheck
       run: ./gradlew detektCheck
     - name: upload linting results
