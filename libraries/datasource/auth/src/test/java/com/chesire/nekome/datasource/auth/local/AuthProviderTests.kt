@@ -1,158 +1,131 @@
 package com.chesire.nekome.datasource.auth.local
 
-import android.content.SharedPreferences
-import com.chesire.nekome.encryption.Cryption
-import io.mockk.CapturingSlot
-import io.mockk.Runs
 import io.mockk.every
 import io.mockk.just
 import io.mockk.mockk
+import io.mockk.runs
 import io.mockk.verify
-import org.junit.Assert.assertEquals
+import org.junit.Before
 import org.junit.Test
 
-private const val KITSU_ACCESS_TOKEN_KEY = "KEY_KITSU_ACCESS_TOKEN"
-private const val KITSU_REFRESH_TOKEN_KEY = "KEY_KITSU_REFRESH_TOKEN"
+private const val ACCESS_TOKEN = "access_token"
+private const val REFRESH_TOKEN = "refresh_token"
 
 class AuthProviderTests {
 
-    @Test
-    fun `accessToken#get returns the decrypted token`() {
-        val expected = "accessToken"
-        val mockPreferences = mockk<SharedPreferences> {
-            every { getString(KITSU_ACCESS_TOKEN_KEY, "") } returns "token"
-        }
-        val mockCryption = mockk<Cryption> {
-            every { decrypt("token", any()) } returns expected
-        }
+    private lateinit var v1Auth: LocalAuthV1
+    private lateinit var v2Auth: LocalAuthV2
 
-        val classUnderTest = AuthProvider(mockPreferences, mockCryption)
+    private lateinit var authProvider: AuthProvider
 
-        assertEquals(expected, classUnderTest.accessToken)
+    @Before
+    fun setup() {
+        v1Auth = mockk {
+            every { hasCredentials } returns false
+        }
+        v2Auth = mockk()
+        authProvider = AuthProvider(v1Auth, v2Auth)
     }
 
     @Test
-    fun `accessToken#get with empty token returns empty String`() {
-        val expected = ""
-        val mockPreferences = mockk<SharedPreferences> {
-            every { getString(KITSU_ACCESS_TOKEN_KEY, "") } returns ""
+    fun `migration doesn't occur if no v1 credentials`() {
+        v1Auth = mockk {
+            every { hasCredentials } returns false
         }
-        val mockCryption = mockk<Cryption> {
-            every { decrypt("", any()) } returns expected
-        }
+        v2Auth = mockk()
+        authProvider = AuthProvider(v1Auth, v2Auth)
 
-        val classUnderTest = AuthProvider(mockPreferences, mockCryption)
-
-        assertEquals(expected, classUnderTest.accessToken)
+        verify(exactly = 0) { v1Auth.accessToken }
     }
 
     @Test
-    fun `accessToken#set saves new encrypted accessToken`() {
-        val slot = CapturingSlot<String>()
-        val expected = "encryptedToken"
-        val mockEditor = mockk<SharedPreferences.Editor> {
-            every { putString(KITSU_ACCESS_TOKEN_KEY, capture(slot)) } returns this
-            every { apply() } just Runs
+    fun `migration copies over access token to v2`() {
+        v1Auth = mockk {
+            every { hasCredentials } returns true
+            every { accessToken } returns ACCESS_TOKEN
+            every { refreshToken } returns REFRESH_TOKEN
+            every { clear() } just runs
         }
-        val mockPreferences = mockk<SharedPreferences> {
-            every { edit() } returns mockEditor
-        }
-        val mockCryption = mockk<Cryption> {
-            every { encrypt("newToken", any()) } returns expected
-        }
+        v2Auth = mockk(relaxed = true)
+        authProvider = AuthProvider(v1Auth, v2Auth)
 
-        val classUnderTest = AuthProvider(mockPreferences, mockCryption)
-        classUnderTest.accessToken = "newToken"
-
-        verify { mockEditor.putString(KITSU_ACCESS_TOKEN_KEY, expected) }
-        assertEquals(expected, slot.captured)
+        verify { v2Auth.accessToken = ACCESS_TOKEN }
     }
 
     @Test
-    fun `refreshToken#get returns the decrypted token`() {
-        val expected = "refreshToken"
-        val mockPreferences = mockk<SharedPreferences> {
-            every { getString(KITSU_REFRESH_TOKEN_KEY, "") } returns "token"
+    fun `migration copies over refresh token to v2`() {
+        v1Auth = mockk {
+            every { hasCredentials } returns true
+            every { accessToken } returns ACCESS_TOKEN
+            every { refreshToken } returns REFRESH_TOKEN
+            every { clear() } just runs
         }
-        val mockCryption = mockk<Cryption> {
-            every { decrypt("token", any()) } returns expected
-        }
+        v2Auth = mockk(relaxed = true)
+        authProvider = AuthProvider(v1Auth, v2Auth)
 
-        val classUnderTest = AuthProvider(mockPreferences, mockCryption)
-
-        assertEquals(expected, classUnderTest.refreshToken)
+        verify { v2Auth.refreshToken = REFRESH_TOKEN }
     }
 
     @Test
-    fun `refreshToken#get with empty token returns empty String`() {
-        val expected = ""
-        val mockPreferences = mockk<SharedPreferences> {
-            every { getString(KITSU_REFRESH_TOKEN_KEY, "") } returns ""
+    fun `migration clears v1 after migration`() {
+        v1Auth = mockk {
+            every { hasCredentials } returns true
+            every { accessToken } returns ACCESS_TOKEN
+            every { refreshToken } returns REFRESH_TOKEN
+            every { clear() } just runs
         }
-        val mockCryption = mockk<Cryption> {
-            every { decrypt("", any()) } returns expected
-        }
+        v2Auth = mockk(relaxed = true)
+        authProvider = AuthProvider(v1Auth, v2Auth)
 
-        val classUnderTest = AuthProvider(mockPreferences, mockCryption)
-
-        assertEquals(expected, classUnderTest.refreshToken)
+        verify { v1Auth.clear() }
     }
 
     @Test
-    fun `refreshToken#set saves new encrypted refreshToken`() {
-        val slot = CapturingSlot<String>()
-        val expected = "encryptedToken"
-        val mockEditor = mockk<SharedPreferences.Editor> {
-            every { putString(KITSU_REFRESH_TOKEN_KEY, capture(slot)) } returns this
-            every { apply() } just Runs
-        }
-        val mockPreferences = mockk<SharedPreferences> {
-            every { edit() } returns mockEditor
-        }
-        val mockCryption = mockk<Cryption> {
-            every { encrypt("newToken", any()) } returns expected
-        }
+    fun `accessToken gets token from correct auth`() {
+        every { v2Auth.accessToken } returns ACCESS_TOKEN
 
-        val classUnderTest = AuthProvider(mockPreferences, mockCryption)
-        classUnderTest.refreshToken = "newToken"
+        authProvider.accessToken
 
-        verify { mockEditor.putString(KITSU_REFRESH_TOKEN_KEY, expected) }
-        assertEquals(expected, slot.captured)
+        verify { v2Auth.accessToken }
     }
 
     @Test
-    fun `clearAuth clears access token`() {
-        val mockEditor = mockk<SharedPreferences.Editor> {
-            every { remove(KITSU_ACCESS_TOKEN_KEY) } returns this
-            every { remove(KITSU_REFRESH_TOKEN_KEY) } returns this
-            every { apply() } just Runs
-        }
-        val mockPreferences = mockk<SharedPreferences> {
-            every { edit() } returns mockEditor
-        }
-        val mockCryption = mockk<Cryption>()
+    fun `accessToken sets token in correct auth`() {
+        every { v2Auth.accessToken = ACCESS_TOKEN } just runs
 
-        val classUnderTest = AuthProvider(mockPreferences, mockCryption)
-        classUnderTest.clearAuth()
+        authProvider.accessToken = ACCESS_TOKEN
 
-        verify { mockEditor.remove(KITSU_ACCESS_TOKEN_KEY) }
+        verify { v2Auth.accessToken = ACCESS_TOKEN }
     }
 
     @Test
-    fun `clearAuth clears refresh token`() {
-        val mockEditor = mockk<SharedPreferences.Editor> {
-            every { remove(KITSU_ACCESS_TOKEN_KEY) } returns this
-            every { remove(KITSU_REFRESH_TOKEN_KEY) } returns this
-            every { apply() } just Runs
-        }
-        val mockPreferences = mockk<SharedPreferences> {
-            every { edit() } returns mockEditor
-        }
-        val mockCryption = mockk<Cryption>()
+    fun `refreshToken gets token from correct auth`() {
+        every { v2Auth.refreshToken } returns REFRESH_TOKEN
 
-        val classUnderTest = AuthProvider(mockPreferences, mockCryption)
-        classUnderTest.clearAuth()
+        authProvider.refreshToken
 
-        verify { mockEditor.remove(KITSU_REFRESH_TOKEN_KEY) }
+        verify { v2Auth.refreshToken }
+    }
+
+    @Test
+    fun `refreshToken sets token in correct auth`() {
+        every { v2Auth.refreshToken = REFRESH_TOKEN } just runs
+
+        authProvider.refreshToken = REFRESH_TOKEN
+
+        verify { v2Auth.refreshToken = REFRESH_TOKEN }
+    }
+
+    @Test
+    fun `clearAuth clears out all auth instances`() {
+        every { v1Auth.clear() } just runs
+        every { v2Auth.clear() } just runs
+
+        authProvider.clearAuth()
+
+        verify {
+            v1Auth.clear()
+            v2Auth.clear()
+        }
     }
 }
