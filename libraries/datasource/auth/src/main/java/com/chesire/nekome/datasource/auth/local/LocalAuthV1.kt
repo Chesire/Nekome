@@ -9,6 +9,13 @@ private const val ACCESS_TOKEN = "KEY_KITSU_ACCESS_TOKEN"
 private const val REFRESH_TOKEN = "KEY_KITSU_REFRESH_TOKEN"
 private const val ALIAS = "kitsuPrivateAuth"
 
+/**
+ * Old version of how auth credentials were stored, uses an old encryption library which is liable
+ * to failure.
+ * Do not use this, instead use the latest [LocalAuthV2].
+ * Remove this class once migration for the majority of users has been performed.
+ */
+@Suppress("TooGenericExceptionCaught")
 @Deprecated("This is legacy and will be removed in a later release once migration has completed")
 class LocalAuthV1 @Inject constructor(
     private val preferences: SharedPreferences,

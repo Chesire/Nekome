@@ -1,5 +1,8 @@
 package com.chesire.nekome.datasource.auth.local
 
+/**
+ * Declares what a local auth instance must provide.
+ */
 internal interface LocalAuth {
 
     /**

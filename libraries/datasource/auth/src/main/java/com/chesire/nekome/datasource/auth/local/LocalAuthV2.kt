@@ -15,6 +15,9 @@ private const val UNENCRYPTED_NEKOME_AUTH_PREF = "UneNekomePrefStore"
 private const val ACCESS_TOKEN = "KEY_KITSU_ACCESS_TOKEN_V2"
 private const val REFRESH_TOKEN = "KEY_KITSU_REFRESH_TOKEN_v2"
 
+/**
+ * Stores auth credentials in the encrypted shares preferences.
+ */
 @Reusable
 class LocalAuthV2 @Inject constructor(
     @ApplicationContext private val context: Context
@@ -24,13 +27,13 @@ class LocalAuthV2 @Inject constructor(
 
     init {
         preferences = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            initializeEncryptedPreferences().also { encryptedPref ->
+            initEncryptedPreferences().also { encryptedPref ->
                 if (encryptedPref.all.isEmpty()) {
-                    initializeUnencryptedPreferences().migrateToEncrypted(encryptedPref)
+                    initUnencryptedPreferences().migrateToEncrypted(encryptedPref)
                 }
             }
         } else {
-            initializeUnencryptedPreferences()
+            initUnencryptedPreferences()
         }
     }
 
@@ -75,7 +78,7 @@ class LocalAuthV2 @Inject constructor(
         remove(REFRESH_TOKEN)
     }
 
-    private fun initializeEncryptedPreferences(): SharedPreferences {
+    private fun initEncryptedPreferences(): SharedPreferences {
         val masterKeyAlias = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC)
         return EncryptedSharedPreferences.create(
             ENCRYPTED_NEKOME_AUTH_PREF,
@@ -86,7 +89,6 @@ class LocalAuthV2 @Inject constructor(
         )
     }
 
-    private fun initializeUnencryptedPreferences(): SharedPreferences {
-        return context.getSharedPreferences(UNENCRYPTED_NEKOME_AUTH_PREF, Context.MODE_PRIVATE)
-    }
+    private fun initUnencryptedPreferences(): SharedPreferences =
+        context.getSharedPreferences(UNENCRYPTED_NEKOME_AUTH_PREF, Context.MODE_PRIVATE)
 }
