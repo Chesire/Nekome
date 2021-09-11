@@ -1,0 +1,1 @@
+* Fix crash that would sometimes occur due to invalid persisted data
