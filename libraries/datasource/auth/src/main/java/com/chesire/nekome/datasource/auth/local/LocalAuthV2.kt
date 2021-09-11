@@ -23,13 +23,14 @@ class LocalAuthV2 @Inject constructor(
     private val preferences: SharedPreferences
 
     init {
-        val unencryptedPreferences = initializeUnencryptedPreferences()
         preferences = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            initializeEncryptedPreferences().also {
-                unencryptedPreferences.migrateToEncrypted(it)
+            initializeEncryptedPreferences().also { encryptedPref ->
+                if (encryptedPref.all.isEmpty()) {
+                    initializeUnencryptedPreferences().migrateToEncrypted(encryptedPref)
+                }
             }
         } else {
-            unencryptedPreferences
+            initializeUnencryptedPreferences()
         }
     }
 
