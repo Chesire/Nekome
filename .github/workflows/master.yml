@@ -30,7 +30,7 @@ jobs:
       run: ./gradlew testDebugUnitTest
     - name: run jacocoTestReport
       run: ./gradlew jacocoTestReport
-    - uses: codecov/codecov-action@v2.0.3
+    - uses: codecov/codecov-action@v2.1.0
 
   analyze:
     runs-on: ubuntu-latest
