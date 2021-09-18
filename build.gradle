@@ -1,6 +1,7 @@
 import io.gitlab.arturbosch.detekt.Detekt
 
 buildscript {
+    ext.aboutlibraries_version = "8.9.1"
     ext.hilt_version = "2.38.1"
     ext.jacoco_version = "0.8.7"
     ext.kotlin_version = "1.5.30"
@@ -13,6 +14,7 @@ buildscript {
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$nav_version"
         classpath "com.android.tools.build:gradle:7.0.2"
         classpath "com.google.dagger:hilt-android-gradle-plugin:$hilt_version"
+        classpath "com.mikepenz.aboutlibraries.plugin:aboutlibraries-plugin:$aboutlibraries_version"
         classpath "org.jacoco:org.jacoco.core:$jacoco_version"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
