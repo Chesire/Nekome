@@ -16,6 +16,7 @@ import dagger.hilt.components.SingletonComponent
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
+
     /**
      * Provides the default [SharedPreferences] for the application.
      */
