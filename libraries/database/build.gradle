@@ -41,7 +41,7 @@ dependencies {
     implementation "androidx.appcompat:appcompat:$appcompat_version"
     implementation "androidx.core:core-ktx:$core_version"
     implementation "androidx.room:room-ktx:$room_version"
-    api "androidx.room:room-runtime:$room_version"
+    implementation "androidx.room:room-runtime:$room_version"
     implementation "com.chesire.lintrules:lint-gradle:$lintrules_version"
     implementation "com.chesire.lintrules:lint-xml:$lintrules_version"
     implementation "com.squareup.moshi:moshi:$moshi_version"
