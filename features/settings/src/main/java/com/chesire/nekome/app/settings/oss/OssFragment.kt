@@ -18,7 +18,6 @@ class OssFragment : Fragment() {
     // about libraries plugin provides.
     private val includedLibraries = arrayOf(
         // "AboutLibraries",
-        // "androidencryptionhelper",
         // "coil",
         "Dagger2",
         // "lifecyklelog",
