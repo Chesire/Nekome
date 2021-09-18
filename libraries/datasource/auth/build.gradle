@@ -23,7 +23,6 @@ android {
 
 dependencies {
     implementation project(':libraries:core')
-    implementation project(":libraries:encryption")
 
     implementation "androidx.core:core-ktx:$core_version"
     implementation "androidx.security:security-crypto:$security_version"

@@ -12,9 +12,7 @@ import javax.inject.Inject
 /**
  * Provider for [SharedPreferences] instances.
  */
-class PreferenceProvider @Inject constructor(
-    @ApplicationContext private val context: Context
-) {
+class PreferenceProvider @Inject constructor(@ApplicationContext private val context: Context) {
 
     /**
      * Retrieves an instance of [SharedPreferences], providing an encrypted version if the SDK is

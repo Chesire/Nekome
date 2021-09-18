@@ -13,12 +13,12 @@ import org.junit.Test
 private const val ACCESS_TOKEN = "KEY_KITSU_ACCESS_TOKEN_V2"
 private const val REFRESH_TOKEN = "KEY_KITSU_REFRESH_TOKEN_v2"
 
-class LocalAuthV2Tests {
+class LocalAuthTests {
 
     private lateinit var sharedPreferencesEditor: SharedPreferences.Editor
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var preferenceProvider: PreferenceProvider
-    private lateinit var localAuthV2: LocalAuthV2
+    private lateinit var localAuth: LocalAuth
 
     @Before
     fun setup() {
@@ -29,7 +29,7 @@ class LocalAuthV2Tests {
         preferenceProvider = mockk {
             every { retrievePreferences(any(), any()) } returns sharedPreferences
         }
-        localAuthV2 = LocalAuthV2(preferenceProvider)
+        localAuth = LocalAuth(preferenceProvider)
     }
 
     @Test
@@ -37,7 +37,7 @@ class LocalAuthV2Tests {
         every { sharedPreferences.contains(ACCESS_TOKEN) } returns true
         every { sharedPreferences.contains(REFRESH_TOKEN) } returns false
 
-        assertTrue(localAuthV2.hasCredentials)
+        assertTrue(localAuth.hasCredentials)
     }
 
     @Test
@@ -45,7 +45,7 @@ class LocalAuthV2Tests {
         every { sharedPreferences.contains(ACCESS_TOKEN) } returns false
         every { sharedPreferences.contains(REFRESH_TOKEN) } returns true
 
-        assertTrue(localAuthV2.hasCredentials)
+        assertTrue(localAuth.hasCredentials)
     }
 
     @Test
@@ -53,7 +53,7 @@ class LocalAuthV2Tests {
         every { sharedPreferences.contains(ACCESS_TOKEN) } returns true
         every { sharedPreferences.contains(REFRESH_TOKEN) } returns true
 
-        assertTrue(localAuthV2.hasCredentials)
+        assertTrue(localAuth.hasCredentials)
     }
 
     @Test
@@ -61,7 +61,7 @@ class LocalAuthV2Tests {
         every { sharedPreferences.contains(ACCESS_TOKEN) } returns false
         every { sharedPreferences.contains(REFRESH_TOKEN) } returns false
 
-        assertFalse(localAuthV2.hasCredentials)
+        assertFalse(localAuth.hasCredentials)
     }
 
     @Test
@@ -69,7 +69,7 @@ class LocalAuthV2Tests {
         val expected = "0123456789"
         every { sharedPreferences.getString(ACCESS_TOKEN, "") } returns expected
 
-        val actual = localAuthV2.accessToken
+        val actual = localAuth.accessToken
 
         assertEquals(expected, actual)
     }
@@ -78,7 +78,7 @@ class LocalAuthV2Tests {
     fun `accessToken#set sets value into shared preferences`() {
         val expected = "0123456789"
 
-        localAuthV2.accessToken = expected
+        localAuth.accessToken = expected
 
         verify { sharedPreferencesEditor.putString(ACCESS_TOKEN, expected) }
     }
@@ -88,7 +88,7 @@ class LocalAuthV2Tests {
         val expected = "0123456789"
         every { sharedPreferences.getString(REFRESH_TOKEN, "") } returns expected
 
-        val actual = localAuthV2.refreshToken
+        val actual = localAuth.refreshToken
 
         assertEquals(expected, actual)
     }
@@ -97,14 +97,14 @@ class LocalAuthV2Tests {
     fun `refreshToken#set sets value into shared preferences`() {
         val expected = "0123456789"
 
-        localAuthV2.refreshToken = expected
+        localAuth.refreshToken = expected
 
         verify { sharedPreferencesEditor.putString(REFRESH_TOKEN, expected) }
     }
 
     @Test
     fun `clear removes currently stored auth values`() {
-        localAuthV2.clear()
+        localAuth.clear()
 
         verify {
             sharedPreferencesEditor.remove(ACCESS_TOKEN)

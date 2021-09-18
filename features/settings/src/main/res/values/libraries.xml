@@ -1,23 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Start androidencryptionhelper -->
-    <string name="define_androidencryptionhelper" translatable="false">year;owner</string>
-    <!-- Author section -->
-    <string name="library_androidencryptionhelper_author" translatable="false">talhahasanzia</string>
-    <!-- Library section -->
-    <string name="library_androidencryptionhelper_libraryName" translatable="false">Android Encryption Helper</string>
-    <string name="library_androidencryptionhelper_libraryDescription" translatable="false">Simple Encryption-Decryption Library containing helper classes for encrypting text data in Android. This will alow apps to decrypt data on runtime only (thanks to KeyStore API), making data storage more secure against concerns like reversing apk or decompilation of jars.</string>
-    <string name="library_androidencryptionhelper_libraryWebsite" translatable="false">https://github.com/talhahasanzia/android-encryption-helper</string>
-    <string name="library_androidencryptionhelper_libraryVersion" translatable="false">0.3.1</string>
-    <!-- OpenSource section -->
-    <string name="library_androidencryptionhelper_isOpenSource" translatable="false">true</string>
-    <string name="library_androidencryptionhelper_repositoryLink" translatable="false">https://github.com/talhahasanzia/android-encryption-helper</string>
-    <!-- ClassPath for autoDetect section -->
-    <!-- License section -->
-    <string name="library_androidencryptionhelper_licenseId" translatable="false">apache_2_0</string>
-    <!-- Custom variables section -->
-    <!-- End androidencryptionhelper -->
-
     <!-- Start coil -->
     <string name="define_coil" translatable="false">year;owner</string>
     <!-- Author section -->
