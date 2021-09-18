@@ -5,28 +5,28 @@ import javax.inject.Inject
 /**
  * Provides authorization for Kitsu access.
  */
-class AuthProvider @Inject constructor(private val v2Auth: LocalAuthV2) {
+class AuthProvider @Inject constructor(private val auth: LocalAuth) {
 
     /**
      * Retrieve or set the current access token.
      */
     var accessToken: String
-        get() = v2Auth.accessToken
+        get() = auth.accessToken
         set(value) {
-            v2Auth.accessToken = value
+            auth.accessToken = value
         }
 
     /**
      * Retrieve or set the refresh token used to get a new access token.
      */
     var refreshToken: String
-        get() = v2Auth.refreshToken
+        get() = auth.refreshToken
         set(value) {
-            v2Auth.refreshToken = value
+            auth.refreshToken = value
         }
 
     /**
      * Clears out the current auth credentials.
      */
-    fun clearAuth() = v2Auth.clear()
+    fun clearAuth() = auth.clear()
 }
