@@ -2,7 +2,7 @@ import io.gitlab.arturbosch.detekt.Detekt
 
 buildscript {
     ext.aboutlibraries_version = "8.9.1"
-    ext.hilt_version = "2.38.1"
+    ext.hilt_version = "2.39"
     ext.jacoco_version = "0.8.7"
     ext.kotlin_version = "1.5.31"
     ext.nav_version = "2.3.5"
