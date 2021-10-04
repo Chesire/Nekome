@@ -1,0 +1,31 @@
+plugins {
+    id "com.android.library"
+    id "kotlin-android"
+}
+
+android {
+    compileSdk sdk_version
+
+    defaultConfig {
+        minSdk 21
+        targetSdk sdk_version
+
+        consumerProguardFiles "consumer-rules.pro"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation project(":libraries:core")
+
+    implementation "com.chesire.lintrules:lint-gradle:$lintrules_version"
+    implementation "com.chesire.lintrules:lint-xml:$lintrules_version"
+    implementation "com.google.dagger:hilt-android:$hilt_version"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
+}

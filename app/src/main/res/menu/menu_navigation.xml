@@ -20,6 +20,12 @@
             android:id="@+id/search_nav_graph"
             android:icon="@drawable/ic_search"
             android:title="@string/nav_search" />
+        <!-- Timeline not yet ready
+        <item
+            android:id="@+id/timelineFragment"
+            android:icon="@drawable/ic_timeline"
+            android:title="@string/nav_timeline" />
+        -->
     </group>
 
     <group
