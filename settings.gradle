@@ -24,6 +24,5 @@ include ':app',
     ':libraries:kitsu:search',
     ':libraries:kitsu:trending',
     ':libraries:kitsu:user',
-    ':libraries:library',
-    
+
     ':testing'
