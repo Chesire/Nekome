@@ -75,7 +75,6 @@ dependencies {
     implementation project(":libraries:kitsu:search")
     implementation project(":libraries:kitsu:trending")
     implementation project(":libraries:kitsu:user")
-    implementation project(":libraries:library")
 
     implementation "androidx.appcompat:appcompat:$appcompat_version"
     implementation "androidx.constraintlayout:constraintlayout:$constraintlayout_version"
