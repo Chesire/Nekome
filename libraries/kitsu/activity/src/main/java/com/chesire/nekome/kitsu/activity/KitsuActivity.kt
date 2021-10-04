@@ -12,6 +12,7 @@ import javax.inject.Inject
 /**
  * Implementation of the [ActivityApi] for usage with the Kitsu API.
  */
+@Suppress("TooGenericExceptionCaught")
 class KitsuActivity @Inject constructor(
     private val activityService: KitsuActivityService,
     private val map: RetrieveActivityDtoMapper

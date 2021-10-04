@@ -6,6 +6,9 @@ import com.chesire.nekome.datasource.activity.remote.ActivityApi
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
+/**
+ * Repository to access the users library activity.
+ */
 class ActivityRepository @Inject constructor(
     private val localData: ActivityLocalDataStorage,
     private val remoteData: ActivityApi
@@ -27,7 +30,18 @@ class ActivityRepository @Inject constructor(
     }
 }
 
+/**
+ * Result class for getting a users [ActivityDomain].
+ */
 sealed class UserActivityResult {
+
+    /**
+     * Success result with the users activity data.
+     */
     data class RetrievedValues(val newValues: List<ActivityDomain>) : UserActivityResult()
+
+    /**
+     * Failure result for retrieving users activity data.
+     */
     object Failure : UserActivityResult()
 }

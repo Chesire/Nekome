@@ -6,11 +6,14 @@ import com.chesire.nekome.datasource.activity.ActivityDomain
 import com.chesire.nekome.datasource.activity.ActivityRepository
 import com.chesire.nekome.datasource.activity.UserActivityResult
 import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
-import javax.inject.Inject
 
+/**
+ * ViewModel for the [TimelineFragment].
+ */
 @HiltViewModel
 class TimelineViewModel @Inject constructor(
     private val activityRepository: ActivityRepository
@@ -19,20 +22,35 @@ class TimelineViewModel @Inject constructor(
     val latestActivity = liveData {
         activityRepository
             .userActivity
-            .onStart { emit(ActivityState.Loading) }
+            .onStart { emit(ViewState.Loading) }
             .map {
                 if (it is UserActivityResult.RetrievedValues) {
-                    ActivityState.GotActivities(it.newValues)
+                    ViewState.GotActivities(it.newValues)
                 } else {
-                    ActivityState.Failure
+                    ViewState.Failure
                 }
             }
             .collect { emit(it) }
     }
 }
 
-sealed class ActivityState {
-    object Loading : ActivityState()
-    data class GotActivities(val activities: List<ActivityDomain>) : ActivityState()
-    object Failure : ActivityState()
+/**
+ * The current state of the view.
+ */
+sealed class ViewState {
+
+    /**
+     * View is in a loading state.
+     */
+    object Loading : ViewState()
+
+    /**
+     * View has got the [ActivityDomain] required to display.
+     */
+    data class GotActivities(val activities: List<ActivityDomain>) : ViewState()
+
+    /**
+     * A failure to retrieve the activity domains has occurred.
+     */
+    object Failure : ViewState()
 }

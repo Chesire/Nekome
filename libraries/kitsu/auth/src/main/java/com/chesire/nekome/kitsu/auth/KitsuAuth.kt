@@ -41,12 +41,10 @@ class KitsuAuth @Inject constructor(
 
     private fun parseResponse(response: Response<AuthResponseDto>): AuthResult {
         return when (val parsed = response.parse()) {
-            is Resource.Success -> {
-                AuthResult.Success(
-                    parsed.data.accessToken,
-                    parsed.data.refreshToken
-                )
-            }
+            is Resource.Success -> AuthResult.Success(
+                parsed.data.accessToken,
+                parsed.data.refreshToken
+            )
             is Resource.Error -> {
                 Timber.e("Error performing request - [${parsed.code}]: ${parsed.msg}")
                 if (parsed.code == Resource.Error.InvalidCredentials) {

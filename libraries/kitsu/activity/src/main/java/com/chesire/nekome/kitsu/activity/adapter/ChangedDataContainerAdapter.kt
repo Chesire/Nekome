@@ -29,6 +29,7 @@ class ChangedDataContainerAdapter {
     /**
      * Not implemented.
      */
+    @Suppress("UnusedPrivateMember")
     @ToJson
     fun changedDataContainerToString(event: ChangedDataContainer): String {
         error("Unable to convert ChangedDataContainer to String")
