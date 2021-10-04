@@ -6,10 +6,10 @@ import com.chesire.nekome.datasource.activity.ActivityDomain
 import com.chesire.nekome.datasource.activity.ActivityRepository
 import com.chesire.nekome.datasource.activity.UserActivityResult
 import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
+import javax.inject.Inject
 
 /**
  * ViewModel for the [TimelineFragment].

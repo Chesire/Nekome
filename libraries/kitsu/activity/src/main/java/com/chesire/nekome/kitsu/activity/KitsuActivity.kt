@@ -1,8 +1,8 @@
 package com.chesire.nekome.kitsu.activity
 
-import com.chesire.nekome.datasource.activity.remote.ActivityApi
-import com.chesire.nekome.datasource.activity.ActivityDomain
 import com.chesire.nekome.core.Resource
+import com.chesire.nekome.datasource.activity.ActivityDomain
+import com.chesire.nekome.datasource.activity.remote.ActivityApi
 import com.chesire.nekome.kitsu.activity.dto.RetrieveActivityDto
 import com.chesire.nekome.kitsu.asError
 import com.chesire.nekome.kitsu.parse
