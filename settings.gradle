@@ -25,10 +25,5 @@ include ':app',
     ':libraries:kitsu:trending',
     ':libraries:kitsu:user',
     ':libraries:library',
-    ':libraries:server:auth',
-    ':libraries:server:library',
-    ':libraries:server:search',
-    ':libraries:server:trending',
-    ':libraries:server:user',
     
     ':testing'
