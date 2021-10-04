@@ -11,6 +11,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.Reusable
 import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -20,13 +21,13 @@ import retrofit2.converter.moshi.MoshiConverterFactory
  * Provides a Hilt module for usage of [ActivityApi].
  */
 @Module
-@InstallIn(SingletonComponent::class)
+@InstallIn(ViewModelComponent::class)
 abstract class ActivityModule {
 
     companion object {
 
         /**
-         * Builds and provides the instance of [KitsuAutKitsuActivityServicehService].
+         * Builds and provides the instance of [KitsuActivityService].
          */
         @Provides
         @Reusable
