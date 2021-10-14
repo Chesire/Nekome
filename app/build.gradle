@@ -88,7 +88,7 @@ dependencies {
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
     implementation "androidx.preference:preference-ktx:$preferences_version"
     implementation "androidx.room:room-runtime:$room_version"
-    implementation "androidx.work:work-runtime-ktx:2.6.0"
+    implementation "androidx.work:work-runtime-ktx:2.7.0"
     implementation "com.afollestad.material-dialogs:core:$materialdialog_version"
     implementation "com.afollestad.material-dialogs:input:$materialdialog_version"
     implementation "com.afollestad.material-dialogs:lifecycle:$materialdialog_version"
