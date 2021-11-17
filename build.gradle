@@ -81,5 +81,5 @@ ext {
     // Tests
     coretesting_version = "2.1.0"
     junit_version = "4.13.2"
-    mockk_version = "1.12.0"
+    mockk_version = "1.12.1"
 }
