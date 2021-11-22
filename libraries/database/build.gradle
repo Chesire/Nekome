@@ -51,7 +51,7 @@ dependencies {
     testImplementation project(":testing")
     testImplementation "androidx.room:room-testing:$room_version"
     testImplementation "junit:junit:$junit_version"
-    testImplementation "org.robolectric:robolectric:4.7"
+    testImplementation "org.robolectric:robolectric:4.7.2"
 
     kapt "androidx.room:room-compiler:$room_version"
 }
