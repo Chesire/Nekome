@@ -134,7 +134,7 @@ class SortTests : UITest() {
     }
 
     @Test
-    fun sortOptionEndDateSortsInRatingOrder() {
+    fun sortOptionRatingSortsInRatingOrder() {
         launchActivity()
 
         seriesList {
