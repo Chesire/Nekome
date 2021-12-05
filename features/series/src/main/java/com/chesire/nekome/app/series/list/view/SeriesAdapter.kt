@@ -94,6 +94,7 @@ class SeriesAdapter(
             SortOption.Title -> compareBy { it.title }
             SortOption.StartDate -> compareBy { it.startDate }
             SortOption.EndDate -> compareBy { it.endDate }
+            SortOption.Rating -> compareBy { it.rating }
         }
     )
 }

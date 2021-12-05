@@ -29,6 +29,7 @@
     <string name="sort_by_title">Title</string>
     <string name="sort_by_start_date">Start date</string>
     <string name="sort_by_end_date">End date</string>
+    <string name="sort_by_rating">Rating</string>
 
     <string name="filter_dialog_title">Filter by</string>
     <string name="filter_dialog_cancel">Cancel</string>
