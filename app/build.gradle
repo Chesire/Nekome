@@ -100,7 +100,7 @@ dependencies {
     implementation "com.google.dagger:hilt-android:$hilt_version"
     implementation "com.jakewharton.timber:timber:$timber_version"
     implementation "com.squareup.moshi:moshi:$moshi_version"
-    implementation "com.squareup.okhttp3:logging-interceptor:4.9.2"
+    implementation "com.squareup.okhttp3:logging-interceptor:4.9.3"
     implementation "com.squareup.retrofit2:converter-moshi:$retrofit_version"
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
     implementation "io.coil-kt:coil:$coil_version"
