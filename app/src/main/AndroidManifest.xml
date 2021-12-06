@@ -41,6 +41,7 @@
 
         <activity
             android:name="com.chesire.nekome.Activity"
+            android:exported="true"
             android:theme="@style/AppTheme.Launcher"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
