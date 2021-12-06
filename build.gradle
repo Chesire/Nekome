@@ -76,7 +76,7 @@ ext {
     room_version = "2.3.0"
     security_version = "1.0.0"
     timber_version = "5.0.1"
-    viewmodel_version = "2.3.1"
+    viewmodel_version = "2.4.0"
 
     // Tests
     coretesting_version = "2.1.0"
