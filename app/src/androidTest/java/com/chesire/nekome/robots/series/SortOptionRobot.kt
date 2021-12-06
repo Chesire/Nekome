@@ -38,6 +38,11 @@ class SortOptionRobot {
     fun selectByEndDate() = clickOn(R.string.sort_by_end_date)
 
     /**
+     * Pick the "Rating" option, requires first calling [open].
+     */
+    fun selectByRating() = clickOn(R.string.sort_by_rating)
+
+    /**
      * Executes validation steps.
      * Requires opening the dialog, performing the check.
      */
@@ -68,5 +73,6 @@ class SortOptionResultsRobot {
         assertDisplayedAtPosition(R.id.md_recyclerview_content, 1, R.string.sort_by_title)
         assertDisplayedAtPosition(R.id.md_recyclerview_content, 2, R.string.sort_by_start_date)
         assertDisplayedAtPosition(R.id.md_recyclerview_content, 3, R.string.sort_by_end_date)
+        assertDisplayedAtPosition(R.id.md_recyclerview_content, 4, R.string.sort_by_rating)
     }
 }

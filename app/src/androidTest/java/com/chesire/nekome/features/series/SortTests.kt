@@ -132,6 +132,27 @@ class SortTests : UITest() {
             )
         }
     }
+
+    @Test
+    fun sortOptionRatingSortsInRatingOrder() {
+        launchActivity()
+
+        seriesList {
+            sortSeries {
+                open()
+                selectByRating()
+            }
+        } validate {
+            isInOrder(
+                listOf(
+                    seriesData.series2.title,
+                    seriesData.series1.title,
+                    seriesData.series3.title,
+                    seriesData.series0.title
+                )
+            )
+        }
+    }
 }
 
 // Make an initial set of series items to compare sort with.
@@ -145,7 +166,8 @@ private data class InitialSortSeriesData(
         seriesType = SeriesType.Anime,
         userSeriesStatus = UserSeriesStatus.Current,
         startDate = "320/01/01",
-        endDate = "220/02/02"
+        endDate = "220/02/02",
+        rating = 10
     ),
     val series1: SeriesEntity = createSeriesEntity(
         id = 1,
@@ -154,7 +176,8 @@ private data class InitialSortSeriesData(
         seriesType = SeriesType.Anime,
         userSeriesStatus = UserSeriesStatus.Current,
         startDate = "021/01/01",
-        endDate = "121/02/02"
+        endDate = "121/02/02",
+        rating = 8
     ),
     val series2: SeriesEntity = createSeriesEntity(
         id = 2,
@@ -163,7 +186,8 @@ private data class InitialSortSeriesData(
         seriesType = SeriesType.Anime,
         userSeriesStatus = UserSeriesStatus.Current,
         startDate = "122/01/01",
-        endDate = "022/02/02"
+        endDate = "022/02/02",
+        rating = 7
     ),
     val series3: SeriesEntity = createSeriesEntity(
         id = 3,
@@ -172,7 +196,8 @@ private data class InitialSortSeriesData(
         seriesType = SeriesType.Anime,
         userSeriesStatus = UserSeriesStatus.Current,
         startDate = "223/01/01",
-        endDate = "323/02/02"
+        endDate = "323/02/02",
+        rating = 9
     )
 ) {
     /**

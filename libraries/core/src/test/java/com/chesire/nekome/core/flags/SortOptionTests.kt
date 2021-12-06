@@ -23,4 +23,9 @@ class SortOptionTests {
     fun `forIndex SortOption#EndDate returns expected value`() {
         assertEquals(SortOption.EndDate, SortOption.forIndex(3))
     }
+
+    @Test
+    fun `forIndex SortOption#Rating returns expected value`() {
+        assertEquals(SortOption.Rating, SortOption.forIndex(4))
+    }
 }
