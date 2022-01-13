@@ -57,7 +57,7 @@ ext {
     sdk_version = 31
 
     // App
-    appcompat_version = "1.4.0"
+    appcompat_version = "1.4.1"
     coil_version = "1.4.0"
     constraintlayout_version = "2.1.2"
     core_version = "1.7.0"
