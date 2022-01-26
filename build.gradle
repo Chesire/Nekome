@@ -12,7 +12,7 @@ buildscript {
     }
     dependencies {
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$nav_version"
-        classpath "com.android.tools.build:gradle:7.0.4"
+        classpath "com.android.tools.build:gradle:7.1.0"
         classpath "com.google.dagger:hilt-android-gradle-plugin:$hilt_version"
         classpath "com.mikepenz.aboutlibraries.plugin:aboutlibraries-plugin:$aboutlibraries_version"
         classpath "org.jacoco:org.jacoco.core:$jacoco_version"
