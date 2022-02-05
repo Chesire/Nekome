@@ -75,8 +75,8 @@ class SettingsFragment : PreferenceFragmentCompat() {
         }
     }
 
-    override fun onPreferenceTreeClick(preference: Preference?): Boolean {
-        when (preference?.key) {
+    override fun onPreferenceTreeClick(preference: Preference): Boolean {
+        when (preference.key) {
             keyPrivacyPolicy -> showPrivacyPolicy()
             keyGithub -> showGithub()
             keyLicenses -> showLicenses()
