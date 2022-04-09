@@ -139,10 +139,7 @@ class KitsuLibrary @Inject constructor(
 
             val body = response.body()
             if (response.isSuccessful && body != null) {
-                val series = body.data.mapNotNull {
-                    map.toSeriesDomain(AddResponseDto(it, body.included))
-                }
-                models.addAll(series)
+                models.addAll(buildSeries(body))
                 retries = 0
 
                 if (body.links.next.isNotEmpty()) {
@@ -164,6 +161,16 @@ class KitsuLibrary @Inject constructor(
             Resource.Error(errorResponse.msg, errorResponse.code)
         } else {
             Resource.Success(models)
+        }
+    }
+
+    private fun buildSeries(body: RetrieveResponseDto): List<SeriesDomain> {
+        return body.data.mapNotNull {
+            if (body.included == null) {
+                null
+            } else {
+                map.toSeriesDomain(AddResponseDto(it, body.included))
+            }
         }
     }
 
