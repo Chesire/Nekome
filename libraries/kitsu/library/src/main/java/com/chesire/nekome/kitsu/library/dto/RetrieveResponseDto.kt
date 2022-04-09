@@ -12,7 +12,7 @@ data class RetrieveResponseDto(
     @Json(name = "data")
     val data: List<DataDto>,
     @Json(name = "included")
-    val included: List<IncludedDto>,
+    val included: List<IncludedDto>?,
     @Json(name = "links")
     val links: Links
 )
