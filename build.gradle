@@ -4,7 +4,7 @@ buildscript {
     ext.aboutlibraries_version = "8.9.1"
     ext.hilt_version = "2.41"
     ext.jacoco_version = "0.8.8"
-    ext.kotlin_version = "1.6.10"
+    ext.kotlin_version = "1.6.20"
     ext.nav_version = "2.4.2"
     repositories {
         google()
