@@ -7,7 +7,7 @@
     <string name="nav_discover">発見</string>
     <string name="nav_manga">漫画</string>
     <string name="nav_profile">プロフィール</string>
-    <string name="nav_timeline">Timeline</string>
+    <string name="nav_timeline">タイムライン</string>
     <string name="nav_results">結果</string>
     <string name="nav_search">検索</string>
     <string name="nav_settings">設定</string>
@@ -19,7 +19,7 @@
     <string name="menu_sort">ソート</string>
     <string name="menu_settings">設定</string>
     <string name="menu_logout">ログアウト</string>
-    <string name="menu_logout_summary"><Kitsuアカウントからログアウト/string>
+    <string name="menu_logout_summary">Kitsuアカウントからログアウト</string>
     <string name="menu_logout_prompt_message">本当にKitsuアカウントからログアウトしてもよろしいですか？</string>
     <string name="menu_logout_prompt_confirm">確認</string>
     <string name="menu_logout_prompt_cancel">キャンセル</string>
