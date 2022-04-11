@@ -17,7 +17,7 @@ android {
         versionCode 22040915 // Date of build formatted as 'yyMMddHH'
         versionName "1.5.3"
         testInstrumentationRunner "com.chesire.nekome.TestRunner"
-        resConfigs "en"
+        resConfigs "en", "ja"
     }
     buildTypes {
         release {
