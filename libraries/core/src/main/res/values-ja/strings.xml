@@ -74,9 +74,9 @@
     <string name="login_login">ログイン</string>
     <string name="login_forgot_password">パスワードをお忘れですか？こちらから変更出来ます</string>
     <string name="login_forgot_password_url">https://kitsu.io/password-reset</string>
-    <string name="login_sign_up">まだKitsuに登録されていませんか？ こちらからKitsuに登録出来ます</string>
+    <string name="login_sign_up">こちらからKitsuに登録出来ます</string>
     <!-- This text should be exactly what part of login_sign_up should be a link -->
-    <string name="login_sign_up_link_target">サインアップ</string>
+    <string name="login_sign_up_link_target">Sign up</string>
     <string name="login_sign_up_url">https://kitsu.io/explore/anime</string>
     <string name="login_error_empty_username">メールアドレスが入力されていません</string>
     <string name="login_error_empty_password">パスワードが入力されていません</string>
