@@ -1,0 +1,136 @@
+<resources>
+
+    <string name="app_name">Nekome</string>
+
+    <string name="nav_anime">アニメ</string>
+    <string name="nav_details">詳細</string>
+    <string name="nav_discover">発見</string>
+    <string name="nav_manga">漫画</string>
+    <string name="nav_profile">プロフィール</string>
+    <string name="nav_timeline">タイムライン</string>
+    <string name="nav_results">結果</string>
+    <string name="nav_search">検索</string>
+    <string name="nav_settings">設定</string>
+    <string name="nav_syncing">同期</string>
+
+    <string name="logout_forced">エラーが発生しました。ログインして再試行してください</string>
+
+    <string name="menu_filter">フィルター</string>
+    <string name="menu_sort">ソート</string>
+    <string name="menu_settings">設定</string>
+    <string name="menu_logout">ログアウト</string>
+    <string name="menu_logout_summary">Kitsuアカウントからログアウト</string>
+    <string name="menu_logout_prompt_message">本当にKitsuアカウントからログアウトしてもよろしいですか？</string>
+    <string name="menu_logout_prompt_confirm">確認</string>
+    <string name="menu_logout_prompt_cancel">キャンセル</string>
+
+    <string name="sort_dialog_title">並び替え</string>
+    <string name="sort_by_default">デフォルト</string>
+    <string name="sort_by_title">タイトル</string>
+    <string name="sort_by_start_date">開始日</string>
+    <string name="sort_by_end_date">終了日</string>
+    <string name="sort_by_rating">評価</string>
+
+    <string name="filter_dialog_title">絞り込む</string>
+    <string name="filter_dialog_cancel">キャンセル</string>
+    <string name="filter_dialog_confirm">確認</string>
+    <string name="filter_by_current">現在</string>
+    <string name="filter_by_completed">完了</string>
+    <string name="filter_by_on_hold">保留</string>
+    <string name="filter_by_dropped">ドロップ</string>
+    <string name="filter_by_planned">予定</string>
+
+    <string name="series_list_length">%s / %s</string>
+    <string name="series_list_plus_one">+1</string>
+    <string name="series_list_date_range">%s - %s</string>
+    <string name="series_list_unknown">不明</string>
+    <string name="series_list_ongoing">進行中</string>
+    <string name="series_list_try_again">シリーズ％sの更新に失敗しました。もう一度やり直してください…</string>
+    <string name="series_list_delete_title">本当に％sを削除してもよろしいですか？</string>
+    <string name="series_list_delete_confirm">確認</string>
+    <string name="series_list_delete_cancel">キャンセル</string>
+    <string name="series_list_delete_failure">シリーズを削除しようとしましたが、エラーが発生しました</string>
+    <string name="series_list_delete_retry">再試行</string>
+    <string name="series_list_empty">現在のフィルターで見つかったシリーズはありません</string>
+    <string name="series_list_refresh">リフレッシュシリーズ</string>
+    <string name="series_list_refresh_error">シリーズ一覧を更新する際にエラーが発生しました。もう一度やり直してください...</string>
+    <string name="rate_dialog_title">レートシリーズ</string>
+    <string name="series_list_rate_cancel">キャンセル</string>
+    <string name="series_list_rate_confirm">確認</string>
+
+    <string name="series_detail_dash">-</string>
+    <string name="series_detail_progress_title">進捗状況</string>
+    <string name="series_detail_progress_out_of">/ %s</string>
+    <string name="series_detail_status_title">ユーザーシリーズの状況</string>
+    <string name="series_detail_rating">評価</string>
+    <string name="series_detail_confirm">確認</string>
+    <string name="series_detail_failure">シリーズ％sの更新に失敗しました。再試行してください</string>
+
+    <string name="rating_none">評価なし</string>
+
+    <string name="login_header">Kitsuにログイン</string>
+    <string name="login_username">Kitsu eメール</string>
+    <string name="login_password">パスワード</string>
+    <string name="login_login">ログイン</string>
+    <string name="login_forgot_password">パスワードをお忘れですか？こちらから変更出来ます</string>
+    <string name="login_forgot_password_url">https://kitsu.io/password-reset</string>
+    <string name="login_sign_up">こちらからKitsuに登録出来ます</string>
+    <!-- This text should be exactly what part of login_sign_up should be a link -->
+    <string name="login_sign_up_link_target">こちらから</string>
+    <string name="login_sign_up_url">https://kitsu.io/explore/anime</string>
+    <string name="login_error_empty_username">メールアドレスが入力されていません</string>
+    <string name="login_error_empty_password">パスワードが入力されていません</string>
+    <string name="login_error_credentials">ログイン時にエラーが発生しました。</string>
+    <string name="login_error_generic">ログインに失敗しました。もう一度やり直してください</string>
+    <string name="login_header_image_content_description">アプリケーションのアイコン</string>
+
+    <string name="syncing_syncing">Kitsuライブラリーの同期</string>
+
+    <string name="profile_total">合計</string>
+    <string name="profile_current">現在</string>
+    <string name="profile_completed">完了</string>
+    <string name="profile_on_hold">保留</string>
+    <string name="profile_dropped">ドロップ</string>
+    <string name="profile_planned">予定</string>
+
+    <!-- Point to a privacy policy in Github repo -->
+    <string name="privacy_policy_url">http://www.google.com</string>
+
+    <string name="settings_category_about">Nekomeの詳細</string>
+    <string name="settings_category_application">アプリケーション</string>
+    <string name="settings_category_series">シリーズ</string>
+    <string name="settings_version">現在のバージョン</string>
+    <string name="settings_licenses">ライセンス</string>
+    <string name="settings_privacy_policy">プライバシーポリシー</string>
+    <string name="settings_github">GitHub(ギットハブ)</string>
+    <string name="settings_github_url">https://github.com/Chesire/Nekome</string>
+    <string name="settings_default_series_status_title">デフォルトのシリーズ状況</string>
+    <string name="settings_default_series_status_summary">新しく追跡されたシリーズが開始されるステータス</string>
+    <string name="settings_default_home_title">デフォルトのホーム画面</string>
+    <string name="settings_default_home_summary">アニメ／マンガから選択</string>
+    <string name="settings_rate_on_completion_title">完了時にシリーズを評価</string>
+    <string name="settings_rate_on_completion_summary">シリーズを完了するときに、評価を追加しますか？</string>
+    <string name="settings_theme">テーマ</string>
+    <string name="settings_theme_system">システムのデフォルト</string>
+    <string name="settings_theme_dark">ダークテーマ</string>
+    <string name="settings_theme_light">ライトテーマ</string>
+
+    <string name="discover_trending_anime">流行中のアニメ</string>
+    <string name="discover_trending_manga">流行中の漫画</string>
+    <string name="discover_trending_track">トラック</string>
+    <string name="discover_search">検索</string>
+    <string name="discover_search_hint">シリーズ名を入力</string>
+
+    <string name="search_series_title">シリーズ名を入力</string>
+    <string name="search_anime">アニメ</string>
+    <string name="search_manga">漫画</string>
+    <string name="search_search">検索</string>
+    <string name="search_error_no_text">シリーズ名を入力する必要があります</string>
+    <string name="search_error_no_type_selected">シリーズの種類を選択する必要があります</string>
+    <string name="search_error_no_series_found">シリーズが見つかりませんでした</string>
+
+    <string name="results_track">追跡</string>
+    <string name="results_failure">シリーズ%sの追跡を開始できませんでした。もう一度お試しください...</string>
+
+    <string name="error_generic">不明なエラーが発生しました...</string>
+</resources>
