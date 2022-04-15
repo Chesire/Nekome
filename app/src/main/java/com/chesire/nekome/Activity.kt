@@ -1,8 +1,6 @@
 package com.chesire.nekome
 
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
@@ -11,6 +9,8 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.drawerlayout.widget.DrawerLayout.LOCK_MODE_LOCKED_CLOSED
 import androidx.drawerlayout.widget.DrawerLayout.LOCK_MODE_UNLOCKED
+import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
@@ -20,15 +20,16 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
 import com.chesire.lifecyklelog.LogLifecykle
 import com.chesire.nekome.core.AuthCaster
-import com.chesire.nekome.core.flags.HomeScreenOptions
 import com.chesire.nekome.core.nav.Flow
-import com.chesire.nekome.core.settings.ApplicationSettings
 import com.chesire.nekome.datasource.user.User
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 import javax.inject.Inject
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 
 /**
  * Single host activity for the application, handles all required logic of the activity such as
@@ -41,9 +42,6 @@ class Activity : AppCompatActivity(), AuthCaster.AuthCasterListener, Flow {
 
     @Inject
     lateinit var authCaster: AuthCaster
-
-    @Inject
-    lateinit var settings: ApplicationSettings
 
     private val viewModel by viewModels<ActivityViewModel>()
 
@@ -60,13 +58,6 @@ class Activity : AppCompatActivity(), AuthCaster.AuthCasterListener, Flow {
         observeViewModel()
 
         authCaster.subscribeToAuthError(this)
-
-        // savedInstanceState check is needed or the DetailsFragment will be recreated
-        // on configuration change
-        if (savedInstanceState == null && !viewModel.userLoggedIn) {
-            findNavController(R.id.activityNavigation)
-                .navigate(OverviewNavGraphDirections.globalToDetailsFragment())
-        }
     }
 
     private fun observeViewModel() {
@@ -74,6 +65,20 @@ class Activity : AppCompatActivity(), AuthCaster.AuthCasterListener, Flow {
             if (user is User.Found) {
                 updateAvatar(findViewById(R.id.activityNavigationView), user.domain)
             }
+        }
+        lifecycleScope.launch {
+            viewModel.navigation.flowWithLifecycle(lifecycle).onEach {
+                findNavController(R.id.activityNavigation).navigate(it)
+            }.launchIn(this)
+            viewModel.snackBar.flowWithLifecycle(lifecycle).onEach {
+                showSnackbarError()
+            }.launchIn(this)
+        }
+    }
+
+    private fun showSnackbarError() {
+        findViewById<View?>(R.id.activityDrawer)?.let { view ->
+            Snackbar.make(view, R.string.logout_forced, Snackbar.LENGTH_LONG).show()
         }
     }
 
@@ -112,8 +117,6 @@ class Activity : AppCompatActivity(), AuthCaster.AuthCasterListener, Flow {
                 }
             }
         }
-
-        navigateToDefaultHome()
     }
 
     override fun onSupportNavigateUp() =
@@ -142,19 +145,7 @@ class Activity : AppCompatActivity(), AuthCaster.AuthCasterListener, Flow {
 
     private fun performLogout(isFailure: Boolean = false) {
         Timber.w("Logout called, now attempting")
-        viewModel.logout {
-            Handler(Looper.getMainLooper()).post {
-                findNavController(R.id.activityNavigation).navigate(
-                    OverviewNavGraphDirections.globalToDetailsFragment()
-                )
-
-                if (isFailure) {
-                    findViewById<View?>(R.id.activityDrawer)?.let { view ->
-                        Snackbar.make(view, R.string.logout_forced, Snackbar.LENGTH_LONG).show()
-                    }
-                }
-            }
-        }
+        viewModel.logout(isFailure)
     }
 
     private fun disableDrawer() {
@@ -168,18 +159,6 @@ class Activity : AppCompatActivity(), AuthCaster.AuthCasterListener, Flow {
     }
 
     override fun finishLogin() {
-        navigateToDefaultHome()
-    }
-
-    private fun navigateToDefaultHome() {
-        if (settings.defaultHomeScreen == HomeScreenOptions.Anime) {
-            findNavController(R.id.activityNavigation).navigate(
-                OverviewNavGraphDirections.globalToAnimeFragment()
-            )
-        } else {
-            findNavController(R.id.activityNavigation).navigate(
-                OverviewNavGraphDirections.globalToMangaFragment()
-            )
-        }
+        viewModel.navigateToDefaultHome()
     }
 }

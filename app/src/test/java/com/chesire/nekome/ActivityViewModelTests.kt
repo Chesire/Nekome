@@ -1,6 +1,7 @@
 package com.chesire.nekome
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import com.chesire.nekome.core.settings.ApplicationSettings
 import com.chesire.nekome.datasource.auth.AccessTokenRepository
 import com.chesire.nekome.datasource.user.UserRepository
 import com.chesire.nekome.testing.CoroutinesMainDispatcherRule
@@ -24,6 +25,8 @@ class ActivityViewModelTests {
     val coroutineRule = CoroutinesMainDispatcherRule()
     private val testDispatcher = coroutineRule.testDispatcher
 
+    private val settings = mockk<ApplicationSettings>(relaxed = true)
+
     @Test
     fun `userLoggedIn failure returns false`() {
         val mockAccessTokenRepository = mockk<AccessTokenRepository> {
@@ -37,6 +40,7 @@ class ActivityViewModelTests {
         val classUnderTest = ActivityViewModel(
             mockAccessTokenRepository,
             mockLogoutHandler,
+            settings,
             testDispatcher,
             mockUserRepository
         )
@@ -57,6 +61,7 @@ class ActivityViewModelTests {
         val classUnderTest = ActivityViewModel(
             mockAccessTokenRepository,
             mockLogoutHandler,
+            settings,
             testDispatcher,
             mockUserRepository
         )
@@ -66,7 +71,9 @@ class ActivityViewModelTests {
 
     @Test
     fun `logout tells the logoutHandler to execute`() {
-        val mockAccessTokenRepository = mockk<AccessTokenRepository>()
+        val mockAccessTokenRepository = mockk<AccessTokenRepository>() {
+            every { accessToken } returns "access token"
+        }
         val mockLogoutHandler = mockk<LogoutHandler> {
             every { executeLogout() } just Runs
         }
@@ -77,38 +84,13 @@ class ActivityViewModelTests {
         val classUnderTest = ActivityViewModel(
             mockAccessTokenRepository,
             mockLogoutHandler,
+            settings,
             testDispatcher,
             mockUserRepository
         )
 
-        classUnderTest.logout { }
+        classUnderTest.logout()
 
         verify { mockLogoutHandler.executeLogout() }
-    }
-
-    @Test
-    fun `logout executes callback after logoutHandler`() {
-        val mockAccessTokenRepository = mockk<AccessTokenRepository>()
-        val mockLogoutHandler = mockk<LogoutHandler> {
-            every { executeLogout() } just Runs
-        }
-        val mockUserRepository = mockk<UserRepository> {
-            every { user } returns mockk()
-        }
-        val mockCallback = mockk<() -> Unit>(relaxed = true)
-
-        val classUnderTest = ActivityViewModel(
-            mockAccessTokenRepository,
-            mockLogoutHandler,
-            testDispatcher,
-            mockUserRepository
-        )
-
-        classUnderTest.logout(mockCallback)
-
-        verifyOrder {
-            mockLogoutHandler.executeLogout()
-            mockCallback.invoke()
-        }
     }
 }
