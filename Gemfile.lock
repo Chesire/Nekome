@@ -50,7 +50,7 @@ GEM
       no_proxy_fix
       octokit (~> 4.7)
       terminal-table (>= 1, < 4)
-    danger-android_lint (0.0.9)
+    danger-android_lint (0.0.10)
       danger-plugin-api (~> 1.0)
       oga
     danger-checkstyle_format (0.1.1)
