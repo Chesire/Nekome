@@ -9,8 +9,6 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.drawerlayout.widget.DrawerLayout.LOCK_MODE_LOCKED_CLOSED
 import androidx.drawerlayout.widget.DrawerLayout.LOCK_MODE_UNLOCKED
-import androidx.lifecycle.flowWithLifecycle
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
@@ -25,11 +23,8 @@ import com.chesire.nekome.datasource.user.User
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 import javax.inject.Inject
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.launch
+import timber.log.Timber
 
 /**
  * Single host activity for the application, handles all required logic of the activity such as
@@ -66,13 +61,12 @@ class Activity : AppCompatActivity(), AuthCaster.AuthCasterListener, Flow {
                 updateAvatar(findViewById(R.id.activityNavigationView), user.domain)
             }
         }
-        lifecycleScope.launch {
-            viewModel.navigation.flowWithLifecycle(lifecycle).onEach {
-                findNavController(R.id.activityNavigation).navigate(it)
-            }.launchIn(this)
-            viewModel.snackBar.flowWithLifecycle(lifecycle).onEach {
-                showSnackbarError()
-            }.launchIn(this)
+
+        viewModel.navigation.observe(this) {
+            findNavController(R.id.activityNavigation).navigate(it)
+        }
+        viewModel.snackBar.observe(this) {
+            showSnackbarError()
         }
     }
 

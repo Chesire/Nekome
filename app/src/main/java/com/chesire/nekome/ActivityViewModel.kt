@@ -10,6 +10,7 @@ import com.chesire.nekome.core.flags.HomeScreenOptions
 import com.chesire.nekome.core.settings.ApplicationSettings
 import com.chesire.nekome.datasource.auth.AccessTokenRepository
 import com.chesire.nekome.datasource.user.UserRepository
+import com.hadilq.liveevent.LiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -29,10 +30,10 @@ class ActivityViewModel @Inject constructor(
     userRepository: UserRepository
 ) : ViewModel() {
 
-    private val navigationChannel = Channel<NavDirections>(Channel.BUFFERED)
-    val navigation = navigationChannel.receiveAsFlow()
-    private val snackBarChannel = Channel<Unit>()
-    val snackBar = snackBarChannel.receiveAsFlow()
+    private val navigationChannel = LiveEvent<NavDirections>()
+    val navigation = navigationChannel
+    private val snackBarChannel = LiveEvent<Unit>()
+    val snackBar = snackBarChannel
 
     init {
         if (!userLoggedIn) {
@@ -62,7 +63,7 @@ class ActivityViewModel @Inject constructor(
         navigateTo(OverviewNavGraphDirections.globalToDetailsFragment())
 
         if (isFailure) {
-            snackBarChannel.trySend(Unit)
+            snackBarChannel.postValue(Unit)
         }
     }
 
@@ -75,6 +76,6 @@ class ActivityViewModel @Inject constructor(
     }
 
     private fun navigateTo(destination: NavDirections) {
-        navigationChannel.trySend(destination)
+        navigationChannel.postValue(destination)
     }
 }
