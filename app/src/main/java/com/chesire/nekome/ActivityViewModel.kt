@@ -30,10 +30,8 @@ class ActivityViewModel @Inject constructor(
     userRepository: UserRepository
 ) : ViewModel() {
 
-    private val navigationChannel = LiveEvent<NavDirections>()
-    val navigation = navigationChannel
-    private val snackBarChannel = LiveEvent<Unit>()
-    val snackBar = snackBarChannel
+    val navigation = LiveEvent<NavDirections>()
+    val snackBar = LiveEvent<Unit>()
 
     init {
         if (!userLoggedIn) {
@@ -63,7 +61,7 @@ class ActivityViewModel @Inject constructor(
         navigateTo(OverviewNavGraphDirections.globalToDetailsFragment())
 
         if (isFailure) {
-            snackBarChannel.postValue(Unit)
+            snackBar.postValue(Unit)
         }
     }
 
@@ -76,6 +74,6 @@ class ActivityViewModel @Inject constructor(
     }
 
     private fun navigateTo(destination: NavDirections) {
-        navigationChannel.postValue(destination)
+        navigation.postValue(destination)
     }
 }
