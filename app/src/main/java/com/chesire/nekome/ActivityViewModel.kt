@@ -1,6 +1,6 @@
 package com.chesire.nekome
 
-import androidx.annotation.VisibleForTesting
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
@@ -15,8 +15,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.receiveAsFlow
 
 /**
  * [ViewModel] scoped to the [Activity].
@@ -30,8 +28,11 @@ class ActivityViewModel @Inject constructor(
     userRepository: UserRepository
 ) : ViewModel() {
 
-    val navigation = LiveEvent<NavDirections>()
-    val snackBar = LiveEvent<Unit>()
+    private val _navigation = LiveEvent<NavDirections>()
+    val navigation: LiveData<NavDirections> = _navigation
+
+    private val _snackBar = LiveEvent<Unit>()
+    val snackBar: LiveData<Unit> = _snackBar
 
     init {
         if (!userLoggedIn) {
@@ -61,7 +62,7 @@ class ActivityViewModel @Inject constructor(
         navigateTo(OverviewNavGraphDirections.globalToDetailsFragment())
 
         if (isFailure) {
-            snackBar.postValue(Unit)
+            _snackBar.postValue(Unit)
         }
     }
 
@@ -74,6 +75,6 @@ class ActivityViewModel @Inject constructor(
     }
 
     private fun navigateTo(destination: NavDirections) {
-        navigation.postValue(destination)
+        _navigation.postValue(destination)
     }
 }
