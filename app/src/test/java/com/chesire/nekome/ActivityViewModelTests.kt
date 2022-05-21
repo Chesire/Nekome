@@ -1,8 +1,7 @@
 package com.chesire.nekome
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.lifecycle.Observer
-import androidx.navigation.NavDirections
+import com.chesire.nekome.core.flags.HomeScreenOptions
 import com.chesire.nekome.core.settings.ApplicationSettings
 import com.chesire.nekome.datasource.auth.AccessTokenRepository
 import com.chesire.nekome.datasource.user.UserRepository
@@ -97,7 +96,7 @@ class ActivityViewModelTests {
 
 
     @Test
-    fun `if user is not logged it then details screen navigation event is emited`() {
+    fun `if user is not logged in then details screen navigation event is emitted`() {
         val mockAccessTokenRepository = mockk<AccessTokenRepository>() {
             every { accessToken } returns ""
         }
@@ -116,14 +115,59 @@ class ActivityViewModelTests {
             mockUserRepository
         )
 
-        val mockObserver = mockk<Observer<NavDirections>> {
-            every { onChanged(any()) } just Runs
-        }
-
-        classUnderTest.navigation.observeForever(mockObserver)
-
-        verify {
-            mockObserver.onChanged(OverviewNavGraphDirections.globalToDetailsFragment())
-        }
+        assertTrue(
+            classUnderTest.navigation.value == OverviewNavGraphDirections.globalToDetailsFragment()
+        )
     }
+
+    @Test
+    fun `if user is logged in then home screen navigation event is emitted`() {
+        val mockAccessTokenRepository = mockk<AccessTokenRepository>() {
+            every { accessToken } returns "khinkali"
+        }
+
+        val mockUserRepository = mockk<UserRepository> {
+            every { user } returns mockk()
+        }
+
+        every { settings.defaultHomeScreen } returns HomeScreenOptions.Anime
+
+        val classUnderTest = ActivityViewModel(
+            mockAccessTokenRepository,
+            mockk(),
+            settings,
+            testDispatcher,
+            mockUserRepository
+        )
+
+        assertTrue(
+            classUnderTest.navigation.value == OverviewNavGraphDirections.globalToAnimeFragment()
+        )
+    }
+
+    @Test
+    fun `if user is logged in and has default home screen changed then mange screen navigation event is emitted`() {
+        val mockAccessTokenRepository = mockk<AccessTokenRepository>() {
+            every { accessToken } returns "FuHuaBestWaifu"
+        }
+
+        val mockUserRepository = mockk<UserRepository> {
+            every { user } returns mockk()
+        }
+
+        every { settings.defaultHomeScreen } returns HomeScreenOptions.Manga
+
+        val classUnderTest = ActivityViewModel(
+            mockAccessTokenRepository,
+            mockk(),
+            settings,
+            testDispatcher,
+            mockUserRepository
+        )
+
+        assertTrue(
+            classUnderTest.navigation.value == OverviewNavGraphDirections.globalToMangaFragment()
+        )
+    }
+
 }
