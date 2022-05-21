@@ -93,14 +93,12 @@ class SettingsTests : UITest() {
         settings {
             changeTheme {
                 chooseDark()
-                activity { goToSettings() }
             } validate {
                 darkIsSelected()
             }
 
             changeTheme {
                 chooseLight()
-                activity { goToSettings() }
             } validate {
                 lightIsSelected()
             }

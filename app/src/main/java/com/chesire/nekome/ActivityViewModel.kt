@@ -1,15 +1,18 @@
 package com.chesire.nekome
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavDirections
 import com.chesire.nekome.core.IOContext
+import com.chesire.nekome.core.flags.HomeScreenOptions
+import com.chesire.nekome.core.settings.ApplicationSettings
 import com.chesire.nekome.datasource.auth.AccessTokenRepository
 import com.chesire.nekome.datasource.user.UserRepository
+import com.hadilq.liveevent.LiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import timber.log.Timber
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
@@ -20,9 +23,24 @@ import kotlin.coroutines.CoroutineContext
 class ActivityViewModel @Inject constructor(
     private val repo: AccessTokenRepository,
     private val logoutHandler: LogoutHandler,
+    private val settings: ApplicationSettings,
     @IOContext private val ioContext: CoroutineContext,
     userRepository: UserRepository
 ) : ViewModel() {
+
+    private val _navigation = LiveEvent<NavDirections>()
+    val navigation: LiveData<NavDirections> = _navigation
+
+    private val _snackBar = LiveEvent<Unit>()
+    val snackBar: LiveData<Unit> = _snackBar
+
+    init {
+        if (!userLoggedIn) {
+            navigateTo(OverviewNavGraphDirections.globalToDetailsFragment())
+        } else {
+            navigateToDefaultHome()
+        }
+    }
 
     /**
      * The currently logged in user.
@@ -36,15 +54,27 @@ class ActivityViewModel @Inject constructor(
         get() = repo.accessToken.isNotEmpty()
 
     /**
-     * Logs the user out and returns the user back to entering the login details. [callback] is
-     * executed after the [LogoutHandler] has finished clearing its data.
+     * Logs the user out and returns the user back to entering the login details.
      */
-    fun logout(callback: () -> Unit) = viewModelScope.launch {
-        withContext(ioContext) {
-            logoutHandler.executeLogout()
-        }
+    fun logout(isFailure: Boolean = false) = viewModelScope.launch(ioContext) {
+        logoutHandler.executeLogout()
 
-        Timber.w("Logout complete, firing callback")
-        callback()
+        navigateTo(OverviewNavGraphDirections.globalToDetailsFragment())
+
+        if (isFailure) {
+            _snackBar.postValue(Unit)
+        }
+    }
+
+    fun navigateToDefaultHome() {
+        if (settings.defaultHomeScreen == HomeScreenOptions.Anime) {
+            navigateTo(OverviewNavGraphDirections.globalToAnimeFragment())
+        } else {
+            navigateTo(OverviewNavGraphDirections.globalToMangaFragment())
+        }
+    }
+
+    private fun navigateTo(destination: NavDirections) {
+        _navigation.postValue(destination)
     }
 }
