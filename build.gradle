@@ -36,6 +36,16 @@ allprojects {
 subprojects {
     apply plugin: "org.jlleitschuh.gradle.ktlint"
     apply from: "${project.rootDir}/jacoco.gradle"
+
+    ktlint {
+        verbose = true
+        android = true
+        outputToConsole = true
+
+        reporters {
+            reporter "plain"
+        }
+    }
 }
 
 task clean(type: Delete) {
