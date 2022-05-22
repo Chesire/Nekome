@@ -6,8 +6,8 @@ import com.chesire.nekome.datasource.search.remote.SearchApi
 import com.chesire.nekome.kitsu.asError
 import com.chesire.nekome.kitsu.parse
 import com.chesire.nekome.kitsu.search.dto.SearchResponseDto
-import retrofit2.Response
 import javax.inject.Inject
+import retrofit2.Response
 
 /**
  * Implementation of the [SearchApi] for usage with the Kitsu API.

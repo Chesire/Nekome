@@ -19,7 +19,9 @@ interface KitsuSearchService {
      * Search is limited to only 20 items at once.
      */
     @GET("api/edge/anime?fields[anime]=$ANIME_FIELDS")
-    suspend fun searchForAnimeAsync(@Query("filter[text]") title: String): Response<SearchResponseDto>
+    suspend fun searchForAnimeAsync(
+        @Query("filter[text]") title: String
+    ): Response<SearchResponseDto>
 
     /**
      * Performs a search for any manga series with the title [title].
@@ -27,5 +29,7 @@ interface KitsuSearchService {
      * Search is limited to only 20 items at once.
      */
     @GET("api/edge/manga?fields[manga]=$MANGA_FIELDS")
-    suspend fun searchForMangaAsync(@Query("filter[text]") title: String): Response<SearchResponseDto>
+    suspend fun searchForMangaAsync(
+        @Query("filter[text]") title: String
+    ): Response<SearchResponseDto>
 }

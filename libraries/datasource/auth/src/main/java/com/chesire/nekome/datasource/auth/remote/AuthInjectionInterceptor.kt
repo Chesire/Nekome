@@ -1,9 +1,9 @@
 package com.chesire.nekome.datasource.auth.remote
 
 import com.chesire.nekome.datasource.auth.AccessTokenRepository
+import javax.inject.Inject
 import okhttp3.Interceptor
 import okhttp3.Response
-import javax.inject.Inject
 
 /**
  * Interceptor to push the authorization header into api requests.

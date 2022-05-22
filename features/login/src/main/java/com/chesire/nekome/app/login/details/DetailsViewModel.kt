@@ -9,9 +9,9 @@ import com.chesire.nekome.datasource.auth.AccessTokenResult
 import com.chesire.nekome.datasource.user.UserRepository
 import com.hadilq.liveevent.LiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.launch
 import timber.log.Timber
-import javax.inject.Inject
 
 /**
  * ViewModel to aid with logging a user in via the [DetailsFragment].

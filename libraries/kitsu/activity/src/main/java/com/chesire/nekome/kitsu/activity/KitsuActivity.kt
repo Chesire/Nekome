@@ -6,8 +6,8 @@ import com.chesire.nekome.datasource.activity.remote.ActivityApi
 import com.chesire.nekome.kitsu.activity.dto.RetrieveActivityDto
 import com.chesire.nekome.kitsu.asError
 import com.chesire.nekome.kitsu.parse
-import retrofit2.Response
 import javax.inject.Inject
+import retrofit2.Response
 
 /**
  * Implementation of the [ActivityApi] for usage with the Kitsu API.

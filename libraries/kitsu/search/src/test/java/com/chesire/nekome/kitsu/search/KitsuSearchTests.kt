@@ -6,13 +6,13 @@ import com.chesire.nekome.kitsu.search.dto.SearchResponseDto
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
+import java.net.UnknownHostException
 import kotlinx.coroutines.runBlocking
 import okhttp3.ResponseBody
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import retrofit2.Response
-import java.net.UnknownHostException
 
 class KitsuSearchTests {
 

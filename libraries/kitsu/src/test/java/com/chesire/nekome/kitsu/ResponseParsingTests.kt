@@ -3,12 +3,12 @@ package com.chesire.nekome.kitsu
 import com.chesire.nekome.core.Resource
 import io.mockk.every
 import io.mockk.mockk
+import java.net.UnknownHostException
 import okhttp3.MediaType
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import retrofit2.Response
-import java.net.UnknownHostException
 
 class ResponseParsingTests {
 

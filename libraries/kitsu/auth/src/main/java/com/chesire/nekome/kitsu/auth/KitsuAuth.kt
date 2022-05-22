@@ -8,10 +8,10 @@ import com.chesire.nekome.kitsu.auth.dto.AuthResponseDto
 import com.chesire.nekome.kitsu.auth.dto.LoginRequestDto
 import com.chesire.nekome.kitsu.auth.dto.RefreshTokenRequestDto
 import com.chesire.nekome.kitsu.parse
-import retrofit2.Response
-import timber.log.Timber
 import java.net.UnknownHostException
 import javax.inject.Inject
+import retrofit2.Response
+import timber.log.Timber
 
 /**
  * Implementation of the [AuthApi] for usage with the Kitsu API.

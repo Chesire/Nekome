@@ -12,8 +12,8 @@ import com.chesire.nekome.core.extensions.postSuccess
 import com.chesire.nekome.core.flags.AsyncState
 import com.chesire.nekome.datasource.trending.remote.TrendingApi
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlinx.coroutines.launch
 
 /**
  * ViewModel to aid with performing series discovery.

@@ -22,5 +22,7 @@ interface KitsuAuthService {
      * Performs a refresh token request with the API.
      */
     @POST("api/oauth/token")
-    suspend fun refreshAccessTokenAsync(@Body body: RefreshTokenRequestDto): Response<AuthResponseDto>
+    suspend fun refreshAccessTokenAsync(
+        @Body body: RefreshTokenRequestDto
+    ): Response<AuthResponseDto>
 }

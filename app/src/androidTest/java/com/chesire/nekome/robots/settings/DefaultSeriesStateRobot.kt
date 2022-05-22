@@ -58,7 +58,9 @@ class DefaultSeriesStateRobot {
      * Executes validation steps.
      * Requires opening the dialog, performing the check, then closing the dialog again.
      */
-    infix fun validate(func: DefaultSeriesStateResultRobot.() -> Unit): DefaultSeriesStateResultRobot {
+    infix fun validate(
+        func: DefaultSeriesStateResultRobot.() -> Unit
+    ): DefaultSeriesStateResultRobot {
         return DefaultSeriesStateResultRobot().apply {
             openDialog()
             func()

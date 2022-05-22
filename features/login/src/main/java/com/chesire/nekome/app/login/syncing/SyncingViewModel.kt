@@ -13,9 +13,9 @@ import com.chesire.nekome.datasource.series.SeriesRepository
 import com.chesire.nekome.datasource.user.User
 import com.chesire.nekome.datasource.user.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 /**
  * ViewModel to aid with pulling down the users series via the [SyncingFragment].

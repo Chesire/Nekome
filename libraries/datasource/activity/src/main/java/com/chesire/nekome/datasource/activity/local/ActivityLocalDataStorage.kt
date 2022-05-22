@@ -8,7 +8,7 @@ import javax.inject.Singleton
  * Local data storage for the users activity.
  * This will cache the data in memory, as it doesn't need to have long term storage.
  */
-@Singleton // Keep this file as a singleton so its a persistent cache, instead of storing it on device.
+@Singleton // Keep this file as a singleton so its memory persistent.
 class ActivityLocalDataStorage @Inject constructor() {
     var cachedActivityItems: List<ActivityDomain> = emptyList()
 

@@ -2,8 +2,8 @@ package com.chesire.nekome.kitsu
 
 import com.chesire.nekome.core.Resource
 import com.chesire.nekome.datasource.auth.AuthException
-import retrofit2.Response
 import java.net.UnknownHostException
+import retrofit2.Response
 
 /**
  * Parse out a [Response] into a [Resource] object.
