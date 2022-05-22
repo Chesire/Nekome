@@ -4,6 +4,7 @@ plugins {
 }
 
 android {
+    namespace 'com.chesire.nekome.testing'
     compileSdk sdk_version
 
     defaultConfig {
@@ -24,7 +25,6 @@ android {
             excludes += ['META-INF/AL2.0', 'META-INF/LGPL2.1', 'META-INF/*.kotlin_module']
         }
     }
-    namespace 'com.chesire.nekome.testing'
 }
 
 dependencies {

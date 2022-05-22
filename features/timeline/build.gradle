@@ -6,6 +6,7 @@ plugins {
 }
 
 android {
+    namespace 'com.chesire.nekome.app.timeline'
     compileSdk sdk_version
 
     defaultConfig {
@@ -23,7 +24,6 @@ android {
     buildFeatures {
         viewBinding true
     }
-    namespace 'com.chesire.nekome.app.timeline'
 }
 
 dependencies {

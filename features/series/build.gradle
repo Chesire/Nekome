@@ -7,6 +7,7 @@ plugins {
 }
 
 android {
+    namespace 'com.chesire.nekome.app.series'
     compileSdk sdk_version
 
     defaultConfig {
@@ -25,7 +26,6 @@ android {
     buildFeatures {
         viewBinding true
     }
-    namespace 'com.chesire.nekome.app.series'
 }
 
 dependencies {

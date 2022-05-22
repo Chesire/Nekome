@@ -8,6 +8,7 @@ plugins {
 }
 
 android {
+    namespace 'com.chesire.nekome.app.search'
     compileSdk sdk_version
 
     defaultConfig {
@@ -26,7 +27,6 @@ android {
     buildFeatures {
         viewBinding true
     }
-    namespace 'com.chesire.nekome.app.search'
 }
 
 dependencies {

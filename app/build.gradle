@@ -8,6 +8,7 @@ plugins {
 }
 
 android {
+    namespace 'com.chesire.nekome'
     compileSdk sdk_version
 
     defaultConfig {
@@ -50,7 +51,6 @@ android {
         checkAllWarnings true
         checkDependencies true
     }
-    namespace 'com.chesire.nekome'
 }
 
 dependencies {

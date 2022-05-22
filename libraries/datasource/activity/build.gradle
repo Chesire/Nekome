@@ -4,6 +4,7 @@ plugins {
 }
 
 android {
+    namespace 'com.chesire.nekome.datasource.activity'
     compileSdk sdk_version
 
     defaultConfig {
@@ -18,7 +19,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-    namespace 'com.chesire.nekome.datasource.activity'
 }
 
 dependencies {

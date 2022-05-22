@@ -6,6 +6,7 @@ plugins {
 }
 
 android {
+    namespace 'com.chesire.nekome.core'
     compileSdk sdk_version
 
     defaultConfig {
@@ -21,7 +22,6 @@ android {
             proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
         }
     }
-    namespace 'com.chesire.nekome.core'
 }
 
 dependencies {

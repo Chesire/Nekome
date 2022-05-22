@@ -5,6 +5,7 @@ plugins {
 }
 
 android {
+    namespace 'com.chesire.nekome.database'
     compileSdk sdk_version
 
     defaultConfig {
@@ -33,7 +34,6 @@ android {
     sourceSets {
         test.assets.srcDirs += files("$projectDir/schemas".toString())
     }
-    namespace 'com.chesire.nekome.database'
 }
 
 dependencies {
