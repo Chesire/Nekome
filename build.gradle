@@ -41,6 +41,7 @@ subprojects {
         verbose = true
         android = true
         outputToConsole = true
+        disabledRules = ["max-line-length"]
 
         reporters {
             reporter "plain"

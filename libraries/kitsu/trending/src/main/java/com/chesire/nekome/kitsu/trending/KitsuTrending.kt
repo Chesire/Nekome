@@ -34,7 +34,9 @@ class KitsuTrending @Inject constructor(
         }
     }
 
-    private fun parseResponse(response: Response<TrendingResponseDto>): Resource<List<TrendingDomain>> {
+    private fun parseResponse(
+        response: Response<TrendingResponseDto>
+    ): Resource<List<TrendingDomain>> {
         return if (response.isSuccessful) {
             response.body()?.let { trending ->
                 Resource.Success(trending.data.map { map.toTrendingDomain(it) })

@@ -145,7 +145,7 @@ class ActivityViewModelTests {
     }
 
     @Test
-    fun `if user is logged in and has default home screen changed then mange screen navigation event is emitted`() {
+    fun `if user is logged in and has default home screen changed then manga screen navigation event is emitted`() {
         val mockAccessTokenRepository = mockk<AccessTokenRepository>() {
             every { accessToken } returns "FuHuaBestWaifu"
         }

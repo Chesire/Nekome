@@ -29,7 +29,9 @@ class ProfileViewModelTests {
     @Test
     fun `anime gets updated with seriesRepository anime series`() {
         val mockSeriesRepo = mockk<SeriesRepository> {
-            every { getSeries() } returns flowOf(listOf(createSeriesDomain(seriesType = SeriesType.Anime)))
+            every {
+                getSeries()
+            } returns flowOf(listOf(createSeriesDomain(seriesType = SeriesType.Anime)))
         }
         val mockUserRepo = mockk<UserRepository> {
             every { user } returns mockk()
@@ -47,7 +49,9 @@ class ProfileViewModelTests {
     @Test
     fun `manga gets updated with seriesRepository manga series`() {
         val mockSeriesRepo = mockk<SeriesRepository> {
-            every { getSeries() } returns flowOf(listOf(createSeriesDomain(seriesType = SeriesType.Manga)))
+            every {
+                getSeries()
+            } returns flowOf(listOf(createSeriesDomain(seriesType = SeriesType.Manga)))
         }
         val mockUserRepo = mockk<UserRepository> {
             every { user } returns mockk()

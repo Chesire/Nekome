@@ -34,7 +34,9 @@ class DefaultHomeScreenRobot {
      * Executes validation steps.
      * Requires opening the dialog, performing the check, then closing the dialog again.
      */
-    infix fun validate(func: DefaultHomeScreenResultRobot.() -> Unit): DefaultHomeScreenResultRobot {
+    infix fun validate(
+        func: DefaultHomeScreenResultRobot.() -> Unit
+    ): DefaultHomeScreenResultRobot {
         return DefaultHomeScreenResultRobot().apply {
             openDialog()
             func()
