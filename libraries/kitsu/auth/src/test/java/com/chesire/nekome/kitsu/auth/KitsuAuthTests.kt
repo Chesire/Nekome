@@ -8,13 +8,13 @@ import com.chesire.nekome.kitsu.auth.dto.RefreshTokenRequestDto
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
+import java.net.HttpURLConnection
+import java.net.UnknownHostException
 import kotlinx.coroutines.runBlocking
 import okhttp3.ResponseBody
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import retrofit2.Response
-import java.net.HttpURLConnection
-import java.net.UnknownHostException
 
 private const val USERNAME_INPUT = "username"
 private const val PASSWORD_INPUT = "password"

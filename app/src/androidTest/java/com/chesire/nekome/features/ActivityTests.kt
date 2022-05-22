@@ -9,8 +9,8 @@ import com.chesire.nekome.robots.search.search
 import com.chesire.nekome.robots.series.seriesList
 import com.chesire.nekome.robots.settings.settings
 import dagger.hilt.android.testing.HiltAndroidTest
-import org.junit.Test
 import javax.inject.Inject
+import org.junit.Test
 
 @HiltAndroidTest
 class ActivityTests : UITest() {

@@ -3,8 +3,8 @@ package com.chesire.nekome.datasource.activity
 import com.chesire.nekome.core.Resource
 import com.chesire.nekome.datasource.activity.local.ActivityLocalDataStorage
 import com.chesire.nekome.datasource.activity.remote.ActivityApi
-import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
+import kotlinx.coroutines.flow.flow
 
 /**
  * Repository to access the users library activity.

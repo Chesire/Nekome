@@ -8,9 +8,9 @@ import com.chesire.nekome.core.flags.SeriesType
 import com.chesire.nekome.core.settings.ApplicationSettings
 import com.chesire.nekome.datasource.series.SeriesRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 /**
  * ViewModel to aid with adding new series to track that are found through search.

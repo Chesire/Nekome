@@ -10,8 +10,8 @@ import com.chesire.nekome.datasource.search.SearchDomain
 import com.chesire.nekome.datasource.search.remote.SearchApi
 import com.hadilq.liveevent.LiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlinx.coroutines.launch
 
 /**
  * ViewModel to aid with searching for new series for a user to follow.

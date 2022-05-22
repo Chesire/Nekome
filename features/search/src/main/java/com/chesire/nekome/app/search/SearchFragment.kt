@@ -14,8 +14,8 @@ import com.chesire.nekome.core.extensions.show
 import com.chesire.nekome.core.flags.SeriesType
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 import javax.inject.Inject
+import timber.log.Timber
 
 /**
  * Allows a user to perform a search to find new series to follow.

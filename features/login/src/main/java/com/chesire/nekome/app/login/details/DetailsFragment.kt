@@ -17,8 +17,8 @@ import com.chesire.nekome.core.extensions.show
 import com.chesire.nekome.core.url.UrlHandler
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 import javax.inject.Inject
+import timber.log.Timber
 
 /**
  * Fragment to allow the user to enter their login details for Kitsu.

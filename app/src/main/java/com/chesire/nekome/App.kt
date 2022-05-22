@@ -10,8 +10,8 @@ import com.chesire.lifecyklelog.LogHandler
 import com.chesire.nekome.core.settings.ApplicationSettings
 import com.chesire.nekome.services.WorkerQueue
 import dagger.hilt.android.HiltAndroidApp
-import timber.log.Timber
 import javax.inject.Inject
+import timber.log.Timber
 
 /**
  * Custom application to initialize anything that needs to be activated from application start.

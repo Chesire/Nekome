@@ -4,11 +4,11 @@ import com.chesire.nekome.core.Resource
 import com.chesire.nekome.core.flags.Service
 import com.chesire.nekome.database.dao.UserDao
 import com.chesire.nekome.datasource.user.remote.UserApi
+import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import timber.log.Timber
-import javax.inject.Inject
 
 /**
  * Repository to interact with user data.

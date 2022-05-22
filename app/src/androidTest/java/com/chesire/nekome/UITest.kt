@@ -11,10 +11,10 @@ import com.chesire.nekome.helpers.logout
 import com.schibsted.spain.barista.rule.cleardata.ClearDatabaseRule
 import com.schibsted.spain.barista.rule.cleardata.ClearPreferencesRule
 import dagger.hilt.android.testing.HiltAndroidRule
+import javax.inject.Inject
 import org.junit.Before
 import org.junit.Rule
 import org.junit.runner.RunWith
-import javax.inject.Inject
 
 /**
  * Provides a base class to use for all UI tests.

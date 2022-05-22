@@ -2,8 +2,8 @@ package com.chesire.nekome
 
 import com.chesire.nekome.database.RoomDB
 import com.chesire.nekome.datasource.auth.AccessTokenRepository
-import timber.log.Timber
 import javax.inject.Inject
+import timber.log.Timber
 
 /**
  * Handles clearing out resources for when a log out occurs.

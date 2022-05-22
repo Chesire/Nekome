@@ -26,8 +26,8 @@ import com.chesire.nekome.core.flags.AsyncState
 import com.chesire.nekome.core.flags.SeriesType
 import com.chesire.nekome.datasource.series.SeriesDomain
 import com.google.android.material.snackbar.Snackbar
-import timber.log.Timber
 import javax.inject.Inject
+import timber.log.Timber
 
 /**
  * Provides a base fragment for the [AnimeFragment] & [MangaFragment] to inherit from, performing

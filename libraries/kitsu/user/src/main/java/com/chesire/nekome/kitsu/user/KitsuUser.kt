@@ -6,8 +6,8 @@ import com.chesire.nekome.datasource.user.remote.UserApi
 import com.chesire.nekome.kitsu.asError
 import com.chesire.nekome.kitsu.parse
 import com.chesire.nekome.kitsu.user.dto.UserResponseDto
-import retrofit2.Response
 import javax.inject.Inject
+import retrofit2.Response
 
 /**
  * Implementation of the [UserApi] for usage with the Kitsu API.

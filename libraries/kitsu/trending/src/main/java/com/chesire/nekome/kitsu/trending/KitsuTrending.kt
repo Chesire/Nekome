@@ -6,8 +6,8 @@ import com.chesire.nekome.datasource.trending.remote.TrendingApi
 import com.chesire.nekome.kitsu.asError
 import com.chesire.nekome.kitsu.parse
 import com.chesire.nekome.kitsu.trending.dto.TrendingResponseDto
-import retrofit2.Response
 import javax.inject.Inject
+import retrofit2.Response
 
 /**
  * Implementation of the [TrendingApi] for usage with the Kitsu API.

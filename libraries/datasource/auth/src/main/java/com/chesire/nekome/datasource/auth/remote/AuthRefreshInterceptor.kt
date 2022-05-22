@@ -4,11 +4,11 @@ import com.chesire.nekome.core.AuthCaster
 import com.chesire.nekome.datasource.auth.AccessTokenRepository
 import com.chesire.nekome.datasource.auth.AccessTokenResult
 import com.chesire.nekome.datasource.auth.AuthException
+import java.net.HttpURLConnection
+import javax.inject.Inject
 import kotlinx.coroutines.runBlocking
 import okhttp3.Interceptor
 import okhttp3.Response
-import java.net.HttpURLConnection
-import javax.inject.Inject
 
 /**
  * Interceptor to handle refreshing access tokens if required.

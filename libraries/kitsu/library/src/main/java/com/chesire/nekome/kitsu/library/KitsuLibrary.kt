@@ -11,10 +11,10 @@ import com.chesire.nekome.kitsu.library.dto.DtoFactory
 import com.chesire.nekome.kitsu.library.dto.RetrieveResponseDto
 import com.chesire.nekome.kitsu.parse
 import com.chesire.nekome.kitsu.parseError
+import javax.inject.Inject
 import okhttp3.MediaType
 import okhttp3.RequestBody
 import retrofit2.Response
-import javax.inject.Inject
 
 private const val LIMIT = 500
 private const val MAX_RETRIES = 3

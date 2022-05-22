@@ -1,7 +1,7 @@
 package com.chesire.nekome.kitsu.library.dto
 
-import org.json.JSONObject
 import javax.inject.Inject
+import org.json.JSONObject
 
 /**
  * Factory to create JSON representations of models to send via the api.

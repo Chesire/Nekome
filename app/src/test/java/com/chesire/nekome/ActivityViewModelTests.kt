@@ -94,7 +94,6 @@ class ActivityViewModelTests {
         verify { mockLogoutHandler.executeLogout() }
     }
 
-
     @Test
     fun `if user is not logged in then details screen navigation event is emitted`() {
         val mockAccessTokenRepository = mockk<AccessTokenRepository>() {
@@ -169,5 +168,4 @@ class ActivityViewModelTests {
             classUnderTest.navigation.value == OverviewNavGraphDirections.globalToMangaFragment()
         )
     }
-
 }
