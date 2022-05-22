@@ -33,6 +33,7 @@ android {
     sourceSets {
         test.assets.srcDirs += files("$projectDir/schemas".toString())
     }
+    namespace 'com.chesire.nekome.database'
 }
 
 dependencies {

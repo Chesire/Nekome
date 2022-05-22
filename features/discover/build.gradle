@@ -26,6 +26,7 @@ android {
     buildFeatures {
         viewBinding true
     }
+    namespace 'com.chesire.nekome.app.discover'
 }
 
 dependencies {
