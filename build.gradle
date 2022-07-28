@@ -84,7 +84,7 @@ ext {
     moshi_version = "1.13.0"
     preferences_version = "1.2.0"
     retrofit_version = "2.9.0"
-    room_version = "2.4.2"
+    room_version = "2.4.3"
     security_version = "1.0.0"
     timber_version = "5.0.1"
     viewmodel_version = "2.5.0"
