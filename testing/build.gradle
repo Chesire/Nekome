@@ -4,6 +4,7 @@ plugins {
 }
 
 android {
+    namespace 'com.chesire.nekome.testing'
     compileSdk sdk_version
 
     defaultConfig {

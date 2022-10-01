@@ -5,6 +5,7 @@ plugins {
 }
 
 android {
+    namespace 'com.chesire.nekome.kitsu.trending'
     compileSdk sdk_version
 
     defaultConfig {

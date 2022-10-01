@@ -4,6 +4,7 @@ plugins {
 }
 
 android {
+    namespace 'com.chesire.nekome.datasource.search'
     compileSdk sdk_version
 
     defaultConfig {

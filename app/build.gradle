@@ -8,6 +8,7 @@ plugins {
 }
 
 android {
+    namespace 'com.chesire.nekome'
     compileSdk sdk_version
 
     defaultConfig {
@@ -17,7 +18,7 @@ android {
         versionCode 22041422 // Date of build formatted as 'yyMMddHH'
         versionName "1.6.0"
         testInstrumentationRunner "com.chesire.nekome.TestRunner"
-        resConfigs "en", "ja"
+        resConfigs 'en', 'ja'
     }
     buildTypes {
         release {
