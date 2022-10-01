@@ -13,7 +13,7 @@ fun View.hide(invisible: Boolean = false) {
     animate()
         .alpha(0.0f)
         .setListener(object : AnimatorListenerAdapter() {
-            override fun onAnimationEnd(animation: Animator?) {
+            override fun onAnimationEnd(animation: Animator) {
                 visibility = if (invisible) View.INVISIBLE else View.GONE
             }
         })
