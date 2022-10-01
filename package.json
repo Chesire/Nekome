@@ -5,8 +5,8 @@
     ]
   },
   "devDependencies": {
-    "@commitlint/cli": "12.1.4",
-    "@commitlint/config-conventional": "12.1.4",
+    "@commitlint/cli": "17.1.2",
+    "@commitlint/config-conventional": "17.1.0",
     "cz-conventional-changelog": "3.3.0",
     "husky": "6.0.0"
   },
