@@ -5,6 +5,7 @@ plugins {
 }
 
 android {
+    namespace 'com.chesire.nekome.kitsu.user'
     compileSdk sdk_version
 
     defaultConfig {

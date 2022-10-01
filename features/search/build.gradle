@@ -8,6 +8,7 @@ plugins {
 }
 
 android {
+    namespace 'com.chesire.nekome.app.search'
     compileSdk sdk_version
 
     defaultConfig {

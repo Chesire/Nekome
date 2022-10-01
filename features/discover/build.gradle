@@ -8,6 +8,7 @@ plugins {
 }
 
 android {
+    namespace 'com.chesire.nekome.app.discover'
     compileSdk sdk_version
 
     defaultConfig {

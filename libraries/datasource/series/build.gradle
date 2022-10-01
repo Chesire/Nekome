@@ -5,6 +5,7 @@ plugins {
 }
 
 android {
+    namespace 'com.chesire.nekome.datasource.series'
     compileSdk sdk_version
 
     defaultConfig {
