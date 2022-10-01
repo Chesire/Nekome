@@ -6,6 +6,9 @@
     "Chesire"
   ],
   "branchPrefix": "deps/",
+  "semanticCommits": "enabled",
+  "semanticCommitType": "chore",
+  "semanticCommitScope": "deps",
   "labels": [
     "dependencies"
   ],
