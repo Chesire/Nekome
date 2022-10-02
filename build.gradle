@@ -69,7 +69,7 @@ ext {
 
     // App
     appcompat_version = "1.5.1"
-    coil_version = "2.1.0"
+    coil_version = "2.2.2"
     constraintlayout_version = "2.1.4"
     core_version = "1.9.0"
     coroutines_version = "1.6.4"
