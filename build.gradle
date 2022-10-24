@@ -5,7 +5,7 @@ buildscript {
     ext.hilt_version = "2.44"
     ext.jacoco_version = "0.8.8"
     ext.kotlin_version = "1.6.21"
-    ext.nav_version = "2.5.2"
+    ext.nav_version = "2.5.3"
     repositories {
         google()
         jcenter()
