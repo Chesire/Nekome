@@ -73,7 +73,7 @@ ext {
     constraintlayout_version = "2.1.4"
     core_version = "1.9.0"
     coroutines_version = "1.6.4"
-    fragment_version = "1.5.3"
+    fragment_version = "1.5.4"
     hiltx_version = "1.0.0"
     lifecycle_version = "2.2.0"
     livedata_version = "2.5.1"
