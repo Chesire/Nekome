@@ -1,9 +1,9 @@
 package com.chesire.nekome.robots.settings
 
+import com.adevinta.android.barista.assertion.BaristaCheckedAssertions.assertChecked
+import com.adevinta.android.barista.interaction.BaristaClickInteractions.clickOn
 import com.chesire.nekome.R
 import com.chesire.nekome.core.flags.HomeScreenOptions
-import com.schibsted.spain.barista.assertion.BaristaCheckedAssertions.assertChecked
-import com.schibsted.spain.barista.interaction.BaristaClickInteractions.clickOn
 
 /**
  * Robot to interact with the default home screen dialog.

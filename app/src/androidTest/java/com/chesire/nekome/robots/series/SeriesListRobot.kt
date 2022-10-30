@@ -2,14 +2,14 @@ package com.chesire.nekome.robots.series
 
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
+import com.adevinta.android.barista.assertion.BaristaListAssertions.assertDisplayedAtPosition
+import com.adevinta.android.barista.assertion.BaristaRecyclerViewAssertions.assertRecyclerViewItemCount
+import com.adevinta.android.barista.assertion.BaristaVisibilityAssertions.assertDisplayed
+import com.adevinta.android.barista.assertion.BaristaVisibilityAssertions.assertNotExist
+import com.adevinta.android.barista.interaction.BaristaListInteractions.clickListItemChild
+import com.adevinta.android.barista.interaction.BaristaSwipeRefreshInteractions.refresh
 import com.chesire.nekome.R
 import com.chesire.nekome.helpers.ToastMatcher.Companion.onToast
-import com.schibsted.spain.barista.assertion.BaristaListAssertions.assertDisplayedAtPosition
-import com.schibsted.spain.barista.assertion.BaristaRecyclerViewAssertions.assertRecyclerViewItemCount
-import com.schibsted.spain.barista.assertion.BaristaVisibilityAssertions.assertDisplayed
-import com.schibsted.spain.barista.assertion.BaristaVisibilityAssertions.assertNotExist
-import com.schibsted.spain.barista.interaction.BaristaListInteractions.clickListItemChild
-import com.schibsted.spain.barista.interaction.BaristaSwipeRefreshInteractions.refresh
 
 /**
  * Method to interact with the [SeriesListRobot].

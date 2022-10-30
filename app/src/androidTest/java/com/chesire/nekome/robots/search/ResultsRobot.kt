@@ -5,8 +5,8 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.hasDescendant
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
+import com.adevinta.android.barista.assertion.BaristaVisibilityAssertions.assertDisplayed
 import com.chesire.nekome.R
-import com.schibsted.spain.barista.assertion.BaristaVisibilityAssertions.assertDisplayed
 
 /**
  * Method to interact with the [ResultsRobot].
