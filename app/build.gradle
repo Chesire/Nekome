@@ -94,8 +94,6 @@ dependencies {
     implementation "com.afollestad.material-dialogs:input:$materialdialog_version"
     implementation "com.afollestad.material-dialogs:lifecycle:$materialdialog_version"
     implementation "com.chesire:lifecyklelog:3.1.0"
-    implementation "com.chesire.lintrules:lint-gradle:$lintrules_version"
-    implementation "com.chesire.lintrules:lint-xml:$lintrules_version"
     implementation "com.github.hadilq:live-event:$liveevent_version"
     implementation "com.google.android.material:material:$material_version"
     implementation "com.google.dagger:hilt-android:$hilt_version"

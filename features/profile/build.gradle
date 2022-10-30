@@ -39,8 +39,6 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$livedata_version"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$viewmodel_version"
-    implementation "com.chesire.lintrules:lint-gradle:$lintrules_version"
-    implementation "com.chesire.lintrules:lint-xml:$lintrules_version"
     implementation "com.google.android.material:material:$material_version"
     implementation "com.google.dagger:hilt-android:$hilt_version"
     implementation "io.coil-kt:coil:$coil_version"

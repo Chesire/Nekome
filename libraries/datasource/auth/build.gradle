@@ -27,8 +27,6 @@ dependencies {
 
     implementation "androidx.core:core-ktx:$core_version"
     implementation "androidx.security:security-crypto:$security_version"
-    implementation "com.chesire.lintrules:lint-gradle:$lintrules_version"
-    implementation "com.chesire.lintrules:lint-xml:$lintrules_version"
     implementation "com.google.dagger:hilt-android:$hilt_version"
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
