@@ -28,8 +28,6 @@ dependencies {
     implementation project(":libraries:datasource:search")
     implementation project(':libraries:kitsu')
 
-    implementation "com.chesire.lintrules:lint-gradle:$lintrules_version"
-    implementation "com.chesire.lintrules:lint-xml:$lintrules_version"
     implementation "com.google.dagger:hilt-android:$hilt_version"
     implementation "com.jakewharton.timber:timber:$timber_version"
     implementation "com.squareup.retrofit2:converter-moshi:$retrofit_version"

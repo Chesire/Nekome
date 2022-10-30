@@ -41,8 +41,6 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$livedata_version"
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
-    implementation "com.chesire.lintrules:lint-gradle:$lintrules_version"
-    implementation "com.chesire.lintrules:lint-xml:$lintrules_version"
     implementation "com.github.hadilq:live-event:$liveevent_version"
     implementation "com.google.android.material:material:$material_version"
     implementation "com.google.dagger:hilt-android:$hilt_version"

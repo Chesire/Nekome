@@ -3,16 +3,16 @@ package com.chesire.nekome.robots.series
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isChecked
 import androidx.test.espresso.matcher.ViewMatchers.isNotChecked
+import com.adevinta.android.barista.assertion.BaristaEnabledAssertions.assertDisabled
+import com.adevinta.android.barista.assertion.BaristaEnabledAssertions.assertEnabled
+import com.adevinta.android.barista.assertion.BaristaListAssertions.assertCustomAssertionAtPosition
+import com.adevinta.android.barista.assertion.BaristaListAssertions.assertDisplayedAtPosition
+import com.adevinta.android.barista.assertion.BaristaVisibilityAssertions.assertDisplayed
+import com.adevinta.android.barista.assertion.BaristaVisibilityAssertions.assertNotExist
+import com.adevinta.android.barista.interaction.BaristaClickInteractions.clickOn
+import com.adevinta.android.barista.interaction.BaristaListInteractions.clickListItem
+import com.adevinta.android.barista.interaction.BaristaMenuClickInteractions.clickMenu
 import com.chesire.nekome.R
-import com.schibsted.spain.barista.assertion.BaristaEnabledAssertions.assertDisabled
-import com.schibsted.spain.barista.assertion.BaristaEnabledAssertions.assertEnabled
-import com.schibsted.spain.barista.assertion.BaristaListAssertions.assertCustomAssertionAtPosition
-import com.schibsted.spain.barista.assertion.BaristaListAssertions.assertDisplayedAtPosition
-import com.schibsted.spain.barista.assertion.BaristaVisibilityAssertions.assertDisplayed
-import com.schibsted.spain.barista.assertion.BaristaVisibilityAssertions.assertNotExist
-import com.schibsted.spain.barista.interaction.BaristaClickInteractions.clickOn
-import com.schibsted.spain.barista.interaction.BaristaListInteractions.clickListItem
-import com.schibsted.spain.barista.interaction.BaristaMenuClickInteractions.clickMenu
 
 /*
 Since the MaterialDialogs library is being used, the way to access parts of the dialog needs to

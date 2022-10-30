@@ -1,5 +1,10 @@
 package com.chesire.nekome.features.series
 
+import com.adevinta.android.barista.assertion.BaristaListAssertions.assertDisplayedAtPosition
+import com.adevinta.android.barista.assertion.BaristaListAssertions.assertListNotEmpty
+import com.adevinta.android.barista.assertion.BaristaVisibilityAssertions.assertDisplayed
+import com.adevinta.android.barista.assertion.BaristaVisibilityAssertions.assertNotDisplayed
+import com.adevinta.android.barista.interaction.BaristaListInteractions.clickListItemChild
 import com.chesire.nekome.R
 import com.chesire.nekome.UITest
 import com.chesire.nekome.core.Resource
@@ -12,11 +17,6 @@ import com.chesire.nekome.datasource.series.remote.SeriesApi
 import com.chesire.nekome.helpers.creation.createSeriesDomain
 import com.chesire.nekome.injection.LibraryModule
 import com.chesire.nekome.testing.createSeriesEntity
-import com.schibsted.spain.barista.assertion.BaristaListAssertions.assertDisplayedAtPosition
-import com.schibsted.spain.barista.assertion.BaristaListAssertions.assertListNotEmpty
-import com.schibsted.spain.barista.assertion.BaristaVisibilityAssertions.assertDisplayed
-import com.schibsted.spain.barista.assertion.BaristaVisibilityAssertions.assertNotDisplayed
-import com.schibsted.spain.barista.interaction.BaristaListInteractions.clickListItemChild
 import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.UninstallModules

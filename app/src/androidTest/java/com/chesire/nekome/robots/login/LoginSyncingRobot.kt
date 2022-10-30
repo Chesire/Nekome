@@ -1,7 +1,7 @@
 package com.chesire.nekome.robots.login
 
+import com.adevinta.android.barista.assertion.BaristaVisibilityAssertions.assertDisplayed
 import com.chesire.nekome.R
-import com.schibsted.spain.barista.assertion.BaristaVisibilityAssertions.assertDisplayed
 
 /**
  * Method to interact with the [LoginSyncingRobot].

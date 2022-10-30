@@ -2,12 +2,12 @@ package com.chesire.nekome.robots.search
 
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
+import com.adevinta.android.barista.assertion.BaristaErrorAssertions.assertError
+import com.adevinta.android.barista.assertion.BaristaVisibilityAssertions.assertDisplayed
+import com.adevinta.android.barista.interaction.BaristaClickInteractions.clickOn
+import com.adevinta.android.barista.interaction.BaristaEditTextInteractions.writeTo
 import com.chesire.nekome.R
 import com.chesire.nekome.helpers.ToastMatcher.Companion.onToast
-import com.schibsted.spain.barista.assertion.BaristaErrorAssertions.assertError
-import com.schibsted.spain.barista.assertion.BaristaVisibilityAssertions.assertDisplayed
-import com.schibsted.spain.barista.interaction.BaristaClickInteractions.clickOn
-import com.schibsted.spain.barista.interaction.BaristaEditTextInteractions.writeTo
 
 /**
  * Method to interact with the [SearchRobot].

@@ -33,8 +33,6 @@ dependencies {
     implementation project(":libraries:datasource:series")
     implementation project(":libraries:datasource:user")
 
-    implementation "com.chesire.lintrules:lint-gradle:$lintrules_version"
-    implementation "com.chesire.lintrules:lint-xml:$lintrules_version"
     implementation "junit:junit:$junit_version"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_version"
 }

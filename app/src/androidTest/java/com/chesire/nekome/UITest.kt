@@ -2,14 +2,14 @@ package com.chesire.nekome
 
 import androidx.test.core.app.ActivityScenario
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.adevinta.android.barista.rule.cleardata.ClearDatabaseRule
+import com.adevinta.android.barista.rule.cleardata.ClearPreferencesRule
 import com.chesire.nekome.database.dao.SeriesDao
 import com.chesire.nekome.database.dao.UserDao
 import com.chesire.nekome.datasource.auth.local.AuthProvider
 import com.chesire.nekome.helpers.createTestUser
 import com.chesire.nekome.helpers.login
 import com.chesire.nekome.helpers.logout
-import com.schibsted.spain.barista.rule.cleardata.ClearDatabaseRule
-import com.schibsted.spain.barista.rule.cleardata.ClearPreferencesRule
 import dagger.hilt.android.testing.HiltAndroidRule
 import javax.inject.Inject
 import org.junit.Before

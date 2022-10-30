@@ -1,11 +1,11 @@
 package com.chesire.nekome.robots.series
 
+import com.adevinta.android.barista.assertion.BaristaListAssertions.assertDisplayedAtPosition
+import com.adevinta.android.barista.assertion.BaristaVisibilityAssertions.assertDisplayed
+import com.adevinta.android.barista.assertion.BaristaVisibilityAssertions.assertNotExist
+import com.adevinta.android.barista.interaction.BaristaClickInteractions.clickOn
+import com.adevinta.android.barista.interaction.BaristaMenuClickInteractions.clickMenu
 import com.chesire.nekome.R
-import com.schibsted.spain.barista.assertion.BaristaListAssertions.assertDisplayedAtPosition
-import com.schibsted.spain.barista.assertion.BaristaVisibilityAssertions.assertDisplayed
-import com.schibsted.spain.barista.assertion.BaristaVisibilityAssertions.assertNotExist
-import com.schibsted.spain.barista.interaction.BaristaClickInteractions.clickOn
-import com.schibsted.spain.barista.interaction.BaristaMenuClickInteractions.clickMenu
 
 /**
  * Robot to interact with the sort dialog.

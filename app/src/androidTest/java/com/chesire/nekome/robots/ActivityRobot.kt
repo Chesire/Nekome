@@ -1,9 +1,9 @@
 package com.chesire.nekome.robots
 
+import com.adevinta.android.barista.assertion.BaristaVisibilityAssertions.assertDisplayed
+import com.adevinta.android.barista.interaction.BaristaClickInteractions.clickOn
+import com.adevinta.android.barista.interaction.BaristaDrawerInteractions.openDrawer
 import com.chesire.nekome.R
-import com.schibsted.spain.barista.assertion.BaristaVisibilityAssertions.assertDisplayed
-import com.schibsted.spain.barista.interaction.BaristaClickInteractions.clickOn
-import com.schibsted.spain.barista.interaction.BaristaDrawerInteractions.openDrawer
 
 /**
  * Method to interact with the [ActivityRobot].
