@@ -200,6 +200,7 @@ abstract class SeriesListFragment :
                         Snackbar.LENGTH_LONG
                     ).show()
                 }
+                is AsyncState.Loading -> { /* Ignore */ }
             }
         }
     }
