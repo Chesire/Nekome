@@ -27,14 +27,13 @@ dependencies {
     implementation project(":libraries:core")
     implementation project(":libraries:database")
 
-    implementation "com.google.dagger:hilt-android:$hilt_version"
-    implementation "com.jakewharton.timber:timber:$timber_version"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
+    implementation libs.google.hilt.android
+    implementation libs.kotlin.coroutines.android
+    implementation libs.kotlin.coroutines.core
+    implementation libs.timber
 
     testImplementation project(":testing")
-    testImplementation "androidx.arch.core:core-testing:$coretesting_version"
-    testImplementation "io.mockk:mockk:$mockk_version"
-    testImplementation "junit:junit:$junit_version"
-    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
+    testImplementation libs.androidx.arch.core.testing
+    testImplementation libs.junit
+    testImplementation libs.mockk
 }

@@ -27,18 +27,17 @@ dependencies {
     implementation project(":libraries:core")
     implementation project(":libraries:datasource:auth")
 
-    implementation "androidx.appcompat:appcompat:$appcompat_version"
-    implementation "androidx.core:core-ktx:$core_version"
-    implementation "com.google.dagger:hilt-android:$hilt_version"
-    implementation "com.squareup.retrofit2:converter-moshi:$retrofit_version"
-    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
+    implementation libs.androidx.appcompat
+    implementation libs.androidx.core
+    implementation libs.google.hilt.android
+    implementation libs.kotlin.coroutines.android
+    implementation libs.kotlin.coroutines.core
+    implementation libs.squareup.retrofit2
+    implementation libs.squareup.retrofit2.converter.moshi
+    kapt libs.google.hilt.android.compiler
+    kapt libs.squareup.moshi.codegen
 
     testImplementation project(":testing")
-    testImplementation "io.mockk:mockk:$mockk_version"
-    testImplementation "junit:junit:$junit_version"
-
-    kapt "com.google.dagger:hilt-compiler:$hilt_version"
-    kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshi_version"
+    testImplementation libs.junit
+    testImplementation libs.mockk
 }
