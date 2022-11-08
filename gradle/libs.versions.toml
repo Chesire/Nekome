@@ -75,6 +75,5 @@ android-library = { id = "com.android.library", version.ref = "android-gradle-pl
 androidx-navigation-safeargs = { id = "androidx.navigation.safeargs.kotlin", version.ref = "androidx-navigation" }
 detekt = { id = "io.gitlab.arturbosch.detekt", version = "1.19.0" }
 google-dagger-hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
-jacoco = { id = "jacoco", version.ref = "jacoco" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version = "11.0.0" }

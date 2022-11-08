@@ -1,8 +1,8 @@
 import io.gitlab.arturbosch.detekt.Detekt
 
 plugins {
+    id 'jacoco'
     alias(libs.plugins.detekt)
-    alias(libs.plugins.jacoco)
     alias(libs.plugins.ktlint)
 
     alias(libs.plugins.aboutlibraries) apply false
