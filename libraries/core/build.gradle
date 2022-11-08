@@ -29,8 +29,8 @@ dependencies {
     implementation libs.androidx.browser
     implementation libs.androidx.core
     implementation libs.androidx.room.runtime
-    implementation libs.google.material
     implementation libs.google.hilt.android
+    implementation libs.google.material
     implementation libs.material.dialogs.core
     implementation libs.material.dialogs.input
     implementation libs.material.dialogs.lifecycle
