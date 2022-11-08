@@ -32,28 +32,27 @@ dependencies {
     implementation project(":libraries:core")
     implementation project(":libraries:datasource:series")
 
-    implementation "androidx.appcompat:appcompat:$appcompat_version"
-    implementation "androidx.constraintlayout:constraintlayout:$constraintlayout_version"
-    implementation "androidx.core:core-ktx:$core_version"
-    implementation "androidx.fragment:fragment-ktx:$fragment_version"
-    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$livedata_version"
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$viewmodel_version"
-    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
-    implementation "com.afollestad.material-dialogs:core:$materialdialog_version"
-    implementation "com.afollestad.material-dialogs:lifecycle:$materialdialog_version"
-    implementation "com.github.hadilq:live-event:$liveevent_version"
-    implementation "com.google.android.material:material:$material_version"
-    implementation "com.google.dagger:hilt-android:$hilt_version"
-    implementation "com.jakewharton.timber:timber:$timber_version"
-    implementation "com.squareup.moshi:moshi:$moshi_version"
-    implementation "io.coil-kt:coil:$coil_version"
+    implementation libs.androidx.appcompat
+    implementation libs.androidx.constraintlayout
+    implementation libs.androidx.core
+    implementation libs.androidx.fragment
+    implementation libs.androidx.lifecycle.extensions
+    implementation libs.androidx.lifecycle.livedata
+    implementation libs.androidx.lifecycle.viewmodel
+    implementation libs.androidx.swiperefreshlayout
+    implementation libs.coil
+    implementation libs.google.hilt.android
+    implementation libs.google.material
+    implementation libs.liveevent
+    implementation libs.material.dialogs.core
+    implementation libs.material.dialogs.lifecycle
+    implementation libs.squareup.moshi
+    implementation libs.timber
+    kapt libs.google.hilt.android.compiler
 
     testImplementation project(":testing")
-    testImplementation "androidx.arch.core:core-testing:$coretesting_version"
-    testImplementation "io.mockk:mockk:$mockk_version"
-    testImplementation "junit:junit:$junit_version"
-    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_version"
-
-    kapt "com.google.dagger:hilt-compiler:$hilt_version"
+    testImplementation libs.androidx.arch.core.testing
+    testImplementation libs.junit
+    testImplementation libs.kotlin.coroutines.test
+    testImplementation libs.mockk
 }

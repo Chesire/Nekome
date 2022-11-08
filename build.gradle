@@ -1,36 +1,16 @@
 import io.gitlab.arturbosch.detekt.Detekt
 
-buildscript {
-    ext.aboutlibraries_version = "8.9.4"
-    ext.hilt_version = "2.44"
-    ext.jacoco_version = "0.8.8"
-    ext.kotlin_version = "1.7.21"
-    ext.nav_version = "2.5.3"
-    repositories {
-        google()
-        mavenCentral()
-    }
-    dependencies {
-        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$nav_version"
-        classpath 'com.android.tools.build:gradle:7.3.1'
-        classpath "com.google.dagger:hilt-android-gradle-plugin:$hilt_version"
-        classpath "com.mikepenz.aboutlibraries.plugin:aboutlibraries-plugin:$aboutlibraries_version"
-        classpath "org.jacoco:org.jacoco.core:$jacoco_version"
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-    }
-}
-
 plugins {
-    id "io.gitlab.arturbosch.detekt" version "1.19.0"
-    id "org.jlleitschuh.gradle.ktlint" version "11.0.0"
-}
+    id 'jacoco'
+    alias(libs.plugins.detekt)
+    alias(libs.plugins.ktlint)
 
-allprojects {
-    repositories {
-        google()
-        mavenCentral()
-        maven { url "https://jitpack.io" }
-    }
+    alias(libs.plugins.aboutlibraries) apply false
+    alias(libs.plugins.android.application) apply false
+    alias(libs.plugins.android.library) apply false
+    alias(libs.plugins.androidx.navigation.safeargs) apply false
+    alias(libs.plugins.google.dagger.hilt.android) apply false
+    alias(libs.plugins.kotlin.android) apply false
 }
 
 subprojects {
@@ -66,30 +46,4 @@ task detektCheck(type: Detekt) {
 
 ext {
     sdk_version = 33
-
-    // App
-    appcompat_version = "1.5.1"
-    coil_version = "2.2.2"
-    constraintlayout_version = "2.1.4"
-    core_version = "1.9.0"
-    coroutines_version = "1.6.4"
-    fragment_version = "1.5.4"
-    hiltx_version = "1.0.0"
-    lifecycle_version = "2.2.0"
-    livedata_version = "2.5.1"
-    liveevent_version = "1.3.0"
-    material_version = "1.7.0"
-    materialdialog_version = "3.3.0"
-    moshi_version = "1.14.0"
-    preferences_version = "1.2.0"
-    retrofit_version = "2.9.0"
-    room_version = "2.4.3"
-    security_version = "1.0.0"
-    timber_version = "5.0.1"
-    viewmodel_version = "2.5.1"
-
-    // Tests
-    coretesting_version = "2.1.0"
-    junit_version = "4.13.2"
-    mockk_version = "1.12.4"
 }

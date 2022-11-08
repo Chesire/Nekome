@@ -28,16 +28,15 @@ android {
 dependencies {
     implementation project(":libraries:core")
 
-    implementation "androidx.appcompat:appcompat:$appcompat_version"
-    implementation "androidx.browser:browser:1.4.0"
-    implementation "androidx.core:core-ktx:$core_version"
-    implementation "androidx.fragment:fragment-ktx:$fragment_version"
-    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
-    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
-    implementation "androidx.preference:preference-ktx:$preferences_version"
-    implementation "com.google.dagger:hilt-android:$hilt_version"
-    implementation "com.jakewharton.timber:timber:$timber_version"
-    implementation "com.mikepenz:aboutlibraries:$aboutlibraries_version"
-
-    kapt "com.google.dagger:hilt-compiler:$hilt_version"
+    implementation libs.androidx.appcompat
+    implementation libs.androidx.browser
+    implementation libs.androidx.core
+    implementation libs.androidx.fragment
+    implementation libs.androidx.navigation.fragment
+    implementation libs.androidx.navigation.ui
+    implementation libs.androidx.preference
+    implementation libs.google.hilt.android
+    implementation libs.mikepenz.aboutlibraries
+    implementation libs.timber
+    kapt libs.google.hilt.android.compiler
 }

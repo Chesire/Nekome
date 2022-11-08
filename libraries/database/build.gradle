@@ -39,18 +39,17 @@ android {
 dependencies {
     implementation project(":libraries:core")
 
-    implementation "androidx.appcompat:appcompat:$appcompat_version"
-    implementation "androidx.core:core-ktx:$core_version"
-    implementation "androidx.room:room-ktx:$room_version"
-    implementation "androidx.room:room-runtime:$room_version"
-    implementation "com.squareup.moshi:moshi:$moshi_version"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
+    implementation libs.androidx.appcompat
+    implementation libs.androidx.core
+    implementation libs.androidx.room
+    implementation libs.androidx.room.runtime
+    implementation libs.kotlin.coroutines.android
+    implementation libs.kotlin.coroutines.core
+    implementation libs.squareup.moshi
+    kapt libs.androidx.room.compiler
 
     testImplementation project(":testing")
-    testImplementation "androidx.room:room-testing:$room_version"
-    testImplementation "junit:junit:$junit_version"
-    testImplementation "org.robolectric:robolectric:4.9"
-
-    kapt "androidx.room:room-compiler:$room_version"
+    testImplementation libs.androidx.room.testing
+    testImplementation libs.junit
+    testImplementation libs.robolectric
 }

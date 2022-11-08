@@ -33,6 +33,6 @@ dependencies {
     implementation project(":libraries:datasource:series")
     implementation project(":libraries:datasource:user")
 
-    implementation "junit:junit:$junit_version"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_version"
+    implementation libs.junit
+    implementation libs.kotlin.coroutines.test
 }

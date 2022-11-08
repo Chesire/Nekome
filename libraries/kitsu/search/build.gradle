@@ -28,16 +28,15 @@ dependencies {
     implementation project(":libraries:datasource:search")
     implementation project(':libraries:kitsu')
 
-    implementation "com.google.dagger:hilt-android:$hilt_version"
-    implementation "com.jakewharton.timber:timber:$timber_version"
-    implementation "com.squareup.retrofit2:converter-moshi:$retrofit_version"
-    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
+    implementation libs.google.hilt.android
+    implementation libs.kotlin.coroutines.android
+    implementation libs.kotlin.coroutines.core
+    implementation libs.squareup.retrofit2
+    implementation libs.squareup.retrofit2.converter.moshi
+    implementation libs.timber
+    kapt libs.squareup.moshi.codegen
 
     testImplementation project(":testing")
-    testImplementation "io.mockk:mockk:$mockk_version"
-    testImplementation "junit:junit:$junit_version"
-
-    kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshi_version"
+    testImplementation libs.junit
+    testImplementation libs.mockk
 }

@@ -25,21 +25,20 @@ android {
 }
 
 dependencies {
-    implementation "androidx.appcompat:appcompat:$appcompat_version"
-    implementation "androidx.browser:browser:1.4.0"
-    implementation "androidx.core:core-ktx:$core_version"
-    implementation "androidx.room:room-runtime:$room_version"
-    implementation "com.afollestad.material-dialogs:core:$materialdialog_version"
-    implementation "com.afollestad.material-dialogs:input:$materialdialog_version"
-    implementation "com.afollestad.material-dialogs:lifecycle:$materialdialog_version"
-    implementation "com.google.android.material:material:$material_version"
-    implementation "com.google.dagger:hilt-android:$hilt_version"
-    implementation "com.squareup.moshi:moshi:$moshi_version"
+    implementation libs.androidx.appcompat
+    implementation libs.androidx.browser
+    implementation libs.androidx.core
+    implementation libs.androidx.room.runtime
+    implementation libs.google.hilt.android
+    implementation libs.google.material
+    implementation libs.material.dialogs.core
+    implementation libs.material.dialogs.input
+    implementation libs.material.dialogs.lifecycle
+    implementation libs.squareup.moshi
+    kapt libs.google.hilt.android.compiler
+    kapt libs.squareup.moshi.codegen
 
     testImplementation project(":testing")
-    testImplementation "io.mockk:mockk:$mockk_version"
-    testImplementation "junit:junit:$junit_version"
-
-    kapt "com.google.dagger:hilt-compiler:$hilt_version"
-    kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshi_version"
+    testImplementation libs.junit
+    testImplementation libs.mockk
 }
