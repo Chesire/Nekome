@@ -4,7 +4,6 @@ import com.chesire.nekome.core.AuthCaster
 import com.chesire.nekome.datasource.auth.AccessTokenRepository
 import com.chesire.nekome.datasource.auth.AccessTokenResult
 import com.chesire.nekome.datasource.auth.AuthException
-import com.chesire.nekome.datasource.auth.local.AuthProvider
 import io.mockk.Runs
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -95,7 +94,6 @@ class AuthRefreshInterceptorTests {
 
     @Test(expected = AuthException::class)
     fun `getting new auth failure, throws AuthException`() = runBlocking {
-        val mockProvider = mockk<AuthProvider>()
         val mockRepo = mockk<AccessTokenRepository> {
             coEvery { refresh() } returns AccessTokenResult.CommunicationError
         }
