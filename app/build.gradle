@@ -36,7 +36,6 @@ android {
         }
     }
     buildFeatures {
-        compose true
         viewBinding true
     }
     testOptions {
@@ -50,9 +49,6 @@ android {
         abortOnError false
         checkAllWarnings true
         checkDependencies true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.compose.get()
     }
 }
 

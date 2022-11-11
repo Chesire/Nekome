@@ -3,6 +3,7 @@
     <string name="app_name">Nekome</string>
 
     <string name="nav_anime">Anime</string>
+    <string name="nav_credentials">Credentials</string>
     <string name="nav_details">Details</string>
     <string name="nav_discover">Discover</string>
     <string name="nav_manga">Manga</string>
