@@ -59,7 +59,7 @@ mikepenz-aboutlibraries = { module = "com.mikepenz:aboutlibraries", version.ref 
 mockk = { module = "io.mockk:mockk", version = "1.12.4" }
 mockk-android = { module = "io.mockk:mockk-android", version = "1.12.4" }
 robolectric = { module = "org.robolectric:robolectric", version = "4.9" }
-squareup-leakcanary = { module = "com.squareup.leakcanary:leakcanary-android", version = "2.9.1" }
+squareup-leakcanary = { module = "com.squareup.leakcanary:leakcanary-android", version = "2.10" }
 squareup-moshi = { module = "com.squareup.moshi:moshi", version.ref = "moshi" }
 squareup-moshi-codegen = { module = "com.squareup.moshi:moshi-kotlin-codegen", version.ref = "moshi" }
 squareup-okhttp3 = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp3" }
