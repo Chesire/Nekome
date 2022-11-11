@@ -12,11 +12,14 @@ import androidx.compose.material.Text
 import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
+import androidx.compose.runtime.produceState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import com.chesire.nekome.app.login.R
 
 @Composable
@@ -30,7 +33,10 @@ fun CredentialsScreen(
 ) {
     val value = state.value
 
-    Column(Modifier.fillMaxSize()) {
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
         HeaderImage()
         UsernameInput(value.username, onUsernameChanged)
         PasswordInput(value.password, onPasswordChanged)
@@ -100,4 +106,18 @@ private fun SignupButton(onSignupPressed: () -> Unit) {
     ) {
         Text(text = stringResource(id = R.string.login_sign_up_link_target))
     }
+}
+
+@Composable
+@Preview
+private fun Preview() {
+    val initialState = ViewState("Username", "Password")
+    CredentialsScreen(
+        state = produceState(initialValue = initialState, producer = { value = initialState }),
+        onUsernameChanged = {},
+        onPasswordChanged = {},
+        onForgotPasswordPressed = {},
+        onLoginPressed = {},
+        onSignupPressed = {}
+    )
 }
