@@ -56,8 +56,8 @@ material-dialogs-core = { module = "com.afollestad.material-dialogs:core", versi
 material-dialogs-input = { module = "com.afollestad.material-dialogs:input", version.ref = "material-dialogs" }
 material-dialogs-lifecycle = { module = "com.afollestad.material-dialogs:lifecycle", version.ref = "material-dialogs" }
 mikepenz-aboutlibraries = { module = "com.mikepenz:aboutlibraries", version.ref = "aboutlibraries" }
-mockk = { module = "io.mockk:mockk", version = "1.12.4" }
-mockk-android = { module = "io.mockk:mockk-android", version = "1.12.4" }
+mockk = { module = "io.mockk:mockk", version = "1.13.2" }
+mockk-android = { module = "io.mockk:mockk-android", version = "1.13.2" }
 robolectric = { module = "org.robolectric:robolectric", version = "4.9" }
 squareup-leakcanary = { module = "com.squareup.leakcanary:leakcanary-android", version = "2.10" }
 squareup-moshi = { module = "com.squareup.moshi:moshi", version.ref = "moshi" }
