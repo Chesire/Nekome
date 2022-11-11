@@ -42,9 +42,8 @@ android {
         animationsDisabled true
     }
     packagingOptions {
-        resources {
-            excludes += ['META-INF/AL2.0', 'META-INF/LGPL2.1', 'META-INF/*.kotlin_module']
-        }
+        resources.excludes.add("META-INF/*")
+        resources.excludes.add("MANIFEST.MF")
     }
     lint {
         abortOnError false
