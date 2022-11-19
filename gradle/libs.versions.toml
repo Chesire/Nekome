@@ -15,7 +15,7 @@ okhttp3 = "4.10.0"
 retrofit = "2.9.0"
 
 [libraries]
-adevinta-barista = { module = "com.adevinta.android:barista", version = "4.2.0" }
+adevinta-barista = { module = "com.adevinta.android:barista", version = "4.3.0" }
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version = "1.5.1" }
 androidx-arch-core-testing = { module = "androidx.arch.core:core-testing", version = "2.1.0" }
 androidx-browser = { module = "androidx.browser:browser", version = "1.4.0" }
