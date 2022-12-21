@@ -56,7 +56,7 @@ private fun Render(
         PasswordInput(state.value.password, onPasswordChanged)
         ForgotPasswordButton(onForgotPasswordPressed)
         Spacer(modifier = Modifier.weight(1f))
-        LoginButton(onLoginPressed)
+        LoginButton(state.value.buttonEnabled, onLoginPressed)
         SignupButton(onSignupPressed)
     }
 }
@@ -95,10 +95,11 @@ private fun ForgotPasswordButton(onForgotPasswordPressed: () -> Unit) {
 }
 
 @Composable
-private fun LoginButton(onLoginPressed: () -> Unit) {
+private fun LoginButton(isEnabled: Boolean, onLoginPressed: () -> Unit) {
     val keyboardController = LocalSoftwareKeyboardController.current
 
     Button(
+        enabled = isEnabled,
         onClick = {
             onLoginPressed()
             keyboardController?.hide()
@@ -125,7 +126,14 @@ private fun SignupButton(onSignupPressed: () -> Unit) {
 @Composable
 @Preview
 private fun Preview() {
-    val initialState = ViewState("Username", "Password")
+    val initialState = ViewState(
+        username = "Username",
+        usernameError = false,
+        password = "Password",
+        passwordError = false,
+        isPerformingLogin = false,
+        buttonEnabled = true
+    )
     Render(
         state = produceState(initialValue = initialState, producer = { value = initialState }),
         { /**/ },
