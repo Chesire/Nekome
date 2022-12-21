@@ -17,6 +17,7 @@ dependencyResolutionManagement {
 rootProject.name = "Nekome"
 
 include ':app',
+    ':core:compose',
     ':features:discover',
     ':features:login',
     ':features:profile',
@@ -24,7 +25,6 @@ include ':app',
     ':features:series',
     ':features:settings',
     ':features:timeline',
-
     ':libraries:core',
     ':libraries:database',
     ':libraries:datasource:activity',
@@ -40,5 +40,4 @@ include ':app',
     ':libraries:kitsu:search',
     ':libraries:kitsu:trending',
     ':libraries:kitsu:user',
-
     ':testing'
