@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Button
@@ -33,6 +35,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
@@ -42,6 +45,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.chesire.core.compose.theme.NekomeTheme
 import com.chesire.nekome.app.login.R
@@ -71,7 +75,9 @@ private fun Render(
 ) {
     Surface(modifier = Modifier.fillMaxSize()) {
         Column(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             HeaderImage()
@@ -82,7 +88,12 @@ private fun Render(
                 onPasswordChanged,
                 onLoginPressed
             )
-            ForgotPasswordButton(onForgotPasswordPressed)
+            ForgotPasswordButton(
+                Modifier
+                    .align(Alignment.End)
+                    .padding(top = 8.dp),
+                onForgotPasswordPressed
+            )
             Spacer(modifier = Modifier.weight(1f))
             LoginButton(state.value.buttonEnabled, onLoginPressed)
             SignupButton(onSignupPressed)
@@ -94,7 +105,11 @@ private fun Render(
 private fun HeaderImage() {
     Image(
         painter = painterResource(id = R.drawable.blackcat),
-        contentDescription = null
+        contentDescription = null,
+        contentScale = ContentScale.Inside,
+        modifier = Modifier
+            .padding(16.dp)
+            .width(160.dp)
     )
 }
 
@@ -167,8 +182,14 @@ private fun PasswordInput(
 }
 
 @Composable
-private fun ForgotPasswordButton(onForgotPasswordPressed: () -> Unit) {
-    TextButton(onClick = onForgotPasswordPressed) {
+private fun ForgotPasswordButton(
+    modifier: Modifier = Modifier,
+    onForgotPasswordPressed: () -> Unit
+) {
+    TextButton(
+        modifier = modifier,
+        onClick = onForgotPasswordPressed
+    ) {
         Text(text = stringResource(id = R.string.login_forgot_password))
     }
 }
@@ -192,13 +213,13 @@ private fun LoginButton(isEnabled: Boolean, onLoginPressed: () -> Unit) {
 private fun SignupButton(onSignupPressed: () -> Unit) {
     val keyboardController = LocalSoftwareKeyboardController.current
 
-    Button(
+    TextButton(
         onClick = {
             onSignupPressed()
             keyboardController?.hide()
         },
     ) {
-        Text(text = stringResource(id = R.string.login_sign_up_link_target))
+        Text(text = stringResource(id = R.string.login_sign_up_kitsu))
     }
 }
 

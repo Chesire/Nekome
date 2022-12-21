@@ -77,6 +77,7 @@
     <string name="login_login">Login</string>
     <string name="login_forgot_password">Forgot Password?</string>
     <string name="login_forgot_password_url">https://kitsu.io/password-reset</string>
+    <string name="login_sign_up_kitsu">No account? Sign up with Kitsu</string>
     <string name="login_sign_up">Not yet registered? Sign up</string>
     <!-- This text should be exactly what part of login_sign_up should be a link -->
     <string name="login_sign_up_link_target">Sign up</string>
