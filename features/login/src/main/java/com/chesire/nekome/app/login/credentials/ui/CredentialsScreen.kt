@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Button
 import androidx.compose.material.OutlinedTextField
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
@@ -22,6 +23,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.chesire.core.compose.theme.NekomeTheme
 import com.chesire.nekome.app.login.R
 
 @Composable
@@ -47,17 +49,19 @@ private fun Render(
     onLoginPressed: () -> Unit,
     onSignupPressed: () -> Unit
 ) {
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        HeaderImage()
-        UsernameInput(state.value.username, onUsernameChanged)
-        PasswordInput(state.value.password, onPasswordChanged)
-        ForgotPasswordButton(onForgotPasswordPressed)
-        Spacer(modifier = Modifier.weight(1f))
-        LoginButton(state.value.buttonEnabled, onLoginPressed)
-        SignupButton(onSignupPressed)
+    Surface(modifier = Modifier.fillMaxSize()) {
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            HeaderImage()
+            UsernameInput(state.value.username, onUsernameChanged)
+            PasswordInput(state.value.password, onPasswordChanged)
+            ForgotPasswordButton(onForgotPasswordPressed)
+            Spacer(modifier = Modifier.weight(1f))
+            LoginButton(state.value.buttonEnabled, onLoginPressed)
+            SignupButton(onSignupPressed)
+        }
     }
 }
 
@@ -134,12 +138,14 @@ private fun Preview() {
         isPerformingLogin = false,
         buttonEnabled = true
     )
-    Render(
-        state = produceState(initialValue = initialState, producer = { value = initialState }),
-        { /**/ },
-        { /**/ },
-        { /**/ },
-        { /**/ },
-        { /**/ }
-    )
+    NekomeTheme {
+        Render(
+            state = produceState(initialValue = initialState, producer = { value = initialState }),
+            { /**/ },
+            { /**/ },
+            { /**/ },
+            { /**/ },
+            { /**/ }
+        )
+    }
 }

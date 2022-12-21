@@ -33,6 +33,7 @@ android {
 }
 
 dependencies {
+    implementation project(":core:compose")
     implementation project(":libraries:core")
     implementation project(":libraries:datasource:auth")
     implementation project(":libraries:datasource:series")
