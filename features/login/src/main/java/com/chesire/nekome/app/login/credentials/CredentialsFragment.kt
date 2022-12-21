@@ -17,23 +17,12 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class CredentialsFragment : Fragment() {
 
-    private val viewModel by viewModels<CredentialsViewModel>()
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View = ComposeView(requireContext()).apply {
         setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
-        setContent {
-            CredentialsScreen(
-                state = viewModel.viewState.collectAsState(),
-                onUsernameChanged = { viewModel.execute(ViewAction.UsernameChanged(it)) },
-                onPasswordChanged = { viewModel.execute(ViewAction.PasswordChanged(it)) },
-                onForgotPasswordPressed = { viewModel.execute(ViewAction.ForgotPasswordPressed) },
-                onLoginPressed = { viewModel.execute(ViewAction.LoginPressed) },
-                onSignupPressed = { viewModel.execute(ViewAction.SignUpPressed) }
-            )
-        }
+        setContent { CredentialsScreen() }
     }
 }

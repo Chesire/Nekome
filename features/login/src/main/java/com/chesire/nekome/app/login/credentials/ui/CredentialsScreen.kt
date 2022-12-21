@@ -12,6 +12,7 @@ import androidx.compose.material.Text
 import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.produceState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -20,10 +21,25 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.chesire.nekome.app.login.R
 
 @Composable
-fun CredentialsScreen(
+fun CredentialsScreen(viewModel: CredentialsViewModel = viewModel()) {
+    val state = viewModel.viewState.collectAsState()
+
+    Render(
+        state = state,
+        onUsernameChanged = { viewModel.execute(ViewAction.UsernameChanged(it)) },
+        onPasswordChanged = { viewModel.execute(ViewAction.PasswordChanged(it)) },
+        onForgotPasswordPressed = { viewModel.execute(ViewAction.ForgotPasswordPressed) },
+        onLoginPressed = { viewModel.execute(ViewAction.LoginPressed) },
+        onSignupPressed = { viewModel.execute(ViewAction.SignUpPressed) }
+    )
+}
+
+@Composable
+private fun Render(
     state: State<ViewState>,
     onUsernameChanged: (String) -> Unit,
     onPasswordChanged: (String) -> Unit,
@@ -31,15 +47,13 @@ fun CredentialsScreen(
     onLoginPressed: () -> Unit,
     onSignupPressed: () -> Unit
 ) {
-    val value = state.value
-
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         HeaderImage()
-        UsernameInput(value.username, onUsernameChanged)
-        PasswordInput(value.password, onPasswordChanged)
+        UsernameInput(state.value.username, onUsernameChanged)
+        PasswordInput(state.value.password, onPasswordChanged)
         ForgotPasswordButton(onForgotPasswordPressed)
         Spacer(modifier = Modifier.weight(1f))
         LoginButton(onLoginPressed)
@@ -112,12 +126,12 @@ private fun SignupButton(onSignupPressed: () -> Unit) {
 @Preview
 private fun Preview() {
     val initialState = ViewState("Username", "Password")
-    CredentialsScreen(
+    Render(
         state = produceState(initialValue = initialState, producer = { value = initialState }),
-        onUsernameChanged = {},
-        onPasswordChanged = {},
-        onForgotPasswordPressed = {},
-        onLoginPressed = {},
-        onSignupPressed = {}
+        { /**/ },
+        { /**/ },
+        { /**/ },
+        { /**/ },
+        { /**/ }
     )
 }

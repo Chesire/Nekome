@@ -8,7 +8,7 @@ androidx-room = "2.4.3"
 compose = "1.4.0-alpha02"
 hilt = "2.44.2"
 jacoco = "0.8.8"
-kotlin = "1.7.22"
+kotlin = "1.7.21"
 kotlin-coroutines = "1.6.4"
 material-dialogs = "3.3.0"
 moshi = "1.14.0"
@@ -32,6 +32,7 @@ androidx-hilt-work = { module = "androidx.hilt:hilt-work", version.ref = "androi
 androidx-lifecycle-extensions = { module = "androidx.lifecycle:lifecycle-extensions", version = "2.2.0" }
 androidx-lifecycle-livedata = { module = "androidx.lifecycle:lifecycle-livedata-ktx", version = "2.5.1" }
 androidx-lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version = "2.5.1" }
+androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "androidx-navigation" }
 androidx-navigation-fragment = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "androidx-navigation" }
 androidx-navigation-ui = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "androidx-navigation" }
 androidx-preference = { module = "androidx.preference:preference-ktx", version = "1.2.0" }

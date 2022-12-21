@@ -45,6 +45,7 @@ captures/
 .idea/dictionaries
 .idea/libraries
 .idea/jarRepositories.xml
+.idea/inspectionProfiles/
 
 # External native build folder generated in Android Studio 2.2 and later
 .externalNativeBuild
