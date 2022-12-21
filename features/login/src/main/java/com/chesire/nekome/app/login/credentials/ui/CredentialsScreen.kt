@@ -6,21 +6,41 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Button
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.produceState
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusDirection
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.chesire.core.compose.theme.NekomeTheme
@@ -51,12 +71,17 @@ private fun Render(
 ) {
     Surface(modifier = Modifier.fillMaxSize()) {
         Column(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             HeaderImage()
-            UsernameInput(state.value.username, onUsernameChanged)
-            PasswordInput(state.value.password, onPasswordChanged)
+            UsernameInput(state.value.username, state.value.usernameError, onUsernameChanged)
+            PasswordInput(
+                state.value.password,
+                state.value.passwordError,
+                onPasswordChanged,
+                onLoginPressed
+            )
             ForgotPasswordButton(onForgotPasswordPressed)
             Spacer(modifier = Modifier.weight(1f))
             LoginButton(state.value.buttonEnabled, onLoginPressed)
@@ -74,19 +99,69 @@ private fun HeaderImage() {
 }
 
 @Composable
-private fun UsernameInput(username: String, onUsernameChanged: (String) -> Unit) {
+private fun UsernameInput(
+    username: String,
+    isUsernameError: Boolean,
+    onUsernameChanged: (String) -> Unit
+) {
+    val focusManager = LocalFocusManager.current
     OutlinedTextField(
         value = username,
         onValueChange = onUsernameChanged,
+        leadingIcon = {
+            Icon(
+                imageVector = Icons.Default.AccountCircle,
+                contentDescription = null
+            )
+        },
+        keyboardOptions = KeyboardOptions.Default.copy(
+            keyboardType = KeyboardType.Text,
+            imeAction = ImeAction.Next
+        ),
+        keyboardActions = KeyboardActions(
+            onNext = { focusManager.moveFocus(FocusDirection.Down) },
+        ),
+        isError = isUsernameError,
+        singleLine = true,
         label = { Text(text = stringResource(id = R.string.login_username)) }
     )
 }
 
 @Composable
-private fun PasswordInput(password: String, onPasswordChanged: (String) -> Unit) {
+private fun PasswordInput(
+    password: String,
+    isPasswordError: Boolean,
+    onPasswordChanged: (String) -> Unit,
+    onLoginPressed: () -> Unit
+) {
+    var passwordVisible by rememberSaveable { mutableStateOf(false) }
     OutlinedTextField(
         value = password,
         onValueChange = onPasswordChanged,
+        leadingIcon = {
+            Icon(
+                imageVector = Icons.Default.Lock,
+                contentDescription = null
+            )
+        },
+        trailingIcon = {
+            IconButton(onClick = { passwordVisible = !passwordVisible }) {
+                Icon(
+                    imageVector = if (passwordVisible) Icons.Default.Visibility else Icons.Default.VisibilityOff,
+                    contentDescription = stringResource(id = if (passwordVisible) R.string.login_hide_password else R.string.login_show_password)
+                )
+            }
+        },
+        visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+        keyboardOptions = KeyboardOptions.Default.copy(
+            keyboardType = KeyboardType.Password,
+            imeAction = ImeAction.Done
+        ),
+        keyboardActions = KeyboardActions(
+            onDone = { onLoginPressed() },
+        ),
+        isError = isPasswordError,
+        singleLine = true,
         label = { Text(text = stringResource(id = R.string.login_password)) }
     )
 }

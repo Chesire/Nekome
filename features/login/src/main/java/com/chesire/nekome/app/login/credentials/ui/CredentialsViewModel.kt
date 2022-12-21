@@ -67,13 +67,13 @@ class CredentialsViewModel @Inject constructor(
                     }
                     VerifyCredentialsFailure.PasswordInvalid -> _viewState.update { viewState ->
                         viewState.copy(
-                            usernameError = true,
+                            passwordError = true,
                             isPerformingLogin = false
                         )
                     }
                     VerifyCredentialsFailure.UsernameInvalid -> _viewState.update { viewState ->
                         viewState.copy(
-                            passwordError = true,
+                            usernameError = true,
                             isPerformingLogin = false
                         )
                     }
