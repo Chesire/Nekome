@@ -4,23 +4,25 @@ import androidx.annotation.StringRes
 
 data class UIState(
     val username: String,
-    val usernameError: Boolean,
+    val hasUsernameError: Boolean,
     val password: String,
-    val passwordError: Boolean,
+    val hasPasswordError: Boolean,
     val isPerformingLogin: Boolean,
-    val buttonEnabled: Boolean,
-    @StringRes val errorSnackbarMessage: Int?
+    val loginButtonEnabled: Boolean,
+    @StringRes val errorSnackbarMessage: Int?,
+    val navigateScreenEvent: Boolean?
 ) {
     companion object {
         val empty: UIState
             get() = UIState(
                 username = "",
-                usernameError = false,
+                hasUsernameError = false,
                 password = "",
-                passwordError = false,
+                hasPasswordError = false,
                 isPerformingLogin = false,
-                buttonEnabled = false,
-                errorSnackbarMessage = null
+                loginButtonEnabled = false,
+                errorSnackbarMessage = null,
+                navigateScreenEvent = null
             )
     }
 }

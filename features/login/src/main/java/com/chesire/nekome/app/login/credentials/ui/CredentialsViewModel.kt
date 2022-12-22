@@ -35,17 +35,20 @@ class CredentialsViewModel @Inject constructor(
         when (viewAction) {
             is ViewAction.UsernameChanged -> state = state.copy(
                 username = viewAction.newUsername,
-                usernameError = false,
-                buttonEnabled = viewAction.newUsername.isNotBlank() && state.password.isNotBlank()
+                hasUsernameError = false,
+                loginButtonEnabled = viewAction.newUsername.isNotBlank() && state.password.isNotBlank()
             )
             is ViewAction.PasswordChanged -> state = state.copy(
                 password = viewAction.newPassword,
-                passwordError = false,
-                buttonEnabled = state.username.isNotBlank() && viewAction.newPassword.isNotBlank()
+                hasPasswordError = false,
+                loginButtonEnabled = state.username.isNotBlank() && viewAction.newPassword.isNotBlank()
             )
             ViewAction.LoginPressed -> performLogin()
             ViewAction.ErrorSnackbarObserved -> {
                 state = state.copy(errorSnackbarMessage = null)
+            }
+            ViewAction.NavigationObserved -> {
+                state = state.copy(navigateScreenEvent = null)
             }
         }
     }
@@ -62,7 +65,8 @@ class CredentialsViewModel @Inject constructor(
         populateUserDetails()
             .onSuccess {
                 state = state.copy(
-                    isPerformingLogin = false
+                    isPerformingLogin = false,
+                    navigateScreenEvent = true
                 )
             }
             .onFailure {
@@ -82,11 +86,11 @@ class CredentialsViewModel @Inject constructor(
                 errorSnackbarMessage = R.string.login_error_generic
             )
             VerifyCredentialsFailure.PasswordInvalid -> state.copy(
-                passwordError = true,
+                hasPasswordError = true,
                 isPerformingLogin = false
             )
             VerifyCredentialsFailure.UsernameInvalid -> state.copy(
-                usernameError = true,
+                hasUsernameError = true,
                 isPerformingLogin = false
             )
         }

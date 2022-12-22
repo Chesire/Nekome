@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
 import com.chesire.core.compose.theme.NekomeTheme
 import com.chesire.nekome.app.login.credentials.ui.CredentialsScreen
 import com.chesire.nekome.core.url.UrlHandler
@@ -28,7 +29,10 @@ class CredentialsFragment : Fragment() {
         setContent {
             NekomeTheme {
                 CredentialsScreen(
-                    urlHandler = urlHandler
+                    urlHandler = urlHandler,
+                    finishAction = {
+                        findNavController().navigate(CredentialsFragmentDirections.toSyncingFragment())
+                    }
                 )
             }
         }

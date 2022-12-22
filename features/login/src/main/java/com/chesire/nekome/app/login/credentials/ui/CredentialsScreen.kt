@@ -63,12 +63,21 @@ import com.chesire.nekome.core.url.UrlHandler
 @Composable
 fun CredentialsScreen(
     urlHandler: UrlHandler,
-    viewModel: CredentialsViewModel = viewModel()
+    viewModel: CredentialsViewModel = viewModel(),
+    finishAction: () -> Unit
 ) {
     val state = viewModel.uiState.collectAsState()
     val context = LocalContext.current
     val signupUrl = stringResource(id = R.string.login_sign_up_url)
     val forgotPasswordUrl = stringResource(id = R.string.login_forgot_password_url)
+
+    val navigate = state.value.navigateScreenEvent
+    if (navigate == true) {
+        LaunchedEffect(navigate) {
+            finishAction()
+            viewModel.execute(ViewAction.NavigationObserved)
+        }
+    }
 
     Render(
         state = state,
@@ -108,13 +117,13 @@ private fun Render(
             HeaderImage()
             UsernameInput(
                 username = state.value.username,
-                isUsernameError = state.value.usernameError,
+                isUsernameError = state.value.hasUsernameError,
                 onUsernameChanged = onUsernameChanged
             )
             PasswordInput(
                 password = state.value.password,
                 isLoggingIn = state.value.isPerformingLogin,
-                isPasswordError = state.value.passwordError,
+                isPasswordError = state.value.hasPasswordError,
                 onPasswordChanged = onPasswordChanged,
                 onLoginPressed = onLoginPressed
             )
@@ -129,7 +138,7 @@ private fun Render(
                 CircularProgressIndicator()
             } else {
                 LoginButton(
-                    isEnabled = state.value.buttonEnabled,
+                    isEnabled = state.value.loginButtonEnabled,
                     isLoggingIn = state.value.isPerformingLogin,
                     onLoginPressed = onLoginPressed
                 )
@@ -284,12 +293,13 @@ private fun SignupButton(onSignupPressed: () -> Unit) {
 private fun Preview() {
     val initialState = UIState(
         username = "Username",
-        usernameError = false,
+        hasUsernameError = false,
         password = "Password",
-        passwordError = false,
+        hasPasswordError = false,
         isPerformingLogin = false,
-        buttonEnabled = true,
-        errorSnackbarMessage = null
+        loginButtonEnabled = true,
+        errorSnackbarMessage = null,
+        navigateScreenEvent = null
     )
     NekomeTheme(darkTheme = true) {
         Render(

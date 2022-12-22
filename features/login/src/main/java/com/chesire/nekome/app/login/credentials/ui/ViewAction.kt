@@ -5,4 +5,5 @@ sealed interface ViewAction {
     data class PasswordChanged(val newPassword: String) : ViewAction
     object LoginPressed : ViewAction
     object ErrorSnackbarObserved : ViewAction
+    object NavigationObserved : ViewAction
 }
