@@ -8,15 +8,6 @@
     <!-- UnusedNavigation is used because this is reached as a nested graph -->
 
     <fragment
-        android:id="@+id/detailsFragment"
-        android:name="com.chesire.nekome.app.login.details.DetailsFragment"
-        android:label="@string/nav_details"
-        tools:layout="@layout/fragment_details">
-        <action
-            android:id="@+id/toSyncingFragment"
-            app:destination="@id/syncingFragment" />
-    </fragment>
-    <fragment
         android:id="@+id/credentialsFragment"
         android:name="com.chesire.nekome.app.login.credentials.CredentialsFragment"
         android:label="@string/nav_credentials">
