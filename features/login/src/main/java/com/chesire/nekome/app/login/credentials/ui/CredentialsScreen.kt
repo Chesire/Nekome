@@ -2,6 +2,7 @@
 
 package com.chesire.nekome.app.login.credentials.ui
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -79,6 +80,7 @@ fun CredentialsScreen(
     )
 }
 
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 private fun Render(
     state: State<ViewState>,
@@ -94,12 +96,12 @@ private fun Render(
     Scaffold(
         snackbarHost = { SnackbarHost(snackbarHostState) },
         modifier = Modifier.fillMaxSize()
-    ) { paddingValues ->
+    ) { _ ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
-                .padding(paddingValues),
+                .padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             HeaderImage()
