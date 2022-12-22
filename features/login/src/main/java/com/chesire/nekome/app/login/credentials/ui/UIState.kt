@@ -2,7 +2,7 @@ package com.chesire.nekome.app.login.credentials.ui
 
 import androidx.annotation.StringRes
 
-data class ViewState(
+data class UIState(
     val username: String,
     val usernameError: Boolean,
     val password: String,
@@ -12,8 +12,8 @@ data class ViewState(
     val errorSnackbar: ErrorSnackbar
 ) {
     companion object {
-        val empty: ViewState
-            get() = ViewState(
+        val empty: UIState
+            get() = UIState(
                 username = "",
                 usernameError = false,
                 password = "",

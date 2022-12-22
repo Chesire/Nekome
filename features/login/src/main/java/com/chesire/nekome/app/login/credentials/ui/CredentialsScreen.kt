@@ -64,7 +64,7 @@ fun CredentialsScreen(
     urlHandler: UrlHandler,
     viewModel: CredentialsViewModel = viewModel()
 ) {
-    val state = viewModel.viewState.collectAsState()
+    val state = viewModel.uiState.collectAsState()
     val context = LocalContext.current
     val signupUrl = stringResource(id = R.string.login_sign_up_url)
     val forgotPasswordUrl = stringResource(id = R.string.login_forgot_password_url)
@@ -83,7 +83,7 @@ fun CredentialsScreen(
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 private fun Render(
-    state: State<ViewState>,
+    state: State<UIState>,
     onUsernameChanged: (String) -> Unit,
     onPasswordChanged: (String) -> Unit,
     onForgotPasswordPressed: () -> Unit,
@@ -262,7 +262,7 @@ private fun SignupButton(onSignupPressed: () -> Unit) {
 @Composable
 @Preview
 private fun Preview() {
-    val initialState = ViewState(
+    val initialState = UIState(
         username = "Username",
         usernameError = false,
         password = "Password",
