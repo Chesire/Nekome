@@ -45,7 +45,7 @@ class CredentialsViewModel @Inject constructor(
             )
             ViewAction.LoginPressed -> performLogin()
             ViewAction.ErrorSnackbarObserved -> {
-                state = state.copy(errorSnackbar = ErrorSnackbar(false, 0))
+                state = state.copy(errorSnackbarMessage = null)
             }
         }
     }
@@ -75,11 +75,11 @@ class CredentialsViewModel @Inject constructor(
         val newState = when (failure) {
             VerifyCredentialsFailure.InvalidCredentials -> state.copy(
                 isPerformingLogin = false,
-                errorSnackbar = ErrorSnackbar(true, R.string.login_error_credentials)
+                errorSnackbarMessage = R.string.login_error_credentials
             )
             VerifyCredentialsFailure.NetworkError -> state.copy(
                 isPerformingLogin = false,
-                errorSnackbar = ErrorSnackbar(true, R.string.login_error_generic)
+                errorSnackbarMessage = R.string.login_error_generic
             )
             VerifyCredentialsFailure.PasswordInvalid -> state.copy(
                 passwordError = true,

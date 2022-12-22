@@ -124,9 +124,10 @@ private fun Render(
         }
     }
 
-    if (state.value.errorSnackbar.show) {
-        val message = stringResource(id = state.value.errorSnackbar.value)
-        LaunchedEffect(state.value.errorSnackbar.show) {
+    val snackbarMessage = state.value.errorSnackbarMessage
+    if (snackbarMessage != null) {
+        val message = stringResource(id = snackbarMessage)
+        LaunchedEffect(snackbarMessage) {
             snackbarHostState.showSnackbar(message = message, duration = SnackbarDuration.Short)
             onSnackbarShown()
         }
@@ -269,7 +270,7 @@ private fun Preview() {
         passwordError = false,
         isPerformingLogin = false,
         buttonEnabled = true,
-        errorSnackbar = ErrorSnackbar(false, 0)
+        errorSnackbarMessage = null
     )
     NekomeTheme(darkTheme = true) {
         Render(

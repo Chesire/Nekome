@@ -9,7 +9,7 @@ data class UIState(
     val passwordError: Boolean,
     val isPerformingLogin: Boolean,
     val buttonEnabled: Boolean,
-    val errorSnackbar: ErrorSnackbar
+    @StringRes val errorSnackbarMessage: Int?
 ) {
     companion object {
         val empty: UIState
@@ -20,12 +20,7 @@ data class UIState(
                 passwordError = false,
                 isPerformingLogin = false,
                 buttonEnabled = false,
-                errorSnackbar = ErrorSnackbar(false, 0)
+                errorSnackbarMessage = null
             )
     }
 }
-
-data class ErrorSnackbar(
-    val show: Boolean,
-    @StringRes val value: Int
-)
