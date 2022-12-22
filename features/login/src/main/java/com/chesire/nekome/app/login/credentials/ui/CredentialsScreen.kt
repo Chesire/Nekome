@@ -6,7 +6,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
@@ -17,7 +16,10 @@ import androidx.compose.material.Button
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.OutlinedTextField
-import androidx.compose.material.Surface
+import androidx.compose.material.Scaffold
+import androidx.compose.material.SnackbarDuration
+import androidx.compose.material.SnackbarHost
+import androidx.compose.material.SnackbarHostState
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
 import androidx.compose.material.icons.Icons
@@ -26,11 +28,13 @@ import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.produceState
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -70,7 +74,8 @@ fun CredentialsScreen(
         onPasswordChanged = { viewModel.execute(ViewAction.PasswordChanged(it)) },
         onForgotPasswordPressed = { urlHandler.launch(context, forgotPasswordUrl) },
         onLoginPressed = { viewModel.execute(ViewAction.LoginPressed) },
-        onSignupPressed = { urlHandler.launch(context, signupUrl) }
+        onSignupPressed = { urlHandler.launch(context, signupUrl) },
+        onSnackbarShown = { viewModel.execute(ViewAction.ErrorSnackbarObserved) }
     )
 }
 
@@ -81,14 +86,20 @@ private fun Render(
     onPasswordChanged: (String) -> Unit,
     onForgotPasswordPressed: () -> Unit,
     onLoginPressed: () -> Unit,
-    onSignupPressed: () -> Unit
+    onSignupPressed: () -> Unit,
+    onSnackbarShown: () -> Unit
 ) {
-    Surface(modifier = Modifier.fillMaxSize()) {
+    val snackbarHostState = remember { SnackbarHostState() }
+
+    Scaffold(
+        snackbarHost = { SnackbarHost(snackbarHostState) },
+        modifier = Modifier.fillMaxSize()
+    ) { paddingValues ->
         Column(
             modifier = Modifier
-                .fillMaxWidth()
+                .fillMaxSize()
                 .verticalScroll(rememberScrollState())
-                .padding(16.dp),
+                .padding(paddingValues),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             HeaderImage()
@@ -108,6 +119,14 @@ private fun Render(
             Spacer(modifier = Modifier.weight(1f))
             LoginButton(state.value.buttonEnabled, onLoginPressed)
             SignupButton(onSignupPressed)
+        }
+    }
+
+    if (state.value.errorSnackbar.show) {
+        val message = stringResource(id = state.value.errorSnackbar.value)
+        LaunchedEffect(state.value.errorSnackbar.show) {
+            snackbarHostState.showSnackbar(message = message, duration = SnackbarDuration.Short)
+            onSnackbarShown()
         }
     }
 }
@@ -247,11 +266,13 @@ private fun Preview() {
         password = "Password",
         passwordError = false,
         isPerformingLogin = false,
-        buttonEnabled = true
+        buttonEnabled = true,
+        errorSnackbar = ErrorSnackbar(false, 0)
     )
     NekomeTheme(darkTheme = true) {
         Render(
             state = produceState(initialValue = initialState, producer = { value = initialState }),
+            { /**/ },
             { /**/ },
             { /**/ },
             { /**/ },

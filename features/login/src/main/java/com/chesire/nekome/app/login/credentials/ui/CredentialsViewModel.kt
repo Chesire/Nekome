@@ -2,6 +2,7 @@ package com.chesire.nekome.app.login.credentials.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.chesire.nekome.app.login.R
 import com.chesire.nekome.app.login.credentials.core.VerifyCredentialsFailure
 import com.chesire.nekome.app.login.credentials.core.VerifyCredentialsUseCase
 import com.github.michaelbull.result.onFailure
@@ -38,6 +39,9 @@ class CredentialsViewModel @Inject constructor(
                 )
             }
             ViewAction.LoginPressed -> performLogin()
+            ViewAction.ErrorSnackbarObserved -> _viewState.update { viewState ->
+                viewState.copy(errorSnackbar = ErrorSnackbar(false, 0))
+            }
         }
     }
 
@@ -52,15 +56,15 @@ class CredentialsViewModel @Inject constructor(
             .onFailure {
                 when (it) {
                     VerifyCredentialsFailure.InvalidCredentials -> _viewState.update { viewState ->
-                        // TODO: Show error message
                         viewState.copy(
-                            isPerformingLogin = false
+                            isPerformingLogin = false,
+                            errorSnackbar = ErrorSnackbar(true, R.string.login_error_credentials)
                         )
                     }
                     VerifyCredentialsFailure.NetworkError -> _viewState.update { viewState ->
-                        // TODO: Show error message
                         viewState.copy(
-                            isPerformingLogin = false
+                            isPerformingLogin = false,
+                            errorSnackbar = ErrorSnackbar(true, R.string.login_error_generic)
                         )
                     }
                     VerifyCredentialsFailure.PasswordInvalid -> _viewState.update { viewState ->
