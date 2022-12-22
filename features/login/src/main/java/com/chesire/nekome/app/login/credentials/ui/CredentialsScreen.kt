@@ -14,6 +14,7 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.OutlinedTextField
@@ -105,22 +106,35 @@ private fun Render(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             HeaderImage()
-            UsernameInput(state.value.username, state.value.usernameError, onUsernameChanged)
+            UsernameInput(
+                username = state.value.username,
+                isUsernameError = state.value.usernameError,
+                onUsernameChanged = onUsernameChanged
+            )
             PasswordInput(
-                state.value.password,
-                state.value.passwordError,
-                onPasswordChanged,
-                onLoginPressed
+                password = state.value.password,
+                isLoggingIn = state.value.isPerformingLogin,
+                isPasswordError = state.value.passwordError,
+                onPasswordChanged = onPasswordChanged,
+                onLoginPressed = onLoginPressed
             )
             ForgotPasswordButton(
-                Modifier
+                modifier = Modifier
                     .align(Alignment.End)
                     .padding(top = 8.dp),
-                onForgotPasswordPressed
+                onForgotPasswordPressed = onForgotPasswordPressed
             )
             Spacer(modifier = Modifier.weight(1f))
-            LoginButton(state.value.buttonEnabled, onLoginPressed)
-            SignupButton(onSignupPressed)
+            if (state.value.isPerformingLogin) {
+                CircularProgressIndicator()
+            } else {
+                LoginButton(
+                    isEnabled = state.value.buttonEnabled,
+                    isLoggingIn = state.value.isPerformingLogin,
+                    onLoginPressed = onLoginPressed
+                )
+                SignupButton(onSignupPressed = onSignupPressed)
+            }
         }
     }
 
@@ -178,6 +192,7 @@ private fun UsernameInput(
 @Composable
 private fun PasswordInput(
     password: String,
+    isLoggingIn: Boolean,
     isPasswordError: Boolean,
     onPasswordChanged: (String) -> Unit,
     onLoginPressed: () -> Unit
@@ -208,8 +223,10 @@ private fun PasswordInput(
         ),
         keyboardActions = KeyboardActions(
             onDone = {
-                onLoginPressed()
-                keyboardController?.hide()
+                if (!isLoggingIn) {
+                    onLoginPressed()
+                    keyboardController?.hide()
+                }
             },
         ),
         isError = isPasswordError,
@@ -232,15 +249,17 @@ private fun ForgotPasswordButton(
 }
 
 @Composable
-private fun LoginButton(isEnabled: Boolean, onLoginPressed: () -> Unit) {
+private fun LoginButton(isEnabled: Boolean, isLoggingIn: Boolean, onLoginPressed: () -> Unit) {
     val keyboardController = LocalSoftwareKeyboardController.current
 
     Button(
         enabled = isEnabled,
         onClick = {
-            onLoginPressed()
-            keyboardController?.hide()
-        },
+            if (!isLoggingIn) {
+                onLoginPressed()
+                keyboardController?.hide()
+            }
+        }
     ) {
         Text(text = stringResource(id = R.string.login_login))
     }
