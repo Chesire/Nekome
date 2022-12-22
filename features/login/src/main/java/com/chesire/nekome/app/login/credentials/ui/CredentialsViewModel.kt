@@ -37,9 +37,7 @@ class CredentialsViewModel @Inject constructor(
                     buttonEnabled = viewState.username.isNotBlank() && viewAction.newPassword.isNotBlank()
                 )
             }
-            ViewAction.ForgotPasswordPressed -> TODO()
             ViewAction.LoginPressed -> performLogin()
-            ViewAction.SignUpPressed -> TODO()
         }
     }
 

@@ -36,6 +36,7 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
@@ -49,18 +50,25 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.chesire.core.compose.theme.NekomeTheme
 import com.chesire.nekome.app.login.R
+import com.chesire.nekome.core.url.UrlHandler
 
 @Composable
-fun CredentialsScreen(viewModel: CredentialsViewModel = viewModel()) {
+fun CredentialsScreen(
+    urlHandler: UrlHandler,
+    viewModel: CredentialsViewModel = viewModel()
+) {
     val state = viewModel.viewState.collectAsState()
+    val context = LocalContext.current
+    val signupUrl = stringResource(id = R.string.login_sign_up_url)
+    val forgotPasswordUrl = stringResource(id = R.string.login_forgot_password_url)
 
     Render(
         state = state,
         onUsernameChanged = { viewModel.execute(ViewAction.UsernameChanged(it)) },
         onPasswordChanged = { viewModel.execute(ViewAction.PasswordChanged(it)) },
-        onForgotPasswordPressed = { viewModel.execute(ViewAction.ForgotPasswordPressed) },
+        onForgotPasswordPressed = { urlHandler.launch(context, forgotPasswordUrl) },
         onLoginPressed = { viewModel.execute(ViewAction.LoginPressed) },
-        onSignupPressed = { viewModel.execute(ViewAction.SignUpPressed) }
+        onSignupPressed = { urlHandler.launch(context, signupUrl) }
     )
 }
 
@@ -234,7 +242,7 @@ private fun Preview() {
         isPerformingLogin = false,
         buttonEnabled = true
     )
-    NekomeTheme {
+    NekomeTheme(darkTheme = true) {
         Render(
             state = produceState(initialValue = initialState, producer = { value = initialState }),
             { /**/ },
