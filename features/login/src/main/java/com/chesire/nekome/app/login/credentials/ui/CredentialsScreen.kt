@@ -9,8 +9,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
@@ -85,6 +87,7 @@ private fun Render(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
+                .verticalScroll(rememberScrollState())
                 .padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -157,6 +160,7 @@ private fun PasswordInput(
     onPasswordChanged: (String) -> Unit,
     onLoginPressed: () -> Unit
 ) {
+    val keyboardController = LocalSoftwareKeyboardController.current
     var passwordVisible by rememberSaveable { mutableStateOf(false) }
     OutlinedTextField(
         value = password,
@@ -181,7 +185,10 @@ private fun PasswordInput(
             imeAction = ImeAction.Done
         ),
         keyboardActions = KeyboardActions(
-            onDone = { onLoginPressed() },
+            onDone = {
+                onLoginPressed()
+                keyboardController?.hide()
+            },
         ),
         isError = isPasswordError,
         singleLine = true,
