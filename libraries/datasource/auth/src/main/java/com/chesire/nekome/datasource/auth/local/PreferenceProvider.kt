@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.os.Build
 import androidx.security.crypto.EncryptedSharedPreferences
-import androidx.security.crypto.MasterKeys
+import androidx.security.crypto.MasterKey
 import com.chesire.nekome.core.extensions.migrateTo
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
@@ -36,9 +36,9 @@ class PreferenceProvider @Inject constructor(@ApplicationContext private val con
 
     private fun initEncryptedPreferences(storeName: String) =
         EncryptedSharedPreferences.create(
-            storeName,
-            MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC),
             context,
+            storeName,
+            MasterKey.Builder(context).setKeyScheme(MasterKey.KeyScheme.AES256_GCM).build(),
             EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
             EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
         )
