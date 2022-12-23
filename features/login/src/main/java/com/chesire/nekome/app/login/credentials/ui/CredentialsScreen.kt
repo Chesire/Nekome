@@ -58,8 +58,8 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.chesire.core.compose.theme.NekomeTheme
 import com.chesire.nekome.app.login.R
+import com.chesire.nekome.core.compose.theme.NekomeTheme
 import com.chesire.nekome.core.url.UrlHandler
 
 @Composable

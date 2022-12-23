@@ -1,4 +1,4 @@
-package com.chesire.core.compose.theme
+package com.chesire.nekome.core.compose.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme

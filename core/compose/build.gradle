@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace 'com.chesire.core.compose'
+    namespace 'com.chesire.nekome.core.compose'
     compileSdk sdk_version
 
     defaultConfig {

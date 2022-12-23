@@ -8,8 +8,8 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
-import com.chesire.core.compose.theme.NekomeTheme
 import com.chesire.nekome.app.login.credentials.ui.CredentialsScreen
+import com.chesire.nekome.core.compose.theme.NekomeTheme
 import com.chesire.nekome.core.url.UrlHandler
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
