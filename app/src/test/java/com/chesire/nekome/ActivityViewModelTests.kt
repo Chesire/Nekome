@@ -115,7 +115,7 @@ class ActivityViewModelTests {
         )
 
         assertTrue(
-            classUnderTest.navigation.value == OverviewNavGraphDirections.globalToDetailsFragment()
+            classUnderTest.navigation.value == OverviewNavGraphDirections.globalToLoginFlow()
         )
     }
 
