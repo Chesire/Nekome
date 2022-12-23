@@ -1,5 +1,6 @@
 package com.chesire.nekome.features.login
 
+import androidx.compose.ui.test.junit4.createComposeRule
 import com.chesire.nekome.R
 import com.chesire.nekome.UITest
 import com.chesire.nekome.core.url.UrlHandler
@@ -8,7 +9,7 @@ import com.chesire.nekome.datasource.auth.remote.AuthResult
 import com.chesire.nekome.helpers.getResource
 import com.chesire.nekome.injection.AuthModule
 import com.chesire.nekome.injection.UrlModule
-import com.chesire.nekome.robots.login.loginDetails
+import com.chesire.nekome.robots.login.loginCredentials
 import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.UninstallModules
@@ -18,6 +19,7 @@ import io.mockk.every
 import io.mockk.just
 import io.mockk.mockk
 import io.mockk.verify
+import org.junit.Rule
 import org.junit.Test
 
 @HiltAndroidTest
@@ -25,7 +27,7 @@ import org.junit.Test
     AuthModule::class,
     UrlModule::class
 )
-class DetailsTests : UITest() {
+class CredentialsTests : UITest() {
 
     override val startLoggedIn = false
 
@@ -35,11 +37,14 @@ class DetailsTests : UITest() {
     @BindValue
     val authApi = mockk<AuthApi>()
 
+    @get:Rule
+    val composeTestRule = createComposeRule()
+
     @Test
     fun emptyUsernameShowsError() {
         launchActivity()
 
-        loginDetails {
+        loginCredentials(composeTestRule) {
             enterUsername("")
             enterPassword("Password")
             clickLogin()
@@ -52,7 +57,7 @@ class DetailsTests : UITest() {
     fun emptyPasswordShowsError() {
         launchActivity()
 
-        loginDetails {
+        loginCredentials(composeTestRule) {
             enterUsername("Username")
             enterPassword("")
             clickLogin()
@@ -71,7 +76,7 @@ class DetailsTests : UITest() {
 
         launchActivity()
 
-        loginDetails {
+        loginCredentials(composeTestRule) {
             enterUsername("Username")
             enterPassword("Password")
             clickLogin()
@@ -90,7 +95,7 @@ class DetailsTests : UITest() {
 
         launchActivity()
 
-        loginDetails {
+        loginCredentials(composeTestRule) {
             enterUsername("Username")
             enterPassword("Password")
             clickLogin()
@@ -106,7 +111,7 @@ class DetailsTests : UITest() {
 
         launchActivity()
 
-        loginDetails {
+        loginCredentials(composeTestRule) {
             clickForgotPassword()
         } validate {
             verify { urlHandler.launch(any(), expectedUrl) }
@@ -120,7 +125,7 @@ class DetailsTests : UITest() {
 
         launchActivity()
 
-        loginDetails {
+        loginCredentials(composeTestRule) {
             clickSignUp()
         } validate {
             verify { urlHandler.launch(any(), expectedUrl) }

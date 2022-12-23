@@ -49,6 +49,8 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.testTag
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -104,8 +106,14 @@ private fun Render(
     val snackbarHostState = remember { SnackbarHostState() }
 
     Scaffold(
-        snackbarHost = { SnackbarHost(snackbarHostState) },
-        modifier = Modifier.fillMaxSize()
+        snackbarHost = {
+            SnackbarHost(
+                hostState = snackbarHostState,
+                modifier = Modifier.semantics { testTag = CredentialsTags.Snackbar })
+        },
+        modifier = Modifier
+            .fillMaxSize()
+            .semantics { testTag = CredentialsTags.Root }
     ) { _ ->
         Column(
             modifier = Modifier
@@ -194,7 +202,10 @@ private fun UsernameInput(
         ),
         isError = isUsernameError,
         singleLine = true,
-        label = { Text(text = stringResource(id = R.string.login_username)) }
+        label = { Text(text = stringResource(id = R.string.login_username)) },
+        modifier = Modifier.semantics {
+            testTag = CredentialsTags.Username
+        }
     )
 }
 
@@ -240,7 +251,10 @@ private fun PasswordInput(
         ),
         isError = isPasswordError,
         singleLine = true,
-        label = { Text(text = stringResource(id = R.string.login_password)) }
+        label = { Text(text = stringResource(id = R.string.login_password)) },
+        modifier = Modifier.semantics {
+            testTag = CredentialsTags.Password
+        }
     )
 }
 
@@ -312,4 +326,11 @@ private fun Preview() {
             { /**/ }
         )
     }
+}
+
+object CredentialsTags {
+    const val Root = "CredentialsRoot"
+    const val Username = "CredentialsUsername"
+    const val Password = "CredentialsPassword"
+    const val Snackbar = "CredentialsSnackbar"
 }

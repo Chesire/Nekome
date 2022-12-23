@@ -1,15 +1,17 @@
 package com.chesire.nekome.features
 
+import androidx.compose.ui.test.junit4.createComposeRule
 import com.chesire.nekome.UITest
 import com.chesire.nekome.core.flags.HomeScreenOptions
 import com.chesire.nekome.core.settings.ApplicationSettings
 import com.chesire.nekome.robots.activity
-import com.chesire.nekome.robots.login.loginDetails
+import com.chesire.nekome.robots.login.loginCredentials
 import com.chesire.nekome.robots.search.search
 import com.chesire.nekome.robots.series.seriesList
 import com.chesire.nekome.robots.settings.settings
 import dagger.hilt.android.testing.HiltAndroidTest
 import javax.inject.Inject
+import org.junit.Rule
 import org.junit.Test
 
 @HiltAndroidTest
@@ -17,6 +19,9 @@ class ActivityTests : UITest() {
 
     @Inject
     lateinit var applicationSettings: ApplicationSettings
+
+    @get:Rule
+    val composeTestRule = createComposeRule()
 
     @Test
     fun overviewCanStartInAnimeView() {
@@ -97,7 +102,7 @@ class ActivityTests : UITest() {
                 confirm()
             }
         }
-        loginDetails {
+        loginCredentials(composeTestRule) {
             validate { isVisible() }
         }
     }
