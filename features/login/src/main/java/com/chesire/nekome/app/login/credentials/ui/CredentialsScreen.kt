@@ -109,7 +109,8 @@ private fun Render(
         snackbarHost = {
             SnackbarHost(
                 hostState = snackbarHostState,
-                modifier = Modifier.semantics { testTag = CredentialsTags.Snackbar })
+                modifier = Modifier.semantics { testTag = CredentialsTags.Snackbar }
+            )
         },
         modifier = Modifier
             .fillMaxSize()
