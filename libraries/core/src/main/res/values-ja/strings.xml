@@ -3,7 +3,7 @@
     <string name="app_name">Nekome</string>
 
     <string name="nav_anime">アニメ</string>
-    <string name="nav_details">詳細</string>
+    <string name="nav_credentials">資格情報</string>
     <string name="nav_discover">発見</string>
     <string name="nav_manga">漫画</string>
     <string name="nav_profile">プロフィール</string>
@@ -53,7 +53,7 @@
     <string name="series_list_delete_retry">再試行</string>
     <string name="series_list_empty">現在のフィルターで見つかったシリーズはありません</string>
     <string name="series_list_refresh">リフレッシュシリーズ</string>
-    <string name="series_list_refresh_error">シリーズ一覧を更新する際にエラーが発生しました。もう一度やり直してください...</string>
+    <string name="series_list_refresh_error">シリーズ一覧を更新する際にエラーが発生しました。もう一度やり直してください…</string>
     <string name="rate_dialog_title">レートシリーズ</string>
     <string name="series_list_rate_cancel">キャンセル</string>
     <string name="series_list_rate_confirm">確認</string>
@@ -68,18 +68,15 @@
 
     <string name="rating_none">評価なし</string>
 
-    <string name="login_header">Kitsuにログイン</string>
     <string name="login_username">Kitsu eメール</string>
     <string name="login_password">パスワード</string>
+    <string name="login_show_password">パスワードを表示</string>
+    <string name="login_hide_password">パスワードを隠す</string>
     <string name="login_login">ログイン</string>
     <string name="login_forgot_password">パスワードをお忘れですか？こちらから変更出来ます</string>
     <string name="login_forgot_password_url">https://kitsu.io/password-reset</string>
-    <string name="login_sign_up">こちらからKitsuに登録出来ます</string>
-    <!-- This text should be exactly what part of login_sign_up should be a link -->
-    <string name="login_sign_up_link_target">こちらから</string>
+    <string name="login_sign_up_kitsu">アカウントがありませんか？キツに申し込む</string>
     <string name="login_sign_up_url">https://kitsu.io/explore/anime</string>
-    <string name="login_error_empty_username">メールアドレスが入力されていません</string>
-    <string name="login_error_empty_password">パスワードが入力されていません</string>
     <string name="login_error_credentials">ログイン時にエラーが発生しました。</string>
     <string name="login_error_generic">ログインに失敗しました。もう一度やり直してください</string>
     <string name="login_header_image_content_description">アプリケーションのアイコン</string>
@@ -130,7 +127,7 @@
     <string name="search_error_no_series_found">シリーズが見つかりませんでした</string>
 
     <string name="results_track">追跡</string>
-    <string name="results_failure">シリーズ%sの追跡を開始できませんでした。もう一度お試しください...</string>
+    <string name="results_failure">シリーズ%sの追跡を開始できませんでした。もう一度お試しください…</string>
 
-    <string name="error_generic">不明なエラーが発生しました...</string>
+    <string name="error_generic">不明なエラーが発生しました…</string>
 </resources>
