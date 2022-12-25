@@ -115,7 +115,7 @@ private fun Render(
         modifier = Modifier
             .fillMaxSize()
             .semantics { testTag = CredentialsTags.Root }
-    ) { _ ->
+    ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()

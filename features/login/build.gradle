@@ -51,8 +51,11 @@ dependencies {
     implementation libs.androidx.navigation.fragment
     implementation libs.androidx.navigation.ui
     implementation libs.coil
+    implementation libs.coil.compose
     implementation libs.google.hilt.android
     implementation libs.google.material
+    implementation libs.kotlin.coroutines.android
+    implementation libs.kotlin.coroutines.core
     implementation libs.kotlin.result
     implementation libs.liveevent
     implementation libs.timber
