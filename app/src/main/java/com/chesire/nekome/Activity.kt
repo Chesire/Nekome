@@ -106,7 +106,7 @@ class Activity : AppCompatActivity(), AuthCaster.AuthCasterListener, Flow {
             setupActionBarWithNavController(this, appBarConfiguration)
             addOnDestinationChangedListener { _, destination, _ ->
                 when (destination.id) {
-                    R.id.detailsFragment, R.id.syncingFragment -> disableDrawer()
+                    R.id.credentialsFragment, R.id.syncingFragment -> disableDrawer()
                     else -> enableDrawer()
                 }
             }

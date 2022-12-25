@@ -48,7 +48,7 @@
         app:popUpToInclusive="true" />
 
     <action
-        android:id="@+id/globalToDetailsFragment"
+        android:id="@+id/globalToLoginFlow"
         app:destination="@id/login_nav_graph"
         app:popUpTo="@+id/overview_nav_graph"
         app:popUpToInclusive="true" />

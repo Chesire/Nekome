@@ -2,6 +2,7 @@ package com.chesire.nekome.app.login.syncing
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
+import com.chesire.nekome.app.login.syncing.ui.SyncingViewModel
 import com.chesire.nekome.core.Resource
 import com.chesire.nekome.core.flags.AsyncState
 import com.chesire.nekome.datasource.series.SeriesRepository

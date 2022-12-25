@@ -9,6 +9,7 @@ import coil.load
 import coil.transform.CircleCropTransformation
 import com.chesire.nekome.app.login.R
 import com.chesire.nekome.app.login.databinding.FragmentSyncingBinding
+import com.chesire.nekome.app.login.syncing.ui.SyncingViewModel
 import com.chesire.nekome.core.nav.Flow
 import dagger.hilt.android.AndroidEntryPoint
 

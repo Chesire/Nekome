@@ -3,7 +3,7 @@
     <string name="app_name">Nekome</string>
 
     <string name="nav_anime">Anime</string>
-    <string name="nav_details">Details</string>
+    <string name="nav_credentials">Credentials</string>
     <string name="nav_discover">Discover</string>
     <string name="nav_manga">Manga</string>
     <string name="nav_profile">Profile</string>
@@ -68,18 +68,15 @@
 
     <string name="rating_none">No rating</string>
 
-    <string name="login_header">Kitsu Login</string>
     <string name="login_username">Kitsu email</string>
     <string name="login_password">Password</string>
+    <string name="login_show_password">Show password</string>
+    <string name="login_hide_password">Hide password</string>
     <string name="login_login">Login</string>
     <string name="login_forgot_password">Forgot Password?</string>
     <string name="login_forgot_password_url">https://kitsu.io/password-reset</string>
-    <string name="login_sign_up">Not yet registered? Sign up</string>
-    <!-- This text should be exactly what part of login_sign_up should be a link -->
-    <string name="login_sign_up_link_target">Sign up</string>
+    <string name="login_sign_up_kitsu">No account? Sign up with Kitsu</string>
     <string name="login_sign_up_url">https://kitsu.io/explore/anime</string>
-    <string name="login_error_empty_username">Empty email not allowed</string>
-    <string name="login_error_empty_password">Empty password not allowed</string>
     <string name="login_error_credentials">Error trying to login, invalid credentials provided</string>
     <string name="login_error_generic">Error trying to login, please try again</string>
     <string name="login_header_image_content_description">Application icon</string>

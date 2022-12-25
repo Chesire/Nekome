@@ -76,7 +76,11 @@ dependencies {
     implementation project(":libraries:kitsu:trending")
     implementation project(":libraries:kitsu:user")
 
+    implementation platform(libs.androidx.compose.bom)
     implementation libs.androidx.appcompat
+    implementation libs.androidx.compose.material
+    implementation libs.androidx.compose.material.icons.extended
+    implementation libs.androidx.compose.ui.tooling.preview
     implementation libs.androidx.constraintlayout
     implementation libs.androidx.core
     implementation libs.androidx.fragment
@@ -104,6 +108,7 @@ dependencies {
     implementation libs.squareup.retrofit2.converter.moshi
     implementation libs.squareup.retrofit2
     implementation libs.timber
+    debugImplementation libs.androidx.compose.ui.tooling
     debugImplementation libs.squareup.leakcanary
     kapt libs.androidx.hilt.compiler
     kapt libs.google.hilt.android.compiler
@@ -117,6 +122,7 @@ dependencies {
     androidTestImplementation project(":testing")
     androidTestImplementation libs.adevinta.barista
     androidTestImplementation libs.androidx.arch.core.testing
+    androidTestImplementation libs.androidx.compose.ui.test.junit4
     androidTestImplementation libs.androidx.test.espresso.core
     androidTestImplementation libs.androidx.test.espresso.intents
     androidTestImplementation libs.androidx.test.ext.junit

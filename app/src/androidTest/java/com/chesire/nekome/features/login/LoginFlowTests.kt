@@ -1,5 +1,6 @@
 package com.chesire.nekome.features.login
 
+import androidx.compose.ui.test.junit4.createComposeRule
 import com.chesire.nekome.UITest
 import com.chesire.nekome.core.Resource
 import com.chesire.nekome.datasource.auth.remote.AuthApi
@@ -12,13 +13,14 @@ import com.chesire.nekome.injection.AuthModule
 import com.chesire.nekome.injection.LibraryModule
 import com.chesire.nekome.injection.UserModule
 import com.chesire.nekome.robots.activity
-import com.chesire.nekome.robots.login.loginDetails
+import com.chesire.nekome.robots.login.loginCredentials
 import com.chesire.nekome.robots.login.loginSyncing
 import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.UninstallModules
 import io.mockk.coEvery
 import io.mockk.mockk
+import org.junit.Rule
 import org.junit.Test
 
 @HiltAndroidTest
@@ -63,11 +65,14 @@ class LoginFlowTests : UITest() {
         }
     }
 
+    @get:Rule
+    val composeTestRule = createComposeRule()
+
     @Test
     fun navigateThroughLoginFlow() {
         launchActivity()
 
-        loginDetails {
+        loginCredentials(composeTestRule) {
             enterUsername("Username")
             enterPassword("Password")
             clickLogin()
