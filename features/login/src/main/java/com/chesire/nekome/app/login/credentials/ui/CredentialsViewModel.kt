@@ -44,12 +44,8 @@ class CredentialsViewModel @Inject constructor(
                 loginButtonEnabled = state.username.isNotBlank() && viewAction.newPassword.isNotBlank()
             )
             ViewAction.LoginPressed -> performLogin()
-            ViewAction.ErrorSnackbarObserved -> {
-                state = state.copy(errorSnackbarMessage = null)
-            }
-            ViewAction.NavigationObserved -> {
-                state = state.copy(navigateScreenEvent = null)
-            }
+            ViewAction.ErrorSnackbarObserved -> state = state.copy(errorSnackbarMessage = null)
+            ViewAction.NavigationObserved -> state = state.copy(navigateScreenEvent = null)
         }
     }
 

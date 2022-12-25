@@ -30,13 +30,9 @@ class VerifyCredentialsUseCase @Inject constructor(private val auth: AccessToken
         }
     }
 
-    private fun isUsernameInvalid(username: String): Boolean {
-        return username.isBlank()
-    }
+    private fun isUsernameInvalid(username: String): Boolean = username.isBlank()
 
-    private fun isPasswordInvalid(password: String): Boolean {
-        return password.isBlank()
-    }
+    private fun isPasswordInvalid(password: String): Boolean = password.isBlank()
 }
 
 sealed interface VerifyCredentialsFailure {
