@@ -1,34 +1,41 @@
 package com.chesire.nekome.robots.login
 
-import com.adevinta.android.barista.assertion.BaristaVisibilityAssertions.assertDisplayed
-import com.chesire.nekome.R
+import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.junit4.ComposeContentTestRule
+import androidx.compose.ui.test.onNodeWithTag
+import com.chesire.nekome.app.login.syncing.ui.SyncingTags
 
 /**
  * Method to interact with the [LoginSyncingRobot].
  */
-fun loginSyncing(func: LoginSyncingRobot.() -> Unit) = LoginSyncingRobot().apply { func() }
+fun loginSyncing(
+    composeContentTestRule: ComposeContentTestRule,
+    func: LoginSyncingRobot.() -> Unit
+) = LoginSyncingRobot(composeContentTestRule).apply { func() }
 
 /**
  * Robot to interact with the login syncing screen.
  */
-class LoginSyncingRobot {
+class LoginSyncingRobot(private val composeContentTestRule: ComposeContentTestRule) {
 
     /**
      * Executes validation steps.
      */
     infix fun validate(func: LoginSyncingResultRobot.() -> Unit) =
-        LoginSyncingResultRobot().apply { func() }
+        LoginSyncingResultRobot(composeContentTestRule).apply { func() }
 }
 
 /**
  * Robot to check the results for the login syncing screen.
  */
-class LoginSyncingResultRobot {
+class LoginSyncingResultRobot(private val composeContentTestRule: ComposeContentTestRule) {
 
     /**
      * Asserts the login syncing screen is shown.
      */
     fun isVisible() {
-        assertDisplayed(R.id.syncingLayout)
+        composeContentTestRule
+            .onNodeWithTag(SyncingTags.Root)
+            .assertIsDisplayed()
     }
 }
