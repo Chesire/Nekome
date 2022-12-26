@@ -1,20 +1,14 @@
 package com.chesire.nekome.app.login.syncing.ui
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.chesire.nekome.core.Resource
-import com.chesire.nekome.core.extensions.postError
-import com.chesire.nekome.core.extensions.postSuccess
-import com.chesire.nekome.core.flags.AsyncState
-import com.chesire.nekome.datasource.series.SeriesRepository
-import com.chesire.nekome.datasource.user.User
-import com.chesire.nekome.datasource.user.UserRepository
+import com.chesire.nekome.app.login.syncing.core.RetrieveAvatarUseCase
+import com.chesire.nekome.app.login.syncing.core.SyncSeriesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 /**
@@ -22,36 +16,29 @@ import kotlinx.coroutines.launch
  */
 @HiltViewModel
 class SyncingViewModel @Inject constructor(
-    private val seriesRepo: SeriesRepository,
-    userRepo: UserRepository
+    private val retrieveAvatar: RetrieveAvatarUseCase,
+    private val syncSeries: SyncSeriesUseCase
 ) : ViewModel() {
 
-    private val _syncStatus = MutableLiveData<AsyncState<Any, Any>>()
-    val syncStatus: LiveData<AsyncState<Any, Any>> get() = _syncStatus
-    val avatarUrl = userRepo.user
-        .map { user ->
-            if (user is User.Found) {
-                user.domain.avatar.largest?.url
-            } else {
-                ""
-            }
-        }.asLiveData()
-
-    /**
-     * Sets off the process for pulling down and storing the users series.
-     *
-     * Success or failure is reported back on [syncStatus].
-     */
-    fun syncLatestData() = viewModelScope.launch {
-        val syncCommands = listOf(
-            seriesRepo.refreshAnime(),
-            seriesRepo.refreshManga()
-        )
-
-        if (syncCommands.any { it is Resource.Error }) {
-            _syncStatus.postError(Any())
-        } else {
-            _syncStatus.postSuccess(Any())
+    private val _uiState = MutableStateFlow(UIState("", null))
+    val uiState = _uiState.asStateFlow()
+    private var state: UIState
+        get() = _uiState.value
+        set(value) {
+            _uiState.update { value }
         }
+
+    init {
+        viewModelScope.launch {
+            state = state.copy(avatar = retrieveAvatar())
+        }
+        viewModelScope.launch {
+            syncSeries()
+            state = state.copy(finishedSyncing = true)
+        }
+    }
+
+    fun observeFinishedSyncing() {
+        state = state.copy(finishedSyncing = null)
     }
 }

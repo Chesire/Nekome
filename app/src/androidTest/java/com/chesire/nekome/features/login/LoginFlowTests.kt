@@ -77,7 +77,7 @@ class LoginFlowTests : UITest() {
             enterPassword("Password")
             clickLogin()
         }
-        loginSyncing {
+        loginSyncing(composeTestRule) {
             // Skipped over, too fast to test
         }
         activity {
