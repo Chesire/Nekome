@@ -1,4 +1,4 @@
-@file:OptIn(ExperimentalMaterialApi::class)
+@file:OptIn(ExperimentalComposeUiApi::class, ExperimentalMaterialApi::class)
 
 package com.chesire.nekome.app.search.host.ui
 
@@ -9,7 +9,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.Button
 import androidx.compose.material.ChipDefaults
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.FilterChip
 import androidx.compose.material.Icon
@@ -24,7 +26,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.produceState
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTag
@@ -57,18 +62,22 @@ private fun Render(
     onSearchGroupSelected: (SearchGroup) -> Unit,
     onSearchPressed: () -> Unit
 ) {
-    Scaffold { paddingValues ->
+    Scaffold(
+        modifier = Modifier.semantics { testTag = HostTags.Root }
+    ) { paddingValues ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(paddingValues)
-                .semantics {
-                    testTag = HostTags.Root
-                }
+                .padding(paddingValues),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             InputText(state.value.searchText, onInputTextChanged)
             SearchGroup(state.value.searchGroup, onSearchGroupSelected)
-            SearchButton(onSearchPressed)
+            if (state.value.isSearching) {
+                CircularProgressIndicator()
+            } else {
+                SearchButton(state.value.isSearching, onSearchPressed)
+            }
         }
     }
 }
@@ -87,9 +96,7 @@ private fun InputText(text: String, onInputTextChanged: (String) -> Unit) {
         modifier = Modifier
             .fillMaxWidth()
             .padding(16.dp)
-            .semantics {
-                testTag = HostTags.Input
-            }
+            .semantics { testTag = HostTags.Input }
     )
 }
 
@@ -123,7 +130,7 @@ private fun SearchGroup(
             onClick = { onSearchGroupSelected(SearchGroup.Manga) },
             modifier = Modifier.padding(8.dp, 0.dp, 8.dp, 8.dp),
             colors = ChipDefaults.filterChipColors(
-                selectedContentColor = MaterialTheme.colors.primaryVariant
+                selectedContentColor = MaterialTheme.colors.primary
             ),
             leadingIcon = {
                 Icon(
@@ -138,8 +145,20 @@ private fun SearchGroup(
 }
 
 @Composable
-private fun SearchButton(onSearchPressed: () -> Unit) {
+private fun SearchButton(isSearching: Boolean, onSearchPressed: () -> Unit) {
+    val keyboardController = LocalSoftwareKeyboardController.current
 
+    Button(
+        onClick = {
+            if (!isSearching) {
+                onSearchPressed()
+                keyboardController?.hide()
+            }
+        },
+        modifier = Modifier.padding(16.dp)
+    ) {
+        Text(text = stringResource(id = R.string.search_search))
+    }
 }
 
 @Composable
@@ -147,7 +166,8 @@ private fun SearchButton(onSearchPressed: () -> Unit) {
 private fun Preview() {
     val initialState = UIState(
         searchText = "Some initial search text",
-        searchGroup = SearchGroup.Anime
+        searchGroup = SearchGroup.Anime,
+        isSearching = false
     )
     NekomeTheme(darkTheme = true) {
         Render(

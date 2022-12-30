@@ -1,6 +1,7 @@
 package com.chesire.nekome.app.search.host.ui
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.chesire.nekome.app.search.host.core.HostInitializeUseCase
 import com.chesire.nekome.app.search.host.core.RememberSearchGroupUseCase
 import com.chesire.nekome.app.search.host.core.model.SearchGroup
@@ -9,6 +10,7 @@ import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 
 @HiltViewModel
 class HostViewModel @Inject constructor(
@@ -16,7 +18,7 @@ class HostViewModel @Inject constructor(
     private val rememberSearchGroup: RememberSearchGroupUseCase
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow(UIState("", SearchGroup.Anime))
+    private val _uiState = MutableStateFlow(UIState("", SearchGroup.Anime, false))
     val uiState = _uiState.asStateFlow()
     private var state: UIState
         get() = _uiState.value
@@ -46,5 +48,11 @@ class HostViewModel @Inject constructor(
 
     private fun handleSearchTextUpdated(newText: String) {
         state = state.copy(searchText = newText)
+    }
+
+    private fun handleExecuteSearch() {
+        viewModelScope.launch {
+            // usecase, send off the search details
+        }
     }
 }
