@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.chesire.nekome.app.search.databinding.FragmentSearchBinding
+import com.chesire.nekome.app.search.host.data.HostPreferences
 import com.chesire.nekome.core.extensions.hide
 import com.chesire.nekome.core.extensions.hideSystemKeyboard
 import com.chesire.nekome.core.extensions.show
@@ -26,7 +27,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
     private val viewModel by viewModels<SearchViewModel>()
 
     @Inject
-    lateinit var searchPreferences: SearchPreferences
+    lateinit var searchPreferences: HostPreferences
     private val seriesType: SeriesType
         get() = when (binding.searchChipGroup.checkedChipId) {
             R.id.searchChipAnime -> SeriesType.Anime

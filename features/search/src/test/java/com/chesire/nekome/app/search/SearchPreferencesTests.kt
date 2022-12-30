@@ -1,6 +1,7 @@
 package com.chesire.nekome.app.search
 
 import android.content.SharedPreferences
+import com.chesire.nekome.app.search.host.data.HostPreferences
 import io.mockk.Runs
 import io.mockk.every
 import io.mockk.just
@@ -16,7 +17,7 @@ class SearchPreferencesTests {
         val mockPreferences = mockk<SharedPreferences> {
             every { getInt("preference.last_search_type", -1) } returns expected
         }
-        val testObject = SearchPreferences(mockPreferences)
+        val testObject = HostPreferences(mockPreferences)
 
         assertEquals(expected, testObject.lastSearchType)
     }
@@ -31,7 +32,7 @@ class SearchPreferencesTests {
         val mockPreferences = mockk<SharedPreferences> {
             every { edit() } returns mockEditor
         }
-        val testObject = SearchPreferences(mockPreferences)
+        val testObject = HostPreferences(mockPreferences)
 
         testObject.lastSearchType = expected
 
