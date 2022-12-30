@@ -28,6 +28,9 @@ android {
         compose true
         viewBinding true
     }
+    composeOptions {
+        kotlinCompilerExtensionVersion = libs.versions.compose.get()
+    }
 }
 
 dependencies {

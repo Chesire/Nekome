@@ -53,17 +53,17 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
                 R.id.searchChipManga -> SeriesType.Manga
                 else -> SeriesType.Unknown
             }
-            searchPreferences.lastSearchType = type.id
+            //searchPreferences.lastSearchType = type.id
         }
         observeSearchResults()
     }
 
     private fun setInitialSeriesType() {
-        val chipId = when (SeriesType.forId(searchPreferences.lastSearchType)) {
-            SeriesType.Manga -> R.id.searchChipManga
-            else -> R.id.searchChipAnime
-        }
-        binding.searchChipGroup.check(chipId)
+        //val chipId = when (SeriesType.forId(searchPreferences.lastSearchType)) {
+        //    SeriesType.Manga -> R.id.searchChipManga
+        //    else -> R.id.searchChipAnime
+        //}
+        //binding.searchChipGroup.check(chipId)
     }
 
     private fun submitSearch() {
