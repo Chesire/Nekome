@@ -1,6 +1,6 @@
 package com.chesire.nekome.app.search.host.ui
 
-import com.chesire.nekome.app.search.host.domain.SearchGroup
+import com.chesire.nekome.app.search.host.core.model.SearchGroup
 
 sealed interface ViewAction {
     data class SearchGroupChanged(val newGroup: SearchGroup) : ViewAction

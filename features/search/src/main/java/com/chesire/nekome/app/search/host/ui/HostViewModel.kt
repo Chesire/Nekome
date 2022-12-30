@@ -3,7 +3,7 @@ package com.chesire.nekome.app.search.host.ui
 import androidx.lifecycle.ViewModel
 import com.chesire.nekome.app.search.host.core.HostInitializeUseCase
 import com.chesire.nekome.app.search.host.core.RememberSearchGroupUseCase
-import com.chesire.nekome.app.search.host.domain.SearchGroup
+import com.chesire.nekome.app.search.host.core.model.SearchGroup
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
