@@ -3,7 +3,6 @@ package com.chesire.nekome.app.search
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.chesire.nekome.app.search.domain.SearchDomainMapper
 import com.chesire.nekome.core.Resource
 import com.chesire.nekome.core.flags.SeriesType
 import com.chesire.nekome.datasource.search.SearchDomain
@@ -18,8 +17,7 @@ import kotlinx.coroutines.launch
  */
 @HiltViewModel
 class SearchViewModel @Inject constructor(
-    private val searchApi: SearchApi,
-    private val mapper: SearchDomainMapper
+    private val searchApi: SearchApi
 ) : ViewModel() {
 
     private val _searchState = LiveEvent<SearchState>()
@@ -63,7 +61,7 @@ class SearchViewModel @Inject constructor(
                 _searchState.postValue(
                     SearchState.Success(
                         model.title,
-                        response.data.map { mapper.toSearchModel(it) }
+                        emptyList()
                     )
                 )
             }

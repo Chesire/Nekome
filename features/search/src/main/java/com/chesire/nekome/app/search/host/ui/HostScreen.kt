@@ -18,14 +18,19 @@ import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Scaffold
+import androidx.compose.material.SnackbarDuration
+import androidx.compose.material.SnackbarHost
+import androidx.compose.material.SnackbarHostState
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CollectionsBookmark
 import androidx.compose.material.icons.filled.VideoLibrary
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.produceState
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -43,15 +48,25 @@ import com.chesire.nekome.core.compose.theme.NekomeTheme
 
 @Composable
 fun HostScreen(
-    viewModel: HostViewModel = viewModel()
+    viewModel: HostViewModel = viewModel(),
+    navigationAction: (NavigationData) -> Unit
 ) {
     val state = viewModel.uiState.collectAsState()
+
+    val navigationEvent = state.value.navigateScreenEvent
+    if (navigationEvent != null) {
+        LaunchedEffect(navigationEvent) {
+            navigationAction(navigationEvent)
+            viewModel.execute(ViewAction.NavigationObserved)
+        }
+    }
 
     Render(
         state = state,
         onInputTextChanged = { viewModel.execute(ViewAction.SearchTextUpdated(it)) },
         onSearchPressed = { viewModel.execute(ViewAction.ExecuteSearch) },
-        onSearchGroupSelected = { viewModel.execute(ViewAction.SearchGroupChanged(it)) }
+        onSearchGroupSelected = { viewModel.execute(ViewAction.SearchGroupChanged(it)) },
+        onSnackbarShown = { viewModel.execute(ViewAction.ErrorSnackbarObserved) }
     )
 }
 
@@ -60,9 +75,18 @@ private fun Render(
     state: State<UIState>,
     onInputTextChanged: (String) -> Unit,
     onSearchGroupSelected: (SearchGroup) -> Unit,
-    onSearchPressed: () -> Unit
+    onSearchPressed: () -> Unit,
+    onSnackbarShown: () -> Unit
 ) {
+    val snackbarHostState = remember { SnackbarHostState() }
+
     Scaffold(
+        snackbarHost = {
+            SnackbarHost(
+                hostState = snackbarHostState,
+                modifier = Modifier.semantics { testTag = HostTags.Snackbar }
+            )
+        },
         modifier = Modifier.semantics { testTag = HostTags.Root }
     ) { paddingValues ->
         Column(
@@ -78,6 +102,15 @@ private fun Render(
             } else {
                 SearchButton(state.value.isSearching, onSearchPressed)
             }
+        }
+    }
+
+    val snackbarMessage = state.value.errorSnackbarMessage
+    if (snackbarMessage != null) {
+        val message = stringResource(id = snackbarMessage)
+        LaunchedEffect(snackbarMessage) {
+            snackbarHostState.showSnackbar(message = message, duration = SnackbarDuration.Short)
+            onSnackbarShown()
         }
     }
 }
@@ -106,7 +139,7 @@ private fun SearchGroup(
     onSearchGroupSelected: (SearchGroup) -> Unit
 ) {
     Row(
-        horizontalArrangement = Arrangement.Center,
+        horizontalArrangement = Arrangement.SpaceEvenly,
         modifier = Modifier.fillMaxWidth()
     ) {
         FilterChip(
@@ -167,14 +200,17 @@ private fun Preview() {
     val initialState = UIState(
         searchText = "Some initial search text",
         searchGroup = SearchGroup.Anime,
-        isSearching = false
+        isSearching = false,
+        errorSnackbarMessage = null,
+        navigateScreenEvent = null
     )
     NekomeTheme(darkTheme = true) {
         Render(
             state = produceState(initialValue = initialState, producer = { value = initialState }),
             onInputTextChanged = { /**/ },
             onSearchPressed = { /**/ },
-            onSearchGroupSelected = { /**/ }
+            onSearchGroupSelected = { /**/ },
+            onSnackbarShown = { /**/ }
         )
     }
 }
@@ -182,4 +218,5 @@ private fun Preview() {
 object HostTags {
     const val Root = "HostRoot"
     const val Input = "HostInput"
+    const val Snackbar = "HostSnackbar"
 }

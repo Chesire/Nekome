@@ -1,6 +1,5 @@
 package com.chesire.nekome.app.search
 
-import com.chesire.nekome.app.search.domain.SearchDomainMapper
 import com.chesire.nekome.core.flags.SeriesType
 import com.chesire.nekome.core.flags.Subtype
 import com.chesire.nekome.core.models.ImageModel
