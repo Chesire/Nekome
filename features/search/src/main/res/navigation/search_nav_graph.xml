@@ -16,15 +16,6 @@
             app:destination="@id/resultsFragment" />
     </fragment>
     <fragment
-        android:id="@+id/searchFragment"
-        android:name="com.chesire.nekome.app.search.SearchFragment"
-        android:label="@string/nav_search"
-        tools:layout="@layout/fragment_search">
-        <action
-            android:id="@+id/toResultsFragment"
-            app:destination="@id/resultsFragment" />
-    </fragment>
-    <fragment
         android:id="@+id/resultsFragment"
         android:name="com.chesire.nekome.app.search.results.ResultsFragment"
         android:label="{searchTerm}"
