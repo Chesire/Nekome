@@ -99,15 +99,18 @@ class SearchSeriesUseCaseTest {
                             url = "",
                             width = 0,
                             height = 0
-                        ), small = ImageModel.ImageData(
+                        ),
+                        small = ImageModel.ImageData(
                             url = "",
                             width = 0,
                             height = 0
-                        ), medium = ImageModel.ImageData(
+                        ),
+                        medium = ImageModel.ImageData(
                             url = "",
                             width = 0,
                             height = 0
-                        ), large = ImageModel.ImageData(
+                        ),
+                        large = ImageModel.ImageData(
                             url = "",
                             width = 0,
                             height = 0
@@ -129,15 +132,18 @@ class SearchSeriesUseCaseTest {
                             url = "",
                             width = 0,
                             height = 0
-                        ), small = ImageModel.ImageData(
+                        ),
+                        small = ImageModel.ImageData(
                             url = "",
                             width = 0,
                             height = 0
-                        ), medium = ImageModel.ImageData(
+                        ),
+                        medium = ImageModel.ImageData(
                             url = "",
                             width = 0,
                             height = 0
-                        ), large = ImageModel.ImageData(
+                        ),
+                        large = ImageModel.ImageData(
                             url = "",
                             width = 0,
                             height = 0
