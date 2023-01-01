@@ -95,7 +95,7 @@ private fun Render(
                 .padding(paddingValues),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            InputText(state.value.searchText, onInputTextChanged)
+            InputText(state.value.searchText, state.value.isSearchTextError, onInputTextChanged)
             SearchGroup(state.value.searchGroup, onSearchGroupSelected)
             if (state.value.isSearching) {
                 CircularProgressIndicator()
@@ -116,7 +116,7 @@ private fun Render(
 }
 
 @Composable
-private fun InputText(text: String, onInputTextChanged: (String) -> Unit) {
+private fun InputText(text: String, isError: Boolean, onInputTextChanged: (String) -> Unit) {
     OutlinedTextField(
         value = text,
         onValueChange = onInputTextChanged,
@@ -126,6 +126,7 @@ private fun InputText(text: String, onInputTextChanged: (String) -> Unit) {
         ),
         singleLine = true,
         label = { Text(text = stringResource(id = R.string.search_series_title)) },
+        isError = isError,
         modifier = Modifier
             .fillMaxWidth()
             .padding(16.dp)
@@ -205,6 +206,7 @@ private fun SearchButton(isSearching: Boolean, onSearchPressed: () -> Unit) {
 private fun Preview() {
     val initialState = UIState(
         searchText = "Some initial search text",
+        isSearchTextError = false,
         searchGroup = SearchGroup.Anime,
         isSearching = false,
         errorSnackbarMessage = null,

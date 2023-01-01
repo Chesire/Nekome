@@ -83,8 +83,17 @@ class HostResultRobot(private val composeContentTestRule: ComposeContentTestRule
      * Asserts the error for having no search term.
      */
     fun isEmptySearchError() {
-        // Need to add error message to the screen.
-        // TODO: assertError(R.id.searchTextLayout, R.string.search_error_no_text)
+        composeContentTestRule
+            .onNodeWithTag(HostTags.Snackbar)
+            .assertIsDisplayed()
+            .onChild()
+            .onChild()
+            .onChild()
+            .assertTextContains(
+                value = "series title must be provided",
+                ignoreCase = true,
+                substring = true
+            )
     }
 
     /**

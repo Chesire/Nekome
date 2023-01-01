@@ -6,6 +6,7 @@ import com.chesire.nekome.app.search.host.core.model.SearchGroup
 
 data class UIState(
     val searchText: String,
+    val isSearchTextError: Boolean,
     val searchGroup: SearchGroup,
     val isSearching: Boolean,
     @StringRes val errorSnackbarMessage: Int?,
@@ -15,6 +16,7 @@ data class UIState(
         val Default
             get() = UIState(
                 searchText = "",
+                isSearchTextError = false,
                 searchGroup = SearchGroup.Anime,
                 isSearching = false,
                 errorSnackbarMessage = null,

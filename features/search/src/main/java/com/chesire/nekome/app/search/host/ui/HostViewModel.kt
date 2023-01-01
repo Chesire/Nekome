@@ -55,7 +55,10 @@ class HostViewModel @Inject constructor(
     }
 
     private fun handleSearchTextUpdated(newText: String) {
-        state = state.copy(searchText = newText)
+        state = state.copy(
+            searchText = newText,
+            isSearchTextError = false
+        )
     }
 
     private fun handleExecuteSearch() {
@@ -72,15 +75,21 @@ class HostViewModel @Inject constructor(
                     )
                 }
                 .onFailure { failureReason ->
-                    val errorStringRes = when (failureReason) {
-                        SearchFailureReason.InvalidTitle -> R.string.search_error_no_text
-                        SearchFailureReason.NetworkError -> R.string.error_generic
-                        SearchFailureReason.NoSeriesFound -> R.string.search_error_no_series_found
+                    state = when (failureReason) {
+                        SearchFailureReason.InvalidTitle -> state.copy(
+                            isSearching = false,
+                            isSearchTextError = true,
+                            errorSnackbarMessage = R.string.search_error_no_text
+                        )
+                        SearchFailureReason.NetworkError -> state.copy(
+                            isSearching = false,
+                            errorSnackbarMessage = R.string.error_generic
+                        )
+                        SearchFailureReason.NoSeriesFound -> state.copy(
+                            isSearching = false,
+                            errorSnackbarMessage = R.string.search_error_no_series_found
+                        )
                     }
-                    state = state.copy(
-                        isSearching = false,
-                        errorSnackbarMessage = errorStringRes
-                    )
                 }
         }
     }
