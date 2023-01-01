@@ -145,7 +145,9 @@ private fun SearchGroup(
         FilterChip(
             selected = selectedGroup == SearchGroup.Anime,
             onClick = { onSearchGroupSelected(SearchGroup.Anime) },
-            modifier = Modifier.padding(8.dp, 0.dp, 8.dp, 8.dp),
+            modifier = Modifier
+                .padding(8.dp, 0.dp, 8.dp, 8.dp)
+                .semantics { testTag = HostTags.Anime },
             colors = ChipDefaults.filterChipColors(
                 selectedContentColor = MaterialTheme.colors.primary
             ),
@@ -161,7 +163,9 @@ private fun SearchGroup(
         FilterChip(
             selected = selectedGroup == SearchGroup.Manga,
             onClick = { onSearchGroupSelected(SearchGroup.Manga) },
-            modifier = Modifier.padding(8.dp, 0.dp, 8.dp, 8.dp),
+            modifier = Modifier
+                .padding(8.dp, 0.dp, 8.dp, 8.dp)
+                .semantics { testTag = HostTags.Manga },
             colors = ChipDefaults.filterChipColors(
                 selectedContentColor = MaterialTheme.colors.primary
             ),
@@ -188,7 +192,9 @@ private fun SearchButton(isSearching: Boolean, onSearchPressed: () -> Unit) {
                 keyboardController?.hide()
             }
         },
-        modifier = Modifier.padding(16.dp)
+        modifier = Modifier
+            .padding(16.dp)
+            .semantics { testTag = HostTags.Search }
     ) {
         Text(text = stringResource(id = R.string.search_search))
     }
@@ -218,5 +224,8 @@ private fun Preview() {
 object HostTags {
     const val Root = "HostRoot"
     const val Input = "HostInput"
+    const val Anime = "HostAnime"
+    const val Manga = "HostManga"
+    const val Search = "HostSearch"
     const val Snackbar = "HostSnackbar"
 }
