@@ -19,7 +19,7 @@ class SearchSeriesUseCase @Inject constructor(private val searchApi: SearchApi) 
         group: SearchGroup
     ): Result<List<SearchModel>, SearchFailureReason> {
         if (isTitleInvalid(title)) {
-            return Err(SearchFailureReason.EmptyTitle)
+            return Err(SearchFailureReason.InvalidTitle)
         }
 
         val result = withContext(Dispatchers.IO) {
@@ -57,7 +57,7 @@ class SearchSeriesUseCase @Inject constructor(private val searchApi: SearchApi) 
 }
 
 sealed interface SearchFailureReason {
-    object EmptyTitle : SearchFailureReason
+    object InvalidTitle : SearchFailureReason
     object NoSeriesFound : SearchFailureReason
     object NetworkError : SearchFailureReason
 }

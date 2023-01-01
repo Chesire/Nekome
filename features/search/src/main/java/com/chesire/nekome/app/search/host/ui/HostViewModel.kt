@@ -73,7 +73,7 @@ class HostViewModel @Inject constructor(
                 }
                 .onFailure { failureReason ->
                     val errorStringRes = when (failureReason) {
-                        SearchFailureReason.EmptyTitle -> R.string.search_error_no_text
+                        SearchFailureReason.InvalidTitle -> R.string.search_error_no_text
                         SearchFailureReason.NetworkError -> R.string.error_generic
                         SearchFailureReason.NoSeriesFound -> R.string.search_error_no_series_found
                     }
