@@ -53,6 +53,7 @@ complexity:
     active: true
     excludes: "**/test/**,**/androidTest/**,**/*.Test.kt,**/*.Spec.kt,**/*.Spek.kt"
     threshold: 30
+    ignoreAnnotated: [ 'Composable' ]
   LongParameterList:
     active: true
     constructorThreshold: 6

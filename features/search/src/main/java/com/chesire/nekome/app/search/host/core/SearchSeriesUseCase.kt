@@ -40,9 +40,7 @@ class SearchSeriesUseCase @Inject constructor(private val searchApi: SearchApi) 
         }
     }
 
-    private fun isTitleInvalid(title: String): Boolean {
-        return title.isBlank()
-    }
+    private fun isTitleInvalid(title: String): Boolean = title.isBlank()
 
     private fun SearchDomain.toSearchModel(): SearchModel {
         return SearchModel(

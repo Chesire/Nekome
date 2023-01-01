@@ -74,23 +74,25 @@ class HostViewModel @Inject constructor(
                         navigateScreenEvent = NavigationData(searchCriteria, it)
                     )
                 }
-                .onFailure { failureReason ->
-                    state = when (failureReason) {
-                        SearchFailureReason.InvalidTitle -> state.copy(
-                            isSearching = false,
-                            isSearchTextError = true,
-                            errorSnackbarMessage = R.string.search_error_no_text
-                        )
-                        SearchFailureReason.NetworkError -> state.copy(
-                            isSearching = false,
-                            errorSnackbarMessage = R.string.error_generic
-                        )
-                        SearchFailureReason.NoSeriesFound -> state.copy(
-                            isSearching = false,
-                            errorSnackbarMessage = R.string.search_error_no_series_found
-                        )
-                    }
-                }
+                .onFailure(::handleSearchFailure)
+        }
+    }
+
+    private fun handleSearchFailure(failureReason: SearchFailureReason) {
+        state = when (failureReason) {
+            SearchFailureReason.InvalidTitle -> state.copy(
+                isSearching = false,
+                isSearchTextError = true,
+                errorSnackbarMessage = R.string.search_error_no_text
+            )
+            SearchFailureReason.NetworkError -> state.copy(
+                isSearching = false,
+                errorSnackbarMessage = R.string.error_generic
+            )
+            SearchFailureReason.NoSeriesFound -> state.copy(
+                isSearching = false,
+                errorSnackbarMessage = R.string.search_error_no_series_found
+            )
         }
     }
 
