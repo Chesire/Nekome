@@ -1,16 +1,18 @@
 package com.chesire.nekome.features.search
 
+import androidx.compose.ui.test.junit4.createComposeRule
 import com.chesire.nekome.UITest
 import com.chesire.nekome.core.Resource
 import com.chesire.nekome.datasource.search.remote.SearchApi
 import com.chesire.nekome.injection.SearchModule
 import com.chesire.nekome.robots.activity
-import com.chesire.nekome.robots.search.search
+import com.chesire.nekome.robots.search.host
 import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.UninstallModules
 import io.mockk.coEvery
 import io.mockk.mockk
+import org.junit.Rule
 import org.junit.Test
 
 private const val GENERIC_ERROR = "GENERIC_ERROR"
@@ -34,6 +36,9 @@ class SearchTests : UITest() {
         }
     }
 
+    @get:Rule
+    val composeTestRule = createComposeRule()
+
     @Test
     fun canReachSearch() {
         launchActivity()
@@ -41,7 +46,7 @@ class SearchTests : UITest() {
         activity {
             goToSearch()
         }
-        search {
+        host(composeTestRule) {
             validate { isVisible() }
         }
     }
@@ -53,7 +58,7 @@ class SearchTests : UITest() {
         activity {
             goToSearch()
         }
-        search {
+        host(composeTestRule) {
             searchTerm("")
             selectAnime()
             clickSearch()
@@ -69,7 +74,7 @@ class SearchTests : UITest() {
         activity {
             goToSearch()
         }
-        search {
+        host(composeTestRule) {
             searchTerm(GENERIC_ERROR)
             selectAnime()
             clickSearch()
@@ -85,7 +90,7 @@ class SearchTests : UITest() {
         activity {
             goToSearch()
         }
-        search {
+        host(composeTestRule) {
             searchTerm(NO_RESULTS_ERROR)
             selectAnime()
             clickSearch()

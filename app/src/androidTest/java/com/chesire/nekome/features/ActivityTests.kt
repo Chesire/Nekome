@@ -6,7 +6,7 @@ import com.chesire.nekome.core.flags.HomeScreenOptions
 import com.chesire.nekome.core.settings.ApplicationSettings
 import com.chesire.nekome.robots.activity
 import com.chesire.nekome.robots.login.loginCredentials
-import com.chesire.nekome.robots.search.search
+import com.chesire.nekome.robots.search.host
 import com.chesire.nekome.robots.series.seriesList
 import com.chesire.nekome.robots.settings.settings
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -76,7 +76,7 @@ class ActivityTests : UITest() {
         activity {
             goToSearch()
         }
-        search {
+        host(composeTestRule) {
             validate { isVisible() }
         }
     }
