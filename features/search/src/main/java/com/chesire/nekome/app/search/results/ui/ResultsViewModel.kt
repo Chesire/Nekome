@@ -45,8 +45,7 @@ class ResultsViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             retrieveUserSeriesIds().collectLatest { userModelIds ->
-                val models = state.models
-                val newModels = models.map {
+                val newModels = state.models.map {
                     it.copy(canTrack = !userModelIds.contains(it.id))
                 }
                 state = state.copy(models = newModels)
@@ -56,16 +55,39 @@ class ResultsViewModel @Inject constructor(
 
     fun trackNewSeries(seriesId: Int, seriesType: SeriesType) {
         viewModelScope.launch {
-            // TODO: Update UI with the series that is updated
+            setResultState(seriesId = seriesId, isTracking = true, canTrack = false)
+
             trackSeries(seriesId, seriesType)
                 .onSuccess {
-                    // Update view state
+                    setResultState(
+                        seriesId = seriesId,
+                        isTracking = false,
+                        canTrack = false
+                    )
                 }
                 .onFailure {
-                    // Update view state
+                    setResultState(
+                        seriesId = seriesId,
+                        isTracking = false,
+                        canTrack = true
+                    )
                 }
-            // TODO: Stop the trackuing on the series chosen
         }
+    }
+
+    private fun setResultState(seriesId: Int, isTracking: Boolean, canTrack: Boolean) {
+        state = state.copy(
+            models = state.models.map {
+                if (it.id == seriesId) {
+                    it.copy(
+                        isTracking = isTracking,
+                        canTrack = canTrack
+                    )
+                } else {
+                    it
+                }
+            }
+        )
     }
 
     private fun Array<SearchModel>.toResultModels(): List<ResultModel> {

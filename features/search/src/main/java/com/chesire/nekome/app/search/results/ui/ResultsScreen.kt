@@ -6,17 +6,20 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Card
-import androidx.compose.material.IconButton
 import androidx.compose.material.LinearProgressIndicator
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
+import androidx.compose.material.TextButton
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.InsertPhoto
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.produceState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
@@ -57,7 +60,10 @@ private fun ResultsList(
     onSeriesTrack: (ResultModel) -> Unit
 ) {
     LazyColumn(modifier = modifier.fillMaxSize()) {
-        items(resultModels) { model ->
+        items(
+            items = resultModels,
+            key = { it.id }
+        ) { model ->
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -68,13 +74,13 @@ private fun ResultsList(
                 Text(text = model.subtype)
                 AsyncImage(
                     model = model.posterImage.smallest?.url,
-                    placeholder = painterResource(id = R.drawable.ic_insert_photo),
-                    error = painterResource(id = R.drawable.ic_insert_photo),
+                    placeholder = rememberVectorPainter(image = Icons.Default.InsertPhoto),
+                    error = rememberVectorPainter(image = Icons.Default.InsertPhoto),
                     contentDescription = null
                 )
                 if (model.canTrack) {
-                    IconButton(onClick = { onSeriesTrack(model) }) {
-
+                    TextButton(onClick = { onSeriesTrack(model) }) {
+                        Text(text = stringResource(id = R.string.results_track))
                     }
                 }
                 if (model.isTracking) {
