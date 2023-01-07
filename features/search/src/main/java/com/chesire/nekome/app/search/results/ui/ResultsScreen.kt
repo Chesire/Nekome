@@ -1,6 +1,7 @@
 package com.chesire.nekome.app.search.results.ui
 
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -58,7 +59,9 @@ private fun ResultsList(
     LazyColumn(modifier = modifier.fillMaxSize()) {
         items(resultModels) { model ->
             Card(
-                modifier = Modifier.alpha(if (model.canTrack) 1.0f else 0.3f)
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .alpha(if (model.canTrack) 1.0f else 0.3f)
             ) {
                 Text(text = model.canonicalTitle)
                 Text(text = model.synopsis)
@@ -92,7 +95,38 @@ private fun Preview() {
                 type = SeriesType.Anime,
                 synopsis = "This is a synopsis",
                 canonicalTitle = "This is the title",
-                subtype = "This is a subtype",
+                subtype = "Oneshot",
+                posterImage = ImageModel(
+                    tiny = ImageModel.ImageData(
+                        url = "",
+                        width = 0,
+                        height = 0
+                    ),
+                    small = ImageModel.ImageData(
+                        url = "",
+                        width = 0,
+                        height = 0
+                    ),
+                    medium = ImageModel.ImageData(
+                        url = "",
+                        width = 0,
+                        height = 0
+                    ),
+                    large = ImageModel.ImageData(
+                        url = "",
+                        width = 0,
+                        height = 0
+                    )
+                ),
+                canTrack = true,
+                isTracking = false
+            ),
+            ResultModel(
+                id = 1,
+                type = SeriesType.Anime,
+                synopsis = "This is another synopsis",
+                canonicalTitle = "This is the title again",
+                subtype = "Oneshot",
                 posterImage = ImageModel(
                     tiny = ImageModel.ImageData(
                         url = "",
@@ -116,7 +150,7 @@ private fun Preview() {
                     )
                 ),
                 canTrack = false,
-                isTracking = false
+                isTracking = true
             )
         )
     )
