@@ -1,59 +1,32 @@
 package com.chesire.nekome.app.search.results
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.navArgs
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.chesire.nekome.app.search.R
-import com.chesire.nekome.app.search.databinding.FragmentResultsBinding
-import com.chesire.nekome.app.search.domain.SearchModel
-import com.google.android.material.snackbar.Snackbar
+import com.chesire.nekome.app.search.results.ui.ResultsScreen
+import com.chesire.nekome.core.compose.theme.NekomeTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 /**
  * Displays the results of a search to the user, allowing them to select to track new series.
  */
 @AndroidEntryPoint
-class ResultsFragment : Fragment(R.layout.fragment_results), ResultsListener {
+class ResultsFragment : Fragment() {
 
-    private val viewModel by viewModels<ResultsViewModel>()
-    private val args by navArgs<ResultsFragmentArgs>()
-    private val resultsAdapter = ResultsAdapter(this)
-    private var _binding: FragmentResultsBinding? = null
-    private val binding get() = requireNotNull(_binding) { "Binding not set" }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        _binding = FragmentResultsBinding.bind(view)
-
-        observeSeries()
-        resultsAdapter.submitList(args.searchResults.toList())
-        binding.resultsContent.apply {
-            adapter = resultsAdapter
-            layoutManager = LinearLayoutManager(requireContext())
-            setHasFixedSize(true)
-        }
-    }
-
-    private fun observeSeries() = viewModel.seriesIds.observe(viewLifecycleOwner) { series ->
-        resultsAdapter.storedSeriesIds = series
-    }
-
-    override fun onTrack(model: SearchModel, callback: () -> Unit) {
-        viewModel.trackNewSeries(
-            ResultsData(model.id, model.type)
-        ) { successful ->
-            if (!successful) {
-                Snackbar.make(
-                    binding.resultsLayout,
-                    getString(R.string.results_failure, model.canonicalTitle),
-                    Snackbar.LENGTH_LONG
-                ).show()
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View = ComposeView(requireContext()).apply {
+        setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+        setContent {
+            NekomeTheme {
+                ResultsScreen()
             }
-
-            callback()
         }
     }
 }
