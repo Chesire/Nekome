@@ -23,7 +23,7 @@ private const val SEARCH_RESULTS_KEY = "searchResults"
 @HiltViewModel
 class ResultsViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    private val retrieveUserSeriesIds: RetrieveUserSeriesIdsUseCase,
+    retrieveUserSeriesIds: RetrieveUserSeriesIdsUseCase,
     private val trackSeries: TrackSeriesUseCase
 ) : ViewModel() {
 
@@ -68,7 +68,8 @@ class ResultsViewModel @Inject constructor(
                     state = state.copy(
                         models = buildResultState(
                             seriesId = resultModel.id,
-                            isTracking = false
+                            isTracking = false,
+                            canTrack = false
                         )
                     )
                 }
@@ -89,11 +90,15 @@ class ResultsViewModel @Inject constructor(
 
     private fun buildResultState(
         seriesId: Int,
-        isTracking: Boolean
+        isTracking: Boolean,
+        canTrack: Boolean? = null
     ): List<ResultModel> {
         return state.models.map {
             if (it.id == seriesId) {
-                it.copy(isTracking = isTracking)
+                it.copy(
+                    canTrack = canTrack ?: it.canTrack,
+                    isTracking = isTracking
+                )
             } else {
                 it
             }

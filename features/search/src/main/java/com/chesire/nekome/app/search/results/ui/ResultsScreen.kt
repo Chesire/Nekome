@@ -171,6 +171,7 @@ private fun ResultItem(model: ResultModel, onSeriesTrack: (ResultModel) -> Unit)
                 }
             }
             if (model.canTrack && !model.isTracking) {
+                // TODO: Make this a bit more pronouncd as a button
                 IconButton(
                     modifier = Modifier.align(Alignment.BottomEnd),
                     onClick = { onSeriesTrack(model) }
