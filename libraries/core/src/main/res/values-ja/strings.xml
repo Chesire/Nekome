@@ -126,7 +126,7 @@
     <string name="search_error_no_type_selected">シリーズの種類を選択する必要があります</string>
     <string name="search_error_no_series_found">シリーズが見つかりませんでした</string>
 
-    <string name="results_track">追跡</string>
+    <string name="results_track_series">このシリーズを追跡する</string>
     <string name="results_failure">シリーズ%sの追跡を開始できませんでした。もう一度お試しください…</string>
 
     <string name="error_generic">不明なエラーが発生しました…</string>

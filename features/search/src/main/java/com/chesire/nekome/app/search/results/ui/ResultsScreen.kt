@@ -10,7 +10,7 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -94,10 +94,17 @@ private fun ResultItem(model: ResultModel, onSeriesTrack: (ResultModel) -> Unit)
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .heightIn(min = 120.dp)
+            .height(120.dp)
             .alpha(if (model.canTrack) 1.0f else 0.3f)
     ) {
         Box(modifier = Modifier.fillMaxSize()) {
+            if (model.isTracking) {
+                LinearProgressIndicator(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .align(Alignment.BottomCenter)
+                )
+            }
             Row(modifier = Modifier.fillMaxSize()) {
                 AsyncImage(
                     model = model.posterImage.smallest?.url,
@@ -128,19 +135,12 @@ private fun ResultItem(model: ResultModel, onSeriesTrack: (ResultModel) -> Unit)
                         style = MaterialTheme.typography.caption,
                         modifier = Modifier.fillMaxWidth()
                     )
-                    Spacer(modifier = Modifier.fillMaxHeight())
+                    Spacer(modifier = Modifier.weight(1f))
                     Text(
                         text = model.subtype,
                         style = MaterialTheme.typography.caption
                     )
                 }
-            }
-            if (model.isTracking) {
-                LinearProgressIndicator(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .align(Alignment.BottomCenter)
-                )
             }
             if (model.canTrack) {
                 IconButton(
@@ -149,7 +149,7 @@ private fun ResultItem(model: ResultModel, onSeriesTrack: (ResultModel) -> Unit)
                 ) {
                     Icon(
                         imageVector = Icons.Default.Add,
-                        contentDescription = stringResource(id = R.string.results_track) // TODO: Update this
+                        contentDescription = stringResource(id = R.string.results_track_series)
                     )
                 }
             }
