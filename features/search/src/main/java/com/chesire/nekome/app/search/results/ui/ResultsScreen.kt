@@ -1,5 +1,6 @@
 package com.chesire.nekome.app.search.results.ui
 
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -14,6 +15,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Card
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
@@ -171,14 +173,15 @@ private fun ResultItem(model: ResultModel, onSeriesTrack: (ResultModel) -> Unit)
                 }
             }
             if (model.canTrack && !model.isTracking) {
-                // TODO: Make this a bit more pronounced as a button
                 IconButton(
                     modifier = Modifier.align(Alignment.BottomEnd),
                     onClick = { onSeriesTrack(model) }
                 ) {
                     Icon(
                         imageVector = Icons.Default.Add,
-                        contentDescription = stringResource(id = R.string.results_track_series)
+                        contentDescription = stringResource(id = R.string.results_track_series),
+                        tint = MaterialTheme.colors.primary,
+                        modifier = Modifier.border(1.dp, MaterialTheme.colors.primary, CircleShape)
                     )
                 }
             }
