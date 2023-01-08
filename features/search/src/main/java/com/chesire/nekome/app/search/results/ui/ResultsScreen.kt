@@ -1,12 +1,20 @@
 package com.chesire.nekome.app.search.results.ui
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Card
 import androidx.compose.material.LinearProgressIndicator
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
@@ -16,11 +24,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.produceState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import com.chesire.nekome.app.search.R
@@ -59,28 +70,71 @@ private fun ResultsList(
     modifier: Modifier = Modifier,
     onSeriesTrack: (ResultModel) -> Unit
 ) {
-    LazyColumn(modifier = modifier.fillMaxSize()) {
+    LazyColumn(
+        modifier = modifier.fillMaxSize(),
+        contentPadding = PaddingValues(8.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
         items(
             items = resultModels,
             key = { it.id }
         ) { model ->
-            Card(
+            ResultItem(model = model, onSeriesTrack = onSeriesTrack)
+        }
+    }
+}
+
+@Composable
+private fun ResultItem(model: ResultModel, onSeriesTrack: (ResultModel) -> Unit) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .requiredHeight(120.dp)
+            .alpha(if (model.canTrack) 1.0f else 0.3f)
+    ) {
+        Row(modifier = Modifier.fillMaxSize()) {
+            AsyncImage(
+                model = model.posterImage.smallest?.url,
+                placeholder = rememberVectorPainter(image = Icons.Default.InsertPhoto),
+                error = rememberVectorPainter(image = Icons.Default.InsertPhoto),
+                contentDescription = null,
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .alpha(if (model.canTrack) 1.0f else 0.3f)
+                    .fillMaxHeight()
+                    .aspectRatio(0.7f)
+            )
+            Column(
+                modifier = Modifier
+                    .padding(8.dp)
+                    .fillMaxHeight()
             ) {
-                Text(text = model.canonicalTitle)
-                Text(text = model.synopsis)
-                Text(text = model.subtype)
-                AsyncImage(
-                    model = model.posterImage.smallest?.url,
-                    placeholder = rememberVectorPainter(image = Icons.Default.InsertPhoto),
-                    error = rememberVectorPainter(image = Icons.Default.InsertPhoto),
-                    contentDescription = null
+                Text(
+                    text = model.canonicalTitle,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                    style = MaterialTheme.typography.body1,
+                    modifier = Modifier.fillMaxWidth()
                 )
-                if (model.canTrack) {
-                    TextButton(onClick = { onSeriesTrack(model) }) {
-                        Text(text = stringResource(id = R.string.results_track))
+                Text(
+                    text = model.synopsis,
+                    maxLines = 3,
+                    overflow = TextOverflow.Ellipsis,
+                    style = MaterialTheme.typography.caption,
+                    modifier = Modifier.fillMaxWidth()
+                )
+
+                Row(
+                    modifier = Modifier.fillMaxSize(),
+                    verticalAlignment = Alignment.Bottom,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(
+                        text = model.subtype,
+                        style = MaterialTheme.typography.caption
+                    )
+                    if (model.canTrack) {
+                        TextButton(onClick = { onSeriesTrack(model) }) {
+                            Text(text = stringResource(id = R.string.results_track))
+                        }
                     }
                 }
                 if (model.isTracking) {
