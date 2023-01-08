@@ -3,10 +3,10 @@ package com.chesire.nekome.app.search.results.ui
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.chesire.nekome.app.search.R
 import com.chesire.nekome.app.search.domain.SearchModel
 import com.chesire.nekome.app.search.results.core.RetrieveUserSeriesIdsUseCase
 import com.chesire.nekome.app.search.results.core.TrackSeriesUseCase
-import com.chesire.nekome.core.flags.SeriesType
 import com.github.michaelbull.result.onFailure
 import com.github.michaelbull.result.onSuccess
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -29,10 +29,11 @@ class ResultsViewModel @Inject constructor(
 
     private val _uiState = MutableStateFlow(
         UIState(
-            savedStateHandle
+            models = savedStateHandle
                 .get<Array<SearchModel>>(SEARCH_RESULTS_KEY)
                 ?.toResultModels()
-                ?: emptyList()
+                ?: emptyList(),
+            errorSnackbar = null
         )
     )
     val uiState = _uiState.asStateFlow()
@@ -53,41 +54,54 @@ class ResultsViewModel @Inject constructor(
         }
     }
 
-    fun trackNewSeries(seriesId: Int, seriesType: SeriesType) {
+    fun trackNewSeries(resultModel: ResultModel) {
         viewModelScope.launch {
-            setResultState(seriesId = seriesId, isTracking = true, canTrack = false)
+            state = state.copy(
+                models = buildResultState(
+                    seriesId = resultModel.id,
+                    isTracking = true
+                )
+            )
 
-            trackSeries(seriesId, seriesType)
+            trackSeries(resultModel.id, resultModel.type)
                 .onSuccess {
-                    setResultState(
-                        seriesId = seriesId,
-                        isTracking = false,
-                        canTrack = false
+                    state = state.copy(
+                        models = buildResultState(
+                            seriesId = resultModel.id,
+                            isTracking = false
+                        )
                     )
                 }
                 .onFailure {
-                    setResultState(
-                        seriesId = seriesId,
-                        isTracking = false,
-                        canTrack = true
+                    state = state.copy(
+                        models = buildResultState(
+                            seriesId = resultModel.id,
+                            isTracking = false
+                        ),
+                        errorSnackbar = SnackbarData(
+                            R.string.results_failure,
+                            resultModel.canonicalTitle
+                        )
                     )
                 }
         }
     }
 
-    private fun setResultState(seriesId: Int, isTracking: Boolean, canTrack: Boolean) {
-        state = state.copy(
-            models = state.models.map {
-                if (it.id == seriesId) {
-                    it.copy(
-                        isTracking = isTracking,
-                        canTrack = canTrack
-                    )
-                } else {
-                    it
-                }
+    private fun buildResultState(
+        seriesId: Int,
+        isTracking: Boolean
+    ): List<ResultModel> {
+        return state.models.map {
+            if (it.id == seriesId) {
+                it.copy(isTracking = isTracking)
+            } else {
+                it
             }
-        )
+        }
+    }
+
+    fun errorSnackbarObserved() {
+        state = state.copy(errorSnackbar = null)
     }
 
     private fun Array<SearchModel>.toResultModels(): List<ResultModel> {

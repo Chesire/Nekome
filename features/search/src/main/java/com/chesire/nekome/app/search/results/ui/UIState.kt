@@ -1,10 +1,12 @@
 package com.chesire.nekome.app.search.results.ui
 
+import androidx.annotation.StringRes
 import com.chesire.nekome.core.flags.SeriesType
 import com.chesire.nekome.core.models.ImageModel
 
 data class UIState(
-    val models: List<ResultModel>
+    val models: List<ResultModel>,
+    val errorSnackbar: SnackbarData?
 )
 
 data class ResultModel(
@@ -16,4 +18,9 @@ data class ResultModel(
     val posterImage: ImageModel,
     val canTrack: Boolean,
     val isTracking: Boolean
+)
+
+data class SnackbarData(
+    @StringRes val stringRes: Int,
+    val formatText: String
 )

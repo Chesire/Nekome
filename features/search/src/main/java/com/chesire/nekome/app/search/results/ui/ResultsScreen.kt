@@ -20,20 +20,27 @@ import androidx.compose.material.IconButton
 import androidx.compose.material.LinearProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
+import androidx.compose.material.SnackbarDuration
+import androidx.compose.material.SnackbarHost
+import androidx.compose.material.SnackbarHostState
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.BrokenImage
 import androidx.compose.material.icons.filled.InsertPhoto
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.produceState
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.testTag
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -51,21 +58,42 @@ fun ResultsScreen(
     val state = viewModel.uiState.collectAsState()
     Render(
         state = state,
-        onSeriesTrack = { viewModel.trackNewSeries(it.id, it.type) }
+        onSeriesTrack = { viewModel.trackNewSeries(it) },
+        onSnackbarShown = { viewModel.errorSnackbarObserved() }
     )
 }
 
 @Composable
 private fun Render(
     state: State<UIState>,
-    onSeriesTrack: (ResultModel) -> Unit
+    onSeriesTrack: (ResultModel) -> Unit,
+    onSnackbarShown: () -> Unit
 ) {
-    Scaffold { paddingValues ->
+    val snackbarHostState = remember { SnackbarHostState() }
+
+    Scaffold(
+        snackbarHost = {
+            SnackbarHost(
+                hostState = snackbarHostState,
+                modifier = Modifier.semantics { testTag = ResultsTags.Snackbar }
+            )
+        },
+        modifier = Modifier.semantics { testTag = ResultsTags.Root }
+    ) { paddingValues ->
         ResultsList(
             resultModels = state.value.models,
             modifier = Modifier.padding(paddingValues),
             onSeriesTrack = onSeriesTrack
         )
+    }
+
+    val snackbar = state.value.errorSnackbar
+    if (snackbar != null) {
+        val message = stringResource(id = snackbar.stringRes, snackbar.formatText)
+        LaunchedEffect(message) {
+            snackbarHostState.showSnackbar(message = message, duration = SnackbarDuration.Short)
+            onSnackbarShown()
+        }
     }
 }
 
@@ -142,7 +170,7 @@ private fun ResultItem(model: ResultModel, onSeriesTrack: (ResultModel) -> Unit)
                     )
                 }
             }
-            if (model.canTrack) {
+            if (model.canTrack && !model.isTracking) {
                 IconButton(
                     modifier = Modifier.align(Alignment.BottomEnd),
                     onClick = { onSeriesTrack(model) }
@@ -224,7 +252,8 @@ private fun Preview() {
                 canTrack = false,
                 isTracking = true
             )
-        )
+        ),
+        errorSnackbar = null
     )
     NekomeTheme(darkTheme = true) {
         Render(
@@ -232,7 +261,14 @@ private fun Preview() {
                 initialValue = initialState,
                 producer = { value = initialState }
             ),
-            onSeriesTrack = { /**/ }
+            onSeriesTrack = { /**/ },
+            onSnackbarShown = { /**/ }
         )
     }
+}
+
+
+object ResultsTags {
+    const val Root = "ResultsRoot"
+    const val Snackbar = "ResultsSnackbar"
 }
