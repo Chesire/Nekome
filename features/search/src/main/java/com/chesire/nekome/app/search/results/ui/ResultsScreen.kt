@@ -1,24 +1,29 @@
 package com.chesire.nekome.app.search.results.ui
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Card
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.LinearProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
-import androidx.compose.material.TextButton
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.BrokenImage
 import androidx.compose.material.icons.filled.InsertPhoto
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
@@ -89,56 +94,63 @@ private fun ResultItem(model: ResultModel, onSeriesTrack: (ResultModel) -> Unit)
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .requiredHeight(120.dp)
+            .heightIn(min = 120.dp)
             .alpha(if (model.canTrack) 1.0f else 0.3f)
     ) {
-        Row(modifier = Modifier.fillMaxSize()) {
-            AsyncImage(
-                model = model.posterImage.smallest?.url,
-                placeholder = rememberVectorPainter(image = Icons.Default.InsertPhoto),
-                error = rememberVectorPainter(image = Icons.Default.InsertPhoto),
-                contentDescription = null,
-                modifier = Modifier
-                    .fillMaxHeight()
-                    .aspectRatio(0.7f)
-            )
-            Column(
-                modifier = Modifier
-                    .padding(8.dp)
-                    .fillMaxHeight()
-            ) {
-                Text(
-                    text = model.canonicalTitle,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                    style = MaterialTheme.typography.body1,
-                    modifier = Modifier.fillMaxWidth()
+        Box(modifier = Modifier.fillMaxSize()) {
+            Row(modifier = Modifier.fillMaxSize()) {
+                AsyncImage(
+                    model = model.posterImage.smallest?.url,
+                    placeholder = rememberVectorPainter(image = Icons.Default.InsertPhoto),
+                    error = rememberVectorPainter(image = Icons.Default.BrokenImage),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .fillMaxWidth(0.25f)
+                        .aspectRatio(0.7f)
+                        .align(Alignment.CenterVertically)
                 )
-                Text(
-                    text = model.synopsis,
-                    maxLines = 3,
-                    overflow = TextOverflow.Ellipsis,
-                    style = MaterialTheme.typography.caption,
-                    modifier = Modifier.fillMaxWidth()
-                )
-
-                Row(
-                    modifier = Modifier.fillMaxSize(),
-                    verticalAlignment = Alignment.Bottom,
-                    horizontalArrangement = Arrangement.SpaceBetween
+                Column(
+                    modifier = Modifier
+                        .padding(8.dp)
+                        .fillMaxHeight()
                 ) {
+                    Text(
+                        text = model.canonicalTitle,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        style = MaterialTheme.typography.body1,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                    Text(
+                        text = model.synopsis,
+                        maxLines = 3,
+                        overflow = TextOverflow.Ellipsis,
+                        style = MaterialTheme.typography.caption,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                    Spacer(modifier = Modifier.fillMaxHeight())
                     Text(
                         text = model.subtype,
                         style = MaterialTheme.typography.caption
                     )
-                    if (model.canTrack) {
-                        TextButton(onClick = { onSeriesTrack(model) }) {
-                            Text(text = stringResource(id = R.string.results_track))
-                        }
-                    }
                 }
-                if (model.isTracking) {
-                    LinearProgressIndicator()
+            }
+            if (model.isTracking) {
+                LinearProgressIndicator(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .align(Alignment.BottomCenter)
+                )
+            }
+            if (model.canTrack) {
+                IconButton(
+                    modifier = Modifier.align(Alignment.BottomEnd),
+                    onClick = { onSeriesTrack(model) }
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Add,
+                        contentDescription = stringResource(id = R.string.results_track) // TODO: Update this
+                    )
                 }
             }
         }
