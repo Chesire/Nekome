@@ -271,7 +271,6 @@ private fun Preview() {
     }
 }
 
-
 object ResultsTags {
     const val Root = "ResultsRoot"
     const val Snackbar = "ResultsSnackbar"
