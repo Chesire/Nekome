@@ -18,8 +18,7 @@
     <fragment
         android:id="@+id/resultsFragment"
         android:name="com.chesire.nekome.app.search.results.ResultsFragment"
-        android:label="{searchTerm}"
-        tools:layout="@layout/fragment_results">
+        android:label="{searchTerm}">
         <argument
             android:name="searchTerm"
             app:argType="string" />

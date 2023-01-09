@@ -41,18 +41,13 @@ dependencies {
 
     implementation platform(libs.androidx.compose.bom)
     implementation libs.androidx.appcompat
-    implementation libs.androidx.constraintlayout
     implementation libs.androidx.core
-    implementation libs.androidx.fragment
-    implementation libs.androidx.lifecycle.livedata
     implementation libs.androidx.navigation.fragment
     implementation libs.androidx.navigation.ui
     implementation libs.bundles.compose
-    implementation libs.coil
     implementation libs.google.hilt.android
     implementation libs.google.material
     implementation libs.kotlin.result
-    implementation libs.liveevent
     implementation libs.timber
     debugImplementation libs.androidx.compose.ui.tooling
     kapt libs.google.hilt.android.compiler

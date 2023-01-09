@@ -46,7 +46,7 @@ class ResultsTests : UITest() {
             searchTerm(DEFAULT_VALUES)
             clickSearch()
         }
-        results {
+        results(composeTestRule) {
             validate { isVisible() }
         }
     }
@@ -62,7 +62,7 @@ class ResultsTests : UITest() {
             searchTerm(DEFAULT_VALUES)
             clickSearch()
         }
-        results {
+        results(composeTestRule) {
             validate { titleIs(DEFAULT_VALUES) }
         }
     }
