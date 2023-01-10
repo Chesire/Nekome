@@ -1,7 +1,7 @@
 import io.gitlab.arturbosch.detekt.Detekt
 
 plugins {
-    id 'jacoco'
+    id("org.jetbrains.kotlinx.kover") version "0.6.1"
     alias(libs.plugins.detekt)
     alias(libs.plugins.ktlint)
 
@@ -14,8 +14,8 @@ plugins {
 }
 
 subprojects {
+    apply plugin: "org.jetbrains.kotlinx.kover"
     apply plugin: "org.jlleitschuh.gradle.ktlint"
-    apply from: "${project.rootDir}/jacoco.gradle"
 
     ktlint {
         verbose = true
@@ -42,6 +42,46 @@ task detektCheck(type: Detekt) {
     exclude "**/build/**"
     config.setFrom(files("$rootDir/detekt.yml"))
     buildUponDefaultConfig = false
+}
+
+koverMerged {
+    enable()
+
+    filters {
+        classes {
+            excludes.addAll(
+                "*.databinding.*", // Autogen ViewBinding
+                "dagger.*", // Autogen Dagger code
+                "hilt_*", // Autogen Hilt code
+                "*BuildConfig", // Autogen Build file
+                "*ComposableSingletons\$*", // Autogen Compose code
+                "*JsonAdapter", // Autogen Moshi code
+                "*Directions\$*", // Autogen Navigation
+                "*_AssistedFactory_Impl", // Autogen Dagger code
+                "*_Factory", // Autogen Dagger code
+                "*_Factory\$*", // Autogen Dagger code
+                "*_HiltModules*", // Autogen Dagger code
+                "*_MembersInjector", // Autogen Dagger code
+
+                "*Activity", // Activities
+                "*Activity\$*", // Activities
+                "*Fragment", // Fragments
+                "*Fragment\$*", // Fragments
+                "*ScreenKt*", // Compose screens
+                "*ScreenKt*\$*", // Compose screens
+                "com.chesire.nekome.injection.*" // Dagger injection code
+            )
+        }
+        projects {
+            excludes.addAll(
+                ":core:compose", // View code
+                ":features:discover", // Not finished
+                ":features:profile", // Not finished
+                ":features:timeline", // Not finished
+                ":testing" // Testing code
+            )
+        }
+    }
 }
 
 ext {
