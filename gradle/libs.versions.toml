@@ -8,7 +8,6 @@ androidx-room = "2.4.3"
 coil = "2.2.2"
 compose = "1.4.0-alpha02"
 hilt = "2.44.2"
-jacoco = "0.8.8"
 kotlin = "1.7.21"
 kotlin-coroutines = "1.6.4"
 material-dialogs = "3.3.0"
@@ -90,6 +89,7 @@ androidx-navigation-safeargs = { id = "androidx.navigation.safeargs.kotlin", ver
 detekt = { id = "io.gitlab.arturbosch.detekt", version = "1.21.0" }
 google-dagger-hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kover = { id = "org.jetbrains.kotlinx.kover", version = "0.6.1" }
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version = "11.0.0" }
 
 [bundles]
