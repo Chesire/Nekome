@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chesire.nekome.app.series.R
 import com.chesire.nekome.app.series.collection.core.CollectSeriesUseCase
-import com.chesire.nekome.app.series.collection.core.DeleteSeriesUseCase
 import com.chesire.nekome.app.series.collection.core.FilterSeriesUseCase
 import com.chesire.nekome.app.series.collection.core.IncrementSeriesUseCase
 import com.chesire.nekome.app.series.collection.core.RefreshSeriesUseCase
@@ -30,7 +29,6 @@ private const val SERIES_TYPE = "seriesType"
 class CollectionViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val collectSeries: CollectSeriesUseCase,
-    private val deleteSeries: DeleteSeriesUseCase,
     private val filterSeries: FilterSeriesUseCase,
     private val incrementSeries: IncrementSeriesUseCase,
     private val refreshSeries: RefreshSeriesUseCase,
