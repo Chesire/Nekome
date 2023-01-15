@@ -73,17 +73,17 @@ class CollectionViewModel @Inject constructor(
 
     private fun handleSeriesRefresh() {
         viewModelScope.launch {
-            // TODO: set isRefreshing to true
+            state = state.copy(isRefreshing = true)
             refreshSeries()
                 .onSuccess {
-
+                    state = state.copy(isRefreshing = false)
                 }
                 .onFailure {
                     state = state.copy(
+                        isRefreshing = false,
                         errorSnackbar = SnackbarData(R.string.series_list_refresh_error)
                     )
                 }
-            // TODO: set isRefreshing to false
         }
     }
 
