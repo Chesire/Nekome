@@ -11,9 +11,7 @@ import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class UpdateSeriesUseCase @Inject constructor(
-    private val repo: SeriesRepository
-) {
+class UpdateSeriesUseCase @Inject constructor(private val repo: SeriesRepository) {
 
     suspend operator fun invoke(
         userSeriesId: Int,
