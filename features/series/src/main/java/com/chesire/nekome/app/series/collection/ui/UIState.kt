@@ -1,12 +1,23 @@
 package com.chesire.nekome.app.series.collection.ui
 
 import androidx.annotation.StringRes
-import com.chesire.nekome.datasource.series.SeriesDomain
 
 data class UIState(
-    val models: List<SeriesDomain>,
+    val models: List<Series>,
     val isRefreshing: Boolean,
     val errorSnackbar: SnackbarData?
+)
+
+data class Series(
+    val userId: Int,
+    val title: String,
+    val posterImageUrl: String,
+    val subtype: String,
+    val progress: String,
+    val startDate: String,
+    val endDate: String,
+    val showPlusOne: Boolean,
+    val isUpdating: Boolean
 )
 
 data class SnackbarData(

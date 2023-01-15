@@ -8,17 +8,19 @@ import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.Result
 import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.withContext
 
 class IncrementSeriesUseCase @Inject constructor(private val repo: SeriesRepository) {
 
-    suspend operator fun invoke(seriesDomain: SeriesDomain): Result<SeriesDomain, Unit> {
+    suspend operator fun invoke(userSeriesId: Int): Result<SeriesDomain, Unit> {
         return withContext(Dispatchers.IO) {
+            val domain = requireNotNull(repo.getSeries().first().find { it.userId == userSeriesId })
             val result = repo.updateSeries(
-                userSeriesId = seriesDomain.userId,
-                progress = seriesDomain.progress + 1,
-                status = seriesDomain.userSeriesStatus,
-                rating = seriesDomain.rating
+                userSeriesId = domain.userId,
+                progress = domain.progress + 1,
+                status = domain.userSeriesStatus,
+                rating = domain.rating
             )
 
             if (result is Resource.Success) {

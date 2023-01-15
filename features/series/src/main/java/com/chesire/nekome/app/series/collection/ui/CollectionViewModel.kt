@@ -10,7 +10,6 @@ import com.chesire.nekome.app.series.collection.core.IncrementSeriesUseCase
 import com.chesire.nekome.app.series.collection.core.RefreshSeriesUseCase
 import com.chesire.nekome.app.series.collection.core.SortSeriesUseCase
 import com.chesire.nekome.core.flags.SeriesType
-import com.chesire.nekome.datasource.series.SeriesDomain
 import com.github.michaelbull.result.onFailure
 import com.github.michaelbull.result.onSuccess
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -28,14 +27,15 @@ private const val SERIES_TYPE = "seriesType"
 @HiltViewModel
 class CollectionViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    private val collectSeries: CollectSeriesUseCase,
+    collectSeries: CollectSeriesUseCase,
     private val filterSeries: FilterSeriesUseCase,
     private val incrementSeries: IncrementSeriesUseCase,
     private val refreshSeries: RefreshSeriesUseCase,
-    private val sortSeries: SortSeriesUseCase
+    private val sortSeries: SortSeriesUseCase,
+    private val domainMapper: DomainMapper
 ) : ViewModel() {
 
-    private val seriesType = requireNotNull(savedStateHandle.get<SeriesType>(SERIES_TYPE))
+    private val _seriesType = requireNotNull(savedStateHandle.get<SeriesType>(SERIES_TYPE))
     private val _uiState = MutableStateFlow(
         UIState(
             models = emptyList(),
@@ -53,8 +53,9 @@ class CollectionViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             collectSeries()
-                .map { filterSeries(it, seriesType) }
+                .map { filterSeries(it, _seriesType) }
                 .map(sortSeries::invoke)
+                .map(domainMapper::toSeries)
                 .collectLatest { newModels ->
                     state = state.copy(models = newModels)
                 }
@@ -64,7 +65,7 @@ class CollectionViewModel @Inject constructor(
     fun execute(action: ViewAction) {
         when (action) {
             ViewAction.PerformSeriesRefresh -> handleSeriesRefresh()
-            is ViewAction.IncrementSeriesPressed -> handleIncrementSeries(action.seriesDomain)
+            is ViewAction.IncrementSeriesPressed -> handleIncrementSeries(action.series)
             ViewAction.ErrorSnackbarObserved -> handleErrorSnackbarObserved()
         }
     }
@@ -85,10 +86,10 @@ class CollectionViewModel @Inject constructor(
         }
     }
 
-    private fun handleIncrementSeries(domain: SeriesDomain) {
+    private fun handleIncrementSeries(series: Series) {
         // TODO: Need to check if this would complete the series, if it would show the rating dialog
         viewModelScope.launch {
-            incrementSeries(domain)
+            incrementSeries(series.userId)
                 .onSuccess {
 
                 }
@@ -96,7 +97,7 @@ class CollectionViewModel @Inject constructor(
                     state = state.copy(
                         errorSnackbar = SnackbarData(
                             stringRes = R.string.series_list_try_again,
-                            formatText = domain.title
+                            formatText = series.title
                         )
                     )
                 }

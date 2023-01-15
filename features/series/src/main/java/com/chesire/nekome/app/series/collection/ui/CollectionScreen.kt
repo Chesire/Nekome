@@ -2,6 +2,7 @@
 
 package com.chesire.nekome.app.series.collection.ui
 
+import android.content.Context
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -20,6 +21,7 @@ import androidx.compose.material.Divider
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
+import androidx.compose.material.LinearProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.SnackbarDuration
@@ -42,6 +44,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -50,12 +53,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import com.chesire.nekome.app.series.R
 import com.chesire.nekome.core.compose.theme.NekomeTheme
-import com.chesire.nekome.core.flags.SeriesStatus
-import com.chesire.nekome.core.flags.SeriesType
 import com.chesire.nekome.core.flags.Subtype
-import com.chesire.nekome.core.flags.UserSeriesStatus
-import com.chesire.nekome.core.models.ImageModel
-import com.chesire.nekome.datasource.series.SeriesDomain
 
 @Composable
 fun CollectionScreen(
@@ -75,8 +73,8 @@ fun CollectionScreen(
 private fun Render(
     state: State<UIState>,
     onRefresh: () -> Unit,
-    onSelectSeries: (SeriesDomain) -> Unit,
-    onIncrementSeries: (SeriesDomain) -> Unit,
+    onSelectSeries: (Series) -> Unit,
+    onIncrementSeries: (Series) -> Unit,
     onSnackbarShown: () -> Unit
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
@@ -110,12 +108,12 @@ private fun Render(
 
 @Composable
 private fun SeriesCollection(
-    models: List<SeriesDomain>,
+    models: List<Series>,
     isRefreshing: Boolean,
     modifier: Modifier = Modifier,
     onRefresh: () -> Unit,
-    onSelectSeries: (SeriesDomain) -> Unit,
-    onIncrementSeries: (SeriesDomain) -> Unit
+    onSelectSeries: (Series) -> Unit,
+    onIncrementSeries: (Series) -> Unit
 ) {
     if (models.isNotEmpty()) {
         val pullRefreshState = rememberPullRefreshState(
@@ -130,7 +128,7 @@ private fun SeriesCollection(
             ) {
                 items(
                     items = models,
-                    key = { it.id }
+                    key = { it.userId }
                 ) {
                     SeriesItem(
                         model = it,
@@ -158,10 +156,14 @@ private fun SeriesCollection(
 
 @Composable
 private fun SeriesItem(
-    model: SeriesDomain,
-    onSelectSeries: (SeriesDomain) -> Unit,
-    onIncrementSeries: (SeriesDomain) -> Unit
+    model: Series,
+    onSelectSeries: (Series) -> Unit,
+    onIncrementSeries: (Series) -> Unit
 ) {
+    val context = LocalContext.current
+    val dateString = remember {
+        buildDateString(context = context, startDate = model.startDate, endDate = model.endDate)
+    }
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -169,7 +171,6 @@ private fun SeriesItem(
 
     ) {
         Box(modifier = Modifier.fillMaxSize()) {
-            /*
             if (model.isUpdating) {
                 LinearProgressIndicator(
                     modifier = Modifier
@@ -177,10 +178,9 @@ private fun SeriesItem(
                         .align(Alignment.BottomCenter)
                 )
             }
-             */
             Row(modifier = Modifier.fillMaxSize()) {
                 AsyncImage(
-                    model = model.posterImage.smallest?.url,
+                    model = model.posterImageUrl,
                     placeholder = rememberVectorPainter(image = Icons.Default.InsertPhoto),
                     error = rememberVectorPainter(image = Icons.Default.BrokenImage),
                     contentDescription = null,
@@ -202,21 +202,15 @@ private fun SeriesItem(
                         modifier = Modifier.fillMaxWidth()
                     )
                     Text(
-                        text = model.subtype.name,
+                        text = model.subtype,
                         maxLines = 3,
                         overflow = TextOverflow.Ellipsis,
                         style = MaterialTheme.typography.overline,
                         modifier = Modifier.fillMaxWidth()
                     )
-                    /* TODO: Pass the correct date down in to the model
-                    Text(
-                        text =
-                    )
-                     */
+                    Text(text = dateString)
                     Divider()
-                    /* TODO: Pass the correct progress down into the model
-                    Text(text = )
-                     */
+                    Text(text = model.progress)
                 }
             }
             IconButton(
@@ -233,47 +227,38 @@ private fun SeriesItem(
     }
 }
 
+private fun buildDateString(context: Context, startDate: String, endDate: String): String {
+    return when {
+        startDate.isEmpty() && endDate.isEmpty() -> context.getString(R.string.series_list_unknown)
+        startDate == endDate -> startDate
+        endDate.isEmpty() -> context.getString(
+            R.string.series_list_date_range,
+            startDate,
+            context.getString(R.string.series_list_ongoing)
+        )
+        else -> context.getString(
+            R.string.series_list_date_range,
+            startDate,
+            endDate
+        )
+    }
+}
+
 @Composable
 @Preview
 private fun Preview() {
     val initialState = UIState(
         models = listOf(
-            SeriesDomain(
-                id = 0,
+            Series(
                 userId = 0,
-                type = SeriesType.Anime,
-                subtype = Subtype.Movie,
-                slug = "slug",
+                subtype = Subtype.Movie.name,
                 title = "Title",
-                seriesStatus = SeriesStatus.Current,
-                userSeriesStatus = UserSeriesStatus.Current,
-                progress = 0,
-                totalLength = 12,
-                rating = 0,
-                posterImage = ImageModel(
-                    tiny = ImageModel.ImageData(
-                        url = "",
-                        width = 0,
-                        height = 0
-                    ),
-                    small = ImageModel.ImageData(
-                        url = "",
-                        width = 0,
-                        height = 0
-                    ),
-                    medium = ImageModel.ImageData(
-                        url = "",
-                        width = 0,
-                        height = 0
-                    ),
-                    large = ImageModel.ImageData(
-                        url = "",
-                        width = 0,
-                        height = 0
-                    )
-                ),
-                startDate = "",
-                endDate = ""
+                progress = "0",
+                startDate = "Start date",
+                endDate = "End date",
+                posterImageUrl = "",
+                isUpdating = false,
+                showPlusOne = true
             )
         ),
         isRefreshing = false,
