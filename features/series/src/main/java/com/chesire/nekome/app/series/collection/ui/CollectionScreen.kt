@@ -48,7 +48,7 @@ fun CollectionScreen(
     Render(
         state = state,
         onRefresh = { viewModel.execute(ViewAction.PerformSeriesRefresh) },
-        onSeriesSelect = { viewModel /* Add method to call */ },
+        onSelectSeries = { viewModel /* Add method to call */ },
         onIncrementSeries = { viewModel.execute(ViewAction.IncrementSeriesPressed(it)) },
         onSnackbarShown = { viewModel.execute(ViewAction.ErrorSnackbarObserved) }
     )
@@ -58,7 +58,7 @@ fun CollectionScreen(
 private fun Render(
     state: State<UIState>,
     onRefresh: () -> Unit,
-    onSeriesSelect: (SeriesDomain) -> Unit,
+    onSelectSeries: (SeriesDomain) -> Unit,
     onIncrementSeries: (SeriesDomain) -> Unit,
     onSnackbarShown: () -> Unit
 ) {
@@ -76,7 +76,7 @@ private fun Render(
             isRefreshing = state.value.isRefreshing,
             modifier = Modifier.padding(paddingValues),
             onRefresh = onRefresh,
-            onSeriesSelect = onSeriesSelect,
+            onSelectSeries = onSelectSeries,
             onIncrementSeries = onIncrementSeries
         )
     }
@@ -97,7 +97,7 @@ private fun SeriesCollection(
     isRefreshing: Boolean,
     modifier: Modifier = Modifier,
     onRefresh: () -> Unit,
-    onSeriesSelect: (SeriesDomain) -> Unit,
+    onSelectSeries: (SeriesDomain) -> Unit,
     onIncrementSeries: (SeriesDomain) -> Unit
 ) {
     if (models.isNotEmpty()) {
@@ -117,7 +117,7 @@ private fun SeriesCollection(
                 ) {
                     SeriesItem(
                         model = it,
-                        onSeriesSelect = onSeriesSelect,
+                        onSelectSeries = onSelectSeries,
                         onIncrementSeries = onIncrementSeries
                     )
                 }
@@ -142,7 +142,7 @@ private fun SeriesCollection(
 @Composable
 private fun SeriesItem(
     model: SeriesDomain,
-    onSeriesSelect: (SeriesDomain) -> Unit,
+    onSelectSeries: (SeriesDomain) -> Unit,
     onIncrementSeries: (SeriesDomain) -> Unit
 ) {
 
@@ -201,7 +201,7 @@ private fun Preview() {
                 producer = { value = initialState }
             ),
             onRefresh = { /**/ },
-            onSeriesSelect = { /**/ },
+            onSelectSeries = { /**/ },
             onIncrementSeries = { /**/ },
             onSnackbarShown = { /**/ }
         )
