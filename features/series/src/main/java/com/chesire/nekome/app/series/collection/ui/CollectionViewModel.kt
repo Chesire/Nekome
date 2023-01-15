@@ -24,6 +24,10 @@ import kotlinx.coroutines.launch
 // Note this value is pulled from the nav_graph.xml
 private const val SERIES_TYPE = "seriesType"
 
+// TODO: Menu items - need to show filter and sort
+// TODO: Find out how to launch the details bottom sheet, for now maybe just launch the fragment?
+// TODO: Show the rating dialog when finishing a series
+
 @HiltViewModel
 class CollectionViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
@@ -110,9 +114,7 @@ class CollectionViewModel @Inject constructor(
     private fun updateIsUpdating(id: Int, isUpdating: Boolean): List<Series> {
         return state.models.map {
             if (it.userId == id) {
-                it.copy(
-                    isUpdating = isUpdating
-                )
+                it.copy(isUpdating = isUpdating)
             } else {
                 it
             }

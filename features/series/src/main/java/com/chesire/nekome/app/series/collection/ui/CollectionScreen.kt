@@ -43,6 +43,7 @@ import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -162,9 +163,14 @@ private fun SeriesItem(
 ) {
     val context = LocalContext.current
     val dateString = remember {
-        buildDateString(context = context, startDate = model.startDate, endDate = model.endDate)
+        buildDateString(
+            context = context,
+            startDate = model.startDate,
+            endDate = model.endDate
+        )
     }
     Card(
+        onClick = { onSelectSeries(model) },
         modifier = Modifier
             .fillMaxWidth()
             .height(125.dp)
@@ -196,7 +202,7 @@ private fun SeriesItem(
                 ) {
                     Text(
                         text = model.title,
-                        maxLines = 1,
+                        maxLines = 1, // TODO: Maybe do 2 lines?
                         overflow = TextOverflow.Ellipsis,
                         style = MaterialTheme.typography.body1,
                         modifier = Modifier.fillMaxWidth()
@@ -214,7 +220,10 @@ private fun SeriesItem(
                 }
             }
             IconButton(
-                modifier = Modifier.align(Alignment.BottomEnd),
+                modifier = Modifier
+                    .align(Alignment.BottomEnd)
+                    .alpha(if (model.isUpdating) 0.3f else 1f),
+                enabled = !model.isUpdating,
                 onClick = { onIncrementSeries(model) }
             ) {
                 Icon(
@@ -258,6 +267,17 @@ private fun Preview() {
                 endDate = "End date",
                 posterImageUrl = "",
                 isUpdating = false,
+                showPlusOne = true
+            ),
+            Series(
+                userId = 1,
+                subtype = Subtype.TV.name,
+                title = "Title 2",
+                progress = "3 / 5",
+                startDate = "Start date",
+                endDate = "End date",
+                posterImageUrl = "",
+                isUpdating = true,
                 showPlusOne = true
             )
         ),
