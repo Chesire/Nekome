@@ -5,6 +5,7 @@ import com.chesire.nekome.datasource.series.SeriesDomain
 
 data class UIState(
     val models: List<SeriesDomain>,
+    val isRefreshing: Boolean,
     val errorSnackbar: SnackbarData?
 )
 

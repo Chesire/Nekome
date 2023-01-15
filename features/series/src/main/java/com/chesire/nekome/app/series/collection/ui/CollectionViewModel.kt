@@ -5,9 +5,12 @@ import androidx.lifecycle.viewModelScope
 import com.chesire.nekome.app.series.collection.core.CollectSeriesUseCase
 import com.chesire.nekome.app.series.collection.core.DeleteSeriesUseCase
 import com.chesire.nekome.app.series.collection.core.FilterSeriesUseCase
+import com.chesire.nekome.app.series.collection.core.IncrementSeriesUseCase
 import com.chesire.nekome.app.series.collection.core.RefreshSeriesUseCase
 import com.chesire.nekome.app.series.collection.core.SortSeriesUseCase
-import com.chesire.nekome.app.series.collection.core.UpdateSeriesUseCase
+import com.chesire.nekome.datasource.series.SeriesDomain
+import com.github.michaelbull.result.onFailure
+import com.github.michaelbull.result.onSuccess
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -22,13 +25,17 @@ class CollectionViewModel @Inject constructor(
     private val collectSeries: CollectSeriesUseCase,
     private val deleteSeries: DeleteSeriesUseCase,
     private val filterSeries: FilterSeriesUseCase,
+    private val incrementSeries: IncrementSeriesUseCase,
     private val refreshSeries: RefreshSeriesUseCase,
-    private val sortSeries: SortSeriesUseCase,
-    private val updateSeries: UpdateSeriesUseCase
+    private val sortSeries: SortSeriesUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(
-        UIState(models = emptyList(), errorSnackbar = null)
+        UIState(
+            models = emptyList(),
+            isRefreshing = false,
+            errorSnackbar = null
+        )
     )
     val uiState = _uiState.asStateFlow()
     private var state: UIState
@@ -44,6 +51,39 @@ class CollectionViewModel @Inject constructor(
                 .map(sortSeries::invoke)
                 .collectLatest { newModels ->
                     state = state.copy(models = newModels)
+                }
+        }
+    }
+
+    fun execute(action: ViewAction) {
+        when (action) {
+            ViewAction.PerformSeriesRefresh -> handleSeriesRefresh()
+            is ViewAction.IncrementSeriesPressed -> handleIncrementSeries(action.seriesDomain)
+        }
+    }
+
+    private fun handleSeriesRefresh() {
+        viewModelScope.launch {
+            // set isRefreshing to true
+            refreshSeries()
+                .onSuccess {
+
+                }
+                .onFailure {
+
+                }
+            // set isRefreshing to false
+        }
+    }
+
+    private fun handleIncrementSeries(domain: SeriesDomain) {
+        viewModelScope.launch {
+            incrementSeries(domain)
+                .onSuccess {
+
+                }
+                .onFailure {
+
                 }
         }
     }

@@ -1,21 +1,29 @@
+@file:OptIn(ExperimentalMaterialApi::class)
+
 package com.chesire.nekome.app.series.collection.ui
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Scaffold
 import androidx.compose.material.SnackbarDuration
 import androidx.compose.material.SnackbarHost
 import androidx.compose.material.SnackbarHostState
+import androidx.compose.material.pullrefresh.PullRefreshIndicator
+import androidx.compose.material.pullrefresh.pullRefresh
+import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -36,8 +44,9 @@ fun CollectionScreen(
     val state = viewModel.uiState.collectAsState()
     Render(
         state = state,
+        onRefresh = { viewModel.execute(ViewAction.PerformSeriesRefresh) },
         onSeriesSelect = { viewModel /* Add method to call */ },
-        onSeriesPlusOne = { viewModel /* Add method to call */ },
+        onIncrementSeries = { viewModel.execute(ViewAction.IncrementSeriesPressed(it)) },
         onSnackbarShown = { viewModel /* Add method to call */ }
     )
 }
@@ -45,8 +54,9 @@ fun CollectionScreen(
 @Composable
 private fun Render(
     state: State<UIState>,
+    onRefresh: () -> Unit,
     onSeriesSelect: (SeriesDomain) -> Unit,
-    onSeriesPlusOne: (SeriesDomain) -> Unit,
+    onIncrementSeries: (SeriesDomain) -> Unit,
     onSnackbarShown: () -> Unit
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
@@ -60,9 +70,11 @@ private fun Render(
     ) { paddingValues ->
         SeriesCollection(
             models = state.value.models,
+            isRefreshing = state.value.isRefreshing,
             modifier = Modifier.padding(paddingValues),
+            onRefresh = onRefresh,
             onSeriesSelect = onSeriesSelect,
-            onSeriesPlusOne = onSeriesPlusOne
+            onIncrementSeries = onIncrementSeries
         )
     }
 
@@ -79,26 +91,39 @@ private fun Render(
 @Composable
 private fun SeriesCollection(
     models: List<SeriesDomain>,
+    isRefreshing: Boolean,
     modifier: Modifier = Modifier,
+    onRefresh: () -> Unit,
     onSeriesSelect: (SeriesDomain) -> Unit,
-    onSeriesPlusOne: (SeriesDomain) -> Unit
+    onIncrementSeries: (SeriesDomain) -> Unit
 ) {
     if (models.isNotEmpty()) {
-        LazyColumn(
-            modifier = modifier.fillMaxSize(),
-            contentPadding = PaddingValues(8.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            items(
-                items = models,
-                key = { it.id }
+        val pullRefreshState = rememberPullRefreshState(
+            refreshing = isRefreshing,
+            onRefresh = onRefresh
+        )
+        Box(modifier = modifier.pullRefresh(pullRefreshState)) {
+            LazyColumn(
+                modifier = Modifier.fillMaxSize(),
+                contentPadding = PaddingValues(8.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                SeriesItem(
-                    model = it,
-                    onSeriesSelect = onSeriesSelect,
-                    onSeriesPlusOne = onSeriesPlusOne
-                )
+                items(
+                    items = models,
+                    key = { it.id }
+                ) {
+                    SeriesItem(
+                        model = it,
+                        onSeriesSelect = onSeriesSelect,
+                        onIncrementSeries = onIncrementSeries
+                    )
+                }
             }
+            PullRefreshIndicator(
+                refreshing = isRefreshing,
+                state = pullRefreshState,
+                modifier = Modifier.align(Alignment.TopCenter)
+            )
         }
     } else {
         // TODO: Show empty list
@@ -109,7 +134,7 @@ private fun SeriesCollection(
 private fun SeriesItem(
     model: SeriesDomain,
     onSeriesSelect: (SeriesDomain) -> Unit,
-    onSeriesPlusOne: (SeriesDomain) -> Unit
+    onIncrementSeries: (SeriesDomain) -> Unit
 ) {
 
 }
@@ -157,6 +182,7 @@ private fun Preview() {
                 endDate = ""
             )
         ),
+        isRefreshing = false,
         errorSnackbar = null
     )
     NekomeTheme(darkTheme = true) {
@@ -165,8 +191,9 @@ private fun Preview() {
                 initialValue = initialState,
                 producer = { value = initialState }
             ),
+            onRefresh = { /**/ },
             onSeriesSelect = { /**/ },
-            onSeriesPlusOne = { /**/ },
+            onIncrementSeries = { /**/ },
             onSnackbarShown = { /**/ }
         )
     }
