@@ -87,20 +87,35 @@ class CollectionViewModel @Inject constructor(
     }
 
     private fun handleIncrementSeries(series: Series) {
-        // TODO: Need to check if this would complete the series, if it would show the rating dialog
+        // TODO: Check if this would complete the series, if it would - show the rating dialog
+        // TODO: Could return a success/error sealed class for potential to do it?
         viewModelScope.launch {
+            state = state.copy(models = updateIsUpdating(series.userId, true))
             incrementSeries(series.userId)
                 .onSuccess {
-
+                    state = state.copy(models = updateIsUpdating(series.userId, false))
                 }
                 .onFailure {
                     state = state.copy(
+                        models = updateIsUpdating(series.userId, false),
                         errorSnackbar = SnackbarData(
                             stringRes = R.string.series_list_try_again,
                             formatText = series.title
                         )
                     )
                 }
+        }
+    }
+
+    private fun updateIsUpdating(id: Int, isUpdating: Boolean): List<Series> {
+        return state.models.map {
+            if (it.userId == id) {
+                it.copy(
+                    isUpdating = isUpdating
+                )
+            } else {
+                it
+            }
         }
     }
 
