@@ -1,5 +1,6 @@
 package com.chesire.nekome.app.series.collection.ui
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chesire.nekome.app.series.R
@@ -9,6 +10,7 @@ import com.chesire.nekome.app.series.collection.core.FilterSeriesUseCase
 import com.chesire.nekome.app.series.collection.core.IncrementSeriesUseCase
 import com.chesire.nekome.app.series.collection.core.RefreshSeriesUseCase
 import com.chesire.nekome.app.series.collection.core.SortSeriesUseCase
+import com.chesire.nekome.core.flags.SeriesType
 import com.chesire.nekome.datasource.series.SeriesDomain
 import com.github.michaelbull.result.onFailure
 import com.github.michaelbull.result.onSuccess
@@ -21,8 +23,12 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
+// Note this value is pulled from the nav_graph.xml
+private const val SERIES_TYPE = "seriesType"
+
 @HiltViewModel
 class CollectionViewModel @Inject constructor(
+    savedStateHandle: SavedStateHandle,
     private val collectSeries: CollectSeriesUseCase,
     private val deleteSeries: DeleteSeriesUseCase,
     private val filterSeries: FilterSeriesUseCase,
@@ -31,6 +37,7 @@ class CollectionViewModel @Inject constructor(
     private val sortSeries: SortSeriesUseCase
 ) : ViewModel() {
 
+    private val seriesType = requireNotNull(savedStateHandle.get<SeriesType>(SERIES_TYPE))
     private val _uiState = MutableStateFlow(
         UIState(
             models = emptyList(),
@@ -48,7 +55,7 @@ class CollectionViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             collectSeries()
-                .map(filterSeries::invoke)
+                .map { filterSeries(it, seriesType) }
                 .map(sortSeries::invoke)
                 .collectLatest { newModels ->
                     state = state.copy(models = newModels)

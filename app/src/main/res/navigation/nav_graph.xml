@@ -14,14 +14,22 @@
     <!-- Main -->
     <fragment
         android:id="@+id/animeFragment"
-        android:name="com.chesire.nekome.app.series.list.anime.AnimeFragment"
-        android:label="@string/nav_anime"
-        tools:layout="@layout/fragment_series_list" />
+        android:name="com.chesire.nekome.app.series.collection.CollectionFragment"
+        android:label="@string/nav_anime">
+        <argument
+            android:name="seriesType"
+            app:argType="com.chesire.nekome.core.flags.SeriesType"
+            android:defaultValue="Anime" />
+    </fragment>
     <fragment
         android:id="@+id/mangaFragment"
-        android:name="com.chesire.nekome.app.series.list.manga.MangaFragment"
-        android:label="@string/nav_manga"
-        tools:layout="@layout/fragment_series_list" />
+        android:name="com.chesire.nekome.app.series.collection.CollectionFragment"
+        android:label="@string/nav_manga">
+        <argument
+            android:name="seriesType"
+            app:argType="com.chesire.nekome.core.flags.SeriesType"
+            android:defaultValue="Manga" />
+    </fragment>
     <fragment
         android:id="@+id/timelineFragment"
         android:name="com.chesire.nekome.app.timeline.TimelineFragment"
