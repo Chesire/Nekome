@@ -12,7 +12,7 @@ import com.chesire.nekome.app.series.collection.core.SortSeriesUseCase
 import com.chesire.nekome.datasource.series.SeriesDomain
 import com.github.michaelbull.result.onFailure
 import com.github.michaelbull.result.onSuccess
-import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -21,7 +21,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-@AndroidEntryPoint
+@HiltViewModel
 class CollectionViewModel @Inject constructor(
     private val collectSeries: CollectSeriesUseCase,
     private val deleteSeries: DeleteSeriesUseCase,
