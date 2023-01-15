@@ -83,21 +83,25 @@ private fun SeriesCollection(
     onSeriesSelect: (SeriesDomain) -> Unit,
     onSeriesPlusOne: (SeriesDomain) -> Unit
 ) {
-    LazyColumn(
-        modifier = modifier.fillMaxSize(),
-        contentPadding = PaddingValues(8.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp)
-    ) {
-        items(
-            items = models,
-            key = { it.id }
+    if (models.isNotEmpty()) {
+        LazyColumn(
+            modifier = modifier.fillMaxSize(),
+            contentPadding = PaddingValues(8.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            SeriesItem(
-                model = it,
-                onSeriesSelect = onSeriesSelect,
-                onSeriesPlusOne = onSeriesPlusOne
-            )
+            items(
+                items = models,
+                key = { it.id }
+            ) {
+                SeriesItem(
+                    model = it,
+                    onSeriesSelect = onSeriesSelect,
+                    onSeriesPlusOne = onSeriesPlusOne
+                )
+            }
         }
+    } else {
+        // TODO: Show empty list
     }
 }
 
