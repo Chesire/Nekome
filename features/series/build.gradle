@@ -50,6 +50,7 @@ dependencies {
     implementation libs.coil
     implementation libs.google.hilt.android
     implementation libs.google.material
+    implementation libs.kotlin.result
     implementation libs.liveevent
     implementation libs.material.dialogs.core
     implementation libs.material.dialogs.lifecycle
