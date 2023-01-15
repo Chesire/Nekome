@@ -4,18 +4,32 @@ package com.chesire.nekome.app.series.collection.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.Card
+import androidx.compose.material.Divider
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.SnackbarDuration
 import androidx.compose.material.SnackbarHost
 import androidx.compose.material.SnackbarHostState
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.BrokenImage
+import androidx.compose.material.icons.filled.InsertPhoto
+import androidx.compose.material.icons.filled.PlusOne
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
@@ -27,10 +41,13 @@ import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import coil.compose.AsyncImage
 import com.chesire.nekome.app.series.R
 import com.chesire.nekome.core.compose.theme.NekomeTheme
 import com.chesire.nekome.core.flags.SeriesStatus
@@ -145,7 +162,75 @@ private fun SeriesItem(
     onSelectSeries: (SeriesDomain) -> Unit,
     onIncrementSeries: (SeriesDomain) -> Unit
 ) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(125.dp)
 
+    ) {
+        Box(modifier = Modifier.fillMaxSize()) {
+            /*
+            if (model.isUpdating) {
+                LinearProgressIndicator(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .align(Alignment.BottomCenter)
+                )
+            }
+             */
+            Row(modifier = Modifier.fillMaxSize()) {
+                AsyncImage(
+                    model = model.posterImage.smallest?.url,
+                    placeholder = rememberVectorPainter(image = Icons.Default.InsertPhoto),
+                    error = rememberVectorPainter(image = Icons.Default.BrokenImage),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .fillMaxWidth(0.25f)
+                        .aspectRatio(0.7f)
+                        .align(Alignment.CenterVertically)
+                )
+                Column(
+                    modifier = Modifier
+                        .padding(8.dp)
+                        .fillMaxHeight()
+                ) {
+                    Text(
+                        text = model.title,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        style = MaterialTheme.typography.body1,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                    Text(
+                        text = model.subtype.name,
+                        maxLines = 3,
+                        overflow = TextOverflow.Ellipsis,
+                        style = MaterialTheme.typography.overline,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                    /* TODO: Pass the correct date down in to the model
+                    Text(
+                        text =
+                    )
+                     */
+                    Divider()
+                    /* TODO: Pass the correct progress down into the model
+                    Text(text = )
+                     */
+                }
+            }
+            IconButton(
+                modifier = Modifier.align(Alignment.BottomEnd),
+                onClick = { onIncrementSeries(model) }
+            ) {
+                Icon(
+                    imageVector = Icons.Default.PlusOne,
+                    contentDescription = stringResource(id = R.string.series_list_plus_one),
+                    tint = MaterialTheme.colors.primary
+                )
+            }
+        }
+    }
 }
 
 @Composable
