@@ -27,7 +27,9 @@ class CollectionViewModel @Inject constructor(
     private val updateSeries: UpdateSeriesUseCase
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow(UIState(models = emptyList()))
+    private val _uiState = MutableStateFlow(
+        UIState(models = emptyList(), errorSnackbar = null)
+    )
     val uiState = _uiState.asStateFlow()
     private var state: UIState
         get() = _uiState.value
