@@ -1,4 +1,4 @@
-@file:OptIn(ExperimentalMaterialApi::class)
+@file:OptIn(ExperimentalMaterialApi::class, ExperimentalMaterialApi::class)
 
 package com.chesire.nekome.app.series.collection.ui
 
@@ -10,10 +10,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.SnackbarDuration
 import androidx.compose.material.SnackbarHost
 import androidx.compose.material.SnackbarHostState
+import androidx.compose.material.Text
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
@@ -29,6 +31,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.chesire.nekome.app.series.R
 import com.chesire.nekome.core.compose.theme.NekomeTheme
 import com.chesire.nekome.core.flags.SeriesStatus
 import com.chesire.nekome.core.flags.SeriesType
@@ -47,7 +50,7 @@ fun CollectionScreen(
         onRefresh = { viewModel.execute(ViewAction.PerformSeriesRefresh) },
         onSeriesSelect = { viewModel /* Add method to call */ },
         onIncrementSeries = { viewModel.execute(ViewAction.IncrementSeriesPressed(it)) },
-        onSnackbarShown = { viewModel /* Add method to call */ }
+        onSnackbarShown = { viewModel.execute(ViewAction.ErrorSnackbarObserved) }
     )
 }
 
@@ -126,7 +129,13 @@ private fun SeriesCollection(
             )
         }
     } else {
-        // TODO: Show empty list
+        Box(modifier = Modifier.fillMaxSize()) {
+            Text(
+                text = stringResource(id = R.string.series_list_empty),
+                style = MaterialTheme.typography.subtitle1,
+                modifier = Modifier.align(Alignment.Center)
+            )
+        }
     }
 }
 

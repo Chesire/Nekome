@@ -5,4 +5,5 @@ import com.chesire.nekome.datasource.series.SeriesDomain
 sealed interface ViewAction {
     object PerformSeriesRefresh : ViewAction
     data class IncrementSeriesPressed(val seriesDomain: SeriesDomain) : ViewAction
+    object ErrorSnackbarObserved : ViewAction
 }

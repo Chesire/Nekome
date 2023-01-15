@@ -11,5 +11,5 @@ data class UIState(
 
 data class SnackbarData(
     @StringRes val stringRes: Int,
-    val formatText: String
+    val formatText: Any = ""
 )

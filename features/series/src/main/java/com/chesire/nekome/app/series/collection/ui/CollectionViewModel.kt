@@ -2,6 +2,7 @@ package com.chesire.nekome.app.series.collection.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.chesire.nekome.app.series.R
 import com.chesire.nekome.app.series.collection.core.CollectSeriesUseCase
 import com.chesire.nekome.app.series.collection.core.DeleteSeriesUseCase
 import com.chesire.nekome.app.series.collection.core.FilterSeriesUseCase
@@ -59,32 +60,45 @@ class CollectionViewModel @Inject constructor(
         when (action) {
             ViewAction.PerformSeriesRefresh -> handleSeriesRefresh()
             is ViewAction.IncrementSeriesPressed -> handleIncrementSeries(action.seriesDomain)
+            ViewAction.ErrorSnackbarObserved -> handleErrorSnackbarObserved()
         }
     }
 
     private fun handleSeriesRefresh() {
         viewModelScope.launch {
-            // set isRefreshing to true
+            // TODO: set isRefreshing to true
             refreshSeries()
                 .onSuccess {
 
                 }
                 .onFailure {
-
+                    state = state.copy(
+                        errorSnackbar = SnackbarData(R.string.series_list_refresh_error)
+                    )
                 }
-            // set isRefreshing to false
+            // TODO: set isRefreshing to false
         }
     }
 
     private fun handleIncrementSeries(domain: SeriesDomain) {
+        // TODO: Need to check if this would complete the series, if it would show the rating dialog
         viewModelScope.launch {
             incrementSeries(domain)
                 .onSuccess {
 
                 }
                 .onFailure {
-
+                    state = state.copy(
+                        errorSnackbar = SnackbarData(
+                            stringRes = R.string.series_list_try_again,
+                            formatText = domain.title
+                        )
+                    )
                 }
         }
+    }
+
+    private fun handleErrorSnackbarObserved() {
+        state = state.copy(errorSnackbar = null)
     }
 }
