@@ -5,6 +5,7 @@ import androidx.annotation.StringRes
 data class UIState(
     val models: List<Series>,
     val isRefreshing: Boolean,
+    val ratingDialog: Rating?,
     val errorSnackbar: SnackbarData?
 )
 
@@ -18,6 +19,11 @@ data class Series(
     val endDate: String,
     val showPlusOne: Boolean,
     val isUpdating: Boolean
+)
+
+data class Rating(
+    val series: Series,
+    val show: Boolean
 )
 
 data class SnackbarData(

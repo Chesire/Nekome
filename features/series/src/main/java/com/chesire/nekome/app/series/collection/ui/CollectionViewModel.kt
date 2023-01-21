@@ -8,6 +8,7 @@ import com.chesire.nekome.app.series.collection.core.CollectSeriesUseCase
 import com.chesire.nekome.app.series.collection.core.FilterSeriesUseCase
 import com.chesire.nekome.app.series.collection.core.IncrementSeriesUseCase
 import com.chesire.nekome.app.series.collection.core.RefreshSeriesUseCase
+import com.chesire.nekome.app.series.collection.core.ShouldRateSeriesUseCase
 import com.chesire.nekome.app.series.collection.core.SortSeriesUseCase
 import com.chesire.nekome.core.flags.SeriesType
 import com.github.michaelbull.result.onFailure
@@ -26,7 +27,6 @@ private const val SERIES_TYPE = "seriesType"
 
 // TODO: Menu items - need to show filter and sort
 // TODO: Find out how to launch the details bottom sheet, for now maybe just launch the fragment?
-// TODO: Show the rating dialog when finishing a series
 
 @HiltViewModel
 class CollectionViewModel @Inject constructor(
@@ -35,6 +35,7 @@ class CollectionViewModel @Inject constructor(
     private val filterSeries: FilterSeriesUseCase,
     private val incrementSeries: IncrementSeriesUseCase,
     private val refreshSeries: RefreshSeriesUseCase,
+    private val shouldRateSeries: ShouldRateSeriesUseCase,
     private val sortSeries: SortSeriesUseCase,
     private val domainMapper: DomainMapper
 ) : ViewModel() {
@@ -44,6 +45,7 @@ class CollectionViewModel @Inject constructor(
         UIState(
             models = emptyList(),
             isRefreshing = false,
+            ratingDialog = null,
             errorSnackbar = null
         )
     )
@@ -70,6 +72,10 @@ class CollectionViewModel @Inject constructor(
         when (action) {
             ViewAction.PerformSeriesRefresh -> handleSeriesRefresh()
             is ViewAction.IncrementSeriesPressed -> handleIncrementSeries(action.series)
+            is ViewAction.IncrementSeriesWithRating -> handleIncrementSeriesWithRating(
+                action.series,
+                action.rating
+            )
             ViewAction.ErrorSnackbarObserved -> handleErrorSnackbarObserved()
         }
     }
@@ -91,11 +97,26 @@ class CollectionViewModel @Inject constructor(
     }
 
     private fun handleIncrementSeries(series: Series) {
-        // TODO: Check if this would complete the series, if it would - show the rating dialog
-        // TODO: Could return a success/error sealed class for potential to do it?
         viewModelScope.launch {
-            state = state.copy(models = updateIsUpdating(series.userId, true))
-            incrementSeries(series.userId)
+            if (shouldRateSeries(series.userId)) {
+                state = state.copy(ratingDialog = Rating(series, true))
+            } else {
+                invokeIncrementSeries(series, null)
+            }
+        }
+    }
+
+    private fun handleIncrementSeriesWithRating(series: Series, rating: Int?) {
+        viewModelScope.launch {
+            invokeIncrementSeries(series, rating)
+        }
+    }
+
+    private fun invokeIncrementSeries(series: Series, rating: Int?) {
+        state = state.copy(models = updateIsUpdating(series.userId, true))
+
+        viewModelScope.launch {
+            incrementSeries(series.userId, rating)
                 .onSuccess {
                     state = state.copy(models = updateIsUpdating(series.userId, false))
                 }

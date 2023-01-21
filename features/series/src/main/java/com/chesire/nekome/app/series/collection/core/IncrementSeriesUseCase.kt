@@ -13,14 +13,15 @@ import kotlinx.coroutines.withContext
 
 class IncrementSeriesUseCase @Inject constructor(private val repo: SeriesRepository) {
 
-    suspend operator fun invoke(userSeriesId: Int): Result<SeriesDomain, Unit> {
+    suspend operator fun invoke(userSeriesId: Int, rating: Int?): Result<SeriesDomain, Unit> {
         return withContext(Dispatchers.IO) {
             val domain = requireNotNull(repo.getSeries().first().find { it.userId == userSeriesId })
+            val newRating = rating ?: domain.rating
             val result = repo.updateSeries(
                 userSeriesId = domain.userId,
                 progress = domain.progress + 1,
                 status = domain.userSeriesStatus,
-                rating = domain.rating
+                rating = newRating
             )
 
             if (result is Resource.Success) {

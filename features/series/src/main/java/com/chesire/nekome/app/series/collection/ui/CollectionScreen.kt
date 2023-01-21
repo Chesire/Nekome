@@ -57,15 +57,18 @@ import com.chesire.nekome.core.compose.theme.NekomeTheme
 import com.chesire.nekome.core.flags.Subtype
 
 @Composable
-fun CollectionScreen(
-    viewModel: CollectionViewModel = viewModel()
-) {
+fun CollectionScreen(viewModel: CollectionViewModel = viewModel()) {
     val state = viewModel.uiState.collectAsState()
     Render(
         state = state,
         onRefresh = { viewModel.execute(ViewAction.PerformSeriesRefresh) },
         onSelectSeries = { viewModel /* Add method to call */ },
         onIncrementSeries = { viewModel.execute(ViewAction.IncrementSeriesPressed(it)) },
+        onRatingComplete = { series, rating ->
+            viewModel.execute(
+                ViewAction.IncrementSeriesWithRating(series, rating)
+            )
+        },
         onSnackbarShown = { viewModel.execute(ViewAction.ErrorSnackbarObserved) }
     )
 }
@@ -76,6 +79,7 @@ private fun Render(
     onRefresh: () -> Unit,
     onSelectSeries: (Series) -> Unit,
     onIncrementSeries: (Series) -> Unit,
+    onRatingComplete: (Series, Int?) -> Unit,
     onSnackbarShown: () -> Unit
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
@@ -95,6 +99,15 @@ private fun Render(
             onSelectSeries = onSelectSeries,
             onIncrementSeries = onIncrementSeries
         )
+    }
+
+    state.value.ratingDialog?.let { rating ->
+        if (rating.show) {
+            RatingDialog(
+                series = rating.series,
+                onRatingComplete = onRatingComplete
+            )
+        }
     }
 
     val snackbar = state.value.errorSnackbar
@@ -282,6 +295,7 @@ private fun Preview() {
             )
         ),
         isRefreshing = false,
+        ratingDialog = null,
         errorSnackbar = null
     )
     NekomeTheme(darkTheme = true) {
@@ -293,6 +307,7 @@ private fun Preview() {
             onRefresh = { /**/ },
             onSelectSeries = { /**/ },
             onIncrementSeries = { /**/ },
+            onRatingComplete = { _, _ -> /**/ },
             onSnackbarShown = { /**/ }
         )
     }
