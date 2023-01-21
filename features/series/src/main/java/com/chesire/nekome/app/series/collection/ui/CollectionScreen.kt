@@ -279,6 +279,7 @@ private fun Preview() {
                 startDate = "Start date",
                 endDate = "End date",
                 posterImageUrl = "",
+                rating = 1,
                 isUpdating = false,
                 showPlusOne = true
             ),
@@ -290,6 +291,7 @@ private fun Preview() {
                 startDate = "Start date",
                 endDate = "End date",
                 posterImageUrl = "",
+                rating = 2,
                 isUpdating = true,
                 showPlusOne = true
             )

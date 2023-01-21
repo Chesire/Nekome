@@ -17,6 +17,7 @@ data class Series(
     val progress: String,
     val startDate: String,
     val endDate: String,
+    val rating: Int,
     val showPlusOne: Boolean,
     val isUpdating: Boolean
 )

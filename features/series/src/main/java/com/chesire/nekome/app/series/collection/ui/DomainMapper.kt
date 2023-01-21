@@ -16,6 +16,7 @@ class DomainMapper @Inject constructor() {
                 progress = buildProgress(series.progress, series.totalLength),
                 startDate = series.startDate,
                 endDate = series.endDate,
+                rating = series.rating,
                 showPlusOne = shouldShowPlusOne(series.progress, series.totalLength),
                 isUpdating = false
             )
