@@ -158,7 +158,7 @@ private fun SeriesCollection(
             )
         }
     } else {
-        Box(modifier = Modifier.fillMaxSize()) {
+        Box(modifier = Modifier.fillMaxSize().padding(16.dp)) {
             Text(
                 text = stringResource(id = R.string.series_list_empty),
                 style = MaterialTheme.typography.subtitle1,
