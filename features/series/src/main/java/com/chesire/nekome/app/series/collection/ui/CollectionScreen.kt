@@ -187,7 +187,6 @@ private fun SeriesItem(
         modifier = Modifier
             .fillMaxWidth()
             .height(125.dp)
-
     ) {
         Box(modifier = Modifier.fillMaxSize()) {
             if (model.isUpdating) {
@@ -215,35 +214,50 @@ private fun SeriesItem(
                 ) {
                     Text(
                         text = model.title,
-                        maxLines = 1, // TODO: Maybe do 2 lines?
+                        maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                         style = MaterialTheme.typography.body1,
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(0.dp, 0.dp, 0.dp, 8.dp)
                     )
                     Text(
-                        text = model.subtype,
-                        maxLines = 3,
+                        text = "${model.subtype}   $dateString",
+                        maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                         style = MaterialTheme.typography.overline,
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(0.dp, 0.dp, 0.dp, 16.dp)
                     )
-                    Text(text = dateString)
                     Divider()
-                    Text(text = model.progress)
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(0.dp, 8.dp, 0.dp, 0.dp),
+                        verticalAlignment = Alignment.Bottom,
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Text(
+                            text = model.progress,
+                            style = MaterialTheme.typography.body2,
+                            modifier = Modifier.align(Alignment.CenterVertically)
+                        )
+                        IconButton(
+                            modifier = Modifier
+                                .alpha(if (model.isUpdating) 0.3f else 1f)
+                                .align(Alignment.CenterVertically),
+                            enabled = !model.isUpdating,
+                            onClick = { onIncrementSeries(model) }
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.PlusOne,
+                                contentDescription = stringResource(id = R.string.series_list_plus_one),
+                                tint = MaterialTheme.colors.primary
+                            )
+                        }
+                    }
                 }
-            }
-            IconButton(
-                modifier = Modifier
-                    .align(Alignment.BottomEnd)
-                    .alpha(if (model.isUpdating) 0.3f else 1f),
-                enabled = !model.isUpdating,
-                onClick = { onIncrementSeries(model) }
-            ) {
-                Icon(
-                    imageVector = Icons.Default.PlusOne,
-                    contentDescription = stringResource(id = R.string.series_list_plus_one),
-                    tint = MaterialTheme.colors.primary
-                )
             }
         }
     }
@@ -276,8 +290,8 @@ private fun Preview() {
                 subtype = Subtype.Movie.name,
                 title = "Title",
                 progress = "0",
-                startDate = "Start date",
-                endDate = "End date",
+                startDate = "2022-10-11",
+                endDate = "2022-12-27",
                 posterImageUrl = "",
                 rating = 1,
                 isUpdating = false,
@@ -288,11 +302,11 @@ private fun Preview() {
                 subtype = Subtype.TV.name,
                 title = "Title 2",
                 progress = "3 / 5",
-                startDate = "Start date",
-                endDate = "End date",
+                startDate = "2022-10-11",
+                endDate = "2022-12-27",
                 posterImageUrl = "",
                 rating = 2,
-                isUpdating = true,
+                isUpdating = false,
                 showPlusOne = true
             )
         ),
