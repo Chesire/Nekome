@@ -80,10 +80,10 @@ private fun Render(
                     horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
                     Button(onClick = { onRatingResult(null) }) {
-                        Text(text = "Cancel")
+                        Text(text = stringResource(id = R.string.series_list_rate_cancel))
                     }
                     Button(onClick = { onRatingResult(sliderValue.roundToInt()) }) {
-                        Text(text = "Confirm")
+                        Text(text = stringResource(id = R.string.series_list_rate_confirm))
                     }
                 }
             }
