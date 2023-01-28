@@ -22,7 +22,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import com.chesire.nekome.app.series.R
 import com.chesire.nekome.core.compose.theme.NekomeTheme
+import java.math.BigDecimal
+import java.math.RoundingMode
 import java.text.NumberFormat
+import kotlin.math.ceil
+import kotlin.math.round
 import kotlin.math.roundToInt
 
 @Composable
@@ -67,10 +71,7 @@ private fun Render(
                     text = if (sliderValue < 2f) {
                         stringResource(id = R.string.rating_none)
                     } else {
-                        NumberFormat
-                            .getInstance()
-                            .apply { maximumFractionDigits = 1 }
-                            .format(sliderValue / 2) // TODO: Can we make it only whole and .5?
+                        (round(sliderValue) / 2.0).toString();
                     }
                 )
 
