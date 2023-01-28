@@ -56,9 +56,13 @@ import com.chesire.nekome.app.series.R
 import com.chesire.nekome.core.compose.theme.NekomeTheme
 import com.chesire.nekome.core.flags.Subtype
 
+// TODO: Needs to show the series detail screen
+// TODO: Needs to show the filter/sort dialogs
+
 @Composable
 fun CollectionScreen(viewModel: CollectionViewModel = viewModel()) {
     val state = viewModel.uiState.collectAsState()
+
     Render(
         state = state,
         onRefresh = { viewModel.execute(ViewAction.PerformSeriesRefresh) },
@@ -101,23 +105,15 @@ private fun Render(
         )
     }
 
-    state.value.ratingDialog?.let { rating ->
-        if (rating.show) {
-            RatingDialog(
-                series = rating.series,
-                onRatingComplete = onRatingComplete
-            )
-        }
-    }
-
-    val snackbar = state.value.errorSnackbar
-    if (snackbar != null) {
-        val message = stringResource(id = snackbar.stringRes, snackbar.formatText)
-        LaunchedEffect(message) {
-            snackbarHostState.showSnackbar(message = message, duration = SnackbarDuration.Short)
-            onSnackbarShown()
-        }
-    }
+    RenderRatingDialog(
+        ratingDialog = state.value.ratingDialog,
+        onRatingComplete = onRatingComplete
+    )
+    RenderSnackbar(
+        snackbarData = state.value.errorSnackbar,
+        snackbarHostState = snackbarHostState,
+        onSnackbarShown = onSnackbarShown
+    )
 }
 
 @Composable
@@ -158,7 +154,11 @@ private fun SeriesCollection(
             )
         }
     } else {
-        Box(modifier = Modifier.fillMaxSize().padding(16.dp)) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp)
+        ) {
             Text(
                 text = stringResource(id = R.string.series_list_empty),
                 style = MaterialTheme.typography.subtitle1,
@@ -277,6 +277,36 @@ private fun buildDateString(context: Context, startDate: String, endDate: String
             startDate,
             endDate
         )
+    }
+}
+
+@Composable
+private fun RenderRatingDialog(
+    ratingDialog: Rating?,
+    onRatingComplete: (Series, Int?) -> Unit,
+) {
+    ratingDialog?.let { rating ->
+        if (rating.show) {
+            RatingDialog(
+                series = rating.series,
+                onRatingComplete = onRatingComplete
+            )
+        }
+    }
+}
+
+@Composable
+private fun RenderSnackbar(
+    snackbarData: SnackbarData?,
+    snackbarHostState: SnackbarHostState,
+    onSnackbarShown: () -> Unit
+) {
+    snackbarData?.let { snackbar ->
+        val message = stringResource(id = snackbar.stringRes, snackbar.formatText)
+        LaunchedEffect(message) {
+            snackbarHostState.showSnackbar(message = message, duration = SnackbarDuration.Short)
+            onSnackbarShown()
+        }
     }
 }
 
