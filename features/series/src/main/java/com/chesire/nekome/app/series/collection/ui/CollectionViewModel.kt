@@ -46,7 +46,8 @@ class CollectionViewModel @Inject constructor(
             models = emptyList(),
             isRefreshing = false,
             ratingDialog = null,
-            errorSnackbar = null
+            errorSnackbar = null,
+            seriesDetails = null
         )
     )
     val uiState = _uiState.asStateFlow()

@@ -6,7 +6,8 @@ data class UIState(
     val models: List<Series>,
     val isRefreshing: Boolean,
     val ratingDialog: Rating?,
-    val errorSnackbar: SnackbarData?
+    val errorSnackbar: SnackbarData?,
+    val seriesDetails: SeriesDetails?
 )
 
 data class Series(
@@ -30,4 +31,14 @@ data class Rating(
 data class SnackbarData(
     @StringRes val stringRes: Int,
     val formatText: Any = ""
+)
+
+data class SeriesDetails(
+    val userId: Int, // <-- Set from the Series object
+    val title: String, // <-- Set from the Series object
+    val subtitle: String, // <-- Build from the Series object
+    val userSeriesStatus: String, // ?? maybe UserSeriesStatus, <-- Retrieve from DB
+    val progress: Int, // <-- Retrieve from the DB?
+    val maxProgress: String, // <-- Retrieve from the DB?
+    val rating: Int // <-- Retrieve from the DB?
 )

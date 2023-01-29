@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.Divider
 import androidx.compose.material.ExperimentalMaterialApi
@@ -23,6 +24,8 @@ import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.LinearProgressIndicator
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.ModalBottomSheetLayout
+import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.Scaffold
 import androidx.compose.material.SnackbarDuration
 import androidx.compose.material.SnackbarHost
@@ -35,6 +38,7 @@ import androidx.compose.material.icons.filled.PlusOne
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
+import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
@@ -87,33 +91,45 @@ private fun Render(
     onSnackbarShown: () -> Unit
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
+    val modalBottomSheetState = rememberModalBottomSheetState(ModalBottomSheetValue.Hidden)
 
-    Scaffold(
-        snackbarHost = {
-            SnackbarHost(
-                hostState = snackbarHostState
+    ModalBottomSheetLayout(
+        sheetContent = { SeriesItemBottomSheet(state.value.seriesDetails) },
+        sheetState = modalBottomSheetState,
+        sheetShape = RoundedCornerShape(
+            topStart = 16.dp,
+            topEnd = 16.dp,
+            bottomStart = 0.dp,
+            bottomEnd = 0.dp
+        )
+    ) {
+        Scaffold(
+            snackbarHost = {
+                SnackbarHost(
+                    hostState = snackbarHostState
+                )
+            }
+        ) { paddingValues ->
+            SeriesCollection(
+                models = state.value.models,
+                isRefreshing = state.value.isRefreshing,
+                modifier = Modifier.padding(paddingValues),
+                onRefresh = onRefresh,
+                onSelectSeries = onSelectSeries,
+                onIncrementSeries = onIncrementSeries
             )
         }
-    ) { paddingValues ->
-        SeriesCollection(
-            models = state.value.models,
-            isRefreshing = state.value.isRefreshing,
-            modifier = Modifier.padding(paddingValues),
-            onRefresh = onRefresh,
-            onSelectSeries = onSelectSeries,
-            onIncrementSeries = onIncrementSeries
+
+        RenderRatingDialog(
+            ratingDialog = state.value.ratingDialog,
+            onRatingComplete = onRatingComplete
+        )
+        RenderSnackbar(
+            snackbarData = state.value.errorSnackbar,
+            snackbarHostState = snackbarHostState,
+            onSnackbarShown = onSnackbarShown
         )
     }
-
-    RenderRatingDialog(
-        ratingDialog = state.value.ratingDialog,
-        onRatingComplete = onRatingComplete
-    )
-    RenderSnackbar(
-        snackbarData = state.value.errorSnackbar,
-        snackbarHostState = snackbarHostState,
-        onSnackbarShown = onSnackbarShown
-    )
 }
 
 @Composable
@@ -342,7 +358,8 @@ private fun Preview() {
         ),
         isRefreshing = false,
         ratingDialog = null,
-        errorSnackbar = null
+        errorSnackbar = null,
+        seriesDetails = null
     )
     NekomeTheme(darkTheme = true) {
         Render(
