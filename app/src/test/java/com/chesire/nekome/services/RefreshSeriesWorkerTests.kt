@@ -21,7 +21,7 @@ class RefreshSeriesWorkerTests {
         val mockContext = mockk<Context>()
         val mockParams = mockk<WorkerParameters> {
             every { taskExecutor } returns mockk {
-                every { backgroundExecutor } returns mockk()
+                every { serialTaskExecutor } returns mockk()
             }
         }
         val mockSeriesRepo = mockk<SeriesRepository> {
@@ -45,7 +45,7 @@ class RefreshSeriesWorkerTests {
         val mockContext = mockk<Context>()
         val mockParams = mockk<WorkerParameters> {
             every { taskExecutor } returns mockk {
-                every { backgroundExecutor } returns mockk()
+                every { serialTaskExecutor } returns mockk()
             }
         }
         val mockSeriesRepo = mockk<SeriesRepository> {
@@ -67,7 +67,7 @@ class RefreshSeriesWorkerTests {
         val mockContext = mockk<Context>()
         val mockParams = mockk<WorkerParameters> {
             every { taskExecutor } returns mockk {
-                every { backgroundExecutor } returns mockk()
+                every { serialTaskExecutor } returns mockk()
             }
         }
         val mockSeriesRepo = mockk<SeriesRepository> {
@@ -89,7 +89,7 @@ class RefreshSeriesWorkerTests {
         val mockContext = mockk<Context>()
         val mockParams = mockk<WorkerParameters> {
             every { taskExecutor } returns mockk {
-                every { backgroundExecutor } returns mockk()
+                every { serialTaskExecutor } returns mockk()
             }
         }
         val mockSeriesRepo = mockk<SeriesRepository> {
@@ -111,7 +111,7 @@ class RefreshSeriesWorkerTests {
         val mockContext = mockk<Context>()
         val mockParams = mockk<WorkerParameters> {
             every { taskExecutor } returns mockk {
-                every { backgroundExecutor } returns mockk()
+                every { serialTaskExecutor } returns mockk()
             }
         }
         val mockSeriesRepo = mockk<SeriesRepository> {
