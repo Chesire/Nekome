@@ -27,6 +27,19 @@ subprojects {
             reporter "plain"
         }
     }
+    afterEvaluate {
+        if (getPlugins().hasPlugin("android") || getPlugins().hasPlugin("android-library")) {
+            configure(android) {
+                compileOptions {
+                    sourceCompatibility = java_version
+                    targetCompatibility = java_version
+                }
+                kotlin {
+                    jvmToolchain(java_version.majorVersion.toInteger())
+                }
+            }
+        }
+    }
 }
 
 task clean(type: Delete) {
@@ -86,4 +99,5 @@ koverMerged {
 
 ext {
     sdk_version = 33
+    java_version = JavaVersion.VERSION_11
 }
