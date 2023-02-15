@@ -79,7 +79,7 @@ class ResponseDtoMapperTests {
                     13,
                     canonicalTitle = "Series 2"
                 ),
-                expected,
+                expected
             )
         )
 

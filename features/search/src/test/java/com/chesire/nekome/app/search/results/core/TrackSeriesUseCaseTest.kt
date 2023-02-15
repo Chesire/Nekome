@@ -108,7 +108,7 @@ class TrackSeriesUseCaseTest {
                 ),
                 startDate = "",
                 endDate = ""
-            ),
+            )
         )
 
         val result = retrieveUserSeriesIds(id, SeriesType.Anime)

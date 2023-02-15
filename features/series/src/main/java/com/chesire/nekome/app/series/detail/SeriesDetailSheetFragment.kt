@@ -140,7 +140,8 @@ class SeriesDetailSheetFragment : BottomSheetDialogFragment() {
             }
         }
         binding.detailProgress.progressOutOf.text = getString(
-            R.string.series_detail_progress_out_of, model.seriesLength
+            R.string.series_detail_progress_out_of,
+            model.seriesLength
         )
     }
 

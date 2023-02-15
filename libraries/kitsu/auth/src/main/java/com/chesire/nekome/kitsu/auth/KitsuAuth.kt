@@ -18,7 +18,7 @@ import timber.log.Timber
  */
 @Suppress("TooGenericExceptionCaught")
 class KitsuAuth @Inject constructor(
-    private val authService: KitsuAuthService,
+    private val authService: KitsuAuthService
 ) : AuthApi {
 
     override suspend fun login(username: String, password: String): AuthResult {

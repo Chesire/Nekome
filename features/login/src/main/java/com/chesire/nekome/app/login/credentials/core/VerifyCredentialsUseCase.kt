@@ -22,8 +22,10 @@ class VerifyCredentialsUseCase @Inject constructor(private val auth: AccessToken
         } else {
             withContext(Dispatchers.IO) {
                 when (auth.login(username, password)) {
-                    AccessTokenResult.CommunicationError -> Err(VerifyCredentialsFailure.NetworkError)
-                    AccessTokenResult.InvalidCredentials -> Err(VerifyCredentialsFailure.InvalidCredentials)
+                    AccessTokenResult.CommunicationError ->
+                        Err(VerifyCredentialsFailure.NetworkError)
+                    AccessTokenResult.InvalidCredentials ->
+                        Err(VerifyCredentialsFailure.InvalidCredentials)
                     AccessTokenResult.Success -> Ok(Unit)
                 }
             }

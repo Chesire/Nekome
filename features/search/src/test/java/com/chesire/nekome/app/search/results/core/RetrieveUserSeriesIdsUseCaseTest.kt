@@ -111,7 +111,7 @@ class RetrieveUserSeriesIdsUseCaseTest {
                     ),
                     startDate = "",
                     endDate = ""
-                ),
+                )
             )
         )
 

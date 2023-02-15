@@ -64,7 +64,7 @@ class SortTests : UITest() {
                     seriesData.series0.title,
                     seriesData.series1.title,
                     seriesData.series2.title,
-                    seriesData.series3.title,
+                    seriesData.series3.title
                 )
             )
         }
@@ -106,7 +106,7 @@ class SortTests : UITest() {
                     seriesData.series1.title,
                     seriesData.series2.title,
                     seriesData.series3.title,
-                    seriesData.series0.title,
+                    seriesData.series0.title
                 )
             )
         }
