@@ -261,7 +261,7 @@ private data class InitialFilterSeriesData(
         title = "Planned Anime",
         seriesType = SeriesType.Anime,
         userSeriesStatus = UserSeriesStatus.Planned
-    ),
+    )
 ) {
     /**
      * Returns all of the series objects in a single list.

@@ -79,7 +79,7 @@ fun createDataDto(type: SeriesType, id: Int = 0) =
                 )
             } else {
                 null
-            },
+            }
         )
     )
 

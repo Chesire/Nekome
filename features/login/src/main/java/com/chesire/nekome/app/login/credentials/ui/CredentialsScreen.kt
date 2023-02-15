@@ -199,7 +199,7 @@ private fun UsernameInput(
             imeAction = ImeAction.Next
         ),
         keyboardActions = KeyboardActions(
-            onNext = { focusManager.moveFocus(FocusDirection.Down) },
+            onNext = { focusManager.moveFocus(FocusDirection.Down) }
         ),
         isError = isUsernameError,
         singleLine = true,
@@ -233,7 +233,13 @@ private fun PasswordInput(
             IconButton(onClick = { passwordVisible = !passwordVisible }) {
                 Icon(
                     imageVector = if (passwordVisible) Icons.Default.Visibility else Icons.Default.VisibilityOff,
-                    contentDescription = stringResource(id = if (passwordVisible) R.string.login_hide_password else R.string.login_show_password)
+                    contentDescription = stringResource(
+                        id = if (passwordVisible) {
+                            R.string.login_hide_password
+                        } else {
+                            R.string.login_show_password
+                        }
+                    )
                 )
             }
         },
@@ -248,7 +254,7 @@ private fun PasswordInput(
                     onLoginPressed()
                     keyboardController?.hide()
                 }
-            },
+            }
         ),
         isError = isPasswordError,
         singleLine = true,
@@ -297,7 +303,7 @@ private fun SignupButton(onSignupPressed: () -> Unit) {
         onClick = {
             onSignupPressed()
             keyboardController?.hide()
-        },
+        }
     ) {
         Text(text = stringResource(id = R.string.login_sign_up_kitsu))
     }

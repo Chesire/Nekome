@@ -31,7 +31,9 @@ class CredentialsFragment : Fragment() {
                 CredentialsScreen(
                     urlHandler = urlHandler,
                     finishAction = {
-                        findNavController().navigate(CredentialsFragmentDirections.toSyncingFragment())
+                        findNavController().navigate(
+                            CredentialsFragmentDirections.toSyncingFragment()
+                        )
                     }
                 )
             }

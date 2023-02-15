@@ -17,7 +17,7 @@ class TrendingItemDtoMapperTests {
             ImageModel.ImageData("posterTiny", 10, 5),
             ImageModel.ImageData("posterSmall", 20, 10),
             ImageModel.ImageData("posterMedium", 30, 15),
-            ImageModel.ImageData("posterLarge", 40, 20),
+            ImageModel.ImageData("posterLarge", 40, 20)
         )
         val input = TrendingItemDto(
             10,

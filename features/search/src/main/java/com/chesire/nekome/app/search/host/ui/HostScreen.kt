@@ -157,7 +157,7 @@ private fun SearchGroup(
                     imageVector = Icons.Default.VideoLibrary,
                     contentDescription = null
                 )
-            },
+            }
         ) {
             Text(text = stringResource(id = R.string.search_anime))
         }
@@ -175,7 +175,7 @@ private fun SearchGroup(
                     imageVector = Icons.Default.CollectionsBookmark,
                     contentDescription = null
                 )
-            },
+            }
         ) {
             Text(text = stringResource(id = R.string.search_manga))
         }
