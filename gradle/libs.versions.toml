@@ -6,9 +6,9 @@ androidx-hilt = "1.0.0"
 androidx-navigation = "2.5.3"
 androidx-room = "2.5.0"
 coil = "2.2.2"
-compose = "1.4.0-alpha02"
+compose-compiler = "1.4.2"
 hilt = "2.45"
-kotlin = "1.7.21"
+kotlin = "1.8.10"
 kotlin-coroutines = "1.6.4"
 material-dialogs = "3.3.0"
 moshi = "1.14.0"
@@ -24,7 +24,7 @@ androidx-compose-bom = { module = "androidx.compose:compose-bom", version = "202
 androidx-compose-material = { module = "androidx.compose.material:material" }
 androidx-compose-material-icons-extended = { module = "androidx.compose.material:material-icons-extended" }
 androidx-compose-ui = { module = "androidx.compose.ui:ui" }
-androidx-compose-ui-test-junit4 = { module = "androidx.compose.ui:ui-test-junit4", version.ref = "compose" }
+androidx-compose-ui-test-junit4 = { module = "androidx.compose.ui:ui-test-junit4", version = "1.4.0-alpha02" }
 androidx-compose-ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest" }
 androidx-compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
 androidx-compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
