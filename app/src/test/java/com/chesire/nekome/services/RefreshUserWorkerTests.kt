@@ -20,7 +20,7 @@ class RefreshUserWorkerTests {
         val mockContext = mockk<Context>()
         val mockParams = mockk<WorkerParameters> {
             every { taskExecutor } returns mockk {
-                every { backgroundExecutor } returns mockk()
+                every { serialTaskExecutor } returns mockk()
             }
         }
         val mockUserRepo = mockk<UserRepository> {
@@ -39,7 +39,7 @@ class RefreshUserWorkerTests {
         val mockContext = mockk<Context>()
         val mockParams = mockk<WorkerParameters> {
             every { taskExecutor } returns mockk {
-                every { backgroundExecutor } returns mockk()
+                every { serialTaskExecutor } returns mockk()
             }
         }
         val mockUserRepo = mockk<UserRepository> {
@@ -59,7 +59,7 @@ class RefreshUserWorkerTests {
         val mockContext = mockk<Context>()
         val mockParams = mockk<WorkerParameters> {
             every { taskExecutor } returns mockk {
-                every { backgroundExecutor } returns mockk()
+                every { serialTaskExecutor } returns mockk()
             }
         }
         val mockUserRepo = mockk<UserRepository> {
