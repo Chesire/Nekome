@@ -1,13 +1,16 @@
 package com.chesire.nekome.app.series.collection.ui
 
 import androidx.annotation.StringRes
+import com.chesire.nekome.core.flags.SortOption
 
 data class UIState(
     val models: List<Series>,
     val isRefreshing: Boolean,
     val ratingDialog: Rating?,
     val errorSnackbar: SnackbarData?,
-    val seriesDetails: SeriesDetails?
+    val seriesDetails: SeriesDetails?,
+    val sortDialog: Sort
+    // showFilter
 )
 
 data class Series(
@@ -41,4 +44,9 @@ data class SeriesDetails(
     val progress: Int, // <-- Retrieve from the DB?
     val maxProgress: String, // <-- Retrieve from the DB?
     val rating: Int // <-- Retrieve from the DB?
+)
+
+data class Sort(
+    val show: Boolean,
+    val sortOptions: List<SortOption>
 )

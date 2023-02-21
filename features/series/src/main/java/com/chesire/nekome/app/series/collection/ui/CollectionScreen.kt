@@ -58,6 +58,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import com.chesire.nekome.app.series.R
 import com.chesire.nekome.core.compose.theme.NekomeTheme
+import com.chesire.nekome.core.flags.SortOption
 import com.chesire.nekome.core.flags.Subtype
 
 // TODO: Needs to show the series detail screen
@@ -77,7 +78,8 @@ fun CollectionScreen(viewModel: CollectionViewModel = viewModel()) {
                 ViewAction.IncrementSeriesWithRating(series, rating)
             )
         },
-        onSnackbarShown = { viewModel.execute(ViewAction.ErrorSnackbarObserved) }
+        onSnackbarShown = { viewModel.execute(ViewAction.ErrorSnackbarObserved) },
+        onSortResult = { viewModel.execute(ViewAction.PerformSort(it)) }
     )
 }
 
@@ -88,7 +90,8 @@ private fun Render(
     onSelectSeries: (Series) -> Unit,
     onIncrementSeries: (Series) -> Unit,
     onRatingComplete: (Series, Int?) -> Unit,
-    onSnackbarShown: () -> Unit
+    onSnackbarShown: () -> Unit,
+    onSortResult: (SortOption?) -> Unit
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
     val modalBottomSheetState = rememberModalBottomSheetState(ModalBottomSheetValue.Hidden)
@@ -128,6 +131,10 @@ private fun Render(
             snackbarData = state.value.errorSnackbar,
             snackbarHostState = snackbarHostState,
             onSnackbarShown = onSnackbarShown
+        )
+        RenderSortDialog(
+            sortDialog = state.value.sortDialog,
+            onSortResult = onSortResult
         )
     }
 }
@@ -327,6 +334,19 @@ private fun RenderSnackbar(
 }
 
 @Composable
+private fun RenderSortDialog(
+    sortDialog: Sort,
+    onSortResult: (SortOption?) -> Unit
+) {
+    if (sortDialog.show) {
+        SortDialog(
+            sortOptions = sortDialog.sortOptions,
+            onSortResult = onSortResult
+        )
+    }
+}
+
+@Composable
 @Preview
 private fun Preview() {
     val initialState = UIState(
@@ -359,7 +379,17 @@ private fun Preview() {
         isRefreshing = false,
         ratingDialog = null,
         errorSnackbar = null,
-        seriesDetails = null
+        seriesDetails = null,
+        sortDialog = Sort(
+            show = false,
+            sortOptions = listOf(
+                SortOption.Default,
+                SortOption.Title,
+                SortOption.StartDate,
+                SortOption.EndDate,
+                SortOption.Rating
+            )
+        )
     )
     NekomeTheme(darkTheme = true) {
         Render(
@@ -371,7 +401,8 @@ private fun Preview() {
             onSelectSeries = { /**/ },
             onIncrementSeries = { /**/ },
             onRatingComplete = { _, _ -> /**/ },
-            onSnackbarShown = { /**/ }
+            onSnackbarShown = { /**/ },
+            onSortResult = { /**/ }
         )
     }
 }

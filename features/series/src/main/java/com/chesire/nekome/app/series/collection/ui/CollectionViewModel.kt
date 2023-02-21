@@ -11,6 +11,7 @@ import com.chesire.nekome.app.series.collection.core.RefreshSeriesUseCase
 import com.chesire.nekome.app.series.collection.core.ShouldRateSeriesUseCase
 import com.chesire.nekome.app.series.collection.core.SortSeriesUseCase
 import com.chesire.nekome.core.flags.SeriesType
+import com.chesire.nekome.core.flags.SortOption
 import com.github.michaelbull.result.onFailure
 import com.github.michaelbull.result.onSuccess
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -47,7 +48,17 @@ class CollectionViewModel @Inject constructor(
             isRefreshing = false,
             ratingDialog = null,
             errorSnackbar = null,
-            seriesDetails = null
+            seriesDetails = null,
+            sortDialog = Sort(
+                show = false,
+                sortOptions = listOf(
+                    SortOption.Default,
+                    SortOption.Title,
+                    SortOption.StartDate,
+                    SortOption.EndDate,
+                    SortOption.Rating
+                )
+            )
         )
     )
     val uiState = _uiState.asStateFlow()
@@ -77,6 +88,9 @@ class CollectionViewModel @Inject constructor(
                 action.series,
                 action.rating
             )
+            ViewAction.FilterPressed -> TODO()
+            ViewAction.SortPressed -> handleSortPressed()
+            is ViewAction.PerformSort -> handlePerformSort(action.option)
             ViewAction.ErrorSnackbarObserved -> handleErrorSnackbarObserved()
         }
     }
@@ -141,6 +155,27 @@ class CollectionViewModel @Inject constructor(
                 it
             }
         }
+    }
+
+    private fun handleSortPressed() {
+        state = state.copy(
+            sortDialog = Sort(
+                show = true,
+                sortOptions = listOf(
+                    SortOption.Default,
+                    SortOption.Title,
+                    SortOption.StartDate,
+                    SortOption.EndDate,
+                    SortOption.Rating
+                )
+            )
+        )
+    }
+
+    private fun handlePerformSort(sortOption: SortOption?) {
+        // Update UseCase
+        // SortSeries use case should listen to the preferences, and update when its updated?
+        state = state.copy(sortDialog = state.sortDialog.copy(show = false))
     }
 
     private fun handleErrorSnackbarObserved() {

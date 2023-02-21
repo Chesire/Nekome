@@ -1,12 +1,12 @@
 package com.chesire.nekome.app.series.collection.ui
 
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.Divider
 import androidx.compose.material.Surface
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -16,13 +16,13 @@ import com.chesire.nekome.core.compose.theme.NekomeTheme
 
 @Composable
 fun SeriesItemBottomSheet(seriesDetails: SeriesDetails?) {
-    if (seriesDetails == null) {
-        return
-    }
-
-    Surface(modifier = Modifier.fillMaxWidth().fillMaxHeight()) {
+    Surface(
+        modifier = Modifier
+            .size(1.dp)
+    ) {
         Box {
             Handle(modifier = Modifier.align(Alignment.TopCenter))
+            Title()
         }
     }
 }
@@ -30,13 +30,15 @@ fun SeriesItemBottomSheet(seriesDetails: SeriesDetails?) {
 @Composable
 private fun Handle(modifier: Modifier = Modifier) {
     Divider(
-        modifier = modifier.padding(8.dp).width(32.dp)
+        modifier = modifier
+            .padding(8.dp)
+            .width(32.dp)
     )
 }
 
 @Composable
 private fun Title() {
-
+    Text(text = "Test")
 }
 
 @Composable
