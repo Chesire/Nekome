@@ -22,22 +22,22 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import com.chesire.nekome.app.series.R
 import com.chesire.nekome.core.compose.theme.NekomeTheme
-import java.math.BigDecimal
-import java.math.RoundingMode
-import java.text.NumberFormat
-import kotlin.math.ceil
 import kotlin.math.round
 import kotlin.math.roundToInt
 
 @Composable
 fun RatingDialog(
-    series: Series,
+    ratingDialog: Rating?,
     onRatingComplete: (Series, Int?) -> Unit
 ) {
-    Render(
-        series = series,
-        onRatingResult = { newRating -> onRatingComplete(series, newRating) }
-    )
+    ratingDialog?.let { rating ->
+        if (rating.show) {
+            Render(
+                series = rating.series,
+                onRatingResult = { newRating -> onRatingComplete(rating.series, newRating) }
+            )
+        }
+    }
 }
 
 @Composable

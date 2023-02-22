@@ -123,7 +123,7 @@ private fun Render(
             )
         }
 
-        RenderRatingDialog(
+        RatingDialog(
             ratingDialog = state.value.ratingDialog,
             onRatingComplete = onRatingComplete
         )
@@ -132,7 +132,7 @@ private fun Render(
             snackbarHostState = snackbarHostState,
             onSnackbarShown = onSnackbarShown
         )
-        RenderSortDialog(
+        SortDialog(
             sortDialog = state.value.sortDialog,
             onSortResult = onSortResult
         )
@@ -304,21 +304,6 @@ private fun buildDateString(context: Context, startDate: String, endDate: String
 }
 
 @Composable
-private fun RenderRatingDialog(
-    ratingDialog: Rating?,
-    onRatingComplete: (Series, Int?) -> Unit,
-) {
-    ratingDialog?.let { rating ->
-        if (rating.show) {
-            RatingDialog(
-                series = rating.series,
-                onRatingComplete = onRatingComplete
-            )
-        }
-    }
-}
-
-@Composable
 private fun RenderSnackbar(
     snackbarData: SnackbarData?,
     snackbarHostState: SnackbarHostState,
@@ -330,19 +315,6 @@ private fun RenderSnackbar(
             snackbarHostState.showSnackbar(message = message, duration = SnackbarDuration.Short)
             onSnackbarShown()
         }
-    }
-}
-
-@Composable
-private fun RenderSortDialog(
-    sortDialog: Sort,
-    onSortResult: (SortOption?) -> Unit
-) {
-    if (sortDialog.show) {
-        SortDialog(
-            sortOptions = sortDialog.sortOptions,
-            onSortResult = onSortResult
-        )
     }
 }
 

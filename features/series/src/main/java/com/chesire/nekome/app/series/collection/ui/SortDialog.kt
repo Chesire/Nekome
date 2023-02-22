@@ -19,10 +19,15 @@ import com.chesire.nekome.core.flags.SortOption
 
 @Composable
 fun SortDialog(
-    sortOptions: List<SortOption>,
+    sortDialog: Sort,
     onSortResult: (SortOption?) -> Unit
 ) {
-    Render(sortOptions, onSortResult)
+    if (sortDialog.show) {
+        Render(
+            options = sortDialog.sortOptions,
+            onSortResult = onSortResult
+        )
+    }
 }
 
 @Composable
