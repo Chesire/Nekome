@@ -9,6 +9,7 @@ import androidx.compose.material.Button
 import androidx.compose.material.Card
 import androidx.compose.material.Slider
 import androidx.compose.material.Text
+import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -79,10 +80,10 @@ private fun Render(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
-                    Button(onClick = { onRatingResult(null) }) {
+                    TextButton(onClick = { onRatingResult(null) }) {
                         Text(text = stringResource(id = R.string.series_list_rate_cancel))
                     }
-                    Button(onClick = { onRatingResult(sliderValue.roundToInt()) }) {
+                    TextButton(onClick = { onRatingResult(sliderValue.roundToInt()) }) {
                         Text(text = stringResource(id = R.string.series_list_rate_confirm))
                     }
                 }

@@ -58,6 +58,7 @@ private fun Render(
                     style = MaterialTheme.typography.h6,
                     modifier = Modifier.padding(bottom = 8.dp)
                 )
+
                 options.forEach { sortOption ->
                     Row(
                         modifier = Modifier
@@ -82,6 +83,7 @@ private fun Render(
                         )
                     }
                 }
+
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.End
@@ -113,7 +115,8 @@ private fun Preview() {
                 SortOption.EndDate,
                 SortOption.Rating
             ),
-            currentSort = SortOption.Default
-        ) { /**/ }
+            currentSort = SortOption.Default,
+            onSortResult = { /**/ }
+        )
     }
 }
