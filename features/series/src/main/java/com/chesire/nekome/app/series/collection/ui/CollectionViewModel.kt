@@ -53,30 +53,7 @@ class CollectionViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _seriesType = requireNotNull(savedStateHandle.get<SeriesType>(SERIES_TYPE))
-    private val _uiState = MutableStateFlow(
-        UIState(
-            models = emptyList(),
-            isRefreshing = false,
-            ratingDialog = null,
-            errorSnackbar = null,
-            seriesDetails = null,
-            sortDialog = Sort(
-                show = false,
-                currentSort = SortOption.Default,
-                sortOptions = listOf(
-                    SortOption.Default,
-                    SortOption.Title,
-                    SortOption.StartDate,
-                    SortOption.EndDate,
-                    SortOption.Rating
-                )
-            ),
-            filterDialog = Filter(
-                show = false,
-                filterOptions = emptyList()
-            )
-        )
-    )
+    private val _uiState = MutableStateFlow(UIState.default)
     val uiState = _uiState.asStateFlow()
     private var state: UIState
         get() = _uiState.value

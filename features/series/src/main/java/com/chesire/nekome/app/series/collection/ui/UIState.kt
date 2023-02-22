@@ -11,7 +11,32 @@ data class UIState(
     val seriesDetails: SeriesDetails?,
     val sortDialog: Sort,
     val filterDialog: Filter
-)
+) {
+    companion object {
+        val default = UIState(
+            models = emptyList(),
+            isRefreshing = false,
+            ratingDialog = null,
+            errorSnackbar = null,
+            seriesDetails = null,
+            sortDialog = Sort(
+                show = false,
+                currentSort = SortOption.Default,
+                sortOptions = listOf(
+                    SortOption.Default,
+                    SortOption.Title,
+                    SortOption.StartDate,
+                    SortOption.EndDate,
+                    SortOption.Rating
+                )
+            ),
+            filterDialog = Filter(
+                show = false,
+                filterOptions = emptyList()
+            )
+        )
+    }
+}
 
 data class Series(
     val userId: Int,
