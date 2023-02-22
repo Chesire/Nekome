@@ -12,6 +12,7 @@ import com.chesire.nekome.app.series.collection.core.IncrementSeriesUseCase
 import com.chesire.nekome.app.series.collection.core.RefreshSeriesUseCase
 import com.chesire.nekome.app.series.collection.core.ShouldRateSeriesUseCase
 import com.chesire.nekome.app.series.collection.core.SortSeriesUseCase
+import com.chesire.nekome.app.series.collection.core.UpdateFilterUseCase
 import com.chesire.nekome.app.series.collection.core.UpdateSortUseCase
 import com.chesire.nekome.core.flags.SeriesType
 import com.chesire.nekome.core.flags.SortOption
@@ -31,7 +32,6 @@ import kotlinx.coroutines.launch
 // Note this value is pulled from the nav_graph.xml
 private const val SERIES_TYPE = "seriesType"
 
-// TODO: Menu items - need to show filter and sort
 // TODO: Find out how to launch the details bottom sheet, for now maybe just launch the fragment?
 
 @HiltViewModel
@@ -44,6 +44,7 @@ class CollectionViewModel @Inject constructor(
     private val shouldRateSeries: ShouldRateSeriesUseCase,
     private val sortSeries: SortSeriesUseCase,
     private val updateSort: UpdateSortUseCase,
+    private val updateFilter: UpdateFilterUseCase,
     private val domainMapper: DomainMapper
 ) : ViewModel() {
 
@@ -64,6 +65,9 @@ class CollectionViewModel @Inject constructor(
                     SortOption.EndDate,
                     SortOption.Rating
                 )
+            ),
+            filterDialog = Filter(
+                show = false
             )
         )
     )
@@ -94,9 +98,10 @@ class CollectionViewModel @Inject constructor(
                 action.series,
                 action.rating
             )
-            ViewAction.FilterPressed -> TODO()
             ViewAction.SortPressed -> handleSortPressed()
             is ViewAction.PerformSort -> handlePerformSort(action.option)
+            ViewAction.FilterPressed -> handleFilterPressed()
+            is ViewAction.PerformFilter -> handlePerformFilter()
             ViewAction.ErrorSnackbarObserved -> handleErrorSnackbarObserved()
         }
     }
@@ -165,15 +170,8 @@ class CollectionViewModel @Inject constructor(
 
     private fun handleSortPressed() {
         state = state.copy(
-            sortDialog = Sort(
-                show = true,
-                sortOptions = listOf(
-                    SortOption.Default,
-                    SortOption.Title,
-                    SortOption.StartDate,
-                    SortOption.EndDate,
-                    SortOption.Rating
-                )
+            sortDialog = state.sortDialog.copy(
+                show = true
             )
         )
     }
@@ -182,8 +180,21 @@ class CollectionViewModel @Inject constructor(
         if (sortOption != null) {
             updateSort(sortOption)
         }
-        // SortSeries use case should listen to the preferences, and update when its updated?
         state = state.copy(sortDialog = state.sortDialog.copy(show = false))
+    }
+
+    private fun handleFilterPressed() {
+        state = state.copy(
+            filterDialog = state.filterDialog.copy(
+                show = true
+                // put the filter options here
+            )
+        )
+    }
+
+    private fun handlePerformFilter() {
+        // TODO:
+        state = state.copy(filterDialog = state.filterDialog.copy(show = false))
     }
 
     private fun handleErrorSnackbarObserved() {

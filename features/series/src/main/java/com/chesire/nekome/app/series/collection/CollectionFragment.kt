@@ -54,7 +54,10 @@ class CollectionFragment : Fragment(), MenuProvider {
     override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
         // This should be removed when we move to fully compose
         return when (menuItem.itemId) {
-            R.id.menuFilter -> true // showFilterDialog(seriesPreferences)
+            R.id.menuFilter -> {
+                viewModel.execute(ViewAction.FilterPressed)
+                true
+            }
             R.id.menuSort -> {
                 viewModel.execute(ViewAction.SortPressed)
                 true

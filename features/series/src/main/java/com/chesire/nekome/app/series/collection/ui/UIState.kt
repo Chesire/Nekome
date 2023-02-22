@@ -9,8 +9,8 @@ data class UIState(
     val ratingDialog: Rating?,
     val errorSnackbar: SnackbarData?,
     val seriesDetails: SeriesDetails?,
-    val sortDialog: Sort
-    // showFilter
+    val sortDialog: Sort,
+    val filterDialog: Filter
 )
 
 data class Series(
@@ -49,4 +49,8 @@ data class SeriesDetails(
 data class Sort(
     val show: Boolean,
     val sortOptions: List<SortOption>
+)
+
+data class Filter(
+    val show: Boolean
 )

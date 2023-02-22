@@ -62,7 +62,6 @@ import com.chesire.nekome.core.flags.SortOption
 import com.chesire.nekome.core.flags.Subtype
 
 // TODO: Needs to show the series detail screen
-// TODO: Needs to show the filter/sort dialogs
 
 @Composable
 fun CollectionScreen(viewModel: CollectionViewModel = viewModel()) {
@@ -79,7 +78,8 @@ fun CollectionScreen(viewModel: CollectionViewModel = viewModel()) {
             )
         },
         onSnackbarShown = { viewModel.execute(ViewAction.ErrorSnackbarObserved) },
-        onSortResult = { viewModel.execute(ViewAction.PerformSort(it)) }
+        onSortResult = { viewModel.execute(ViewAction.PerformSort(it)) },
+        onFilterResult = { viewModel.execute(ViewAction.PerformFilter(0)) }
     )
 }
 
@@ -91,7 +91,8 @@ private fun Render(
     onIncrementSeries: (Series) -> Unit,
     onRatingComplete: (Series, Int?) -> Unit,
     onSnackbarShown: () -> Unit,
-    onSortResult: (SortOption?) -> Unit
+    onSortResult: (SortOption?) -> Unit,
+    onFilterResult: () -> Unit,
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
     val modalBottomSheetState = rememberModalBottomSheetState(ModalBottomSheetValue.Hidden)
@@ -135,6 +136,10 @@ private fun Render(
         SortDialog(
             sortDialog = state.value.sortDialog,
             onSortResult = onSortResult
+        )
+        FilterDialog(
+            filterDialog = state.value.filterDialog,
+            onFilterResult = onFilterResult
         )
     }
 }
@@ -361,6 +366,9 @@ private fun Preview() {
                 SortOption.EndDate,
                 SortOption.Rating
             )
+        ),
+        filterDialog = Filter(
+            show = false
         )
     )
     NekomeTheme(darkTheme = true) {
@@ -374,7 +382,8 @@ private fun Preview() {
             onIncrementSeries = { /**/ },
             onRatingComplete = { _, _ -> /**/ },
             onSnackbarShown = { /**/ },
-            onSortResult = { /**/ }
+            onSortResult = { /**/ },
+            onFilterResult = { /**/ }
         )
     }
 }
