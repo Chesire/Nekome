@@ -14,10 +14,10 @@ import kotlinx.coroutines.flow.flow
 class SortSeriesUseCase @Inject constructor(private val pref: SeriesPreferences) {
 
     operator fun invoke(seriesList: List<SeriesDomain>): Flow<List<SeriesDomain>> {
-        return pref.sort.flatMapLatest {
+        return pref.sort.flatMapLatest { sortOption ->
             flow {
                 val sortedSeries = seriesList.sortedWith(
-                    when (it) {
+                    when (sortOption) {
                         SortOption.Default -> compareBy { it.userId }
                         SortOption.Title -> compareBy { it.title }
                         SortOption.StartDate -> compareBy { it.startDate }

@@ -127,7 +127,7 @@ class SeriesPreferences @Inject constructor(
     }
 
     companion object {
-        private const val SORT_PREFERENCE = "preference.sort"
-        private const val FILTER_PREFERENCE = "preference.filter"
+        const val SORT_PREFERENCE = "preference.sort"
+        const val FILTER_PREFERENCE = "preference.filter"
     }
 }

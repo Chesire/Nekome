@@ -23,7 +23,7 @@ import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.flattenConcat
+import kotlinx.coroutines.flow.flatMapConcat
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -77,9 +77,8 @@ class CollectionViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             collectSeries()
-                .map { filterSeries(it, _seriesType) }
-                .map(sortSeries::invoke)
-                .flattenConcat()
+                .flatMapConcat { filterSeries(it, _seriesType) }
+                .flatMapConcat(sortSeries::invoke)
                 .map(domainMapper::toSeries)
                 .collectLatest { newModels ->
                     state = state.copy(models = newModels)
