@@ -57,6 +57,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import com.chesire.nekome.app.series.R
+import com.chesire.nekome.app.series.item.ui.ItemBottomSheet
 import com.chesire.nekome.core.compose.theme.NekomeTheme
 import com.chesire.nekome.core.flags.SortOption
 import com.chesire.nekome.core.flags.Subtype
@@ -71,7 +72,7 @@ fun CollectionScreen(viewModel: CollectionViewModel = viewModel()) {
     Render(
         state = state,
         onRefresh = { viewModel.execute(ViewAction.PerformSeriesRefresh) },
-        onSelectSeries = { viewModel /* Add method to call */ },
+        onSelectSeries = { viewModel.execute(ViewAction.SeriesPressed(it)) },
         onIncrementSeries = { viewModel.execute(ViewAction.IncrementSeriesPressed(it)) },
         onRatingComplete = { series, rating ->
             viewModel.execute(
@@ -99,7 +100,11 @@ private fun Render(
     val modalBottomSheetState = rememberModalBottomSheetState(ModalBottomSheetValue.Hidden)
 
     ModalBottomSheetLayout(
-        sheetContent = { SeriesItemBottomSheet(state.value.seriesDetails) },
+        sheetContent = {
+            if (state.value.seriesDetails?.show == true) {
+                ItemBottomSheet()
+            }
+        },
         sheetState = modalBottomSheetState,
         sheetShape = RoundedCornerShape(
             topStart = 16.dp,

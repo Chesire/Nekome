@@ -76,6 +76,7 @@ class CollectionViewModel @Inject constructor(
     fun execute(action: ViewAction) {
         when (action) {
             ViewAction.PerformSeriesRefresh -> handleSeriesRefresh()
+            is ViewAction.SeriesPressed -> handleSeriesPressed(action.series)
             is ViewAction.IncrementSeriesPressed -> handleIncrementSeries(action.series)
             is ViewAction.IncrementSeriesWithRating -> handleIncrementSeriesWithRating(
                 action.series,
@@ -89,37 +90,41 @@ class CollectionViewModel @Inject constructor(
         }
     }
 
-    private fun handleSeriesRefresh() {
-        viewModelScope.launch {
-            state = state.copy(isRefreshing = true)
-            refreshSeries()
-                .onSuccess {
-                    state = state.copy(isRefreshing = false)
-                }
-                .onFailure {
-                    state = state.copy(
-                        isRefreshing = false,
-                        errorSnackbar = SnackbarData(R.string.series_list_refresh_error)
-                    )
-                }
-        }
-    }
-
-    private fun handleIncrementSeries(series: Series) {
-        viewModelScope.launch {
-            if (shouldRateSeries(series.userId)) {
-                state = state.copy(ratingDialog = Rating(series, true))
-            } else {
-                invokeIncrementSeries(series, null)
+    private fun handleSeriesRefresh() = viewModelScope.launch {
+        state = state.copy(isRefreshing = true)
+        refreshSeries()
+            .onSuccess {
+                state = state.copy(isRefreshing = false)
             }
+            .onFailure {
+                state = state.copy(
+                    isRefreshing = false,
+                    errorSnackbar = SnackbarData(R.string.series_list_refresh_error)
+                )
+            }
+    }
+
+    private fun handleSeriesPressed(series: Series) {
+        state = state.copy(
+            seriesDetails = SeriesDetails(
+                show = true,
+                seriesId = series.userId
+            )
+        )
+    }
+
+    private fun handleIncrementSeries(series: Series) = viewModelScope.launch {
+        if (shouldRateSeries(series.userId)) {
+            state = state.copy(ratingDialog = Rating(series, true))
+        } else {
+            invokeIncrementSeries(series, null)
         }
     }
 
-    private fun handleIncrementSeriesWithRating(series: Series, rating: Int?) {
+    private fun handleIncrementSeriesWithRating(series: Series, rating: Int?) =
         viewModelScope.launch {
             invokeIncrementSeries(series, rating)
         }
-    }
 
     private fun invokeIncrementSeries(series: Series, rating: Int?) {
         state = state.copy(models = updateIsUpdating(series.userId, true))
