@@ -16,7 +16,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.Divider
 import androidx.compose.material.ExperimentalMaterialApi
@@ -24,8 +23,6 @@ import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.LinearProgressIndicator
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.ModalBottomSheetLayout
-import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.Scaffold
 import androidx.compose.material.SnackbarDuration
 import androidx.compose.material.SnackbarHost
@@ -38,7 +35,6 @@ import androidx.compose.material.icons.filled.PlusOne
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
-import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
@@ -57,27 +53,31 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import com.chesire.nekome.app.series.R
-import com.chesire.nekome.app.series.item.ui.ItemBottomSheet
 import com.chesire.nekome.core.compose.theme.NekomeTheme
 import com.chesire.nekome.core.flags.SortOption
 import com.chesire.nekome.core.flags.Subtype
 import com.chesire.nekome.core.flags.UserSeriesStatus
 
-// TODO: Needs to show the series detail screen
-
 @Composable
-fun CollectionScreen(viewModel: CollectionViewModel = viewModel()) {
+fun CollectionScreen(
+    viewModel: CollectionViewModel = viewModel(),
+    navigateToItem: (Int, String) -> Unit
+) {
     val state = viewModel.uiState.collectAsState()
 
+    state.value.seriesDetails?.let {
+        LaunchedEffect(it.show) {
+            navigateToItem(it.seriesId, it.seriesTitle)
+            viewModel.execute(ViewAction.SeriesNavigationObserved)
+        }
+    }
     Render(
         state = state,
         onRefresh = { viewModel.execute(ViewAction.PerformSeriesRefresh) },
         onSelectSeries = { viewModel.execute(ViewAction.SeriesPressed(it)) },
         onIncrementSeries = { viewModel.execute(ViewAction.IncrementSeriesPressed(it)) },
         onRatingComplete = { series, rating ->
-            viewModel.execute(
-                ViewAction.IncrementSeriesWithRating(series, rating)
-            )
+            viewModel.execute(ViewAction.IncrementSeriesWithRating(series, rating))
         },
         onSnackbarShown = { viewModel.execute(ViewAction.ErrorSnackbarObserved) },
         onSortResult = { viewModel.execute(ViewAction.PerformSort(it)) },
@@ -97,57 +97,41 @@ private fun Render(
     onFilterResult: (List<FilterOption>?) -> Unit,
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
-    val modalBottomSheetState = rememberModalBottomSheetState(ModalBottomSheetValue.Hidden)
 
-    ModalBottomSheetLayout(
-        sheetContent = {
-            if (state.value.seriesDetails?.show == true) {
-                ItemBottomSheet()
-            }
-        },
-        sheetState = modalBottomSheetState,
-        sheetShape = RoundedCornerShape(
-            topStart = 16.dp,
-            topEnd = 16.dp,
-            bottomStart = 0.dp,
-            bottomEnd = 0.dp
-        )
-    ) {
-        Scaffold(
-            snackbarHost = {
-                SnackbarHost(
-                    hostState = snackbarHostState
-                )
-            }
-        ) { paddingValues ->
-            SeriesCollection(
-                models = state.value.models,
-                isRefreshing = state.value.isRefreshing,
-                modifier = Modifier.padding(paddingValues),
-                onRefresh = onRefresh,
-                onSelectSeries = onSelectSeries,
-                onIncrementSeries = onIncrementSeries
+    Scaffold(
+        snackbarHost = {
+            SnackbarHost(
+                hostState = snackbarHostState
             )
         }
-
-        RatingDialog(
-            ratingDialog = state.value.ratingDialog,
-            onRatingComplete = onRatingComplete
-        )
-        RenderSnackbar(
-            snackbarData = state.value.errorSnackbar,
-            snackbarHostState = snackbarHostState,
-            onSnackbarShown = onSnackbarShown
-        )
-        SortDialog(
-            sortDialog = state.value.sortDialog,
-            onSortResult = onSortResult
-        )
-        FilterDialog(
-            filterDialog = state.value.filterDialog,
-            onFilterResult = onFilterResult
+    ) { paddingValues ->
+        SeriesCollection(
+            models = state.value.models,
+            isRefreshing = state.value.isRefreshing,
+            modifier = Modifier.padding(paddingValues),
+            onRefresh = onRefresh,
+            onSelectSeries = onSelectSeries,
+            onIncrementSeries = onIncrementSeries
         )
     }
+
+    RatingDialog(
+        ratingDialog = state.value.ratingDialog,
+        onRatingComplete = onRatingComplete
+    )
+    RenderSnackbar(
+        snackbarData = state.value.errorSnackbar,
+        snackbarHostState = snackbarHostState,
+        onSnackbarShown = onSnackbarShown
+    )
+    SortDialog(
+        sortDialog = state.value.sortDialog,
+        onSortResult = onSortResult
+    )
+    FilterDialog(
+        filterDialog = state.value.filterDialog,
+        onFilterResult = onFilterResult
+    )
 }
 
 @Composable

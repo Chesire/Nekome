@@ -5,6 +5,7 @@ import com.chesire.nekome.core.flags.SortOption
 sealed interface ViewAction {
     object PerformSeriesRefresh : ViewAction
     data class SeriesPressed(val series: Series) : ViewAction
+    object SeriesNavigationObserved : ViewAction
     data class IncrementSeriesPressed(val series: Series) : ViewAction
     data class IncrementSeriesWithRating(val series: Series, val rating: Int?) : ViewAction
     object SortPressed : ViewAction

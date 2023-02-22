@@ -63,7 +63,8 @@ data class SnackbarData(
 
 data class SeriesDetails(
     val show: Boolean,
-    val seriesId: Int
+    val seriesId: Int,
+    val seriesTitle: String
 )
 
 data class Sort(

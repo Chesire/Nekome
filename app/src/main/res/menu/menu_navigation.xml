@@ -9,11 +9,11 @@
         android:checkableBehavior="single">
 
         <item
-            android:id="@+id/animeFragment"
+            android:id="@+id/anime_nav_graph"
             android:icon="@drawable/ic_video_library"
             android:title="@string/nav_anime" />
         <item
-            android:id="@+id/mangaFragment"
+            android:id="@+id/manga_nav_graph"
             android:icon="@drawable/ic_collections_bookmark"
             android:title="@string/nav_manga" />
         <item

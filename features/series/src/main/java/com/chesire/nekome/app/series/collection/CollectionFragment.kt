@@ -14,6 +14,7 @@ import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
+import androidx.navigation.findNavController
 import com.chesire.nekome.app.series.R
 import com.chesire.nekome.app.series.collection.ui.CollectionScreen
 import com.chesire.nekome.app.series.collection.ui.CollectionViewModel
@@ -34,7 +35,14 @@ class CollectionFragment : Fragment(), MenuProvider {
         setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
         setContent {
             NekomeTheme {
-                CollectionScreen(viewModel = viewModel)
+                CollectionScreen(
+                    viewModel = viewModel,
+                    navigateToItem = { seriesId, seriesTitle ->
+                        findNavController().navigate(
+                            CollectionFragmentDirections.toItemFragment(seriesId, seriesTitle)
+                        )
+                    }
+                )
             }
         }
     }

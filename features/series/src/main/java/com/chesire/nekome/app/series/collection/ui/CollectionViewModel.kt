@@ -77,6 +77,7 @@ class CollectionViewModel @Inject constructor(
         when (action) {
             ViewAction.PerformSeriesRefresh -> handleSeriesRefresh()
             is ViewAction.SeriesPressed -> handleSeriesPressed(action.series)
+            ViewAction.SeriesNavigationObserved -> handleSeriesNavigationObserved()
             is ViewAction.IncrementSeriesPressed -> handleIncrementSeries(action.series)
             is ViewAction.IncrementSeriesWithRating -> handleIncrementSeriesWithRating(
                 action.series,
@@ -108,8 +109,15 @@ class CollectionViewModel @Inject constructor(
         state = state.copy(
             seriesDetails = SeriesDetails(
                 show = true,
-                seriesId = series.userId
+                seriesId = series.userId,
+                seriesTitle = series.title
             )
+        )
+    }
+
+    private fun handleSeriesNavigationObserved() {
+        state = state.copy(
+            seriesDetails = null
         )
     }
 
