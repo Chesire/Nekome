@@ -44,7 +44,7 @@ androidx-room = { module = "androidx.room:room-ktx", version.ref = "androidx-roo
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "androidx-room" }
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "androidx-room" }
 androidx-room-testing = { module = "androidx.room:room-testing", version.ref = "androidx-room" }
-androidx-security-crypto = { module = "androidx.security:security-crypto", version = "1.1.0-alpha04" }
+androidx-security-crypto = { module = "androidx.security:security-crypto", version = "1.1.0-alpha05" }
 androidx-swiperefreshlayout = { module = "androidx.swiperefreshlayout:swiperefreshlayout", version = "1.1.0" }
 androidx-test-espresso-core = { module = "androidx.test.espresso:espresso-core", version.ref = "androidx-espresso" }
 androidx-test-espresso-intents = { module = "androidx.test.espresso:espresso-intents", version.ref = "androidx-espresso" }
