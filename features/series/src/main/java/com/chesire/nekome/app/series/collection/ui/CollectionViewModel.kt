@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chesire.nekome.app.series.R
 import com.chesire.nekome.app.series.collection.core.CollectSeriesUseCase
+import com.chesire.nekome.app.series.collection.core.CurrentSortUseCase
 import com.chesire.nekome.app.series.collection.core.FilterSeriesUseCase
 import com.chesire.nekome.app.series.collection.core.IncrementSeriesUseCase
 import com.chesire.nekome.app.series.collection.core.RefreshSeriesUseCase
@@ -42,6 +43,7 @@ class CollectionViewModel @Inject constructor(
     private val incrementSeries: IncrementSeriesUseCase,
     private val refreshSeries: RefreshSeriesUseCase,
     private val shouldRateSeries: ShouldRateSeriesUseCase,
+    private val currentSort: CurrentSortUseCase,
     private val sortSeries: SortSeriesUseCase,
     private val updateSort: UpdateSortUseCase,
     private val updateFilter: UpdateFilterUseCase,
@@ -58,6 +60,7 @@ class CollectionViewModel @Inject constructor(
             seriesDetails = null,
             sortDialog = Sort(
                 show = false,
+                currentSort = SortOption.Default,
                 sortOptions = listOf(
                     SortOption.Default,
                     SortOption.Title,
@@ -168,10 +171,11 @@ class CollectionViewModel @Inject constructor(
         }
     }
 
-    private fun handleSortPressed() {
+    private fun handleSortPressed() = viewModelScope.launch {
         state = state.copy(
             sortDialog = state.sortDialog.copy(
-                show = true
+                show = true,
+                currentSort = currentSort()
             )
         )
     }
@@ -186,8 +190,8 @@ class CollectionViewModel @Inject constructor(
     private fun handleFilterPressed() {
         state = state.copy(
             filterDialog = state.filterDialog.copy(
-                show = true
-                // put the filter options here
+                show = true,
+                // TODO: put the filter options here
             )
         )
     }

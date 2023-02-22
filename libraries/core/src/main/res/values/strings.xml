@@ -13,6 +13,9 @@
     <string name="nav_settings">Settings</string>
     <string name="nav_syncing">Syncing</string>
 
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+
     <string name="logout_forced">An error occurred, please login to try again</string>
 
     <string name="menu_filter">Filter</string>

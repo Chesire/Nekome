@@ -13,6 +13,9 @@
     <string name="nav_settings">設定</string>
     <string name="nav_syncing">同期</string>
 
+    <string name="ok">オーケー</string>
+    <string name="cancel">キャンセル</string>
+
     <string name="logout_forced">エラーが発生しました。ログインして再試行してください</string>
 
     <string name="menu_filter">フィルター</string>

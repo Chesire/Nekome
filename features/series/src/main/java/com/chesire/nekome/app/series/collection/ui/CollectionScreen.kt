@@ -359,6 +359,7 @@ private fun Preview() {
         seriesDetails = null,
         sortDialog = Sort(
             show = false,
+            currentSort = SortOption.Title,
             sortOptions = listOf(
                 SortOption.Default,
                 SortOption.Title,

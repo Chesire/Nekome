@@ -48,6 +48,7 @@ data class SeriesDetails(
 
 data class Sort(
     val show: Boolean,
+    val currentSort: SortOption,
     val sortOptions: List<SortOption>
 )
 
