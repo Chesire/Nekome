@@ -216,7 +216,7 @@ class SeriesListTests : UITest() {
                 )
             )
         }
-        seriesPreferences.rateSeriesOnCompletion = false
+        seriesPreferences.rateSeriesOnCompletionPreference = false
         launchActivity()
 
         seriesList {
@@ -256,7 +256,7 @@ class SeriesListTests : UITest() {
                 )
             )
         }
-        seriesPreferences.rateSeriesOnCompletion = true
+        seriesPreferences.rateSeriesOnCompletionPreference = true
         launchActivity()
 
         seriesList {

@@ -8,6 +8,7 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
+import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.chesire.nekome.core.flags.SortOption
 import com.chesire.nekome.core.flags.UserSeriesStatus
@@ -30,7 +31,8 @@ class SeriesPreferences @Inject constructor(
 
     private val _rateOnCompletionKey = context.getString(R.string.key_rate_on_completion)
     private val rateOnCompletionKey = booleanPreferencesKey(_rateOnCompletionKey)
-
+    private val sortPreferenceKey = intPreferencesKey(SORT_PREFERENCE)
+    private val filterPreferenceKey = stringPreferencesKey(FILTER_PREFERENCE)
     private val filterAdapter by lazy {
         Moshi.Builder()
             .build()
@@ -42,7 +44,6 @@ class SeriesPreferences @Inject constructor(
                 )
             )
     }
-
     private val defaultFilter by lazy {
         filterAdapter.toJson(
             UserSeriesStatus
@@ -54,17 +55,27 @@ class SeriesPreferences @Inject constructor(
         )
     }
 
+    val filter: Flow<Map<Int, Boolean>> = context.dataStore.data.map { preferences ->
+        filterAdapter.fromJson(preferences[filterPreferenceKey] ?: defaultFilter) ?: emptyMap()
+    }
+
     val sort: Flow<SortOption> = context.dataStore.data.map { preferences ->
         SortOption.forIndex(preferences[sortPreferenceKey] ?: SortOption.Default.index)
     }
 
-    val rateSeriesOnCompletionFlow: Flow<Boolean> = context.dataStore.data.map { preferences ->
+    val rateSeriesOnCompletion: Flow<Boolean> = context.dataStore.data.map { preferences ->
         preferences[rateOnCompletionKey] ?: false
     }
 
-    suspend fun updateSort(sortOption: SortOption) {
+    suspend fun updateSort(value: SortOption) {
         context.dataStore.edit { preferences ->
-            preferences[sortPreferenceKey] = sortOption.index
+            preferences[sortPreferenceKey] = value.index
+        }
+    }
+
+    suspend fun updateFilter(value: Map<Int, Boolean>) {
+        context.dataStore.edit { preferences ->
+            preferences[filterPreferenceKey] = filterAdapter.toJson(value)
         }
     }
 
@@ -86,6 +97,7 @@ class SeriesPreferences @Inject constructor(
     /**
      * Preference value for the filter options.
      */
+    @Deprecated("Delete with the rest of the old series code")
     var filterPreference: Map<Int, Boolean>
         get() {
             return filterAdapter.fromJson(
@@ -100,7 +112,7 @@ class SeriesPreferences @Inject constructor(
      * Preference value for if a rating dialog should be displayed on completing a series.
      */
     @Deprecated("Delete with the rest of the old series code, and mark new flow without flow name")
-    var rateSeriesOnCompletion: Boolean
+    var rateSeriesOnCompletionPreference: Boolean
         get() = sharedPreferences.getBoolean(_rateOnCompletionKey, false)
         set(value) = sharedPreferences.edit {
             putBoolean(_rateOnCompletionKey, value)
@@ -115,8 +127,7 @@ class SeriesPreferences @Inject constructor(
     }
 
     companion object {
-        const val SORT_PREFERENCE = "preference.sort"
-        const val FILTER_PREFERENCE = "preference.filter"
-        private val sortPreferenceKey = intPreferencesKey(SORT_PREFERENCE)
+        private const val SORT_PREFERENCE = "preference.sort"
+        private const val FILTER_PREFERENCE = "preference.filter"
     }
 }

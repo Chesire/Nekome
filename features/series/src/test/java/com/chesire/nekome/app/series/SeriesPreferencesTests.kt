@@ -126,7 +126,7 @@ class SeriesPreferencesTests {
         }
 
         val classUnderTest = SeriesPreferences(mockPreferences, mockContext)
-        val actual = classUnderTest.rateSeriesOnCompletion
+        val actual = classUnderTest.rateSeriesOnCompletionPreference
 
         assertTrue(actual)
     }
@@ -144,7 +144,7 @@ class SeriesPreferencesTests {
         }
 
         val classUnderTest = SeriesPreferences(mockPreferences, mockContext)
-        classUnderTest.rateSeriesOnCompletion = true
+        classUnderTest.rateSeriesOnCompletionPreference = true
 
         verify { mockEditor.putBoolean(RATE_ON_COMPLETION_KEY, true) }
     }

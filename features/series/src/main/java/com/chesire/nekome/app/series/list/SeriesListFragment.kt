@@ -130,7 +130,7 @@ abstract class SeriesListFragment :
     }
 
     private fun shouldDisplayRatingDialog(model: SeriesDomain): Boolean =
-        seriesPreferences.rateSeriesOnCompletion && model.progress + 1 == model.totalLength
+        seriesPreferences.rateSeriesOnCompletionPreference && model.progress + 1 == model.totalLength
 
     private fun updateSeries(model: SeriesDomain, rating: Int, callback: () -> Unit) {
         viewModel.updateSeries(model.userId, model.progress.inc(), model.userSeriesStatus, rating) {
@@ -200,7 +200,8 @@ abstract class SeriesListFragment :
                         Snackbar.LENGTH_LONG
                     ).show()
                 }
-                is AsyncState.Loading -> { /* Ignore */ }
+                is AsyncState.Loading -> { /* Ignore */
+                }
             }
         }
     }
