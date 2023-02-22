@@ -10,6 +10,7 @@ import com.chesire.nekome.app.series.collection.core.IncrementSeriesUseCase
 import com.chesire.nekome.app.series.collection.core.RefreshSeriesUseCase
 import com.chesire.nekome.app.series.collection.core.ShouldRateSeriesUseCase
 import com.chesire.nekome.app.series.collection.core.SortSeriesUseCase
+import com.chesire.nekome.app.series.collection.core.UpdateSortUseCase
 import com.chesire.nekome.core.flags.SeriesType
 import com.chesire.nekome.core.flags.SortOption
 import com.github.michaelbull.result.onFailure
@@ -38,6 +39,7 @@ class CollectionViewModel @Inject constructor(
     private val refreshSeries: RefreshSeriesUseCase,
     private val shouldRateSeries: ShouldRateSeriesUseCase,
     private val sortSeries: SortSeriesUseCase,
+    private val updateSort: UpdateSortUseCase,
     private val domainMapper: DomainMapper
 ) : ViewModel() {
 
@@ -173,7 +175,9 @@ class CollectionViewModel @Inject constructor(
     }
 
     private fun handlePerformSort(sortOption: SortOption?) {
-        // Update UseCase
+        if (sortOption != null) {
+            updateSort(sortOption)
+        }
         // SortSeries use case should listen to the preferences, and update when its updated?
         state = state.copy(sortDialog = state.sortDialog.copy(show = false))
     }
