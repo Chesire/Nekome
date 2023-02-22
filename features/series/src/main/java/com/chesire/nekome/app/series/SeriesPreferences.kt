@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import androidx.core.content.edit
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
@@ -27,7 +28,8 @@ class SeriesPreferences @Inject constructor(
     @ApplicationContext private val context: Context
 ) {
 
-    private val rateOnCompletionKey = context.getString(R.string.key_rate_on_completion)
+    private val _rateOnCompletionKey = context.getString(R.string.key_rate_on_completion)
+    private val rateOnCompletionKey = booleanPreferencesKey(_rateOnCompletionKey)
 
     private val filterAdapter by lazy {
         Moshi.Builder()
@@ -54,6 +56,10 @@ class SeriesPreferences @Inject constructor(
 
     val sort: Flow<SortOption> = context.dataStore.data.map { preferences ->
         SortOption.forIndex(preferences[sortPreferenceKey] ?: SortOption.Default.index)
+    }
+
+    val rateSeriesOnCompletionFlow: Flow<Boolean> = context.dataStore.data.map { preferences ->
+        preferences[rateOnCompletionKey] ?: false
     }
 
     suspend fun updateSort(sortOption: SortOption) {
@@ -93,10 +99,11 @@ class SeriesPreferences @Inject constructor(
     /**
      * Preference value for if a rating dialog should be displayed on completing a series.
      */
+    @Deprecated("Delete with the rest of the old series code, and mark new flow without flow name")
     var rateSeriesOnCompletion: Boolean
-        get() = sharedPreferences.getBoolean(rateOnCompletionKey, false)
+        get() = sharedPreferences.getBoolean(_rateOnCompletionKey, false)
         set(value) = sharedPreferences.edit {
-            putBoolean(rateOnCompletionKey, value)
+            putBoolean(_rateOnCompletionKey, value)
         }
 
     /**
