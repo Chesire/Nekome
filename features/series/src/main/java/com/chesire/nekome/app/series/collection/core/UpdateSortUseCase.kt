@@ -6,7 +6,5 @@ import javax.inject.Inject
 
 class UpdateSortUseCase @Inject constructor(private val pref: SeriesPreferences) {
 
-    operator fun invoke(newSortOption: SortOption) {
-        pref.sortPreference = newSortOption
-    }
+    suspend operator fun invoke(newSortOption: SortOption) = pref.updateSort(newSortOption)
 }

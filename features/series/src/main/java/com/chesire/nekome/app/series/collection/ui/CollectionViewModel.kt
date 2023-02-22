@@ -1,3 +1,5 @@
+@file:OptIn(FlowPreview::class)
+
 package com.chesire.nekome.app.series.collection.ui
 
 import androidx.lifecycle.SavedStateHandle
@@ -17,9 +19,11 @@ import com.github.michaelbull.result.onFailure
 import com.github.michaelbull.result.onSuccess
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.flattenConcat
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -75,6 +79,7 @@ class CollectionViewModel @Inject constructor(
             collectSeries()
                 .map { filterSeries(it, _seriesType) }
                 .map(sortSeries::invoke)
+                .flattenConcat()
                 .map(domainMapper::toSeries)
                 .collectLatest { newModels ->
                     state = state.copy(models = newModels)
@@ -174,7 +179,7 @@ class CollectionViewModel @Inject constructor(
         )
     }
 
-    private fun handlePerformSort(sortOption: SortOption?) {
+    private fun handlePerformSort(sortOption: SortOption?) = viewModelScope.launch {
         if (sortOption != null) {
             updateSort(sortOption)
         }
