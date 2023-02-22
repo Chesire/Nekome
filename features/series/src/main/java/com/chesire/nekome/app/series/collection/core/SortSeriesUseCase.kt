@@ -10,12 +10,14 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
+import timber.log.Timber
 
 class SortSeriesUseCase @Inject constructor(private val pref: SeriesPreferences) {
 
     operator fun invoke(seriesList: List<SeriesDomain>): Flow<List<SeriesDomain>> {
         return pref.sort.flatMapLatest { sortOption ->
             flow {
+                Timber.d("Sorting series by [$sortOption]")
                 val sortedSeries = seriesList.sortedWith(
                     when (sortOption) {
                         SortOption.Default -> compareBy { it.userId }

@@ -9,6 +9,6 @@ sealed interface ViewAction {
     object SortPressed : ViewAction
     data class PerformSort(val option: SortOption?) : ViewAction
     object FilterPressed : ViewAction
-    data class PerformFilter(val id: Int) : ViewAction
+    data class PerformFilter(val filters: List<FilterOption>?) : ViewAction
     object ErrorSnackbarObserved : ViewAction
 }

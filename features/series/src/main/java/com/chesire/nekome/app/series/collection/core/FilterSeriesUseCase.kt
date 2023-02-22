@@ -10,6 +10,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
+import timber.log.Timber
 
 class FilterSeriesUseCase @Inject constructor(private val pref: SeriesPreferences) {
 
@@ -19,6 +20,7 @@ class FilterSeriesUseCase @Inject constructor(private val pref: SeriesPreference
     ): Flow<List<SeriesDomain>> {
         return pref.filter.flatMapLatest { filter ->
             flow {
+                Timber.d("Filtering series with [$filter]")
                 val filteredSeries = seriesList
                     .filter { it.type == seriesType }
                     .filter { filter[it.userSeriesStatus.index] ?: false }

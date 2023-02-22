@@ -60,6 +60,7 @@ import com.chesire.nekome.app.series.R
 import com.chesire.nekome.core.compose.theme.NekomeTheme
 import com.chesire.nekome.core.flags.SortOption
 import com.chesire.nekome.core.flags.Subtype
+import com.chesire.nekome.core.flags.UserSeriesStatus
 
 // TODO: Needs to show the series detail screen
 
@@ -79,7 +80,7 @@ fun CollectionScreen(viewModel: CollectionViewModel = viewModel()) {
         },
         onSnackbarShown = { viewModel.execute(ViewAction.ErrorSnackbarObserved) },
         onSortResult = { viewModel.execute(ViewAction.PerformSort(it)) },
-        onFilterResult = { viewModel.execute(ViewAction.PerformFilter(0)) }
+        onFilterResult = { viewModel.execute(ViewAction.PerformFilter(it)) }
     )
 }
 
@@ -92,7 +93,7 @@ private fun Render(
     onRatingComplete: (Series, Int?) -> Unit,
     onSnackbarShown: () -> Unit,
     onSortResult: (SortOption?) -> Unit,
-    onFilterResult: () -> Unit,
+    onFilterResult: (List<FilterOption>?) -> Unit,
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
     val modalBottomSheetState = rememberModalBottomSheetState(ModalBottomSheetValue.Hidden)
@@ -369,7 +370,14 @@ private fun Preview() {
             )
         ),
         filterDialog = Filter(
-            show = false
+            show = false,
+            filterOptions = listOf(
+                FilterOption(UserSeriesStatus.Current, true),
+                FilterOption(UserSeriesStatus.Completed, true),
+                FilterOption(UserSeriesStatus.OnHold, true),
+                FilterOption(UserSeriesStatus.Dropped, true),
+                FilterOption(UserSeriesStatus.Planned, true)
+            )
         )
     )
     NekomeTheme(darkTheme = true) {

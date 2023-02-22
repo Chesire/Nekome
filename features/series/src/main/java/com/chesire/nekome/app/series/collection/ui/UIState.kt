@@ -53,5 +53,6 @@ data class Sort(
 )
 
 data class Filter(
-    val show: Boolean
+    val show: Boolean,
+    val filterOptions: List<FilterOption>
 )

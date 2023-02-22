@@ -5,7 +5,7 @@ import com.chesire.nekome.core.flags.SortOption
 import javax.inject.Inject
 import kotlinx.coroutines.flow.first
 
-class CurrentSortUseCase @Inject constructor(private val preferences: SeriesPreferences) {
+class CurrentSortUseCase @Inject constructor(private val pref: SeriesPreferences) {
 
-    suspend operator fun invoke(): SortOption = preferences.sort.first()
+    suspend operator fun invoke(): SortOption = pref.sort.first()
 }

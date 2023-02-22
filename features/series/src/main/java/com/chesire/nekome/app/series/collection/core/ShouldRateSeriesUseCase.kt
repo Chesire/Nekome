@@ -9,13 +9,13 @@ import kotlinx.coroutines.withContext
 
 class ShouldRateSeriesUseCase @Inject constructor(
     private val repo: SeriesRepository,
-    private val preferences: SeriesPreferences
+    private val pref: SeriesPreferences
 ) {
 
     suspend operator fun invoke(userSeriesId: Int): Boolean {
         return withContext(Dispatchers.IO) {
             val domain = requireNotNull(repo.getSeries().first().find { it.userId == userSeriesId })
-            preferences.rateSeriesOnCompletion.first() && domain.progress + 1 == domain.totalLength
+            pref.rateSeriesOnCompletion.first() && domain.progress + 1 == domain.totalLength
         }
     }
 }
