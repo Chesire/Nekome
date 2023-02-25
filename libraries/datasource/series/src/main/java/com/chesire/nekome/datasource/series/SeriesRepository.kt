@@ -23,6 +23,12 @@ class SeriesRepository(
     fun getSeries() = seriesDao.getSeries().map { it.map { map.toSeriesDomain(it) } }
 
     /**
+     * Gets a single [SeriesDomain] which has a matching [userSeriesId].
+     */
+    suspend fun getSeries(userSeriesId: Int): SeriesDomain =
+        map.toSeriesDomain(seriesDao.getSeries(userSeriesId))
+
+    /**
      * Adds the anime series with id [seriesId] to the users tracked list.
      */
     suspend fun addAnime(seriesId: Int, startingStatus: UserSeriesStatus): Resource<SeriesDomain> {

@@ -33,7 +33,6 @@ import kotlinx.coroutines.launch
 // Note this value is pulled from the nav_graph.xml
 private const val SERIES_TYPE = "seriesType"
 
-// TODO: Find out how to launch the details bottom sheet, for now maybe just launch the fragment?
 // TODO: Show a "loading" screen, which should be a list of shimmering items
 
 @HiltViewModel
