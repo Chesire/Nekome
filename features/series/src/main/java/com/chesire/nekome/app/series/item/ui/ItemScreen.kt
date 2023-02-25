@@ -1,16 +1,29 @@
+@file:OptIn(ExperimentalMaterialApi::class)
+
 package com.chesire.nekome.app.series.item.ui
 
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.FilterChip
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.SnackbarDuration
 import androidx.compose.material.SnackbarHost
 import androidx.compose.material.SnackbarHostState
+import androidx.compose.material.Text
+import androidx.compose.material.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.chesire.nekome.core.compose.theme.NekomeTheme
@@ -32,7 +45,7 @@ fun ItemScreen(viewModel: ItemViewModel = viewModel()) {
 private fun Render(
     state: State<UIState>,
     onSeriesStatusChanged: (UserSeriesStatus) -> Unit,
-    onProgressChanged: (Int) -> Unit,
+    onProgressChanged: (String) -> Unit,
     onRatingChanged: (Int) -> Unit,
     onSnackbarShown: () -> Unit
 ) {
@@ -43,7 +56,29 @@ private fun Render(
             SnackbarHost(hostState = snackbarHostState)
         }
     ) { paddingValues ->
-        // Show details here
+        Column(
+            modifier = Modifier
+                .padding(paddingValues)
+                .fillMaxSize()
+        ) {
+            Title(title = state.value.title)
+            Subtitle(subtitle = state.value.subtitle)
+            SeriesStatus(
+                possibleSeriesStatus = state.value.possibleSeriesStatus,
+                seriesStatus = state.value.seriesStatus,
+                onSeriesStatusChanged = onSeriesStatusChanged
+            )
+            Progress(
+                progress = state.value.progress,
+                length = state.value.length,
+                onProgressChanged = onProgressChanged
+            )
+            Rating(
+                rating = state.value.rating,
+                onRatingChanged = onRatingChanged
+            )
+            ConfirmButton()
+        }
     }
 
     RenderSnackbar(
@@ -53,6 +88,65 @@ private fun Render(
     )
 }
 
+@Composable
+private fun Title(title: String) {
+    Text(
+        text = title,
+        style = MaterialTheme.typography.h1
+    )
+}
+
+@Composable
+private fun Subtitle(subtitle: String) {
+    Text(
+        text = subtitle,
+        style = MaterialTheme.typography.subtitle1
+    )
+}
+
+@Composable
+private fun SeriesStatus(
+    possibleSeriesStatus: List<UserSeriesStatus>,
+    seriesStatus: UserSeriesStatus,
+    onSeriesStatusChanged: (UserSeriesStatus) -> Unit
+) {
+    // TODO: Lay this out correctly
+    possibleSeriesStatus.forEach { seriesChip ->
+        FilterChip(
+            selected = seriesChip == seriesStatus,
+            onClick = { onSeriesStatusChanged(seriesChip) }
+        ) {
+            Text(text = stringResource(id = seriesChip.stringId))
+        }
+    }
+}
+
+@Composable
+private fun Progress(
+    progress: String,
+    length: String,
+    onProgressChanged: (String) -> Unit
+) {
+    TextField(
+        value = progress,
+        onValueChange = onProgressChanged,
+        keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number)
+    )
+    Text(text = length)
+}
+
+@Composable
+private fun Rating(
+    rating: Int,
+    onRatingChanged: (Int) -> Unit
+) {
+
+}
+
+@Composable
+private fun ConfirmButton() {
+
+}
 
 @Composable
 private fun RenderSnackbar(
@@ -76,8 +170,15 @@ private fun Preview() {
         id = 0,
         title = "Title",
         subtitle = "Anime - TV - Finished",
+        possibleSeriesStatus = listOf(
+            UserSeriesStatus.Current,
+            UserSeriesStatus.Completed,
+            UserSeriesStatus.Dropped,
+            UserSeriesStatus.OnHold,
+            UserSeriesStatus.Planned
+        ),
         seriesStatus = UserSeriesStatus.Planned,
-        progress = 0,
+        progress = "0",
         length = "-",
         rating = 0,
         isSendingData = false,

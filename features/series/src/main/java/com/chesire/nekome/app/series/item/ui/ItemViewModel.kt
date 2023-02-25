@@ -43,9 +43,12 @@ class ItemViewModel @Inject constructor(
             state = state.copy(
                 id = series.userId,
                 title = series.title,
-                subtitle = "${series.type.name} - ${series.subtype.name} - ${series.seriesStatus.name}",
+                subtitle = "${series.type.name}  -  ${series.subtype.name}  -  ${series.seriesStatus.name}",
+                possibleSeriesStatus = UserSeriesStatus
+                    .values()
+                    .filterNot { it == UserSeriesStatus.Unknown },
                 seriesStatus = series.userSeriesStatus,
-                progress = series.progress,
+                progress = series.progress.toString(),
                 length = series.totalLength.takeUnless { it == 0 }?.toString() ?: "-",
                 rating = series.rating
             )
@@ -68,11 +71,12 @@ class ItemViewModel @Inject constructor(
     }
 
     private fun handleConfirmPressed() = viewModelScope.launch {
+        // TODO: Validation on values
         state = state.copy(isSendingData = true)
         updateItem(
             UpdateItemModel(
                 userSeriesId = state.id,
-                progress = state.progress,
+                progress = state.progress.toInt(),
                 newStatus = state.seriesStatus,
                 rating = state.rating
             )
@@ -94,7 +98,7 @@ class ItemViewModel @Inject constructor(
         state = state.copy(errorSnackbar = null)
     }
 
-    private fun handleProgressChanged(newProgress: Int) {
+    private fun handleProgressChanged(newProgress: String) {
         state = state.copy(progress = newProgress)
     }
 
