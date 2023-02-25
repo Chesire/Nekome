@@ -1,5 +1,6 @@
 package com.chesire.nekome.app.series.item.ui
 
+import androidx.annotation.StringRes
 import com.chesire.nekome.core.flags.UserSeriesStatus
 
 data class UIState(
@@ -9,7 +10,9 @@ data class UIState(
     val seriesStatus: UserSeriesStatus,
     val progress: Int,
     val length: String,
-    val rating: Int
+    val rating: Int,
+    val isSendingData: Boolean,
+    val errorSnackbar: SnackbarData?
 ) {
     companion object {
         val default = UIState(
@@ -19,7 +22,14 @@ data class UIState(
             seriesStatus = UserSeriesStatus.Unknown,
             progress = 0,
             length = "-",
-            rating = 0
+            rating = 0,
+            isSendingData = false,
+            errorSnackbar = null
         )
     }
 }
+
+data class SnackbarData(
+    @StringRes val stringRes: Int,
+    val formatText: Any = ""
+)

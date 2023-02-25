@@ -8,4 +8,5 @@ sealed interface ViewAction {
     data class RatingChanged(val newRating: Int) : ViewAction
     object CancelPressed : ViewAction
     object ConfirmPressed : ViewAction
+    object SnackbarObserved : ViewAction
 }

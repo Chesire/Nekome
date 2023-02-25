@@ -3,6 +3,7 @@ package com.chesire.nekome.app.series.item.ui
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.chesire.nekome.app.series.R
 import com.chesire.nekome.app.series.item.core.RetrieveItemUseCase
 import com.chesire.nekome.app.series.item.core.UpdateItemModel
 import com.chesire.nekome.app.series.item.core.UpdateItemUseCase
@@ -55,6 +56,7 @@ class ItemViewModel @Inject constructor(
         when (action) {
             ViewAction.CancelPressed -> handleCancelPressed()
             ViewAction.ConfirmPressed -> handleConfirmPressed()
+            ViewAction.SnackbarObserved -> handleSnackbarObserved()
             is ViewAction.ProgressChanged -> handleProgressChanged(action.newProgress)
             is ViewAction.RatingChanged -> handleRatingChanged(action.newRating)
             is ViewAction.SeriesStatusChanged -> handleSeriesStatusChanged(action.newSeriesStatus)
@@ -66,7 +68,7 @@ class ItemViewModel @Inject constructor(
     }
 
     private fun handleConfirmPressed() = viewModelScope.launch {
-        // TODO: Emit loading indicator
+        state = state.copy(isSendingData = true)
         updateItem(
             UpdateItemModel(
                 userSeriesId = state.id,
@@ -76,9 +78,20 @@ class ItemViewModel @Inject constructor(
             )
         ).onSuccess {
             // TODO: Show success, maybe close screen?
+            state = state.copy(isSendingData = false)
         }.onFailure {
-            // TODO: Emit failure to screen
+            state = state.copy(
+                isSendingData = false,
+                errorSnackbar = SnackbarData(
+                    stringRes = R.string.series_detail_failure,
+                    formatText = state.title
+                )
+            )
         }
+    }
+
+    private fun handleSnackbarObserved() {
+        state = state.copy(errorSnackbar = null)
     }
 
     private fun handleProgressChanged(newProgress: Int) {
@@ -96,7 +109,5 @@ class ItemViewModel @Inject constructor(
 
 // TODO:
 // Move rating out into own composable
-// Hook up all the events
 // Build screen
-// Handle success / failure states
-// Handle screen loading (maybe too fast?)
+// Handle success

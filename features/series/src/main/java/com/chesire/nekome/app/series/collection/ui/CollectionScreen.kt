@@ -94,7 +94,7 @@ private fun Render(
     onRatingComplete: (Series, Int?) -> Unit,
     onSnackbarShown: () -> Unit,
     onSortResult: (SortOption?) -> Unit,
-    onFilterResult: (List<FilterOption>?) -> Unit,
+    onFilterResult: (List<FilterOption>?) -> Unit
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
 
@@ -119,11 +119,6 @@ private fun Render(
         ratingDialog = state.value.ratingDialog,
         onRatingComplete = onRatingComplete
     )
-    RenderSnackbar(
-        snackbarData = state.value.errorSnackbar,
-        snackbarHostState = snackbarHostState,
-        onSnackbarShown = onSnackbarShown
-    )
     SortDialog(
         sortDialog = state.value.sortDialog,
         onSortResult = onSortResult
@@ -131,6 +126,11 @@ private fun Render(
     FilterDialog(
         filterDialog = state.value.filterDialog,
         onFilterResult = onFilterResult
+    )
+    RenderSnackbar(
+        snackbarData = state.value.errorSnackbar,
+        snackbarHostState = snackbarHostState,
+        onSnackbarShown = onSnackbarShown
     )
 }
 
