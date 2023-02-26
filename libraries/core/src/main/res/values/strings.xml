@@ -68,6 +68,7 @@
     <string name="series_detail_rating">Rating</string>
     <string name="series_detail_confirm">Confirm</string>
     <string name="series_detail_failure">Failed to update series %s, please try again</string>
+    <string name="series_detail_delete">Delete</string>
 
     <string name="rating_none">No rating</string>
 

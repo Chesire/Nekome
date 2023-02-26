@@ -30,14 +30,19 @@ import com.chesire.nekome.core.compose.theme.NekomeTheme
 import com.chesire.nekome.core.flags.UserSeriesStatus
 
 @Composable
-fun ItemScreen(viewModel: ItemViewModel = viewModel()) {
+fun ItemScreen(
+    viewModel: ItemViewModel = viewModel(),
+    finishScreen: () -> Unit
+) {
     val state = viewModel.uiState.collectAsState()
     Render(
         state = state,
         onSeriesStatusChanged = { viewModel.execute(ViewAction.SeriesStatusChanged(it)) },
         onProgressChanged = { viewModel.execute(ViewAction.ProgressChanged(it)) },
         onRatingChanged = { viewModel.execute(ViewAction.RatingChanged(it)) },
-        onSnackbarShown = { viewModel.execute(ViewAction.SnackbarObserved) }
+        onDeleteResult = { viewModel.execute(ViewAction.OnDeleteResult(it)) },
+        onSnackbarShown = { viewModel.execute(ViewAction.SnackbarObserved) },
+        finishScreen = finishScreen
     )
 }
 
@@ -47,7 +52,9 @@ private fun Render(
     onSeriesStatusChanged: (UserSeriesStatus) -> Unit,
     onProgressChanged: (String) -> Unit,
     onRatingChanged: (Int) -> Unit,
-    onSnackbarShown: () -> Unit
+    onDeleteResult: (Boolean?) -> Unit,
+    onSnackbarShown: () -> Unit,
+    finishScreen: () -> Unit
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
 
@@ -81,11 +88,19 @@ private fun Render(
         }
     }
 
+    DeleteDialog(
+        deleteDialog = state.value.deleteDialog,
+        onDeleteResult = onDeleteResult
+    )
     RenderSnackbar(
         snackbarData = state.value.errorSnackbar,
         snackbarHostState = snackbarHostState,
         onSnackbarShown = onSnackbarShown
     )
+
+    if (state.value.finishScreen) {
+        finishScreen()
+    }
 }
 
 @Composable
@@ -182,6 +197,8 @@ private fun Preview() {
         length = "-",
         rating = 0,
         isSendingData = false,
+        finishScreen = false,
+        deleteDialog = null,
         errorSnackbar = null
     )
     NekomeTheme(darkTheme = true) {
@@ -193,7 +210,9 @@ private fun Preview() {
             onSeriesStatusChanged = { /**/ },
             onProgressChanged = { /**/ },
             onRatingChanged = { /**/ },
-            onSnackbarShown = { /**/ }
+            onDeleteResult = { /**/ },
+            onSnackbarShown = { /**/ },
+            finishScreen = { /**/ }
         )
     }
 }

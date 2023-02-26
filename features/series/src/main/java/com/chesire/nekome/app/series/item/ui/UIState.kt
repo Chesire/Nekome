@@ -13,6 +13,8 @@ data class UIState(
     val length: String,
     val rating: Int,
     val isSendingData: Boolean,
+    val finishScreen: Boolean,
+    val deleteDialog: Delete?,
     val errorSnackbar: SnackbarData?
 ) {
     companion object {
@@ -31,11 +33,18 @@ data class UIState(
             progress = "0",
             length = "-",
             rating = 0,
+            finishScreen = false,
             isSendingData = false,
+            deleteDialog = null,
             errorSnackbar = null
         )
     }
 }
+
+data class Delete(
+    val show: Boolean,
+    val title: String
+)
 
 data class SnackbarData(
     @StringRes val stringRes: Int,

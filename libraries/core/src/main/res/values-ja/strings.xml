@@ -68,6 +68,7 @@
     <string name="series_detail_rating">評価</string>
     <string name="series_detail_confirm">確認</string>
     <string name="series_detail_failure">シリーズ％sの更新に失敗しました。再試行してください</string>
+    <string name="series_detail_delete">デリート</string>
 
     <string name="rating_none">評価なし</string>
 

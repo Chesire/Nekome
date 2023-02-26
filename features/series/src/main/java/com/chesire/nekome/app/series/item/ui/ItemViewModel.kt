@@ -4,6 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chesire.nekome.app.series.R
+import com.chesire.nekome.app.series.item.core.DeleteItemUseCase
 import com.chesire.nekome.app.series.item.core.RetrieveItemUseCase
 import com.chesire.nekome.app.series.item.core.UpdateItemModel
 import com.chesire.nekome.app.series.item.core.UpdateItemUseCase
@@ -24,7 +25,8 @@ private const val SERIES_ID = "seriesId"
 class ItemViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val retrieveItem: RetrieveItemUseCase,
-    private val updateItem: UpdateItemUseCase
+    private val updateItem: UpdateItemUseCase,
+    private val deleteItem: DeleteItemUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(UIState.default)
@@ -59,7 +61,9 @@ class ItemViewModel @Inject constructor(
         when (action) {
             ViewAction.CancelPressed -> handleCancelPressed()
             ViewAction.ConfirmPressed -> handleConfirmPressed()
+            ViewAction.DeletePressed -> handleDeletePressed()
             ViewAction.SnackbarObserved -> handleSnackbarObserved()
+            is ViewAction.OnDeleteResult -> handleDeleteResult(action.result)
             is ViewAction.ProgressChanged -> handleProgressChanged(action.newProgress)
             is ViewAction.RatingChanged -> handleRatingChanged(action.newRating)
             is ViewAction.SeriesStatusChanged -> handleSeriesStatusChanged(action.newSeriesStatus)
@@ -94,8 +98,44 @@ class ItemViewModel @Inject constructor(
         }
     }
 
+    private fun handleDeletePressed() {
+        state = state.copy(
+            deleteDialog = Delete(
+                show = true,
+                title = state.title
+            )
+        )
+    }
+
     private fun handleSnackbarObserved() {
         state = state.copy(errorSnackbar = null)
+    }
+
+    private fun handleDeleteResult(result: Boolean?) {
+        if (result != true) {
+            state = state.copy(deleteDialog = null)
+            return
+        }
+
+        viewModelScope.launch {
+            state = state.copy(
+                isSendingData = true,
+                deleteDialog = null
+            )
+            deleteItem(state.id)
+                .onSuccess {
+                    state = state.copy(
+                        isSendingData = false,
+                        finishScreen = true
+                    )
+                }
+                .onFailure {
+                    state = state.copy(
+                        isSendingData = false,
+                        errorSnackbar = SnackbarData(stringRes = R.string.series_list_delete_failure)
+                    )
+                }
+        }
     }
 
     private fun handleProgressChanged(newProgress: String) {
