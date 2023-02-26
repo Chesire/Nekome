@@ -52,7 +52,7 @@ private fun Render(
     onSeriesStatusChanged: (UserSeriesStatus) -> Unit,
     onProgressChanged: (String) -> Unit,
     onRatingChanged: (Int) -> Unit,
-    onDeleteResult: (Boolean?) -> Unit,
+    onDeleteResult: (Boolean) -> Unit,
     onSnackbarShown: () -> Unit,
     finishScreen: () -> Unit
 ) {
@@ -198,7 +198,10 @@ private fun Preview() {
         rating = 0,
         isSendingData = false,
         finishScreen = false,
-        deleteDialog = null,
+        deleteDialog = Delete(
+            show = false,
+            title = "Title"
+        ),
         errorSnackbar = null
     )
     NekomeTheme(darkTheme = true) {

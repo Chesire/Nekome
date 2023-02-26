@@ -50,6 +50,7 @@
     <string name="series_list_ongoing">Ongoing</string>
     <string name="series_list_try_again">Series %s failed to update, please try again…</string>
     <string name="series_list_delete_title">Are you sure you want to delete %s?</string>
+    <string name="series_list_delete_body">Deleting this series will remove it from your library</string>
     <string name="series_list_delete_confirm">Confirm</string>
     <string name="series_list_delete_cancel">Cancel</string>
     <string name="series_list_delete_failure">Encountered error trying to delete series</string>

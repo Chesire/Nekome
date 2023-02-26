@@ -14,7 +14,7 @@ data class UIState(
     val rating: Int,
     val isSendingData: Boolean,
     val finishScreen: Boolean,
-    val deleteDialog: Delete?,
+    val deleteDialog: Delete,
     val errorSnackbar: SnackbarData?
 ) {
     companion object {
@@ -35,7 +35,10 @@ data class UIState(
             rating = 0,
             finishScreen = false,
             isSendingData = false,
-            deleteDialog = null,
+            deleteDialog = Delete(
+                show = false,
+                title = ""
+            ),
             errorSnackbar = null
         )
     }

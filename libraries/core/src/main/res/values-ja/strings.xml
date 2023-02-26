@@ -48,8 +48,9 @@
     <string name="series_list_date_range">%s - %s</string>
     <string name="series_list_unknown">不明</string>
     <string name="series_list_ongoing">進行中</string>
-    <string name="series_list_try_again">シリーズ％sの更新に失敗しました。もう一度やり直してください…</string>
-    <string name="series_list_delete_title">本当に％sを削除してもよろしいですか？</string>
+    <string name="series_list_try_again">シリーズ%sの更新に失敗しました。もう一度やり直してください…</string>
+    <string name="series_list_delete_title">本当に%sを削除してもよろしいですか？</string>
+    <string name="series_list_delete_body">このシリーズを削除すると、ライブラリから削除されます</string>
     <string name="series_list_delete_confirm">確認</string>
     <string name="series_list_delete_cancel">キャンセル</string>
     <string name="series_list_delete_failure">シリーズを削除しようとしましたが、エラーが発生しました</string>
@@ -67,7 +68,7 @@
     <string name="series_detail_status_title">ユーザーシリーズの状況</string>
     <string name="series_detail_rating">評価</string>
     <string name="series_detail_confirm">確認</string>
-    <string name="series_detail_failure">シリーズ％sの更新に失敗しました。再試行してください</string>
+    <string name="series_detail_failure">シリーズ%sの更新に失敗しました。再試行してください</string>
     <string name="series_detail_delete">デリート</string>
 
     <string name="rating_none">評価なし</string>

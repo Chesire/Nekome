@@ -111,16 +111,16 @@ class ItemViewModel @Inject constructor(
         state = state.copy(errorSnackbar = null)
     }
 
-    private fun handleDeleteResult(result: Boolean?) {
-        if (result != true) {
-            state = state.copy(deleteDialog = null)
+    private fun handleDeleteResult(result: Boolean) {
+        if (!result) {
+            state = state.copy(deleteDialog = state.deleteDialog.copy(show = false))
             return
         }
 
         viewModelScope.launch {
             state = state.copy(
                 isSendingData = true,
-                deleteDialog = null
+                deleteDialog = state.deleteDialog.copy(show = false)
             )
             deleteItem(state.id)
                 .onSuccess {
