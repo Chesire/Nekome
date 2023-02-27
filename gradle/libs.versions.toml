@@ -1,6 +1,6 @@
 [versions]
 aboutlibraries = "8.9.4"
-android-gradle-plugin = "7.4.1"
+android-gradle-plugin = "7.4.2"
 androidx-espresso = "3.5.1"
 androidx-hilt = "1.0.0"
 androidx-navigation = "2.5.3"
