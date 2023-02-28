@@ -32,8 +32,8 @@ class SeriesPreferences @Inject constructor(
 
     private val _rateOnCompletionKey = context.getString(R.string.key_rate_on_completion)
     private val rateOnCompletionKey = booleanPreferencesKey(_rateOnCompletionKey)
-    private val sortPreferenceKey = intPreferencesKey(SORT_PREFERENCE)
-    private val filterPreferenceKey = stringPreferencesKey(FILTER_PREFERENCE)
+    private val sortPreferenceKey = intPreferencesKey("preference.sort")
+    private val filterPreferenceKey = stringPreferencesKey("preference.filter")
     private val filterAdapter by lazy {
         Moshi.Builder()
             .build()
@@ -56,10 +56,16 @@ class SeriesPreferences @Inject constructor(
         )
     }
 
+    /**
+     * Returns a [Flow] of the filter value.
+     */
     val filter: Flow<Map<Int, Boolean>> = context.dataStore.data.map { preferences ->
         filterAdapter.fromJson(preferences[filterPreferenceKey] ?: defaultFilter) ?: emptyMap()
     }
 
+    /**
+     * Returns a [Flow] of the sort value.
+     */
     val sort: Flow<SortOption> = context.dataStore.data.map { preferences ->
         SortOption.forIndex(preferences[sortPreferenceKey] ?: SortOption.Default.index)
     }
@@ -69,14 +75,23 @@ class SeriesPreferences @Inject constructor(
         preferences[rateOnCompletionKey] ?: false
     }
     */
+    /**
+     * Returns a flow for if a rating dialog should be shown when the series on completing a series.
+     */
     val rateSeriesOnCompletion: Flow<Boolean> = flowOf(rateSeriesOnCompletionPreference)
 
+    /**
+     * Update the [sort] value with a new [SortOption].
+     */
     suspend fun updateSort(value: SortOption) {
         context.dataStore.edit { preferences ->
             preferences[sortPreferenceKey] = value.index
         }
     }
 
+    /**
+     * Update the [filter] value with new data.
+     */
     suspend fun updateFilter(value: Map<Int, Boolean>) {
         context.dataStore.edit { preferences ->
             preferences[filterPreferenceKey] = filterAdapter.toJson(value)
@@ -84,54 +99,12 @@ class SeriesPreferences @Inject constructor(
     }
 
     /**
-     * Preference value for the sort option.
-     */
-    @Deprecated("Delete with the rest of the old series code")
-    var sortPreference: SortOption
-        get() = SortOption.forIndex(
-            sharedPreferences.getInt(
-                SORT_PREFERENCE,
-                SortOption.Default.index
-            )
-        )
-        set(value) = sharedPreferences.edit {
-            putInt(SORT_PREFERENCE, value.index)
-        }
-
-    /**
-     * Preference value for the filter options.
-     */
-    @Deprecated("Delete with the rest of the old series code")
-    var filterPreference: Map<Int, Boolean>
-        get() {
-            return filterAdapter.fromJson(
-                sharedPreferences.getString(FILTER_PREFERENCE, defaultFilter) ?: defaultFilter
-            ) ?: emptyMap()
-        }
-        set(value) = sharedPreferences.edit {
-            putString(FILTER_PREFERENCE, filterAdapter.toJson(value))
-        }
-
-    /**
      * Preference value for if a rating dialog should be displayed on completing a series.
      */
-    @Deprecated("Delete with the rest of the old series code, and mark new flow without flow name")
+    @Deprecated("Delete when settings can update the flag")
     var rateSeriesOnCompletionPreference: Boolean
         get() = sharedPreferences.getBoolean(_rateOnCompletionKey, false)
         set(value) = sharedPreferences.edit {
             putBoolean(_rateOnCompletionKey, value)
         }
-
-    /**
-     * Subscribe to changes in the [SharedPreferences].
-     */
-    @Deprecated("Delete with the rest of the old series code")
-    fun subscribeToChanges(changeListener: SharedPreferences.OnSharedPreferenceChangeListener) {
-        sharedPreferences.registerOnSharedPreferenceChangeListener(changeListener)
-    }
-
-    companion object {
-        const val SORT_PREFERENCE = "preference.sort"
-        const val FILTER_PREFERENCE = "preference.filter"
-    }
 }
