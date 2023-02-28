@@ -7,7 +7,6 @@ sealed interface ViewAction {
     data class ProgressChanged(val newProgress: String) : ViewAction
     data class RatingChanged(val newRating: Float) : ViewAction
     data class SeriesStatusChanged(val newSeriesStatus: UserSeriesStatus) : ViewAction
-    object CancelPressed : ViewAction
     object ConfirmPressed : ViewAction
     object DeletePressed : ViewAction
     object SnackbarObserved : ViewAction

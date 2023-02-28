@@ -61,7 +61,6 @@ class ItemViewModel @Inject constructor(
 
     fun execute(action: ViewAction) {
         when (action) {
-            ViewAction.CancelPressed -> handleCancelPressed()
             ViewAction.ConfirmPressed -> handleConfirmPressed()
             ViewAction.DeletePressed -> handleDeletePressed()
             ViewAction.SnackbarObserved -> handleSnackbarObserved()
@@ -70,10 +69,6 @@ class ItemViewModel @Inject constructor(
             is ViewAction.RatingChanged -> handleRatingChanged(action.newRating)
             is ViewAction.SeriesStatusChanged -> handleSeriesStatusChanged(action.newSeriesStatus)
         }
-    }
-
-    private fun handleCancelPressed() {
-        // TODO: Close the screen
     }
 
     private fun handleConfirmPressed() = viewModelScope.launch {
@@ -87,8 +82,10 @@ class ItemViewModel @Inject constructor(
                 rating = state.rating.roundToInt()
             )
         ).onSuccess {
-            // TODO: Show success, maybe close screen?
-            state = state.copy(isSendingData = false)
+            state = state.copy(
+                isSendingData = false,
+                finishScreen = true
+            )
         }.onFailure {
             state = state.copy(
                 isSendingData = false,

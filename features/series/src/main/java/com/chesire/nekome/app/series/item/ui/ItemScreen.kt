@@ -109,11 +109,11 @@ private fun Render(
                     modifier = Modifier.align(Alignment.CenterHorizontally)
                 )
             } else {
-            ConfirmButton(
-                isSendingData = state.value.isSendingData,
-                modifier = Modifier.align(Alignment.CenterHorizontally),
-                onConfirmPressed = onConfirmPressed
-            )
+                ConfirmButton(
+                    isSendingData = state.value.isSendingData,
+                    modifier = Modifier.align(Alignment.CenterHorizontally),
+                    onConfirmPressed = onConfirmPressed
+                )
             }
         }
     }
@@ -234,7 +234,7 @@ private fun Rating(
         text = if (rating < 2f) {
             stringResource(id = R.string.rating_none)
         } else {
-            (round(rating) / 2.0).toString();
+            (round(rating) / 2.0).toString()
         },
         modifier = Modifier.fillMaxWidth(),
         textAlign = TextAlign.Center
