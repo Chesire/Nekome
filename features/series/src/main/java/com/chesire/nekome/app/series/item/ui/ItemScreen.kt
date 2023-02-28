@@ -1,13 +1,15 @@
-@file:OptIn(ExperimentalMaterialApi::class)
+@file:OptIn(ExperimentalMaterialApi::class, ExperimentalComposeUiApi::class)
 
 package com.chesire.nekome.app.series.item.ui
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.Button
 import androidx.compose.material.ChipDefaults
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.FilterChip
@@ -24,7 +26,10 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
@@ -47,6 +52,7 @@ fun ItemScreen(
         onSeriesStatusChanged = { viewModel.execute(ViewAction.SeriesStatusChanged(it)) },
         onProgressChanged = { viewModel.execute(ViewAction.ProgressChanged(it)) },
         onRatingChanged = { viewModel.execute(ViewAction.RatingChanged(it)) },
+        onConfirmPressed = { viewModel.execute(ViewAction.ConfirmPressed) },
         onDeleteResult = { viewModel.execute(ViewAction.OnDeleteResult(it)) },
         onSnackbarShown = { viewModel.execute(ViewAction.SnackbarObserved) },
         finishScreen = finishScreen
@@ -59,6 +65,7 @@ private fun Render(
     onSeriesStatusChanged: (UserSeriesStatus) -> Unit,
     onProgressChanged: (String) -> Unit,
     onRatingChanged: (Int) -> Unit,
+    onConfirmPressed: () -> Unit,
     onDeleteResult: (Boolean) -> Unit,
     onSnackbarShown: () -> Unit,
     finishScreen: () -> Unit
@@ -92,7 +99,12 @@ private fun Render(
                 rating = state.value.rating,
                 onRatingChanged = onRatingChanged
             )
-            ConfirmButton()
+            Spacer(modifier = Modifier.weight(1f))
+            ConfirmButton(
+                isSendingData = state.value.isSendingData,
+                modifier = Modifier.align(Alignment.CenterHorizontally),
+                onConfirmPressed = onConfirmPressed
+            )
         }
     }
 
@@ -191,8 +203,24 @@ private fun Rating(
 }
 
 @Composable
-private fun ConfirmButton() {
+private fun ConfirmButton(
+    isSendingData: Boolean,
+    modifier: Modifier,
+    onConfirmPressed: () -> Unit
+) {
+    val keyboardController = LocalSoftwareKeyboardController.current
 
+    Button(
+        onClick = {
+            if (!isSendingData) {
+                onConfirmPressed()
+                keyboardController?.hide()
+            }
+        },
+        modifier = modifier.padding(start = 16.dp, top = 16.dp, end = 16.dp, bottom = 0.dp)
+    ) {
+        Text(text = stringResource(id = R.string.series_detail_confirm))
+    }
 }
 
 @Composable
@@ -245,6 +273,7 @@ private fun Preview() {
             onSeriesStatusChanged = { /**/ },
             onProgressChanged = { /**/ },
             onRatingChanged = { /**/ },
+            onConfirmPressed = { /**/ },
             onDeleteResult = { /**/ },
             onSnackbarShown = { /**/ },
             finishScreen = { /**/ }
