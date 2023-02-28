@@ -134,7 +134,10 @@ class CollectionViewModel @Inject constructor(
         }
 
     private fun invokeIncrementSeries(series: Series, rating: Int?) {
-        state = state.copy(models = updateIsUpdating(series.userId, true))
+        state = state.copy(
+            models = updateIsUpdating(series.userId, true),
+            ratingDialog = null
+        )
 
         viewModelScope.launch {
             incrementSeries(series.userId, rating)

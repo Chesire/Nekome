@@ -17,6 +17,7 @@ import com.squareup.moshi.Types
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "series")
@@ -63,9 +64,12 @@ class SeriesPreferences @Inject constructor(
         SortOption.forIndex(preferences[sortPreferenceKey] ?: SortOption.Default.index)
     }
 
-    val rateSeriesOnCompletion: Flow<Boolean> = context.dataStore.data.map { preferences ->
+    /* TODO: Update this from the settings screen and use this instead.
+    context.dataStore.data.map { preferences ->
         preferences[rateOnCompletionKey] ?: false
     }
+    */
+    val rateSeriesOnCompletion: Flow<Boolean> = flowOf(rateSeriesOnCompletionPreference)
 
     suspend fun updateSort(value: SortOption) {
         context.dataStore.edit { preferences ->

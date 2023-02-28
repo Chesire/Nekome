@@ -11,7 +11,7 @@ data class UIState(
     val seriesStatus: UserSeriesStatus,
     val progress: String,
     val length: String,
-    val rating: Int,
+    val rating: Float,
     val isSendingData: Boolean,
     val finishScreen: Boolean,
     val deleteDialog: Delete,
@@ -32,7 +32,7 @@ data class UIState(
             seriesStatus = UserSeriesStatus.Unknown,
             progress = "0",
             length = "-",
-            rating = 0,
+            rating = 0f,
             finishScreen = false,
             isSendingData = false,
             deleteDialog = Delete(

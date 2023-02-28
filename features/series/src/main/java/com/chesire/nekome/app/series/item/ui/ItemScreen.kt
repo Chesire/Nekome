@@ -16,6 +16,7 @@ import androidx.compose.material.FilterChip
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Scaffold
+import androidx.compose.material.Slider
 import androidx.compose.material.SnackbarDuration
 import androidx.compose.material.SnackbarHost
 import androidx.compose.material.SnackbarHostState
@@ -32,6 +33,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -40,6 +42,7 @@ import com.chesire.nekome.core.compose.theme.NekomeTheme
 import com.chesire.nekome.core.flags.UserSeriesStatus
 import com.google.accompanist.flowlayout.FlowMainAxisAlignment
 import com.google.accompanist.flowlayout.FlowRow
+import kotlin.math.round
 
 @Composable
 fun ItemScreen(
@@ -64,7 +67,7 @@ private fun Render(
     state: State<UIState>,
     onSeriesStatusChanged: (UserSeriesStatus) -> Unit,
     onProgressChanged: (String) -> Unit,
-    onRatingChanged: (Int) -> Unit,
+    onRatingChanged: (Float) -> Unit,
     onConfirmPressed: () -> Unit,
     onDeleteResult: (Boolean) -> Unit,
     onSnackbarShown: () -> Unit,
@@ -196,10 +199,39 @@ private fun Progress(
 
 @Composable
 private fun Rating(
-    rating: Int,
-    onRatingChanged: (Int) -> Unit
+    rating: Float,
+    onRatingChanged: (Float) -> Unit
 ) {
+    Text(
+        text = stringResource(id = R.string.series_detail_rating),
+        modifier = Modifier.padding(top = 16.dp),
+        style = MaterialTheme.typography.body1
+    )
+    Slider(
+        value = rating,
+        onValueChange = {
+            onRatingChanged(
+                if (it == 1f) {
+                    0f
+                } else {
+                    it
+                }
+            )
+        },
+        valueRange = 1f..20f,
+        steps = 18,
+        modifier = Modifier.padding(horizontal = 8.dp)
+    )
 
+    Text(
+        text = if (rating < 2f) {
+            stringResource(id = R.string.rating_none)
+        } else {
+            (round(rating) / 2.0).toString();
+        },
+        modifier = Modifier.fillMaxWidth(),
+        textAlign = TextAlign.Center
+    )
 }
 
 @Composable
@@ -255,7 +287,7 @@ private fun Preview() {
         seriesStatus = UserSeriesStatus.Planned,
         progress = "0",
         length = "12",
-        rating = 0,
+        rating = 0f,
         isSendingData = false,
         finishScreen = false,
         deleteDialog = Delete(

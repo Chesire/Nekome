@@ -5,7 +5,7 @@ import com.chesire.nekome.core.flags.UserSeriesStatus
 sealed interface ViewAction {
     data class OnDeleteResult(val result: Boolean) : ViewAction
     data class ProgressChanged(val newProgress: String) : ViewAction
-    data class RatingChanged(val newRating: Int) : ViewAction
+    data class RatingChanged(val newRating: Float) : ViewAction
     data class SeriesStatusChanged(val newSeriesStatus: UserSeriesStatus) : ViewAction
     object CancelPressed : ViewAction
     object ConfirmPressed : ViewAction

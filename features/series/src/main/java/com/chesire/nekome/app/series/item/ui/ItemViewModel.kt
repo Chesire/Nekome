@@ -13,6 +13,7 @@ import com.github.michaelbull.result.onFailure
 import com.github.michaelbull.result.onSuccess
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
+import kotlin.math.roundToInt
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -53,7 +54,7 @@ class ItemViewModel @Inject constructor(
                 seriesStatus = series.userSeriesStatus,
                 progress = series.progress.toString(),
                 length = series.totalLength.takeUnless { it == 0 }?.toString() ?: "-",
-                rating = series.rating
+                rating = series.rating.toFloat()
             )
         }
     }
@@ -83,7 +84,7 @@ class ItemViewModel @Inject constructor(
                 userSeriesId = state.id,
                 progress = state.progress.toInt(),
                 newStatus = state.seriesStatus,
-                rating = state.rating
+                rating = state.rating.roundToInt()
             )
         ).onSuccess {
             // TODO: Show success, maybe close screen?
@@ -145,7 +146,7 @@ class ItemViewModel @Inject constructor(
         }
     }
 
-    private fun handleRatingChanged(newRating: Int) {
+    private fun handleRatingChanged(newRating: Float) {
         state = state.copy(rating = newRating)
     }
 
@@ -153,8 +154,3 @@ class ItemViewModel @Inject constructor(
         state = state.copy(seriesStatus = newStatus)
     }
 }
-
-// TODO:
-// Move rating out into own composable
-// Build screen
-// Handle success
