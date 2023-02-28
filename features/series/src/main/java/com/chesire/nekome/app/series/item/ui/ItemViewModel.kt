@@ -20,6 +20,7 @@ import kotlinx.coroutines.launch
 
 // Note this value is pulled from the nav_graph.xml
 private const val SERIES_ID = "seriesId"
+private const val MAX_PROGRESS_NUMBERS = 4
 
 @HiltViewModel
 class ItemViewModel @Inject constructor(
@@ -139,7 +140,9 @@ class ItemViewModel @Inject constructor(
     }
 
     private fun handleProgressChanged(newProgress: String) {
-        state = state.copy(progress = newProgress)
+        if (newProgress.count() <= MAX_PROGRESS_NUMBERS) {
+            state = state.copy(progress = newProgress)
+        }
     }
 
     private fun handleRatingChanged(newRating: Int) {

@@ -12,12 +12,12 @@ import androidx.compose.material.ChipDefaults
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.FilterChip
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Scaffold
 import androidx.compose.material.SnackbarDuration
 import androidx.compose.material.SnackbarHost
 import androidx.compose.material.SnackbarHostState
 import androidx.compose.material.Text
-import androidx.compose.material.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
@@ -165,12 +165,21 @@ private fun Progress(
     length: String,
     onProgressChanged: (String) -> Unit
 ) {
-    TextField(
+    Text(
+        text = stringResource(id = R.string.series_detail_progress_title),
+        modifier = Modifier.padding(top = 16.dp, bottom = 8.dp),
+        style = MaterialTheme.typography.body1
+    )
+    OutlinedTextField(
         value = progress,
         onValueChange = onProgressChanged,
+        modifier = Modifier.fillMaxWidth(),
+        trailingIcon = {
+            Text(text = stringResource(id = R.string.series_detail_progress_out_of, length))
+        },
+        singleLine = true,
         keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number)
     )
-    Text(text = length)
 }
 
 @Composable
@@ -217,7 +226,7 @@ private fun Preview() {
         ),
         seriesStatus = UserSeriesStatus.Planned,
         progress = "0",
-        length = "-",
+        length = "12",
         rating = 0,
         isSendingData = false,
         finishScreen = false,
