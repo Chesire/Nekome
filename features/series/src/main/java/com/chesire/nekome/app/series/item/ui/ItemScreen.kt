@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Button
 import androidx.compose.material.ChipDefaults
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.FilterChip
 import androidx.compose.material.MaterialTheme
@@ -103,11 +104,17 @@ private fun Render(
                 onRatingChanged = onRatingChanged
             )
             Spacer(modifier = Modifier.weight(1f))
+            if (state.value.isSendingData) {
+                CircularProgressIndicator(
+                    modifier = Modifier.align(Alignment.CenterHorizontally)
+                )
+            } else {
             ConfirmButton(
                 isSendingData = state.value.isSendingData,
                 modifier = Modifier.align(Alignment.CenterHorizontally),
                 onConfirmPressed = onConfirmPressed
             )
+            }
         }
     }
 
