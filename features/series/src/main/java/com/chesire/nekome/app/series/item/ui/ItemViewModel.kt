@@ -72,12 +72,12 @@ class ItemViewModel @Inject constructor(
     }
 
     private fun handleConfirmPressed() = viewModelScope.launch {
-        // TODO: Validation on values
         state = state.copy(isSendingData = true)
+
         updateItem(
             UpdateItemModel(
                 userSeriesId = state.id,
-                progress = state.progress.toInt(),
+                progress = state.progress.toIntOrNull() ?: 0,
                 newStatus = state.seriesStatus,
                 rating = state.rating.roundToInt()
             )
