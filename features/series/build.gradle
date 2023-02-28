@@ -52,6 +52,7 @@ dependencies {
     implementation libs.androidx.swiperefreshlayout
     implementation libs.bundles.compose
     implementation libs.coil
+    implementation libs.google.accompanist.flowlayout
     implementation libs.google.hilt.android
     implementation libs.google.material
     implementation libs.kotlin.result

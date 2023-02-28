@@ -4,8 +4,11 @@ package com.chesire.nekome.app.series.item.ui
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.ChipDefaults
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.FilterChip
 import androidx.compose.material.MaterialTheme
@@ -25,9 +28,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.chesire.nekome.app.series.R
 import com.chesire.nekome.core.compose.theme.NekomeTheme
 import com.chesire.nekome.core.flags.UserSeriesStatus
+import com.google.accompanist.flowlayout.FlowMainAxisAlignment
+import com.google.accompanist.flowlayout.FlowRow
 
 @Composable
 fun ItemScreen(
@@ -66,6 +73,7 @@ private fun Render(
         Column(
             modifier = Modifier
                 .padding(paddingValues)
+                .padding(16.dp)
                 .fillMaxSize()
         ) {
             Title(title = state.value.title)
@@ -107,7 +115,7 @@ private fun Render(
 private fun Title(title: String) {
     Text(
         text = title,
-        style = MaterialTheme.typography.h1
+        style = MaterialTheme.typography.h5
     )
 }
 
@@ -115,7 +123,7 @@ private fun Title(title: String) {
 private fun Subtitle(subtitle: String) {
     Text(
         text = subtitle,
-        style = MaterialTheme.typography.subtitle1
+        style = MaterialTheme.typography.caption
     )
 }
 
@@ -125,13 +133,28 @@ private fun SeriesStatus(
     seriesStatus: UserSeriesStatus,
     onSeriesStatusChanged: (UserSeriesStatus) -> Unit
 ) {
-    // TODO: Lay this out correctly
-    possibleSeriesStatus.forEach { seriesChip ->
-        FilterChip(
-            selected = seriesChip == seriesStatus,
-            onClick = { onSeriesStatusChanged(seriesChip) }
-        ) {
-            Text(text = stringResource(id = seriesChip.stringId))
+    Text(
+        text = stringResource(id = R.string.series_detail_status_title),
+        modifier = Modifier.padding(top = 16.dp),
+        style = MaterialTheme.typography.body1
+    )
+    FlowRow(
+        mainAxisAlignment = FlowMainAxisAlignment.SpaceAround,
+        modifier = Modifier
+            .fillMaxWidth()
+            .wrapContentHeight()
+            .padding(horizontal = 8.dp)
+    ) {
+        possibleSeriesStatus.forEach { seriesChip ->
+            FilterChip(
+                selected = seriesChip == seriesStatus,
+                colors = ChipDefaults.filterChipColors(
+                    selectedContentColor = MaterialTheme.colors.primary
+                ),
+                onClick = { onSeriesStatusChanged(seriesChip) }
+            ) {
+                Text(text = stringResource(id = seriesChip.stringId))
+            }
         }
     }
 }
