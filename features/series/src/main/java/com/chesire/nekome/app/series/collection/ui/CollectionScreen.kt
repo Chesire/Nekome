@@ -270,7 +270,9 @@ private fun SeriesItem(
                         ) {
                             Icon(
                                 imageVector = Icons.Default.PlusOne,
-                                contentDescription = stringResource(id = R.string.series_list_plus_one),
+                                contentDescription = stringResource(
+                                    id = R.string.series_list_plus_one
+                                ),
                                 tint = MaterialTheme.colors.primary
                             )
                         }

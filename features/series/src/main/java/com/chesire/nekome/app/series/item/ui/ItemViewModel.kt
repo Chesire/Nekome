@@ -131,7 +131,9 @@ class ItemViewModel @Inject constructor(
                 .onFailure {
                     state = state.copy(
                         isSendingData = false,
-                        errorSnackbar = SnackbarData(stringRes = R.string.series_list_delete_failure)
+                        errorSnackbar = SnackbarData(
+                            stringRes = R.string.series_list_delete_failure
+                        )
                     )
                 }
         }

@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Button
 import androidx.compose.material.Card
 import androidx.compose.material.Slider
 import androidx.compose.material.Text
@@ -72,7 +71,7 @@ private fun Render(
                     text = if (sliderValue < 2f) {
                         stringResource(id = R.string.rating_none)
                     } else {
-                        (round(sliderValue) / 2.0).toString();
+                        (round(sliderValue) / 2.0).toString()
                     }
                 )
 
@@ -109,7 +108,7 @@ private fun Preview() {
                 showPlusOne = false,
                 isUpdating = false
             ),
-            onRatingResult = { /**/ },
+            onRatingResult = { /**/ }
         )
     }
 }

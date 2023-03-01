@@ -5,7 +5,6 @@ import com.chesire.nekome.datasource.series.SeriesRepository
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.Result
-
 import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
