@@ -23,16 +23,14 @@ class DomainMapper @Inject constructor() {
         }
     }
 
-    private fun choosePosterImageUrl(imageModel: ImageModel): String {
-        return imageModel.smallest?.url ?: ""
-    }
+    private fun choosePosterImageUrl(imageModel: ImageModel): String =
+        imageModel.smallest?.url ?: ""
 
     private fun buildProgress(progress: Int, totalLength: Int): String {
         val maxLengthString = if (totalLength == 0) "-" else totalLength
         return "$progress / $maxLengthString"
     }
 
-    private fun shouldShowPlusOne(progress: Int, totalLength: Int): Boolean {
-        return totalLength == 0 || progress < totalLength
-    }
+    private fun shouldShowPlusOne(progress: Int, totalLength: Int): Boolean =
+        totalLength == 0 || progress < totalLength
 }

@@ -78,7 +78,7 @@ class CollectionViewModel @Inject constructor(
             is ViewAction.SeriesPressed -> handleSeriesPressed(action.series)
             ViewAction.SeriesNavigationObserved -> handleSeriesNavigationObserved()
             is ViewAction.IncrementSeriesPressed -> handleIncrementSeries(action.series)
-            is ViewAction.IncrementSeriesWithRating -> handleIncrementSeriesWithRating(
+            is ViewAction.IncrementSeriesWithRating -> handleIncrementSeries(
                 action.series,
                 action.rating
             )
@@ -128,7 +128,7 @@ class CollectionViewModel @Inject constructor(
         }
     }
 
-    private fun handleIncrementSeriesWithRating(series: Series, rating: Int?) =
+    private fun handleIncrementSeries(series: Series, rating: Int?) =
         viewModelScope.launch {
             invokeIncrementSeries(series, rating)
         }

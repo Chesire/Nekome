@@ -64,7 +64,7 @@ private fun Render(
                         modifier = Modifier
                             .fillMaxWidth()
                             .selectable(
-                                selected = (sortOption == selectedOption),
+                                selected = sortOption == selectedOption,
                                 onClick = {
                                     selectedOption = sortOption
                                 }
@@ -73,7 +73,7 @@ private fun Render(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         RadioButton(
-                            selected = (sortOption == selectedOption),
+                            selected = sortOption == selectedOption,
                             onClick = { selectedOption = sortOption }
                         )
                         Text(

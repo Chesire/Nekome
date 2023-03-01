@@ -59,7 +59,7 @@ private fun Render(
                         modifier = Modifier
                             .fillMaxWidth()
                             .selectable(
-                                selected = (selectedFilters[filter.userStatus] == true),
+                                selected = selectedFilters[filter.userStatus] == true,
                                 onClick = {
                                     selectedFilters[filter.userStatus] =
                                         !selectedFilters.getValue(filter.userStatus)
