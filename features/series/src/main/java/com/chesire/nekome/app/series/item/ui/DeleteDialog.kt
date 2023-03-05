@@ -12,9 +12,11 @@ import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import com.chesire.nekome.app.series.R
+import com.chesire.nekome.core.compose.theme.NekomeTheme
 
 @Composable
 fun DeleteDialog(
@@ -65,5 +67,16 @@ private fun Render(
                 }
             }
         }
+    }
+}
+
+@Composable
+@Preview
+private fun Preview() {
+    NekomeTheme(darkTheme = true) {
+        Render(
+            title = "Series Title",
+            onDeleteResult = { /**/ }
+        )
     }
 }
