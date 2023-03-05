@@ -51,7 +51,6 @@ class CollectionViewModel @Inject constructor(
     private val domainMapper: DomainMapper
 ) : ViewModel() {
 
-    private val _seriesType = requireNotNull(savedStateHandle.get<SeriesType>(SERIES_TYPE))
     private val _uiState = MutableStateFlow(UIState.default)
     val uiState = _uiState.asStateFlow()
     private var state: UIState
@@ -61,9 +60,11 @@ class CollectionViewModel @Inject constructor(
         }
 
     init {
+        val seriesType = requireNotNull(savedStateHandle.get<SeriesType>(SERIES_TYPE))
+
         viewModelScope.launch {
             collectSeries()
-                .flatMapLatest { filterSeries(it, _seriesType) }
+                .flatMapLatest { filterSeries(it, seriesType) }
                 .flatMapLatest { sortSeries(it) }
                 .map(domainMapper::toSeries)
                 .collect { newModels ->
@@ -128,10 +129,9 @@ class CollectionViewModel @Inject constructor(
         }
     }
 
-    private fun handleIncrementSeries(series: Series, rating: Int?) =
-        viewModelScope.launch {
-            invokeIncrementSeries(series, rating)
-        }
+    private fun handleIncrementSeries(series: Series, rating: Int?) = viewModelScope.launch {
+        invokeIncrementSeries(series, rating)
+    }
 
     private fun invokeIncrementSeries(series: Series, rating: Int?) {
         state = state.copy(
