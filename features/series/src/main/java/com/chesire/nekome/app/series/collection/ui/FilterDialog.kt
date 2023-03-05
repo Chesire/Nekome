@@ -17,9 +17,11 @@ import androidx.compose.runtime.toMutableStateMap
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import com.chesire.nekome.app.series.R
+import com.chesire.nekome.core.compose.theme.NekomeTheme
 import com.chesire.nekome.core.flags.UserSeriesStatus
 
 @Composable
@@ -114,3 +116,20 @@ data class FilterOption(
     val userStatus: UserSeriesStatus,
     val selected: Boolean
 )
+
+@Composable
+@Preview
+private fun Preview() {
+    NekomeTheme(darkTheme = true) {
+        Render(
+            filters = listOf(
+                FilterOption(UserSeriesStatus.Current, true),
+                FilterOption(UserSeriesStatus.Completed, false),
+                FilterOption(UserSeriesStatus.OnHold, true),
+                FilterOption(UserSeriesStatus.Dropped, false),
+                FilterOption(UserSeriesStatus.Planned, true)
+            ),
+            onFilterResult = { /**/ }
+        )
+    }
+}
