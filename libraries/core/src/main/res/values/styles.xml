@@ -11,7 +11,6 @@
         <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogTheme</item>
         <item name="alertDialogTheme">@style/AlertDialogTheme</item>
         <item name="dialogTheme">@style/DialogTheme</item>
-        <item name="md_color_button_text">@color/colorAccent</item>
     </style>
 
     <style name="AppTheme.Launcher">
