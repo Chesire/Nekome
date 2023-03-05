@@ -50,7 +50,7 @@ class FilterSeriesUseCaseTest {
             createSeriesDomain(
                 seriesType = SeriesType.Manga,
                 userSeriesStatus = UserSeriesStatus.Current
-            ),
+            )
         )
 
         val result = filterSeries(input, SeriesType.Anime)
