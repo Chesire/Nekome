@@ -23,10 +23,9 @@ class IncrementSeriesUseCase @Inject constructor(private val repo: SeriesReposit
                 rating = newRating
             )
 
-            if (result is Resource.Success) {
-                Ok(result.data)
-            } else {
-                Err(Unit)
+            when (result) {
+                is Resource.Success -> Ok(result.data)
+                is Resource.Error -> Err(Unit)
             }
         }
     }
