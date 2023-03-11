@@ -2,7 +2,6 @@ package com.chesire.nekome.features.series
 
 import androidx.compose.ui.test.junit4.createComposeRule
 import com.chesire.nekome.UITest
-import com.chesire.nekome.app.series.SeriesPreferences
 import com.chesire.nekome.core.Resource
 import com.chesire.nekome.core.flags.SeriesType
 import com.chesire.nekome.core.flags.UserSeriesStatus
@@ -16,7 +15,6 @@ import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.UninstallModules
 import io.mockk.coEvery
 import io.mockk.mockk
-import javax.inject.Inject
 import kotlinx.coroutines.runBlocking
 import org.junit.Rule
 import org.junit.Test
@@ -30,9 +28,6 @@ class SeriesListTests : UITest() {
 
     @get:Rule
     val composeTestRule = createComposeRule()
-
-    @Inject
-    lateinit var seriesPreferences: SeriesPreferences
 
     @Test
     fun canReachSeriesList() {

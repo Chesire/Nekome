@@ -22,7 +22,10 @@ class SortTests : UITest() {
 
     override fun setUp() {
         super.setUp()
-        runBlocking { series.insert(seriesData.all) }
+
+        runBlocking {
+            series.insert(seriesData.all)
+        }
     }
 
     @Test

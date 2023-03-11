@@ -10,7 +10,6 @@ import androidx.compose.ui.test.onChild
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTouchInput
-import androidx.compose.ui.test.printToLog
 import androidx.compose.ui.test.swipeDown
 import com.adevinta.android.barista.assertion.BaristaVisibilityAssertions.assertDisplayed
 import com.chesire.nekome.R
@@ -166,8 +165,6 @@ class SeriesListResultRobot(private val composeContentTestRule: ComposeContentTe
      * Use this to verify that the list is in the correct order/filtered.
      */
     fun checkSeriesAtIndex(index: Int, title: String) {
-        composeContentTestRule.onAllNodesWithTag(SeriesCollectionTags.SeriesItem)
-            .printToLog("GOT THESE")
         composeContentTestRule
             .onAllNodesWithTag(SeriesCollectionTags.SeriesItem)
             .get(index)

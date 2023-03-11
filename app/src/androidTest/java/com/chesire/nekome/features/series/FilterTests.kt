@@ -2,14 +2,12 @@ package com.chesire.nekome.features.series
 
 import androidx.compose.ui.test.junit4.createComposeRule
 import com.chesire.nekome.UITest
-import com.chesire.nekome.app.series.SeriesPreferences
 import com.chesire.nekome.core.flags.SeriesType
 import com.chesire.nekome.core.flags.UserSeriesStatus
 import com.chesire.nekome.database.entity.SeriesEntity
 import com.chesire.nekome.robots.series.seriesList
 import com.chesire.nekome.testing.createSeriesEntity
 import dagger.hilt.android.testing.HiltAndroidTest
-import javax.inject.Inject
 import kotlinx.coroutines.runBlocking
 import org.junit.Rule
 import org.junit.Test
@@ -22,23 +20,11 @@ class FilterTests : UITest() {
     @get:Rule
     val composeTestRule = createComposeRule()
 
-    @Inject
-    lateinit var seriesPreferences: SeriesPreferences
-
     override fun setUp() {
         super.setUp()
 
         runBlocking {
             series.insert(seriesData.all)
-            seriesPreferences.updateFilter(
-                mapOf(
-                    0 to true,
-                    1 to false,
-                    2 to false,
-                    3 to false,
-                    4 to false
-                )
-            )
         }
     }
 
