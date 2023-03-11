@@ -47,6 +47,8 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.testTag
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -101,9 +103,11 @@ private fun Render(
     Scaffold(
         snackbarHost = {
             SnackbarHost(
-                hostState = snackbarHostState
+                hostState = snackbarHostState,
+                modifier = Modifier.semantics { testTag = SeriesCollectionTags.Snackbar }
             )
-        }
+        },
+        modifier = Modifier.semantics { testTag = SeriesCollectionTags.Root }
     ) { paddingValues ->
         SeriesCollection(
             models = state.value.models,
@@ -148,7 +152,11 @@ private fun SeriesCollection(
             refreshing = isRefreshing,
             onRefresh = onRefresh
         )
-        Box(modifier = modifier.pullRefresh(pullRefreshState)) {
+        Box(
+            modifier = modifier
+                .pullRefresh(pullRefreshState)
+                .semantics { testTag = SeriesCollectionTags.RefreshContainer }
+        ) {
             LazyColumn(
                 modifier = Modifier.fillMaxSize(),
                 contentPadding = PaddingValues(8.dp),
@@ -176,6 +184,7 @@ private fun SeriesCollection(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(16.dp)
+                .semantics { testTag = SeriesCollectionTags.EmptyView }
         ) {
             Text(
                 text = stringResource(id = R.string.series_list_empty),
@@ -205,6 +214,7 @@ private fun SeriesItem(
         modifier = Modifier
             .fillMaxWidth()
             .height(125.dp)
+            .semantics { testTag = SeriesCollectionTags.SeriesItem }
     ) {
         Box(modifier = Modifier.fillMaxSize()) {
             if (model.isUpdating) {
@@ -264,7 +274,8 @@ private fun SeriesItem(
                         IconButton(
                             modifier = Modifier
                                 .alpha(if (model.isUpdating) 0.3f else 1f)
-                                .align(Alignment.CenterVertically),
+                                .align(Alignment.CenterVertically)
+                                .semantics { testTag = SeriesCollectionTags.PlusOne },
                             enabled = !model.isUpdating,
                             onClick = { onIncrementSeries(model) }
                         ) {
@@ -386,4 +397,13 @@ private fun Preview() {
             onFilterResult = { /**/ }
         )
     }
+}
+
+object SeriesCollectionTags {
+    const val Root = "SeriesCollectionRoot"
+    const val EmptyView = "SeriesCollectionEmptyView"
+    const val RefreshContainer = "SeriesCollectionRefreshContainer"
+    const val SeriesItem = "SeriesCollectionSeriesItem"
+    const val PlusOne = "SeriesCollectionPlusOne"
+    const val Snackbar = "SeriesCollectionSnackbar"
 }

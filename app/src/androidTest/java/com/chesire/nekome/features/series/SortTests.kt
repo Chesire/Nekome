@@ -1,5 +1,6 @@
 package com.chesire.nekome.features.series
 
+import androidx.compose.ui.test.junit4.createComposeRule
 import com.chesire.nekome.UITest
 import com.chesire.nekome.core.flags.SeriesType
 import com.chesire.nekome.core.flags.UserSeriesStatus
@@ -8,12 +9,16 @@ import com.chesire.nekome.robots.series.seriesList
 import com.chesire.nekome.testing.createSeriesEntity
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.runBlocking
+import org.junit.Rule
 import org.junit.Test
 
 @HiltAndroidTest
 class SortTests : UITest() {
 
     private val seriesData = InitialSortSeriesData()
+
+    @get:Rule
+    val composeTestRule = createComposeRule()
 
     override fun setUp() {
         super.setUp()
@@ -24,7 +29,7 @@ class SortTests : UITest() {
     fun sortDialogDisplaysWithAllOptions() {
         launchActivity()
 
-        seriesList {
+        seriesList(composeTestRule) {
             sortSeries {
                 open()
             } validate {
@@ -38,10 +43,11 @@ class SortTests : UITest() {
     fun sortDialogClosesOnOptionSelected() {
         launchActivity()
 
-        seriesList {
+        seriesList(composeTestRule) {
             sortSeries {
                 open()
                 selectByTitle()
+                confirm()
             } validate {
                 isNotVisible()
             }
@@ -53,10 +59,11 @@ class SortTests : UITest() {
         // default order is by id
         launchActivity()
 
-        seriesList {
+        seriesList(composeTestRule) {
             sortSeries {
                 open()
                 selectByDefault()
+                confirm()
             }
         } validate {
             isInOrder(
@@ -74,10 +81,11 @@ class SortTests : UITest() {
     fun sortOptionTitleSortsInTitleOrder() {
         launchActivity()
 
-        seriesList {
+        seriesList(composeTestRule) {
             sortSeries {
                 open()
                 selectByTitle()
+                confirm()
             }
         } validate {
             isInOrder(
@@ -95,10 +103,11 @@ class SortTests : UITest() {
     fun sortOptionStartDateSortsInStartDateOrder() {
         launchActivity()
 
-        seriesList {
+        seriesList(composeTestRule) {
             sortSeries {
                 open()
                 selectByStartDate()
+                confirm()
             }
         } validate {
             isInOrder(
@@ -116,10 +125,11 @@ class SortTests : UITest() {
     fun sortOptionEndDateSortsInEndDateOrder() {
         launchActivity()
 
-        seriesList {
+        seriesList(composeTestRule) {
             sortSeries {
                 open()
                 selectByEndDate()
+                confirm()
             }
         } validate {
             isInOrder(
@@ -137,10 +147,11 @@ class SortTests : UITest() {
     fun sortOptionRatingSortsInRatingOrder() {
         launchActivity()
 
-        seriesList {
+        seriesList(composeTestRule) {
             sortSeries {
                 open()
                 selectByRating()
+                confirm()
             }
         } validate {
             isInOrder(

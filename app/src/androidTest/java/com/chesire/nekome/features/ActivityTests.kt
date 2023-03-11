@@ -28,7 +28,7 @@ class ActivityTests : UITest() {
         applicationSettings.defaultHomeScreen = HomeScreenOptions.Anime
         launchActivity()
 
-        seriesList {
+        seriesList(composeTestRule) {
             validate { isAnimeScreen() }
         }
     }
@@ -38,7 +38,7 @@ class ActivityTests : UITest() {
         applicationSettings.defaultHomeScreen = HomeScreenOptions.Manga
         launchActivity()
 
-        seriesList {
+        seriesList(composeTestRule) {
             validate { isMangaScreen() }
         }
     }
@@ -51,7 +51,7 @@ class ActivityTests : UITest() {
         activity {
             goToAnime()
         }
-        seriesList {
+        seriesList(composeTestRule) {
             validate { isAnimeScreen() }
         }
     }
@@ -64,7 +64,7 @@ class ActivityTests : UITest() {
         activity {
             goToManga()
         }
-        seriesList {
+        seriesList(composeTestRule) {
             validate { isMangaScreen() }
         }
     }

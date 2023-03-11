@@ -67,5 +67,7 @@ abstract class UITest {
      */
     protected fun launchActivity() {
         ActivityScenario.launch(Activity::class.java)
+        // Not the nicest solution, but it keeps compose views a bit happier when they launch.
+        Thread.sleep(200)
     }
 }

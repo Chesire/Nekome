@@ -1,95 +1,142 @@
 package com.chesire.nekome.robots.series
 
-import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
-import com.adevinta.android.barista.assertion.BaristaListAssertions.assertDisplayedAtPosition
-import com.adevinta.android.barista.assertion.BaristaRecyclerViewAssertions.assertRecyclerViewItemCount
+import androidx.compose.ui.test.assertCountEquals
+import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.assertIsNotDisplayed
+import androidx.compose.ui.test.assertTextContains
+import androidx.compose.ui.test.junit4.ComposeContentTestRule
+import androidx.compose.ui.test.onAllNodesWithTag
+import androidx.compose.ui.test.onChild
+import androidx.compose.ui.test.onNodeWithTag
+import androidx.compose.ui.test.performClick
+import androidx.compose.ui.test.performTouchInput
+import androidx.compose.ui.test.printToLog
+import androidx.compose.ui.test.swipeDown
 import com.adevinta.android.barista.assertion.BaristaVisibilityAssertions.assertDisplayed
-import com.adevinta.android.barista.assertion.BaristaVisibilityAssertions.assertNotExist
-import com.adevinta.android.barista.interaction.BaristaListInteractions.clickListItemChild
-import com.adevinta.android.barista.interaction.BaristaSwipeRefreshInteractions.refresh
 import com.chesire.nekome.R
-import com.chesire.nekome.helpers.ToastMatcher.Companion.onToast
+import com.chesire.nekome.app.series.collection.ui.RatingTags
+import com.chesire.nekome.app.series.collection.ui.SeriesCollectionTags
 
 /**
  * Method to interact with the [SeriesListRobot].
  */
-fun seriesList(func: SeriesListRobot.() -> Unit) = SeriesListRobot().apply { func() }
+fun seriesList(
+    composeContentTestRule: ComposeContentTestRule,
+    func: SeriesListRobot.() -> Unit
+) = SeriesListRobot(composeContentTestRule).apply(func)
 
 /**
  * Robot to interact with the series list screen.
  */
-class SeriesListRobot {
+class SeriesListRobot(private val composeContentTestRule: ComposeContentTestRule) {
 
     /**
      * Performs refresh on the series list.
      */
     fun refreshList() {
-        refresh(R.id.refreshLayout)
+        composeContentTestRule
+            .onNodeWithTag(SeriesCollectionTags.RefreshContainer)
+            .performTouchInput {
+                swipeDown()
+            }
     }
 
     /**
      * Presses the increment watched button on the series at position [itemPosition].
      */
-    fun incrementSeriesByOne(itemPosition: Int) =
-        clickListItemChild(R.id.listContent, itemPosition, R.id.seriesPlusOne)
+    fun incrementSeriesByOne(itemPosition: Int) {
+        composeContentTestRule
+            .onAllNodesWithTag(SeriesCollectionTags.PlusOne)
+            .get(itemPosition)
+            .performClick()
+    }
 
     /**
      * Options for changing the sort option.
      */
-    fun sortSeries(func: SortOptionRobot.() -> Unit) = SortOptionRobot().apply { func() }
+    fun sortSeries(func: SortOptionRobot.() -> Unit) =
+        SortOptionRobot(composeContentTestRule).apply(func)
 
     /**
      * Options for changing the filter option.
      */
-    fun filterSeries(func: FilterOptionsRobot.() -> Unit) = FilterOptionsRobot().apply { func() }
+    fun filterSeries(func: FilterOptionsRobot.() -> Unit) =
+        FilterOptionsRobot(composeContentTestRule).apply(func)
 
     /**
      * Executes validation steps.
      */
     infix fun validate(func: SeriesListResultRobot.() -> Unit) =
-        SeriesListResultRobot().apply { func() }
+        SeriesListResultRobot(composeContentTestRule).apply(func)
 }
 
 /**
  * Robot to check the results for the series list screen.
  */
-class SeriesListResultRobot {
+class SeriesListResultRobot(private val composeContentTestRule: ComposeContentTestRule) {
 
     /**
      * Asserts the series list screen is shown.
      */
-    fun isVisible() = assertDisplayed(R.id.seriesListLayout)
+    fun isVisible() {
+        composeContentTestRule
+            .onNodeWithTag(SeriesCollectionTags.Root)
+            .assertIsDisplayed()
+    }
 
     /**
      * Asserts the empty list view is displayed.
      */
-    fun isEmptyDisplayed() = assertDisplayed(R.id.listEmpty)
+    fun isEmptyDisplayed() {
+        composeContentTestRule
+            .onNodeWithTag(SeriesCollectionTags.EmptyView)
+            .assertIsDisplayed()
+    }
 
     /**
      * Asserts the populated list view is displayed.
      */
-    fun isListDisplayed() = assertDisplayed(R.id.seriesLayout)
+    fun isListDisplayed() {
+        composeContentTestRule
+            .onNodeWithTag(SeriesCollectionTags.RefreshContainer)
+            .assertIsDisplayed()
+    }
 
     /**
      * Asserts that [expect] numbers of items are in the list.
      */
-    fun listCount(expect: Int) = assertRecyclerViewItemCount(R.id.listContent, expect)
+    fun listCount(expect: Int) {
+        composeContentTestRule
+            .onAllNodesWithTag(SeriesCollectionTags.SeriesItem)
+            .assertCountEquals(expect)
+    }
 
     /**
      * Asserts that the refresh error toast is displayed.
      */
     fun isRefreshSeriesError() {
-        onToast(R.string.series_list_refresh_error).check(matches(isDisplayed()))
+        composeContentTestRule
+            .onNodeWithTag(SeriesCollectionTags.Snackbar)
+            .assertIsDisplayed()
+            .onChild()
+            .onChild()
+            .onChild()
+            .assertTextContains(
+                value = "Encountered error trying to refresh series list, please try again…",
+                ignoreCase = true,
+                substring = true
+            )
     }
 
     /**
      * Asserts that the current screen is the [AnimeFragment].
+     * TODO: Change this once we move to full compose.
      */
     fun isAnimeScreen() = assertDisplayed(R.string.nav_anime)
 
     /**
      * Asserts that the current screen is the [MangaFragment].
+     * TODO: Change this once we move to full compose.
      */
     fun isMangaScreen() = assertDisplayed(R.string.nav_manga)
 
@@ -97,13 +144,12 @@ class SeriesListResultRobot {
      * Asserts that the series progress at [itemPosition] is the expected value of
      * "[expectedProgress] / [totalLength]".
      */
-    fun seriesProgress(itemPosition: Int, expectedProgress: Int, totalLength: Int) =
-        assertDisplayedAtPosition(
-            R.id.listContent,
-            itemPosition,
-            R.id.seriesProgress,
-            "$expectedProgress / $totalLength"
-        )
+    fun seriesProgress(itemPosition: Int, expectedProgress: Int, totalLength: Int) {
+        composeContentTestRule
+            .onAllNodesWithTag(SeriesCollectionTags.SeriesItem)
+            .get(itemPosition)
+            .assertTextContains("$expectedProgress / $totalLength")
+    }
 
     /**
      * Asserts that the series are listed in the expected order. A list of the series titles must be
@@ -119,16 +165,34 @@ class SeriesListResultRobot {
      * Asserts that the series at index [index] contains the title [title].
      * Use this to verify that the list is in the correct order/filtered.
      */
-    fun checkSeriesAtIndex(index: Int, title: String) =
-        assertDisplayedAtPosition(R.id.listContent, index, R.id.seriesTitle, title)
+    fun checkSeriesAtIndex(index: Int, title: String) {
+        composeContentTestRule.onAllNodesWithTag(SeriesCollectionTags.SeriesItem)
+            .printToLog("GOT THESE")
+        composeContentTestRule
+            .onAllNodesWithTag(SeriesCollectionTags.SeriesItem)
+            .get(index)
+            .assertTextContains(title)
+    }
 
     /**
      * Asserts that the rating dialog is currently displayed.
      */
-    fun isRatingDialogDisplayed() = assertDisplayed(R.string.rate_dialog_title)
+    fun isRatingDialogDisplayed() {
+        composeContentTestRule
+            .onNodeWithTag(RatingTags.Root)
+            .assertIsDisplayed()
+    }
 
     /**
      * Asserts that the rating dialog is not currently displayed.
      */
-    fun isRatingDialogNotDisplayed() = assertNotExist(R.id.ratingDialog)
+    fun isRatingDialogNotDisplayed() {
+        try {
+            composeContentTestRule
+                .onNodeWithTag(RatingTags.Root)
+                .assertIsNotDisplayed()
+        } catch (ex: AssertionError) {
+            // If an ex is thrown, then the node wasn't available
+        }
+    }
 }

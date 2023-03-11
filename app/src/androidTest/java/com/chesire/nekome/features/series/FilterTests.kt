@@ -1,13 +1,17 @@
 package com.chesire.nekome.features.series
 
+import androidx.compose.ui.test.junit4.createComposeRule
 import com.chesire.nekome.UITest
+import com.chesire.nekome.app.series.SeriesPreferences
 import com.chesire.nekome.core.flags.SeriesType
 import com.chesire.nekome.core.flags.UserSeriesStatus
 import com.chesire.nekome.database.entity.SeriesEntity
 import com.chesire.nekome.robots.series.seriesList
 import com.chesire.nekome.testing.createSeriesEntity
 import dagger.hilt.android.testing.HiltAndroidTest
+import javax.inject.Inject
 import kotlinx.coroutines.runBlocking
+import org.junit.Rule
 import org.junit.Test
 
 @HiltAndroidTest
@@ -15,16 +19,34 @@ class FilterTests : UITest() {
 
     private val seriesData = InitialFilterSeriesData()
 
+    @get:Rule
+    val composeTestRule = createComposeRule()
+
+    @Inject
+    lateinit var seriesPreferences: SeriesPreferences
+
     override fun setUp() {
         super.setUp()
-        runBlocking { series.insert(seriesData.all) }
+
+        runBlocking {
+            series.insert(seriesData.all)
+            seriesPreferences.updateFilter(
+                mapOf(
+                    0 to true,
+                    1 to false,
+                    2 to false,
+                    3 to false,
+                    4 to false
+                )
+            )
+        }
     }
 
     @Test
     fun filterDialogDisplaysWithAllOptions() {
         launchActivity()
 
-        seriesList {
+        seriesList(composeTestRule) {
             filterSeries {
                 open()
             } validate {
@@ -38,7 +60,7 @@ class FilterTests : UITest() {
     fun filterDialogHasCorrectDefaultChoices() {
         launchActivity()
 
-        seriesList {
+        seriesList(composeTestRule) {
             filterSeries {
                 open()
             } validate {
@@ -51,7 +73,7 @@ class FilterTests : UITest() {
     fun filterDialogClosesOnConfirm() {
         launchActivity()
 
-        seriesList {
+        seriesList(composeTestRule) {
             filterSeries {
                 open()
                 confirm()
@@ -65,7 +87,7 @@ class FilterTests : UITest() {
     fun filterDialogRetainsLastChoices() {
         launchActivity()
 
-        seriesList {
+        seriesList(composeTestRule) {
             filterSeries {
                 open()
                 clickOnHold()
@@ -86,7 +108,7 @@ class FilterTests : UITest() {
     fun filterDialogCancelsOnCancelHit() {
         launchActivity()
 
-        seriesList {
+        seriesList(composeTestRule) {
             filterSeries {
                 open()
                 clickCompleted()
@@ -107,7 +129,7 @@ class FilterTests : UITest() {
     fun filterDialogConfirmDisabledIfNoFilter() {
         launchActivity()
 
-        seriesList {
+        seriesList(composeTestRule) {
             filterSeries {
                 open()
             } validate {
@@ -126,7 +148,7 @@ class FilterTests : UITest() {
     fun filterCurrentShowsOnlyCurrentSeries() {
         launchActivity()
 
-        seriesList {
+        seriesList(composeTestRule) {
             filterSeries {
                 open()
                 // Default has current already selected
@@ -142,7 +164,7 @@ class FilterTests : UITest() {
     fun filterCompletedShowsOnlyCompletedSeries() {
         launchActivity()
 
-        seriesList {
+        seriesList(composeTestRule) {
             filterSeries {
                 open()
                 clickCurrent()
@@ -159,7 +181,7 @@ class FilterTests : UITest() {
     fun filterOnHoldShowsOnlyOnHoldSeries() {
         launchActivity()
 
-        seriesList {
+        seriesList(composeTestRule) {
             filterSeries {
                 open()
                 clickCurrent()
@@ -176,7 +198,7 @@ class FilterTests : UITest() {
     fun filterDroppedShowsOnlyDroppedSeries() {
         launchActivity()
 
-        seriesList {
+        seriesList(composeTestRule) {
             filterSeries {
                 open()
                 clickCurrent()
@@ -193,7 +215,7 @@ class FilterTests : UITest() {
     fun filterPlannedShowsOnlyPlannedSeries() {
         launchActivity()
 
-        seriesList {
+        seriesList(composeTestRule) {
             filterSeries {
                 open()
                 clickCurrent()
@@ -210,7 +232,7 @@ class FilterTests : UITest() {
     fun filterAllShowsAllSeries() {
         launchActivity()
 
-        seriesList {
+        seriesList(composeTestRule) {
             filterSeries {
                 open()
                 clickCompleted()

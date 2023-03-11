@@ -1,5 +1,6 @@
 package com.chesire.nekome.features.series
 
+import androidx.compose.ui.test.junit4.createComposeRule
 import com.chesire.nekome.UITest
 import com.chesire.nekome.app.series.SeriesPreferences
 import com.chesire.nekome.core.Resource
@@ -17,6 +18,7 @@ import io.mockk.coEvery
 import io.mockk.mockk
 import javax.inject.Inject
 import kotlinx.coroutines.runBlocking
+import org.junit.Rule
 import org.junit.Test
 
 @HiltAndroidTest
@@ -26,6 +28,9 @@ class SeriesListTests : UITest() {
     @BindValue
     val seriesApi = mockk<SeriesApi>()
 
+    @get:Rule
+    val composeTestRule = createComposeRule()
+
     @Inject
     lateinit var seriesPreferences: SeriesPreferences
 
@@ -33,7 +38,7 @@ class SeriesListTests : UITest() {
     fun canReachSeriesList() {
         launchActivity()
 
-        seriesList {
+        seriesList(composeTestRule) {
             validate { isVisible() }
         }
     }
@@ -42,7 +47,7 @@ class SeriesListTests : UITest() {
     fun emptyListDisplaysEmptyView() {
         launchActivity()
 
-        seriesList {
+        seriesList(composeTestRule) {
             validate { isEmptyDisplayed() }
         }
     }
@@ -54,7 +59,7 @@ class SeriesListTests : UITest() {
         }
         launchActivity()
 
-        seriesList {
+        seriesList(composeTestRule) {
             validate {
                 isListDisplayed()
                 listCount(1)
@@ -106,7 +111,7 @@ class SeriesListTests : UITest() {
         }
         launchActivity()
 
-        seriesList {
+        seriesList(composeTestRule) {
             refreshList()
         } validate {
             listCount(2)
@@ -140,7 +145,7 @@ class SeriesListTests : UITest() {
         }
         launchActivity()
 
-        seriesList {
+        seriesList(composeTestRule) {
             refreshList()
         } validate {
             isRefreshSeriesError()
@@ -179,7 +184,7 @@ class SeriesListTests : UITest() {
         }
         launchActivity()
 
-        seriesList {
+        seriesList(composeTestRule) {
             incrementSeriesByOne(0)
         } validate {
             seriesProgress(0, 1, 24)
@@ -219,7 +224,7 @@ class SeriesListTests : UITest() {
         seriesPreferences.rateSeriesOnCompletionPreference = false
         launchActivity()
 
-        seriesList {
+        seriesList(composeTestRule) {
             incrementSeriesByOne(0)
         } validate {
             isRatingDialogNotDisplayed()
@@ -259,7 +264,7 @@ class SeriesListTests : UITest() {
         seriesPreferences.rateSeriesOnCompletionPreference = true
         launchActivity()
 
-        seriesList {
+        seriesList(composeTestRule) {
             incrementSeriesByOne(0)
         } validate {
             isRatingDialogDisplayed()

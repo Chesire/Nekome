@@ -17,6 +17,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.testTag
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
@@ -47,7 +49,7 @@ private fun Render(
 ) {
     var sliderValue by remember { mutableStateOf(series.rating.toFloat()) }
     Dialog(onDismissRequest = { onRatingResult(null) }) {
-        Card {
+        Card(modifier = Modifier.semantics { testTag = RatingTags.Root }) {
             Column(
                 modifier = Modifier.padding(16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
@@ -111,4 +113,8 @@ private fun Preview() {
             onRatingResult = { /**/ }
         )
     }
+}
+
+object RatingTags {
+    const val Root = "RatingRoot"
 }

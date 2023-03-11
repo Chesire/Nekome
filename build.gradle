@@ -85,6 +85,11 @@ koverMerged {
                 "com.chesire.nekome.injection.*" // Dagger injection code
             )
         }
+        annotations {
+            excludes.addAll(
+                "androidx.compose.runtime.Composable"
+            )
+        }
         projects {
             excludes.addAll(
                 ":core:compose", // View code

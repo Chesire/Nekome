@@ -17,6 +17,8 @@ import androidx.compose.runtime.toMutableStateMap
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.testTag
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
@@ -46,7 +48,7 @@ private fun Render(
         filters.map { it.userStatus to it.selected }.toMutableStateMap()
     }
     Dialog(onDismissRequest = { onFilterResult(null) }) {
-        Card {
+        Card(modifier = Modifier.semantics { testTag = FilterTags.Root },) {
             Column(
                 modifier = Modifier.padding(16.dp)
             ) {
@@ -71,6 +73,7 @@ private fun Render(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Checkbox(
+                            modifier = Modifier.semantics { testTag = FilterTags.OptionChecked },
                             checked = selectedFilters[filter.userStatus] == true,
                             onCheckedChange = { checkValue ->
                                 selectedFilters[filter.userStatus] = checkValue
@@ -79,7 +82,9 @@ private fun Render(
                         Text(
                             text = stringResource(id = filter.userStatus.stringId),
                             style = MaterialTheme.typography.body1,
-                            modifier = Modifier.padding(start = 16.dp)
+                            modifier = Modifier
+                                .padding(start = 16.dp)
+                                .semantics { testTag = FilterTags.OptionText }
                         )
                     }
                 }
@@ -89,12 +94,15 @@ private fun Render(
                     horizontalArrangement = Arrangement.End
                 ) {
                     TextButton(
-                        modifier = Modifier.padding(horizontal = 8.dp),
+                        modifier = Modifier
+                            .padding(horizontal = 8.dp)
+                            .semantics { testTag = FilterTags.CancelButton },
                         onClick = { onFilterResult(null) }
                     ) {
                         Text(text = stringResource(id = R.string.cancel))
                     }
                     TextButton(
+                        modifier = Modifier.semantics { testTag = FilterTags.OkButton },
                         onClick = {
                             onFilterResult(
                                 selectedFilters.map {
@@ -132,4 +140,12 @@ private fun Preview() {
             onFilterResult = { /**/ }
         )
     }
+}
+
+object FilterTags {
+    const val Root = "FilterRoot"
+    const val OptionChecked = "FilterOptionChecked"
+    const val OptionText = "FilterOptionText"
+    const val OkButton = "FilterOkButton"
+    const val CancelButton = "FilterCancelButton"
 }

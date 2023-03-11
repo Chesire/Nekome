@@ -19,6 +19,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.testTag
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
@@ -49,7 +51,7 @@ private fun Render(
     var selectedOption by remember { mutableStateOf(SortOption.forIndex(currentSort.index)) }
 
     Dialog(onDismissRequest = { onSortResult(null) }) {
-        Card {
+        Card(modifier = Modifier.semantics { testTag = SortTags.Root }) {
             Column(
                 modifier = Modifier.padding(16.dp)
             ) {
@@ -79,7 +81,9 @@ private fun Render(
                         Text(
                             text = stringResource(id = sortOption.stringId),
                             style = MaterialTheme.typography.body1,
-                            modifier = Modifier.padding(start = 16.dp)
+                            modifier = Modifier
+                                .padding(start = 16.dp)
+                                .semantics { testTag = SortTags.OptionText }
                         )
                     }
                 }
@@ -94,7 +98,10 @@ private fun Render(
                     ) {
                         Text(text = stringResource(id = R.string.cancel))
                     }
-                    TextButton(onClick = { onSortResult(selectedOption) }) {
+                    TextButton(
+                        onClick = { onSortResult(selectedOption) },
+                        modifier = Modifier.semantics { testTag = SortTags.OkButton }
+                    ) {
                         Text(text = stringResource(id = R.string.ok))
                     }
                 }
@@ -119,4 +126,10 @@ private fun Preview() {
             onSortResult = { /**/ }
         )
     }
+}
+
+object SortTags {
+    const val Root = "SortRoot"
+    const val OptionText = "SortOptionText"
+    const val OkButton = "SortOkButton"
 }
