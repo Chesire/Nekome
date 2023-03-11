@@ -87,7 +87,7 @@ koverMerged {
         }
         annotations {
             excludes.addAll(
-                "androidx.compose.runtime.Composable"
+                "androidx.compose.runtime.Composable" // Compose components
             )
         }
         projects {
