@@ -48,7 +48,7 @@ private fun Render(
         filters.map { it.userStatus to it.selected }.toMutableStateMap()
     }
     Dialog(onDismissRequest = { onFilterResult(null) }) {
-        Card(modifier = Modifier.semantics { testTag = FilterTags.Root },) {
+        Card(modifier = Modifier.semantics { testTag = FilterTags.Root }) {
             Column(
                 modifier = Modifier.padding(16.dp)
             ) {
