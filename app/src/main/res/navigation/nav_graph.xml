@@ -3,25 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/overview_nav_graph"
-    app:startDestination="@id/animeFragment">
+    app:startDestination="@id/anime_nav_graph">
 
     <!-- Nested -->
+    <include app:graph="@navigation/anime_nav_graph" />
     <include app:graph="@navigation/discover_nav_graph" />
     <include app:graph="@navigation/login_nav_graph" />
+    <include app:graph="@navigation/manga_nav_graph" />
     <include app:graph="@navigation/search_nav_graph" />
     <include app:graph="@navigation/settings_nav_graph" />
 
     <!-- Main -->
-    <fragment
-        android:id="@+id/animeFragment"
-        android:name="com.chesire.nekome.app.series.list.anime.AnimeFragment"
-        android:label="@string/nav_anime"
-        tools:layout="@layout/fragment_series_list" />
-    <fragment
-        android:id="@+id/mangaFragment"
-        android:name="com.chesire.nekome.app.series.list.manga.MangaFragment"
-        android:label="@string/nav_manga"
-        tools:layout="@layout/fragment_series_list" />
     <fragment
         android:id="@+id/timelineFragment"
         android:name="com.chesire.nekome.app.timeline.TimelineFragment"
@@ -37,13 +29,13 @@
     <!-- Global Actions -->
     <action
         android:id="@+id/globalToAnimeFragment"
-        app:destination="@id/animeFragment"
+        app:destination="@id/anime_nav_graph"
         app:popUpTo="@+id/overview_nav_graph"
         app:popUpToInclusive="true" />
 
     <action
         android:id="@+id/globalToMangaFragment"
-        app:destination="@id/mangaFragment"
+        app:destination="@id/manga_nav_graph"
         app:popUpTo="@+id/overview_nav_graph"
         app:popUpToInclusive="true" />
 

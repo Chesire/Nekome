@@ -1,9 +1,10 @@
 plugins {
     id "com.android.library"
     id "kotlin-android"
-    id "kotlin-kapt"
     id "kotlin-parcelize"
     id "dagger.hilt.android.plugin"
+    id "androidx.navigation.safeargs.kotlin"
+    id "kotlin-kapt"
 }
 
 android {
@@ -24,30 +25,36 @@ android {
         }
     }
     buildFeatures {
+        compose true
         viewBinding true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = libs.versions.compose.compiler.get()
     }
 }
 
 dependencies {
+    implementation project(":core:compose")
     implementation project(":libraries:core")
     implementation project(":libraries:datasource:series")
 
+    implementation platform(libs.androidx.compose.bom)
     implementation libs.androidx.appcompat
-    implementation libs.androidx.constraintlayout
     implementation libs.androidx.core
+    implementation libs.androidx.datastore.preferences
     implementation libs.androidx.fragment
     implementation libs.androidx.lifecycle.extensions
-    implementation libs.androidx.lifecycle.livedata
     implementation libs.androidx.lifecycle.viewmodel
-    implementation libs.androidx.swiperefreshlayout
+    implementation libs.androidx.navigation.fragment
+    implementation libs.androidx.navigation.ui
+    implementation libs.bundles.compose
     implementation libs.coil
+    implementation libs.google.accompanist.flowlayout
     implementation libs.google.hilt.android
-    implementation libs.google.material
-    implementation libs.liveevent
-    implementation libs.material.dialogs.core
-    implementation libs.material.dialogs.lifecycle
+    implementation libs.kotlin.result
     implementation libs.squareup.moshi
     implementation libs.timber
+    debugImplementation libs.androidx.compose.ui.tooling
     kapt libs.google.hilt.android.compiler
 
     testImplementation project(":testing")

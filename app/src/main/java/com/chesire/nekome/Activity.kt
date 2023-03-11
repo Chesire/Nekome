@@ -92,8 +92,7 @@ class Activity : AppCompatActivity(), AuthCaster.AuthCasterListener, Flow {
     private fun setupNavController() {
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.animeFragment,
-                R.id.mangaFragment,
+                R.id.collectionFragment,
                 R.id.discoverFragment,
                 R.id.hostFragment,
                 R.id.timelineFragment

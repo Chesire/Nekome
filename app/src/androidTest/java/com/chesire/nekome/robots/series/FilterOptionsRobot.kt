@@ -1,30 +1,27 @@
 package com.chesire.nekome.robots.series
 
-import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.matcher.ViewMatchers.isChecked
-import androidx.test.espresso.matcher.ViewMatchers.isNotChecked
-import com.adevinta.android.barista.assertion.BaristaEnabledAssertions.assertDisabled
-import com.adevinta.android.barista.assertion.BaristaEnabledAssertions.assertEnabled
-import com.adevinta.android.barista.assertion.BaristaListAssertions.assertCustomAssertionAtPosition
-import com.adevinta.android.barista.assertion.BaristaListAssertions.assertDisplayedAtPosition
-import com.adevinta.android.barista.assertion.BaristaVisibilityAssertions.assertDisplayed
-import com.adevinta.android.barista.assertion.BaristaVisibilityAssertions.assertNotExist
-import com.adevinta.android.barista.interaction.BaristaClickInteractions.clickOn
-import com.adevinta.android.barista.interaction.BaristaListInteractions.clickListItem
+import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.assertIsEnabled
+import androidx.compose.ui.test.assertIsNotDisplayed
+import androidx.compose.ui.test.assertIsNotEnabled
+import androidx.compose.ui.test.assertIsOff
+import androidx.compose.ui.test.assertIsOn
+import androidx.compose.ui.test.assertIsToggleable
+import androidx.compose.ui.test.assertTextContains
+import androidx.compose.ui.test.junit4.ComposeContentTestRule
+import androidx.compose.ui.test.onAllNodesWithTag
+import androidx.compose.ui.test.onNodeWithTag
+import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.performClick
 import com.adevinta.android.barista.interaction.BaristaMenuClickInteractions.clickMenu
 import com.chesire.nekome.R
-
-/*
-Since the MaterialDialogs library is being used, the way to access parts of the dialog needs to
-be slightly different, since the library uses a bunch of custom views, such as a control of a
-check box + a text view inside each item of a recycler view, as such all of the tests need to
-interact with `R.id.md_recyclerview_content` and the other `R.id.md_*` items.
- */
+import com.chesire.nekome.app.series.collection.ui.FilterTags
+import com.chesire.nekome.helpers.getResource
 
 /**
  * Robot to interact with the filter dialog.
  */
-class FilterOptionsRobot {
+class FilterOptionsRobot(private val composeContentTestRule: ComposeContentTestRule) {
 
     /**
      * Opens the filter dialog.
@@ -34,70 +31,111 @@ class FilterOptionsRobot {
     /**
      * Pick the "Current" option, requires first calling [open].
      */
-    fun clickCurrent() = clickListItem(R.id.md_recyclerview_content, 0)
+    fun clickCurrent() {
+        composeContentTestRule
+            .onNodeWithText(R.string.filter_by_current.getResource())
+            .performClick()
+    }
 
     /**
      * Pick the "Completed" option, requires first calling [open].
      */
-    fun clickCompleted() = clickListItem(R.id.md_recyclerview_content, 1)
+    fun clickCompleted() {
+        composeContentTestRule
+            .onNodeWithText(R.string.filter_by_completed.getResource())
+            .performClick()
+    }
 
     /**
      * Pick the "On hold" option, requires first calling [open].
      */
-    fun clickOnHold() = clickListItem(R.id.md_recyclerview_content, 2)
+    fun clickOnHold() {
+        composeContentTestRule
+            .onNodeWithText(R.string.filter_by_on_hold.getResource())
+            .performClick()
+    }
 
     /**
      * Pick the "Dropped" option, requires first calling [open].
      */
-    fun clickDropped() = clickListItem(R.id.md_recyclerview_content, 3)
+    fun clickDropped() {
+        composeContentTestRule
+            .onNodeWithText(R.string.filter_by_dropped.getResource())
+            .performClick()
+    }
 
     /**
      * Pick the "Planned" option, requires first calling [open].
      */
-    fun clickPlanned() = clickListItem(R.id.md_recyclerview_content, 4)
+    fun clickPlanned() {
+        composeContentTestRule
+            .onNodeWithText(R.string.filter_by_planned.getResource())
+            .performClick()
+    }
 
     /**
      * Clicks the confirm dialog option, requires first calling [open].
      */
-    fun confirm() = clickOn(R.id.md_button_positive)
+    fun confirm() {
+        composeContentTestRule
+            .onNodeWithTag(FilterTags.OkButton)
+            .performClick()
+    }
 
     /**
      * Clicks the cancel dialog option, requires first calling [open].
      */
-    fun cancel() = clickOn(R.id.md_button_negative)
+    fun cancel() {
+        composeContentTestRule
+            .onNodeWithTag(FilterTags.CancelButton)
+            .performClick()
+    }
 
     /**
      * Executes validation steps.
      * Requires opening the dialog, performing the check.
      */
     infix fun validate(func: FilterOptionsResultsRobot.() -> Unit) =
-        FilterOptionsResultsRobot().apply { func() }
+        FilterOptionsResultsRobot(composeContentTestRule).apply(func)
 }
 
 /**
  * Robot to check the results for the filter dialog.
  */
-class FilterOptionsResultsRobot {
+class FilterOptionsResultsRobot(private val composeContentTestRule: ComposeContentTestRule) {
 
     /**
      * Assert that the filter options dialog is visible.
      */
-    fun isVisible() = assertDisplayed(R.string.filter_dialog_title)
+    fun isVisible() {
+        composeContentTestRule
+            .onNodeWithTag(FilterTags.Root)
+            .assertIsDisplayed()
+    }
 
     /**
      * Assert that the filter options dialog is not visible.
      */
-    fun isNotVisible() = assertNotExist(R.string.filter_dialog_title)
+    fun isNotVisible() {
+        try {
+            composeContentTestRule
+                .onNodeWithTag(FilterTags.Root)
+                .assertIsNotDisplayed()
+        } catch (ex: AssertionError) {
+            // If an ex is thrown, then the node wasn't available
+        }
+    }
 
     /**
      * Assert that the filter options are in the correct locations.
      */
     fun isLoadedCorrectly() {
-        assertDisplayedAtPosition(R.id.md_recyclerview_content, 0, R.string.filter_by_current)
-        assertDisplayedAtPosition(R.id.md_recyclerview_content, 1, R.string.filter_by_completed)
-        assertDisplayedAtPosition(R.id.md_recyclerview_content, 2, R.string.filter_by_on_hold)
-        assertDisplayedAtPosition(R.id.md_recyclerview_content, 3, R.string.filter_by_dropped)
-        assertDisplayedAtPosition(R.id.md_recyclerview_content, 4, R.string.filter_by_planned)
+        val collection = composeContentTestRule.onAllNodesWithTag(FilterTags.OptionText, true)
+        collection[0].assertTextContains(R.string.filter_by_current.getResource())
+        collection[1].assertTextContains(R.string.filter_by_completed.getResource())
+        collection[2].assertTextContains(R.string.filter_by_on_hold.getResource())
+        collection[3].assertTextContains(R.string.filter_by_dropped.getResource())
+        collection[4].assertTextContains(R.string.filter_by_planned.getResource())
     }
 
     /**
@@ -114,69 +152,119 @@ class FilterOptionsResultsRobot {
     /**
      * Assert that the confirm dialog option is enabled.
      */
-    fun confirmIsEnabled() = assertEnabled(R.id.md_button_positive)
+    fun confirmIsEnabled() {
+        composeContentTestRule
+            .onNodeWithTag(FilterTags.OkButton)
+            .assertIsEnabled()
+    }
 
     /**
      * Assert that the confirm dialog option is disabled.
      */
-    fun confirmIsDisabled() = assertDisabled(R.id.md_button_positive)
+    fun confirmIsDisabled() {
+        composeContentTestRule
+            .onNodeWithTag(FilterTags.OkButton)
+            .assertIsNotEnabled()
+    }
 
     /**
      * Assert that the "Current" choice is checked.
      */
-    fun isCurrentChecked() = assertPositionState(0, true)
+    fun isCurrentChecked() {
+        composeContentTestRule
+            .onAllNodesWithTag(FilterTags.OptionChecked, true)
+            .get(0)
+            .assertIsOn()
+    }
 
     /**
      * Assert that the "Current" choice is not checked.
      */
-    fun isCurrentNotChecked() = assertPositionState(0, false)
+    fun isCurrentNotChecked() {
+        composeContentTestRule
+            .onAllNodesWithTag(FilterTags.OptionChecked, true)
+            .get(0)
+            .assertIsOff()
+    }
 
     /**
      * Assert that the "Completed" choice is checked.
      */
-    fun isCompletedChecked() = assertPositionState(1, true)
+    fun isCompletedChecked() {
+        composeContentTestRule
+            .onAllNodesWithTag(FilterTags.OptionChecked, true)
+            .get(1)
+            .assertIsOn()
+    }
 
     /**
      * Assert that the "Completed" choice is not checked.
      */
-    fun isCompletedNotChecked() = assertPositionState(1, false)
+    fun isCompletedNotChecked() {
+        composeContentTestRule
+            .onAllNodesWithTag(FilterTags.OptionChecked, true)
+            .get(1)
+            .assertIsToggleable()
+            .assertIsOff()
+    }
 
     /**
      * Assert that the "On hold" choice is checked.
      */
-    fun isOnHoldChecked() = assertPositionState(2, true)
+    fun isOnHoldChecked() {
+        composeContentTestRule
+            .onAllNodesWithTag(FilterTags.OptionChecked, true)
+            .get(2)
+            .assertIsOn()
+    }
 
     /**
      * Assert that the "On hold" choice is not checked.
      */
-    fun isOnHoldNotChecked() = assertPositionState(2, false)
+    fun isOnHoldNotChecked() {
+        composeContentTestRule
+            .onAllNodesWithTag(FilterTags.OptionChecked, true)
+            .get(2)
+            .assertIsOff()
+    }
 
     /**
      * Assert that the "Dropped" choice is checked.
      */
-    fun isDroppedChecked() = assertPositionState(3, true)
+    fun isDroppedChecked() {
+        composeContentTestRule
+            .onAllNodesWithTag(FilterTags.OptionChecked, true)
+            .get(3)
+            .assertIsOn()
+    }
 
     /**
      * Assert that the "Dropped" choice is not checked.
      */
-    fun isDroppedNotChecked() = assertPositionState(3, false)
+    fun isDroppedNotChecked() {
+        composeContentTestRule
+            .onAllNodesWithTag(FilterTags.OptionChecked, true)
+            .get(3)
+            .assertIsOff()
+    }
 
     /**
      * Assert that the "Planned" choice is checked.
      */
-    fun isPlannedChecked() = assertPositionState(4, true)
+    fun isPlannedChecked() {
+        composeContentTestRule
+            .onAllNodesWithTag(FilterTags.OptionChecked, true)
+            .get(4)
+            .assertIsOn()
+    }
 
     /**
      * Assert that the "Planned" choice is not checked.
      */
-    fun isPlannedNotChecked() = assertPositionState(4, false)
-
-    private fun assertPositionState(position: Int, expectedChecked: Boolean) {
-        assertCustomAssertionAtPosition(
-            R.id.md_recyclerview_content,
-            position,
-            R.id.md_control,
-            matches(if (expectedChecked) isChecked() else isNotChecked())
-        )
+    fun isPlannedNotChecked() {
+        composeContentTestRule
+            .onAllNodesWithTag(FilterTags.OptionChecked, true)
+            .get(4)
+            .assertIsOff()
     }
 }

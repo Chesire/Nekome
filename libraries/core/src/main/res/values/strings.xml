@@ -13,6 +13,9 @@
     <string name="nav_settings">Settings</string>
     <string name="nav_syncing">Syncing</string>
 
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+
     <string name="logout_forced">An error occurred, please login to try again</string>
 
     <string name="menu_filter">Filter</string>
@@ -47,6 +50,7 @@
     <string name="series_list_ongoing">Ongoing</string>
     <string name="series_list_try_again">Series %s failed to update, please try again…</string>
     <string name="series_list_delete_title">Are you sure you want to delete %s?</string>
+    <string name="series_list_delete_body">Deleting this series will remove it from your library</string>
     <string name="series_list_delete_confirm">Confirm</string>
     <string name="series_list_delete_cancel">Cancel</string>
     <string name="series_list_delete_failure">Encountered error trying to delete series</string>
@@ -65,6 +69,7 @@
     <string name="series_detail_rating">Rating</string>
     <string name="series_detail_confirm">Confirm</string>
     <string name="series_detail_failure">Failed to update series %s, please try again</string>
+    <string name="series_detail_delete">Delete</string>
 
     <string name="rating_none">No rating</string>
 
