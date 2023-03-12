@@ -27,6 +27,7 @@ android {
 }
 
 dependencies {
+    implementation project(":core:resources")
     implementation project(":libraries:datasource:activity")
 
     implementation libs.androidx.appcompat

@@ -9,7 +9,6 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.chesire.nekome.app.discover.trending.TrendingAdapter
-import com.chesire.nekome.core.flags.AsyncState
 import dagger.hilt.android.AndroidEntryPoint
 
 /**
@@ -48,33 +47,4 @@ class DiscoverFragment : Fragment() {
                 setHasFixedSize(true)
             }
         }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        viewModel.trendingAnime.observe(viewLifecycleOwner) { state ->
-            when (state) {
-                is AsyncState.Success -> animeTrendingAdapter.submitList(state.data)
-                is AsyncState.Error -> {
-                    // Show snackbar
-                    // Show error view on trending anime
-                }
-                is AsyncState.Loading -> {
-                    // Show loading view
-                }
-            }
-        }
-        viewModel.trendingManga.observe(viewLifecycleOwner) { state ->
-            when (state) {
-                is AsyncState.Success -> mangaTrendingAdapter.submitList(state.data)
-                is AsyncState.Error -> {
-                    // Show snackbar
-                    // Show error view on trending manga
-                }
-                is AsyncState.Loading -> {
-                    // Show loading view
-                }
-            }
-        }
-    }
 }

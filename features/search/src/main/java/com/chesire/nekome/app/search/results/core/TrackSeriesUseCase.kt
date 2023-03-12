@@ -2,7 +2,7 @@ package com.chesire.nekome.app.search.results.core
 
 import com.chesire.nekome.core.Resource
 import com.chesire.nekome.core.flags.SeriesType
-import com.chesire.nekome.core.settings.ApplicationSettings
+import com.chesire.nekome.core.preferences.ApplicationPreferences
 import com.chesire.nekome.datasource.series.SeriesRepository
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
@@ -13,7 +13,7 @@ import kotlinx.coroutines.withContext
 
 class TrackSeriesUseCase @Inject constructor(
     private val seriesRepo: SeriesRepository,
-    private val settings: ApplicationSettings
+    private val settings: ApplicationPreferences
 ) {
 
     suspend operator fun invoke(

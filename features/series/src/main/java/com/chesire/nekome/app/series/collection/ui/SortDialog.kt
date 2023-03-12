@@ -26,7 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import com.chesire.nekome.app.series.R
 import com.chesire.nekome.core.compose.theme.NekomeTheme
-import com.chesire.nekome.core.flags.SortOption
+import com.chesire.nekome.core.preferences.flags.SortOption
 
 @Composable
 fun SortDialog(

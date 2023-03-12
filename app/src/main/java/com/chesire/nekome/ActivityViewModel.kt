@@ -6,8 +6,8 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavDirections
 import com.chesire.nekome.core.IOContext
-import com.chesire.nekome.core.flags.HomeScreenOptions
-import com.chesire.nekome.core.settings.ApplicationSettings
+import com.chesire.nekome.core.preferences.ApplicationPreferences
+import com.chesire.nekome.core.preferences.flags.HomeScreenOptions
 import com.chesire.nekome.datasource.auth.AccessTokenRepository
 import com.chesire.nekome.datasource.user.UserRepository
 import com.hadilq.liveevent.LiveEvent
@@ -23,7 +23,7 @@ import kotlinx.coroutines.launch
 class ActivityViewModel @Inject constructor(
     private val repo: AccessTokenRepository,
     private val logoutHandler: LogoutHandler,
-    private val settings: ApplicationSettings,
+    private val settings: ApplicationPreferences,
     @IOContext private val ioContext: CoroutineContext,
     userRepository: UserRepository
 ) : ViewModel() {

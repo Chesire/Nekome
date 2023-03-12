@@ -15,9 +15,9 @@ import com.chesire.nekome.app.series.collection.core.SortSeriesUseCase
 import com.chesire.nekome.app.series.collection.core.UpdateFiltersUseCase
 import com.chesire.nekome.app.series.collection.core.UpdateSortUseCase
 import com.chesire.nekome.core.flags.SeriesType
-import com.chesire.nekome.core.flags.SortOption
 import com.chesire.nekome.core.flags.Subtype
 import com.chesire.nekome.core.flags.UserSeriesStatus
+import com.chesire.nekome.core.preferences.flags.SortOption
 import com.chesire.nekome.testing.createSeriesDomain
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok

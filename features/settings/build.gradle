@@ -26,6 +26,8 @@ android {
 }
 
 dependencies {
+    implementation project(":core:preferences")
+    implementation project(":core:resources")
     implementation project(":libraries:core")
 
     implementation libs.androidx.appcompat

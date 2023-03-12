@@ -1,6 +1,6 @@
 package com.chesire.nekome.app.series.collection.ui
 
-import com.chesire.nekome.core.flags.SortOption
+import com.chesire.nekome.core.preferences.flags.SortOption
 
 sealed interface ViewAction {
     object PerformSeriesRefresh : ViewAction

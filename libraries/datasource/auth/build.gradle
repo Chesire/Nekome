@@ -23,6 +23,7 @@ android {
 }
 
 dependencies {
+    implementation project(':core:preferences')
     implementation project(':libraries:core')
 
     implementation libs.androidx.core

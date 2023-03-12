@@ -4,7 +4,7 @@ import androidx.test.core.app.ActivityScenario
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.adevinta.android.barista.rule.cleardata.ClearDatabaseRule
 import com.adevinta.android.barista.rule.cleardata.ClearPreferencesRule
-import com.chesire.nekome.app.series.SeriesPreferences
+import com.chesire.nekome.core.preferences.SeriesPreferences
 import com.chesire.nekome.database.dao.SeriesDao
 import com.chesire.nekome.database.dao.UserDao
 import com.chesire.nekome.datasource.auth.local.AuthProvider

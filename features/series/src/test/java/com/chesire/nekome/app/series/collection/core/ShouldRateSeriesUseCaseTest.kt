@@ -2,7 +2,7 @@
 
 package com.chesire.nekome.app.series.collection.core
 
-import com.chesire.nekome.app.series.SeriesPreferences
+import com.chesire.nekome.core.preferences.SeriesPreferences
 import com.chesire.nekome.datasource.series.SeriesRepository
 import com.chesire.nekome.testing.createSeriesDomain
 import io.mockk.clearAllMocks
