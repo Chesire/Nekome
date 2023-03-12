@@ -56,9 +56,9 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import com.chesire.nekome.app.series.R
 import com.chesire.nekome.core.compose.theme.NekomeTheme
-import com.chesire.nekome.core.flags.SortOption
 import com.chesire.nekome.core.flags.Subtype
 import com.chesire.nekome.core.flags.UserSeriesStatus
+import com.chesire.nekome.core.preferences.flags.SortOption
 
 @Composable
 fun CollectionScreen(

@@ -28,6 +28,7 @@ dependencies {
     implementation project(":core:resources")
     implementation project(":libraries:core")
 
+    implementation libs.androidx.appcompat
     implementation libs.androidx.datastore.preferences
     implementation libs.google.hilt.android
     implementation libs.squareup.moshi

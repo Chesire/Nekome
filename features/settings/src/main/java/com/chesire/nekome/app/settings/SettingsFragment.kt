@@ -8,9 +8,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
-import com.chesire.nekome.core.flags.HomeScreenOptions
-import com.chesire.nekome.core.flags.Theme
 import com.chesire.nekome.core.flags.UserSeriesStatus
+import com.chesire.nekome.core.preferences.flags.HomeScreenOptions
+import com.chesire.nekome.core.preferences.flags.Theme
 
 /**
  * [SettingsFragment] hosts the configuration options for the application.

@@ -1,4 +1,4 @@
-package com.chesire.nekome.core.flags
+package com.chesire.nekome.core.preferences.flags
 
 import androidx.annotation.StringRes
 import com.chesire.nekome.core.R

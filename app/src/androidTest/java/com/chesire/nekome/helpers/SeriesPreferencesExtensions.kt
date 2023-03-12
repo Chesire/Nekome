@@ -1,7 +1,7 @@
 package com.chesire.nekome.helpers
 
-import com.chesire.nekome.core.flags.SortOption
 import com.chesire.nekome.core.preferences.SeriesPreferences
+import com.chesire.nekome.core.preferences.flags.SortOption
 
 /**
  * Resets the [SeriesPreferences] back to a default state.

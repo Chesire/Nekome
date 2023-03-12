@@ -17,7 +17,7 @@ import com.chesire.nekome.app.series.collection.core.SortSeriesUseCase
 import com.chesire.nekome.app.series.collection.core.UpdateFiltersUseCase
 import com.chesire.nekome.app.series.collection.core.UpdateSortUseCase
 import com.chesire.nekome.core.flags.SeriesType
-import com.chesire.nekome.core.flags.SortOption
+import com.chesire.nekome.core.preferences.flags.SortOption
 import com.github.michaelbull.result.onFailure
 import com.github.michaelbull.result.onSuccess
 import dagger.hilt.android.lifecycle.HiltViewModel

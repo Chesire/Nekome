@@ -1,4 +1,4 @@
-package com.chesire.nekome.core.flags
+package com.chesire.nekome.core.preferences.flags
 
 import android.content.Context
 import com.chesire.nekome.core.R
@@ -24,26 +24,41 @@ class ThemeTests {
 
     @Test
     fun `fromValue with Theme#System returns expected value`() {
-        assertEquals(Theme.System, Theme.fromValue("-1"))
+        assertEquals(
+            Theme.System,
+            Theme.fromValue("-1")
+        )
     }
 
     @Test
     fun `fromValue with Theme#Dark returns expected value`() {
-        assertEquals(Theme.Dark, Theme.fromValue("2"))
+        assertEquals(
+            Theme.Dark,
+            Theme.fromValue("2")
+        )
     }
 
     @Test
     fun `fromValue with Theme#Light returns expected value`() {
-        assertEquals(Theme.Light, Theme.fromValue("1"))
+        assertEquals(
+            Theme.Light,
+            Theme.fromValue("1")
+        )
     }
 
     @Test
     fun `fromValue with unexpected value returns default of System`() {
-        assertEquals(Theme.System, Theme.fromValue("999"))
+        assertEquals(
+            Theme.System,
+            Theme.fromValue("999")
+        )
     }
 
     @Test
     fun `fromValue with non-numerical value returns default of System`() {
-        assertEquals(Theme.System, Theme.fromValue("parse"))
+        assertEquals(
+            Theme.System,
+            Theme.fromValue("parse")
+        )
     }
 }

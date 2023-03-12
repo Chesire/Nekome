@@ -1,7 +1,7 @@
 package com.chesire.nekome.app.series.collection.ui
 
 import androidx.annotation.StringRes
-import com.chesire.nekome.core.flags.SortOption
+import com.chesire.nekome.core.preferences.flags.SortOption
 
 data class UIState(
     val models: List<Series>,

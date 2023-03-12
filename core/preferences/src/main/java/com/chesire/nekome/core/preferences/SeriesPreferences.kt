@@ -10,8 +10,8 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
-import com.chesire.nekome.core.flags.SortOption
 import com.chesire.nekome.core.flags.UserSeriesStatus
+import com.chesire.nekome.core.preferences.flags.SortOption
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
 import dagger.hilt.android.qualifiers.ApplicationContext

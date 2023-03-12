@@ -1,8 +1,8 @@
 package com.chesire.nekome
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.chesire.nekome.core.flags.HomeScreenOptions
 import com.chesire.nekome.core.preferences.ApplicationPreferences
+import com.chesire.nekome.core.preferences.flags.HomeScreenOptions
 import com.chesire.nekome.datasource.auth.AccessTokenRepository
 import com.chesire.nekome.datasource.user.UserRepository
 import com.chesire.nekome.testing.CoroutinesMainDispatcherRule

@@ -4,9 +4,9 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.core.content.edit
 import com.chesire.nekome.core.R
-import com.chesire.nekome.core.flags.HomeScreenOptions
-import com.chesire.nekome.core.flags.Theme
 import com.chesire.nekome.core.flags.UserSeriesStatus
+import com.chesire.nekome.core.preferences.flags.HomeScreenOptions
+import com.chesire.nekome.core.preferences.flags.Theme
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 

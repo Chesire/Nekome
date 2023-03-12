@@ -2,8 +2,8 @@
 
 package com.chesire.nekome.app.series.collection.core
 
-import com.chesire.nekome.core.flags.SortOption
 import com.chesire.nekome.core.preferences.SeriesPreferences
+import com.chesire.nekome.core.preferences.flags.SortOption
 import com.chesire.nekome.datasource.series.SeriesDomain
 import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
