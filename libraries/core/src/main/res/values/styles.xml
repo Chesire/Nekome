@@ -53,10 +53,6 @@
         <item name="android:background">@drawable/rounded_dialog</item>
     </style>
 
-    <style name="ChipStyle" parent="Widget.MaterialComponents.Chip.Choice">
-        <item name="android:textColor">@color/chip_text_color</item>
-    </style>
-
     <style name="TextInputStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox" />
 
 </resources>
