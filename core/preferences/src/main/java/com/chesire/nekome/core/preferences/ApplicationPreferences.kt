@@ -1,4 +1,4 @@
-package com.chesire.nekome.core.settings
+package com.chesire.nekome.core.preferences
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -6,6 +6,7 @@ import androidx.core.content.edit
 import com.chesire.nekome.core.R
 import com.chesire.nekome.core.flags.HomeScreenOptions
 import com.chesire.nekome.core.flags.UserSeriesStatus
+import com.chesire.nekome.core.settings.Theme
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
@@ -14,7 +15,7 @@ import javax.inject.Inject
  * These values must be set from the settings fragment within the app-Settings module.
  */
 @Suppress("UseDataClass")
-class ApplicationSettings @Inject constructor(
+class ApplicationPreferences @Inject constructor(
     @ApplicationContext context: Context,
     private val preferences: SharedPreferences
 ) {

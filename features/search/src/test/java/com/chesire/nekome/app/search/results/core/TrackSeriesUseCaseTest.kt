@@ -8,7 +8,7 @@ import com.chesire.nekome.core.flags.SeriesType
 import com.chesire.nekome.core.flags.Subtype
 import com.chesire.nekome.core.flags.UserSeriesStatus
 import com.chesire.nekome.core.models.ImageModel
-import com.chesire.nekome.core.settings.ApplicationSettings
+import com.chesire.nekome.core.preferences.ApplicationPreferences
 import com.chesire.nekome.datasource.series.SeriesDomain
 import com.chesire.nekome.datasource.series.SeriesRepository
 import com.github.michaelbull.result.Err
@@ -27,7 +27,7 @@ import org.junit.Test
 class TrackSeriesUseCaseTest {
 
     private val seriesRepo = mockk<SeriesRepository>()
-    private val settings = mockk<ApplicationSettings>()
+    private val settings = mockk<ApplicationPreferences>()
     private lateinit var retrieveUserSeriesIds: TrackSeriesUseCase
 
     @Before

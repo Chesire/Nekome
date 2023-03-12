@@ -2,7 +2,7 @@ package com.chesire.nekome
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.chesire.nekome.core.flags.HomeScreenOptions
-import com.chesire.nekome.core.settings.ApplicationSettings
+import com.chesire.nekome.core.preferences.ApplicationPreferences
 import com.chesire.nekome.datasource.auth.AccessTokenRepository
 import com.chesire.nekome.datasource.user.UserRepository
 import com.chesire.nekome.testing.CoroutinesMainDispatcherRule
@@ -25,7 +25,7 @@ class ActivityViewModelTests {
     val coroutineRule = CoroutinesMainDispatcherRule()
     private val testDispatcher = coroutineRule.testDispatcher
 
-    private val settings = mockk<ApplicationSettings>(relaxed = true)
+    private val settings = mockk<ApplicationPreferences>(relaxed = true)
 
     @Test
     fun `userLoggedIn failure returns false`() {

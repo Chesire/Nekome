@@ -32,4 +32,7 @@ dependencies {
     implementation libs.google.hilt.android
     implementation libs.squareup.moshi
     kapt libs.google.hilt.android.compiler
+
+    testImplementation libs.junit
+    testImplementation libs.mockk
 }

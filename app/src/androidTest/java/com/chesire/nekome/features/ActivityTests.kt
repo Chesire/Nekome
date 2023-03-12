@@ -3,7 +3,7 @@ package com.chesire.nekome.features
 import androidx.compose.ui.test.junit4.createComposeRule
 import com.chesire.nekome.UITest
 import com.chesire.nekome.core.flags.HomeScreenOptions
-import com.chesire.nekome.core.settings.ApplicationSettings
+import com.chesire.nekome.core.preferences.ApplicationPreferences
 import com.chesire.nekome.robots.activity
 import com.chesire.nekome.robots.login.loginCredentials
 import com.chesire.nekome.robots.search.host
@@ -18,14 +18,14 @@ import org.junit.Test
 class ActivityTests : UITest() {
 
     @Inject
-    lateinit var applicationSettings: ApplicationSettings
+    lateinit var applicationPreferences: ApplicationPreferences
 
     @get:Rule
     val composeTestRule = createComposeRule()
 
     @Test
     fun overviewCanStartInAnimeView() {
-        applicationSettings.defaultHomeScreen = HomeScreenOptions.Anime
+        applicationPreferences.defaultHomeScreen = HomeScreenOptions.Anime
         launchActivity()
 
         seriesList(composeTestRule) {
@@ -35,7 +35,7 @@ class ActivityTests : UITest() {
 
     @Test
     fun overviewCanStartInMangaView() {
-        applicationSettings.defaultHomeScreen = HomeScreenOptions.Manga
+        applicationPreferences.defaultHomeScreen = HomeScreenOptions.Manga
         launchActivity()
 
         seriesList(composeTestRule) {
@@ -45,7 +45,7 @@ class ActivityTests : UITest() {
 
     @Test
     fun overviewCanNavigateToAnimeView() {
-        applicationSettings.defaultHomeScreen = HomeScreenOptions.Manga
+        applicationPreferences.defaultHomeScreen = HomeScreenOptions.Manga
         launchActivity()
 
         activity {
@@ -58,7 +58,7 @@ class ActivityTests : UITest() {
 
     @Test
     fun overviewCanNavigateToMangaView() {
-        applicationSettings.defaultHomeScreen = HomeScreenOptions.Anime
+        applicationPreferences.defaultHomeScreen = HomeScreenOptions.Anime
         launchActivity()
 
         activity {

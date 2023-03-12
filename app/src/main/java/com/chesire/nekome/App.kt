@@ -7,7 +7,7 @@ import androidx.hilt.work.HiltWorkerFactory
 import androidx.work.Configuration
 import com.chesire.lifecyklelog.LifecykleLog
 import com.chesire.lifecyklelog.LogHandler
-import com.chesire.nekome.core.settings.ApplicationSettings
+import com.chesire.nekome.core.preferences.ApplicationPreferences
 import com.chesire.nekome.services.WorkerQueue
 import dagger.hilt.android.HiltAndroidApp
 import javax.inject.Inject
@@ -20,7 +20,7 @@ import timber.log.Timber
 class App : Application(), Configuration.Provider {
 
     @Inject
-    lateinit var settings: ApplicationSettings
+    lateinit var settings: ApplicationPreferences
 
     @Inject
     lateinit var workerFactory: HiltWorkerFactory

@@ -1,10 +1,11 @@
-package com.chesire.nekome.core.settings
+package com.chesire.nekome.core.preferences
 
 import android.content.Context
 import android.content.SharedPreferences
 import com.chesire.nekome.core.R
 import com.chesire.nekome.core.flags.HomeScreenOptions
 import com.chesire.nekome.core.flags.UserSeriesStatus
+import com.chesire.nekome.core.settings.Theme
 import io.mockk.Runs
 import io.mockk.every
 import io.mockk.just
@@ -13,7 +14,7 @@ import io.mockk.verify
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
-class ApplicationSettingsTests {
+class ApplicationPreferencesTests {
     private val mockContext = mockk<Context> {
         every { getString(R.string.key_default_home) } returns "key_default_home"
         every { getString(R.string.key_default_series_state) } returns "key_default_series_state"
@@ -25,7 +26,7 @@ class ApplicationSettingsTests {
         val mockPreferences = mockk<SharedPreferences> {
             every { getString("key_default_home", "0") } returns "1"
         }
-        val testObject = ApplicationSettings(
+        val testObject = ApplicationPreferences(
             mockContext,
             mockPreferences
         )
@@ -43,7 +44,7 @@ class ApplicationSettingsTests {
             every { getString("key_default_home", "0") } returns "-1"
             every { edit() } returns mockEditor
         }
-        val testObject = ApplicationSettings(
+        val testObject = ApplicationPreferences(
             mockContext,
             mockPreferences
         )
@@ -63,7 +64,7 @@ class ApplicationSettingsTests {
             every { getString("key_default_home", "0") } returns "-1"
             every { edit() } returns mockEditor
         }
-        val testObject = ApplicationSettings(
+        val testObject = ApplicationPreferences(
             mockContext,
             mockPreferences
         )
@@ -83,7 +84,7 @@ class ApplicationSettingsTests {
         val mockPreferences = mockk<SharedPreferences> {
             every { getString("key_default_series_state", "0") } returns "2"
         }
-        val testObject = ApplicationSettings(
+        val testObject = ApplicationPreferences(
             mockContext,
             mockPreferences
         )
@@ -101,7 +102,7 @@ class ApplicationSettingsTests {
             every { getString("key_default_series_state", "0") } returns "-1"
             every { edit() } returns mockEditor
         }
-        val testObject = ApplicationSettings(
+        val testObject = ApplicationPreferences(
             mockContext,
             mockPreferences
         )
@@ -121,7 +122,7 @@ class ApplicationSettingsTests {
             every { getString("key_default_series_state", "0") } returns "-1"
             every { edit() } returns mockEditor
         }
-        val testObject = ApplicationSettings(
+        val testObject = ApplicationPreferences(
             mockContext,
             mockPreferences
         )
@@ -136,7 +137,7 @@ class ApplicationSettingsTests {
         val mockPreferences = mockk<SharedPreferences> {
             every { getString("key_theme", "-1") } returns "2"
         }
-        val testObject = ApplicationSettings(
+        val testObject = ApplicationPreferences(
             mockContext,
             mockPreferences
         )

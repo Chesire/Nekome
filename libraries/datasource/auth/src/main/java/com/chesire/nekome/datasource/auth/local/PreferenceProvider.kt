@@ -5,7 +5,7 @@ import android.content.SharedPreferences
 import android.os.Build
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
-import com.chesire.nekome.core.extensions.migrateTo
+import com.chesire.nekome.core.preferences.migrateTo
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
