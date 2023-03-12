@@ -1,7 +1,7 @@
 package com.chesire.nekome.app.series.collection.core
 
-import com.chesire.nekome.app.series.SeriesPreferences
 import com.chesire.nekome.core.flags.UserSeriesStatus
+import com.chesire.nekome.core.preferences.SeriesPreferences
 import javax.inject.Inject
 import kotlinx.coroutines.flow.first
 

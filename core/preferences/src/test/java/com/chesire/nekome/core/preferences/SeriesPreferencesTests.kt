@@ -1,6 +1,4 @@
-package com.chesire.nekome.app.series
-
-private const val RATE_ON_COMPLETION_KEY = "rateOnCompletionKey"
+package com.chesire.nekome.core.preferences
 
 class SeriesPreferencesTests {
 

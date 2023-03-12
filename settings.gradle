@@ -18,6 +18,7 @@ rootProject.name = "Nekome"
 
 include ':app',
     ':core:compose',
+    ':core:preferences',
     ':features:discover',
     ':features:login',
     ':features:profile',

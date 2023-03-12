@@ -1,4 +1,4 @@
-package com.chesire.nekome.app.series
+package com.chesire.nekome.core.preferences
 
 import android.content.Context
 import android.content.SharedPreferences
