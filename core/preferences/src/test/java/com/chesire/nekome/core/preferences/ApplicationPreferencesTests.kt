@@ -2,7 +2,6 @@ package com.chesire.nekome.core.preferences
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.chesire.nekome.core.R
 import com.chesire.nekome.core.flags.UserSeriesStatus
 import com.chesire.nekome.core.preferences.flags.HomeScreenOptions
 import com.chesire.nekome.core.preferences.flags.Theme
