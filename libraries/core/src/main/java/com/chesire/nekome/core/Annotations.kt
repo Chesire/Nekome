@@ -8,10 +8,3 @@ import javax.inject.Qualifier
 @Qualifier
 @kotlin.annotation.Retention(AnnotationRetention.RUNTIME)
 annotation class IOContext
-
-/**
- * Specifies that a coroutine should be using the Main Context.
- */
-@Qualifier
-@kotlin.annotation.Retention(AnnotationRetention.RUNTIME)
-annotation class MainContext
