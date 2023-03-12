@@ -3,7 +3,7 @@ package com.chesire.nekome.robots.settings
 import com.adevinta.android.barista.assertion.BaristaCheckedAssertions.assertChecked
 import com.adevinta.android.barista.interaction.BaristaClickInteractions.clickOn
 import com.chesire.nekome.R
-import com.chesire.nekome.core.settings.Theme
+import com.chesire.nekome.core.flags.Theme
 
 /**
  * Robot to interact with the theme dialog.

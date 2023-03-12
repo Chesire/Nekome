@@ -4,8 +4,8 @@ import android.content.Context
 import android.content.SharedPreferences
 import com.chesire.nekome.core.R
 import com.chesire.nekome.core.flags.HomeScreenOptions
+import com.chesire.nekome.core.flags.Theme
 import com.chesire.nekome.core.flags.UserSeriesStatus
-import com.chesire.nekome.core.settings.Theme
 import io.mockk.Runs
 import io.mockk.every
 import io.mockk.just
