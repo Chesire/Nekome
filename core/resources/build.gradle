@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace 'com.chesire.nekome.resources'
+    namespace 'com.chesire.nekome.core.resources'
     compileSdk sdk_version
 
     defaultConfig {
