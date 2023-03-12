@@ -2,7 +2,6 @@ package com.chesire.nekome.app.settings.config.ui
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -25,13 +24,27 @@ import com.chesire.nekome.core.compose.theme.NekomeTheme
 fun ConfigScreen(viewModel: ConfigViewModel = viewModel()) {
     val state = viewModel.uiState.collectAsState()
     Render(
-        state = state
+        state = state,
+        onThemeClicked = { /*TODO*/ },
+        onDefaultHomeScreenClicked = { /*TODO*/ },
+        onDefaultSeriesStatusClicked = { /*TODO*/ },
+        onRateSeriesClicked = { /*TODO*/ },
+        onVersionLinkClicked = { /*TODO*/ },
+        onGitHubLinkClicked = { /*TODO*/ },
+        onLicensesLinkClicked = { /*TODO*/ }
     )
 }
 
 @Composable
 private fun Render(
-    state: State<UIState>
+    state: State<UIState>,
+    onThemeClicked: () -> Unit,
+    onDefaultHomeScreenClicked: () -> Unit,
+    onDefaultSeriesStatusClicked: () -> Unit,
+    onRateSeriesClicked: () -> Unit,
+    onVersionLinkClicked: () -> Unit,
+    onGitHubLinkClicked: () -> Unit,
+    onLicensesLinkClicked: () -> Unit
 ) {
     Scaffold { paddingValues ->
         Column(
@@ -41,17 +54,17 @@ private fun Render(
                 .fillMaxSize()
         ) {
             ApplicationHeading()
-            ThemePreference()
-            DefaultHomeScreenPreference()
+            ThemePreference(state.value.themeValue, onThemeClicked)
+            DefaultHomeScreenPreference(onDefaultHomeScreenClicked)
 
             SeriesHeading()
-            DefaultSeriesStatusPreference()
-            RateSeriesPreference()
+            DefaultSeriesStatusPreference(onDefaultSeriesStatusClicked)
+            RateSeriesPreference(onRateSeriesClicked)
 
             AboutHeading()
-            VersionLink()
-            GitHubLink()
-            LicensesLink()
+            VersionLink(onVersionLinkClicked)
+            GitHubLink(onGitHubLinkClicked)
+            LicensesLink(onLicensesLinkClicked)
         }
     }
 }
@@ -62,23 +75,21 @@ private fun ApplicationHeading() {
 }
 
 @Composable
-private fun ThemePreference() {
+private fun ThemePreference(themeValue: String, onThemeClicked: () -> Unit) {
     PreferenceSection(
         title = stringResource(id = R.string.settings_theme),
-        summary = "Not set" // TODO
-    ) {
-        // TODO
-    }
+        summary = themeValue,
+        onClick = onThemeClicked
+    )
 }
 
 @Composable
-private fun DefaultHomeScreenPreference() {
+private fun DefaultHomeScreenPreference(onDefaultHomeScreenClicked: () -> Unit) {
     PreferenceSection(
         title = stringResource(id = R.string.settings_default_home_title),
-        summary = stringResource(id = R.string.settings_default_home_summary)
-    ) {
-        // TODO
-    }
+        summary = stringResource(id = R.string.settings_default_home_summary),
+        onClick = onDefaultHomeScreenClicked
+    )
 }
 
 @Composable
@@ -87,17 +98,16 @@ private fun SeriesHeading() {
 }
 
 @Composable
-private fun DefaultSeriesStatusPreference() {
+private fun DefaultSeriesStatusPreference(onDefaultSeriesStatusClicked: () -> Unit) {
     PreferenceSection(
         title = stringResource(id = R.string.settings_default_series_status_title),
-        summary = stringResource(id = R.string.settings_default_series_status_summary)
-    ) {
-        // TODO
-    }
+        summary = stringResource(id = R.string.settings_default_series_status_summary),
+        onClick = onDefaultSeriesStatusClicked
+    )
 }
 
 @Composable
-private fun RateSeriesPreference() {
+private fun RateSeriesPreference(onRateSeriesClicked: () -> Unit) {
 
 }
 
@@ -107,32 +117,30 @@ private fun AboutHeading() {
 }
 
 @Composable
-private fun VersionLink() {
+private fun VersionLink(onVersionLinkClicked: () -> Unit) {
     PreferenceSection(
         title = stringResource(id = R.string.settings_version),
         summary = stringResource(id = R.string.version),
-        onClick = null
+        onClick = onVersionLinkClicked
     )
 }
 
 @Composable
-private fun GitHubLink() {
+private fun GitHubLink(onGitHubLinkClicked: () -> Unit) {
     PreferenceSection(
         title = stringResource(id = R.string.settings_github),
-        summary = stringResource(id = R.string.settings_github_url)
-    ) {
-        // TODO: Launch browser
-    }
+        summary = stringResource(id = R.string.settings_github_url),
+        onClick = onGitHubLinkClicked
+    )
 }
 
 @Composable
-private fun LicensesLink() {
+private fun LicensesLink(onLicensesLinkClicked: () -> Unit) {
     PreferenceSection(
         title = stringResource(id = R.string.settings_licenses),
-        summary = null
-    ) {
-        // TODO: Navigate to oss screen
-    }
+        summary = null,
+        onClick = onLicensesLinkClicked
+    )
 }
 
 @Composable
@@ -175,14 +183,21 @@ private fun PreferenceSection(
 @Preview
 private fun Preview() {
     val initialState = UIState(
-        title = "Title"
+        themeValue = "Not set"
     )
     NekomeTheme(darkTheme = true) {
         Render(
             state = produceState(
                 initialValue = initialState,
                 producer = { value = initialState }
-            )
+            ),
+            onThemeClicked = { /*TODO*/ },
+            onDefaultHomeScreenClicked = { /*TODO*/ },
+            onDefaultSeriesStatusClicked = { /*TODO*/ },
+            onRateSeriesClicked = { /*TODO*/ },
+            onVersionLinkClicked = { /*TODO*/ },
+            onGitHubLinkClicked = { /*TODO*/ },
+            onLicensesLinkClicked = { /*TODO*/ }
         )
     }
 }
