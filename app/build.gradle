@@ -54,6 +54,7 @@ android {
 
 dependencies {
     implementation project(":core:preferences")
+    implementation project(":core:resources")
     implementation project(":features:discover")
     implementation project(":features:login")
     implementation project(":features:profile")
