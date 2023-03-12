@@ -1,8 +1,7 @@
-package com.chesire.nekome.core.settings
+package com.chesire.nekome.core.flags
 
 import android.content.Context
 import com.chesire.nekome.core.R
-import com.chesire.nekome.core.flags.Theme
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.Assert.assertEquals
