@@ -42,7 +42,7 @@ class ConfigViewModel @Inject constructor(
     fun execute(action: ViewAction) {
         when (action) {
             is ViewAction.OnRateSeriesChanged -> handleOnRateSeriesChanged(action.newValue)
-            is ViewAction.OnThemeChanged -> handleOnThemeChanged(action.newTheme)
+            is ViewAction.OnThemeChanged -> handleOnThemeChanged(action.newTheme) // TODO: Implement the choose theme flow, need to send the list of themes to show and show in a dialog
         }
     }
 
