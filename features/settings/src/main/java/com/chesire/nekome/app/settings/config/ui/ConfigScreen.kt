@@ -22,7 +22,10 @@ import com.chesire.nekome.app.settings.R
 import com.chesire.nekome.core.compose.theme.NekomeTheme
 
 @Composable
-fun ConfigScreen(viewModel: ConfigViewModel = viewModel()) {
+fun ConfigScreen(
+    viewModel: ConfigViewModel = viewModel(),
+    navigateToOssScreen: () -> Unit
+) {
     val state = viewModel.uiState.collectAsState()
     Render(
         state = state,
@@ -30,8 +33,7 @@ fun ConfigScreen(viewModel: ConfigViewModel = viewModel()) {
         onDefaultHomeScreenClicked = { /*TODO*/ },
         onDefaultSeriesStatusClicked = { /*TODO*/ },
         onRateSeriesClicked = { /*TODO*/ },
-        onVersionLinkClicked = { /*TODO*/ },
-        onLicensesLinkClicked = { /*TODO*/ }
+        onLicensesLinkClicked = { navigateToOssScreen() }
     )
 }
 
@@ -42,7 +44,6 @@ private fun Render(
     onDefaultHomeScreenClicked: () -> Unit,
     onDefaultSeriesStatusClicked: () -> Unit,
     onRateSeriesClicked: () -> Unit,
-    onVersionLinkClicked: () -> Unit,
     onLicensesLinkClicked: () -> Unit
 ) {
     Scaffold { paddingValues ->
@@ -61,7 +62,7 @@ private fun Render(
             RateSeriesPreference(onRateSeriesClicked)
 
             AboutHeading()
-            VersionLink(onVersionLinkClicked)
+            VersionLink()
             GitHubLink()
             LicensesLink(onLicensesLinkClicked)
         }
@@ -116,11 +117,11 @@ private fun AboutHeading() {
 }
 
 @Composable
-private fun VersionLink(onVersionLinkClicked: () -> Unit) {
+private fun VersionLink() {
     PreferenceSection(
         title = stringResource(id = R.string.settings_version),
         summary = stringResource(id = R.string.version),
-        onClick = onVersionLinkClicked
+        onClick = null
     )
 }
 
@@ -196,7 +197,6 @@ private fun Preview() {
             onDefaultHomeScreenClicked = { /*TODO*/ },
             onDefaultSeriesStatusClicked = { /*TODO*/ },
             onRateSeriesClicked = { /*TODO*/ },
-            onVersionLinkClicked = { /*TODO*/ },
             onLicensesLinkClicked = { /*TODO*/ }
         )
     }

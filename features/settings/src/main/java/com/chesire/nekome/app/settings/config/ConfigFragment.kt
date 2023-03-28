@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
 import com.chesire.nekome.app.settings.config.ui.ConfigScreen
 import com.chesire.nekome.core.compose.theme.NekomeTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -22,7 +23,11 @@ class ConfigFragment : Fragment() {
         setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
         setContent {
             NekomeTheme {
-                ConfigScreen()
+                ConfigScreen(
+                    navigateToOssScreen = {
+                        findNavController().navigate(ConfigFragmentDirections.toOssFragment())
+                    }
+                )
             }
         }
     }
