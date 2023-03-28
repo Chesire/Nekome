@@ -11,6 +11,8 @@ import com.chesire.nekome.core.preferences.ApplicationPreferences
 import com.chesire.nekome.services.WorkerQueue
 import dagger.hilt.android.HiltAndroidApp
 import javax.inject.Inject
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
 import timber.log.Timber
 
 /**
@@ -44,7 +46,12 @@ class App : Application(), Configuration.Provider {
             startStrictMode()
         }
 
-        setApplicationTheme()
+        MainScope().launch {
+            // This can cause a flicker from light -> dark.
+            // Implement correct splash screen to hide this
+            setApplicationTheme()
+        }
+
         workerQueue.enqueueAuthRefresh()
         workerQueue.enqueueSeriesRefresh()
         workerQueue.enqueueUserRefresh()
@@ -55,7 +62,11 @@ class App : Application(), Configuration.Provider {
             .setWorkerFactory(workerFactory)
             .build()
 
-    private fun setApplicationTheme() = AppCompatDelegate.setDefaultNightMode(settings.theme.value)
+    private suspend fun setApplicationTheme() {
+        settings.theme.collect { theme ->
+            AppCompatDelegate.setDefaultNightMode(theme.value)
+        }
+    }
 
     private fun startStrictMode() {
         StrictMode.setThreadPolicy(

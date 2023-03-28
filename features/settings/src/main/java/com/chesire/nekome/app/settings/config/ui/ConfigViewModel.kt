@@ -4,6 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chesire.nekome.app.settings.config.core.RetrievePreferencesUseCase
 import com.chesire.nekome.app.settings.config.core.UpdateRateSeriesUseCase
+import com.chesire.nekome.app.settings.config.core.UpdateThemeUseCase
+import com.chesire.nekome.core.preferences.flags.Theme
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,7 +16,8 @@ import kotlinx.coroutines.launch
 @HiltViewModel
 class ConfigViewModel @Inject constructor(
     private val retrievePreferences: RetrievePreferencesUseCase,
-    private val updateRateSeries: UpdateRateSeriesUseCase
+    private val updateRateSeries: UpdateRateSeriesUseCase,
+    private val updateTheme: UpdateThemeUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(UIState.default)
@@ -29,7 +32,7 @@ class ConfigViewModel @Inject constructor(
         viewModelScope.launch {
             retrievePreferences().collect { prefModel ->
                 state = state.copy(
-                    themeValue = "Done the thing",
+                    themeStringDisplay = prefModel.theme.stringId,
                     rateSeriesValue = prefModel.shouldRateSeries
                 )
             }
@@ -39,12 +42,19 @@ class ConfigViewModel @Inject constructor(
     fun execute(action: ViewAction) {
         when (action) {
             is ViewAction.OnRateSeriesChanged -> handleOnRateSeriesChanged(action.newValue)
+            is ViewAction.OnThemeChanged -> handleOnThemeChanged(action.newTheme)
         }
     }
 
     private fun handleOnRateSeriesChanged(newValue: Boolean) {
         viewModelScope.launch {
             updateRateSeries(newValue)
+        }
+    }
+
+    private fun handleOnThemeChanged(newTheme: Theme) {
+        viewModelScope.launch {
+            updateTheme(newTheme)
         }
     }
 }

@@ -1,5 +1,6 @@
 package com.chesire.nekome.app.settings.config.ui
 
+import androidx.annotation.StringRes
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -58,7 +59,7 @@ private fun Render(
                 .fillMaxSize()
         ) {
             ApplicationHeading()
-            ThemePreference(state.value.themeValue, onThemeClicked)
+            ThemePreference(state.value.themeStringDisplay, onThemeClicked)
             DefaultHomeScreenPreference(onDefaultHomeScreenClicked)
 
             SeriesHeading()
@@ -79,10 +80,10 @@ private fun ApplicationHeading() {
 }
 
 @Composable
-private fun ThemePreference(themeValue: String, onThemeClicked: () -> Unit) {
+private fun ThemePreference(@StringRes themeValue: Int, onThemeClicked: () -> Unit) {
     PreferenceSection(
         title = stringResource(id = R.string.settings_theme),
-        summary = themeValue,
+        summary = stringResource(id = themeValue),
         onClick = onThemeClicked
     )
 }
@@ -217,7 +218,7 @@ private fun PreferenceSection(
 @Preview
 private fun Preview() {
     val initialState = UIState(
-        themeValue = "Not set",
+        themeStringDisplay = 0,
         rateSeriesValue = false
     )
     NekomeTheme(darkTheme = true) {
