@@ -13,6 +13,7 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.produceState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -30,7 +31,6 @@ fun ConfigScreen(viewModel: ConfigViewModel = viewModel()) {
         onDefaultSeriesStatusClicked = { /*TODO*/ },
         onRateSeriesClicked = { /*TODO*/ },
         onVersionLinkClicked = { /*TODO*/ },
-        onGitHubLinkClicked = { /*TODO*/ },
         onLicensesLinkClicked = { /*TODO*/ }
     )
 }
@@ -43,7 +43,6 @@ private fun Render(
     onDefaultSeriesStatusClicked: () -> Unit,
     onRateSeriesClicked: () -> Unit,
     onVersionLinkClicked: () -> Unit,
-    onGitHubLinkClicked: () -> Unit,
     onLicensesLinkClicked: () -> Unit
 ) {
     Scaffold { paddingValues ->
@@ -63,7 +62,7 @@ private fun Render(
 
             AboutHeading()
             VersionLink(onVersionLinkClicked)
-            GitHubLink(onGitHubLinkClicked)
+            GitHubLink()
             LicensesLink(onLicensesLinkClicked)
         }
     }
@@ -126,11 +125,13 @@ private fun VersionLink(onVersionLinkClicked: () -> Unit) {
 }
 
 @Composable
-private fun GitHubLink(onGitHubLinkClicked: () -> Unit) {
+private fun GitHubLink() {
+    val uriHandler = LocalUriHandler.current
+    val uri = "https://github.com/Chesire/Nekome"
     PreferenceSection(
         title = stringResource(id = R.string.settings_github),
-        summary = stringResource(id = R.string.settings_github_url),
-        onClick = onGitHubLinkClicked
+        summary = uri,
+        onClick = { uriHandler.openUri(uri) }
     )
 }
 
@@ -196,7 +197,6 @@ private fun Preview() {
             onDefaultSeriesStatusClicked = { /*TODO*/ },
             onRateSeriesClicked = { /*TODO*/ },
             onVersionLinkClicked = { /*TODO*/ },
-            onGitHubLinkClicked = { /*TODO*/ },
             onLicensesLinkClicked = { /*TODO*/ }
         )
     }
