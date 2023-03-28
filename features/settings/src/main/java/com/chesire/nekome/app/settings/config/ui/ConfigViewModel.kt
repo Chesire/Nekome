@@ -1,14 +1,21 @@
 package com.chesire.nekome.app.settings.config.ui
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.chesire.nekome.app.settings.config.core.RetrievePreferencesUseCase
+import com.chesire.nekome.app.settings.config.core.UpdateRateSeriesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 
 @HiltViewModel
-class ConfigViewModel @Inject constructor() : ViewModel() {
+class ConfigViewModel @Inject constructor(
+    private val retrievePreferences: RetrievePreferencesUseCase,
+    private val updateRateSeries: UpdateRateSeriesUseCase
+) : ViewModel() {
 
     private val _uiState = MutableStateFlow(UIState.default)
     val uiState = _uiState.asStateFlow()
@@ -17,4 +24,27 @@ class ConfigViewModel @Inject constructor() : ViewModel() {
         set(value) {
             _uiState.update { value }
         }
+
+    init {
+        viewModelScope.launch {
+            retrievePreferences().collect { prefModel ->
+                state = state.copy(
+                    themeValue = "Done the thing",
+                    rateSeriesValue = prefModel.shouldRateSeries
+                )
+            }
+        }
+    }
+
+    fun execute(action: ViewAction) {
+        when (action) {
+            is ViewAction.OnRateSeriesChanged -> handleOnRateSeriesChanged(action.newValue)
+        }
+    }
+
+    private fun handleOnRateSeriesChanged(newValue: Boolean) {
+        viewModelScope.launch {
+            updateRateSeries(newValue)
+        }
+    }
 }

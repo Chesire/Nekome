@@ -36,7 +36,7 @@ fun ConfigScreen(
         onThemeClicked = { /*TODO*/ },
         onDefaultHomeScreenClicked = { /*TODO*/ },
         onDefaultSeriesStatusClicked = { /*TODO*/ },
-        onRateSeriesClicked = { /*TODO*/ },
+        onRateSeriesClicked = { viewModel.execute(ViewAction.OnRateSeriesChanged(it)) },
         onLicensesLinkClicked = { navigateToOssScreen() }
     )
 }
