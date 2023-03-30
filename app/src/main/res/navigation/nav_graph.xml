@@ -1,30 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/overview_nav_graph"
     app:startDestination="@id/anime_nav_graph">
 
     <!-- Nested -->
     <include app:graph="@navigation/anime_nav_graph" />
-    <include app:graph="@navigation/discover_nav_graph" />
     <include app:graph="@navigation/login_nav_graph" />
     <include app:graph="@navigation/manga_nav_graph" />
     <include app:graph="@navigation/search_nav_graph" />
     <include app:graph="@navigation/settings_nav_graph" />
-
-    <!-- Main -->
-    <fragment
-        android:id="@+id/timelineFragment"
-        android:name="com.chesire.nekome.app.timeline.TimelineFragment"
-        android:label="@string/nav_timeline"
-        tools:layout="@layout/fragment_timeline" />
-    <fragment
-        android:id="@+id/profileFragment"
-        android:name="com.chesire.nekome.app.profile.ProfileFragment"
-        android:label="@string/nav_profile"
-        tools:layout="@layout/fragment_profile" />
-    <!-- End Main -->
 
     <!-- Global Actions -->
     <action
