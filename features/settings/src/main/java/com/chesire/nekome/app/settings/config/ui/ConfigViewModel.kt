@@ -32,7 +32,7 @@ class ConfigViewModel @Inject constructor(
         viewModelScope.launch {
             retrievePreferences().collect { prefModel ->
                 state = state.copy(
-                    themeStringDisplay = prefModel.theme.stringId,
+                    themeValue = prefModel.theme,
                     rateSeriesValue = prefModel.shouldRateSeries
                 )
             }
@@ -42,7 +42,8 @@ class ConfigViewModel @Inject constructor(
     fun execute(action: ViewAction) {
         when (action) {
             is ViewAction.OnRateSeriesChanged -> handleOnRateSeriesChanged(action.newValue)
-            is ViewAction.OnThemeChanged -> handleOnThemeChanged(action.newTheme) // TODO: Implement the choose theme flow, need to send the list of themes to show and show in a dialog
+            ViewAction.OnThemeClicked -> handleOnThemeClicked()
+            is ViewAction.OnThemeChanged -> handleOnThemeChanged(action.newTheme)
         }
     }
 
@@ -52,9 +53,16 @@ class ConfigViewModel @Inject constructor(
         }
     }
 
-    private fun handleOnThemeChanged(newTheme: Theme) {
-        viewModelScope.launch {
-            updateTheme(newTheme)
+    private fun handleOnThemeClicked() {
+        state = state.copy(showThemeDialog = true)
+    }
+
+    private fun handleOnThemeChanged(newTheme: Theme?) {
+        state = state.copy(showThemeDialog = false)
+        if (newTheme != null) {
+            viewModelScope.launch {
+                updateTheme(newTheme)
+            }
         }
     }
 }

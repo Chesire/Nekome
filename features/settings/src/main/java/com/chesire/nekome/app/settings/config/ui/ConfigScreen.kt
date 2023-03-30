@@ -24,7 +24,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.chesire.nekome.app.settings.R
+import com.chesire.nekome.core.compose.composables.NekomeDialog
 import com.chesire.nekome.core.compose.theme.NekomeTheme
+import com.chesire.nekome.core.preferences.flags.Theme
 
 @Composable
 fun ConfigScreen(
@@ -34,7 +36,8 @@ fun ConfigScreen(
     val state = viewModel.uiState.collectAsState()
     Render(
         state = state,
-        onThemeClicked = { /*TODO*/ },
+        onThemeClicked = { viewModel.execute(ViewAction.OnThemeClicked) },
+        onThemeResult = { viewModel.execute(ViewAction.OnThemeChanged(it)) },
         onDefaultHomeScreenClicked = { /*TODO*/ },
         onDefaultSeriesStatusClicked = { /*TODO*/ },
         onRateSeriesClicked = { viewModel.execute(ViewAction.OnRateSeriesChanged(it)) },
@@ -46,6 +49,7 @@ fun ConfigScreen(
 private fun Render(
     state: State<UIState>,
     onThemeClicked: () -> Unit,
+    onThemeResult: (Theme?) -> Unit,
     onDefaultHomeScreenClicked: () -> Unit,
     onDefaultSeriesStatusClicked: () -> Unit,
     onRateSeriesClicked: (Boolean) -> Unit,
@@ -59,7 +63,7 @@ private fun Render(
                 .fillMaxSize()
         ) {
             ApplicationHeading()
-            ThemePreference(state.value.themeStringDisplay, onThemeClicked)
+            ThemePreference(state.value.themeValue.stringId, onThemeClicked)
             DefaultHomeScreenPreference(onDefaultHomeScreenClicked)
 
             SeriesHeading()
@@ -71,6 +75,17 @@ private fun Render(
             GitHubLink()
             LicensesLink(onLicensesLinkClicked)
         }
+    }
+
+    if (state.value.showThemeDialog) {
+        NekomeDialog(
+            title = R.string.settings_theme,
+            confirmButton = R.string.ok,
+            cancelButton = R.string.cancel,
+            currentValue = state.value.themeValue,
+            allValues = Theme.values().associateWith { stringResource(id = it.stringId) }.toList(),
+            onResult = onThemeResult
+        )
     }
 }
 
@@ -218,7 +233,8 @@ private fun PreferenceSection(
 @Preview
 private fun Preview() {
     val initialState = UIState(
-        themeStringDisplay = 0,
+        themeValue = Theme.System,
+        showThemeDialog = false,
         rateSeriesValue = false
     )
     NekomeTheme(darkTheme = true) {
@@ -227,10 +243,11 @@ private fun Preview() {
                 initialValue = initialState,
                 producer = { value = initialState }
             ),
-            onThemeClicked = { /*TODO*/ },
-            onDefaultHomeScreenClicked = { /*TODO*/ },
-            onDefaultSeriesStatusClicked = { /*TODO*/ },
-            onRateSeriesClicked = { /*TODO*/ },
+            onThemeClicked = { /**/ },
+            onThemeResult = { /**/ },
+            onDefaultHomeScreenClicked = { /**/ },
+            onDefaultSeriesStatusClicked = { /**/ },
+            onRateSeriesClicked = { /**/ },
             onLicensesLinkClicked = { /**/ }
         )
     }

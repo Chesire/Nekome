@@ -4,5 +4,6 @@ import com.chesire.nekome.core.preferences.flags.Theme
 
 sealed interface ViewAction {
     data class OnRateSeriesChanged(val newValue: Boolean) : ViewAction
-    data class OnThemeChanged(val newTheme: Theme) : ViewAction
+    object OnThemeClicked : ViewAction
+    data class OnThemeChanged(val newTheme: Theme?) : ViewAction
 }

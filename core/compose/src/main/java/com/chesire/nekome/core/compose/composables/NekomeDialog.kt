@@ -1,5 +1,6 @@
-package com.chesire.nekome.app.settings.config.ui
+package com.chesire.nekome.core.compose.composables
 
+import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -21,70 +22,56 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTag
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import com.chesire.nekome.core.compose.theme.NekomeTheme
-import com.chesire.nekome.core.preferences.flags.Theme
-import com.chesire.nekome.app.settings.R
 
 @Composable
-fun ThemeDialog(
-    options: ThemeDialogOptions,
-    onThemeResult: (Theme?) -> Unit
+fun <T> NekomeDialog(
+    @StringRes title: Int,
+    @StringRes confirmButton: Int,
+    @StringRes cancelButton: Int,
+    currentValue: T,
+    allValues: List<Pair<T, String>>,
+    onResult: (T?) -> Unit
 ) {
-    if (options.show) {
-        Render(
-            currentTheme = options.currentTheme,
-            onThemeResult = onThemeResult
-        )
-    }
-}
+    var selectedOption by remember { mutableStateOf(currentValue) }
 
-@Composable
-private fun Render(
-    currentTheme: Theme,
-    onThemeResult: (Theme?) -> Unit
-) {
-    var selectedOption by remember { mutableStateOf(currentTheme) }
-
-    // Move this into a generic NekomeDialog class, likely with T
-    Dialog(onDismissRequest = { onThemeResult(null) }) {
-        Card(modifier = Modifier.semantics { testTag = ThemeTags.Root }) {
+    Dialog(onDismissRequest = { onResult(null) }) {
+        Card(modifier = Modifier.semantics { testTag = DialogTags.Root }) {
             Column(modifier = Modifier.padding(16.dp)) {
                 Text(
-                    text = stringResource(id = R.string.settings_theme),
+                    text = stringResource(id = title),
                     style = MaterialTheme.typography.h6,
                     modifier = Modifier.padding(bottom = 8.dp)
                 )
 
-                Theme.values().forEach { theme ->
+                allValues.forEach { pair ->
+                    val (value, displayValue) = pair
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
                             .selectable(
-                                selected = theme == selectedOption,
+                                selected = value == selectedOption,
                                 onClick = {
-                                    selectedOption = theme
+                                    selectedOption = value
                                 }
                             )
                             .padding(horizontal = 16.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         RadioButton(
-                            selected = theme == selectedOption,
-                            onClick = { selectedOption = theme }
+                            selected = value == selectedOption,
+                            onClick = { selectedOption = value }
                         )
                         Text(
-                            text = stringResource(id = theme.stringId),
+                            text = displayValue,
                             style = MaterialTheme.typography.body1,
                             modifier = Modifier
                                 .padding(start = 16.dp)
-                                .semantics { testTag = ThemeTags.OptionText }
+                                .semantics { testTag = DialogTags.OptionText }
                         )
                     }
                 }
-
 
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -92,15 +79,15 @@ private fun Render(
                 ) {
                     TextButton(
                         modifier = Modifier.padding(horizontal = 8.dp),
-                        onClick = { onThemeResult(null) }
+                        onClick = { onResult(null) }
                     ) {
-                        Text(text = stringResource(id = R.string.cancel))
+                        Text(text = stringResource(id = cancelButton))
                     }
                     TextButton(
-                        onClick = { onThemeResult(selectedOption) },
-                        modifier = Modifier.semantics { testTag = ThemeTags.OkButton }
+                        onClick = { onResult(selectedOption) },
+                        modifier = Modifier.semantics { testTag = DialogTags.OkButton }
                     ) {
-                        Text(text = stringResource(id = R.string.ok))
+                        Text(text = stringResource(id = confirmButton))
                     }
                 }
             }
@@ -108,23 +95,8 @@ private fun Render(
     }
 }
 
-@Composable
-@Preview
-private fun Preview() {
-    NekomeTheme(darkTheme = true) {
-        Render(
-            currentTheme = Theme.System,
-            onThemeResult = { /**/ }
-        )
-    }
-}
-
-data class ThemeDialogOptions(
-    val show: Boolean,
-    val currentTheme: Theme
-)
-object ThemeTags {
-    const val Root = "ThemeRoot"
-    const val OptionText = "ThemeOptionText"
-    const val OkButton = "ThemeOkButton"
+object DialogTags {
+    const val Root = "DialogRoot"
+    const val OptionText = "DialogOptionText"
+    const val OkButton = "DialogOkButton"
 }
