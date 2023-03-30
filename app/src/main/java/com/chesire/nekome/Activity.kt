@@ -93,9 +93,7 @@ class Activity : AppCompatActivity(), AuthCaster.AuthCasterListener, Flow {
         appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.collectionFragment,
-                R.id.discoverFragment,
-                R.id.hostFragment,
-                R.id.timelineFragment
+                R.id.hostFragment
             ),
             findViewById<DrawerLayout>(R.id.activityDrawer)
         )

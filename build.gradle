@@ -93,9 +93,6 @@ koverMerged {
         projects {
             excludes.addAll(
                 ":core:compose", // View code
-                ":features:discover", // Not finished
-                ":features:profile", // Not finished
-                ":features:timeline", // Not finished
                 ":testing" // Testing code
             )
         }
