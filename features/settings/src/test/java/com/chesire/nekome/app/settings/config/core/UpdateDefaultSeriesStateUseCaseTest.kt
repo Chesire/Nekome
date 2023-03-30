@@ -28,9 +28,9 @@ class UpdateDefaultSeriesStateUseCaseTest {
 
     @Test
     fun `When invoking, update pref with new value`() = runTest {
-        coEvery { pref.updateDefaultHomeScreen(any()) } just runs
+        coEvery { pref.updateDefaultSeriesState(any()) } just runs
 
-        pref.updateDefaultSeriesState(UserSeriesStatus.OnHold)
+        updateDefaultSeriesState(UserSeriesStatus.OnHold)
 
         coEvery { pref.updateDefaultSeriesState(UserSeriesStatus.OnHold) }
     }

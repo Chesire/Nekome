@@ -29,7 +29,7 @@ class UpdateRateSeriesUseCaseTest {
     fun `When invoking, update pref with new value`() = runTest {
         coEvery { pref.updateRateSeriesOnCompletion(any()) } just runs
 
-        pref.updateRateSeriesOnCompletion(true)
+        updateRateSeries(true)
 
         coEvery { pref.updateRateSeriesOnCompletion(true) }
     }

@@ -30,7 +30,7 @@ class UpdateThemeUseCaseTest {
     fun `When invoking, update pref with new value`() = runTest {
         coEvery { pref.updateTheme(any()) } just runs
 
-        pref.updateTheme(Theme.Light)
+        updateTheme(Theme.Light)
 
         coEvery { pref.updateTheme(Theme.Light) }
     }

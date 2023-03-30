@@ -30,7 +30,7 @@ class UpdateDefaultHomeScreenUseCaseTest {
     fun `When invoking, update pref with new value`() = runTest {
         coEvery { pref.updateDefaultHomeScreen(any()) } just runs
 
-        pref.updateDefaultHomeScreen(HomeScreenOptions.Manga)
+        updateDefaultHomeScreen(HomeScreenOptions.Manga)
 
         coEvery { pref.updateDefaultHomeScreen(HomeScreenOptions.Manga) }
     }
