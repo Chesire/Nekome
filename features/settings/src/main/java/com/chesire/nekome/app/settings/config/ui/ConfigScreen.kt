@@ -169,7 +169,10 @@ private fun RateSeriesPreference(
     Row(
         modifier = Modifier
             .padding(vertical = 8.dp)
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .clickable {
+                onRateSeriesClicked(!shouldRateSeries)
+            },
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -186,7 +189,7 @@ private fun RateSeriesPreference(
         }
         Checkbox(
             checked = shouldRateSeries,
-            onCheckedChange = { onRateSeriesClicked(!shouldRateSeries) }
+            onCheckedChange = null
         )
     }
 }
