@@ -15,7 +15,7 @@ sealed interface ViewAction {
         val newHomeScreen: HomeScreenOptions?
     ) : ViewAction
 
-    object onDefaultSeriesStatusClicked : ViewAction
+    object OnDefaultSeriesStatusClicked : ViewAction
     data class OnDefaultSeriesStatusChanged(
         val newDefaultSeriesStatus: UserSeriesStatus?
     ) : ViewAction
