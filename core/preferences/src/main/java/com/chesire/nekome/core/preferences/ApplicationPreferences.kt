@@ -1,8 +1,6 @@
 package com.chesire.nekome.core.preferences
 
 import android.content.Context
-import android.content.SharedPreferences
-import androidx.core.content.edit
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
@@ -22,45 +20,32 @@ private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(na
  * Interact with the settings of the application, provides methods to get the user chosen values.
  * These values must be set from the settings fragment within the app-Settings module.
  */
-@Suppress("UseDataClass")
 class ApplicationPreferences @Inject constructor(
-    @ApplicationContext private val context: Context,
-    private val preferences: SharedPreferences
+    @ApplicationContext private val context: Context
 ) {
 
-    private val _defaultSeriesState = context.getString(R.string.key_default_series_state)
+    private val defaultSeriesStatePreferenceKey =
+        stringPreferencesKey("preference.default-series-state")
     private val defaultHomeScreenPreferenceKey =
-        stringPreferencesKey("preference.defaulthomescreen")
-    private val themePreferenceKey = stringPreferencesKey("preference.theme")
+        stringPreferencesKey("preference.default-home-screen")
+    private val themePreferenceKey =
+        stringPreferencesKey("preference.theme")
 
     /**
      * Gets the default [UserSeriesStatus] a series should start in when a user begins tracking it.
      */
-    val defaultSeriesState: UserSeriesStatus
-        get() {
-            val index = requireNotNull(
-                preferences.getString(
-                    _defaultSeriesState,
-                    UserSeriesStatus.Current.index.toString()
-                )
-            ) {
-                "Preferences defaultSeriesState returned null, with supplied default value"
-            }
-            var status = UserSeriesStatus.getFromIndex(index)
-            if (status == UserSeriesStatus.Unknown) {
-                // Something has gone wrong, this shouldn't be possible.
-                // Reset the state of the setting and return "Current".
-                preferences.edit {
-                    putString(
-                        _defaultSeriesState,
-                        UserSeriesStatus.Current.index.toString()
-                    )
-                }
-                status = UserSeriesStatus.Current
-            }
+    val defaultSeriesState: Flow<UserSeriesStatus> = context.dataStore.data.map { preferences ->
+        UserSeriesStatus.getFromIndex(
+            preferences[defaultSeriesStatePreferenceKey]
+                ?: UserSeriesStatus.Current.index.toString()
+        )
+    }
 
-            return status
+    suspend fun updateDefaultSeriesState(newDefaultSeriesState: UserSeriesStatus) {
+        context.dataStore.edit { preferences ->
+            preferences[defaultSeriesStatePreferenceKey] = newDefaultSeriesState.index.toString()
         }
+    }
 
     /**
      * Gets the default [HomeScreenOptions] the home screen that shows after login or when re-launching.

@@ -1,5 +1,6 @@
 package com.chesire.nekome.app.settings.config.core
 
+import com.chesire.nekome.core.flags.UserSeriesStatus
 import com.chesire.nekome.core.preferences.ApplicationPreferences
 import com.chesire.nekome.core.preferences.SeriesPreferences
 import com.chesire.nekome.core.preferences.flags.HomeScreenOptions
@@ -21,6 +22,7 @@ class RetrievePreferencesUseCase @Inject constructor(
             PreferenceModel(
                 theme = Theme.System,
                 defaultHomeScreen = HomeScreenOptions.Anime,
+                defaultSeriesStatus = UserSeriesStatus.Current,
                 shouldRateSeries = false,
             )
         ).combine(seriesPref.rateSeriesOnCompletion) { model, rateSeriesOnCompletion ->
@@ -29,6 +31,8 @@ class RetrievePreferencesUseCase @Inject constructor(
             model.copy(theme = theme)
         }.combine(applicationPref.defaultHomeScreen) { model, homeScreen ->
             model.copy(defaultHomeScreen = homeScreen)
+        }.combine(applicationPref.defaultSeriesState) { model, seriesStatus ->
+            model.copy(defaultSeriesStatus = seriesStatus)
         }
     }
 }
@@ -36,5 +40,6 @@ class RetrievePreferencesUseCase @Inject constructor(
 data class PreferenceModel(
     val theme: Theme,
     val defaultHomeScreen: HomeScreenOptions,
+    val defaultSeriesStatus: UserSeriesStatus,
     val shouldRateSeries: Boolean
 )

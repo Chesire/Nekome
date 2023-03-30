@@ -26,6 +26,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.chesire.nekome.app.settings.R
 import com.chesire.nekome.core.compose.composables.NekomeDialog
 import com.chesire.nekome.core.compose.theme.NekomeTheme
+import com.chesire.nekome.core.flags.UserSeriesStatus
 import com.chesire.nekome.core.preferences.flags.HomeScreenOptions
 import com.chesire.nekome.core.preferences.flags.Theme
 
@@ -41,7 +42,8 @@ fun ConfigScreen(
         onThemeResult = { viewModel.execute(ViewAction.OnThemeChanged(it)) },
         onDefaultHomeScreenClicked = { viewModel.execute(ViewAction.OnDefaultHomeScreenClicked) },
         onDefaultHomeScreenResult = { viewModel.execute(ViewAction.OnDefaultHomeScreenChanged(it)) },
-        onDefaultSeriesStatusClicked = { /*TODO*/ },
+        onDefaultSeriesStatusClicked = { viewModel.execute(ViewAction.onDefaultSeriesStatusClicked) },
+        onDefaultSeriesStatusResult = { viewModel.execute(ViewAction.OnDefaultSeriesStatusChanged(it)) },
         onRateSeriesClicked = { viewModel.execute(ViewAction.OnRateSeriesChanged(it)) },
         onLicensesLinkClicked = { navigateToOssScreen() }
     )
@@ -55,6 +57,7 @@ private fun Render(
     onDefaultHomeScreenClicked: () -> Unit,
     onDefaultHomeScreenResult: (HomeScreenOptions?) -> Unit,
     onDefaultSeriesStatusClicked: () -> Unit,
+    onDefaultSeriesStatusResult: (UserSeriesStatus?) -> Unit,
     onRateSeriesClicked: (Boolean) -> Unit,
     onLicensesLinkClicked: () -> Unit
 ) {
@@ -102,6 +105,21 @@ private fun Render(
                 .associateWith { stringResource(id = it.stringId) }
                 .toList(),
             onResult = onDefaultHomeScreenResult
+        )
+    }
+
+    if (state.value.showDefaultSeriesStatusDialog) {
+        NekomeDialog(
+            title = R.string.settings_default_series_status_title,
+            confirmButton = R.string.ok,
+            cancelButton = R.string.cancel,
+            currentValue = state.value.defaultSeriesStatusValue,
+            allValues = UserSeriesStatus
+                .values()
+                .filterNot { it == UserSeriesStatus.Unknown }
+                .associateWith { stringResource(id = it.stringId) }
+                .toList(),
+            onResult = onDefaultSeriesStatusResult
         )
     }
 }
@@ -254,6 +272,8 @@ private fun Preview() {
         showThemeDialog = false,
         defaultHomeValue = HomeScreenOptions.Anime,
         showDefaultHomeDialog = false,
+        defaultSeriesStatusValue = UserSeriesStatus.Current,
+        showDefaultSeriesStatusDialog = false,
         rateSeriesValue = false
     )
     NekomeTheme(darkTheme = true) {
@@ -267,6 +287,7 @@ private fun Preview() {
             onDefaultHomeScreenClicked = { /**/ },
             onDefaultHomeScreenResult = { /**/ },
             onDefaultSeriesStatusClicked = { /**/ },
+            onDefaultSeriesStatusResult = { /**/ },
             onRateSeriesClicked = { /**/ },
             onLicensesLinkClicked = { /**/ }
         )

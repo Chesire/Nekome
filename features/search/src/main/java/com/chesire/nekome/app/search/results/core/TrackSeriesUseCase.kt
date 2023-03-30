@@ -9,6 +9,7 @@ import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.Result
 import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.withContext
 
 class TrackSeriesUseCase @Inject constructor(
@@ -22,8 +23,14 @@ class TrackSeriesUseCase @Inject constructor(
     ): Result<Unit, Unit> {
         val response = withContext(Dispatchers.IO) {
             when (seriesType) {
-                SeriesType.Anime -> seriesRepo.addAnime(seriesId, settings.defaultSeriesState)
-                SeriesType.Manga -> seriesRepo.addManga(seriesId, settings.defaultSeriesState)
+                SeriesType.Anime -> seriesRepo.addAnime(
+                    seriesId,
+                    settings.defaultSeriesState.first()
+                )
+                SeriesType.Manga -> seriesRepo.addManga(
+                    seriesId,
+                    settings.defaultSeriesState.first()
+                )
                 else -> error("Unknown SeriesType: $seriesType")
             }
         }

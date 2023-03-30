@@ -4,8 +4,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chesire.nekome.app.settings.config.core.RetrievePreferencesUseCase
 import com.chesire.nekome.app.settings.config.core.UpdateDefaultHomeScreenUseCase
+import com.chesire.nekome.app.settings.config.core.UpdateDefaultSeriesStateUseCase
 import com.chesire.nekome.app.settings.config.core.UpdateRateSeriesUseCase
 import com.chesire.nekome.app.settings.config.core.UpdateThemeUseCase
+import com.chesire.nekome.core.flags.UserSeriesStatus
 import com.chesire.nekome.core.preferences.flags.HomeScreenOptions
 import com.chesire.nekome.core.preferences.flags.Theme
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,7 +22,8 @@ class ConfigViewModel @Inject constructor(
     private val retrievePreferences: RetrievePreferencesUseCase,
     private val updateRateSeries: UpdateRateSeriesUseCase,
     private val updateTheme: UpdateThemeUseCase,
-    private val updateDefaultHomeScreen: UpdateDefaultHomeScreenUseCase
+    private val updateDefaultHomeScreen: UpdateDefaultHomeScreenUseCase,
+    private val updateDefaultSeriesState: UpdateDefaultSeriesStateUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(UIState.default)
@@ -37,6 +40,7 @@ class ConfigViewModel @Inject constructor(
                 state = state.copy(
                     themeValue = prefModel.theme,
                     defaultHomeValue = prefModel.defaultHomeScreen,
+                    defaultSeriesStatusValue = prefModel.defaultSeriesStatus,
                     rateSeriesValue = prefModel.shouldRateSeries
                 )
             }
@@ -49,6 +53,8 @@ class ConfigViewModel @Inject constructor(
             is ViewAction.OnThemeChanged -> handleOnThemeChanged(action.newTheme)
             ViewAction.OnDefaultHomeScreenClicked -> handleOnDefaultHomeScreenClicked()
             is ViewAction.OnDefaultHomeScreenChanged -> handleOnDefaultHomeScreenChanged(action.newHomeScreen)
+            ViewAction.onDefaultSeriesStatusClicked -> handleOnDefaultSeriesStatusClicked()
+            is ViewAction.OnDefaultSeriesStatusChanged -> handleOnDefaultSeriesStatusChanged(action.newDefaultSeriesStatus)
             is ViewAction.OnRateSeriesChanged -> handleOnRateSeriesChanged(action.newValue)
         }
     }
@@ -75,6 +81,19 @@ class ConfigViewModel @Inject constructor(
         if (newHomeScreen != null) {
             viewModelScope.launch {
                 updateDefaultHomeScreen(newHomeScreen)
+            }
+        }
+    }
+
+    private fun handleOnDefaultSeriesStatusClicked() {
+        state = state.copy(showDefaultSeriesStatusDialog = true)
+    }
+
+    private fun handleOnDefaultSeriesStatusChanged(newSeriesStatus: UserSeriesStatus?) {
+        state = state.copy(showDefaultSeriesStatusDialog = false)
+        if (newSeriesStatus != null) {
+            viewModelScope.launch {
+                updateDefaultSeriesState(newSeriesStatus)
             }
         }
     }
