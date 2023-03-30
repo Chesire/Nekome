@@ -55,6 +55,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import com.chesire.nekome.app.series.R
+import com.chesire.nekome.core.compose.composables.NekomeDialog
 import com.chesire.nekome.core.compose.theme.NekomeTheme
 import com.chesire.nekome.core.flags.Subtype
 import com.chesire.nekome.core.flags.UserSeriesStatus
@@ -119,13 +120,10 @@ private fun Render(
         )
     }
 
+    SortDialog(sortOptions = state.value.sortDialog, onSortResult = onSortResult)
     RatingDialog(
         ratingDialog = state.value.ratingDialog,
         onRatingComplete = onRatingComplete
-    )
-    SortDialog(
-        sortDialog = state.value.sortDialog,
-        onSortResult = onSortResult
     )
     FilterDialog(
         filterDialog = state.value.filterDialog,
@@ -307,6 +305,23 @@ private fun buildDateString(context: Context, startDate: String, endDate: String
             R.string.series_list_date_range,
             startDate,
             endDate
+        )
+    }
+}
+
+@Composable
+private fun SortDialog(sortOptions: Sort, onSortResult: (SortOption?) -> Unit) {
+    if (sortOptions.show) {
+        NekomeDialog(
+            title = R.string.sort_dialog_title,
+            confirmButton = R.string.ok,
+            cancelButton = R.string.cancel,
+            currentValue = sortOptions.currentSort,
+            allValues = sortOptions
+                .sortOptions
+                .associateWith { stringResource(id = it.stringId) }
+                .toList(),
+            onResult = onSortResult
         )
     }
 }
