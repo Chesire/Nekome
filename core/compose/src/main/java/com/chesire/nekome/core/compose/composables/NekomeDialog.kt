@@ -25,6 +25,9 @@ import androidx.compose.ui.semantics.testTag
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 
+/**
+ * Dialog composable which lays out the values in a vertical list with radio buttons.
+ */
 @Composable
 fun <T> NekomeDialog(
     @StringRes title: Int,

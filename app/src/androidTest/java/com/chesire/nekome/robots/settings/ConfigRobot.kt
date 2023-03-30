@@ -16,7 +16,7 @@ fun config(composeContentTestRule: ComposeContentTestRule, func: ConfigRobot.() 
     ConfigRobot(composeContentTestRule).apply(func)
 
 /**
- * Robot to interact with the settings screen.
+ * Robot to interact with the config screen.
  */
 class ConfigRobot(private val composeContentTestRule: ComposeContentTestRule) {
 
@@ -90,7 +90,7 @@ class ConfigRobot(private val composeContentTestRule: ComposeContentTestRule) {
 }
 
 /**
- * Robot to check the results for the settings screen.
+ * Robot to check the results for the config screen.
  */
 class ConfigResultRobot(private val composeContentTestRule: ComposeContentTestRule) {
 

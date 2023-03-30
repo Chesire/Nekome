@@ -7,6 +7,9 @@ import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
 import com.chesire.nekome.core.compose.composables.DialogTags
 
+/**
+ * Base class for other Dialog robots to use.
+ */
 abstract class DialogRobot(private val composeContentTestRule: ComposeContentTestRule) {
 
     /**
@@ -28,6 +31,9 @@ abstract class DialogRobot(private val composeContentTestRule: ComposeContentTes
     }
 }
 
+/**
+ * Base class for other Dialog results robots to use.
+ */
 abstract class DialogResultsRobot(private val composeContentTestRule: ComposeContentTestRule) {
 
     /**
