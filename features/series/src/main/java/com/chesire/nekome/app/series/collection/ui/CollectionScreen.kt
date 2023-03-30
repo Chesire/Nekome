@@ -120,7 +120,10 @@ private fun Render(
         )
     }
 
-    SortDialog(sortOptions = state.value.sortDialog, onSortResult = onSortResult)
+    SortDialog(
+        sortOptions = state.value.sortDialog,
+        onSortResult = onSortResult
+    )
     RatingDialog(
         ratingDialog = state.value.ratingDialog,
         onRatingComplete = onRatingComplete
