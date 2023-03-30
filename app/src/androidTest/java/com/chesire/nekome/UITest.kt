@@ -4,6 +4,7 @@ import androidx.test.core.app.ActivityScenario
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.adevinta.android.barista.rule.cleardata.ClearDatabaseRule
 import com.adevinta.android.barista.rule.cleardata.ClearPreferencesRule
+import com.chesire.nekome.core.preferences.ApplicationPreferences
 import com.chesire.nekome.core.preferences.SeriesPreferences
 import com.chesire.nekome.database.dao.SeriesDao
 import com.chesire.nekome.database.dao.UserDao
@@ -45,6 +46,9 @@ abstract class UITest {
     lateinit var user: UserDao
 
     @Inject
+    lateinit var applicationPreferences: ApplicationPreferences
+
+    @Inject
     lateinit var seriesPreferences: SeriesPreferences
 
     /**
@@ -61,6 +65,7 @@ abstract class UITest {
         hilt.inject()
 
         runBlocking {
+            applicationPreferences.reset()
             seriesPreferences.reset()
         }
 
