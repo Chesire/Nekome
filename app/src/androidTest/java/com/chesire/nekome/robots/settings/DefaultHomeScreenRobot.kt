@@ -1,62 +1,84 @@
 package com.chesire.nekome.robots.settings
 
-import com.adevinta.android.barista.assertion.BaristaCheckedAssertions.assertChecked
-import com.adevinta.android.barista.interaction.BaristaClickInteractions.clickOn
-import com.chesire.nekome.R
+import androidx.compose.ui.test.assertIsSelected
+import androidx.compose.ui.test.assertTextContains
+import androidx.compose.ui.test.junit4.ComposeContentTestRule
+import androidx.compose.ui.test.onAllNodesWithTag
+import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.performClick
+import com.chesire.nekome.core.compose.composables.DialogTags
 import com.chesire.nekome.core.preferences.flags.HomeScreenOptions
+import com.chesire.nekome.helpers.getResource
+import com.chesire.nekome.robots.DialogResultsRobot
+import com.chesire.nekome.robots.DialogRobot
 
 /**
  * Robot to interact with the default home screen dialog.
  */
-class DefaultHomeScreenRobot {
+class DefaultHomeScreenRobot(
+    private val composeContentTestRule: ComposeContentTestRule
+) : DialogRobot(composeContentTestRule) {
 
     /**
-     * Open the default home screen dialog, and picks the "Anime" option.
+     * Picks the "Anime" option.
      */
     fun chooseAnime() {
-        openDialog()
-        clickOn(HomeScreenOptions.Anime.stringId)
+        composeContentTestRule
+            .onNodeWithText(HomeScreenOptions.Anime.stringId.getResource())
+            .performClick()
     }
 
     /**
-     * Open the default home screen dialog, and picks the "Manga" option.
+     * Picks the "Manga" option.
      */
     fun chooseManga() {
-        openDialog()
-        clickOn(HomeScreenOptions.Manga.stringId)
+        composeContentTestRule
+            .onNodeWithText(HomeScreenOptions.Manga.stringId.getResource())
+            .performClick()
     }
-
-    private fun openDialog() = clickOn(R.string.settings_default_home_title)
-
-    private fun closeDialog() = clickOn(android.R.string.cancel)
 
     /**
      * Executes validation steps.
      * Requires opening the dialog, performing the check, then closing the dialog again.
      */
-    infix fun validate(
-        func: DefaultHomeScreenResultRobot.() -> Unit
-    ): DefaultHomeScreenResultRobot {
-        return DefaultHomeScreenResultRobot().apply {
-            openDialog()
-            func()
-            closeDialog()
-        }
-    }
+    infix fun validate(func: DefaultHomeScreenResultRobot.() -> Unit) =
+        DefaultHomeScreenResultRobot(composeContentTestRule).apply(func)
 }
 
 /**
  * Robot to check the results for the default home screen dialog.
  */
-class DefaultHomeScreenResultRobot {
+class DefaultHomeScreenResultRobot(
+    private val composeContentTestRule: ComposeContentTestRule
+) : DialogResultsRobot(composeContentTestRule) {
+
+    /**
+     * Assert that the options are in the correct locations.
+     */
+    fun isLoadedCorrectly() {
+        val collection = composeContentTestRule.onAllNodesWithTag(DialogTags.OptionText, true)
+        collection[0].assertTextContains(HomeScreenOptions.Anime.stringId.getResource())
+        collection[1].assertTextContains(HomeScreenOptions.Manga.stringId.getResource())
+    }
 
     /**
      * Checks if the "Anime" option is checked.
      */
-    fun animeIsSelected() = assertChecked(HomeScreenOptions.Anime.stringId)
+    fun animeIsSelected() {
+        composeContentTestRule
+            .onAllNodesWithTag(DialogTags.OptionRadio, true)
+            .get(0)
+            .assertIsSelected()
+
+    }
 
     /**
      * Checks if the "Manga" option is checked.
      */
-    fun mangaIsSelected() = assertChecked(HomeScreenOptions.Manga.stringId)
+    fun mangaIsSelected() {
+        composeContentTestRule
+            .onAllNodesWithTag(DialogTags.OptionRadio, true)
+            .get(1)
+            .assertIsSelected()
+    }
 }

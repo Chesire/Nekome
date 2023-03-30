@@ -20,6 +20,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.testTag
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -61,7 +63,9 @@ private fun Render(
     onRateSeriesClicked: (Boolean) -> Unit,
     onLicensesLinkClicked: () -> Unit
 ) {
-    Scaffold { paddingValues ->
+    Scaffold(
+        modifier = Modifier.semantics { testTag = ConfigTags.Root }
+    ) { paddingValues ->
         Column(
             modifier = Modifier
                 .padding(paddingValues)
@@ -295,4 +299,8 @@ private fun Preview() {
             onLicensesLinkClicked = { /**/ }
         )
     }
+}
+
+object ConfigTags {
+    const val Root = "ConfigRoot"
 }

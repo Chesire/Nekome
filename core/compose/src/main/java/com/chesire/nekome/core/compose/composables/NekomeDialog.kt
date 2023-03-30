@@ -60,6 +60,7 @@ fun <T> NekomeDialog(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         RadioButton(
+                            modifier = Modifier.semantics { testTag = DialogTags.OptionRadio },
                             selected = value == selectedOption,
                             onClick = { selectedOption = value }
                         )
@@ -100,6 +101,7 @@ fun <T> NekomeDialog(
 object DialogTags {
     const val Root = "DialogRoot"
     const val OptionText = "DialogOptionText"
+    const val OptionRadio = "DialogOptionRadio"
     const val OkButton = "DialogOkButton"
     const val CancelButton = "DialogCancelButton"
 }

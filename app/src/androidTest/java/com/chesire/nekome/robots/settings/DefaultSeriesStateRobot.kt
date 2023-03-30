@@ -1,101 +1,143 @@
 package com.chesire.nekome.robots.settings
 
-import com.adevinta.android.barista.assertion.BaristaCheckedAssertions.assertChecked
-import com.adevinta.android.barista.interaction.BaristaClickInteractions.clickOn
-import com.chesire.nekome.R
+import androidx.compose.ui.test.assertIsSelected
+import androidx.compose.ui.test.assertTextContains
+import androidx.compose.ui.test.junit4.ComposeContentTestRule
+import androidx.compose.ui.test.onAllNodesWithTag
+import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.performClick
+import com.chesire.nekome.core.compose.composables.DialogTags
 import com.chesire.nekome.core.flags.UserSeriesStatus
+import com.chesire.nekome.helpers.getResource
+import com.chesire.nekome.robots.DialogResultsRobot
+import com.chesire.nekome.robots.DialogRobot
 
 /**
  * Robot to interact with the default series state dialog.
  */
-class DefaultSeriesStateRobot {
+class DefaultSeriesStateRobot(
+    private val composeContentTestRule: ComposeContentTestRule
+) : DialogRobot(composeContentTestRule) {
 
     /**
-     * Open the default series state dialog, and picks the "Current" option.
+     * Picks the "Current" option.
      */
     fun chooseCurrent() {
-        openDialog()
-        clickOn(UserSeriesStatus.Current.stringId)
+        composeContentTestRule
+            .onNodeWithText(UserSeriesStatus.Current.stringId.getResource())
+            .performClick()
     }
 
     /**
-     * Open the default series state dialog, and picks the "Completed" option.
+     * Picks the "Completed" option.
      */
     fun chooseCompleted() {
-        openDialog()
-        clickOn(UserSeriesStatus.Completed.stringId)
+        composeContentTestRule
+            .onNodeWithText(UserSeriesStatus.Completed.stringId.getResource())
+            .performClick()
     }
 
     /**
-     * Open the default series state dialog, and picks the "On hold" option.
+     * Picks the "On hold" option.
      */
     fun chooseOnHold() {
-        openDialog()
-        clickOn(UserSeriesStatus.OnHold.stringId)
+        composeContentTestRule
+            .onNodeWithText(UserSeriesStatus.OnHold.stringId.getResource())
+            .performClick()
     }
 
     /**
-     * Open the default series state dialog, and picks the "Dropped" option.
+     * Picks the "Dropped" option.
      */
     fun chooseDropped() {
-        openDialog()
-        clickOn(UserSeriesStatus.Dropped.stringId)
+        composeContentTestRule
+            .onNodeWithText(UserSeriesStatus.Dropped.stringId.getResource())
+            .performClick()
     }
 
     /**
-     * Open the default series state dialog, and picks the "Planned" option.
+     * Picks the "Planned" option.
      */
     fun choosePlanned() {
-        openDialog()
-        clickOn(UserSeriesStatus.Planned.stringId)
+        composeContentTestRule
+            .onNodeWithText(UserSeriesStatus.Planned.stringId.getResource())
+            .performClick()
     }
-
-    private fun openDialog() = clickOn(R.string.settings_default_series_status_title)
-
-    private fun closeDialog() = clickOn(android.R.string.cancel)
 
     /**
      * Executes validation steps.
      * Requires opening the dialog, performing the check, then closing the dialog again.
      */
-    infix fun validate(
-        func: DefaultSeriesStateResultRobot.() -> Unit
-    ): DefaultSeriesStateResultRobot {
-        return DefaultSeriesStateResultRobot().apply {
-            openDialog()
-            func()
-            closeDialog()
-        }
-    }
+    infix fun validate(func: DefaultSeriesStateResultRobot.() -> Unit) =
+        DefaultSeriesStateResultRobot(composeContentTestRule).apply(func)
 }
 
 /**
  * Robot to check the results for the default series state dialog.
  */
-class DefaultSeriesStateResultRobot {
+class DefaultSeriesStateResultRobot(
+    private val composeContentTestRule: ComposeContentTestRule
+) : DialogResultsRobot(composeContentTestRule) {
+
+    /**
+     * Assert that the options are in the correct locations.
+     */
+    fun isLoadedCorrectly() {
+        val collection = composeContentTestRule.onAllNodesWithTag(DialogTags.OptionText, true)
+        collection[0].assertTextContains(UserSeriesStatus.Current.stringId.getResource())
+        collection[1].assertTextContains(UserSeriesStatus.Completed.stringId.getResource())
+        collection[2].assertTextContains(UserSeriesStatus.OnHold.stringId.getResource())
+        collection[3].assertTextContains(UserSeriesStatus.Dropped.stringId.getResource())
+        collection[4].assertTextContains(UserSeriesStatus.Planned.stringId.getResource())
+    }
 
     /**
      * Checks if the "Current" option is checked.
      */
-    fun currentIsSelected() = assertChecked(UserSeriesStatus.Current.stringId)
+    fun currentIsSelected() {
+        composeContentTestRule
+            .onAllNodesWithTag(DialogTags.OptionRadio, true)
+            .get(0)
+            .assertIsSelected()
+    }
 
     /**
      * Checks if the "Completed" option is checked.
      */
-    fun completedIsSelected() = assertChecked(UserSeriesStatus.Completed.stringId)
+    fun completedIsSelected() {
+        composeContentTestRule
+            .onAllNodesWithTag(DialogTags.OptionRadio, true)
+            .get(1)
+            .assertIsSelected()
+    }
 
     /**
      * Checks if the "On hold" option is checked.
      */
-    fun onHoldIsSelected() = assertChecked(UserSeriesStatus.OnHold.stringId)
+    fun onHoldIsSelected() {
+        composeContentTestRule
+            .onAllNodesWithTag(DialogTags.OptionRadio, true)
+            .get(2)
+            .assertIsSelected()
+    }
 
     /**
      * Checks if the "Dropped" option is checked.
      */
-    fun droppedIsSelected() = assertChecked(UserSeriesStatus.Dropped.stringId)
+    fun droppedIsSelected() {
+        composeContentTestRule
+            .onAllNodesWithTag(DialogTags.OptionRadio, true)
+            .get(3)
+            .assertIsSelected()
+    }
 
     /**
      * Checks if the "Planned" option is checked.
      */
-    fun plannedIsSelected() = assertChecked(UserSeriesStatus.Planned.stringId)
+    fun plannedIsSelected() {
+        composeContentTestRule
+            .onAllNodesWithTag(DialogTags.OptionRadio, true)
+            .get(4)
+            .assertIsSelected()
+    }
 }

@@ -215,8 +215,8 @@ class SeriesListTests : UITest() {
                     totalLength = 24
                 )
             )
+            seriesPreferences.updateRateSeriesOnCompletion(false)
         }
-        seriesPreferences.rateSeriesOnCompletionPreference = false
         launchActivity()
 
         seriesList(composeTestRule) {
@@ -255,8 +255,8 @@ class SeriesListTests : UITest() {
                     totalLength = 24
                 )
             )
+            seriesPreferences.updateRateSeriesOnCompletion(true)
         }
-        seriesPreferences.rateSeriesOnCompletionPreference = true
         launchActivity()
 
         seriesList(composeTestRule) {
