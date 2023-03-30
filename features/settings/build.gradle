@@ -55,4 +55,10 @@ dependencies {
     implementation libs.timber
     debugImplementation libs.androidx.compose.ui.tooling
     kapt libs.google.hilt.android.compiler
+
+    testImplementation project(":testing")
+    testImplementation libs.androidx.arch.core.testing
+    testImplementation libs.junit
+    testImplementation libs.kotlin.coroutines.test
+    testImplementation libs.mockk
 }
