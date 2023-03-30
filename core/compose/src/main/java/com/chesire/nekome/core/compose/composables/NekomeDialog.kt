@@ -78,7 +78,9 @@ fun <T> NekomeDialog(
                     horizontalArrangement = Arrangement.End
                 ) {
                     TextButton(
-                        modifier = Modifier.padding(horizontal = 8.dp),
+                        modifier = Modifier
+                            .padding(horizontal = 8.dp)
+                            .semantics { testTag = DialogTags.CancelButton },
                         onClick = { onResult(null) }
                     ) {
                         Text(text = stringResource(id = cancelButton))
@@ -99,4 +101,5 @@ object DialogTags {
     const val Root = "DialogRoot"
     const val OptionText = "DialogOptionText"
     const val OkButton = "DialogOkButton"
+    const val CancelButton = "DialogCancelButton"
 }
