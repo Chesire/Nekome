@@ -1,22 +1,23 @@
 package com.chesire.nekome.robots.series
 
-import androidx.compose.ui.test.assertIsDisplayed
-import androidx.compose.ui.test.assertIsNotDisplayed
 import androidx.compose.ui.test.assertTextContains
 import androidx.compose.ui.test.junit4.ComposeContentTestRule
 import androidx.compose.ui.test.onAllNodesWithTag
-import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import com.adevinta.android.barista.interaction.BaristaMenuClickInteractions.clickMenu
 import com.chesire.nekome.R
 import com.chesire.nekome.core.compose.composables.DialogTags
 import com.chesire.nekome.helpers.getResource
+import com.chesire.nekome.robots.DialogResultsRobot
+import com.chesire.nekome.robots.DialogRobot
 
 /**
  * Robot to interact with the sort dialog.
  */
-class SortOptionRobot(private val composeContentTestRule: ComposeContentTestRule) {
+class SortOptionRobot(
+    private val composeContentTestRule: ComposeContentTestRule
+) : DialogRobot(composeContentTestRule) {
 
     /**
      * Opens the sort dialog.
@@ -69,15 +70,6 @@ class SortOptionRobot(private val composeContentTestRule: ComposeContentTestRule
     }
 
     /**
-     * Confirms the sort dialog option.
-     */
-    fun confirm() {
-        composeContentTestRule
-            .onNodeWithTag(DialogTags.OkButton)
-            .performClick()
-    }
-
-    /**
      * Executes validation steps.
      * Requires opening the dialog, performing the check.
      */
@@ -88,29 +80,9 @@ class SortOptionRobot(private val composeContentTestRule: ComposeContentTestRule
 /**
  * Robot to check the results for the sort dialog.
  */
-class SortOptionResultsRobot(private val composeContentTestRule: ComposeContentTestRule) {
-
-    /**
-     * Assert that the sort options dialog is visible.
-     */
-    fun isVisible() {
-        composeContentTestRule
-            .onNodeWithTag(DialogTags.Root)
-            .assertIsDisplayed()
-    }
-
-    /**
-     * Assert that the sort options dialog is not visible.
-     */
-    fun isNotVisible() {
-        try {
-            composeContentTestRule
-                .onNodeWithTag(DialogTags.Root)
-                .assertIsNotDisplayed()
-        } catch (ex: AssertionError) {
-            // If an ex is thrown, then the node wasn't available
-        }
-    }
+class SortOptionResultsRobot(
+    private val composeContentTestRule: ComposeContentTestRule
+) : DialogResultsRobot(composeContentTestRule) {
 
     /**
      * Assert that the sort options are in the correct locations.
