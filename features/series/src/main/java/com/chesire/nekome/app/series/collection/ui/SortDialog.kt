@@ -48,7 +48,7 @@ private fun Render(
     currentSort: SortOption,
     onSortResult: (SortOption?) -> Unit
 ) {
-    var selectedOption by remember { mutableStateOf(SortOption.forIndex(currentSort.index)) }
+    var selectedOption by remember { mutableStateOf(currentSort) }
 
     Dialog(onDismissRequest = { onSortResult(null) }) {
         Card(modifier = Modifier.semantics { testTag = SortTags.Root }) {
