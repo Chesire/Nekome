@@ -26,6 +26,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.chesire.nekome.app.settings.R
 import com.chesire.nekome.core.compose.composables.NekomeDialog
 import com.chesire.nekome.core.compose.theme.NekomeTheme
+import com.chesire.nekome.core.preferences.flags.HomeScreenOptions
 import com.chesire.nekome.core.preferences.flags.Theme
 
 @Composable
@@ -38,7 +39,8 @@ fun ConfigScreen(
         state = state,
         onThemeClicked = { viewModel.execute(ViewAction.OnThemeClicked) },
         onThemeResult = { viewModel.execute(ViewAction.OnThemeChanged(it)) },
-        onDefaultHomeScreenClicked = { /*TODO*/ },
+        onDefaultHomeScreenClicked = { viewModel.execute(ViewAction.OnDefaultHomeScreenClicked) },
+        onDefaultHomeScreenResult = { viewModel.execute(ViewAction.OnDefaultHomeScreenChanged(it)) },
         onDefaultSeriesStatusClicked = { /*TODO*/ },
         onRateSeriesClicked = { viewModel.execute(ViewAction.OnRateSeriesChanged(it)) },
         onLicensesLinkClicked = { navigateToOssScreen() }
@@ -51,6 +53,7 @@ private fun Render(
     onThemeClicked: () -> Unit,
     onThemeResult: (Theme?) -> Unit,
     onDefaultHomeScreenClicked: () -> Unit,
+    onDefaultHomeScreenResult: (HomeScreenOptions?) -> Unit,
     onDefaultSeriesStatusClicked: () -> Unit,
     onRateSeriesClicked: (Boolean) -> Unit,
     onLicensesLinkClicked: () -> Unit
@@ -85,6 +88,20 @@ private fun Render(
             currentValue = state.value.themeValue,
             allValues = Theme.values().associateWith { stringResource(id = it.stringId) }.toList(),
             onResult = onThemeResult
+        )
+    }
+
+    if (state.value.showDefaultHomeDialog) {
+        NekomeDialog(
+            title = R.string.settings_default_home_title,
+            confirmButton = R.string.ok,
+            cancelButton = R.string.cancel,
+            currentValue = state.value.defaultHomeValue,
+            allValues = HomeScreenOptions
+                .values()
+                .associateWith { stringResource(id = it.stringId) }
+                .toList(),
+            onResult = onDefaultHomeScreenResult
         )
     }
 }
@@ -235,6 +252,8 @@ private fun Preview() {
     val initialState = UIState(
         themeValue = Theme.System,
         showThemeDialog = false,
+        defaultHomeValue = HomeScreenOptions.Anime,
+        showDefaultHomeDialog = false,
         rateSeriesValue = false
     )
     NekomeTheme(darkTheme = true) {
@@ -246,6 +265,7 @@ private fun Preview() {
             onThemeClicked = { /**/ },
             onThemeResult = { /**/ },
             onDefaultHomeScreenClicked = { /**/ },
+            onDefaultHomeScreenResult = { /**/ },
             onDefaultSeriesStatusClicked = { /**/ },
             onRateSeriesClicked = { /**/ },
             onLicensesLinkClicked = { /**/ }

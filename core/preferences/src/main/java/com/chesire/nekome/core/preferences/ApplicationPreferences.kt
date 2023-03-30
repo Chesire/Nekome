@@ -29,7 +29,8 @@ class ApplicationPreferences @Inject constructor(
 ) {
 
     private val _defaultSeriesState = context.getString(R.string.key_default_series_state)
-    private val _defaultHomeScreen = context.getString(R.string.key_default_home)
+    private val defaultHomeScreenPreferenceKey =
+        stringPreferencesKey("preference.defaulthomescreen")
     private val themePreferenceKey = stringPreferencesKey("preference.theme")
 
     /**
@@ -64,24 +65,17 @@ class ApplicationPreferences @Inject constructor(
     /**
      * Gets the default [HomeScreenOptions] the home screen that shows after login or when re-launching.
      */
-    var defaultHomeScreen: HomeScreenOptions
-        get() {
-            val index = requireNotNull(
-                preferences.getString(
-                    _defaultHomeScreen,
-                    HomeScreenOptions.Anime.index.toString()
-                )
-            ) {
-                "Preferences defaultHomeScreen returned null, with supplied default value"
-            }
+    val defaultHomeScreen: Flow<HomeScreenOptions> = context.dataStore.data.map { preferences ->
+        HomeScreenOptions.getFromIndex(
+            preferences[defaultHomeScreenPreferenceKey] ?: HomeScreenOptions.Anime.index.toString()
+        )
+    }
 
-            return HomeScreenOptions.getFromIndex(index)
+    suspend fun updateDefaultHomeScreen(newDefaultHomeScreen: HomeScreenOptions) {
+        context.dataStore.edit { preferences ->
+            preferences[defaultHomeScreenPreferenceKey] = newDefaultHomeScreen.index.toString()
         }
-        set(value) {
-            preferences.edit {
-                putString(_defaultHomeScreen, value.index.toString())
-            }
-        }
+    }
 
     /**
      * Gets the [Theme] the user has chosen to use for the application.
