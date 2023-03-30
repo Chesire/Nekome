@@ -20,18 +20,6 @@
     </fragment>
 
     <fragment
-        android:id="@+id/settingsFragment"
-        android:name="com.chesire.nekome.app.settings.SettingsFragment"
-        android:label="@string/nav_settings">
-        <action
-            android:id="@+id/toOssFragment"
-            app:destination="@id/ossFragment"
-            app:enterAnim="@anim/fragment_fade_enter"
-            app:exitAnim="@anim/fragment_fade_exit"
-            app:popEnterAnim="@anim/fragment_fade_enter"
-            app:popExitAnim="@anim/fragment_fade_exit" />
-    </fragment>
-    <fragment
         android:id="@+id/ossFragment"
         android:name="com.chesire.nekome.app.settings.oss.OssFragment"
         android:label="@string/settings_licenses"
