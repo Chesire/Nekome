@@ -10,7 +10,7 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import com.adevinta.android.barista.interaction.BaristaMenuClickInteractions.clickMenu
 import com.chesire.nekome.R
-import com.chesire.nekome.app.series.collection.ui.SortTags
+import com.chesire.nekome.core.compose.composables.DialogTags
 import com.chesire.nekome.helpers.getResource
 
 /**
@@ -73,7 +73,7 @@ class SortOptionRobot(private val composeContentTestRule: ComposeContentTestRule
      */
     fun confirm() {
         composeContentTestRule
-            .onNodeWithTag(SortTags.OkButton)
+            .onNodeWithTag(DialogTags.OkButton)
             .performClick()
     }
 
@@ -95,7 +95,7 @@ class SortOptionResultsRobot(private val composeContentTestRule: ComposeContentT
      */
     fun isVisible() {
         composeContentTestRule
-            .onNodeWithTag(SortTags.Root)
+            .onNodeWithTag(DialogTags.Root)
             .assertIsDisplayed()
     }
 
@@ -105,7 +105,7 @@ class SortOptionResultsRobot(private val composeContentTestRule: ComposeContentT
     fun isNotVisible() {
         try {
             composeContentTestRule
-                .onNodeWithTag(SortTags.Root)
+                .onNodeWithTag(DialogTags.Root)
                 .assertIsNotDisplayed()
         } catch (ex: AssertionError) {
             // If an ex is thrown, then the node wasn't available
@@ -116,7 +116,7 @@ class SortOptionResultsRobot(private val composeContentTestRule: ComposeContentT
      * Assert that the sort options are in the correct locations.
      */
     fun isLoadedCorrectly() {
-        val collection = composeContentTestRule.onAllNodesWithTag(SortTags.OptionText, true)
+        val collection = composeContentTestRule.onAllNodesWithTag(DialogTags.OptionText, true)
         collection[0].assertTextContains(R.string.sort_by_default.getResource())
         collection[1].assertTextContains(R.string.sort_by_title.getResource())
         collection[2].assertTextContains(R.string.sort_by_start_date.getResource())
