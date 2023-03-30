@@ -52,9 +52,11 @@ class ConfigViewModel @Inject constructor(
             ViewAction.OnThemeClicked -> handleOnThemeClicked()
             is ViewAction.OnThemeChanged -> handleOnThemeChanged(action.newTheme)
             ViewAction.OnDefaultHomeScreenClicked -> handleOnDefaultHomeScreenClicked()
-            is ViewAction.OnDefaultHomeScreenChanged -> handleOnDefaultHomeScreenChanged(action.newHomeScreen)
+            is ViewAction.OnDefaultHomeScreenChanged ->
+                handleOnDefaultHomeScreenChanged(action.newHomeScreen)
             ViewAction.OnDefaultSeriesStatusClicked -> handleOnDefaultSeriesStatusClicked()
-            is ViewAction.OnDefaultSeriesStatusChanged -> handleOnDefaultSeriesStatusChanged(action.newDefaultSeriesStatus)
+            is ViewAction.OnDefaultSeriesStatusChanged ->
+                handleOnDefaultSeriesStatusChanged(action.newDefaultSeriesStatus)
             is ViewAction.OnRateSeriesChanged -> handleOnRateSeriesChanged(action.newValue)
         }
     }

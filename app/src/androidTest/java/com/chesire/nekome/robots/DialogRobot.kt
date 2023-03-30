@@ -8,7 +8,7 @@ import androidx.compose.ui.test.performClick
 import com.chesire.nekome.core.compose.composables.DialogTags
 
 abstract class DialogRobot(private val composeContentTestRule: ComposeContentTestRule) {
-    
+
     /**
      * Confirms the dialog option.
      */

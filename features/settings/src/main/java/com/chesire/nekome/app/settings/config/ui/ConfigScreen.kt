@@ -45,7 +45,9 @@ fun ConfigScreen(
         onDefaultHomeScreenClicked = { viewModel.execute(ViewAction.OnDefaultHomeScreenClicked) },
         onDefaultHomeScreenResult = { viewModel.execute(ViewAction.OnDefaultHomeScreenChanged(it)) },
         onDefaultSeriesStatusClicked = { viewModel.execute(ViewAction.OnDefaultSeriesStatusClicked) },
-        onDefaultSeriesStatusResult = { viewModel.execute(ViewAction.OnDefaultSeriesStatusChanged(it)) },
+        onDefaultSeriesStatusResult = {
+            viewModel.execute(ViewAction.OnDefaultSeriesStatusChanged(it))
+        },
         onRateSeriesClicked = { viewModel.execute(ViewAction.OnRateSeriesChanged(it)) },
         onLicensesLinkClicked = { navigateToOssScreen() }
     )

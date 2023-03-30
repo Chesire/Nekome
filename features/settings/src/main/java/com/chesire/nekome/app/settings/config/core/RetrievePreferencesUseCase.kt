@@ -23,7 +23,7 @@ class RetrievePreferencesUseCase @Inject constructor(
                 theme = Theme.System,
                 defaultHomeScreen = HomeScreenOptions.Anime,
                 defaultSeriesStatus = UserSeriesStatus.Current,
-                shouldRateSeries = false,
+                shouldRateSeries = false
             )
         ).combine(seriesPref.rateSeriesOnCompletion) { model, rateSeriesOnCompletion ->
             model.copy(shouldRateSeries = rateSeriesOnCompletion)

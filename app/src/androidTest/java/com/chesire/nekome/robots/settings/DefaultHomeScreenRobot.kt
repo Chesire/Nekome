@@ -69,7 +69,6 @@ class DefaultHomeScreenResultRobot(
             .onAllNodesWithTag(DialogTags.OptionRadio, true)
             .get(0)
             .assertIsSelected()
-
     }
 
     /**
