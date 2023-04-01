@@ -11,6 +11,7 @@ import io.mockk.every
 import io.mockk.just
 import io.mockk.mockk
 import io.mockk.verify
+import kotlinx.coroutines.flow.flowOf
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Rule
@@ -129,7 +130,7 @@ class ActivityViewModelTests {
             every { user } returns mockk()
         }
 
-        every { settings.defaultHomeScreen } returns HomeScreenOptions.Anime
+        every { settings.defaultHomeScreen } returns flowOf(HomeScreenOptions.Anime)
 
         val classUnderTest = ActivityViewModel(
             mockAccessTokenRepository,
@@ -154,7 +155,7 @@ class ActivityViewModelTests {
             every { user } returns mockk()
         }
 
-        every { settings.defaultHomeScreen } returns HomeScreenOptions.Manga
+        every { settings.defaultHomeScreen } returns flowOf(HomeScreenOptions.Manga)
 
         val classUnderTest = ActivityViewModel(
             mockAccessTokenRepository,

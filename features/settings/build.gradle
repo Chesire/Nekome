@@ -1,9 +1,9 @@
 plugins {
     id "com.android.library"
     id "kotlin-android"
-    id "kotlin-kapt"
     id "dagger.hilt.android.plugin"
     id "androidx.navigation.safeargs.kotlin"
+    id "kotlin-kapt"
 }
 
 android {
@@ -23,22 +23,42 @@ android {
             proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
         }
     }
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = libs.versions.compose.compiler.get()
+    }
 }
 
 dependencies {
+    implementation project(":core:compose")
     implementation project(":core:preferences")
     implementation project(":core:resources")
     implementation project(":libraries:core")
 
+    implementation platform(libs.androidx.compose.bom)
     implementation libs.androidx.appcompat
     implementation libs.androidx.browser
     implementation libs.androidx.core
+    implementation libs.androidx.datastore.preferences
     implementation libs.androidx.fragment
+    implementation libs.androidx.lifecycle.extensions
+    implementation libs.androidx.lifecycle.viewmodel
     implementation libs.androidx.navigation.fragment
     implementation libs.androidx.navigation.ui
     implementation libs.androidx.preference
+    implementation libs.bundles.compose
+    implementation libs.coil
     implementation libs.google.hilt.android
     implementation libs.mikepenz.aboutlibraries
     implementation libs.timber
+    debugImplementation libs.androidx.compose.ui.tooling
     kapt libs.google.hilt.android.compiler
+
+    testImplementation project(":testing")
+    testImplementation libs.androidx.arch.core.testing
+    testImplementation libs.junit
+    testImplementation libs.kotlin.coroutines.test
+    testImplementation libs.mockk
 }

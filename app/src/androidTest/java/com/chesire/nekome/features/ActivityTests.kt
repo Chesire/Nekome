@@ -8,9 +8,10 @@ import com.chesire.nekome.robots.activity
 import com.chesire.nekome.robots.login.loginCredentials
 import com.chesire.nekome.robots.search.host
 import com.chesire.nekome.robots.series.seriesList
-import com.chesire.nekome.robots.settings.settings
+import com.chesire.nekome.robots.settings.config
 import dagger.hilt.android.testing.HiltAndroidTest
 import javax.inject.Inject
+import kotlinx.coroutines.runBlocking
 import org.junit.Rule
 import org.junit.Test
 
@@ -25,7 +26,7 @@ class ActivityTests : UITest() {
 
     @Test
     fun overviewCanStartInAnimeView() {
-        applicationPreferences.defaultHomeScreen = HomeScreenOptions.Anime
+        runBlocking { applicationPreferences.updateDefaultHomeScreen(HomeScreenOptions.Anime) }
         launchActivity()
 
         seriesList(composeTestRule) {
@@ -35,7 +36,7 @@ class ActivityTests : UITest() {
 
     @Test
     fun overviewCanStartInMangaView() {
-        applicationPreferences.defaultHomeScreen = HomeScreenOptions.Manga
+        runBlocking { applicationPreferences.updateDefaultHomeScreen(HomeScreenOptions.Manga) }
         launchActivity()
 
         seriesList(composeTestRule) {
@@ -45,7 +46,7 @@ class ActivityTests : UITest() {
 
     @Test
     fun overviewCanNavigateToAnimeView() {
-        applicationPreferences.defaultHomeScreen = HomeScreenOptions.Manga
+        runBlocking { applicationPreferences.updateDefaultHomeScreen(HomeScreenOptions.Manga) }
         launchActivity()
 
         activity {
@@ -58,7 +59,7 @@ class ActivityTests : UITest() {
 
     @Test
     fun overviewCanNavigateToMangaView() {
-        applicationPreferences.defaultHomeScreen = HomeScreenOptions.Anime
+        runBlocking { applicationPreferences.updateDefaultHomeScreen(HomeScreenOptions.Anime) }
         launchActivity()
 
         activity {
@@ -88,7 +89,7 @@ class ActivityTests : UITest() {
         activity {
             goToSettings()
         }
-        settings {
+        config(composeTestRule) {
             validate { isVisible() }
         }
     }

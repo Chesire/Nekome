@@ -20,6 +20,7 @@ import io.mockk.every
 import io.mockk.mockk
 import junit.framework.Assert.assertTrue
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
@@ -34,7 +35,7 @@ class TrackSeriesUseCaseTest {
     fun setup() {
         clearAllMocks()
 
-        every { settings.defaultSeriesState } returns UserSeriesStatus.Current
+        every { settings.defaultSeriesState } returns flowOf(UserSeriesStatus.Current)
         retrieveUserSeriesIds = TrackSeriesUseCase(seriesRepo, settings)
     }
 

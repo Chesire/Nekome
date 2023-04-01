@@ -14,6 +14,7 @@ import com.hadilq.liveevent.LiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 /**
@@ -67,10 +68,12 @@ class ActivityViewModel @Inject constructor(
     }
 
     fun navigateToDefaultHome() {
-        if (settings.defaultHomeScreen == HomeScreenOptions.Anime) {
-            navigateTo(OverviewNavGraphDirections.globalToAnimeFragment())
-        } else {
-            navigateTo(OverviewNavGraphDirections.globalToMangaFragment())
+        viewModelScope.launch {
+            if (settings.defaultHomeScreen.first() == HomeScreenOptions.Anime) {
+                navigateTo(OverviewNavGraphDirections.globalToAnimeFragment())
+            } else {
+                navigateTo(OverviewNavGraphDirections.globalToMangaFragment())
+            }
         }
     }
 
