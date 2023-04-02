@@ -46,6 +46,7 @@ import androidx.compose.ui.semantics.testTag
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import com.chesire.nekome.app.search.R
@@ -55,7 +56,7 @@ import com.chesire.nekome.core.models.ImageModel
 
 @Composable
 fun ResultsScreen(
-    viewModel: ResultsViewModel = viewModel()
+    viewModel: ResultsViewModel = hiltViewModel()
 ) {
     val state = viewModel.uiState.collectAsState()
     Render(

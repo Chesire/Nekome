@@ -2,7 +2,6 @@
 
 package com.chesire.nekome.app.login.credentials.ui
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -57,13 +56,13 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.chesire.nekome.app.login.R
 import com.chesire.nekome.core.compose.theme.NekomeTheme
 
 @Composable
 fun CredentialsScreen(
-    viewModel: CredentialsViewModel = viewModel(),
+    viewModel: CredentialsViewModel = hiltViewModel(),
     finishAction: () -> Unit
 ) {
     val state = viewModel.uiState.collectAsState()
@@ -85,7 +84,6 @@ fun CredentialsScreen(
     )
 }
 
-@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 private fun Render(
     state: State<UIState>,
@@ -106,11 +104,12 @@ private fun Render(
         modifier = Modifier
             .fillMaxSize()
             .semantics { testTag = CredentialsTags.Root }
-    ) {
+    ) { paddingValues ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
+                .padding(paddingValues)
                 .padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {

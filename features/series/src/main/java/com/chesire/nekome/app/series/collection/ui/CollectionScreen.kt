@@ -52,6 +52,7 @@ import androidx.compose.ui.semantics.testTag
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import com.chesire.nekome.app.series.R
@@ -63,7 +64,7 @@ import com.chesire.nekome.core.preferences.flags.SortOption
 
 @Composable
 fun CollectionScreen(
-    viewModel: CollectionViewModel = viewModel(),
+    viewModel: CollectionViewModel = hiltViewModel(),
     navigateToItem: (Int, String) -> Unit
 ) {
     val state = viewModel.uiState.collectAsState()

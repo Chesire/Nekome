@@ -24,7 +24,7 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTag
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.chesire.nekome.app.settings.R
 import com.chesire.nekome.core.compose.composables.NekomeDialog
 import com.chesire.nekome.core.compose.theme.NekomeTheme
@@ -34,7 +34,7 @@ import com.chesire.nekome.core.preferences.flags.Theme
 
 @Composable
 fun ConfigScreen(
-    viewModel: ConfigViewModel = viewModel(),
+    viewModel: ConfigViewModel = hiltViewModel(),
     navigateToOssScreen: () -> Unit
 ) {
     val state = viewModel.uiState.collectAsState()

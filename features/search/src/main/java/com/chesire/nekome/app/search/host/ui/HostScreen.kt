@@ -41,14 +41,14 @@ import androidx.compose.ui.semantics.testTag
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.chesire.nekome.app.search.R
 import com.chesire.nekome.app.search.host.core.model.SearchGroup
 import com.chesire.nekome.core.compose.theme.NekomeTheme
 
 @Composable
 fun HostScreen(
-    viewModel: HostViewModel = viewModel(),
+    viewModel: HostViewModel = hiltViewModel(),
     navigationAction: (NavigationData) -> Unit
 ) {
     val state = viewModel.uiState.collectAsState()

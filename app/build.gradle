@@ -36,7 +36,11 @@ android {
         }
     }
     buildFeatures {
+        compose true
         viewBinding true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = libs.versions.compose.compiler.get()
     }
     testOptions {
         animationsDisabled true
@@ -93,6 +97,7 @@ dependencies {
     implementation libs.androidx.preference
     implementation libs.androidx.room.runtime
     implementation libs.androidx.work.runtime
+    implementation libs.bundles.compose
     implementation libs.coil
     implementation libs.google.hilt.android
     implementation libs.google.material

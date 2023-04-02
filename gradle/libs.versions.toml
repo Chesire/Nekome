@@ -34,6 +34,7 @@ androidx-core = { module = "androidx.core:core-ktx", version = "1.9.0" }
 androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version = "1.0.0" }
 androidx-fragment = { module = "androidx.fragment:fragment-ktx", version = "1.5.6" }
 androidx-hilt-compiler = { module = "androidx.hilt:hilt-compiler", version.ref = "androidx-hilt" }
+androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version = "1.0.0" }
 androidx-hilt-work = { module = "androidx.hilt:hilt-work", version.ref = "androidx-hilt" }
 androidx-lifecycle-extensions = { module = "androidx.lifecycle:lifecycle-extensions", version = "2.2.0" }
 androidx-lifecycle-livedata = { module = "androidx.lifecycle:lifecycle-livedata-ktx", version = "2.6.1" }
@@ -100,6 +101,7 @@ compose = [
     "androidx-compose-material",
     "androidx-compose-material-icons-extended",
     "androidx-compose-ui-tooling-preview",
+    "androidx-hilt-navigation-compose",
     "androidx-navigation-compose",
     "coil-compose"
 ]

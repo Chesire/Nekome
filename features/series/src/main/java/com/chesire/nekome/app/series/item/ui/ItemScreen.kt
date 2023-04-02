@@ -37,6 +37,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.chesire.nekome.app.series.R
 import com.chesire.nekome.core.compose.theme.NekomeTheme
@@ -47,7 +48,7 @@ import kotlin.math.round
 
 @Composable
 fun ItemScreen(
-    viewModel: ItemViewModel = viewModel(),
+    viewModel: ItemViewModel = hiltViewModel(),
     finishScreen: () -> Unit
 ) {
     val state = viewModel.uiState.collectAsState()
