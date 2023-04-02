@@ -44,9 +44,9 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.semantics
@@ -60,18 +60,13 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.chesire.nekome.app.login.R
 import com.chesire.nekome.core.compose.theme.NekomeTheme
-import com.chesire.nekome.core.url.UrlHandler
 
 @Composable
 fun CredentialsScreen(
-    urlHandler: UrlHandler,
     viewModel: CredentialsViewModel = viewModel(),
     finishAction: () -> Unit
 ) {
     val state = viewModel.uiState.collectAsState()
-    val context = LocalContext.current
-    val signupUrl = stringResource(id = R.string.login_sign_up_url)
-    val forgotPasswordUrl = stringResource(id = R.string.login_forgot_password_url)
 
     val navigate = state.value.navigateScreenEvent
     if (navigate == true) {
@@ -85,9 +80,7 @@ fun CredentialsScreen(
         state = state,
         onUsernameChanged = { viewModel.execute(ViewAction.UsernameChanged(it)) },
         onPasswordChanged = { viewModel.execute(ViewAction.PasswordChanged(it)) },
-        onForgotPasswordPressed = { urlHandler.launch(context, forgotPasswordUrl) },
         onLoginPressed = { viewModel.execute(ViewAction.LoginPressed) },
-        onSignupPressed = { urlHandler.launch(context, signupUrl) },
         onSnackbarShown = { viewModel.execute(ViewAction.ErrorSnackbarObserved) }
     )
 }
@@ -98,9 +91,7 @@ private fun Render(
     state: State<UIState>,
     onUsernameChanged: (String) -> Unit,
     onPasswordChanged: (String) -> Unit,
-    onForgotPasswordPressed: () -> Unit,
     onLoginPressed: () -> Unit,
-    onSignupPressed: () -> Unit,
     onSnackbarShown: () -> Unit
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
@@ -139,8 +130,7 @@ private fun Render(
             ForgotPasswordButton(
                 modifier = Modifier
                     .align(Alignment.End)
-                    .padding(top = 8.dp),
-                onForgotPasswordPressed = onForgotPasswordPressed
+                    .padding(top = 8.dp)
             )
             Spacer(modifier = Modifier.weight(1f))
             if (state.value.isPerformingLogin) {
@@ -151,7 +141,7 @@ private fun Render(
                     isLoggingIn = state.value.isPerformingLogin,
                     onLoginPressed = onLoginPressed
                 )
-                SignupButton(onSignupPressed = onSignupPressed)
+                SignupButton()
             }
         }
     }
@@ -266,13 +256,13 @@ private fun PasswordInput(
 }
 
 @Composable
-private fun ForgotPasswordButton(
-    modifier: Modifier = Modifier,
-    onForgotPasswordPressed: () -> Unit
-) {
+private fun ForgotPasswordButton(modifier: Modifier = Modifier) {
+    val uriHandler = LocalUriHandler.current
+    val forgotPasswordUrl = "https://kitsu.io/password-reset"
+
     TextButton(
         modifier = modifier,
-        onClick = onForgotPasswordPressed
+        onClick = { uriHandler.openUri(forgotPasswordUrl) }
     ) {
         Text(text = stringResource(id = R.string.login_forgot_password))
     }
@@ -296,12 +286,14 @@ private fun LoginButton(isEnabled: Boolean, isLoggingIn: Boolean, onLoginPressed
 }
 
 @Composable
-private fun SignupButton(onSignupPressed: () -> Unit) {
+private fun SignupButton() {
     val keyboardController = LocalSoftwareKeyboardController.current
+    val uriHandler = LocalUriHandler.current
+    val signupUrl = "https://kitsu.io/explore/anime"
 
     TextButton(
         onClick = {
-            onSignupPressed()
+            uriHandler.openUri(signupUrl)
             keyboardController?.hide()
         }
     ) {
@@ -325,8 +317,6 @@ private fun Preview() {
     NekomeTheme(darkTheme = true) {
         Render(
             state = produceState(initialValue = initialState, producer = { value = initialState }),
-            { /**/ },
-            { /**/ },
             { /**/ },
             { /**/ },
             { /**/ },
