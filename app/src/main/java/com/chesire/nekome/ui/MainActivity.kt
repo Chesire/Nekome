@@ -15,15 +15,12 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
 import com.chesire.lifecyklelog.LogLifecykle
 import com.chesire.nekome.app.login.credentials.ui.CredentialsScreen
 import com.chesire.nekome.app.login.syncing.ui.SyncingScreen
-import com.chesire.nekome.app.search.domain.SearchModel
 import com.chesire.nekome.app.search.host.ui.HostScreen
 import com.chesire.nekome.app.search.results.ui.ResultsScreen
 import com.chesire.nekome.app.series.collection.ui.CollectionScreen
@@ -92,7 +89,7 @@ private fun NavGraphBuilder.addLoginRoutes(
     finishDestination: String
 ) {
     composable(Nav.Login.Credentials.route) {
-        CredentialsScreen { navController.navigate(Nav.Login.Syncing.route) }
+        CredentialsScreen { navController.navigate(Nav.Login.Syncing.destination) }
     }
 
     composable(Nav.Login.Syncing.route) {
@@ -106,7 +103,7 @@ private fun NavGraphBuilder.addSeriesRoutes(navController: NavHostController) {
         arguments = Nav.Series.Anime.args
     ) {
         CollectionScreen { seriesId, seriesTitle ->
-            navController.navigate("${Nav.Series.Item.route}/$seriesId/$seriesTitle")
+            navController.navigate("${Nav.Series.Item.destination}/$seriesId/$seriesTitle")
         }
     }
 
@@ -115,7 +112,7 @@ private fun NavGraphBuilder.addSeriesRoutes(navController: NavHostController) {
         arguments = Nav.Series.Manga.args
     ) {
         CollectionScreen { seriesId, seriesTitle ->
-            navController.navigate("${Nav.Series.Item.route}/$seriesId/$seriesTitle")
+            navController.navigate("${Nav.Series.Item.destination}/$seriesId/$seriesTitle")
         }
     }
 
@@ -129,26 +126,19 @@ private fun NavGraphBuilder.addSeriesRoutes(navController: NavHostController) {
 
 private fun NavGraphBuilder.addSearchRoutes(navController: NavHostController) {
     composable(Nav.Search.Host.route) {
-        HostScreen(
-            navigationAction = {
-                navController.navigate("results")
-            }
-        )
+        HostScreen {
+            /*
+            Move the "Results" screen into the host? Then we don't need to pass anything along, we can
+            just show everything underneath the search critera.
+            Maybe hide the results again if we click the search bar?
+             */
+            navController.navigate("${Nav.Search.Results.destination}/${it.searchTerm}")
+        }
     }
+
     composable(
         route = Nav.Search.Results.route,
-        arguments = listOf(
-            navArgument("searchTerm") {
-                type = NavType.StringType
-                defaultValue = "Test"
-            },
-            navArgument("searchResults") {
-                type = NavType.ParcelableArrayType(
-                    SearchModel::class.java
-                )
-                defaultValue = emptyArray<SearchModel>()
-            }
-        )
+        arguments = Nav.Search.Results.args
     ) {
         ResultsScreen()
     }

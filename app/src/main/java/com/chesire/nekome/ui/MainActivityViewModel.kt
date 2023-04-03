@@ -38,7 +38,8 @@ class MainActivityViewModel @Inject constructor(
 
     private fun parseDefaultHomeScreen(options: HomeScreenOptions): String {
         return when (options) {
-            HomeScreenOptions.Anime -> Nav.Series.Anime.route
+            HomeScreenOptions.Anime -> Nav.Search.Host.route
+            //HomeScreenOptions.Anime -> Nav.Series.Anime.route
             HomeScreenOptions.Manga -> Nav.Series.Manga.route
         }
     }
