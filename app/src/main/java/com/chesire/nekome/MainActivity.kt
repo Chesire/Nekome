@@ -78,18 +78,13 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-
 private fun NavGraphBuilder.addLoginRoutes(navController: NavHostController) {
     composable(Nav.Login.Credentials.route) {
-        CredentialsScreen {
-            // TODO: Navigation
-        }
+        CredentialsScreen { navController.navigate(Nav.Login.Syncing.route) }
     }
 
     composable(Nav.Login.Syncing.route) {
-        SyncingScreen {
-            // TODO: Navigation
-        }
+        SyncingScreen { navController.navigate(Nav.Series.Anime.route) } // TODO: Get the default home
     }
 }
 

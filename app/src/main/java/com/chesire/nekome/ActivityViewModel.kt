@@ -37,7 +37,7 @@ class ActivityViewModel @Inject constructor(
 
     init {
         if (!userLoggedIn) {
-            navigateTo(OverviewNavGraphDirections.globalToLoginFlow())
+            //navigateTo(OverviewNavGraphDirections.globalToLoginFlow())
         } else {
             navigateToDefaultHome()
         }
@@ -60,7 +60,7 @@ class ActivityViewModel @Inject constructor(
     fun logout(isFailure: Boolean = false) = viewModelScope.launch(ioContext) {
         logoutHandler.executeLogout()
 
-        navigateTo(OverviewNavGraphDirections.globalToLoginFlow())
+        //navigateTo(OverviewNavGraphDirections.globalToLoginFlow())
 
         if (isFailure) {
             _snackBar.postValue(Unit)
