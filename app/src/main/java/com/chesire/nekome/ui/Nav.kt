@@ -1,4 +1,4 @@
-package com.chesire.nekome
+package com.chesire.nekome.ui
 
 import androidx.navigation.NamedNavArgument
 import androidx.navigation.NavType

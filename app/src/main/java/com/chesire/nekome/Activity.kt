@@ -150,6 +150,6 @@ class Activity : AppCompatActivity(), AuthCaster.AuthCasterListener, Flow {
     }
 
     override fun finishLogin() {
-        viewModel.navigateToDefaultHome()
+        // viewModel.navigateToDefaultHome()
     }
 }

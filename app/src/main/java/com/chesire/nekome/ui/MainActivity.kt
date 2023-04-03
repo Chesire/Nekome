@@ -1,8 +1,9 @@
-package com.chesire.nekome
+package com.chesire.nekome.ui
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -10,6 +11,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.material.rememberScaffoldState
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
@@ -34,6 +36,8 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
+    private val viewModel by viewModels<MainActivityViewModel>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -43,6 +47,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
+                    val state = viewModel.uiState.collectAsState()
                     val navController = rememberNavController()
                     val scaffoldState = rememberScaffoldState()
 
@@ -63,9 +68,13 @@ class MainActivity : ComponentActivity() {
                         ) {
                             NavHost(
                                 navController = navController,
-                                startDestination = Nav.Series.Anime.route
+                                startDestination = if (state.value.userLoggedIn) {
+                                    state.value.defaultHomeScreen
+                                } else {
+                                    Nav.Login.Credentials.route
+                                }
                             ) {
-                                addLoginRoutes(navController)
+                                addLoginRoutes(navController, state.value.defaultHomeScreen)
                                 addSeriesRoutes(navController)
                                 addSearchRoutes(navController)
                                 addSettingsRoutes(navController)
@@ -78,13 +87,16 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-private fun NavGraphBuilder.addLoginRoutes(navController: NavHostController) {
+private fun NavGraphBuilder.addLoginRoutes(
+    navController: NavHostController,
+    finishDestination: String
+) {
     composable(Nav.Login.Credentials.route) {
         CredentialsScreen { navController.navigate(Nav.Login.Syncing.route) }
     }
 
     composable(Nav.Login.Syncing.route) {
-        SyncingScreen { navController.navigate(Nav.Series.Anime.route) } // TODO: Get the default home
+        SyncingScreen { navController.navigate(finishDestination) }
     }
 }
 
