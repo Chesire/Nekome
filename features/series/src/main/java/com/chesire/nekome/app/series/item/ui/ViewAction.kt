@@ -10,4 +10,5 @@ sealed interface ViewAction {
     object ConfirmPressed : ViewAction
     object DeletePressed : ViewAction
     object SnackbarObserved : ViewAction
+    object FinishScreenObserved : ViewAction
 }

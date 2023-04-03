@@ -18,8 +18,11 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.chesire.lifecyklelog.LogLifecykle
 import com.chesire.nekome.app.login.credentials.ui.CredentialsScreen
+import com.chesire.nekome.app.search.domain.SearchModel
 import com.chesire.nekome.app.search.host.ui.HostScreen
+import com.chesire.nekome.app.search.results.ui.ResultsScreen
 import com.chesire.nekome.app.series.collection.ui.CollectionScreen
+import com.chesire.nekome.app.series.item.ui.ItemScreen
 import com.chesire.nekome.app.settings.config.ui.ConfigScreen
 import com.chesire.nekome.core.compose.theme.NekomeTheme
 import com.chesire.nekome.core.flags.SeriesType
@@ -58,16 +61,15 @@ class MainActivity : ComponentActivity() {
                         ) {
                             NavHost(
                                 navController = navController,
-                                startDestination = "anime"
+                                startDestination = Nav.Series.Anime
                             ) {
-                                composable("login") {
+                                composable(Nav.Login.Credentials) {
                                     CredentialsScreen {
-                                        // TODO: Implement the navigation to the sub screen here?
-                                        // TODO: Probably better inside the module
+                                        // TODO: Navigation
                                     }
                                 }
                                 composable(
-                                    route = "anime",
+                                    route = Nav.Series.Anime,
                                     arguments = listOf(
                                         navArgument("seriesType") {
                                             type = NavType.ParcelableType(SeriesType::class.java)
@@ -76,12 +78,11 @@ class MainActivity : ComponentActivity() {
                                     )
                                 ) {
                                     CollectionScreen { seriesId, seriesTitle ->
-                                        // TODO: Implement the navigation to the sub screen here?
-                                        // TODO: Probably better inside the module
+                                        navController.navigate("${Nav.Series.Item}/$seriesId/$seriesTitle")
                                     }
                                 }
                                 composable(
-                                    route = "manga",
+                                    route = Nav.Series.Manga,
                                     arguments = listOf(
                                         navArgument("seriesType") {
                                             type = NavType.ParcelableType(SeriesType::class.java)
@@ -90,19 +91,45 @@ class MainActivity : ComponentActivity() {
                                     )
                                 ) {
                                     CollectionScreen { seriesId, seriesTitle ->
-                                        // TODO: Implement the navigation to the sub screen here?
-                                        // TODO: Probably better inside the module
+                                        navController.navigate("${Nav.Series.Item}/$seriesId/$seriesTitle")
                                     }
                                 }
-                                composable("search") {
-                                    HostScreen {
-                                        // TODO: Navigation action can be handled better now
-                                    }
+                                composable(
+                                    route = "${Nav.Series.Item}/{seriesId}/{seriesTitle}",
+                                    arguments = listOf(
+                                        navArgument("seriesId") { type = NavType.IntType },
+                                        navArgument("seriesTitle") { type = NavType.StringType }
+                                    )
+                                ) {
+                                    ItemScreen { navController.popBackStack() }
                                 }
-                                composable("settings") {
+                                composable(Nav.Search.Host) {
+                                    HostScreen(
+                                        navigationAction = {
+                                            navController.navigate("results")
+                                        }
+                                    )
+                                }
+                                composable(
+                                    route = Nav.Search.Results,
+                                    arguments = listOf(
+                                        navArgument("searchTerm") {
+                                            type = NavType.StringType
+                                            defaultValue = "Test"
+                                        },
+                                        navArgument("searchResults") {
+                                            type = NavType.ParcelableArrayType(
+                                                SearchModel::class.java
+                                            )
+                                            defaultValue = emptyArray<SearchModel>()
+                                        }
+                                    )
+                                ) {
+                                    ResultsScreen()
+                                }
+                                composable(Nav.Settings.Config) {
                                     ConfigScreen {
-                                        // TODO: Implement the navigation to the sub screen here?
-                                        // TODO: Probably better inside the module
+                                        // TODO: Navigation
                                     }
                                 }
                             }

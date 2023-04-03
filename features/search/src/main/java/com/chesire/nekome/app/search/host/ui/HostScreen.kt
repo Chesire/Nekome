@@ -57,6 +57,12 @@ fun HostScreen(
     if (navigationEvent != null) {
         LaunchedEffect(navigationEvent) {
             navigationAction(navigationEvent)
+            //findNavController().navigate(
+            //    HostFragmentDirections.toResultsFragment(
+            //        it.searchTerm,
+            //        it.searchResults.toTypedArray()
+            //    )
+            //)
             viewModel.execute(ViewAction.NavigationObserved)
         }
     }

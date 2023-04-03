@@ -60,6 +60,7 @@ fun ItemScreen(
         onConfirmPressed = { viewModel.execute(ViewAction.ConfirmPressed) },
         onDeleteResult = { viewModel.execute(ViewAction.OnDeleteResult(it)) },
         onSnackbarShown = { viewModel.execute(ViewAction.SnackbarObserved) },
+        onFinishedScreen = { viewModel.execute(ViewAction.FinishScreenObserved) },
         finishScreen = finishScreen
     )
 }
@@ -73,7 +74,8 @@ private fun Render(
     onConfirmPressed: () -> Unit,
     onDeleteResult: (Boolean) -> Unit,
     onSnackbarShown: () -> Unit,
-    finishScreen: () -> Unit
+    finishScreen: () -> Unit,
+    onFinishedScreen: () -> Unit
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
 
@@ -131,6 +133,7 @@ private fun Render(
 
     if (state.value.finishScreen) {
         finishScreen()
+        onFinishedScreen()
     }
 }
 
@@ -316,7 +319,8 @@ private fun Preview() {
             onConfirmPressed = { /**/ },
             onDeleteResult = { /**/ },
             onSnackbarShown = { /**/ },
-            finishScreen = { /**/ }
+            finishScreen = { /**/ },
+            onFinishedScreen = { /**/ }
         )
     }
 }
