@@ -67,7 +67,7 @@ fun MainActivityScreen(viewModel: MainActivityViewModel = viewModel()) {
                         }
                     }
                 }
-            },
+            }
         ) { paddingValues ->
             NavHost(
                 navController = navController,
