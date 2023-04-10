@@ -16,7 +16,6 @@ import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTag
@@ -78,7 +77,7 @@ class MainActivity : ComponentActivity() {
                                         BottomNavigationItem(
                                             icon = {
                                                 Icon(
-                                                    painter = painterResource(id = screen.icon),
+                                                    imageVector = screen.icon,
                                                     contentDescription = stringResource(id = screen.title)
                                                 )
                                             },

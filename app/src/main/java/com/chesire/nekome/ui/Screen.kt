@@ -1,7 +1,12 @@
 package com.chesire.nekome.ui
 
-import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.CollectionsBookmark
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.VideoLibrary
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NamedNavArgument
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
@@ -42,7 +47,7 @@ sealed class Screen {
     object Host : Screen(), BottomNavTarget {
         override val route = "host"
         override val title = R.string.nav_search
-        override val icon = R.drawable.ic_search
+        override val icon = Icons.Default.Search
         override val tag = MainActivityTags.Search
     }
 
@@ -57,7 +62,7 @@ sealed class Screen {
         )
 
         override val title = R.string.nav_anime
-        override val icon = R.drawable.ic_video_library
+        override val icon = Icons.Default.VideoLibrary
         override val tag = MainActivityTags.Anime
     }
 
@@ -72,7 +77,7 @@ sealed class Screen {
         )
 
         override val title = R.string.nav_manga
-        override val icon = R.drawable.ic_collections_bookmark
+        override val icon = Icons.Default.CollectionsBookmark
         override val tag = MainActivityTags.Manga
     }
 
@@ -89,7 +94,7 @@ sealed class Screen {
     object Config : Screen(), BottomNavTarget {
         override val route = "config"
         override val title = R.string.nav_settings
-        override val icon = R.drawable.ic_settings
+        override val icon = Icons.Default.Settings
         override val tag = MainActivityTags.Settings
     }
 
@@ -101,9 +106,6 @@ sealed class Screen {
 interface BottomNavTarget {
     @get:StringRes
     val title: Int
-
-    @get:DrawableRes
-    val icon: Int // TODO: Change these to compose icons
-
+    val icon: ImageVector
     val tag: String
 }
