@@ -14,12 +14,9 @@ import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
-import androidx.navigation.findNavController
 import com.chesire.nekome.app.series.R
-import com.chesire.nekome.app.series.collection.ui.CollectionScreen
 import com.chesire.nekome.app.series.collection.ui.CollectionViewModel
 import com.chesire.nekome.app.series.collection.ui.ViewAction
-import com.chesire.nekome.core.compose.theme.NekomeTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -33,18 +30,6 @@ class CollectionFragment : Fragment(), MenuProvider {
         savedInstanceState: Bundle?
     ): View = ComposeView(requireContext()).apply {
         setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
-        setContent {
-            NekomeTheme {
-                CollectionScreen(
-                    viewModel = viewModel,
-                    navigateToItem = { seriesId, seriesTitle ->
-                        findNavController().navigate(
-                            CollectionFragmentDirections.toItemFragment(seriesId, seriesTitle)
-                        )
-                    }
-                )
-            }
-        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

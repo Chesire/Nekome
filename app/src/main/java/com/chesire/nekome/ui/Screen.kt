@@ -99,5 +99,5 @@ interface BottomNavTarget {
     val title: Int
 
     @get:DrawableRes
-    val icon: Int
+    val icon: Int // TODO: Change these to compose icons
 }

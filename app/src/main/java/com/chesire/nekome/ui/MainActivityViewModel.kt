@@ -2,6 +2,7 @@ package com.chesire.nekome.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.chesire.nekome.core.AuthCaster
 import com.chesire.nekome.core.preferences.ApplicationPreferences
 import com.chesire.nekome.core.preferences.flags.HomeScreenOptions
 import com.chesire.nekome.datasource.auth.AccessTokenRepository
@@ -16,6 +17,7 @@ import kotlinx.coroutines.launch
 @HiltViewModel
 class MainActivityViewModel @Inject constructor(
     private val repo: AccessTokenRepository,
+    private val authCaster: AuthCaster,
     private val settings: ApplicationPreferences
 ) : ViewModel() {
 
@@ -28,6 +30,14 @@ class MainActivityViewModel @Inject constructor(
         }
 
     init {
+        authCaster.subscribeToAuthError(
+            object : AuthCaster.AuthCasterListener {
+                override fun unableToRefresh() {
+                    TODO("Not yet implemented")
+                    // TODO: execute logout code :thinking:
+                }
+            }
+        )
         viewModelScope.launch {
             state = state.copy(
                 userLoggedIn = repo.accessToken.isNotEmpty(),
