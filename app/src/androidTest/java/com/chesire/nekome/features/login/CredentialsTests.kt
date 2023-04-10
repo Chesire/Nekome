@@ -5,7 +5,6 @@ import com.chesire.nekome.UITest
 import com.chesire.nekome.datasource.auth.remote.AuthApi
 import com.chesire.nekome.datasource.auth.remote.AuthResult
 import com.chesire.nekome.injection.AuthModule
-import com.chesire.nekome.injection.UrlModule
 import com.chesire.nekome.robots.login.loginCredentials
 import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidTest
