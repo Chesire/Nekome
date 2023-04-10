@@ -120,7 +120,7 @@ class SearchSeriesUseCaseTest {
         )
         val expected = Ok(
             listOf(
-                SearchModel(
+                SearchDomain(
                     id = 55,
                     type = SeriesType.Manga,
                     synopsis = "",
