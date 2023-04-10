@@ -9,10 +9,12 @@ import com.chesire.nekome.robots.series.seriesList
 import com.chesire.nekome.testing.createSeriesEntity
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.runBlocking
+import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test
 
 @HiltAndroidTest
+@Ignore("Need to add sorting again")
 class SortTests : UITest() {
 
     private val seriesData = InitialSortSeriesData()

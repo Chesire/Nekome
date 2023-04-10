@@ -13,6 +13,7 @@ import com.chesire.nekome.helpers.createTestUser
 import com.chesire.nekome.helpers.login
 import com.chesire.nekome.helpers.logout
 import com.chesire.nekome.helpers.reset
+import com.chesire.nekome.ui.MainActivity
 import dagger.hilt.android.testing.HiltAndroidRule
 import javax.inject.Inject
 import kotlinx.coroutines.runBlocking
@@ -81,7 +82,7 @@ abstract class UITest {
      * Launches the [Activity] using the [ActivityScenario].
      */
     protected fun launchActivity() {
-        ActivityScenario.launch(Activity::class.java)
+        ActivityScenario.launch(MainActivity::class.java)
         // Not the nicest solution, but it keeps compose views a bit happier when they launch.
         Thread.sleep(200)
     }

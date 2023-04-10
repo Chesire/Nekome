@@ -18,7 +18,7 @@ class SettingsTests : UITest() {
     fun canReachSettings() {
         launchActivity()
 
-        activity {
+        activity(composeTestRule) {
             goToSettings()
         }
         config(composeTestRule) {
@@ -30,7 +30,7 @@ class SettingsTests : UITest() {
     fun changeDefaultSeriesState() {
         launchActivity()
 
-        activity {
+        activity(composeTestRule) {
             goToSettings()
         }
         config(composeTestRule) {
@@ -92,7 +92,7 @@ class SettingsTests : UITest() {
     fun changeDefaultHomeScreenState() {
         launchActivity()
 
-        activity {
+        activity(composeTestRule) {
             goToSettings()
         }
         config(composeTestRule) {
@@ -127,7 +127,7 @@ class SettingsTests : UITest() {
     fun changeThemeSetting() {
         launchActivity()
 
-        activity {
+        activity(composeTestRule) {
             goToSettings()
         }
         config(composeTestRule) {
@@ -171,7 +171,7 @@ class SettingsTests : UITest() {
     fun changeRateOnCompletionSetting() {
         launchActivity()
 
-        activity {
+        activity(composeTestRule) {
             goToSettings()
         }
         config(composeTestRule) {
@@ -183,7 +183,7 @@ class SettingsTests : UITest() {
     fun openOSS() {
         launchActivity()
 
-        activity {
+        activity(composeTestRule) {
             goToSettings()
         }
         config(composeTestRule) {

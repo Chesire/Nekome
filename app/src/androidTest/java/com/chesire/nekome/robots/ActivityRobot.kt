@@ -1,91 +1,115 @@
 package com.chesire.nekome.robots
 
-import com.adevinta.android.barista.assertion.BaristaVisibilityAssertions.assertDisplayed
-import com.adevinta.android.barista.interaction.BaristaClickInteractions.clickOn
-import com.adevinta.android.barista.interaction.BaristaDrawerInteractions.openDrawer
-import com.chesire.nekome.R
+import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.assertIsSelected
+import androidx.compose.ui.test.junit4.ComposeContentTestRule
+import androidx.compose.ui.test.onNodeWithTag
+import androidx.compose.ui.test.performClick
+import com.chesire.nekome.ui.MainActivityTags
 
 /**
  * Method to interact with the [ActivityRobot].
  */
-fun activity(func: ActivityRobot.() -> Unit) = ActivityRobot().apply { func() }
+fun activity(
+    composeContentTestRule: ComposeContentTestRule,
+    func: ActivityRobot.() -> Unit
+) = ActivityRobot(composeContentTestRule).apply(func)
 
 /**
  * Robot to interact with the activity screen.
  */
-class ActivityRobot {
+class ActivityRobot(private val composeContentTestRule: ComposeContentTestRule) {
 
     /**
      * Executes navigation to the Anime screen.
      */
     fun goToAnime() {
-        openDrawer()
-        clickOn(R.string.nav_anime)
+        composeContentTestRule
+            .onNodeWithTag(MainActivityTags.Anime)
+            .performClick()
     }
 
     /**
      * Executes navigation to the Manga screen.
      */
     fun goToManga() {
-        openDrawer()
-        clickOn(R.string.nav_manga)
+        composeContentTestRule
+            .onNodeWithTag(MainActivityTags.Manga)
+            .performClick()
     }
 
     /**
      * Executes navigation to the Search screen.
      */
     fun goToSearch() {
-        openDrawer()
-        clickOn(R.string.nav_search)
+        composeContentTestRule
+            .onNodeWithTag(MainActivityTags.Search)
+            .performClick()
     }
 
     /**
      * Executes navigation to the Settings screen.
      */
     fun goToSettings() {
-        openDrawer()
-        clickOn(R.string.nav_settings)
-    }
-
-    /**
-     * Executes logout from the navigation drawer, then executes the chosen [ActivityLogoutChoices].
-     */
-    infix fun logout(func: ActivityLogoutChoices.() -> Unit): ActivityLogoutChoices {
-        openDrawer()
-        clickOn(R.string.menu_logout)
-        return ActivityLogoutChoices().apply { func() }
+        composeContentTestRule
+            .onNodeWithTag(MainActivityTags.Settings)
+            .performClick()
     }
 
     /**
      * Executes validation steps.
      */
     infix fun validate(func: ActivityResultRobot.() -> Unit) =
-        ActivityResultRobot().apply { func() }
-}
-
-/**
- * Choices to take once the logout dialog has appeared.
- */
-class ActivityLogoutChoices {
-
-    /**
-     * Confirm user logout.
-     */
-    fun confirm() = clickOn(R.string.menu_logout_prompt_confirm)
-
-    /**
-     * Cancel user logout.
-     */
-    fun cancel() = clickOn(R.string.menu_logout_prompt_cancel)
+        ActivityResultRobot(composeContentTestRule).apply(func)
 }
 
 /**
  * Robot to check the results for the activity screen.
  */
-class ActivityResultRobot {
+class ActivityResultRobot(private val composeContentTestRule: ComposeContentTestRule) {
 
     /**
-     * Asserts the login details screen is shown.
+     * Asserts the main activity screen is shown.
      */
-    fun isVisible() = assertDisplayed(R.id.activityNavigation)
+    fun isVisible() {
+        composeContentTestRule
+            .onNodeWithTag(MainActivityTags.Root)
+            .assertIsDisplayed()
+    }
+
+    /**
+     * Asserts that the anime screen is currently shown.
+     */
+    fun isOnAnimeScreen() {
+        composeContentTestRule
+            .onNodeWithTag(MainActivityTags.Anime)
+            .assertIsSelected()
+    }
+
+    /**
+     * Asserts that the manga screen is currently shown.
+     */
+    fun isOnMangaScreen() {
+        composeContentTestRule
+            .onNodeWithTag(MainActivityTags.Manga)
+            .assertIsSelected()
+    }
+
+    /**
+     * Asserts that the search screen is currently shown.
+     */
+    fun isOnSearchScreen() {
+        composeContentTestRule
+            .onNodeWithTag(MainActivityTags.Search)
+            .assertIsSelected()
+    }
+
+    /**
+     * Asserts that the settings screen is currently shown.
+     */
+    fun isOnSettingsScreen() {
+        composeContentTestRule
+            .onNodeWithTag(MainActivityTags.Settings)
+            .assertIsSelected()
+    }
 }

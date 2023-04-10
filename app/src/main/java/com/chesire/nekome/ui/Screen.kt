@@ -43,6 +43,7 @@ sealed class Screen {
         override val route = "host"
         override val title = R.string.nav_search
         override val icon = R.drawable.ic_search
+        override val tag = MainActivityTags.Search
     }
 
     object Anime : Screen(), BottomNavTarget {
@@ -57,6 +58,7 @@ sealed class Screen {
 
         override val title = R.string.nav_anime
         override val icon = R.drawable.ic_video_library
+        override val tag = MainActivityTags.Anime
     }
 
     object Manga : Screen(), BottomNavTarget {
@@ -71,6 +73,7 @@ sealed class Screen {
 
         override val title = R.string.nav_manga
         override val icon = R.drawable.ic_collections_bookmark
+        override val tag = MainActivityTags.Manga
     }
 
     object Item : Screen() {
@@ -87,6 +90,7 @@ sealed class Screen {
         override val route = "config"
         override val title = R.string.nav_settings
         override val icon = R.drawable.ic_settings
+        override val tag = MainActivityTags.Settings
     }
 
     object OSS : Screen() {
@@ -100,4 +104,6 @@ interface BottomNavTarget {
 
     @get:DrawableRes
     val icon: Int // TODO: Change these to compose icons
+
+    val tag: String
 }

@@ -18,6 +18,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.testTag
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavGraphBuilder
@@ -54,7 +56,10 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             NekomeTheme {
-                Surface(modifier = Modifier.fillMaxSize()) {
+                Surface(modifier = Modifier
+                    .fillMaxSize()
+                    .semantics { testTag = MainActivityTags.Root }
+                ) {
                     val state = viewModel.uiState.collectAsState()
                     val navController = rememberNavController()
                     val scaffoldState = rememberScaffoldState()
@@ -76,6 +81,7 @@ class MainActivity : ComponentActivity() {
                                                     contentDescription = stringResource(id = screen.title)
                                                 )
                                             },
+                                            modifier = Modifier.semantics { testTag = screen.tag },
                                             label = { Text(stringResource(screen.title)) },
                                             selected = currentDestination?.hierarchy?.any { it.route == screen.route } == true,
                                             onClick = {
@@ -112,6 +118,14 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+}
+
+object MainActivityTags {
+    const val Root = "MainActivityRoot"
+    const val Anime = "MainActivityAnime"
+    const val Manga = "MainActivityManga"
+    const val Search = "MainActivitySearch"
+    const val Settings = "MainActivitySettings"
 }
 
 private fun NavGraphBuilder.addLoginRoutes(

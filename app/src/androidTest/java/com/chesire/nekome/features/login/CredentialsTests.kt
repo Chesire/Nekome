@@ -15,10 +15,7 @@ import org.junit.Rule
 import org.junit.Test
 
 @HiltAndroidTest
-@UninstallModules(
-    AuthModule::class,
-    UrlModule::class
-)
+@UninstallModules(AuthModule::class)
 class CredentialsTests : UITest() {
 
     override val startLoggedIn = false

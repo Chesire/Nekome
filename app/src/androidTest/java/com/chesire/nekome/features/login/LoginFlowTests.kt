@@ -80,7 +80,7 @@ class LoginFlowTests : UITest() {
         loginSyncing(composeTestRule) {
             // Skipped over, too fast to test
         }
-        activity {
+        activity(composeTestRule) {
             validate { isVisible() }
         }
     }

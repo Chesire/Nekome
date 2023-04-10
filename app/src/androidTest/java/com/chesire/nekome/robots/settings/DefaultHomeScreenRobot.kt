@@ -2,9 +2,12 @@ package com.chesire.nekome.robots.settings
 
 import androidx.compose.ui.test.assertIsSelected
 import androidx.compose.ui.test.assertTextContains
+import androidx.compose.ui.test.filterToOne
+import androidx.compose.ui.test.hasParent
+import androidx.compose.ui.test.hasTestTag
 import androidx.compose.ui.test.junit4.ComposeContentTestRule
 import androidx.compose.ui.test.onAllNodesWithTag
-import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.performClick
 import com.chesire.nekome.core.compose.composables.DialogTags
 import com.chesire.nekome.core.preferences.flags.HomeScreenOptions
@@ -24,7 +27,8 @@ class DefaultHomeScreenRobot(
      */
     fun chooseAnime() {
         composeContentTestRule
-            .onNodeWithText(HomeScreenOptions.Anime.stringId.getResource())
+            .onAllNodesWithText(HomeScreenOptions.Anime.stringId.getResource())
+            .filterToOne(hasParent(hasTestTag(DialogTags.Root)))
             .performClick()
     }
 
@@ -33,7 +37,8 @@ class DefaultHomeScreenRobot(
      */
     fun chooseManga() {
         composeContentTestRule
-            .onNodeWithText(HomeScreenOptions.Manga.stringId.getResource())
+            .onAllNodesWithText(HomeScreenOptions.Manga.stringId.getResource())
+            .filterToOne(hasParent(hasTestTag(DialogTags.Root)))
             .performClick()
     }
 

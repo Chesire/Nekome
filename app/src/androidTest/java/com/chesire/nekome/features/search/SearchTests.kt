@@ -43,7 +43,7 @@ class SearchTests : UITest() {
     fun canReachSearch() {
         launchActivity()
 
-        activity {
+        activity(composeTestRule) {
             goToSearch()
         }
         host(composeTestRule) {
@@ -55,7 +55,7 @@ class SearchTests : UITest() {
     fun emptySearchTermShowsError() {
         launchActivity()
 
-        activity {
+        activity(composeTestRule) {
             goToSearch()
         }
         host(composeTestRule) {
@@ -71,7 +71,7 @@ class SearchTests : UITest() {
     fun genericErrorFromSearchShowsError() {
         launchActivity()
 
-        activity {
+        activity(composeTestRule) {
             goToSearch()
         }
         host(composeTestRule) {
@@ -87,7 +87,7 @@ class SearchTests : UITest() {
     fun noSeriesFoundErrorFromSearchShowsError() {
         launchActivity()
 
-        activity {
+        activity(composeTestRule) {
             goToSearch()
         }
         host(composeTestRule) {

@@ -4,10 +4,6 @@ import androidx.compose.ui.test.junit4.createComposeRule
 import com.chesire.nekome.UITest
 import com.chesire.nekome.core.preferences.flags.HomeScreenOptions
 import com.chesire.nekome.robots.activity
-import com.chesire.nekome.robots.login.loginCredentials
-import com.chesire.nekome.robots.search.host
-import com.chesire.nekome.robots.series.seriesList
-import com.chesire.nekome.robots.settings.config
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.runBlocking
 import org.junit.Rule
@@ -24,8 +20,10 @@ class ActivityTests : UITest() {
         runBlocking { applicationPreferences.updateDefaultHomeScreen(HomeScreenOptions.Anime) }
         launchActivity()
 
-        seriesList(composeTestRule) {
-            validate { isAnimeScreen() }
+        activity(composeTestRule) {
+            validate {
+                isOnAnimeScreen()
+            }
         }
     }
 
@@ -34,8 +32,10 @@ class ActivityTests : UITest() {
         runBlocking { applicationPreferences.updateDefaultHomeScreen(HomeScreenOptions.Manga) }
         launchActivity()
 
-        seriesList(composeTestRule) {
-            validate { isMangaScreen() }
+        activity(composeTestRule) {
+            validate {
+                isOnMangaScreen()
+            }
         }
     }
 
@@ -44,11 +44,11 @@ class ActivityTests : UITest() {
         runBlocking { applicationPreferences.updateDefaultHomeScreen(HomeScreenOptions.Manga) }
         launchActivity()
 
-        activity {
+        activity(composeTestRule) {
             goToAnime()
-        }
-        seriesList(composeTestRule) {
-            validate { isAnimeScreen() }
+            validate {
+                isOnAnimeScreen()
+            }
         }
     }
 
@@ -57,23 +57,23 @@ class ActivityTests : UITest() {
         runBlocking { applicationPreferences.updateDefaultHomeScreen(HomeScreenOptions.Anime) }
         launchActivity()
 
-        activity {
+        activity(composeTestRule) {
             goToManga()
-        }
-        seriesList(composeTestRule) {
-            validate { isMangaScreen() }
+            validate {
+                isOnMangaScreen()
+            }
         }
     }
 
     @Test
-    fun overviewCanNavigateToSearch() {
+    fun overviewCanNavigateToSearchView() {
         launchActivity()
 
-        activity {
+        activity(composeTestRule) {
             goToSearch()
-        }
-        host(composeTestRule) {
-            validate { isVisible() }
+            validate {
+                isOnSearchScreen()
+            }
         }
     }
 
@@ -81,38 +81,11 @@ class ActivityTests : UITest() {
     fun overviewCanNavigateToSettingsView() {
         launchActivity()
 
-        activity {
+        activity(composeTestRule) {
             goToSettings()
-        }
-        config(composeTestRule) {
-            validate { isVisible() }
-        }
-    }
-
-    @Test
-    fun acceptingLogoutExits() {
-        launchActivity()
-
-        activity {
-            logout {
-                confirm()
+            validate {
+                isOnSettingsScreen()
             }
-        }
-        loginCredentials(composeTestRule) {
-            validate { isVisible() }
-        }
-    }
-
-    @Test
-    fun decliningLogoutRemains() {
-        launchActivity()
-
-        activity {
-            logout {
-                cancel()
-            }
-        } validate {
-            isVisible()
         }
     }
 }

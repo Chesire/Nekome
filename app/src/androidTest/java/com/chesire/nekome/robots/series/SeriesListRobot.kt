@@ -11,8 +11,6 @@ import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTouchInput
 import androidx.compose.ui.test.swipeDown
-import com.adevinta.android.barista.assertion.BaristaVisibilityAssertions.assertDisplayed
-import com.chesire.nekome.R
 import com.chesire.nekome.app.series.collection.ui.RatingTags
 import com.chesire.nekome.app.series.collection.ui.SeriesCollectionTags
 
@@ -126,18 +124,6 @@ class SeriesListResultRobot(private val composeContentTestRule: ComposeContentTe
                 substring = true
             )
     }
-
-    /**
-     * Asserts that the current screen is the [AnimeFragment].
-     * TODO: Change this once we move to full compose.
-     */
-    fun isAnimeScreen() = assertDisplayed(R.string.nav_anime)
-
-    /**
-     * Asserts that the current screen is the [MangaFragment].
-     * TODO: Change this once we move to full compose.
-     */
-    fun isMangaScreen() = assertDisplayed(R.string.nav_manga)
 
     /**
      * Asserts that the series progress at [itemPosition] is the expected value of
