@@ -72,7 +72,7 @@ class MainActivity : ComponentActivity() {
                             ) {
                                 addLoginRoutes(navController, state.value.defaultHomeScreen)
                                 addSeriesRoutes(navController)
-                                addSearchRoutes(navController)
+                                addSearchRoutes()
                                 addSettingsRoutes(navController)
                             }
                         }
@@ -123,7 +123,7 @@ private fun NavGraphBuilder.addSeriesRoutes(navController: NavHostController) {
     }
 }
 
-private fun NavGraphBuilder.addSearchRoutes(navController: NavHostController) {
+private fun NavGraphBuilder.addSearchRoutes() {
     composable(Nav.Search.Host.route) {
         HostScreen()
     }
