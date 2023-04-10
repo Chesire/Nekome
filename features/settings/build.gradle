@@ -36,6 +36,7 @@ dependencies {
     implementation project(":core:preferences")
     implementation project(":core:resources")
     implementation project(":libraries:core")
+    implementation project(":libraries:datasource:user")
 
     implementation platform(libs.androidx.compose.bom)
     implementation libs.androidx.appcompat

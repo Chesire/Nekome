@@ -26,7 +26,8 @@ class ConfigFragment : Fragment() {
                 ConfigScreen(
                     navigateToOssScreen = {
                         findNavController().navigate(ConfigFragmentDirections.toOssFragment())
-                    }
+                    },
+                    navigateAfterLogout = { /**/ }
                 )
             }
         }

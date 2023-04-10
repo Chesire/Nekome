@@ -2,7 +2,9 @@ package com.chesire.nekome.app.settings.config.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.chesire.nekome.app.settings.config.LogoutExecutor
 import com.chesire.nekome.app.settings.config.core.RetrievePreferencesUseCase
+import com.chesire.nekome.app.settings.config.core.RetrieveUserUseCase
 import com.chesire.nekome.app.settings.config.core.UpdateDefaultHomeScreenUseCase
 import com.chesire.nekome.app.settings.config.core.UpdateDefaultSeriesStateUseCase
 import com.chesire.nekome.app.settings.config.core.UpdateRateSeriesUseCase
@@ -10,20 +12,24 @@ import com.chesire.nekome.app.settings.config.core.UpdateThemeUseCase
 import com.chesire.nekome.core.flags.UserSeriesStatus
 import com.chesire.nekome.core.preferences.flags.HomeScreenOptions
 import com.chesire.nekome.core.preferences.flags.Theme
+import com.chesire.nekome.datasource.user.User
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 @HiltViewModel
 class ConfigViewModel @Inject constructor(
     private val retrievePreferences: RetrievePreferencesUseCase,
+    private val retrieveUser: RetrieveUserUseCase,
     private val updateRateSeries: UpdateRateSeriesUseCase,
     private val updateTheme: UpdateThemeUseCase,
     private val updateDefaultHomeScreen: UpdateDefaultHomeScreenUseCase,
-    private val updateDefaultSeriesState: UpdateDefaultSeriesStateUseCase
+    private val updateDefaultSeriesState: UpdateDefaultSeriesStateUseCase,
+    private val logoutExecutor: LogoutExecutor
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(UIState.default)
@@ -36,6 +42,14 @@ class ConfigViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
+            val user = retrieveUser().first()
+            check(user is User.Found)
+            state = state.copy(
+                userModel = UserModel(
+                    avatarUrl = user.domain.avatar.largest?.url ?: "",
+                    userName = user.domain.name
+                )
+            )
             retrievePreferences().collect { prefModel ->
                 state = state.copy(
                     themeValue = prefModel.theme,
@@ -49,6 +63,9 @@ class ConfigViewModel @Inject constructor(
 
     fun execute(action: ViewAction) {
         when (action) {
+            ViewAction.OnLogoutClicked -> handleOnLogoutClicked()
+            is ViewAction.OnLogoutResult -> handleOnLogoutResult(action.logout)
+            ViewAction.ConsumeExecuteLogout -> handleConsumeExecuteLogout()
             ViewAction.OnThemeClicked -> handleOnThemeClicked()
             is ViewAction.OnThemeChanged -> handleOnThemeChanged(action.newTheme)
             ViewAction.OnDefaultHomeScreenClicked -> handleOnDefaultHomeScreenClicked()
@@ -59,6 +76,24 @@ class ConfigViewModel @Inject constructor(
                 handleOnDefaultSeriesStatusChanged(action.newDefaultSeriesStatus)
             is ViewAction.OnRateSeriesChanged -> handleOnRateSeriesChanged(action.newValue)
         }
+    }
+
+    private fun handleOnLogoutClicked() {
+        state = state.copy(showLogoutDialog = true)
+    }
+
+    private fun handleOnLogoutResult(shouldLogout: Boolean) {
+        state = state.copy(showLogoutDialog = false)
+        if (shouldLogout) {
+            viewModelScope.launch {
+                logoutExecutor.executeLogout()
+                state = state.copy(executeLogout = Unit)
+            }
+        }
+    }
+
+    private fun handleConsumeExecuteLogout() {
+        state = state.copy(executeLogout = null)
     }
 
     private fun handleOnThemeClicked() {

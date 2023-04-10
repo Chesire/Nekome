@@ -122,7 +122,11 @@ private fun NavGraphBuilder.addLoginRoutes(
     }
 
     composable(Screen.Syncing.route) {
-        SyncingScreen { navController.navigate(finishDestination) }
+        SyncingScreen {
+            navController.navigate(finishDestination) {
+                popUpTo(navController.graph.id) { inclusive = true }
+            }
+        }
     }
 }
 
@@ -161,8 +165,13 @@ private fun NavGraphBuilder.addSearchRoutes() {
 
 private fun NavGraphBuilder.addSettingsRoutes(navController: NavHostController) {
     composable(Screen.Config.route) {
-        ConfigScreen {
-            // TODO: Navigation
-        }
+        ConfigScreen(
+            navigateToOssScreen = { /**/ },
+            navigateAfterLogout = {
+                navController.navigate(Screen.Credentials.route) {
+                    popUpTo(navController.graph.id) { inclusive = true }
+                }
+            }
+        )
     }
 }

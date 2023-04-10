@@ -5,6 +5,10 @@ import com.chesire.nekome.core.preferences.flags.HomeScreenOptions
 import com.chesire.nekome.core.preferences.flags.Theme
 
 sealed interface ViewAction {
+    object OnLogoutClicked : ViewAction
+    data class OnLogoutResult(val logout: Boolean) : ViewAction
+    object ConsumeExecuteLogout : ViewAction
+
     object OnThemeClicked : ViewAction
     data class OnThemeChanged(
         val newTheme: Theme?
