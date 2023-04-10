@@ -56,9 +56,10 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             NekomeTheme {
-                Surface(modifier = Modifier
-                    .fillMaxSize()
-                    .semantics { testTag = MainActivityTags.Root }
+                Surface(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .semantics { testTag = MainActivityTags.Root }
                 ) {
                     val state = viewModel.uiState.collectAsState()
                     val navController = rememberNavController()
