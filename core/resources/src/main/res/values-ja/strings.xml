@@ -1,6 +1,7 @@
 <resources>
 
     <string name="app_name">Nekome</string>
+    <string name="version">0.0.0</string>
 
     <string name="nav_anime">アニメ</string>
     <string name="nav_credentials">資格情報</string>

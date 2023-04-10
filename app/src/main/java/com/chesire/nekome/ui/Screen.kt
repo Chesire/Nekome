@@ -23,6 +23,7 @@ sealed class Screen {
 
                 Credentials.route,
                 Item.route,
+                OSS.route,
                 Syncing.route -> false
 
                 else -> false
@@ -86,6 +87,10 @@ sealed class Screen {
         override val route = "config"
         override val title = R.string.nav_settings
         override val icon = R.drawable.ic_settings
+    }
+
+    object OSS : Screen() {
+        override val route = "oss"
     }
 }
 

@@ -33,6 +33,7 @@ import com.chesire.nekome.app.search.host.ui.HostScreen
 import com.chesire.nekome.app.series.collection.ui.CollectionScreen
 import com.chesire.nekome.app.series.item.ui.ItemScreen
 import com.chesire.nekome.app.settings.config.ui.ConfigScreen
+import com.chesire.nekome.app.settings.oss.ui.OssScreen
 import com.chesire.nekome.core.compose.theme.NekomeTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -166,12 +167,16 @@ private fun NavGraphBuilder.addSearchRoutes() {
 private fun NavGraphBuilder.addSettingsRoutes(navController: NavHostController) {
     composable(Screen.Config.route) {
         ConfigScreen(
-            navigateToOssScreen = { /**/ },
+            navigateToOssScreen = { navController.navigate(Screen.OSS.route) },
             navigateAfterLogout = {
                 navController.navigate(Screen.Credentials.route) {
                     popUpTo(navController.graph.id) { inclusive = true }
                 }
             }
         )
+    }
+
+    composable(Screen.OSS.route) {
+        OssScreen()
     }
 }
