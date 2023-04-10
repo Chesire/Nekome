@@ -22,7 +22,6 @@ import com.chesire.lifecyklelog.LogLifecykle
 import com.chesire.nekome.app.login.credentials.ui.CredentialsScreen
 import com.chesire.nekome.app.login.syncing.ui.SyncingScreen
 import com.chesire.nekome.app.search.host.ui.HostScreen
-import com.chesire.nekome.app.search.results.ui.ResultsScreen
 import com.chesire.nekome.app.series.collection.ui.CollectionScreen
 import com.chesire.nekome.app.series.item.ui.ItemScreen
 import com.chesire.nekome.app.settings.config.ui.ConfigScreen
@@ -126,21 +125,7 @@ private fun NavGraphBuilder.addSeriesRoutes(navController: NavHostController) {
 
 private fun NavGraphBuilder.addSearchRoutes(navController: NavHostController) {
     composable(Nav.Search.Host.route) {
-        HostScreen {
-            /*
-            Move the "Results" screen into the host? Then we don't need to pass anything along, we can
-            just show everything underneath the search critera.
-            Maybe hide the results again if we click the search bar?
-             */
-            navController.navigate("${Nav.Search.Results.destination}/${it.searchTerm}")
-        }
-    }
-
-    composable(
-        route = Nav.Search.Results.route,
-        arguments = Nav.Search.Results.args
-    ) {
-        ResultsScreen()
+        HostScreen()
     }
 }
 

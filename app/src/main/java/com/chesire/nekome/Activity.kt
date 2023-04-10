@@ -91,10 +91,7 @@ class Activity : AppCompatActivity(), AuthCaster.AuthCasterListener, Flow {
 
     private fun setupNavController() {
         appBarConfiguration = AppBarConfiguration(
-            setOf(
-                R.id.collectionFragment,
-                R.id.hostFragment
-            ),
+            setOf(R.id.collectionFragment),
             findViewById<DrawerLayout>(R.id.activityDrawer)
         )
 

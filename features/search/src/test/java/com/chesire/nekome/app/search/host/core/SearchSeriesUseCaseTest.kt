@@ -2,7 +2,6 @@
 
 package com.chesire.nekome.app.search.host.core
 
-import com.chesire.nekome.app.search.domain.SearchModel
 import com.chesire.nekome.app.search.host.core.model.SearchGroup
 import com.chesire.nekome.core.Resource
 import com.chesire.nekome.core.flags.SeriesType

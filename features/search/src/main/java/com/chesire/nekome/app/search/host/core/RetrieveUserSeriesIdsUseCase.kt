@@ -1,6 +1,6 @@
 @file:OptIn(ExperimentalCoroutinesApi::class)
 
-package com.chesire.nekome.app.search.results.core
+package com.chesire.nekome.app.search.host.core
 
 import com.chesire.nekome.datasource.series.SeriesRepository
 import javax.inject.Inject

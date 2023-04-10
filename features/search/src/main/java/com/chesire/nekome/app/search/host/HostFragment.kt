@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import com.chesire.nekome.app.search.host.ui.HostScreen
 import com.chesire.nekome.core.compose.theme.NekomeTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,16 +22,7 @@ class HostFragment : Fragment() {
         setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
         setContent {
             NekomeTheme {
-                HostScreen(
-                    navigationAction = {
-                        findNavController().navigate(
-                            HostFragmentDirections.toResultsFragment(
-                                it.searchTerm,
-                                it.searchResults.toTypedArray()
-                            )
-                        )
-                    }
-                )
+                HostScreen()
             }
         }
     }

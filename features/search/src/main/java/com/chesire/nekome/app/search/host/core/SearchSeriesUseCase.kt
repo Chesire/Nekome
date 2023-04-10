@@ -1,6 +1,5 @@
 package com.chesire.nekome.app.search.host.core
 
-import com.chesire.nekome.app.search.domain.SearchModel
 import com.chesire.nekome.app.search.host.core.model.SearchGroup
 import com.chesire.nekome.core.Resource
 import com.chesire.nekome.datasource.search.SearchDomain
@@ -17,7 +16,7 @@ class SearchSeriesUseCase @Inject constructor(private val searchApi: SearchApi) 
     suspend operator fun invoke(
         title: String,
         group: SearchGroup
-    ): Result<List<SearchModel>, SearchFailureReason> {
+    ): Result<List<SearchDomain>, SearchFailureReason> {
         if (isTitleInvalid(title)) {
             return Err(SearchFailureReason.InvalidTitle)
         }
@@ -33,7 +32,7 @@ class SearchSeriesUseCase @Inject constructor(private val searchApi: SearchApi) 
             if (result.data.isEmpty()) {
                 Err(SearchFailureReason.NoSeriesFound)
             } else {
-                Ok(result.data.map { it.toSearchModel() })
+                Ok(result.data)
             }
         } else {
             Err(SearchFailureReason.NetworkError)
@@ -41,17 +40,6 @@ class SearchSeriesUseCase @Inject constructor(private val searchApi: SearchApi) 
     }
 
     private fun isTitleInvalid(title: String): Boolean = title.isBlank()
-
-    private fun SearchDomain.toSearchModel(): SearchModel {
-        return SearchModel(
-            id = id,
-            type = type,
-            synopsis = synopsis,
-            canonicalTitle = canonicalTitle,
-            subtype = subtype,
-            posterImage = posterImage
-        )
-    }
 }
 
 sealed interface SearchFailureReason {

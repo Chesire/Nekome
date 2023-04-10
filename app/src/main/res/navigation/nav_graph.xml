@@ -7,7 +7,6 @@
     <!-- Nested -->
     <include app:graph="@navigation/anime_nav_graph" />
     <include app:graph="@navigation/manga_nav_graph" />
-    <include app:graph="@navigation/search_nav_graph" />
     <include app:graph="@navigation/settings_nav_graph" />
 
     <!-- Global Actions -->
