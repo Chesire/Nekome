@@ -1,5 +1,6 @@
 package com.chesire.nekome.core.compose.theme
 
+import android.util.Log
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.darkColors
@@ -34,6 +35,8 @@ fun NekomeTheme(
         setNavigationBarColor(color = Color.Transparent)
         setStatusBarColor(color = Color.Transparent)
     }
+
+    Log.d("Nekome", "Is system in dark theme? [$darkTheme]")
 
     MaterialTheme(
         colors = colors,

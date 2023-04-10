@@ -13,6 +13,23 @@ sealed class Screen {
     abstract val route: String
     open val args: List<NamedNavArgument> = emptyList()
 
+    companion object {
+        fun showsBottomNav(route: String?): Boolean {
+            return when (route) {
+                Anime.route,
+                Manga.route,
+                Host.route,
+                Config.route -> true
+
+                Credentials.route,
+                Item.route,
+                Syncing.route -> false
+
+                else -> false
+            }
+        }
+    }
+
     object Credentials : Screen() {
         override val route = "credentials"
     }

@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -54,10 +53,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             NekomeTheme {
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colors.background
-                ) {
+                Surface(modifier = Modifier.fillMaxSize()) {
                     val state = viewModel.uiState.collectAsState()
                     val navController = rememberNavController()
                     val scaffoldState = rememberScaffoldState()
@@ -66,30 +62,32 @@ class MainActivity : ComponentActivity() {
                         modifier = Modifier.fillMaxSize(),
                         scaffoldState = scaffoldState,
                         bottomBar = {
-                            BottomNavigation {
-                                val navBackStackEntry by navController.currentBackStackEntryAsState()
-                                val currentDestination = navBackStackEntry?.destination
-                                bottomNavItems.forEach { screen ->
-                                    check(screen is Screen)
-                                    BottomNavigationItem(
-                                        icon = {
-                                            Icon(
-                                                painter = painterResource(id = screen.icon),
-                                                contentDescription = stringResource(id = screen.title)
-                                            )
-                                        },
-                                        label = { Text(stringResource(screen.title)) },
-                                        selected = currentDestination?.hierarchy?.any { it.route == screen.route } == true,
-                                        onClick = {
-                                            navController.navigate(screen.route) {
-                                                popUpTo(navController.graph.findStartDestination().id) {
-                                                    saveState = true
+                            val navBackStackEntry by navController.currentBackStackEntryAsState()
+                            if (Screen.showsBottomNav(navBackStackEntry?.destination?.route)) {
+                                BottomNavigation {
+                                    val currentDestination = navBackStackEntry?.destination
+                                    bottomNavItems.forEach { screen ->
+                                        check(screen is Screen)
+                                        BottomNavigationItem(
+                                            icon = {
+                                                Icon(
+                                                    painter = painterResource(id = screen.icon),
+                                                    contentDescription = stringResource(id = screen.title)
+                                                )
+                                            },
+                                            label = { Text(stringResource(screen.title)) },
+                                            selected = currentDestination?.hierarchy?.any { it.route == screen.route } == true,
+                                            onClick = {
+                                                navController.navigate(screen.route) {
+                                                    popUpTo(navController.graph.findStartDestination().id) {
+                                                        saveState = true
+                                                    }
+                                                    launchSingleTop = true
+                                                    restoreState = false
                                                 }
-                                                launchSingleTop = true
-                                                restoreState = true
                                             }
-                                        }
-                                    )
+                                        )
+                                    }
                                 }
                             }
                         },
