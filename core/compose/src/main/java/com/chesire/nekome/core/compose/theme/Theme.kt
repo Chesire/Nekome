@@ -19,7 +19,10 @@ private val LightColorPalette = lightColors(
 )
 
 @Composable
-fun NekomeTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit) {
+fun NekomeTheme(
+    darkTheme: Boolean = isSystemInDarkTheme(),
+    content: @Composable () -> Unit
+) {
     val systemUiController = rememberSystemUiController()
     val colors = if (darkTheme) {
         DarkColorPalette

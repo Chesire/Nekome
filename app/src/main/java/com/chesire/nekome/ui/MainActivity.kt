@@ -4,19 +4,28 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.BottomNavigation
+import androidx.compose.material.BottomNavigationItem
+import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
+import androidx.compose.material.Text
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.navigation.NavDestination.Companion.hierarchy
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.chesire.lifecyklelog.LogLifecykle
 import com.chesire.nekome.app.login.credentials.ui.CredentialsScreen
@@ -33,6 +42,12 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
     private val viewModel by viewModels<MainActivityViewModel>()
+    private val bottomNavItems = listOf<BottomNavTarget>(
+        Screen.Anime,
+        Screen.Manga,
+        Screen.Host,
+        Screen.Config
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,31 +65,48 @@ class MainActivity : ComponentActivity() {
                     Scaffold(
                         modifier = Modifier.fillMaxSize(),
                         scaffoldState = scaffoldState,
-                        topBar = {
-                            /* Top app bar */
-                        },
-                        drawerContent = {
-                            /* Drawer Content */
-                        }
-                    ) { paddingValues ->
-                        Column(
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .padding(paddingValues)
-                        ) {
-                            NavHost(
-                                navController = navController,
-                                startDestination = if (state.value.userLoggedIn) {
-                                    state.value.defaultHomeScreen
-                                } else {
-                                    Nav.Login.Credentials.route
+                        bottomBar = {
+                            BottomNavigation {
+                                val navBackStackEntry by navController.currentBackStackEntryAsState()
+                                val currentDestination = navBackStackEntry?.destination
+                                bottomNavItems.forEach { screen ->
+                                    check(screen is Screen)
+                                    BottomNavigationItem(
+                                        icon = {
+                                            Icon(
+                                                painter = painterResource(id = screen.icon),
+                                                contentDescription = stringResource(id = screen.title)
+                                            )
+                                        },
+                                        label = { Text(stringResource(screen.title)) },
+                                        selected = currentDestination?.hierarchy?.any { it.route == screen.route } == true,
+                                        onClick = {
+                                            navController.navigate(screen.route) {
+                                                popUpTo(navController.graph.findStartDestination().id) {
+                                                    saveState = true
+                                                }
+                                                launchSingleTop = true
+                                                restoreState = true
+                                            }
+                                        }
+                                    )
                                 }
-                            ) {
-                                addLoginRoutes(navController, state.value.defaultHomeScreen)
-                                addSeriesRoutes(navController)
-                                addSearchRoutes()
-                                addSettingsRoutes(navController)
                             }
+                        },
+                    ) { paddingValues ->
+                        NavHost(
+                            navController = navController,
+                            startDestination = if (state.value.userLoggedIn) {
+                                state.value.defaultHomeScreen
+                            } else {
+                                Screen.Credentials.route
+                            },
+                            modifier = Modifier.padding(paddingValues)
+                        ) {
+                            addLoginRoutes(navController, state.value.defaultHomeScreen)
+                            addSeriesRoutes(navController)
+                            addSearchRoutes()
+                            addSettingsRoutes(navController)
                         }
                     }
                 }
@@ -87,50 +119,50 @@ private fun NavGraphBuilder.addLoginRoutes(
     navController: NavHostController,
     finishDestination: String
 ) {
-    composable(Nav.Login.Credentials.route) {
-        CredentialsScreen { navController.navigate(Nav.Login.Syncing.destination) }
+    composable(Screen.Credentials.route) {
+        CredentialsScreen { navController.navigate(Screen.Syncing.route) }
     }
 
-    composable(Nav.Login.Syncing.route) {
+    composable(Screen.Syncing.route) {
         SyncingScreen { navController.navigate(finishDestination) }
     }
 }
 
 private fun NavGraphBuilder.addSeriesRoutes(navController: NavHostController) {
     composable(
-        route = Nav.Series.Anime.route,
-        arguments = Nav.Series.Anime.args
+        route = Screen.Anime.route,
+        arguments = Screen.Anime.args
     ) {
         CollectionScreen { seriesId, seriesTitle ->
-            navController.navigate("${Nav.Series.Item.destination}/$seriesId/$seriesTitle")
+            navController.navigate("${Screen.Item.destination}/$seriesId/$seriesTitle")
         }
     }
 
     composable(
-        route = Nav.Series.Manga.route,
-        arguments = Nav.Series.Manga.args
+        route = Screen.Manga.route,
+        arguments = Screen.Manga.args
     ) {
         CollectionScreen { seriesId, seriesTitle ->
-            navController.navigate("${Nav.Series.Item.destination}/$seriesId/$seriesTitle")
+            navController.navigate("${Screen.Item.destination}/$seriesId/$seriesTitle")
         }
     }
 
     composable(
-        route = Nav.Series.Item.route,
-        arguments = Nav.Series.Item.args
+        route = Screen.Item.route,
+        arguments = Screen.Item.args
     ) {
         ItemScreen { navController.popBackStack() }
     }
 }
 
 private fun NavGraphBuilder.addSearchRoutes() {
-    composable(Nav.Search.Host.route) {
+    composable(Screen.Host.route) {
         HostScreen()
     }
 }
 
 private fun NavGraphBuilder.addSettingsRoutes(navController: NavHostController) {
-    composable(Nav.Settings.Config.route) {
+    composable(Screen.Config.route) {
         ConfigScreen {
             // TODO: Navigation
         }

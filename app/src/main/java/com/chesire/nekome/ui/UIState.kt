@@ -7,7 +7,7 @@ data class UIState(
     companion object {
         val empty = UIState(
             userLoggedIn = false,
-            defaultHomeScreen = Nav.Series.Anime.route
+            defaultHomeScreen = Screen.Anime.route
         )
     }
 }
