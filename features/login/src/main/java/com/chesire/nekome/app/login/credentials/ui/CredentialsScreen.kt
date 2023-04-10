@@ -184,7 +184,7 @@ private fun UsernameInput(
             )
         },
         keyboardOptions = KeyboardOptions.Default.copy(
-            keyboardType = KeyboardType.Text,
+            keyboardType = KeyboardType.Email,
             imeAction = ImeAction.Next
         ),
         keyboardActions = KeyboardActions(
