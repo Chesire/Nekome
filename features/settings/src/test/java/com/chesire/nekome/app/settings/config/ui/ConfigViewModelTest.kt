@@ -2,15 +2,21 @@
 
 package com.chesire.nekome.app.settings.config.ui
 
+import com.chesire.nekome.app.settings.config.LogoutExecutor
 import com.chesire.nekome.app.settings.config.core.PreferenceModel
 import com.chesire.nekome.app.settings.config.core.RetrievePreferencesUseCase
+import com.chesire.nekome.app.settings.config.core.RetrieveUserUseCase
 import com.chesire.nekome.app.settings.config.core.UpdateDefaultHomeScreenUseCase
 import com.chesire.nekome.app.settings.config.core.UpdateDefaultSeriesStateUseCase
 import com.chesire.nekome.app.settings.config.core.UpdateRateSeriesUseCase
 import com.chesire.nekome.app.settings.config.core.UpdateThemeUseCase
+import com.chesire.nekome.core.flags.Service
 import com.chesire.nekome.core.flags.UserSeriesStatus
+import com.chesire.nekome.core.models.ImageModel
 import com.chesire.nekome.core.preferences.flags.HomeScreenOptions
 import com.chesire.nekome.core.preferences.flags.Theme
+import com.chesire.nekome.datasource.user.User
+import com.chesire.nekome.datasource.user.UserDomain
 import io.mockk.clearAllMocks
 import io.mockk.coVerify
 import io.mockk.every
@@ -30,10 +36,12 @@ import org.junit.Test
 class ConfigViewModelTest {
 
     private val retrievePreferences = mockk<RetrievePreferencesUseCase>()
+    private val retrieveUser = mockk<RetrieveUserUseCase>()
     private val updateRateSeries = mockk<UpdateRateSeriesUseCase>(relaxed = true)
     private val updateTheme = mockk<UpdateThemeUseCase>(relaxed = true)
     private val updateDefaultHomeScreen = mockk<UpdateDefaultHomeScreenUseCase>(relaxed = true)
     private val updateDefaultSeriesState = mockk<UpdateDefaultSeriesStateUseCase>(relaxed = true)
+    private val logoutExecutor = mockk<LogoutExecutor>(relaxed = true)
     private lateinit var viewModel: ConfigViewModel
 
     @Before
@@ -51,19 +59,40 @@ class ConfigViewModelTest {
                 shouldRateSeries = false
             )
         )
+        every {
+            retrieveUser()
+        } returns flowOf(
+            User.Found(
+                UserDomain(
+                    userId = 0,
+                    name = "Nekome",
+                    avatar = ImageModel.empty,
+                    coverImage = ImageModel.empty,
+                    service = Service.Kitsu
+                )
+            )
+        )
 
         viewModel = ConfigViewModel(
             retrievePreferences,
+            retrieveUser,
             updateRateSeries,
             updateTheme,
             updateDefaultHomeScreen,
-            updateDefaultSeriesState
+            updateDefaultSeriesState,
+            logoutExecutor
         )
     }
 
     @Test
     fun `When initialize, uiState is expected defaults`() = runTest {
         val expected = UIState(
+            userModel = UserModel(
+                ImageModel.ImageData.empty.url,
+                "Nekome"
+            ),
+            showLogoutDialog = false,
+            executeLogout = null,
             themeValue = Theme.Dark,
             showThemeDialog = false,
             defaultHomeValue = HomeScreenOptions.Anime,
