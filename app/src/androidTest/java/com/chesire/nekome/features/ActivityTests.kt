@@ -2,7 +2,6 @@ package com.chesire.nekome.features
 
 import androidx.compose.ui.test.junit4.createComposeRule
 import com.chesire.nekome.UITest
-import com.chesire.nekome.core.preferences.ApplicationPreferences
 import com.chesire.nekome.core.preferences.flags.HomeScreenOptions
 import com.chesire.nekome.robots.activity
 import com.chesire.nekome.robots.login.loginCredentials
@@ -10,16 +9,12 @@ import com.chesire.nekome.robots.search.host
 import com.chesire.nekome.robots.series.seriesList
 import com.chesire.nekome.robots.settings.config
 import dagger.hilt.android.testing.HiltAndroidTest
-import javax.inject.Inject
 import kotlinx.coroutines.runBlocking
 import org.junit.Rule
 import org.junit.Test
 
 @HiltAndroidTest
 class ActivityTests : UITest() {
-
-    @Inject
-    lateinit var applicationPreferences: ApplicationPreferences
 
     @get:Rule
     val composeTestRule = createComposeRule()
