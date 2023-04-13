@@ -2,7 +2,9 @@
 
 package com.chesire.nekome.app.series.item.ui
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -10,6 +12,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.ChipDefaults
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.ExperimentalMaterialApi
@@ -31,6 +34,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
@@ -38,7 +42,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.chesire.nekome.app.series.R
 import com.chesire.nekome.core.compose.theme.NekomeTheme
 import com.chesire.nekome.core.flags.UserSeriesStatus
@@ -58,6 +61,7 @@ fun ItemScreen(
         onProgressChanged = { viewModel.execute(ViewAction.ProgressChanged(it)) },
         onRatingChanged = { viewModel.execute(ViewAction.RatingChanged(it)) },
         onConfirmPressed = { viewModel.execute(ViewAction.ConfirmPressed) },
+        onDeletePressed = { viewModel.execute(ViewAction.DeletePressed) },
         onDeleteResult = { viewModel.execute(ViewAction.OnDeleteResult(it)) },
         onSnackbarShown = { viewModel.execute(ViewAction.SnackbarObserved) },
         onFinishedScreen = { viewModel.execute(ViewAction.FinishScreenObserved) },
@@ -72,6 +76,7 @@ private fun Render(
     onProgressChanged: (String) -> Unit,
     onRatingChanged: (Float) -> Unit,
     onConfirmPressed: () -> Unit,
+    onDeletePressed: () -> Unit,
     onDeleteResult: (Boolean) -> Unit,
     onSnackbarShown: () -> Unit,
     finishScreen: () -> Unit,
@@ -112,11 +117,16 @@ private fun Render(
                     modifier = Modifier.align(Alignment.CenterHorizontally)
                 )
             } else {
-                ConfirmButton(
-                    isSendingData = state.value.isSendingData,
+                Row(
                     modifier = Modifier.align(Alignment.CenterHorizontally),
-                    onConfirmPressed = onConfirmPressed
-                )
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    DeleteButton(onDeletePressed = onDeletePressed)
+                    ConfirmButton(
+                        isSendingData = state.value.isSendingData,
+                        onConfirmPressed = onConfirmPressed
+                    )
+                }
             }
         }
     }
@@ -246,9 +256,19 @@ private fun Rating(
 }
 
 @Composable
+private fun DeleteButton(onDeletePressed: () -> Unit) {
+    Button(
+        onClick = { onDeletePressed() },
+        colors = ButtonDefaults.buttonColors(backgroundColor = Color.Red),
+        modifier = Modifier.padding(start = 16.dp, top = 16.dp, end = 16.dp, bottom = 0.dp)
+    ) {
+        Text(text = stringResource(id = R.string.series_detail_delete))
+    }
+}
+
+@Composable
 private fun ConfirmButton(
     isSendingData: Boolean,
-    modifier: Modifier,
     onConfirmPressed: () -> Unit
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
@@ -260,7 +280,7 @@ private fun ConfirmButton(
                 keyboardController?.hide()
             }
         },
-        modifier = modifier.padding(start = 16.dp, top = 16.dp, end = 16.dp, bottom = 0.dp)
+        modifier = Modifier.padding(start = 16.dp, top = 16.dp, end = 16.dp, bottom = 0.dp)
     ) {
         Text(text = stringResource(id = R.string.series_detail_confirm))
     }
@@ -317,6 +337,7 @@ private fun Preview() {
             onProgressChanged = { /**/ },
             onRatingChanged = { /**/ },
             onConfirmPressed = { /**/ },
+            onDeletePressed = { /**/ },
             onDeleteResult = { /**/ },
             onSnackbarShown = { /**/ },
             finishScreen = { /**/ },
