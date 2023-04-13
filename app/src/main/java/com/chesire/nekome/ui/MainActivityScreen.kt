@@ -6,12 +6,15 @@ import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
 import androidx.compose.material.Scaffold
+import androidx.compose.material.SnackbarHost
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.semantics
@@ -22,6 +25,8 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.chesire.nekome.R
+import kotlinx.coroutines.launch
 
 @Composable
 fun MainActivityScreen(viewModel: MainActivityViewModel = viewModel()) {
@@ -33,10 +38,17 @@ fun MainActivityScreen(viewModel: MainActivityViewModel = viewModel()) {
         val state = viewModel.uiState.collectAsState()
         val navController = rememberNavController()
         val scaffoldState = rememberScaffoldState()
+        val coroutineScope = rememberCoroutineScope()
 
         Scaffold(
             modifier = Modifier.fillMaxSize(),
             scaffoldState = scaffoldState,
+            snackbarHost = {
+                SnackbarHost(
+                    hostState = scaffoldState.snackbarHostState,
+                    modifier = Modifier.semantics { testTag = MainActivityTags.Snackbar }
+                )
+            },
             bottomBar = {
                 val navBackStackEntry by navController.currentBackStackEntryAsState()
                 if (Screen.showsBottomNav(navBackStackEntry?.destination?.route)) {
@@ -84,11 +96,24 @@ fun MainActivityScreen(viewModel: MainActivityViewModel = viewModel()) {
                 addSettingsRoutes(navController)
             }
         }
+
+        val snackbarString = stringResource(id = R.string.logout_forced)
+        LaunchedEffect(state.value.kickUserToLogin) {
+            if (state.value.kickUserToLogin != null) {
+                coroutineScope.launch {
+                    scaffoldState.snackbarHostState.showSnackbar(snackbarString)
+                }
+
+                navController.navigate(Screen.Credentials.route)
+                viewModel.observeKickUserToLogin()
+            }
+        }
     }
 }
 
 object MainActivityTags {
     const val Root = "MainActivityRoot"
+    const val Snackbar = "MainActivitySnackbar"
     const val Anime = "MainActivityAnime"
     const val Manga = "MainActivityManga"
     const val Search = "MainActivitySearch"

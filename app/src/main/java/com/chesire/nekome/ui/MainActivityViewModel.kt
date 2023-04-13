@@ -2,6 +2,7 @@ package com.chesire.nekome.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.chesire.nekome.app.settings.config.LogoutExecutor
 import com.chesire.nekome.core.AuthCaster
 import com.chesire.nekome.core.preferences.ApplicationPreferences
 import com.chesire.nekome.core.preferences.flags.HomeScreenOptions
@@ -17,8 +18,9 @@ import kotlinx.coroutines.launch
 @HiltViewModel
 class MainActivityViewModel @Inject constructor(
     private val repo: AccessTokenRepository,
-    private val authCaster: AuthCaster,
-    private val settings: ApplicationPreferences
+    private val settings: ApplicationPreferences,
+    private val logoutExecutor: LogoutExecutor,
+    authCaster: AuthCaster
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(UIState.empty)
@@ -33,8 +35,10 @@ class MainActivityViewModel @Inject constructor(
         authCaster.subscribeToAuthError(
             object : AuthCaster.AuthCasterListener {
                 override fun unableToRefresh() {
-                    TODO("Not yet implemented")
-                    // TODO: execute logout code :thinking:
+                    viewModelScope.launch {
+                        logoutExecutor.executeLogout()
+                        state = state.copy(kickUserToLogin = Unit)
+                    }
                 }
             }
         )
@@ -44,6 +48,10 @@ class MainActivityViewModel @Inject constructor(
                 defaultHomeScreen = parseDefaultHomeScreen(settings.defaultHomeScreen.first())
             )
         }
+    }
+
+    fun observeKickUserToLogin() {
+        state = state.copy(kickUserToLogin = null)
     }
 
     private fun parseDefaultHomeScreen(options: HomeScreenOptions): String {
