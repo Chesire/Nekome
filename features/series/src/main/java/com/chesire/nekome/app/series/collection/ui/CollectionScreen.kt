@@ -116,13 +116,13 @@ private fun Render(
                     Text(text = stringResource(id = state.value.screenTitle))
                 },
                 actions = {
-                    IconButton(onClick = onSortPressed) {
+                    IconButton(onClick = onFilterPressed) {
                         Icon(
                             imageVector = Icons.Default.FilterAlt,
                             contentDescription = stringResource(id = R.string.menu_filter)
                         )
                     }
-                    IconButton(onClick = onFilterPressed) {
+                    IconButton(onClick = onSortPressed) {
                         Icon(
                             imageVector = Icons.Default.SortByAlpha,
                             contentDescription = stringResource(id = R.string.menu_sort)
