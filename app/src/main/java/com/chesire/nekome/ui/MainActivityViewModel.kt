@@ -44,6 +44,7 @@ class MainActivityViewModel @Inject constructor(
         )
         viewModelScope.launch {
             state = state.copy(
+                isInitialized = true,
                 userLoggedIn = repo.accessToken.isNotEmpty(),
                 defaultHomeScreen = parseDefaultHomeScreen(settings.defaultHomeScreen.first())
             )

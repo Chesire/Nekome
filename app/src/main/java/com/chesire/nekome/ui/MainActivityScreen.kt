@@ -81,19 +81,21 @@ fun MainActivityScreen(viewModel: MainActivityViewModel = viewModel()) {
                 }
             }
         ) { paddingValues ->
-            NavHost(
-                navController = navController,
-                startDestination = if (state.value.userLoggedIn) {
-                    state.value.defaultHomeScreen
-                } else {
-                    Screen.Credentials.route
-                },
-                modifier = Modifier.padding(paddingValues)
-            ) {
-                addLoginRoutes(navController, state.value.defaultHomeScreen)
-                addSeriesRoutes(navController)
-                addSearchRoutes()
-                addSettingsRoutes(navController)
+            if (state.value.isInitialized) {
+                NavHost(
+                    navController = navController,
+                    startDestination = if (state.value.userLoggedIn) {
+                        state.value.defaultHomeScreen
+                    } else {
+                        Screen.Credentials.route
+                    },
+                    modifier = Modifier.padding(paddingValues)
+                ) {
+                    addLoginRoutes(navController, state.value.defaultHomeScreen)
+                    addSeriesRoutes(navController)
+                    addSearchRoutes()
+                    addSettingsRoutes(navController)
+                }
             }
         }
 
