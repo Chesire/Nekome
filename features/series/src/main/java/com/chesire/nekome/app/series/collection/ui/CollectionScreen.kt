@@ -116,19 +116,28 @@ private fun Render(
                     Text(text = stringResource(id = state.value.screenTitle))
                 },
                 actions = {
-                    IconButton(onClick = onFilterPressed) {
+                    IconButton(
+                        onClick = onFilterPressed,
+                        modifier = Modifier.semantics { testTag = SeriesCollectionTags.MenuFilter }
+                    ) {
                         Icon(
                             imageVector = Icons.Default.FilterAlt,
                             contentDescription = stringResource(id = R.string.menu_filter)
                         )
                     }
-                    IconButton(onClick = onSortPressed) {
+                    IconButton(
+                        onClick = onSortPressed,
+                        modifier = Modifier.semantics { testTag = SeriesCollectionTags.MenuSort }
+                    ) {
                         Icon(
                             imageVector = Icons.Default.SortByAlpha,
                             contentDescription = stringResource(id = R.string.menu_sort)
                         )
                     }
-                    IconButton(onClick = onRefresh) {
+                    IconButton(
+                        onClick = onRefresh,
+                        modifier = Modifier.semantics { testTag = SeriesCollectionTags.MenuRefresh }
+                    ) {
                         Icon(
                             imageVector = Icons.Default.Refresh,
                             contentDescription = stringResource(id = R.string.series_list_refresh)
@@ -339,6 +348,7 @@ private fun buildDateString(context: Context, startDate: String, endDate: String
             startDate,
             context.getString(R.string.series_list_ongoing)
         )
+
         else -> context.getString(
             R.string.series_list_date_range,
             startDate,
@@ -462,4 +472,7 @@ object SeriesCollectionTags {
     const val SeriesItem = "SeriesCollectionSeriesItem"
     const val PlusOne = "SeriesCollectionPlusOne"
     const val Snackbar = "SeriesCollectionSnackbar"
+    const val MenuFilter = "SeriesCollectionMenuFilter"
+    const val MenuSort = "SeriesCollectionMenuSort"
+    const val MenuRefresh = "SeriesCollectionRefresh"
 }

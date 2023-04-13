@@ -14,7 +14,6 @@ import org.junit.Rule
 import org.junit.Test
 
 @HiltAndroidTest
-@Ignore("Need to add sorting again")
 class SortTests : UITest() {
 
     private val seriesData = InitialSortSeriesData()
