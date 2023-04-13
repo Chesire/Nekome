@@ -105,6 +105,7 @@ class CollectionViewModelTest {
 
     @Test
     fun `on init, uiState is emitted`() = runTest {
+        assertEquals(R.string.nav_anime, viewModel.uiState.value.screenTitle)
         assertEquals(models, viewModel.uiState.value.models)
     }
 

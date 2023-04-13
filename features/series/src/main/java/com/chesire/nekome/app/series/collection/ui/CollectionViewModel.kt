@@ -61,6 +61,12 @@ class CollectionViewModel @Inject constructor(
 
     init {
         val seriesType = requireNotNull(savedStateHandle.get<SeriesType>(SERIES_TYPE))
+        val screenTitle = when (seriesType) {
+            SeriesType.Anime -> R.string.nav_anime
+            SeriesType.Manga -> R.string.nav_manga
+            SeriesType.Unknown -> error("Unknown series type")
+        }
+        state = state.copy(screenTitle = screenTitle)
 
         viewModelScope.launch {
             collectSeries()
