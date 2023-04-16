@@ -36,8 +36,10 @@ dependencies {
     implementation project(":core:preferences")
     implementation project(":core:resources")
     implementation project(":libraries:core")
+    implementation project(":libraries:datasource:user")
 
     implementation platform(libs.androidx.compose.bom)
+    implementation libs.aboutlibraries.compose
     implementation libs.androidx.appcompat
     implementation libs.androidx.browser
     implementation libs.androidx.core
@@ -51,7 +53,6 @@ dependencies {
     implementation libs.bundles.compose
     implementation libs.coil
     implementation libs.google.hilt.android
-    implementation libs.mikepenz.aboutlibraries
     implementation libs.timber
     debugImplementation libs.androidx.compose.ui.tooling
     kapt libs.google.hilt.android.compiler

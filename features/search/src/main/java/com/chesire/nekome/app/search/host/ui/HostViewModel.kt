@@ -5,23 +5,30 @@ import androidx.lifecycle.viewModelScope
 import com.chesire.nekome.app.search.R
 import com.chesire.nekome.app.search.host.core.HostInitializeUseCase
 import com.chesire.nekome.app.search.host.core.RememberSearchGroupUseCase
+import com.chesire.nekome.app.search.host.core.RetrieveUserSeriesIdsUseCase
 import com.chesire.nekome.app.search.host.core.SearchFailureReason
 import com.chesire.nekome.app.search.host.core.SearchSeriesUseCase
+import com.chesire.nekome.app.search.host.core.TrackSeriesUseCase
 import com.chesire.nekome.app.search.host.core.model.SearchGroup
+import com.chesire.nekome.datasource.search.SearchDomain
 import com.github.michaelbull.result.onFailure
 import com.github.michaelbull.result.onSuccess
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 @HiltViewModel
 class HostViewModel @Inject constructor(
     hostInitialize: HostInitializeUseCase,
+    private val retrieveUserSeriesIds: RetrieveUserSeriesIdsUseCase,
     private val rememberSearchGroup: RememberSearchGroupUseCase,
-    private val searchSeries: SearchSeriesUseCase
+    private val searchSeries: SearchSeriesUseCase,
+    private val trackSeries: TrackSeriesUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(UIState.Default)
@@ -37,6 +44,14 @@ class HostViewModel @Inject constructor(
         state = state.copy(
             searchGroup = initializeResult.initialGroup
         )
+        viewModelScope.launch {
+            retrieveUserSeriesIds().collectLatest { userModelIds ->
+                val newModels = state.resultModels.map {
+                    it.copy(canTrack = !userModelIds.contains(it.id))
+                }
+                state = state.copy(resultModels = newModels)
+            }
+        }
     }
 
     fun execute(viewAction: ViewAction) {
@@ -44,8 +59,8 @@ class HostViewModel @Inject constructor(
             is ViewAction.SearchGroupChanged -> handleSearchGroupChanged(viewAction.newGroup)
             is ViewAction.SearchTextUpdated -> handleSearchTextUpdated(viewAction.newSearchText)
             ViewAction.ExecuteSearch -> handleExecuteSearch()
+            is ViewAction.TrackSeries -> handleTrackSeries(viewAction.model)
             ViewAction.ErrorSnackbarObserved -> handleErrorSnackbarObserved()
-            ViewAction.NavigationObserved -> handleNavigationObserved()
         }
     }
 
@@ -71,7 +86,7 @@ class HostViewModel @Inject constructor(
                 .onSuccess {
                     state = state.copy(
                         isSearching = false,
-                        navigateScreenEvent = NavigationData(searchCriteria, it)
+                        resultModels = it.toResultModels(retrieveUserSeriesIds().first())
                     )
                 }
                 .onFailure(::handleSearchFailure)
@@ -83,24 +98,86 @@ class HostViewModel @Inject constructor(
             SearchFailureReason.InvalidTitle -> state.copy(
                 isSearching = false,
                 isSearchTextError = true,
-                errorSnackbarMessage = R.string.search_error_no_text
+                errorSnackbar = SnackbarData(R.string.search_error_no_text)
             )
             SearchFailureReason.NetworkError -> state.copy(
                 isSearching = false,
-                errorSnackbarMessage = R.string.error_generic
+                errorSnackbar = SnackbarData(R.string.error_generic)
             )
             SearchFailureReason.NoSeriesFound -> state.copy(
                 isSearching = false,
-                errorSnackbarMessage = R.string.search_error_no_series_found
+                errorSnackbar = SnackbarData(R.string.search_error_no_series_found)
             )
         }
     }
 
-    private fun handleErrorSnackbarObserved() {
-        state = state.copy(errorSnackbarMessage = null)
+    private fun handleTrackSeries(model: ResultModel) {
+        viewModelScope.launch {
+            state = state.copy(
+                resultModels = updateModelsState(
+                    seriesId = model.id,
+                    isTracking = true
+                )
+            )
+
+            trackSeries(model.id, model.type)
+                .onSuccess {
+                    state = state.copy(
+                        resultModels = updateModelsState(
+                            seriesId = model.id,
+                            isTracking = false,
+                            canTrack = false
+                        )
+                    )
+                }
+                .onFailure {
+                    state = state.copy(
+                        resultModels = updateModelsState(
+                            seriesId = model.id,
+                            isTracking = false
+                        ),
+                        errorSnackbar = SnackbarData(
+                            R.string.results_failure,
+                            model.canonicalTitle
+                        )
+                    )
+                }
+        }
     }
 
-    private fun handleNavigationObserved() {
-        state = state.copy(navigateScreenEvent = null)
+    private fun updateModelsState(
+        seriesId: Int,
+        isTracking: Boolean,
+        canTrack: Boolean? = null
+    ): List<ResultModel> {
+        return state.resultModels.map {
+            if (it.id == seriesId) {
+                it.copy(
+                    canTrack = canTrack ?: it.canTrack,
+                    isTracking = isTracking
+                )
+            } else {
+                it
+            }
+        }
+    }
+
+    private fun handleErrorSnackbarObserved() {
+        state = state.copy(errorSnackbar = null)
+    }
+
+    private fun List<SearchDomain>.toResultModels(currentSeriesIds: List<Int>): List<ResultModel> {
+        return map {
+            ResultModel(
+                id = it.id,
+                type = it.type,
+                synopsis = it.synopsis,
+                canonicalTitle = it.canonicalTitle,
+                subtype = it.subtype.name,
+                posterImage = it.posterImage,
+                canTrack = !currentSeriesIds.contains(it.id),
+                isTracking = false
+            )
+        }
     }
 }

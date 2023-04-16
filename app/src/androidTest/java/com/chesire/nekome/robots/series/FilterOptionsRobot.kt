@@ -13,9 +13,9 @@ import androidx.compose.ui.test.onAllNodesWithTag
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
-import com.adevinta.android.barista.interaction.BaristaMenuClickInteractions.clickMenu
 import com.chesire.nekome.R
 import com.chesire.nekome.app.series.collection.ui.FilterTags
+import com.chesire.nekome.app.series.collection.ui.SeriesCollectionTags
 import com.chesire.nekome.helpers.getResource
 
 /**
@@ -26,7 +26,11 @@ class FilterOptionsRobot(private val composeContentTestRule: ComposeContentTestR
     /**
      * Opens the filter dialog.
      */
-    fun open() = clickMenu(R.id.menuFilter)
+    fun open() {
+        composeContentTestRule
+            .onNodeWithTag(SeriesCollectionTags.MenuFilter)
+            .performClick()
+    }
 
     /**
      * Pick the "Current" option, requires first calling [open].

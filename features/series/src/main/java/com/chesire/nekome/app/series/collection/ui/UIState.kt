@@ -1,9 +1,11 @@
 package com.chesire.nekome.app.series.collection.ui
 
 import androidx.annotation.StringRes
+import com.chesire.nekome.app.series.R
 import com.chesire.nekome.core.preferences.flags.SortOption
 
 data class UIState(
+    @StringRes val screenTitle: Int,
     val models: List<Series>,
     val isRefreshing: Boolean,
     val ratingDialog: Rating?,
@@ -14,6 +16,7 @@ data class UIState(
 ) {
     companion object {
         val default = UIState(
+            screenTitle = R.string.nav_anime,
             models = emptyList(),
             isRefreshing = false,
             ratingDialog = null,

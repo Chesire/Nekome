@@ -28,10 +28,14 @@ import androidx.compose.material.SnackbarDuration
 import androidx.compose.material.SnackbarHost
 import androidx.compose.material.SnackbarHostState
 import androidx.compose.material.Text
+import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.BrokenImage
+import androidx.compose.material.icons.filled.FilterAlt
 import androidx.compose.material.icons.filled.InsertPhoto
 import androidx.compose.material.icons.filled.PlusOne
+import androidx.compose.material.icons.filled.Refresh
+import androidx.compose.material.icons.filled.SortByAlpha
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
@@ -52,7 +56,7 @@ import androidx.compose.ui.semantics.testTag
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.chesire.nekome.app.series.R
 import com.chesire.nekome.core.compose.composables.NekomeDialog
@@ -63,7 +67,7 @@ import com.chesire.nekome.core.preferences.flags.SortOption
 
 @Composable
 fun CollectionScreen(
-    viewModel: CollectionViewModel = viewModel(),
+    viewModel: CollectionViewModel = hiltViewModel(),
     navigateToItem: (Int, String) -> Unit
 ) {
     val state = viewModel.uiState.collectAsState()
@@ -83,7 +87,9 @@ fun CollectionScreen(
             viewModel.execute(ViewAction.IncrementSeriesWithRating(series, rating))
         },
         onSnackbarShown = { viewModel.execute(ViewAction.ErrorSnackbarObserved) },
+        onSortPressed = { viewModel.execute(ViewAction.SortPressed) },
         onSortResult = { viewModel.execute(ViewAction.PerformSort(it)) },
+        onFilterPressed = { viewModel.execute(ViewAction.FilterPressed) },
         onFilterResult = { viewModel.execute(ViewAction.PerformFilter(it)) }
     )
 }
@@ -96,12 +102,50 @@ private fun Render(
     onIncrementSeries: (Series) -> Unit,
     onRatingComplete: (Series, Int?) -> Unit,
     onSnackbarShown: () -> Unit,
+    onSortPressed: () -> Unit,
     onSortResult: (SortOption?) -> Unit,
+    onFilterPressed: () -> Unit,
     onFilterResult: (List<FilterOption>?) -> Unit
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
 
     Scaffold(
+        topBar = {
+            TopAppBar(
+                title = {
+                    Text(text = stringResource(id = state.value.screenTitle))
+                },
+                actions = {
+                    IconButton(
+                        onClick = onFilterPressed,
+                        modifier = Modifier.semantics { testTag = SeriesCollectionTags.MenuFilter }
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.FilterAlt,
+                            contentDescription = stringResource(id = R.string.menu_filter)
+                        )
+                    }
+                    IconButton(
+                        onClick = onSortPressed,
+                        modifier = Modifier.semantics { testTag = SeriesCollectionTags.MenuSort }
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.SortByAlpha,
+                            contentDescription = stringResource(id = R.string.menu_sort)
+                        )
+                    }
+                    IconButton(
+                        onClick = onRefresh,
+                        modifier = Modifier.semantics { testTag = SeriesCollectionTags.MenuRefresh }
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Refresh,
+                            contentDescription = stringResource(id = R.string.series_list_refresh)
+                        )
+                    }
+                }
+            )
+        },
         snackbarHost = {
             SnackbarHost(
                 hostState = snackbarHostState,
@@ -304,6 +348,7 @@ private fun buildDateString(context: Context, startDate: String, endDate: String
             startDate,
             context.getString(R.string.series_list_ongoing)
         )
+
         else -> context.getString(
             R.string.series_list_date_range,
             startDate,
@@ -348,6 +393,7 @@ private fun RenderSnackbar(
 @Preview
 private fun Preview() {
     val initialState = UIState(
+        screenTitle = R.string.nav_anime,
         models = listOf(
             Series(
                 userId = 0,
@@ -411,7 +457,9 @@ private fun Preview() {
             onIncrementSeries = { /**/ },
             onRatingComplete = { _, _ -> /**/ },
             onSnackbarShown = { /**/ },
+            onSortPressed = { /**/ },
             onSortResult = { /**/ },
+            onFilterPressed = { /**/ },
             onFilterResult = { /**/ }
         )
     }
@@ -424,4 +472,7 @@ object SeriesCollectionTags {
     const val SeriesItem = "SeriesCollectionSeriesItem"
     const val PlusOne = "SeriesCollectionPlusOne"
     const val Snackbar = "SeriesCollectionSnackbar"
+    const val MenuFilter = "SeriesCollectionMenuFilter"
+    const val MenuSort = "SeriesCollectionMenuSort"
+    const val MenuRefresh = "SeriesCollectionRefresh"
 }

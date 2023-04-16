@@ -1,45 +1,41 @@
+@file:OptIn(ExperimentalCoroutinesApi::class)
+
 package com.chesire.nekome
 
 import com.chesire.nekome.database.RoomDB
 import com.chesire.nekome.datasource.auth.AccessTokenRepository
-import io.mockk.Runs
-import io.mockk.every
-import io.mockk.just
+import io.mockk.clearAllMocks
+import io.mockk.coVerify
 import io.mockk.mockk
-import io.mockk.verifyAll
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.runTest
+import org.junit.Before
 import org.junit.Test
 
 class LogoutHandlerTests {
 
-    @Test
-    fun `executeLogout clears db`() {
-        val mockAccessTokenRepository = mockk<AccessTokenRepository> {
-            every { clear() } just Runs
-        }
-        val mockDb = mockk<RoomDB> {
-            every { clearAllTables() } just Runs
-        }
+    private val accessTokenRepository = mockk<AccessTokenRepository>(relaxed = true)
+    private val roomDB = mockk<RoomDB>(relaxed = true)
+    private lateinit var logoutHandler: LogoutHandler
 
-        LogoutHandler(mockAccessTokenRepository, mockDb).run {
-            executeLogout()
-        }
+    @Before
+    fun setup() {
+        clearAllMocks()
 
-        verifyAll { mockDb.clearAllTables() }
+        logoutHandler = LogoutHandler(accessTokenRepository, roomDB)
     }
 
     @Test
-    fun `executeLogout clears authProvider`() {
-        val mockAccessTokenRepository = mockk<AccessTokenRepository> {
-            every { clear() } just Runs
-        }
-        val mockDb = mockk<RoomDB> {
-            every { clearAllTables() } just Runs
-        }
+    fun `executeLogout clears db`() = runTest {
+        logoutHandler.executeLogout()
 
-        LogoutHandler(mockAccessTokenRepository, mockDb).run {
-            executeLogout()
-        }
+        coVerify { roomDB.clearAllTables() }
+    }
 
-        verifyAll { mockAccessTokenRepository.clear() }
+    @Test
+    fun `executeLogout clears authProvider`() = runTest {
+        logoutHandler.executeLogout()
+
+        coVerify { accessTokenRepository.clear() }
     }
 }

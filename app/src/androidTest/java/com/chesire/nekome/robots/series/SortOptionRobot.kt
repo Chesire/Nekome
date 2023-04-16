@@ -3,10 +3,11 @@ package com.chesire.nekome.robots.series
 import androidx.compose.ui.test.assertTextContains
 import androidx.compose.ui.test.junit4.ComposeContentTestRule
 import androidx.compose.ui.test.onAllNodesWithTag
+import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
-import com.adevinta.android.barista.interaction.BaristaMenuClickInteractions.clickMenu
 import com.chesire.nekome.R
+import com.chesire.nekome.app.series.collection.ui.SeriesCollectionTags
 import com.chesire.nekome.core.compose.composables.DialogTags
 import com.chesire.nekome.helpers.getResource
 import com.chesire.nekome.robots.DialogResultsRobot
@@ -22,7 +23,11 @@ class SortOptionRobot(
     /**
      * Opens the sort dialog.
      */
-    fun open() = clickMenu(R.id.menuSort)
+    fun open() {
+        composeContentTestRule
+            .onNodeWithTag(SeriesCollectionTags.MenuSort)
+            .performClick()
+    }
 
     /**
      * Pick the "Default" option, requires first calling [open], and ending with [confirm].

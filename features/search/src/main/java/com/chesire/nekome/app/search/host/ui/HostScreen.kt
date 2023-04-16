@@ -2,19 +2,33 @@
 
 package com.chesire.nekome.app.search.host.ui
 
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Button
+import androidx.compose.material.Card
 import androidx.compose.material.ChipDefaults
 import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.Divider
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.FilterChip
 import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.LinearProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Scaffold
@@ -23,7 +37,10 @@ import androidx.compose.material.SnackbarHost
 import androidx.compose.material.SnackbarHostState
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.BrokenImage
 import androidx.compose.material.icons.filled.CollectionsBookmark
+import androidx.compose.material.icons.filled.InsertPhoto
 import androidx.compose.material.icons.filled.VideoLibrary
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -34,38 +51,34 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTag
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
+import coil.compose.AsyncImage
 import com.chesire.nekome.app.search.R
 import com.chesire.nekome.app.search.host.core.model.SearchGroup
 import com.chesire.nekome.core.compose.theme.NekomeTheme
+import com.chesire.nekome.core.flags.SeriesType
+import com.chesire.nekome.core.models.ImageModel
 
 @Composable
-fun HostScreen(
-    viewModel: HostViewModel = viewModel(),
-    navigationAction: (NavigationData) -> Unit
-) {
+fun HostScreen(viewModel: HostViewModel = hiltViewModel()) {
     val state = viewModel.uiState.collectAsState()
-
-    val navigationEvent = state.value.navigateScreenEvent
-    if (navigationEvent != null) {
-        LaunchedEffect(navigationEvent) {
-            navigationAction(navigationEvent)
-            viewModel.execute(ViewAction.NavigationObserved)
-        }
-    }
 
     Render(
         state = state,
         onInputTextChanged = { viewModel.execute(ViewAction.SearchTextUpdated(it)) },
         onSearchPressed = { viewModel.execute(ViewAction.ExecuteSearch) },
         onSearchGroupSelected = { viewModel.execute(ViewAction.SearchGroupChanged(it)) },
+        onSeriesTrack = { viewModel.execute(ViewAction.TrackSeries(it)) },
         onSnackbarShown = { viewModel.execute(ViewAction.ErrorSnackbarObserved) }
     )
 }
@@ -76,6 +89,7 @@ private fun Render(
     onInputTextChanged: (String) -> Unit,
     onSearchGroupSelected: (SearchGroup) -> Unit,
     onSearchPressed: () -> Unit,
+    onSeriesTrack: (ResultModel) -> Unit,
     onSnackbarShown: () -> Unit
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
@@ -102,13 +116,15 @@ private fun Render(
             } else {
                 SearchButton(state.value.isSearching, onSearchPressed)
             }
+            Divider(modifier = Modifier.padding(8.dp))
+            SearchResults(state.value.resultModels, onSeriesTrack)
         }
     }
 
-    val snackbarMessage = state.value.errorSnackbarMessage
-    if (snackbarMessage != null) {
-        val message = stringResource(id = snackbarMessage)
-        LaunchedEffect(snackbarMessage) {
+    val snackbar = state.value.errorSnackbar
+    if (snackbar != null) {
+        val message = stringResource(id = snackbar.stringRes, snackbar.formatText)
+        LaunchedEffect(message) {
             snackbarHostState.showSnackbar(message = message, duration = SnackbarDuration.Short)
             onSnackbarShown()
         }
@@ -202,15 +218,106 @@ private fun SearchButton(isSearching: Boolean, onSearchPressed: () -> Unit) {
 }
 
 @Composable
-@Preview
+private fun SearchResults(
+    resultModels: List<ResultModel>,
+    onSeriesTrack: (ResultModel) -> Unit
+) {
+    if (resultModels.isNotEmpty()) {
+        LazyColumn(
+            modifier = Modifier.fillMaxSize(),
+            contentPadding = PaddingValues(8.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            items(
+                items = resultModels,
+                key = { it.id }
+            ) { model ->
+                ResultItem(model = model, onSeriesTrack = onSeriesTrack)
+            }
+        }
+    }
+}
+
+@Composable
+private fun ResultItem(model: ResultModel, onSeriesTrack: (ResultModel) -> Unit) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(120.dp)
+            .alpha(if (model.canTrack) 1.0f else 0.3f)
+    ) {
+        Box(modifier = Modifier.fillMaxSize()) {
+            if (model.isTracking) {
+                LinearProgressIndicator(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .align(Alignment.BottomCenter)
+                )
+            }
+            Row(modifier = Modifier.fillMaxSize()) {
+                AsyncImage(
+                    model = model.posterImage.smallest?.url,
+                    placeholder = rememberVectorPainter(image = Icons.Default.InsertPhoto),
+                    error = rememberVectorPainter(image = Icons.Default.BrokenImage),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .fillMaxWidth(0.25f)
+                        .aspectRatio(0.7f)
+                        .align(Alignment.CenterVertically)
+                )
+                Column(
+                    modifier = Modifier
+                        .padding(8.dp)
+                        .fillMaxHeight()
+                ) {
+                    Text(
+                        text = model.canonicalTitle,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        style = MaterialTheme.typography.body1,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                    Text(
+                        text = model.synopsis,
+                        maxLines = 3,
+                        overflow = TextOverflow.Ellipsis,
+                        style = MaterialTheme.typography.caption,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                    Spacer(modifier = Modifier.weight(1f))
+                    Text(
+                        text = model.subtype,
+                        style = MaterialTheme.typography.caption
+                    )
+                }
+            }
+            if (model.canTrack && !model.isTracking) {
+                IconButton(
+                    modifier = Modifier.align(Alignment.BottomEnd),
+                    onClick = { onSeriesTrack(model) }
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Add,
+                        contentDescription = stringResource(id = R.string.results_track_series),
+                        tint = MaterialTheme.colors.primary,
+                        modifier = Modifier.border(1.dp, MaterialTheme.colors.primary, CircleShape)
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+@Preview("Preview")
 private fun Preview() {
     val initialState = UIState(
         searchText = "Some initial search text",
         isSearchTextError = false,
         searchGroup = SearchGroup.Anime,
         isSearching = false,
-        errorSnackbarMessage = null,
-        navigateScreenEvent = null
+        resultModels = emptyList(),
+        errorSnackbar = null
     )
     NekomeTheme(darkTheme = true) {
         Render(
@@ -218,6 +325,93 @@ private fun Preview() {
             onInputTextChanged = { /**/ },
             onSearchPressed = { /**/ },
             onSearchGroupSelected = { /**/ },
+            onSeriesTrack = { /**/ },
+            onSnackbarShown = { /**/ }
+        )
+    }
+}
+
+@Composable
+@Preview("Populated preview")
+private fun PopulatedPreview() {
+    val initialState = UIState(
+        searchText = "Some initial search text",
+        isSearchTextError = false,
+        searchGroup = SearchGroup.Anime,
+        isSearching = false,
+        resultModels = listOf(
+            ResultModel(
+                id = 0,
+                type = SeriesType.Anime,
+                synopsis = "This is a synopsis",
+                canonicalTitle = "This is the title",
+                subtype = "Oneshot",
+                posterImage = ImageModel(
+                    tiny = ImageModel.ImageData(
+                        url = "",
+                        width = 0,
+                        height = 0
+                    ),
+                    small = ImageModel.ImageData(
+                        url = "",
+                        width = 0,
+                        height = 0
+                    ),
+                    medium = ImageModel.ImageData(
+                        url = "",
+                        width = 0,
+                        height = 0
+                    ),
+                    large = ImageModel.ImageData(
+                        url = "",
+                        width = 0,
+                        height = 0
+                    )
+                ),
+                canTrack = true,
+                isTracking = false
+            ),
+            ResultModel(
+                id = 1,
+                type = SeriesType.Anime,
+                synopsis = "This is another synopsis",
+                canonicalTitle = "This is the title again",
+                subtype = "Oneshot",
+                posterImage = ImageModel(
+                    tiny = ImageModel.ImageData(
+                        url = "",
+                        width = 0,
+                        height = 0
+                    ),
+                    small = ImageModel.ImageData(
+                        url = "",
+                        width = 0,
+                        height = 0
+                    ),
+                    medium = ImageModel.ImageData(
+                        url = "",
+                        width = 0,
+                        height = 0
+                    ),
+                    large = ImageModel.ImageData(
+                        url = "",
+                        width = 0,
+                        height = 0
+                    )
+                ),
+                canTrack = false,
+                isTracking = true
+            )
+        ),
+        errorSnackbar = null
+    )
+    NekomeTheme(darkTheme = true) {
+        Render(
+            state = produceState(initialValue = initialState, producer = { value = initialState }),
+            onInputTextChanged = { /**/ },
+            onSearchPressed = { /**/ },
+            onSearchGroupSelected = { /**/ },
+            onSeriesTrack = { /**/ },
             onSnackbarShown = { /**/ }
         )
     }

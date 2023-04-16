@@ -64,6 +64,7 @@ class ItemViewModel @Inject constructor(
             ViewAction.ConfirmPressed -> handleConfirmPressed()
             ViewAction.DeletePressed -> handleDeletePressed()
             ViewAction.SnackbarObserved -> handleSnackbarObserved()
+            ViewAction.FinishScreenObserved -> handleFinishScreenObserved()
             is ViewAction.OnDeleteResult -> handleDeleteResult(action.result)
             is ViewAction.ProgressChanged -> handleProgressChanged(action.newProgress)
             is ViewAction.RatingChanged -> handleRatingChanged(action.newRating)
@@ -108,6 +109,10 @@ class ItemViewModel @Inject constructor(
 
     private fun handleSnackbarObserved() {
         state = state.copy(errorSnackbar = null)
+    }
+
+    private fun handleFinishScreenObserved() {
+        state = state.copy(finishScreen = false)
     }
 
     private fun handleDeleteResult(result: Boolean) {

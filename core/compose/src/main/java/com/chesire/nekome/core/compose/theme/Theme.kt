@@ -1,5 +1,6 @@
 package com.chesire.nekome.core.compose.theme
 
+import android.util.Log
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.darkColors
@@ -19,7 +20,10 @@ private val LightColorPalette = lightColors(
 )
 
 @Composable
-fun NekomeTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit) {
+fun NekomeTheme(
+    darkTheme: Boolean = isSystemInDarkTheme(),
+    content: @Composable () -> Unit
+) {
     val systemUiController = rememberSystemUiController()
     val colors = if (darkTheme) {
         DarkColorPalette
@@ -31,6 +35,8 @@ fun NekomeTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable
         setNavigationBarColor(color = Color.Transparent)
         setStatusBarColor(color = Color.Transparent)
     }
+
+    Log.d("Nekome", "Is system in dark theme? [$darkTheme]")
 
     MaterialTheme(
         colors = colors,

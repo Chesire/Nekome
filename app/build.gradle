@@ -36,7 +36,10 @@ android {
         }
     }
     buildFeatures {
-        viewBinding true
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = libs.versions.compose.compiler.get()
     }
     testOptions {
         animationsDisabled true
@@ -93,16 +96,13 @@ dependencies {
     implementation libs.androidx.preference
     implementation libs.androidx.room.runtime
     implementation libs.androidx.work.runtime
+    implementation libs.bundles.compose
     implementation libs.coil
     implementation libs.google.hilt.android
     implementation libs.google.material
     implementation libs.kotlin.coroutines.android
     implementation libs.kotlin.coroutines.core
     implementation libs.lifecyklelog
-    implementation libs.liveevent
-    implementation libs.material.dialogs.core
-    implementation libs.material.dialogs.input
-    implementation libs.material.dialogs.lifecycle
     implementation libs.squareup.moshi
     implementation libs.squareup.okhttp3.logging.interceptor
     implementation libs.squareup.retrofit2.converter.moshi

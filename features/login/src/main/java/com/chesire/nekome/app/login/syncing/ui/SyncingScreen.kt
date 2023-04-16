@@ -24,6 +24,7 @@ import androidx.compose.ui.semantics.testTag
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import com.chesire.nekome.app.login.R
@@ -31,7 +32,7 @@ import com.chesire.nekome.core.compose.theme.NekomeTheme
 
 @Composable
 fun SyncingScreen(
-    viewModel: SyncingViewModel = viewModel(),
+    viewModel: SyncingViewModel = hiltViewModel(),
     finishAction: () -> Unit
 ) {
     val state = viewModel.uiState.collectAsState()

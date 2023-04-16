@@ -5,6 +5,9 @@ import com.chesire.nekome.core.preferences.flags.HomeScreenOptions
 import com.chesire.nekome.core.preferences.flags.Theme
 
 data class UIState(
+    val userModel: UserModel?,
+    val showLogoutDialog: Boolean,
+    val executeLogout: Unit?,
     val themeValue: Theme,
     val showThemeDialog: Boolean,
     val defaultHomeValue: HomeScreenOptions,
@@ -15,6 +18,9 @@ data class UIState(
 ) {
     companion object {
         val default = UIState(
+            userModel = null,
+            showLogoutDialog = false,
+            executeLogout = null,
             themeValue = Theme.System,
             showThemeDialog = false,
             defaultHomeValue = HomeScreenOptions.Anime,
@@ -25,3 +31,8 @@ data class UIState(
         )
     }
 }
+
+data class UserModel(
+    val avatarUrl: String,
+    val userName: String
+)

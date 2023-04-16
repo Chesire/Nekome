@@ -5,26 +5,41 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.sizeIn
+import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.material.Card
 import androidx.compose.material.Checkbox
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.BrokenImage
+import androidx.compose.material.icons.filled.InsertPhoto
+import androidx.compose.material.icons.filled.Logout
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.produceState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTag
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
+import coil.transform.CircleCropTransformation
 import com.chesire.nekome.app.settings.R
 import com.chesire.nekome.core.compose.composables.NekomeDialog
 import com.chesire.nekome.core.compose.theme.NekomeTheme
@@ -34,12 +49,15 @@ import com.chesire.nekome.core.preferences.flags.Theme
 
 @Composable
 fun ConfigScreen(
-    viewModel: ConfigViewModel = viewModel(),
-    navigateToOssScreen: () -> Unit
+    viewModel: ConfigViewModel = hiltViewModel(),
+    navigateToOssScreen: () -> Unit,
+    navigateAfterLogout: () -> Unit
 ) {
     val state = viewModel.uiState.collectAsState()
     Render(
         state = state,
+        onLogoutClicked = { viewModel.execute(ViewAction.OnLogoutClicked) },
+        onLogoutResult = { viewModel.execute(ViewAction.OnLogoutResult(it)) },
         onThemeClicked = { viewModel.execute(ViewAction.OnThemeClicked) },
         onThemeResult = { viewModel.execute(ViewAction.OnThemeChanged(it)) },
         onDefaultHomeScreenClicked = { viewModel.execute(ViewAction.OnDefaultHomeScreenClicked) },
@@ -51,11 +69,18 @@ fun ConfigScreen(
         onRateSeriesClicked = { viewModel.execute(ViewAction.OnRateSeriesChanged(it)) },
         onLicensesLinkClicked = { navigateToOssScreen() }
     )
+
+    if (state.value.executeLogout != null) {
+        navigateAfterLogout()
+        viewModel.execute(ViewAction.ConsumeExecuteLogout)
+    }
 }
 
 @Composable
 private fun Render(
     state: State<UIState>,
+    onLogoutClicked: () -> Unit,
+    onLogoutResult: (Boolean) -> Unit,
     onThemeClicked: () -> Unit,
     onThemeResult: (Theme?) -> Unit,
     onDefaultHomeScreenClicked: () -> Unit,
@@ -74,6 +99,7 @@ private fun Render(
                 .padding(16.dp)
                 .fillMaxSize()
         ) {
+            ProfileSection(state.value.userModel, onLogoutClicked)
             ApplicationHeading()
             ThemePreference(state.value.themeValue.stringId, onThemeClicked)
             DefaultHomeScreenPreference(onDefaultHomeScreenClicked)
@@ -87,6 +113,17 @@ private fun Render(
             GitHubLink()
             LicensesLink(onLicensesLinkClicked)
         }
+    }
+
+    if (state.value.showLogoutDialog) {
+        NekomeDialog(
+            title = R.string.menu_logout_summary,
+            summary = R.string.menu_logout_prompt_message,
+            confirmButton = R.string.menu_logout_prompt_confirm,
+            cancelButton = R.string.menu_logout_prompt_cancel,
+            onConfirmButtonClicked = { onLogoutResult(true) },
+            onCancelButtonClicked = { onLogoutResult(false) }
+        )
     }
 
     if (state.value.showThemeDialog) {
@@ -127,6 +164,50 @@ private fun Render(
                 .toList(),
             onResult = onDefaultSeriesStatusResult
         )
+    }
+}
+
+@Composable
+private fun ProfileSection(
+    userModel: UserModel?,
+    onLogoutClicked: () -> Unit
+) {
+    if (userModel != null) {
+        Card(
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentHeight()
+        ) {
+            Row(
+                modifier = Modifier.padding(8.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                AsyncImage(
+                    model = ImageRequest.Builder(LocalContext.current)
+                        .data(userModel.avatarUrl)
+                        .transformations(CircleCropTransformation())
+                        .build(),
+                    placeholder = rememberVectorPainter(image = Icons.Default.InsertPhoto),
+                    error = rememberVectorPainter(image = Icons.Default.BrokenImage),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .sizeIn(48.dp, 48.dp, 74.dp, 74.dp)
+                        .padding(end = 8.dp)
+                )
+
+                Text(
+                    text = userModel.userName,
+                    style = MaterialTheme.typography.subtitle1
+                )
+                Spacer(modifier = Modifier.weight(1f))
+                IconButton(onClick = onLogoutClicked) {
+                    Icon(
+                        imageVector = Icons.Default.Logout,
+                        contentDescription = stringResource(id = R.string.menu_logout)
+                    )
+                }
+            }
+        }
     }
 }
 
@@ -277,6 +358,9 @@ private fun PreferenceSection(
 @Preview
 private fun Preview() {
     val initialState = UIState(
+        userModel = UserModel("", "Nekome"),
+        showLogoutDialog = false,
+        executeLogout = null,
         themeValue = Theme.System,
         showThemeDialog = false,
         defaultHomeValue = HomeScreenOptions.Anime,
@@ -291,6 +375,8 @@ private fun Preview() {
                 initialValue = initialState,
                 producer = { value = initialState }
             ),
+            onLogoutClicked = { /**/ },
+            onLogoutResult = { /**/ },
             onThemeClicked = { /**/ },
             onThemeResult = { /**/ },
             onDefaultHomeScreenClicked = { /**/ },

@@ -26,6 +26,59 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 
 /**
+ * Dialog composable which provides a cancel and confirm button.
+ */
+@Composable
+fun NekomeDialog(
+    @StringRes title: Int,
+    @StringRes summary: Int?,
+    @StringRes confirmButton: Int,
+    @StringRes cancelButton: Int,
+    onConfirmButtonClicked: () -> Unit,
+    onCancelButtonClicked: () -> Unit
+) {
+    Dialog(onDismissRequest = { onCancelButtonClicked() }) {
+        Card(modifier = Modifier.semantics { testTag = DialogTags.Root }) {
+            Column(modifier = Modifier.padding(16.dp)) {
+                Text(
+                    text = stringResource(id = title),
+                    style = MaterialTheme.typography.h6,
+                    modifier = Modifier.padding(bottom = 8.dp)
+                )
+
+                summary?.let {
+                    Text(
+                        text = stringResource(id = summary),
+                        style = MaterialTheme.typography.body1,
+                        modifier = Modifier.padding(bottom = 8.dp)
+                    )
+                }
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.End
+                ) {
+                    TextButton(
+                        modifier = Modifier
+                            .padding(horizontal = 8.dp)
+                            .semantics { testTag = DialogTags.CancelButton },
+                        onClick = { onCancelButtonClicked() }
+                    ) {
+                        Text(text = stringResource(id = cancelButton))
+                    }
+                    TextButton(
+                        onClick = { onConfirmButtonClicked() },
+                        modifier = Modifier.semantics { testTag = DialogTags.OkButton }
+                    ) {
+                        Text(text = stringResource(id = confirmButton))
+                    }
+                }
+            }
+        }
+    }
+}
+
+/**
  * Dialog composable which lays out the values in a vertical list with radio buttons.
  */
 @Composable

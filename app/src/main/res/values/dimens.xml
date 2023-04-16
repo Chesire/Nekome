@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <dimen name="nav_heading_height">176dp</dimen>
-    <dimen name="nav_image_height">56dp</dimen>
-    <dimen name="nav_image_width">56dp</dimen>
-</resources>

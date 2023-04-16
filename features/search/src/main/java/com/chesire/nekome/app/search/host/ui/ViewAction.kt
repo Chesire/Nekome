@@ -6,6 +6,6 @@ sealed interface ViewAction {
     data class SearchGroupChanged(val newGroup: SearchGroup) : ViewAction
     data class SearchTextUpdated(val newSearchText: String) : ViewAction
     object ExecuteSearch : ViewAction
+    data class TrackSeries(val model: ResultModel) : ViewAction
     object ErrorSnackbarObserved : ViewAction
-    object NavigationObserved : ViewAction
 }
