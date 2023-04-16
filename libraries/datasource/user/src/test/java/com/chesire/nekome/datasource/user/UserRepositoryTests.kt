@@ -1,9 +1,14 @@
 package com.chesire.nekome.datasource.user
 
 import com.chesire.nekome.core.flags.Service
+import com.chesire.nekome.core.models.ErrorDomain
 import com.chesire.nekome.core.models.ImageModel
 import com.chesire.nekome.database.dao.UserDao
+import com.chesire.nekome.datasource.user.remote.UserApi
 import com.chesire.nekome.testing.createUserEntity
+import com.github.michaelbull.result.Err
+import com.github.michaelbull.result.Ok
+import com.github.michaelbull.result.getError
 import io.mockk.Runs
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -13,8 +18,8 @@ import io.mockk.mockk
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertTrue
-import org.junit.Assert.fail
 import org.junit.Test
 
 class UserRepositoryTests {
@@ -59,11 +64,11 @@ class UserRepositoryTests {
             coEvery { insert(any()) } just Runs
             every { getUser(Service.Kitsu) } returns mockk()
         }
-        val mockApi = mockk<com.chesire.nekome.datasource.user.remote.UserApi> {
+        val mockApi = mockk<UserApi> {
             coEvery {
                 getUserDetails()
             } coAnswers {
-                Resource.Success(
+                Ok(
                     UserDomain(
                         0,
                         "name",
@@ -76,11 +81,9 @@ class UserRepositoryTests {
         }
 
         val classUnderTest = UserRepository(mockDao, mockApi, map)
+        classUnderTest.refreshUser()
 
-        when (classUnderTest.refreshUser()) {
-            is Resource.Success -> coVerify { mockDao.insert(any()) }
-            is Resource.Error -> fail()
-        }
+        coVerify { mockDao.insert(any()) }
     }
 
     @Test
@@ -89,16 +92,14 @@ class UserRepositoryTests {
         val mockDao = mockk<UserDao> {
             every { getUser(Service.Kitsu) } returns mockk()
         }
-        val mockApi = mockk<com.chesire.nekome.datasource.user.remote.UserApi> {
-            coEvery { getUserDetails() } coAnswers { Resource.Error(expected) }
+        val mockApi = mockk<UserApi> {
+            coEvery { getUserDetails() } coAnswers { Err(ErrorDomain(expected, 0)) }
         }
 
         val classUnderTest = UserRepository(mockDao, mockApi, map)
+        val result = classUnderTest.refreshUser().getError()
 
-        when (val result = classUnderTest.refreshUser()) {
-            is Resource.Success -> fail()
-            is Resource.Error -> assertEquals(expected, result.msg)
-        }
+        assertNotNull(result)
     }
 
     @Test
@@ -108,7 +109,7 @@ class UserRepositoryTests {
             coEvery { retrieveUserId(Service.Kitsu) } coAnswers { expected }
             every { getUser(Service.Kitsu) } returns mockk()
         }
-        val mockApi = mockk<com.chesire.nekome.datasource.user.remote.UserApi>()
+        val mockApi = mockk<UserApi>()
 
         val classUnderTest = UserRepository(mockDao, mockApi, map)
 
