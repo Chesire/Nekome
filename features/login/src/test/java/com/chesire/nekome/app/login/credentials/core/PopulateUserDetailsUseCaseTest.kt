@@ -27,7 +27,7 @@ class PopulateUserDetailsUseCaseTest {
 
     @Test
     fun `Given populate user succeeds, Then return result of Ok`() = runTest {
-        coEvery { user.refreshUser() } returns Resource.Success(Unit)
+        coEvery { user.refreshUser() } returns Ok(Unit)
 
         val result = populateUserDetails()
 
@@ -36,7 +36,7 @@ class PopulateUserDetailsUseCaseTest {
 
     @Test
     fun `Given populate user fails, Then return result of Err`() = runTest {
-        coEvery { user.refreshUser() } returns Resource.Error("")
+        coEvery { user.refreshUser() } returns Err(Unit)
 
         val result = populateUserDetails()
 
