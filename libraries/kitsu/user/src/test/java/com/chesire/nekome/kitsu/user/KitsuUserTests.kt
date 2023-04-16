@@ -3,6 +3,8 @@ package com.chesire.nekome.kitsu.user
 import com.chesire.nekome.core.models.ImageModel
 import com.chesire.nekome.kitsu.user.dto.UserItemDto
 import com.chesire.nekome.kitsu.user.dto.UserResponseDto
+import com.github.michaelbull.result.get
+import com.github.michaelbull.result.getError
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
@@ -10,7 +12,7 @@ import java.net.UnknownHostException
 import kotlinx.coroutines.runBlocking
 import okhttp3.ResponseBody
 import org.junit.Assert.assertEquals
-import org.junit.Assert.assertTrue
+import org.junit.Assert.assertNotNull
 import org.junit.Test
 import retrofit2.Response
 
@@ -39,12 +41,9 @@ class KitsuUserTests {
         }
 
         val classUnderTest = KitsuUser(mockService, mapper)
-        val actual = classUnderTest.getUserDetails()
+        val actual = classUnderTest.getUserDetails().getError()
 
-        when (actual) {
-            is Resource.Success -> error("Test has failed")
-            is Resource.Error -> assertEquals(expected, actual.msg)
-        }
+        assertEquals(expected, actual?.message)
     }
 
     @Test
@@ -67,12 +66,9 @@ class KitsuUserTests {
             }
 
             val classUnderTest = KitsuUser(mockService, mapper)
-            val actual = classUnderTest.getUserDetails()
+            val actual = classUnderTest.getUserDetails().getError()
 
-            when (actual) {
-                is Resource.Success -> error("Test has failed")
-                is Resource.Error -> assertEquals(expected, actual.msg)
-            }
+            assertEquals(expected, actual?.message)
         }
 
     @Test
@@ -93,12 +89,9 @@ class KitsuUserTests {
         }
 
         val classUnderTest = KitsuUser(mockService, mapper)
-        val actual = classUnderTest.getUserDetails()
+        val actual = classUnderTest.getUserDetails().getError()
 
-        when (actual) {
-            is Resource.Success -> error("Test has failed")
-            is Resource.Error -> assertEquals(expected, actual.msg)
-        }
+        assertEquals(expected, actual?.message)
     }
 
     @Test
@@ -129,15 +122,9 @@ class KitsuUserTests {
         }
 
         val classUnderTest = KitsuUser(mockService, mapper)
-        val actual = classUnderTest.getUserDetails()
+        val actual = classUnderTest.getUserDetails().get()
 
-        when (actual) {
-            is Resource.Success -> {
-                /* Pass */
-            }
-
-            is Resource.Error -> error("Test has failed")
-        }
+        assertNotNull(actual)
     }
 
     @Test
@@ -147,11 +134,8 @@ class KitsuUserTests {
         }
 
         val classUnderTest = KitsuUser(mockService, mapper)
-        val result = classUnderTest.getUserDetails()
+        val result = classUnderTest.getUserDetails().getError()
 
-        when (result) {
-            is Resource.Success -> error("Test has failed")
-            is Resource.Error -> assertTrue(true)
-        }
+        assertNotNull(result)
     }
 }
