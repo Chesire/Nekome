@@ -5,6 +5,7 @@ import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.chesire.nekome.datasource.user.UserRepository
+import com.github.michaelbull.result.mapBoth
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import timber.log.Timber
@@ -31,10 +32,10 @@ class RefreshUserWorker @AssistedInject constructor(
         }
 
         Timber.i("doWork userId found, beginning to refresh")
-        return if (userRepo.refreshUser() is Resource.Error) {
-            Result.retry()
-        } else {
-            Result.success()
-        }
+        return userRepo.refreshUser()
+            .mapBoth(
+                success = { Result.success() },
+                failure = { Result.retry() }
+            )
     }
 }

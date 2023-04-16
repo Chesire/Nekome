@@ -102,6 +102,7 @@ dependencies {
     implementation libs.google.material
     implementation libs.kotlin.coroutines.android
     implementation libs.kotlin.coroutines.core
+    implementation libs.kotlin.result
     implementation libs.lifecyklelog
     implementation libs.squareup.moshi
     implementation libs.squareup.okhttp3.logging.interceptor
