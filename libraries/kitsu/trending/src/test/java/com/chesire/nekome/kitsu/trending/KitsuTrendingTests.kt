@@ -2,6 +2,8 @@ package com.chesire.nekome.kitsu.trending
 
 import com.chesire.nekome.core.flags.SeriesType
 import com.chesire.nekome.kitsu.trending.dto.TrendingResponseDto
+import com.github.michaelbull.result.get
+import com.github.michaelbull.result.getError
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
@@ -9,7 +11,7 @@ import java.net.UnknownHostException
 import kotlinx.coroutines.runBlocking
 import okhttp3.ResponseBody
 import org.junit.Assert.assertEquals
-import org.junit.Assert.assertTrue
+import org.junit.Assert.assertNotNull
 import org.junit.Test
 import retrofit2.Response
 
@@ -37,11 +39,9 @@ class KitsuTrendingTests {
         }
 
         val classUnderTest = KitsuTrending(mockService, map)
+        val actual = classUnderTest.getTrendingAnime().getError()
 
-        when (val actual = classUnderTest.getTrendingAnime()) {
-            is Resource.Success -> error("Test has failed")
-            is Resource.Error -> assertEquals(expected, actual.msg)
-        }
+        assertEquals(expected, actual?.message)
     }
 
     @Test
@@ -64,11 +64,9 @@ class KitsuTrendingTests {
             }
 
             val classUnderTest = KitsuTrending(mockService, map)
+            val actual = classUnderTest.getTrendingAnime().getError()
 
-            when (val actual = classUnderTest.getTrendingAnime()) {
-                is Resource.Success -> error("Test has failed")
-                is Resource.Error -> assertEquals(expected, actual.msg)
-            }
+            assertEquals(expected, actual?.message)
         }
 
     @Test
@@ -89,11 +87,9 @@ class KitsuTrendingTests {
         }
 
         val classUnderTest = KitsuTrending(mockService, map)
+        val actual = classUnderTest.getTrendingAnime().getError()
 
-        when (val actual = classUnderTest.getTrendingAnime()) {
-            is Resource.Success -> error("Test has failed")
-            is Resource.Error -> assertEquals(expected, actual.msg)
-        }
+        assertEquals(expected, actual?.message)
     }
 
     @Test
@@ -113,14 +109,9 @@ class KitsuTrendingTests {
         }
 
         val classUnderTest = KitsuTrending(mockService, map)
+        val result = classUnderTest.getTrendingAnime().get()
 
-        when (val actual = classUnderTest.getTrendingAnime()) {
-            is Resource.Success -> {
-                /* Pass */
-            }
-
-            is Resource.Error -> error("Test has failed")
-        }
+        assertNotNull(result)
     }
 
     @Test
@@ -130,11 +121,9 @@ class KitsuTrendingTests {
         }
 
         val classUnderTest = KitsuTrending(mockService, map)
+        val result = classUnderTest.getTrendingAnime().getError()
 
-        when (classUnderTest.getTrendingAnime()) {
-            is Resource.Success -> error("Test has failed")
-            is Resource.Error -> assertTrue(true)
-        }
+        assertNotNull(result)
     }
 
     @Test
@@ -158,11 +147,9 @@ class KitsuTrendingTests {
         }
 
         val classUnderTest = KitsuTrending(mockService, map)
+        val actual = classUnderTest.getTrendingManga().getError()
 
-        when (val actual = classUnderTest.getTrendingManga()) {
-            is Resource.Success -> error("Test has failed")
-            is Resource.Error -> assertEquals(expected, actual.msg)
-        }
+        assertEquals(expected, actual?.message)
     }
 
     @Test
@@ -185,11 +172,9 @@ class KitsuTrendingTests {
             }
 
             val classUnderTest = KitsuTrending(mockService, map)
+            val actual = classUnderTest.getTrendingManga().getError()
 
-            when (val actual = classUnderTest.getTrendingManga()) {
-                is Resource.Success -> error("Test has failed")
-                is Resource.Error -> assertEquals(expected, actual.msg)
-            }
+            assertEquals(expected, actual?.message)
         }
 
     @Test
@@ -210,11 +195,9 @@ class KitsuTrendingTests {
         }
 
         val classUnderTest = KitsuTrending(mockService, map)
+        val actual = classUnderTest.getTrendingManga().getError()
 
-        when (val actual = classUnderTest.getTrendingManga()) {
-            is Resource.Success -> error("Test has failed")
-            is Resource.Error -> assertEquals(expected, actual.msg)
-        }
+        assertEquals(expected, actual?.message)
     }
 
     @Test
@@ -234,14 +217,9 @@ class KitsuTrendingTests {
         }
 
         val classUnderTest = KitsuTrending(mockService, map)
+        val result = classUnderTest.getTrendingManga().get()
 
-        when (val actual = classUnderTest.getTrendingManga()) {
-            is Resource.Success -> {
-                /* Pass */
-            }
-
-            is Resource.Error -> error("Test has failed")
-        }
+        assertNotNull(result)
     }
 
     @Test
@@ -251,10 +229,8 @@ class KitsuTrendingTests {
         }
 
         val classUnderTest = KitsuTrending(mockService, map)
+        val result = classUnderTest.getTrendingManga().getError()
 
-        when (classUnderTest.getTrendingManga()) {
-            is Resource.Success -> error("Test has failed")
-            is Resource.Error -> assertTrue(true)
-        }
+        assertNotNull(result)
     }
 }
