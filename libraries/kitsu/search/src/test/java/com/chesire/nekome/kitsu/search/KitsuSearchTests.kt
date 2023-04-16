@@ -2,6 +2,8 @@ package com.chesire.nekome.kitsu.search
 
 import com.chesire.nekome.core.flags.SeriesType
 import com.chesire.nekome.kitsu.search.dto.SearchResponseDto
+import com.github.michaelbull.result.get
+import com.github.michaelbull.result.getError
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
@@ -9,7 +11,7 @@ import java.net.UnknownHostException
 import kotlinx.coroutines.runBlocking
 import okhttp3.ResponseBody
 import org.junit.Assert.assertEquals
-import org.junit.Assert.assertTrue
+import org.junit.Assert.assertNotNull
 import org.junit.Test
 import retrofit2.Response
 
@@ -38,12 +40,9 @@ class KitsuSearchTests {
         }
 
         val classUnderTest = KitsuSearch(mockService, map)
-        val actual = classUnderTest.searchForAnime("Anime")
+        val actual = classUnderTest.searchForAnime("Anime").getError()
 
-        when (actual) {
-            is Resource.Success -> error("Test has failed")
-            is Resource.Error -> assertEquals(expected, actual.msg)
-        }
+        assertEquals(expected, actual?.message)
     }
 
     @Test
@@ -66,12 +65,9 @@ class KitsuSearchTests {
             }
 
             val classUnderTest = KitsuSearch(mockService, map)
-            val actual = classUnderTest.searchForAnime("Anime")
+            val actual = classUnderTest.searchForAnime("Anime").getError()
 
-            when (actual) {
-                is Resource.Success -> error("Test has failed")
-                is Resource.Error -> assertEquals(expected, actual.msg)
-            }
+            assertEquals(expected, actual?.message)
         }
 
     @Test
@@ -92,12 +88,9 @@ class KitsuSearchTests {
         }
 
         val classUnderTest = KitsuSearch(mockService, map)
-        val actual = classUnderTest.searchForAnime("Anime")
+        val actual = classUnderTest.searchForAnime("Anime").getError()
 
-        when (actual) {
-            is Resource.Success -> error("Test has failed")
-            is Resource.Error -> assertEquals(expected, actual.msg)
-        }
+        assertEquals(expected, actual?.message)
     }
 
     @Test
@@ -117,15 +110,9 @@ class KitsuSearchTests {
         }
 
         val classUnderTest = KitsuSearch(mockService, map)
-        val actual = classUnderTest.searchForAnime("Anime")
+        val result = classUnderTest.searchForAnime("Anime").get()
 
-        when (actual) {
-            is Resource.Success -> {
-                /* Pass */
-            }
-
-            is Resource.Error -> error("Test has failed")
-        }
+        assertNotNull(result)
     }
 
     @Test
@@ -135,12 +122,9 @@ class KitsuSearchTests {
         }
 
         val classUnderTest = KitsuSearch(mockService, map)
-        val result = classUnderTest.searchForAnime("")
+        val result = classUnderTest.searchForAnime("").getError()
 
-        when (result) {
-            is Resource.Success -> error("Test has failed")
-            is Resource.Error -> assertTrue(true)
-        }
+        assertNotNull(result)
     }
 
     @Test
@@ -164,12 +148,9 @@ class KitsuSearchTests {
         }
 
         val classUnderTest = KitsuSearch(mockService, map)
-        val actual = classUnderTest.searchForManga("Manga")
+        val actual = classUnderTest.searchForManga("Manga").getError()
 
-        when (actual) {
-            is Resource.Success -> error("Test has failed")
-            is Resource.Error -> assertEquals(expected, actual.msg)
-        }
+        assertEquals(expected, actual?.message)
     }
 
     @Test
@@ -192,12 +173,9 @@ class KitsuSearchTests {
             }
 
             val classUnderTest = KitsuSearch(mockService, map)
-            val actual = classUnderTest.searchForManga("Manga")
+            val actual = classUnderTest.searchForManga("Manga").getError()
 
-            when (actual) {
-                is Resource.Success -> error("Test has failed")
-                is Resource.Error -> assertEquals(expected, actual.msg)
-            }
+            assertEquals(expected, actual?.message)
         }
 
     @Test
@@ -218,12 +196,9 @@ class KitsuSearchTests {
         }
 
         val classUnderTest = KitsuSearch(mockService, map)
-        val actual = classUnderTest.searchForManga("Manga")
+        val actual = classUnderTest.searchForManga("Manga").getError()
 
-        when (actual) {
-            is Resource.Success -> error("Test has failed")
-            is Resource.Error -> assertEquals(expected, actual.msg)
-        }
+        assertEquals(expected, actual?.message)
     }
 
     @Test
@@ -243,15 +218,9 @@ class KitsuSearchTests {
         }
 
         val classUnderTest = KitsuSearch(mockService, map)
-        val actual = classUnderTest.searchForManga("Manga")
+        val result = classUnderTest.searchForManga("Manga").get()
 
-        when (actual) {
-            is Resource.Success -> {
-                /* Pass */
-            }
-
-            is Resource.Error -> error("Test has failed")
-        }
+        assertNotNull(result)
     }
 
     @Test
@@ -261,11 +230,8 @@ class KitsuSearchTests {
         }
 
         val classUnderTest = KitsuSearch(mockService, map)
-        val result = classUnderTest.searchForManga("")
+        val result = classUnderTest.searchForManga("").getError()
 
-        when (result) {
-            is Resource.Success -> error("Test has failed")
-            is Resource.Error -> assertTrue(true)
-        }
+        assertNotNull(result)
     }
 }
