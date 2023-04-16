@@ -1,6 +1,5 @@
 package com.chesire.nekome.kitsu.user
 
-import com.chesire.nekome.core.Resource
 import com.chesire.nekome.core.models.ImageModel
 import com.chesire.nekome.kitsu.user.dto.UserItemDto
 import com.chesire.nekome.kitsu.user.dto.UserResponseDto
@@ -136,6 +135,7 @@ class KitsuUserTests {
             is Resource.Success -> {
                 /* Pass */
             }
+
             is Resource.Error -> error("Test has failed")
         }
     }

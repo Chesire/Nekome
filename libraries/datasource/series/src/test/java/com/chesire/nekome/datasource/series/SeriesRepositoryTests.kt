@@ -1,7 +1,6 @@
 package com.chesire.nekome.datasource.series
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.chesire.nekome.core.Resource
 import com.chesire.nekome.core.flags.SeriesStatus
 import com.chesire.nekome.core.flags.SeriesType
 import com.chesire.nekome.core.flags.Subtype

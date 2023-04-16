@@ -1,6 +1,5 @@
 package com.chesire.nekome.kitsu.library
 
-import com.chesire.nekome.core.Resource
 import com.chesire.nekome.core.flags.SeriesType
 import com.chesire.nekome.core.flags.UserSeriesStatus
 import com.chesire.nekome.kitsu.api.intermediaries.Links
@@ -50,6 +49,7 @@ class KitsuLibraryTests {
             is Resource.Success -> {
                 /* Pass */
             }
+
             is Resource.Error -> error("Test has failed")
         }
     }
@@ -180,6 +180,7 @@ class KitsuLibraryTests {
             is Resource.Success -> {
                 /* Pass */
             }
+
             is Resource.Error -> error("Test has failed")
         }
     }
@@ -314,6 +315,7 @@ class KitsuLibraryTests {
             is Resource.Success -> {
                 /* Pass */
             }
+
             is Resource.Error -> error("Test has failed")
         }
     }
@@ -355,6 +357,7 @@ class KitsuLibraryTests {
             is Resource.Success -> {
                 /* Pass */
             }
+
             is Resource.Error -> error("Test has failed")
         }
     }
@@ -396,6 +399,7 @@ class KitsuLibraryTests {
             is Resource.Success -> {
                 /* Pass */
             }
+
             is Resource.Error -> error("Test has failed")
         }
     }

@@ -1,7 +1,7 @@
 package com.chesire.nekome.kitsu.library
 
-import com.chesire.nekome.core.Resource
 import com.chesire.nekome.core.flags.UserSeriesStatus
+import com.chesire.nekome.core.models.ErrorDomain
 import com.chesire.nekome.datasource.series.SeriesDomain
 import com.chesire.nekome.datasource.series.remote.SeriesApi
 import com.chesire.nekome.kitsu.asError
@@ -10,7 +10,9 @@ import com.chesire.nekome.kitsu.library.dto.AddResponseDto
 import com.chesire.nekome.kitsu.library.dto.DtoFactory
 import com.chesire.nekome.kitsu.library.dto.RetrieveResponseDto
 import com.chesire.nekome.kitsu.parse
-import com.chesire.nekome.kitsu.parseError
+import com.github.michaelbull.result.Err
+import com.github.michaelbull.result.Ok
+import com.github.michaelbull.result.Result
 import javax.inject.Inject
 import okhttp3.MediaType
 import okhttp3.RequestBody
@@ -34,17 +36,17 @@ class KitsuLibrary @Inject constructor(
 
     private val userSeriesStatusAdapter = UserSeriesStatusAdapter()
 
-    override suspend fun retrieveAnime(userId: Int): Resource<List<SeriesDomain>> =
+    override suspend fun retrieveAnime(userId: Int): Result<List<SeriesDomain>, ErrorDomain> =
         performRetrieveCall(userId, libraryService::retrieveAnimeAsync)
 
-    override suspend fun retrieveManga(userId: Int): Resource<List<SeriesDomain>> =
+    override suspend fun retrieveManga(userId: Int): Result<List<SeriesDomain>, ErrorDomain> =
         performRetrieveCall(userId, libraryService::retrieveMangaAsync)
 
     override suspend fun addAnime(
         userId: Int,
         seriesId: Int,
         startingStatus: UserSeriesStatus
-    ): Resource<SeriesDomain> {
+    ): Result<SeriesDomain, ErrorDomain> {
         val addJson = entityFactory.createAddDto(
             userId,
             seriesId,
@@ -56,7 +58,7 @@ class KitsuLibrary @Inject constructor(
         return try {
             return parseResponse(libraryService.addAnimeAsync(body))
         } catch (ex: Exception) {
-            ex.parse()
+            Err(ex.parse())
         }
     }
 
@@ -64,7 +66,7 @@ class KitsuLibrary @Inject constructor(
         userId: Int,
         seriesId: Int,
         startingStatus: UserSeriesStatus
-    ): Resource<SeriesDomain> {
+    ): Result<SeriesDomain, ErrorDomain> {
         val addJson = entityFactory.createAddDto(
             userId,
             seriesId,
@@ -76,7 +78,7 @@ class KitsuLibrary @Inject constructor(
         return try {
             return parseResponse(libraryService.addMangaAsync(body))
         } catch (ex: Exception) {
-            ex.parse()
+            Err(ex.parse())
         }
     }
 
@@ -85,7 +87,7 @@ class KitsuLibrary @Inject constructor(
         progress: Int,
         newStatus: UserSeriesStatus,
         rating: Int
-    ): Resource<SeriesDomain> {
+    ): Result<SeriesDomain, ErrorDomain> {
         val updateJson = entityFactory.createUpdateDto(
             userSeriesId,
             progress,
@@ -97,20 +99,20 @@ class KitsuLibrary @Inject constructor(
         return try {
             parseResponse(libraryService.updateItemAsync(userSeriesId, body))
         } catch (ex: Exception) {
-            ex.parse()
+            Err(ex.parse())
         }
     }
 
-    override suspend fun delete(userSeriesId: Int): Resource<Any> {
+    override suspend fun delete(userSeriesId: Int): Result<Unit, ErrorDomain> {
         return try {
             val response = libraryService.deleteItemAsync(userSeriesId)
             return if (response.isSuccessful) {
-                Resource.Success(Any())
+                Ok(Unit)
             } else {
-                response.parseError()
+                Err(response.asError())
             }
         } catch (ex: Exception) {
-            ex.parse()
+            Err(ex.parse())
         }
     }
 
@@ -118,14 +120,14 @@ class KitsuLibrary @Inject constructor(
     private suspend fun performRetrieveCall(
         userId: Int,
         execute: suspend (userId: Int, offset: Int, limit: Int) -> Response<RetrieveResponseDto>
-    ): Resource<List<SeriesDomain>> {
+    ): Result<List<SeriesDomain>, ErrorDomain> {
         val models = mutableListOf<SeriesDomain>()
 
         var offset = 0
         var page = 0
         var retries = 0
         var executeAgain: Boolean
-        var errorResponse = Resource.Error<RetrieveResponseDto>("", 200)
+        var errorResponse = ErrorDomain("", 200)
 
         do {
             executeAgain = false
@@ -134,7 +136,7 @@ class KitsuLibrary @Inject constructor(
             try {
                 response = execute(userId, offset, LIMIT)
             } catch (ex: Exception) {
-                return ex.parse()
+                return Err(ex.parse())
             }
 
             val body = response.body()
@@ -152,15 +154,17 @@ class KitsuLibrary @Inject constructor(
                     retries++
                     executeAgain = true
                 } else {
-                    errorResponse = response.parseError()
+                    errorResponse = response.asError()
                 }
             }
         } while (executeAgain)
 
-        return if (retries == MAX_RETRIES && models.count() == 0) {
-            Resource.Error(errorResponse.msg, errorResponse.code)
+        return if (retries == MAX_RETRIES && models.isEmpty()) {
+            Err(
+                ErrorDomain(errorResponse.message, errorResponse.code)
+            )
         } else {
-            Resource.Success(models)
+            Ok(models)
         }
     }
 
@@ -174,13 +178,13 @@ class KitsuLibrary @Inject constructor(
         }
     }
 
-    private fun parseResponse(response: Response<AddResponseDto>): Resource<SeriesDomain> {
+    private fun parseResponse(response: Response<AddResponseDto>): Result<SeriesDomain, ErrorDomain> {
         return if (response.isSuccessful) {
             response.body()?.let { entity ->
-                Resource.Success(requireNotNull(map.toSeriesDomain(entity)))
-            } ?: Resource.Error.emptyResponse()
+                Ok(requireNotNull(map.toSeriesDomain(entity)))
+            } ?: Err(ErrorDomain.emptyResponse)
         } else {
-            response.asError()
+            Err(response.asError())
         }
     }
 }

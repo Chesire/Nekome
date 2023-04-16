@@ -1,6 +1,5 @@
 package com.chesire.nekome.kitsu.trending
 
-import com.chesire.nekome.core.Resource
 import com.chesire.nekome.core.flags.SeriesType
 import com.chesire.nekome.kitsu.trending.dto.TrendingResponseDto
 import io.mockk.coEvery
@@ -119,6 +118,7 @@ class KitsuTrendingTests {
             is Resource.Success -> {
                 /* Pass */
             }
+
             is Resource.Error -> error("Test has failed")
         }
     }
@@ -239,6 +239,7 @@ class KitsuTrendingTests {
             is Resource.Success -> {
                 /* Pass */
             }
+
             is Resource.Error -> error("Test has failed")
         }
     }

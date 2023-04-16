@@ -1,7 +1,6 @@
 package com.chesire.nekome.app.search.host.core
 
 import com.chesire.nekome.app.search.host.core.model.SearchGroup
-import com.chesire.nekome.core.Resource
 import com.chesire.nekome.datasource.search.SearchDomain
 import com.chesire.nekome.datasource.search.remote.SearchApi
 import com.github.michaelbull.result.Err

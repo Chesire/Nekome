@@ -2,9 +2,8 @@ package com.chesire.nekome.features.login
 
 import androidx.compose.ui.test.junit4.createComposeRule
 import com.chesire.nekome.UITest
-import com.chesire.nekome.core.Resource
 import com.chesire.nekome.datasource.auth.remote.AuthApi
-import com.chesire.nekome.datasource.auth.remote.AuthResult
+import com.chesire.nekome.datasource.auth.remote.AuthFailure
 import com.chesire.nekome.datasource.series.remote.SeriesApi
 import com.chesire.nekome.datasource.user.remote.UserApi
 import com.chesire.nekome.helpers.creation.createSeriesDomain
@@ -38,7 +37,7 @@ class LoginFlowTests : UITest() {
         coEvery {
             login("Username", "Password")
         } coAnswers {
-            AuthResult.Success("accessToken", "refreshToken")
+            AuthFailure.Success("accessToken", "refreshToken")
         }
     }
 

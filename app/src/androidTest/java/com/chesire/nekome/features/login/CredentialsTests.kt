@@ -3,7 +3,7 @@ package com.chesire.nekome.features.login
 import androidx.compose.ui.test.junit4.createComposeRule
 import com.chesire.nekome.UITest
 import com.chesire.nekome.datasource.auth.remote.AuthApi
-import com.chesire.nekome.datasource.auth.remote.AuthResult
+import com.chesire.nekome.datasource.auth.remote.AuthFailure
 import com.chesire.nekome.injection.AuthModule
 import com.chesire.nekome.robots.login.loginCredentials
 import dagger.hilt.android.testing.BindValue
@@ -57,7 +57,7 @@ class CredentialsTests : UITest() {
         coEvery {
             authApi.login("Username", "Password")
         } coAnswers {
-            AuthResult.InvalidCredentials
+            AuthFailure.InvalidCredentials
         }
 
         launchActivity()
@@ -76,7 +76,7 @@ class CredentialsTests : UITest() {
         coEvery {
             authApi.login("Username", "Password")
         } coAnswers {
-            AuthResult.BadRequest
+            AuthFailure.BadRequest
         }
 
         launchActivity()

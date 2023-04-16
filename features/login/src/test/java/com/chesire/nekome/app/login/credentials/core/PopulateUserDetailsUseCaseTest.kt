@@ -2,7 +2,6 @@
 
 package com.chesire.nekome.app.login.credentials.core
 
-import com.chesire.nekome.core.Resource
 import com.chesire.nekome.datasource.user.UserRepository
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok

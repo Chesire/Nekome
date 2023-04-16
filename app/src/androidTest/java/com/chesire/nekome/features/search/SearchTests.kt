@@ -2,7 +2,6 @@ package com.chesire.nekome.features.search
 
 import androidx.compose.ui.test.junit4.createComposeRule
 import com.chesire.nekome.UITest
-import com.chesire.nekome.core.Resource
 import com.chesire.nekome.datasource.search.remote.SearchApi
 import com.chesire.nekome.injection.SearchModule
 import com.chesire.nekome.robots.activity

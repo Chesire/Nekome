@@ -1,6 +1,5 @@
 package com.chesire.nekome.datasource.user
 
-import com.chesire.nekome.core.Resource
 import com.chesire.nekome.core.flags.Service
 import com.chesire.nekome.core.models.ImageModel
 import com.chesire.nekome.database.dao.UserDao
@@ -11,7 +10,6 @@ import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.just
 import io.mockk.mockk
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals

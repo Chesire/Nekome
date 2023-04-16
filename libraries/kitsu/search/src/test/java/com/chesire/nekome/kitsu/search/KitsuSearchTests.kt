@@ -1,6 +1,5 @@
 package com.chesire.nekome.kitsu.search
 
-import com.chesire.nekome.core.Resource
 import com.chesire.nekome.core.flags.SeriesType
 import com.chesire.nekome.kitsu.search.dto.SearchResponseDto
 import io.mockk.coEvery
@@ -124,6 +123,7 @@ class KitsuSearchTests {
             is Resource.Success -> {
                 /* Pass */
             }
+
             is Resource.Error -> error("Test has failed")
         }
     }
@@ -249,6 +249,7 @@ class KitsuSearchTests {
             is Resource.Success -> {
                 /* Pass */
             }
+
             is Resource.Error -> error("Test has failed")
         }
     }

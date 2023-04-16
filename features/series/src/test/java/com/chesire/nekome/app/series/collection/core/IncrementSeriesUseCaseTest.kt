@@ -2,7 +2,6 @@
 
 package com.chesire.nekome.app.series.collection.core
 
-import com.chesire.nekome.core.Resource
 import com.chesire.nekome.core.flags.UserSeriesStatus
 import com.chesire.nekome.datasource.series.SeriesRepository
 import com.chesire.nekome.testing.createSeriesDomain

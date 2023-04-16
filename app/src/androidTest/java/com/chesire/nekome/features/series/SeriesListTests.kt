@@ -2,7 +2,6 @@ package com.chesire.nekome.features.series
 
 import androidx.compose.ui.test.junit4.createComposeRule
 import com.chesire.nekome.UITest
-import com.chesire.nekome.core.Resource
 import com.chesire.nekome.core.flags.SeriesType
 import com.chesire.nekome.core.flags.UserSeriesStatus
 import com.chesire.nekome.datasource.series.remote.SeriesApi

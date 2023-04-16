@@ -4,7 +4,6 @@ import android.content.Context
 import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
-import com.chesire.nekome.core.Resource
 import com.chesire.nekome.datasource.series.SeriesRepository
 import com.chesire.nekome.datasource.user.UserRepository
 import dagger.assisted.Assisted

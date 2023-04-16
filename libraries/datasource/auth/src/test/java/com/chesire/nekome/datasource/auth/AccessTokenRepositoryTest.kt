@@ -2,7 +2,7 @@ package com.chesire.nekome.datasource.auth
 
 import com.chesire.nekome.datasource.auth.local.AuthProvider
 import com.chesire.nekome.datasource.auth.remote.AuthApi
-import com.chesire.nekome.datasource.auth.remote.AuthResult
+import com.chesire.nekome.datasource.auth.remote.AuthFailure
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.just
@@ -49,7 +49,7 @@ class AccessTokenRepositoryTest {
     fun `login on success, stores the accessToken`() = runBlocking {
         coEvery {
             authApi.login(USERNAME_INPUT, PASSWORD_INPUT)
-        } returns AuthResult.Success(ACCESS_TOKEN, REFRESH_TOKEN)
+        } returns AuthFailure.Success(ACCESS_TOKEN, REFRESH_TOKEN)
 
         accessTokenRepository.login(USERNAME_INPUT, PASSWORD_INPUT)
 
@@ -60,7 +60,7 @@ class AccessTokenRepositoryTest {
     fun `login on success, stores the refreshToken`() = runBlocking {
         coEvery {
             authApi.login(USERNAME_INPUT, PASSWORD_INPUT)
-        } returns AuthResult.Success(ACCESS_TOKEN, REFRESH_TOKEN)
+        } returns AuthFailure.Success(ACCESS_TOKEN, REFRESH_TOKEN)
 
         accessTokenRepository.login(USERNAME_INPUT, PASSWORD_INPUT)
 
@@ -71,7 +71,7 @@ class AccessTokenRepositoryTest {
     fun `login on success, returns AccessTokenResult#Success`() = runBlocking {
         coEvery {
             authApi.login(USERNAME_INPUT, PASSWORD_INPUT)
-        } returns AuthResult.Success(ACCESS_TOKEN, REFRESH_TOKEN)
+        } returns AuthFailure.Success(ACCESS_TOKEN, REFRESH_TOKEN)
 
         val result = accessTokenRepository.login(USERNAME_INPUT, PASSWORD_INPUT)
 
@@ -83,7 +83,7 @@ class AccessTokenRepositoryTest {
         runBlocking {
             coEvery {
                 authApi.login(USERNAME_INPUT, PASSWORD_INPUT)
-            } returns AuthResult.InvalidCredentials
+            } returns AuthFailure.InvalidCredentials
 
             val actual = accessTokenRepository.login(USERNAME_INPUT, PASSWORD_INPUT)
 
@@ -95,7 +95,7 @@ class AccessTokenRepositoryTest {
         runBlocking {
             coEvery {
                 authApi.login(USERNAME_INPUT, PASSWORD_INPUT)
-            } returns AuthResult.BadRequest
+            } returns AuthFailure.BadRequest
 
             val actual = accessTokenRepository.login(USERNAME_INPUT, PASSWORD_INPUT)
 
@@ -106,7 +106,7 @@ class AccessTokenRepositoryTest {
     fun `refresh on success, stores the accessToken`() = runBlocking {
         coEvery {
             authApi.refresh(REFRESH_TOKEN_INPUT)
-        } returns AuthResult.Success(ACCESS_TOKEN, REFRESH_TOKEN)
+        } returns AuthFailure.Success(ACCESS_TOKEN, REFRESH_TOKEN)
 
         accessTokenRepository.refresh()
 
@@ -117,7 +117,7 @@ class AccessTokenRepositoryTest {
     fun `refresh on success, stores the refreshToken`() = runBlocking {
         coEvery {
             authApi.refresh(REFRESH_TOKEN_INPUT)
-        } returns AuthResult.Success(ACCESS_TOKEN, REFRESH_TOKEN)
+        } returns AuthFailure.Success(ACCESS_TOKEN, REFRESH_TOKEN)
 
         accessTokenRepository.refresh()
 
@@ -128,7 +128,7 @@ class AccessTokenRepositoryTest {
     fun `refresh on success, returns AccessTokenResult#Success`() = runBlocking {
         coEvery {
             authApi.refresh(REFRESH_TOKEN_INPUT)
-        } returns AuthResult.Success(ACCESS_TOKEN, REFRESH_TOKEN)
+        } returns AuthFailure.Success(ACCESS_TOKEN, REFRESH_TOKEN)
 
         val result = accessTokenRepository.refresh()
 
@@ -140,7 +140,7 @@ class AccessTokenRepositoryTest {
         runBlocking {
             coEvery {
                 authApi.refresh(REFRESH_TOKEN_INPUT)
-            } returns AuthResult.InvalidCredentials
+            } returns AuthFailure.InvalidCredentials
 
             val actual = accessTokenRepository.refresh()
 
@@ -152,7 +152,7 @@ class AccessTokenRepositoryTest {
         runBlocking {
             coEvery {
                 authApi.refresh(REFRESH_TOKEN_INPUT)
-            } returns AuthResult.BadRequest
+            } returns AuthFailure.BadRequest
 
             val actual = accessTokenRepository.refresh()
 

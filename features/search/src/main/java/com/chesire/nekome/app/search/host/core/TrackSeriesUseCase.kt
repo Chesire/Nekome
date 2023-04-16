@@ -1,6 +1,5 @@
 package com.chesire.nekome.app.search.host.core
 
-import com.chesire.nekome.core.Resource
 import com.chesire.nekome.core.flags.SeriesType
 import com.chesire.nekome.core.preferences.ApplicationPreferences
 import com.chesire.nekome.datasource.series.SeriesRepository
@@ -27,10 +26,12 @@ class TrackSeriesUseCase @Inject constructor(
                     seriesId,
                     settings.defaultSeriesState.first()
                 )
+
                 SeriesType.Manga -> seriesRepo.addManga(
                     seriesId,
                     settings.defaultSeriesState.first()
                 )
+
                 else -> error("Unknown SeriesType: $seriesType")
             }
         }

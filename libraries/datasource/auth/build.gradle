@@ -31,6 +31,7 @@ dependencies {
     implementation libs.google.hilt.android
     implementation libs.kotlin.coroutines.android
     implementation libs.kotlin.coroutines.core
+    implementation libs.kotlin.result
     implementation libs.squareup.retrofit2
 
     testImplementation project(":testing")

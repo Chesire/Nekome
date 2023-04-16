@@ -1,7 +1,7 @@
 package com.chesire.nekome.kitsu.auth
 
 import com.chesire.nekome.datasource.auth.AuthException
-import com.chesire.nekome.datasource.auth.remote.AuthResult
+import com.chesire.nekome.datasource.auth.remote.AuthFailure
 import com.chesire.nekome.kitsu.auth.dto.AuthResponseDto
 import com.chesire.nekome.kitsu.auth.dto.LoginRequestDto
 import com.chesire.nekome.kitsu.auth.dto.RefreshTokenRequestDto
@@ -41,7 +41,7 @@ class KitsuAuthTests {
 
         val actual = classUnderTest.login(USERNAME_INPUT, PASSWORD_INPUT)
 
-        assertEquals(AuthResult.BadRequest, actual)
+        assertEquals(AuthFailure.BadRequest, actual)
     }
 
     @Test
@@ -64,7 +64,7 @@ class KitsuAuthTests {
 
             val actual = classUnderTest.login(USERNAME_INPUT, PASSWORD_INPUT)
 
-            assertEquals(AuthResult.InvalidCredentials, actual)
+            assertEquals(AuthFailure.InvalidCredentials, actual)
         }
 
     @Test
@@ -83,7 +83,7 @@ class KitsuAuthTests {
 
         val actual = classUnderTest.login(USERNAME_INPUT, PASSWORD_INPUT)
 
-        assertEquals(AuthResult.BadRequest, actual)
+        assertEquals(AuthFailure.BadRequest, actual)
     }
 
     @Test
@@ -104,7 +104,7 @@ class KitsuAuthTests {
 
         val actual = classUnderTest.login(USERNAME_INPUT, PASSWORD_INPUT)
 
-        check(actual is AuthResult.Success)
+        check(actual is AuthFailure.Success)
         assertEquals(expectedAccessToken, actual.accessToken)
         assertEquals(expectedRefreshToken, actual.refreshToken)
     }
@@ -121,7 +121,7 @@ class KitsuAuthTests {
 
             val result = classUnderTest.login(USERNAME_INPUT, PASSWORD_INPUT)
 
-            assertEquals(AuthResult.CouldNotReachServer, result)
+            assertEquals(AuthFailure.CouldNotReachServer, result)
         }
 
     @Test
@@ -135,7 +135,7 @@ class KitsuAuthTests {
 
         val result = classUnderTest.login(USERNAME_INPUT, PASSWORD_INPUT)
 
-        assertEquals(AuthResult.CouldNotRefresh, result)
+        assertEquals(AuthFailure.CouldNotRefresh, result)
     }
 
     @Test
@@ -149,7 +149,7 @@ class KitsuAuthTests {
 
         val result = classUnderTest.login(USERNAME_INPUT, PASSWORD_INPUT)
 
-        assertEquals(AuthResult.BadRequest, result)
+        assertEquals(AuthFailure.BadRequest, result)
     }
 
     @Test
@@ -171,7 +171,7 @@ class KitsuAuthTests {
 
         val actual = classUnderTest.refresh(REFRESH_TOKEN_INPUT)
 
-        assertEquals(AuthResult.BadRequest, actual)
+        assertEquals(AuthFailure.BadRequest, actual)
     }
 
     @Test
@@ -192,7 +192,7 @@ class KitsuAuthTests {
 
             val actual = classUnderTest.refresh(REFRESH_TOKEN_INPUT)
 
-            assertEquals(AuthResult.BadRequest, actual)
+            assertEquals(AuthFailure.BadRequest, actual)
         }
 
     @Test
@@ -211,7 +211,7 @@ class KitsuAuthTests {
 
         val actual = classUnderTest.refresh(REFRESH_TOKEN_INPUT)
 
-        assertEquals(AuthResult.BadRequest, actual)
+        assertEquals(AuthFailure.BadRequest, actual)
     }
 
     @Test
@@ -232,7 +232,7 @@ class KitsuAuthTests {
 
         val actual = classUnderTest.refresh(REFRESH_TOKEN_INPUT)
 
-        check(actual is AuthResult.Success)
+        check(actual is AuthFailure.Success)
         assertEquals(expectedAccessToken, actual.accessToken)
         assertEquals(expectedRefreshToken, actual.refreshToken)
     }
@@ -249,7 +249,7 @@ class KitsuAuthTests {
 
             val actual = classUnderTest.refresh(REFRESH_TOKEN_INPUT)
 
-            assertEquals(AuthResult.CouldNotReachServer, actual)
+            assertEquals(AuthFailure.CouldNotReachServer, actual)
         }
 
     @Test
@@ -263,7 +263,7 @@ class KitsuAuthTests {
 
         val actual = classUnderTest.refresh(REFRESH_TOKEN_INPUT)
 
-        assertEquals(AuthResult.CouldNotRefresh, actual)
+        assertEquals(AuthFailure.CouldNotRefresh, actual)
     }
 
     @Test
@@ -277,6 +277,6 @@ class KitsuAuthTests {
 
         val actual = classUnderTest.refresh(REFRESH_TOKEN_INPUT)
 
-        assertEquals(AuthResult.BadRequest, actual)
+        assertEquals(AuthFailure.BadRequest, actual)
     }
 }

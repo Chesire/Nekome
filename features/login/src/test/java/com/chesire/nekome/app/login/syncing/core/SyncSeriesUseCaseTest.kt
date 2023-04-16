@@ -2,7 +2,6 @@
 
 package com.chesire.nekome.app.login.syncing.core
 
-import com.chesire.nekome.core.Resource
 import com.chesire.nekome.datasource.series.SeriesRepository
 import io.mockk.clearAllMocks
 import io.mockk.coEvery

@@ -3,7 +3,6 @@ package com.chesire.nekome.services
 import android.content.Context
 import androidx.work.ListenableWorker
 import androidx.work.WorkerParameters
-import com.chesire.nekome.core.Resource
 import com.chesire.nekome.datasource.user.UserRepository
 import io.mockk.coEvery
 import io.mockk.coVerify
