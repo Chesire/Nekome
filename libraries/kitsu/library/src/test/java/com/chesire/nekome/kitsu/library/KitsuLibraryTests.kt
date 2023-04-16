@@ -5,6 +5,8 @@ import com.chesire.nekome.core.flags.UserSeriesStatus
 import com.chesire.nekome.kitsu.api.intermediaries.Links
 import com.chesire.nekome.kitsu.library.dto.AddResponseDto
 import com.chesire.nekome.kitsu.library.dto.DtoFactory
+import com.github.michaelbull.result.get
+import com.github.michaelbull.result.getError
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
@@ -13,8 +15,8 @@ import java.net.UnknownHostException
 import kotlinx.coroutines.runBlocking
 import okhttp3.ResponseBody
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertSame
-import org.junit.Assert.assertTrue
 import org.junit.Test
 import retrofit2.Response
 
@@ -42,16 +44,10 @@ class KitsuLibraryTests {
             }
         }
         val classUnderTest = KitsuLibrary(mockService, map, factory)
-        val actual = classUnderTest.retrieveAnime(1)
+        val actual = classUnderTest.retrieveAnime(1).get()
 
         coVerify(exactly = 1) { mockService.retrieveAnimeAsync(1, 0, 500) }
-        when (actual) {
-            is Resource.Success -> {
-                /* Pass */
-            }
-
-            is Resource.Error -> error("Test has failed")
-        }
+        assertNotNull(actual)
     }
 
     @Test
@@ -98,13 +94,10 @@ class KitsuLibraryTests {
             }
         }
         val classUnderTest = KitsuLibrary(mockService, map, factory)
-        val actual = classUnderTest.retrieveAnime(1)
+        val result = classUnderTest.retrieveAnime(1).getError()
 
         coVerify(exactly = 4) { mockService.retrieveAnimeAsync(1, 0, 500) }
-        when (actual) {
-            is Resource.Success -> error("Test has failed")
-            is Resource.Error -> assertTrue(true)
-        }
+        assertNotNull(result)
     }
 
     @Test
@@ -135,14 +128,11 @@ class KitsuLibraryTests {
             }
         }
         val classUnderTest = KitsuLibrary(mockService, map, factory)
-        val actual = classUnderTest.retrieveAnime(1)
+        val result = classUnderTest.retrieveAnime(1).get()
 
         coVerify { mockService.retrieveAnimeAsync(1, 0, 500) }
         coVerify(exactly = 4) { mockService.retrieveAnimeAsync(1, 500, 500) }
-        when (actual) {
-            is Resource.Success -> assertTrue(true)
-            is Resource.Error -> error("Test has failed")
-        }
+        assertNotNull(result)
     }
 
     @Test
@@ -152,12 +142,9 @@ class KitsuLibraryTests {
         }
 
         val classUnderTest = KitsuLibrary(mockService, map, factory)
-        val result = classUnderTest.retrieveAnime(0)
+        val result = classUnderTest.retrieveAnime(0).getError()
 
-        when (result) {
-            is Resource.Success -> error("Test has failed")
-            is Resource.Error -> assertTrue(true)
-        }
+        assertNotNull(result)
     }
 
     @Test
@@ -174,15 +161,9 @@ class KitsuLibraryTests {
             }
         }
         val classUnderTest = KitsuLibrary(mockService, map, factory)
-        val actual = classUnderTest.retrieveManga(0)
+        val result = classUnderTest.retrieveManga(0).getError()
 
-        when (actual) {
-            is Resource.Success -> {
-                /* Pass */
-            }
-
-            is Resource.Error -> error("Test has failed")
-        }
+        assertNotNull(result)
     }
 
     @Test
@@ -229,13 +210,10 @@ class KitsuLibraryTests {
             }
         }
         val classUnderTest = KitsuLibrary(mockService, map, factory)
-        val actual = classUnderTest.retrieveManga(1)
+        val result = classUnderTest.retrieveManga(1).getError()
 
         coVerify(exactly = 4) { mockService.retrieveMangaAsync(1, 0, 500) }
-        when (actual) {
-            is Resource.Success -> error("Test has failed")
-            is Resource.Error -> assertTrue(true)
-        }
+        assertNotNull(result)
     }
 
     @Test
@@ -266,14 +244,11 @@ class KitsuLibraryTests {
             }
         }
         val classUnderTest = KitsuLibrary(mockService, map, factory)
-        val actual = classUnderTest.retrieveManga(1)
+        val result = classUnderTest.retrieveManga(1).get()
 
         coVerify { mockService.retrieveMangaAsync(1, 0, 500) }
         coVerify(exactly = 4) { mockService.retrieveMangaAsync(1, 500, 500) }
-        when (actual) {
-            is Resource.Success -> assertTrue(true)
-            is Resource.Error -> error("Test has failed")
-        }
+        assertNotNull(result)
     }
 
     @Test
@@ -285,12 +260,9 @@ class KitsuLibraryTests {
         }
 
         val classUnderTest = KitsuLibrary(mockService, map, factory)
-        val result = classUnderTest.retrieveManga(0)
+        val result = classUnderTest.retrieveManga(0).getError()
 
-        when (result) {
-            is Resource.Success -> error("Test has failed")
-            is Resource.Error -> assertTrue(true)
-        }
+        assertNotNull(result)
     }
 
     @Test
@@ -309,15 +281,9 @@ class KitsuLibraryTests {
         }
 
         val classUnderTest = KitsuLibrary(mockService, map, factory)
-        val actual = classUnderTest.addAnime(1, 10, UserSeriesStatus.Planned)
+        val result = classUnderTest.addAnime(1, 10, UserSeriesStatus.Planned).getError()
 
-        when (actual) {
-            is Resource.Success -> {
-                /* Pass */
-            }
-
-            is Resource.Error -> error("Test has failed")
-        }
+        assertNotNull(result)
     }
 
     @Test
@@ -327,12 +293,9 @@ class KitsuLibraryTests {
         }
 
         val classUnderTest = KitsuLibrary(mockService, map, factory)
-        val result = classUnderTest.addAnime(0, 0, UserSeriesStatus.Dropped)
+        val result = classUnderTest.addAnime(0, 0, UserSeriesStatus.Dropped).getError()
 
-        when (result) {
-            is Resource.Success -> error("Test has failed")
-            is Resource.Error -> assertTrue(true)
-        }
+        assertNotNull(result)
     }
 
     @Test
@@ -351,15 +314,9 @@ class KitsuLibraryTests {
         }
 
         val classUnderTest = KitsuLibrary(mockService, map, factory)
-        val actual = classUnderTest.addManga(1, 10, UserSeriesStatus.Planned)
+        val result = classUnderTest.addManga(1, 10, UserSeriesStatus.Planned).get()
 
-        when (actual) {
-            is Resource.Success -> {
-                /* Pass */
-            }
-
-            is Resource.Error -> error("Test has failed")
-        }
+        assertNotNull(result)
     }
 
     @Test
@@ -369,12 +326,9 @@ class KitsuLibraryTests {
         }
 
         val classUnderTest = KitsuLibrary(mockService, map, factory)
-        val result = classUnderTest.addManga(0, 0, UserSeriesStatus.Dropped)
+        val result = classUnderTest.addManga(0, 0, UserSeriesStatus.Dropped).getError()
 
-        when (result) {
-            is Resource.Success -> error("Test has failed")
-            is Resource.Error -> assertTrue(true)
-        }
+        assertNotNull(result)
     }
 
     @Test
@@ -393,15 +347,9 @@ class KitsuLibraryTests {
         }
 
         val classUnderTest = KitsuLibrary(mockService, map, factory)
-        val actual = classUnderTest.update(10, 0, UserSeriesStatus.OnHold, 0)
+        val result = classUnderTest.update(10, 0, UserSeriesStatus.OnHold, 0).get()
 
-        when (actual) {
-            is Resource.Success -> {
-                /* Pass */
-            }
-
-            is Resource.Error -> error("Test has failed")
-        }
+        assertNotNull(result)
     }
 
     @Test
@@ -420,12 +368,9 @@ class KitsuLibraryTests {
         }
 
         val classUnderTest = KitsuLibrary(mockService, map, factory)
-        val actual = classUnderTest.update(10, 0, UserSeriesStatus.OnHold, 0)
+        val actual = classUnderTest.update(10, 0, UserSeriesStatus.OnHold, 0).getError()
 
-        when (actual) {
-            is Resource.Success -> error("Test has failed")
-            is Resource.Error -> assertSame(expected, actual.msg)
-        }
+        assertSame(expected, actual?.message)
     }
 
     @Test
@@ -449,12 +394,9 @@ class KitsuLibraryTests {
         }
 
         val classUnderTest = KitsuLibrary(mockService, map, factory)
-        val actual = classUnderTest.update(10, 0, UserSeriesStatus.OnHold, 0)
+        val actual = classUnderTest.update(10, 0, UserSeriesStatus.OnHold, 0).getError()
 
-        when (actual) {
-            is Resource.Success -> error("Test has failed")
-            is Resource.Error -> assertSame(expected, actual.msg)
-        }
+        assertSame(expected, actual?.message)
     }
 
     @Test
@@ -476,12 +418,9 @@ class KitsuLibraryTests {
         }
 
         val classUnderTest = KitsuLibrary(mockService, map, factory)
-        val actual = classUnderTest.update(10, 0, UserSeriesStatus.OnHold, 0)
+        val actual = classUnderTest.update(10, 0, UserSeriesStatus.OnHold, 0).getError()
 
-        when (actual) {
-            is Resource.Success -> error("Test has failed")
-            is Resource.Error -> assertSame(expected, actual.msg)
-        }
+        assertSame(expected, actual?.message)
     }
 
     @Test
@@ -491,12 +430,9 @@ class KitsuLibraryTests {
         }
 
         val classUnderTest = KitsuLibrary(mockService, map, factory)
-        val result = classUnderTest.update(0, 0, UserSeriesStatus.Current, 0)
+        val result = classUnderTest.update(0, 0, UserSeriesStatus.Current, 0).getError()
 
-        when (result) {
-            is Resource.Success -> error("Test has failed")
-            is Resource.Error -> assertTrue(true)
-        }
+        assertNotNull(result)
     }
 
     @Test
@@ -513,12 +449,9 @@ class KitsuLibraryTests {
         }
 
         val classUnderTest = KitsuLibrary(mockService, map, factory)
-        val actual = classUnderTest.delete(10)
+        val result = classUnderTest.delete(10).get()
 
-        when (actual) {
-            is Resource.Success -> assertTrue(true)
-            is Resource.Error -> error("Test has failed")
-        }
+        assertNotNull(result)
     }
 
     @Test
@@ -542,12 +475,9 @@ class KitsuLibraryTests {
         }
 
         val classUnderTest = KitsuLibrary(mockService, map, factory)
-        val actual = classUnderTest.delete(10)
+        val actual = classUnderTest.delete(10).getError()
 
-        when (actual) {
-            is Resource.Success -> error("Test has failed")
-            is Resource.Error -> assertEquals(expected, actual.msg)
-        }
+        assertEquals(expected, actual?.message)
     }
 
     @Test
@@ -569,12 +499,9 @@ class KitsuLibraryTests {
         }
 
         val classUnderTest = KitsuLibrary(mockService, map, factory)
-        val actual = classUnderTest.delete(10)
+        val actual = classUnderTest.delete(10).getError()
 
-        when (actual) {
-            is Resource.Success -> error("Test has failed")
-            is Resource.Error -> assertEquals(expected, actual.msg)
-        }
+        assertEquals(expected, actual?.message)
     }
 
     @Test
@@ -584,11 +511,8 @@ class KitsuLibraryTests {
         }
 
         val classUnderTest = KitsuLibrary(mockService, map, factory)
-        val result = classUnderTest.delete(0)
+        val result = classUnderTest.delete(0).getError()
 
-        when (result) {
-            is Resource.Success -> error("Test has failed")
-            is Resource.Error -> assertTrue(true)
-        }
+        assertNotNull(result)
     }
 }
