@@ -42,7 +42,7 @@ class KitsuAuth @Inject constructor(
             val dto = RefreshTokenRequestDto(refreshToken)
             parseResponse(authService.refreshAccessTokenAsync(dto))
         } catch (ex: Exception) {
-            Err(AuthFailure.BadRequest)
+            Err(ex.parse())
         }
     }
 
