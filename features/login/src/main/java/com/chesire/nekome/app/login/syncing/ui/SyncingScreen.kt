@@ -5,10 +5,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.LinearProgressIndicator
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
+import androidx.compose.material3.LinearProgressIndicator
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
@@ -91,7 +91,7 @@ private fun SyncingText(modifier: Modifier = Modifier) {
 @Composable
 private fun SyncingProgress(modifier: Modifier = Modifier) {
     LinearProgressIndicator(
-        color = MaterialTheme.colors.primary,
+        color = MaterialTheme.colorScheme.primary,
         modifier = modifier
     )
 }
