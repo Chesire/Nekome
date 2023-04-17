@@ -25,7 +25,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import com.chesire.nekome.app.login.R
 import com.chesire.nekome.core.compose.theme.NekomeTheme
@@ -104,7 +103,7 @@ private fun Preview() {
         avatar = "https://media.kitsu.io/users/avatars/294558/large.jpeg",
         finishedSyncing = null
     )
-    NekomeTheme(darkTheme = true) {
+    NekomeTheme(isDarkTheme = true) {
         Render(
             state = produceState(initialValue = initialState, producer = { value = initialState })
         )

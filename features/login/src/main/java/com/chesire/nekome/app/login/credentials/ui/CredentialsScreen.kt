@@ -313,7 +313,7 @@ private fun Preview() {
         errorSnackbarMessage = null,
         navigateScreenEvent = null
     )
-    NekomeTheme(darkTheme = true) {
+    NekomeTheme(isDarkTheme = true) {
         Render(
             state = produceState(initialValue = initialState, producer = { value = initialState }),
             { /**/ },

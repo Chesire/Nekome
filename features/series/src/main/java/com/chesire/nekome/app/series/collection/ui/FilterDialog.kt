@@ -128,7 +128,7 @@ data class FilterOption(
 @Composable
 @Preview
 private fun Preview() {
-    NekomeTheme(darkTheme = true) {
+    NekomeTheme(isDarkTheme = true) {
         Render(
             filters = listOf(
                 FilterOption(UserSeriesStatus.Current, true),

@@ -96,7 +96,7 @@ private fun Render(
 @Composable
 @Preview
 private fun Preview() {
-    NekomeTheme(darkTheme = true) {
+    NekomeTheme(isDarkTheme = true) {
         Render(
             series = Series(
                 userId = 0,

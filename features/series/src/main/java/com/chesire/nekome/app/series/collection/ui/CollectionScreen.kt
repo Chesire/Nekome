@@ -446,7 +446,7 @@ private fun Preview() {
             )
         )
     )
-    NekomeTheme(darkTheme = true) {
+    NekomeTheme(isDarkTheme = true) {
         Render(
             state = produceState(
                 initialValue = initialState,
