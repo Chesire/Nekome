@@ -1,4 +1,4 @@
-@file:OptIn(ExperimentalMaterialApi::class, ExperimentalComposeUiApi::class)
+@file:OptIn(ExperimentalComposeUiApi::class, ExperimentalMaterial3Api::class)
 
 package com.chesire.nekome.app.series.item.ui
 
@@ -11,20 +11,20 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.ChipDefaults
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.FilterChip
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.OutlinedTextField
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Slider
-import androidx.compose.material.SnackbarDuration
-import androidx.compose.material.SnackbarHost
-import androidx.compose.material.SnackbarHostState
-import androidx.compose.material.Text
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FilterChip
+import androidx.compose.material3.FilterChipDefaults
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Slider
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
@@ -151,7 +151,7 @@ private fun Render(
 private fun Title(title: String) {
     Text(
         text = title,
-        style = MaterialTheme.typography.h5
+        style = MaterialTheme.typography.headlineSmall
     )
 }
 
@@ -159,7 +159,7 @@ private fun Title(title: String) {
 private fun Subtitle(subtitle: String) {
     Text(
         text = subtitle,
-        style = MaterialTheme.typography.caption
+        style = MaterialTheme.typography.bodySmall
     )
 }
 
@@ -172,7 +172,7 @@ private fun SeriesStatus(
     Text(
         text = stringResource(id = R.string.series_detail_status_title),
         modifier = Modifier.padding(top = 16.dp),
-        style = MaterialTheme.typography.body1
+        style = MaterialTheme.typography.bodyLarge
     )
     FlowRow(
         mainAxisAlignment = FlowMainAxisAlignment.SpaceAround,
@@ -184,13 +184,12 @@ private fun SeriesStatus(
         possibleSeriesStatus.forEach { seriesChip ->
             FilterChip(
                 selected = seriesChip == seriesStatus,
-                colors = ChipDefaults.filterChipColors(
-                    selectedContentColor = MaterialTheme.colors.primary
+                label = { Text(text = stringResource(id = seriesChip.stringId)) },
+                colors = FilterChipDefaults.filterChipColors(
+                    labelColor = MaterialTheme.colorScheme.primary
                 ),
                 onClick = { onSeriesStatusChanged(seriesChip) }
-            ) {
-                Text(text = stringResource(id = seriesChip.stringId))
-            }
+            )
         }
     }
 }
@@ -204,7 +203,7 @@ private fun Progress(
     Text(
         text = stringResource(id = R.string.series_detail_progress_title),
         modifier = Modifier.padding(top = 16.dp, bottom = 8.dp),
-        style = MaterialTheme.typography.body1
+        style = MaterialTheme.typography.bodyLarge
     )
     OutlinedTextField(
         value = progress,
@@ -226,7 +225,7 @@ private fun Rating(
     Text(
         text = stringResource(id = R.string.series_detail_rating),
         modifier = Modifier.padding(top = 16.dp),
-        style = MaterialTheme.typography.body1
+        style = MaterialTheme.typography.bodyLarge
     )
     Slider(
         value = rating,
@@ -259,7 +258,7 @@ private fun Rating(
 private fun DeleteButton(onDeletePressed: () -> Unit) {
     Button(
         onClick = { onDeletePressed() },
-        colors = ButtonDefaults.buttonColors(backgroundColor = Color.Red),
+        colors = ButtonDefaults.buttonColors(containerColor = Color.Red),
         modifier = Modifier.padding(start = 16.dp, top = 16.dp, end = 16.dp, bottom = 0.dp)
     ) {
         Text(text = stringResource(id = R.string.series_detail_delete))
