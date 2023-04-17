@@ -1,7 +1,7 @@
 plugins {
     id "com.android.library"
+    id "com.google.devtools.ksp"
     id "kotlin-android"
-    id "kotlin-kapt"
 }
 
 android {
@@ -15,11 +15,9 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
 
-        kapt {
-            arguments {
-                arg("room.schemaLocation", "$projectDir/schemas".toString())
-                arg("room.incremental", "true")
-            }
+        ksp {
+            arg("room.schemaLocation", "$projectDir/schemas".toString())
+            arg("room.incremental", "true")
         }
     }
     buildTypes {
@@ -46,7 +44,7 @@ dependencies {
     implementation libs.kotlin.coroutines.android
     implementation libs.kotlin.coroutines.core
     implementation libs.squareup.moshi
-    kapt libs.androidx.room.compiler
+    ksp libs.androidx.room.compiler
 
     testImplementation project(":testing")
     testImplementation libs.androidx.room.testing
