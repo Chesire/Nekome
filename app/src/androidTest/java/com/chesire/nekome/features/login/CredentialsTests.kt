@@ -6,6 +6,7 @@ import com.chesire.nekome.datasource.auth.remote.AuthApi
 import com.chesire.nekome.datasource.auth.remote.AuthFailure
 import com.chesire.nekome.injection.AuthModule
 import com.chesire.nekome.robots.login.loginCredentials
+import com.github.michaelbull.result.Err
 import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.UninstallModules
@@ -57,7 +58,7 @@ class CredentialsTests : UITest() {
         coEvery {
             authApi.login("Username", "Password")
         } coAnswers {
-            AuthFailure.InvalidCredentials
+            Err(AuthFailure.InvalidCredentials)
         }
 
         launchActivity()
@@ -76,7 +77,7 @@ class CredentialsTests : UITest() {
         coEvery {
             authApi.login("Username", "Password")
         } coAnswers {
-            AuthFailure.BadRequest
+            Err(AuthFailure.BadRequest)
         }
 
         launchActivity()

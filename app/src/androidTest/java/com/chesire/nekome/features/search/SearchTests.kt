@@ -2,10 +2,13 @@ package com.chesire.nekome.features.search
 
 import androidx.compose.ui.test.junit4.createComposeRule
 import com.chesire.nekome.UITest
+import com.chesire.nekome.core.models.ErrorDomain
 import com.chesire.nekome.datasource.search.remote.SearchApi
 import com.chesire.nekome.injection.SearchModule
 import com.chesire.nekome.robots.activity
 import com.chesire.nekome.robots.search.host
+import com.github.michaelbull.result.Err
+import com.github.michaelbull.result.Ok
 import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.UninstallModules
@@ -26,12 +29,12 @@ class SearchTests : UITest() {
         coEvery {
             searchForAnime(GENERIC_ERROR)
         } coAnswers {
-            Resource.Error("")
+            Err(ErrorDomain.badRequest)
         }
         coEvery {
             searchForAnime(NO_RESULTS_ERROR)
         } coAnswers {
-            Resource.Success(listOf())
+            Ok(listOf())
         }
     }
 
