@@ -11,17 +11,17 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.material.Card
-import androidx.compose.material.Checkbox
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.BrokenImage
 import androidx.compose.material.icons.filled.InsertPhoto
 import androidx.compose.material.icons.filled.Logout
+import androidx.compose.material3.Card
+import androidx.compose.material3.Checkbox
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
@@ -197,7 +197,7 @@ private fun ProfileSection(
 
                 Text(
                     text = userModel.userName,
-                    style = MaterialTheme.typography.subtitle1
+                    style = MaterialTheme.typography.titleMedium
                 )
                 Spacer(modifier = Modifier.weight(1f))
                 IconButton(onClick = onLogoutClicked) {
@@ -266,12 +266,12 @@ private fun RateSeriesPreference(
         Column(verticalArrangement = Arrangement.Center) {
             Text(
                 text = stringResource(id = R.string.settings_rate_on_completion_title),
-                style = MaterialTheme.typography.subtitle1
+                style = MaterialTheme.typography.titleMedium
             )
 
             Text(
                 text = stringResource(id = R.string.settings_rate_on_completion_summary),
-                style = MaterialTheme.typography.caption
+                style = MaterialTheme.typography.bodySmall
             )
         }
         Checkbox(
@@ -319,11 +319,11 @@ private fun LicensesLink(onLicensesLinkClicked: () -> Unit) {
 private fun PreferenceHeading(title: String) {
     Text(
         text = title,
-        style = MaterialTheme.typography.h6,
+        style = MaterialTheme.typography.titleLarge,
         modifier = Modifier
             .padding(top = 16.dp)
             .fillMaxWidth(),
-        color = MaterialTheme.colors.primary
+        color = MaterialTheme.colorScheme.primary
     )
 }
 
@@ -342,13 +342,13 @@ private fun PreferenceSection(
     ) {
         Text(
             text = title,
-            style = MaterialTheme.typography.subtitle1
+            style = MaterialTheme.typography.titleMedium
         )
 
         summary?.let {
             Text(
                 text = summary,
-                style = MaterialTheme.typography.caption
+                style = MaterialTheme.typography.bodySmall
             )
         }
     }
