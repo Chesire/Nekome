@@ -161,7 +161,7 @@ class KitsuLibraryTests {
             }
         }
         val classUnderTest = KitsuLibrary(mockService, map, factory)
-        val result = classUnderTest.retrieveManga(0).getError()
+        val result = classUnderTest.retrieveManga(0).get()
 
         assertNotNull(result)
     }
@@ -266,7 +266,7 @@ class KitsuLibraryTests {
     }
 
     @Test
-    fun `addAnime success return Resource#Error`() = runBlocking {
+    fun `addAnime success return Ok`() = runBlocking {
         val mockModel = createAddResponseDto(SeriesType.Anime)
         val mockResponse = mockk<Response<AddResponseDto>> {
             every { isSuccessful } returns true
@@ -281,7 +281,7 @@ class KitsuLibraryTests {
         }
 
         val classUnderTest = KitsuLibrary(mockService, map, factory)
-        val result = classUnderTest.addAnime(1, 10, UserSeriesStatus.Planned).getError()
+        val result = classUnderTest.addAnime(1, 10, UserSeriesStatus.Planned).get()
 
         assertNotNull(result)
     }
