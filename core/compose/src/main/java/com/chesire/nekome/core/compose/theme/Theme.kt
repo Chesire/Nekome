@@ -13,15 +13,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
-private val DarkColorPalette = darkColorScheme(
-    primary = LightBlue219
-)
-
-private val LightColorPalette = lightColorScheme(
-    primary = LightGray607,
-    secondary = LightBlue42A
-)
-
 @Composable
 fun NekomeTheme(
     isDarkTheme: Boolean = isSystemInDarkTheme(),
