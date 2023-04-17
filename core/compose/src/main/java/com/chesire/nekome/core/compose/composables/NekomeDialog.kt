@@ -30,10 +30,10 @@ import androidx.compose.ui.window.Dialog
  */
 @Composable
 fun NekomeDialog(
-    @StringRes title: Int,
-    @StringRes summary: Int?,
-    @StringRes confirmButton: Int,
-    @StringRes cancelButton: Int,
+    title: String,
+    summary: String?,
+    confirmButton: String,
+    cancelButton: String,
     onConfirmButtonClicked: () -> Unit,
     onCancelButtonClicked: () -> Unit
 ) {
@@ -41,14 +41,14 @@ fun NekomeDialog(
         Card(modifier = Modifier.semantics { testTag = DialogTags.Root }) {
             Column(modifier = Modifier.padding(16.dp)) {
                 Text(
-                    text = stringResource(id = title),
+                    text = title,
                     style = MaterialTheme.typography.titleLarge,
                     modifier = Modifier.padding(bottom = 8.dp)
                 )
 
                 summary?.let {
                     Text(
-                        text = stringResource(id = summary),
+                        text = summary,
                         style = MaterialTheme.typography.bodyLarge,
                         modifier = Modifier.padding(bottom = 8.dp)
                     )
@@ -64,13 +64,13 @@ fun NekomeDialog(
                             .semantics { testTag = DialogTags.CancelButton },
                         onClick = { onCancelButtonClicked() }
                     ) {
-                        Text(text = stringResource(id = cancelButton))
+                        Text(text = cancelButton)
                     }
                     TextButton(
                         onClick = { onConfirmButtonClicked() },
                         modifier = Modifier.semantics { testTag = DialogTags.OkButton }
                     ) {
-                        Text(text = stringResource(id = confirmButton))
+                        Text(text = confirmButton)
                     }
                 }
             }

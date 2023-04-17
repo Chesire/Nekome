@@ -43,6 +43,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.chesire.nekome.app.series.R
+import com.chesire.nekome.core.compose.composables.NekomeDialog
 import com.chesire.nekome.core.compose.theme.NekomeTheme
 import com.chesire.nekome.core.flags.UserSeriesStatus
 import com.google.accompanist.flowlayout.FlowMainAxisAlignment
@@ -282,6 +283,23 @@ private fun ConfirmButton(
         modifier = Modifier.padding(start = 16.dp, top = 16.dp, end = 16.dp, bottom = 0.dp)
     ) {
         Text(text = stringResource(id = R.string.series_detail_confirm))
+    }
+}
+
+@Composable
+private fun DeleteDialog(
+    deleteDialog: Delete,
+    onDeleteResult: (Boolean) -> Unit
+) {
+    if (deleteDialog.show) {
+        NekomeDialog(
+            title = stringResource(id = R.string.series_list_delete_title, deleteDialog.title),
+            summary = stringResource(R.string.series_list_delete_body),
+            confirmButton = stringResource(id = R.string.series_list_delete_confirm),
+            cancelButton = stringResource(id = R.string.cancel),
+            onConfirmButtonClicked = { onDeleteResult(true) },
+            onCancelButtonClicked = { onDeleteResult(false) }
+        )
     }
 }
 

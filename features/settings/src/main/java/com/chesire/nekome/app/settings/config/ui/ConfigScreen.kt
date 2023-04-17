@@ -117,10 +117,10 @@ private fun Render(
 
     if (state.value.showLogoutDialog) {
         NekomeDialog(
-            title = R.string.menu_logout_summary,
-            summary = R.string.menu_logout_prompt_message,
-            confirmButton = R.string.menu_logout_prompt_confirm,
-            cancelButton = R.string.menu_logout_prompt_cancel,
+            title = stringResource(id = R.string.menu_logout_summary),
+            summary = stringResource(id = R.string.menu_logout_prompt_message),
+            confirmButton = stringResource(id = R.string.menu_logout_prompt_confirm),
+            cancelButton = stringResource(id = R.string.menu_logout_prompt_cancel),
             onConfirmButtonClicked = { onLogoutResult(true) },
             onCancelButtonClicked = { onLogoutResult(false) }
         )
