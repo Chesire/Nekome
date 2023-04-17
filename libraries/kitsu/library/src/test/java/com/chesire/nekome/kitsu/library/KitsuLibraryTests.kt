@@ -136,7 +136,7 @@ class KitsuLibraryTests {
     }
 
     @Test
-    fun `retrieveAnime on thrown exception return Resource#Error`() = runBlocking {
+    fun `retrieveAnime on thrown exception return Err`() = runBlocking {
         val mockService = mockk<KitsuLibraryService> {
             coEvery { retrieveAnimeAsync(any(), any(), any()) } throws UnknownHostException()
         }
@@ -148,7 +148,7 @@ class KitsuLibraryTests {
     }
 
     @Test
-    fun `retrieveManga on success returns Resource#Success`() = runBlocking {
+    fun `retrieveManga on success returns Ok`() = runBlocking {
         val expected = createRetrieveResponseDto(SeriesType.Manga)
         val mockService = mockk<KitsuLibraryService> {
             coEvery {
@@ -252,7 +252,7 @@ class KitsuLibraryTests {
     }
 
     @Test
-    fun `retrieveManga on thrown exception return Resource#Error`() = runBlocking {
+    fun `retrieveManga on thrown exception return Err`() = runBlocking {
         val mockService = mockk<KitsuLibraryService> {
             coEvery {
                 retrieveMangaAsync(any(), any(), any())
@@ -287,7 +287,7 @@ class KitsuLibraryTests {
     }
 
     @Test
-    fun `addAnime on thrown exception return Resource#Error`() = runBlocking {
+    fun `addAnime on thrown exception return Err`() = runBlocking {
         val mockService = mockk<KitsuLibraryService> {
             coEvery { addAnimeAsync(any()) } throws UnknownHostException()
         }
@@ -299,7 +299,7 @@ class KitsuLibraryTests {
     }
 
     @Test
-    fun `addManga on success return Resource#Error`() = runBlocking {
+    fun `addManga on success return Err`() = runBlocking {
         val mockModel = createAddResponseDto(SeriesType.Manga)
         val mockResponse = mockk<Response<AddResponseDto>> {
             every { isSuccessful } returns true
@@ -320,7 +320,7 @@ class KitsuLibraryTests {
     }
 
     @Test
-    fun `addManga on thrown exception return Resource#Error`() = runBlocking {
+    fun `addManga on thrown exception return Err`() = runBlocking {
         val mockService = mockk<KitsuLibraryService> {
             coEvery { addMangaAsync(any()) } throws UnknownHostException()
         }
@@ -332,7 +332,7 @@ class KitsuLibraryTests {
     }
 
     @Test
-    fun `update success returns Resource#Success`() = runBlocking {
+    fun `update success returns Ok`() = runBlocking {
         val mockModel = createAddResponseDto(SeriesType.Manga)
         val mockResponse = mockk<Response<AddResponseDto>> {
             every { isSuccessful } returns true
@@ -353,7 +353,7 @@ class KitsuLibraryTests {
     }
 
     @Test
-    fun `update success returns Resource#Error if no body`() = runBlocking {
+    fun `update success returns Err if no body`() = runBlocking {
         val expected = "Response body is null"
         val mockResponse = mockk<Response<AddResponseDto>> {
             every { isSuccessful } returns true
@@ -374,7 +374,7 @@ class KitsuLibraryTests {
     }
 
     @Test
-    fun `update failure returns Resource#Error with errorBody`() = runBlocking {
+    fun `update failure returns Err with errorBody`() = runBlocking {
         val expected = "errorBodyString"
 
         val mockResponseBody = mockk<ResponseBody> {
@@ -400,7 +400,7 @@ class KitsuLibraryTests {
     }
 
     @Test
-    fun `update failure returns Resource#Error with message if null errorBody`() = runBlocking {
+    fun `update failure returns Err with message if null errorBody`() = runBlocking {
         val expected = "errorBodyString"
 
         val mockResponse = mockk<Response<AddResponseDto>> {
@@ -424,7 +424,7 @@ class KitsuLibraryTests {
     }
 
     @Test
-    fun `update on thrown exception return Resource#Error`() = runBlocking {
+    fun `update on thrown exception return Err`() = runBlocking {
         val mockService = mockk<KitsuLibraryService> {
             coEvery { updateItemAsync(any(), any()) } throws UnknownHostException()
         }
@@ -436,7 +436,7 @@ class KitsuLibraryTests {
     }
 
     @Test
-    fun `delete success returns Resource#Success`() = runBlocking {
+    fun `delete success returns Ok`() = runBlocking {
         val mockResponse = mockk<Response<Any>> {
             every { isSuccessful } returns true
         }
@@ -455,7 +455,7 @@ class KitsuLibraryTests {
     }
 
     @Test
-    fun `delete failure returns Resource#Error with errorBody`() = runBlocking {
+    fun `delete failure returns Err with errorBody`() = runBlocking {
         val expected = "errorBodyString"
 
         val mockResponseBody = mockk<ResponseBody> {
@@ -481,7 +481,7 @@ class KitsuLibraryTests {
     }
 
     @Test
-    fun `delete failure returns Resource#Error with message if null errorBody`() = runBlocking {
+    fun `delete failure returns Err with message if null errorBody`() = runBlocking {
         val expected = "errorBodyString"
 
         val mockResponse = mockk<Response<Any>> {
@@ -505,7 +505,7 @@ class KitsuLibraryTests {
     }
 
     @Test
-    fun `delete on thrown exception return Resource#Error`() = runBlocking {
+    fun `delete on thrown exception return Err`() = runBlocking {
         val mockService = mockk<KitsuLibraryService> {
             coEvery { deleteItemAsync(any()) } throws UnknownHostException()
         }

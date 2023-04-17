@@ -19,7 +19,7 @@ class KitsuTrendingTests {
     private val map = TrendingItemDtoMapper()
 
     @Test
-    fun `trendingAnime failure response returns Resource#Error with errorBody`() = runBlocking {
+    fun `trendingAnime failure response returns Err with errorBody`() = runBlocking {
         val expected = "errorBodyString"
 
         val mockResponseBody = mockk<ResponseBody> {
@@ -45,7 +45,7 @@ class KitsuTrendingTests {
     }
 
     @Test
-    fun `trendingAnime failure response returns Resource#Error with message if no error`() =
+    fun `trendingAnime failure response returns Err with message if no error`() =
         runBlocking {
             val expected = "responseBodyString"
 
@@ -70,7 +70,7 @@ class KitsuTrendingTests {
         }
 
     @Test
-    fun `trendingAnime successful response with no body returns Resource#Error`() = runBlocking {
+    fun `trendingAnime successful response with no body returns Err`() = runBlocking {
         val expected = "Response body is null"
 
         val mockResponse = mockk<Response<TrendingResponseDto>> {
@@ -93,7 +93,7 @@ class KitsuTrendingTests {
     }
 
     @Test
-    fun `trendingAnime successful response with body returns Resource#Success`() = runBlocking {
+    fun `trendingAnime successful response with body returns Ok`() = runBlocking {
         val expected = TrendingResponseDto(listOf(createTrendingItemDto(SeriesType.Anime)))
 
         val mockResponse = mockk<Response<TrendingResponseDto>> {
@@ -115,7 +115,7 @@ class KitsuTrendingTests {
     }
 
     @Test
-    fun `trendingAnime on thrown exception return Resource#Error`() = runBlocking {
+    fun `trendingAnime on thrown exception return Err`() = runBlocking {
         val mockService = mockk<KitsuTrendingService> {
             coEvery { getTrendingAnimeAsync() } throws UnknownHostException()
         }
@@ -127,7 +127,7 @@ class KitsuTrendingTests {
     }
 
     @Test
-    fun `trendingManga failure response returns Resource#Error with errorBody`() = runBlocking {
+    fun `trendingManga failure response returns Err with errorBody`() = runBlocking {
         val expected = "errorBodyString"
 
         val mockResponseBody = mockk<ResponseBody> {
@@ -153,7 +153,7 @@ class KitsuTrendingTests {
     }
 
     @Test
-    fun `trendingManga failure response returns Resource#Error with message if no error`() =
+    fun `trendingManga failure response returns Err with message if no error`() =
         runBlocking {
             val expected = "responseBodyString"
 
@@ -178,7 +178,7 @@ class KitsuTrendingTests {
         }
 
     @Test
-    fun `trendingManga successful response with no body returns Resource#Error`() = runBlocking {
+    fun `trendingManga successful response with no body returns Err`() = runBlocking {
         val expected = "Response body is null"
 
         val mockResponse = mockk<Response<TrendingResponseDto>> {
@@ -201,7 +201,7 @@ class KitsuTrendingTests {
     }
 
     @Test
-    fun `trendingManga successful response with body returns Resource#Success`() = runBlocking {
+    fun `trendingManga successful response with body returns Ok`() = runBlocking {
         val expected = TrendingResponseDto(listOf(createTrendingItemDto(SeriesType.Manga)))
 
         val mockResponse = mockk<Response<TrendingResponseDto>> {
@@ -223,7 +223,7 @@ class KitsuTrendingTests {
     }
 
     @Test
-    fun `trendingManga on thrown exception return Resource#Error`() = runBlocking {
+    fun `trendingManga on thrown exception return Err`() = runBlocking {
         val mockService = mockk<KitsuTrendingService> {
             coEvery { getTrendingMangaAsync() } throws UnknownHostException()
         }

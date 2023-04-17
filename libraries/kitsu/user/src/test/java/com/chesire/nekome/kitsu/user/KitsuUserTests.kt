@@ -21,7 +21,7 @@ class KitsuUserTests {
     private val mapper = UserItemDtoMapper()
 
     @Test
-    fun `getUserDetails failure response returns Resource#Error with errorBody`() = runBlocking {
+    fun `getUserDetails failure response returns Err with errorBody`() = runBlocking {
         val expected = "errorBodyString"
 
         val mockResponseBody = mockk<ResponseBody> {
@@ -47,7 +47,7 @@ class KitsuUserTests {
     }
 
     @Test
-    fun `getUserDetails failure response returns Resource#Error with message if no error`() =
+    fun `getUserDetails failure response returns Err with message if no error`() =
         runBlocking {
             val expected = "responseBodyString"
 
@@ -72,7 +72,7 @@ class KitsuUserTests {
         }
 
     @Test
-    fun `getUserDetails successful response with no body returns Resource#Error`() = runBlocking {
+    fun `getUserDetails successful response with no body returns Err`() = runBlocking {
         val expected = "Response body is null"
 
         val mockResponse = mockk<Response<UserResponseDto>> {
@@ -95,7 +95,7 @@ class KitsuUserTests {
     }
 
     @Test
-    fun `getUserDetails successful response with body returns Resource#Success`() = runBlocking {
+    fun `getUserDetails successful response with body returns Ok`() = runBlocking {
         val expected = UserResponseDto(
             listOf(
                 UserItemDto(
@@ -128,7 +128,7 @@ class KitsuUserTests {
     }
 
     @Test
-    fun `on thrown exception return Resource#Error`() = runBlocking {
+    fun `on thrown exception return Err`() = runBlocking {
         val mockService = mockk<KitsuUserService> {
             coEvery { getUserDetailsAsync() } throws UnknownHostException()
         }

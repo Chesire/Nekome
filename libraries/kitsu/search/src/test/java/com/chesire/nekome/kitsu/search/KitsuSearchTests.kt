@@ -20,7 +20,7 @@ class KitsuSearchTests {
     private val map = SearchItemDtoMapper()
 
     @Test
-    fun `searchForAnime failure response returns Resource#Error with errorBody`() = runBlocking {
+    fun `searchForAnime failure response returns Err with errorBody`() = runBlocking {
         val expected = "errorBodyString"
 
         val mockResponseBody = mockk<ResponseBody> {
@@ -46,7 +46,7 @@ class KitsuSearchTests {
     }
 
     @Test
-    fun `searchForAnime failure response returns Resource#Error with message if no error`() =
+    fun `searchForAnime failure response returns Err with message if no error`() =
         runBlocking {
             val expected = "responseBodyString"
 
@@ -71,7 +71,7 @@ class KitsuSearchTests {
         }
 
     @Test
-    fun `searchForAnime successful response with no body returns Resource#Error`() = runBlocking {
+    fun `searchForAnime successful response with no body returns Err`() = runBlocking {
         val expected = "Response body is null"
 
         val mockResponse = mockk<Response<SearchResponseDto>> {
@@ -94,7 +94,7 @@ class KitsuSearchTests {
     }
 
     @Test
-    fun `searchForAnime successful response with body returns Resource#Success`() = runBlocking {
+    fun `searchForAnime successful response with body returns Ok`() = runBlocking {
         val expected = SearchResponseDto(listOf(createSearchItemDto(SeriesType.Anime)))
 
         val mockResponse = mockk<Response<SearchResponseDto>> {
@@ -116,7 +116,7 @@ class KitsuSearchTests {
     }
 
     @Test
-    fun `searchForAnime on thrown exception return Resource#Error`() = runBlocking {
+    fun `searchForAnime on thrown exception return Err`() = runBlocking {
         val mockService = mockk<KitsuSearchService> {
             coEvery { searchForAnimeAsync(any()) } throws UnknownHostException()
         }
@@ -128,7 +128,7 @@ class KitsuSearchTests {
     }
 
     @Test
-    fun `searchForManga failure response returns Resource#Error with errorBody`() = runBlocking {
+    fun `searchForManga failure response returns Err with errorBody`() = runBlocking {
         val expected = "errorBodyString"
 
         val mockResponseBody = mockk<ResponseBody> {
@@ -154,7 +154,7 @@ class KitsuSearchTests {
     }
 
     @Test
-    fun `searchForManga failure response returns Resource#Error with message if no error`() =
+    fun `searchForManga failure response returns Err with message if no error`() =
         runBlocking {
             val expected = "responseBodyString"
 
@@ -179,7 +179,7 @@ class KitsuSearchTests {
         }
 
     @Test
-    fun `searchForManga successful response with no body returns Resource#Error`() = runBlocking {
+    fun `searchForManga successful response with no body returns Err`() = runBlocking {
         val expected = "Response body is null"
 
         val mockResponse = mockk<Response<SearchResponseDto>> {
@@ -202,7 +202,7 @@ class KitsuSearchTests {
     }
 
     @Test
-    fun `searchForManga successful response with body returns Resource#Success`() = runBlocking {
+    fun `searchForManga successful response with body returns Ok`() = runBlocking {
         val expected = SearchResponseDto(listOf(createSearchItemDto(SeriesType.Manga)))
 
         val mockResponse = mockk<Response<SearchResponseDto>> {
@@ -224,7 +224,7 @@ class KitsuSearchTests {
     }
 
     @Test
-    fun `searchForManga on thrown exception return Resource#Error`() = runBlocking {
+    fun `searchForManga on thrown exception return Err`() = runBlocking {
         val mockService = mockk<KitsuSearchService> {
             coEvery { searchForMangaAsync(any()) } throws UnknownHostException()
         }
