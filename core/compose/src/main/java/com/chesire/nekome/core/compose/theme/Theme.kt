@@ -38,9 +38,8 @@ fun NekomeTheme(
         else -> LightColorPalette
     }
     systemUiController.apply {
-        setSystemBarsColor(color = Color.Transparent)
-        setNavigationBarColor(color = Color.Transparent)
-        setStatusBarColor(color = Color.Transparent)
+        setNavigationBarColor(color = colorScheme.surface)
+        setStatusBarColor(color = colorScheme.background)
     }
 
     Log.d("Nekome", "Is system in dark theme? [$isDarkTheme]")

@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
 
     <!-- Base application theme -->
     <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
@@ -7,52 +7,11 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-        <item name="chipIconTint">@color/colorAccent</item>
-        <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogTheme</item>
-        <item name="alertDialogTheme">@style/AlertDialogTheme</item>
-        <item name="dialogTheme">@style/DialogTheme</item>
     </style>
 
     <style name="AppTheme.Launcher">
         <item name="android:windowBackground">@drawable/splash_screen</item>
         <item name="android:navigationBarColor">?attr/colorPrimaryDark</item>
     </style>
-
-    <style name="AppTheme.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-    </style>
-
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.MaterialComponents.Dark.ActionBar">
-        <item name="android:textColor">?attr/colorOnSurface</item>
-    </style>
-
-    <style name="DialogTheme" parent="ThemeOverlay.MaterialComponents.Dialog">
-        <item name="buttonBarNegativeButtonStyle">@style/DialogButtonTheme</item>
-        <item name="buttonBarPositiveButtonStyle">@style/DialogButtonTheme</item>
-    </style>
-
-    <style name="AlertDialogTheme" parent="ThemeOverlay.MaterialComponents.Dialog.Alert">
-        <item name="buttonBarNegativeButtonStyle">@style/DialogButtonTheme</item>
-        <item name="buttonBarPositiveButtonStyle">@style/DialogButtonTheme</item>
-    </style>
-
-    <style name="DialogButtonTheme" parent="Widget.MaterialComponents.Button.TextButton">
-        <item name="android:textColor">@color/colorAccent</item>
-    </style>
-
-    <style name="AppBottomSheetDialogTheme" parent="Theme.MaterialComponents.DayNight.BottomSheetDialog">
-        <item name="android:windowIsFloating">false</item>
-        <item name="bottomSheetStyle">@style/AppModalStyle</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
-        <item name="android:navigationBarColor">?attr/colorBackgroundFloating</item>
-        <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">true</item>
-    </style>
-
-    <style name="AppModalStyle" parent="Widget.Design.BottomSheet.Modal">
-        <item name="android:background">@drawable/rounded_dialog</item>
-    </style>
-
-    <style name="TextInputStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox" />
 
 </resources>
