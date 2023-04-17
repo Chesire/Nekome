@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalCoroutinesApi::class)
+
 package com.chesire.nekome.binders
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
@@ -7,13 +9,12 @@ import com.chesire.nekome.testing.CoroutinesMainDispatcherRule
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Rule
 import org.junit.Test
 
-@ExperimentalCoroutinesApi
 class UserProviderBinderTests {
 
     @get:Rule
@@ -23,7 +24,7 @@ class UserProviderBinderTests {
     val coroutineRule = CoroutinesMainDispatcherRule()
 
     @Test
-    fun `provideUserId returns UserIdResult#Failure if no id available`() = runBlockingTest {
+    fun `provideUserId returns UserIdResult#Failure if no id available`() = runTest {
         val mockRepo = mockk<UserRepository> {
             coEvery { retrieveUserId() } returns null
         }
@@ -35,7 +36,7 @@ class UserProviderBinderTests {
     }
 
     @Test
-    fun `provideUserId returns expected id`() = runBlockingTest {
+    fun `provideUserId returns expected id`() = runTest {
         val mockRepo = mockk<UserRepository> {
             coEvery { retrieveUserId() } returns 2
         }
