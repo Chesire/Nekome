@@ -3,6 +3,7 @@
 package com.chesire.nekome.app.series.item.core
 
 import com.chesire.nekome.core.flags.UserSeriesStatus
+import com.chesire.nekome.core.models.ErrorDomain
 import com.chesire.nekome.datasource.series.SeriesRepository
 import com.chesire.nekome.testing.createSeriesDomain
 import com.github.michaelbull.result.Err
@@ -32,7 +33,7 @@ class UpdateItemUseCaseTest {
     fun `When invoking, on success, Ok is returned`() = runTest {
         coEvery {
             seriesRepo.updateSeries(any(), any(), any(), any())
-        } returns Resource.Success(createSeriesDomain())
+        } returns Ok(createSeriesDomain())
 
         val result = updateItem(
             UpdateItemModel(
@@ -50,7 +51,7 @@ class UpdateItemUseCaseTest {
     fun `When invoking, on failure, Err is returned`() = runTest {
         coEvery {
             seriesRepo.updateSeries(any(), any(), any(), any())
-        } returns Resource.Error("")
+        } returns Err(ErrorDomain.badRequest)
 
         val result = updateItem(
             UpdateItemModel(

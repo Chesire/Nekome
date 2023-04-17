@@ -3,9 +3,8 @@ package com.chesire.nekome.app.search.host.core
 import com.chesire.nekome.core.flags.SeriesType
 import com.chesire.nekome.core.preferences.ApplicationPreferences
 import com.chesire.nekome.datasource.series.SeriesRepository
-import com.github.michaelbull.result.Err
-import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.Result
+import com.github.michaelbull.result.mapEither
 import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
@@ -20,7 +19,7 @@ class TrackSeriesUseCase @Inject constructor(
         seriesId: Int,
         seriesType: SeriesType
     ): Result<Unit, Unit> {
-        val response = withContext(Dispatchers.IO) {
+        return withContext(Dispatchers.IO) {
             when (seriesType) {
                 SeriesType.Anime -> seriesRepo.addAnime(
                     seriesId,
@@ -34,12 +33,9 @@ class TrackSeriesUseCase @Inject constructor(
 
                 else -> error("Unknown SeriesType: $seriesType")
             }
-        }
-
-        return if (response is Resource.Success) {
-            Ok(Unit)
-        } else {
-            Err(Unit)
-        }
+        }.mapEither(
+            success = { },
+            failure = { }
+        )
     }
 }

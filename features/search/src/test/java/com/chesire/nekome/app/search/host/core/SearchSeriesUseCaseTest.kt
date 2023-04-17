@@ -5,6 +5,7 @@ package com.chesire.nekome.app.search.host.core
 import com.chesire.nekome.app.search.host.core.model.SearchGroup
 import com.chesire.nekome.core.flags.SeriesType
 import com.chesire.nekome.core.flags.Subtype
+import com.chesire.nekome.core.models.ErrorDomain
 import com.chesire.nekome.core.models.ImageModel
 import com.chesire.nekome.datasource.search.SearchDomain
 import com.chesire.nekome.datasource.search.remote.SearchApi
@@ -43,7 +44,7 @@ class SearchSeriesUseCaseTest {
 
     @Test
     fun `Given Anime SearchGroup, When invoke, Then anime endpoint is hit`() = runTest {
-        coEvery { searchApi.searchForAnime(any()) } returns Resource.Error("")
+        coEvery { searchApi.searchForAnime(any()) } returns Err(ErrorDomain.badRequest)
 
         searchSeries.invoke("title", SearchGroup.Anime)
 
@@ -52,7 +53,7 @@ class SearchSeriesUseCaseTest {
 
     @Test
     fun `Given Manga SearchGroup, When invoke, Then manga endpoint is hit`() = runTest {
-        coEvery { searchApi.searchForManga(any()) } returns Resource.Error("")
+        coEvery { searchApi.searchForManga(any()) } returns Err(ErrorDomain.badRequest)
 
         searchSeries.invoke("title", SearchGroup.Manga)
 
@@ -61,7 +62,7 @@ class SearchSeriesUseCaseTest {
 
     @Test
     fun `Given api call failure, When invoke, Then NetworkError Err is returned`() = runTest {
-        coEvery { searchApi.searchForManga(any()) } returns Resource.Error("")
+        coEvery { searchApi.searchForManga(any()) } returns Err(ErrorDomain.badRequest)
         val expected = Err(SearchFailureReason.NetworkError)
 
         val result = searchSeries.invoke("title", SearchGroup.Manga)
@@ -72,7 +73,7 @@ class SearchSeriesUseCaseTest {
     @Test
     fun `Given api call success, but no series, When invoke, Then NoSeriesFound Err is returned`() =
         runTest {
-            coEvery { searchApi.searchForManga(any()) } returns Resource.Success(emptyList())
+            coEvery { searchApi.searchForManga(any()) } returns Ok(emptyList())
             val expected = Err(SearchFailureReason.NoSeriesFound)
 
             val result = searchSeries.invoke("title", SearchGroup.Manga)
@@ -84,7 +85,7 @@ class SearchSeriesUseCaseTest {
     fun `Given api call success, When invoke, Then mapped data is returned`() = runTest {
         coEvery {
             searchApi.searchForManga(any())
-        } returns Resource.Success(
+        } returns Ok(
             listOf(
                 SearchDomain(
                     id = 55,

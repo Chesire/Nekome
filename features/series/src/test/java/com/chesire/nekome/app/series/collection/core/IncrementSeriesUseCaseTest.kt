@@ -3,6 +3,7 @@
 package com.chesire.nekome.app.series.collection.core
 
 import com.chesire.nekome.core.flags.UserSeriesStatus
+import com.chesire.nekome.core.models.ErrorDomain
 import com.chesire.nekome.datasource.series.SeriesRepository
 import com.chesire.nekome.testing.createSeriesDomain
 import com.github.michaelbull.result.Err
@@ -33,7 +34,7 @@ class IncrementSeriesUseCaseTest {
     fun `When invoking, on success update series call, then Ok is returned`() = runTest {
         val domain = createSeriesDomain()
         coEvery { repo.getSeries(any()) } returns domain
-        coEvery { repo.updateSeries(any(), any(), any(), any()) } returns Resource.Success(domain)
+        coEvery { repo.updateSeries(any(), any(), any(), any()) } returns Ok(domain)
 
         val result = incrementSeries(123, null)
 
@@ -44,7 +45,14 @@ class IncrementSeriesUseCaseTest {
     fun `When invoking, on failure update series call, then Ok is returned`() = runTest {
         val domain = createSeriesDomain()
         coEvery { repo.getSeries(any()) } returns domain
-        coEvery { repo.updateSeries(any(), any(), any(), any()) } returns Resource.Error("")
+        coEvery {
+            repo.updateSeries(
+                any(),
+                any(),
+                any(),
+                any()
+            )
+        } returns Err(ErrorDomain.badRequest)
 
         val result = incrementSeries(123, null)
 
@@ -55,7 +63,7 @@ class IncrementSeriesUseCaseTest {
     fun `When invoking, if rating is provided, then new rating is applied`() = runTest {
         val domain = createSeriesDomain()
         coEvery { repo.getSeries(any()) } returns domain
-        coEvery { repo.updateSeries(any(), any(), any(), any()) } returns Resource.Success(domain)
+        coEvery { repo.updateSeries(any(), any(), any(), any()) } returns Ok(domain)
 
         val result = incrementSeries(123, 5)
 

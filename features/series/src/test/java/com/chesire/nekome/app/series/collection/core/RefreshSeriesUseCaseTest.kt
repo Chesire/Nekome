@@ -2,6 +2,7 @@
 
 package com.chesire.nekome.app.series.collection.core
 
+import com.chesire.nekome.core.models.ErrorDomain
 import com.chesire.nekome.datasource.series.SeriesRepository
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
@@ -28,8 +29,8 @@ class RefreshSeriesUseCaseTest {
 
     @Test
     fun `When invoking, on all success calls, then Ok is returned`() = runTest {
-        coEvery { repo.refreshAnime() } returns Resource.Success(emptyList())
-        coEvery { repo.refreshManga() } returns Resource.Success(emptyList())
+        coEvery { repo.refreshAnime() } returns Ok(emptyList())
+        coEvery { repo.refreshManga() } returns Ok(emptyList())
 
         val result = refreshSeries()
 
@@ -38,8 +39,8 @@ class RefreshSeriesUseCaseTest {
 
     @Test
     fun `When invoking, on just anime success call, then Err is returned`() = runTest {
-        coEvery { repo.refreshAnime() } returns Resource.Success(emptyList())
-        coEvery { repo.refreshManga() } returns Resource.Error("")
+        coEvery { repo.refreshAnime() } returns Ok(emptyList())
+        coEvery { repo.refreshManga() } returns Err(ErrorDomain.badRequest)
 
         val result = refreshSeries()
 
@@ -48,8 +49,8 @@ class RefreshSeriesUseCaseTest {
 
     @Test
     fun `When invoking, on just manga success call, then Err is returned`() = runTest {
-        coEvery { repo.refreshAnime() } returns Resource.Error("")
-        coEvery { repo.refreshManga() } returns Resource.Success(emptyList())
+        coEvery { repo.refreshAnime() } returns Err(ErrorDomain.badRequest)
+        coEvery { repo.refreshManga() } returns Ok(emptyList())
 
         val result = refreshSeries()
 
@@ -58,8 +59,8 @@ class RefreshSeriesUseCaseTest {
 
     @Test
     fun `When invoking, on all failure call, then Err is returned`() = runTest {
-        coEvery { repo.refreshAnime() } returns Resource.Error("")
-        coEvery { repo.refreshManga() } returns Resource.Error("")
+        coEvery { repo.refreshAnime() } returns Err(ErrorDomain.badRequest)
+        coEvery { repo.refreshManga() } returns Err(ErrorDomain.badRequest)
 
         val result = refreshSeries()
 

@@ -6,6 +6,7 @@ import com.chesire.nekome.core.flags.SeriesStatus
 import com.chesire.nekome.core.flags.SeriesType
 import com.chesire.nekome.core.flags.Subtype
 import com.chesire.nekome.core.flags.UserSeriesStatus
+import com.chesire.nekome.core.models.ErrorDomain
 import com.chesire.nekome.core.models.ImageModel
 import com.chesire.nekome.core.preferences.ApplicationPreferences
 import com.chesire.nekome.datasource.series.SeriesDomain
@@ -41,7 +42,12 @@ class TrackSeriesUseCaseTest {
     @Test
     fun `invoke with anime series type, calls to add anime`() = runTest {
         val id = 15
-        coEvery { seriesRepo.addAnime(id, UserSeriesStatus.Current) } returns Resource.Error("")
+        coEvery {
+            seriesRepo.addAnime(
+                id,
+                UserSeriesStatus.Current
+            )
+        } returns Err(ErrorDomain.badRequest)
 
         retrieveUserSeriesIds(id, SeriesType.Anime)
 
@@ -51,7 +57,12 @@ class TrackSeriesUseCaseTest {
     @Test
     fun `invoke with manga series type, calls to add manga`() = runTest {
         val id = 15
-        coEvery { seriesRepo.addManga(id, UserSeriesStatus.Current) } returns Resource.Error("")
+        coEvery {
+            seriesRepo.addManga(
+                id,
+                UserSeriesStatus.Current
+            )
+        } returns Err(ErrorDomain.badRequest)
 
         retrieveUserSeriesIds(id, SeriesType.Manga)
 
@@ -61,7 +72,12 @@ class TrackSeriesUseCaseTest {
     @Test
     fun `on failure to add series, Err is returned`() = runTest {
         val id = 15
-        coEvery { seriesRepo.addAnime(id, UserSeriesStatus.Current) } returns Resource.Error("")
+        coEvery {
+            seriesRepo.addAnime(
+                id,
+                UserSeriesStatus.Current
+            )
+        } returns Err(ErrorDomain.badRequest)
 
         val result = retrieveUserSeriesIds(id, SeriesType.Anime)
 
@@ -71,7 +87,7 @@ class TrackSeriesUseCaseTest {
     @Test
     fun `on success to add series, Ok is returned`() = runTest {
         val id = 15
-        coEvery { seriesRepo.addAnime(id, UserSeriesStatus.Current) } returns Resource.Success(
+        coEvery { seriesRepo.addAnime(id, UserSeriesStatus.Current) } returns Ok(
             SeriesDomain(
                 id = 15,
                 userId = 0,

@@ -18,7 +18,7 @@ class RefreshSeriesUseCase @Inject constructor(private val repo: SeriesRepositor
             val mangaJob = async(Dispatchers.IO) { repo.refreshManga() }
 
             val results = awaitAll(animeJob, mangaJob)
-            if (results.all { it is Resource.Success }) {
+            if (results.all { it is Ok }) {
                 Ok(Unit)
             } else {
                 Err(Unit)

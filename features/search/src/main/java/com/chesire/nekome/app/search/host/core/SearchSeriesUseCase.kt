@@ -6,6 +6,7 @@ import com.chesire.nekome.datasource.search.remote.SearchApi
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.Result
+import com.github.michaelbull.result.get
 import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -27,11 +28,12 @@ class SearchSeriesUseCase @Inject constructor(private val searchApi: SearchApi) 
             }
         }
 
-        return if (result is Resource.Success) {
-            if (result.data.isEmpty()) {
+        val data = result.get()
+        return if (data != null) {
+            if (data.isEmpty()) {
                 Err(SearchFailureReason.NoSeriesFound)
             } else {
-                Ok(result.data)
+                Ok(data)
             }
         } else {
             Err(SearchFailureReason.NetworkError)
