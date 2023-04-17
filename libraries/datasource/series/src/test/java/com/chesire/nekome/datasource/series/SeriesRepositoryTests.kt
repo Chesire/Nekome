@@ -1,16 +1,19 @@
 package com.chesire.nekome.datasource.series
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.chesire.nekome.core.Resource
 import com.chesire.nekome.core.flags.SeriesStatus
 import com.chesire.nekome.core.flags.SeriesType
 import com.chesire.nekome.core.flags.Subtype
 import com.chesire.nekome.core.flags.UserSeriesStatus
+import com.chesire.nekome.core.models.ErrorDomain
 import com.chesire.nekome.core.models.ImageModel
 import com.chesire.nekome.database.dao.SeriesDao
 import com.chesire.nekome.database.entity.SeriesEntity
 import com.chesire.nekome.datasource.series.remote.SeriesApi
 import com.chesire.nekome.testing.createSeriesDomain
+import com.github.michaelbull.result.Err
+import com.github.michaelbull.result.Ok
+import com.github.michaelbull.result.getError
 import io.mockk.CapturingSlot
 import io.mockk.Runs
 import io.mockk.coEvery
@@ -20,8 +23,8 @@ import io.mockk.just
 import io.mockk.mockk
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertTrue
-import org.junit.Assert.fail
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -40,7 +43,7 @@ class SeriesRepositoryTests {
 
     @Test
     fun `addAnime onSuccess saves to dao`() = runBlocking {
-        val expected = Resource.Success(createSeriesDomain())
+        val expected = Ok(createSeriesDomain())
         val mockDao = mockk<SeriesDao> {
             coEvery { insert(any<SeriesEntity>()) } just Runs
             every { getSeries() } returns mockk()
@@ -60,7 +63,7 @@ class SeriesRepositoryTests {
 
     @Test
     fun `addAnime onSuccess returns success`() = runBlocking {
-        val expected = Resource.Success(createSeriesDomain())
+        val expected = Ok(createSeriesDomain())
         val mockDao = mockk<SeriesDao> {
             coEvery { insert(any<SeriesEntity>()) } just Runs
             every { getSeries() } returns mockk()
@@ -75,12 +78,12 @@ class SeriesRepositoryTests {
         val classUnderTest = SeriesRepository(mockDao, mockApi, mockUser, map)
         val actual = classUnderTest.addAnime(0, UserSeriesStatus.Current)
 
-        assertTrue(actual is Resource.Success)
+        assertTrue(actual is Ok)
     }
 
     @Test
     fun `addAnime onFailure returns failure`() = runBlocking {
-        val expected = Resource.Error<SeriesDomain>("Error")
+        val expected = Err(ErrorDomain("Error", 0))
         val mockDao = mockk<SeriesDao> {
             coEvery { insert(any<SeriesEntity>()) } just Runs
             every { getSeries() } returns mockk()
@@ -95,12 +98,12 @@ class SeriesRepositoryTests {
         val classUnderTest = SeriesRepository(mockDao, mockApi, mockUser, map)
         val actual = classUnderTest.addAnime(0, UserSeriesStatus.Current)
 
-        assertTrue(actual is Resource.Error)
+        assertTrue(actual is Err)
     }
 
     @Test
     fun `addManga onSuccess saves to dao`() = runBlocking {
-        val expected = Resource.Success(createSeriesDomain())
+        val expected = Ok(createSeriesDomain())
         val mockDao = mockk<SeriesDao> {
             coEvery { insert(any<SeriesEntity>()) } just Runs
             every { getSeries() } returns mockk()
@@ -120,7 +123,7 @@ class SeriesRepositoryTests {
 
     @Test
     fun `addManga onSuccess returns success`() = runBlocking {
-        val expected = Resource.Success(createSeriesDomain())
+        val expected = Ok(createSeriesDomain())
         val mockDao = mockk<SeriesDao> {
             coEvery { insert(any<SeriesEntity>()) } just Runs
             every { getSeries() } returns mockk()
@@ -135,12 +138,12 @@ class SeriesRepositoryTests {
         val classUnderTest = SeriesRepository(mockDao, mockApi, mockUser, map)
         val actual = classUnderTest.addManga(0, UserSeriesStatus.Current)
 
-        assertTrue(actual is Resource.Success)
+        assertTrue(actual is Ok)
     }
 
     @Test
     fun `addManga onFailure returns failure`() = runBlocking {
-        val expected = Resource.Error<SeriesDomain>("Error")
+        val expected = Err(ErrorDomain("Error", 0))
         val mockDao = mockk<SeriesDao> {
             coEvery { insert(any<SeriesEntity>()) } just Runs
             every { getSeries() } returns mockk()
@@ -155,7 +158,7 @@ class SeriesRepositoryTests {
         val classUnderTest = SeriesRepository(mockDao, mockApi, mockUser, map)
         val actual = classUnderTest.addManga(0, UserSeriesStatus.Current)
 
-        assertTrue(actual is Resource.Error)
+        assertTrue(actual is Err)
     }
 
     @Test
@@ -166,7 +169,7 @@ class SeriesRepositoryTests {
             every { getSeries() } returns mockk()
         }
         val mockApi = mockk<SeriesApi> {
-            coEvery { delete(capture(slot)) } returns Resource.Success(Any())
+            coEvery { delete(capture(slot)) } returns Ok(Unit)
         }
         val mockUser = mockk<UserProvider> {
             coEvery { provideUserId() } returns UserProvider.UserIdResult.Success(1)
@@ -181,7 +184,7 @@ class SeriesRepositoryTests {
 
     @Test
     fun `deleteSeries onSuccess returns success`() = runBlocking {
-        val expected = Resource.Success(Any())
+        val expected = Ok(Unit)
         val mockDao = mockk<SeriesDao> {
             coEvery { delete(any()) } just Runs
             every { getSeries() } returns mockk()
@@ -201,7 +204,7 @@ class SeriesRepositoryTests {
 
     @Test
     fun `deleteSeries onFailure returns failure`() = runBlocking {
-        val expected = Resource.Error<Any>("")
+        val expected = Err(ErrorDomain("Error", 0))
         val mockDao = mockk<SeriesDao> {
             coEvery { delete(any()) } just Runs
             every { getSeries() } returns mockk()
@@ -225,7 +228,7 @@ class SeriesRepositoryTests {
 
     @Test
     fun `refreshAnime on success updates the dao`() = runBlocking {
-        val response = Resource.Success(listOf<SeriesDomain>())
+        val response = Ok(listOf<SeriesDomain>())
         val mockDao = mockk<SeriesDao> {
             coEvery { insert(any<List<SeriesEntity>>()) } just Runs
             every { getSeries() } returns mockk()
@@ -245,7 +248,7 @@ class SeriesRepositoryTests {
 
     @Test
     fun `refreshAnime on failure doesn't update the dao`() = runBlocking {
-        val response = Resource.Error<List<SeriesDomain>>("")
+        val response = Err(ErrorDomain("Error", 0))
         val mockDao = mockk<SeriesDao> {
             coEvery { insert(any<List<SeriesEntity>>()) } just Runs
             every { getSeries() } returns mockk()
@@ -265,7 +268,7 @@ class SeriesRepositoryTests {
 
     @Test
     fun `refreshManga on success updates the dao`() = runBlocking {
-        val response = Resource.Success(listOf<SeriesDomain>())
+        val response = Ok(listOf<SeriesDomain>())
         val mockDao = mockk<SeriesDao> {
             coEvery { insert(any<List<SeriesEntity>>()) } just Runs
             every { getSeries() } returns mockk()
@@ -285,7 +288,7 @@ class SeriesRepositoryTests {
 
     @Test
     fun `refreshManga on failure doesn't update the dao`() = runBlocking {
-        val response = Resource.Error<List<SeriesDomain>>("")
+        val response = Err(ErrorDomain("Error", 0))
         val mockDao = mockk<SeriesDao> {
             coEvery { insert(any<List<SeriesEntity>>()) } just Runs
             every { getSeries() } returns mockk()
@@ -314,7 +317,7 @@ class SeriesRepositoryTests {
             coEvery {
                 update(0, 0, UserSeriesStatus.Current, 0)
             } coAnswers {
-                Resource.Success(expected)
+                Ok(expected)
             }
         }
         val mockUser = mockk<UserProvider>()
@@ -334,17 +337,15 @@ class SeriesRepositoryTests {
             coEvery {
                 update(0, 0, UserSeriesStatus.Current, 0)
             } coAnswers {
-                Resource.Error("")
+                Err(ErrorDomain("Error", 0))
             }
         }
         val mockUser = mockk<UserProvider>()
 
         val classUnderTest = SeriesRepository(mockDao, mockApi, mockUser, map)
+        val result = classUnderTest.updateSeries(0, 0, UserSeriesStatus.Current, 0).getError()
 
-        when (classUnderTest.updateSeries(0, 0, UserSeriesStatus.Current, 0)) {
-            is Resource.Success -> fail("Expected Resource.Error")
-            is Resource.Error -> assertTrue(true)
-        }
+        assertNotNull(result)
     }
 
     private fun createSeriesDomain() =

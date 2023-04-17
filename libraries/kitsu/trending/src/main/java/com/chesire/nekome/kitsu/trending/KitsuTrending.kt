@@ -1,11 +1,14 @@
 package com.chesire.nekome.kitsu.trending
 
-import com.chesire.nekome.core.Resource
+import com.chesire.nekome.core.models.ErrorDomain
 import com.chesire.nekome.datasource.trending.TrendingDomain
 import com.chesire.nekome.datasource.trending.remote.TrendingApi
 import com.chesire.nekome.kitsu.asError
 import com.chesire.nekome.kitsu.parse
 import com.chesire.nekome.kitsu.trending.dto.TrendingResponseDto
+import com.github.michaelbull.result.Err
+import com.github.michaelbull.result.Ok
+import com.github.michaelbull.result.Result
 import javax.inject.Inject
 import retrofit2.Response
 
@@ -18,31 +21,31 @@ class KitsuTrending @Inject constructor(
     private val map: TrendingItemDtoMapper
 ) : TrendingApi {
 
-    override suspend fun getTrendingAnime(): Resource<List<TrendingDomain>> {
+    override suspend fun getTrendingAnime(): Result<List<TrendingDomain>, ErrorDomain> {
         return try {
             parseResponse(trendingService.getTrendingAnimeAsync())
         } catch (ex: Exception) {
-            ex.parse()
+            Err(ex.parse())
         }
     }
 
-    override suspend fun getTrendingManga(): Resource<List<TrendingDomain>> {
+    override suspend fun getTrendingManga(): Result<List<TrendingDomain>, ErrorDomain> {
         return try {
             parseResponse(trendingService.getTrendingMangaAsync())
         } catch (ex: Exception) {
-            ex.parse()
+            Err(ex.parse())
         }
     }
 
     private fun parseResponse(
         response: Response<TrendingResponseDto>
-    ): Resource<List<TrendingDomain>> {
+    ): Result<List<TrendingDomain>, ErrorDomain> {
         return if (response.isSuccessful) {
             response.body()?.let { trending ->
-                Resource.Success(trending.data.map { map.toTrendingDomain(it) })
-            } ?: Resource.Error.emptyResponse()
+                Ok(trending.data.map { map.toTrendingDomain(it) })
+            } ?: Err(ErrorDomain.emptyResponse)
         } else {
-            response.asError()
+            Err(response.asError())
         }
     }
 }

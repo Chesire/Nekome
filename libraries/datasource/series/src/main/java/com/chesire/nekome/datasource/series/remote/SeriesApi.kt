@@ -1,8 +1,9 @@
 package com.chesire.nekome.datasource.series.remote
 
-import com.chesire.nekome.core.Resource
 import com.chesire.nekome.core.flags.UserSeriesStatus
+import com.chesire.nekome.core.models.ErrorDomain
 import com.chesire.nekome.datasource.series.SeriesDomain
+import com.github.michaelbull.result.Result
 
 /**
  * Methods relating to interacting with the users library.
@@ -12,12 +13,12 @@ interface SeriesApi {
     /**
      * Retrieves all of the users anime.
      */
-    suspend fun retrieveAnime(userId: Int): Resource<List<SeriesDomain>>
+    suspend fun retrieveAnime(userId: Int): Result<List<SeriesDomain>, ErrorDomain>
 
     /**
      * Retrieves all of the users manga.
      */
-    suspend fun retrieveManga(userId: Int): Resource<List<SeriesDomain>>
+    suspend fun retrieveManga(userId: Int): Result<List<SeriesDomain>, ErrorDomain>
 
     /**
      * Adds the anime series with an id of [seriesId].
@@ -26,7 +27,7 @@ interface SeriesApi {
         userId: Int,
         seriesId: Int,
         startingStatus: UserSeriesStatus
-    ): Resource<SeriesDomain>
+    ): Result<SeriesDomain, ErrorDomain>
 
     /**
      * Adds the manga series with an id of [seriesId].
@@ -35,7 +36,7 @@ interface SeriesApi {
         userId: Int,
         seriesId: Int,
         startingStatus: UserSeriesStatus
-    ): Resource<SeriesDomain>
+    ): Result<SeriesDomain, ErrorDomain>
 
     /**
      * Updates the state of a users series, passing in the users ID for the series.
@@ -45,10 +46,10 @@ interface SeriesApi {
         progress: Int,
         newStatus: UserSeriesStatus,
         rating: Int
-    ): Resource<SeriesDomain>
+    ): Result<SeriesDomain, ErrorDomain>
 
     /**
      * Deletes a series from the users library, passing in the users ID for the series.
      */
-    suspend fun delete(userSeriesId: Int): Resource<Any>
+    suspend fun delete(userSeriesId: Int): Result<Unit, ErrorDomain>
 }

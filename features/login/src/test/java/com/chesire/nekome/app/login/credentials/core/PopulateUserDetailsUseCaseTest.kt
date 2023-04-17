@@ -2,7 +2,6 @@
 
 package com.chesire.nekome.app.login.credentials.core
 
-import com.chesire.nekome.core.Resource
 import com.chesire.nekome.datasource.user.UserRepository
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
@@ -28,7 +27,7 @@ class PopulateUserDetailsUseCaseTest {
 
     @Test
     fun `Given populate user succeeds, Then return result of Ok`() = runTest {
-        coEvery { user.refreshUser() } returns Resource.Success(Unit)
+        coEvery { user.refreshUser() } returns Ok(Unit)
 
         val result = populateUserDetails()
 
@@ -37,7 +36,7 @@ class PopulateUserDetailsUseCaseTest {
 
     @Test
     fun `Given populate user fails, Then return result of Err`() = runTest {
-        coEvery { user.refreshUser() } returns Resource.Error("")
+        coEvery { user.refreshUser() } returns Err(Unit)
 
         val result = populateUserDetails()
 

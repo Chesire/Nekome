@@ -30,6 +30,7 @@ dependencies {
     implementation libs.google.hilt.android
     implementation libs.kotlin.coroutines.android
     implementation libs.kotlin.coroutines.core
+    implementation libs.kotlin.result
     implementation libs.squareup.retrofit2
     implementation libs.squareup.retrofit2.converter.moshi
     implementation libs.timber

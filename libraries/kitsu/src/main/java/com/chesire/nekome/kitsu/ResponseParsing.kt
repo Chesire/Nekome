@@ -1,53 +1,22 @@
 package com.chesire.nekome.kitsu
 
-import com.chesire.nekome.core.Resource
+import com.chesire.nekome.core.models.ErrorDomain
 import com.chesire.nekome.datasource.auth.AuthException
 import java.net.UnknownHostException
 import retrofit2.Response
 
 /**
- * Parse out a [Response] into a [Resource] object.
+ * Converts the current [Response] into an [ErrorDomain].
  */
-fun <T> Response<T>.parse(): Resource<T> {
-    return if (isSuccessful) {
-        body()?.let {
-            Resource.Success(it)
-        } ?: emptyResponseError()
-    } else {
-        parseError()
-    }
-}
+fun <T> Response<T>.asError(): ErrorDomain = ErrorDomain(errorBody()?.string() ?: message(), code())
 
 /**
- * Parses out the [Response] into a [Resource.Error] object.
+ * Parses out the [Exception] providing an [ErrorDomain] for use elsewhere.
  */
-fun <T> Response<T>.parseError(): Resource.Error<T> {
-    return Resource.Error(
-        errorBody()?.string() ?: message(),
-        code()
-    )
-}
-
-/**
- * Generates a [Resource] for an empty [Response].
- */
-fun <T> emptyResponseError(): Resource.Error<T> = Resource.Error.emptyResponse()
-
-/**
- * Converts the current [Response] into a [Resource.Error] with a data type of [U] instead of [T].
- */
-fun <T, U> Response<T>.asError() = Resource.Error<U>(
-    errorBody()?.string() ?: message(),
-    code()
-)
-
-/**
- * Parses out the [Exception] providing a [Resource] for use elsewhere.
- */
-fun <T> Exception.parse(): Resource.Error<T> {
+fun Exception.parse(): ErrorDomain {
     return when (this) {
-        is UnknownHostException -> Resource.Error.couldNotReach()
-        is AuthException -> Resource.Error.couldNotRefresh()
-        else -> Resource.Error.badRequest(toString())
+        is UnknownHostException -> ErrorDomain.couldNotReach
+        is AuthException -> ErrorDomain.couldNotRefresh
+        else -> ErrorDomain.badRequest.copy(message = toString())
     }
 }

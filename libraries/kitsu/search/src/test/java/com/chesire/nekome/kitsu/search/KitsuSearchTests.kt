@@ -1,8 +1,9 @@
 package com.chesire.nekome.kitsu.search
 
-import com.chesire.nekome.core.Resource
 import com.chesire.nekome.core.flags.SeriesType
 import com.chesire.nekome.kitsu.search.dto.SearchResponseDto
+import com.github.michaelbull.result.get
+import com.github.michaelbull.result.getError
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
@@ -10,7 +11,7 @@ import java.net.UnknownHostException
 import kotlinx.coroutines.runBlocking
 import okhttp3.ResponseBody
 import org.junit.Assert.assertEquals
-import org.junit.Assert.assertTrue
+import org.junit.Assert.assertNotNull
 import org.junit.Test
 import retrofit2.Response
 
@@ -19,7 +20,7 @@ class KitsuSearchTests {
     private val map = SearchItemDtoMapper()
 
     @Test
-    fun `searchForAnime failure response returns Resource#Error with errorBody`() = runBlocking {
+    fun `searchForAnime failure response returns Err with errorBody`() = runBlocking {
         val expected = "errorBodyString"
 
         val mockResponseBody = mockk<ResponseBody> {
@@ -39,16 +40,13 @@ class KitsuSearchTests {
         }
 
         val classUnderTest = KitsuSearch(mockService, map)
-        val actual = classUnderTest.searchForAnime("Anime")
+        val actual = classUnderTest.searchForAnime("Anime").getError()
 
-        when (actual) {
-            is Resource.Success -> error("Test has failed")
-            is Resource.Error -> assertEquals(expected, actual.msg)
-        }
+        assertEquals(expected, actual?.message)
     }
 
     @Test
-    fun `searchForAnime failure response returns Resource#Error with message if no error`() =
+    fun `searchForAnime failure response returns Err with message if no error`() =
         runBlocking {
             val expected = "responseBodyString"
 
@@ -67,16 +65,13 @@ class KitsuSearchTests {
             }
 
             val classUnderTest = KitsuSearch(mockService, map)
-            val actual = classUnderTest.searchForAnime("Anime")
+            val actual = classUnderTest.searchForAnime("Anime").getError()
 
-            when (actual) {
-                is Resource.Success -> error("Test has failed")
-                is Resource.Error -> assertEquals(expected, actual.msg)
-            }
+            assertEquals(expected, actual?.message)
         }
 
     @Test
-    fun `searchForAnime successful response with no body returns Resource#Error`() = runBlocking {
+    fun `searchForAnime successful response with no body returns Err`() = runBlocking {
         val expected = "Response body is null"
 
         val mockResponse = mockk<Response<SearchResponseDto>> {
@@ -93,16 +88,13 @@ class KitsuSearchTests {
         }
 
         val classUnderTest = KitsuSearch(mockService, map)
-        val actual = classUnderTest.searchForAnime("Anime")
+        val actual = classUnderTest.searchForAnime("Anime").getError()
 
-        when (actual) {
-            is Resource.Success -> error("Test has failed")
-            is Resource.Error -> assertEquals(expected, actual.msg)
-        }
+        assertEquals(expected, actual?.message)
     }
 
     @Test
-    fun `searchForAnime successful response with body returns Resource#Success`() = runBlocking {
+    fun `searchForAnime successful response with body returns Ok`() = runBlocking {
         val expected = SearchResponseDto(listOf(createSearchItemDto(SeriesType.Anime)))
 
         val mockResponse = mockk<Response<SearchResponseDto>> {
@@ -118,33 +110,25 @@ class KitsuSearchTests {
         }
 
         val classUnderTest = KitsuSearch(mockService, map)
-        val actual = classUnderTest.searchForAnime("Anime")
+        val result = classUnderTest.searchForAnime("Anime").get()
 
-        when (actual) {
-            is Resource.Success -> {
-                /* Pass */
-            }
-            is Resource.Error -> error("Test has failed")
-        }
+        assertNotNull(result)
     }
 
     @Test
-    fun `searchForAnime on thrown exception return Resource#Error`() = runBlocking {
+    fun `searchForAnime on thrown exception return Err`() = runBlocking {
         val mockService = mockk<KitsuSearchService> {
             coEvery { searchForAnimeAsync(any()) } throws UnknownHostException()
         }
 
         val classUnderTest = KitsuSearch(mockService, map)
-        val result = classUnderTest.searchForAnime("")
+        val result = classUnderTest.searchForAnime("").getError()
 
-        when (result) {
-            is Resource.Success -> error("Test has failed")
-            is Resource.Error -> assertTrue(true)
-        }
+        assertNotNull(result)
     }
 
     @Test
-    fun `searchForManga failure response returns Resource#Error with errorBody`() = runBlocking {
+    fun `searchForManga failure response returns Err with errorBody`() = runBlocking {
         val expected = "errorBodyString"
 
         val mockResponseBody = mockk<ResponseBody> {
@@ -164,16 +148,13 @@ class KitsuSearchTests {
         }
 
         val classUnderTest = KitsuSearch(mockService, map)
-        val actual = classUnderTest.searchForManga("Manga")
+        val actual = classUnderTest.searchForManga("Manga").getError()
 
-        when (actual) {
-            is Resource.Success -> error("Test has failed")
-            is Resource.Error -> assertEquals(expected, actual.msg)
-        }
+        assertEquals(expected, actual?.message)
     }
 
     @Test
-    fun `searchForManga failure response returns Resource#Error with message if no error`() =
+    fun `searchForManga failure response returns Err with message if no error`() =
         runBlocking {
             val expected = "responseBodyString"
 
@@ -192,16 +173,13 @@ class KitsuSearchTests {
             }
 
             val classUnderTest = KitsuSearch(mockService, map)
-            val actual = classUnderTest.searchForManga("Manga")
+            val actual = classUnderTest.searchForManga("Manga").getError()
 
-            when (actual) {
-                is Resource.Success -> error("Test has failed")
-                is Resource.Error -> assertEquals(expected, actual.msg)
-            }
+            assertEquals(expected, actual?.message)
         }
 
     @Test
-    fun `searchForManga successful response with no body returns Resource#Error`() = runBlocking {
+    fun `searchForManga successful response with no body returns Err`() = runBlocking {
         val expected = "Response body is null"
 
         val mockResponse = mockk<Response<SearchResponseDto>> {
@@ -218,16 +196,13 @@ class KitsuSearchTests {
         }
 
         val classUnderTest = KitsuSearch(mockService, map)
-        val actual = classUnderTest.searchForManga("Manga")
+        val actual = classUnderTest.searchForManga("Manga").getError()
 
-        when (actual) {
-            is Resource.Success -> error("Test has failed")
-            is Resource.Error -> assertEquals(expected, actual.msg)
-        }
+        assertEquals(expected, actual?.message)
     }
 
     @Test
-    fun `searchForManga successful response with body returns Resource#Success`() = runBlocking {
+    fun `searchForManga successful response with body returns Ok`() = runBlocking {
         val expected = SearchResponseDto(listOf(createSearchItemDto(SeriesType.Manga)))
 
         val mockResponse = mockk<Response<SearchResponseDto>> {
@@ -243,28 +218,20 @@ class KitsuSearchTests {
         }
 
         val classUnderTest = KitsuSearch(mockService, map)
-        val actual = classUnderTest.searchForManga("Manga")
+        val result = classUnderTest.searchForManga("Manga").get()
 
-        when (actual) {
-            is Resource.Success -> {
-                /* Pass */
-            }
-            is Resource.Error -> error("Test has failed")
-        }
+        assertNotNull(result)
     }
 
     @Test
-    fun `searchForManga on thrown exception return Resource#Error`() = runBlocking {
+    fun `searchForManga on thrown exception return Err`() = runBlocking {
         val mockService = mockk<KitsuSearchService> {
             coEvery { searchForMangaAsync(any()) } throws UnknownHostException()
         }
 
         val classUnderTest = KitsuSearch(mockService, map)
-        val result = classUnderTest.searchForManga("")
+        val result = classUnderTest.searchForManga("").getError()
 
-        when (result) {
-            is Resource.Success -> error("Test has failed")
-            is Resource.Error -> assertTrue(true)
-        }
+        assertNotNull(result)
     }
 }

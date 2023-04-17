@@ -2,14 +2,16 @@ package com.chesire.nekome.features.series
 
 import androidx.compose.ui.test.junit4.createComposeRule
 import com.chesire.nekome.UITest
-import com.chesire.nekome.core.Resource
 import com.chesire.nekome.core.flags.SeriesType
 import com.chesire.nekome.core.flags.UserSeriesStatus
+import com.chesire.nekome.core.models.ErrorDomain
 import com.chesire.nekome.datasource.series.remote.SeriesApi
 import com.chesire.nekome.helpers.creation.createSeriesDomain
 import com.chesire.nekome.injection.LibraryModule
 import com.chesire.nekome.robots.series.seriesList
 import com.chesire.nekome.testing.createSeriesEntity
+import com.github.michaelbull.result.Err
+import com.github.michaelbull.result.Ok
 import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.UninstallModules
@@ -68,7 +70,7 @@ class SeriesListTests : UITest() {
             coEvery {
                 retrieveAnime(any())
             } coAnswers {
-                Resource.Success(
+                Ok(
                     listOf(
                         createSeriesDomain(
                             id = 0,
@@ -90,7 +92,7 @@ class SeriesListTests : UITest() {
             coEvery {
                 retrieveManga(any())
             } coAnswers {
-                Resource.Success(listOf())
+                Ok(listOf())
             }
         }
         runBlocking {
@@ -119,12 +121,12 @@ class SeriesListTests : UITest() {
             coEvery {
                 retrieveAnime(any())
             } coAnswers {
-                Resource.Error.couldNotReach()
+                Err(ErrorDomain.couldNotReach)
             }
             coEvery {
                 retrieveManga(any())
             } coAnswers {
-                Resource.Error.couldNotReach()
+                Err(ErrorDomain.couldNotReach)
             }
         }
         runBlocking {
@@ -152,7 +154,7 @@ class SeriesListTests : UITest() {
         coEvery {
             seriesApi.update(0, 1, UserSeriesStatus.Current, 0)
         } coAnswers {
-            Resource.Success(
+            Ok(
                 createSeriesDomain(
                     id = 0,
                     userId = 0,
@@ -191,7 +193,7 @@ class SeriesListTests : UITest() {
         coEvery {
             seriesApi.update(0, 24, UserSeriesStatus.Current, 0)
         } coAnswers {
-            Resource.Success(
+            Ok(
                 createSeriesDomain(
                     id = 0,
                     userId = 0,
@@ -231,7 +233,7 @@ class SeriesListTests : UITest() {
         coEvery {
             seriesApi.update(0, 24, UserSeriesStatus.Current, 0)
         } coAnswers {
-            Resource.Success(
+            Ok(
                 createSeriesDomain(
                     id = 0,
                     userId = 0,

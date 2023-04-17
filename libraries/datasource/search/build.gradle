@@ -24,4 +24,6 @@ android {
 
 dependencies {
     implementation project(':libraries:core')
+
+    implementation libs.kotlin.result
 }

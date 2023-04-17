@@ -1,10 +1,12 @@
 package com.chesire.nekome.kitsu.auth
 
 import com.chesire.nekome.datasource.auth.AuthException
-import com.chesire.nekome.datasource.auth.remote.AuthResult
+import com.chesire.nekome.datasource.auth.remote.AuthFailure
 import com.chesire.nekome.kitsu.auth.dto.AuthResponseDto
 import com.chesire.nekome.kitsu.auth.dto.LoginRequestDto
 import com.chesire.nekome.kitsu.auth.dto.RefreshTokenRequestDto
+import com.github.michaelbull.result.get
+import com.github.michaelbull.result.getError
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
@@ -39,9 +41,9 @@ class KitsuAuthTests {
         }
         val classUnderTest = KitsuAuth(mockService)
 
-        val actual = classUnderTest.login(USERNAME_INPUT, PASSWORD_INPUT)
+        val actual = classUnderTest.login(USERNAME_INPUT, PASSWORD_INPUT).getError()
 
-        assertEquals(AuthResult.BadRequest, actual)
+        assertEquals(AuthFailure.BadRequest, actual)
     }
 
     @Test
@@ -62,9 +64,9 @@ class KitsuAuthTests {
             }
             val classUnderTest = KitsuAuth(mockService)
 
-            val actual = classUnderTest.login(USERNAME_INPUT, PASSWORD_INPUT)
+            val actual = classUnderTest.login(USERNAME_INPUT, PASSWORD_INPUT).getError()
 
-            assertEquals(AuthResult.InvalidCredentials, actual)
+            assertEquals(AuthFailure.InvalidCredentials, actual)
         }
 
     @Test
@@ -81,9 +83,9 @@ class KitsuAuthTests {
         }
         val classUnderTest = KitsuAuth(mockService)
 
-        val actual = classUnderTest.login(USERNAME_INPUT, PASSWORD_INPUT)
+        val actual = classUnderTest.login(USERNAME_INPUT, PASSWORD_INPUT).getError()
 
-        assertEquals(AuthResult.BadRequest, actual)
+        assertEquals(AuthFailure.BadRequest, actual)
     }
 
     @Test
@@ -102,11 +104,10 @@ class KitsuAuthTests {
         }
         val classUnderTest = KitsuAuth(mockService)
 
-        val actual = classUnderTest.login(USERNAME_INPUT, PASSWORD_INPUT)
+        val actual = classUnderTest.login(USERNAME_INPUT, PASSWORD_INPUT).get()
 
-        check(actual is AuthResult.Success)
-        assertEquals(expectedAccessToken, actual.accessToken)
-        assertEquals(expectedRefreshToken, actual.refreshToken)
+        assertEquals(expectedAccessToken, actual?.accessToken)
+        assertEquals(expectedRefreshToken, actual?.refreshToken)
     }
 
     @Test
@@ -119,9 +120,9 @@ class KitsuAuthTests {
             }
             val classUnderTest = KitsuAuth(mockService)
 
-            val result = classUnderTest.login(USERNAME_INPUT, PASSWORD_INPUT)
+            val result = classUnderTest.login(USERNAME_INPUT, PASSWORD_INPUT).getError()
 
-            assertEquals(AuthResult.CouldNotReachServer, result)
+            assertEquals(AuthFailure.CouldNotReachServer, result)
         }
 
     @Test
@@ -133,9 +134,9 @@ class KitsuAuthTests {
         }
         val classUnderTest = KitsuAuth(mockService)
 
-        val result = classUnderTest.login(USERNAME_INPUT, PASSWORD_INPUT)
+        val result = classUnderTest.login(USERNAME_INPUT, PASSWORD_INPUT).getError()
 
-        assertEquals(AuthResult.CouldNotRefresh, result)
+        assertEquals(AuthFailure.CouldNotRefresh, result)
     }
 
     @Test
@@ -147,9 +148,9 @@ class KitsuAuthTests {
         }
         val classUnderTest = KitsuAuth(mockService)
 
-        val result = classUnderTest.login(USERNAME_INPUT, PASSWORD_INPUT)
+        val result = classUnderTest.login(USERNAME_INPUT, PASSWORD_INPUT).getError()
 
-        assertEquals(AuthResult.BadRequest, result)
+        assertEquals(AuthFailure.BadRequest, result)
     }
 
     @Test
@@ -169,9 +170,9 @@ class KitsuAuthTests {
         }
         val classUnderTest = KitsuAuth(mockService)
 
-        val actual = classUnderTest.refresh(REFRESH_TOKEN_INPUT)
+        val actual = classUnderTest.refresh(REFRESH_TOKEN_INPUT).getError()
 
-        assertEquals(AuthResult.BadRequest, actual)
+        assertEquals(AuthFailure.BadRequest, actual)
     }
 
     @Test
@@ -190,9 +191,9 @@ class KitsuAuthTests {
             }
             val classUnderTest = KitsuAuth(mockService)
 
-            val actual = classUnderTest.refresh(REFRESH_TOKEN_INPUT)
+            val actual = classUnderTest.refresh(REFRESH_TOKEN_INPUT).getError()
 
-            assertEquals(AuthResult.BadRequest, actual)
+            assertEquals(AuthFailure.BadRequest, actual)
         }
 
     @Test
@@ -209,9 +210,9 @@ class KitsuAuthTests {
         }
         val classUnderTest = KitsuAuth(mockService)
 
-        val actual = classUnderTest.refresh(REFRESH_TOKEN_INPUT)
+        val actual = classUnderTest.refresh(REFRESH_TOKEN_INPUT).getError()
 
-        assertEquals(AuthResult.BadRequest, actual)
+        assertEquals(AuthFailure.BadRequest, actual)
     }
 
     @Test
@@ -230,11 +231,10 @@ class KitsuAuthTests {
         }
         val classUnderTest = KitsuAuth(mockService)
 
-        val actual = classUnderTest.refresh(REFRESH_TOKEN_INPUT)
+        val actual = classUnderTest.refresh(REFRESH_TOKEN_INPUT).get()
 
-        check(actual is AuthResult.Success)
-        assertEquals(expectedAccessToken, actual.accessToken)
-        assertEquals(expectedRefreshToken, actual.refreshToken)
+        assertEquals(expectedAccessToken, actual?.accessToken)
+        assertEquals(expectedRefreshToken, actual?.refreshToken)
     }
 
     @Test
@@ -247,9 +247,9 @@ class KitsuAuthTests {
             }
             val classUnderTest = KitsuAuth(mockService)
 
-            val actual = classUnderTest.refresh(REFRESH_TOKEN_INPUT)
+            val actual = classUnderTest.refresh(REFRESH_TOKEN_INPUT).getError()
 
-            assertEquals(AuthResult.CouldNotReachServer, actual)
+            assertEquals(AuthFailure.CouldNotReachServer, actual)
         }
 
     @Test
@@ -261,9 +261,9 @@ class KitsuAuthTests {
         }
         val classUnderTest = KitsuAuth(mockService)
 
-        val actual = classUnderTest.refresh(REFRESH_TOKEN_INPUT)
+        val actual = classUnderTest.refresh(REFRESH_TOKEN_INPUT).getError()
 
-        assertEquals(AuthResult.CouldNotRefresh, actual)
+        assertEquals(AuthFailure.CouldNotRefresh, actual)
     }
 
     @Test
@@ -275,8 +275,8 @@ class KitsuAuthTests {
         }
         val classUnderTest = KitsuAuth(mockService)
 
-        val actual = classUnderTest.refresh(REFRESH_TOKEN_INPUT)
+        val actual = classUnderTest.refresh(REFRESH_TOKEN_INPUT).getError()
 
-        assertEquals(AuthResult.BadRequest, actual)
+        assertEquals(AuthFailure.BadRequest, actual)
     }
 }

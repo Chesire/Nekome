@@ -2,7 +2,7 @@
 
 package com.chesire.nekome.app.series.item.core
 
-import com.chesire.nekome.core.Resource
+import com.chesire.nekome.core.models.ErrorDomain
 import com.chesire.nekome.datasource.series.SeriesRepository
 import com.chesire.nekome.testing.createSeriesDomain
 import com.github.michaelbull.result.Err
@@ -32,7 +32,7 @@ class DeleteItemUseCaseTest {
     fun `When invoking, On success, Ok is returned`() = runTest {
         val expectedDomain = createSeriesDomain()
         coEvery { seriesRepo.getSeries(any()) } returns expectedDomain
-        coEvery { seriesRepo.deleteSeries(expectedDomain) } returns Resource.Success(Unit)
+        coEvery { seriesRepo.deleteSeries(expectedDomain) } returns Ok(Unit)
 
         val result = deleteItem(123)
 
@@ -43,7 +43,7 @@ class DeleteItemUseCaseTest {
     fun `When invoking, On failure, Err is returned`() = runTest {
         val expectedDomain = createSeriesDomain()
         coEvery { seriesRepo.getSeries(any()) } returns expectedDomain
-        coEvery { seriesRepo.deleteSeries(expectedDomain) } returns Resource.Error("")
+        coEvery { seriesRepo.deleteSeries(expectedDomain) } returns Err(ErrorDomain.badRequest)
 
         val result = deleteItem(123)
 

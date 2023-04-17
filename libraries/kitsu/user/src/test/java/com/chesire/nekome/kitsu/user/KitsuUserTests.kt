@@ -1,9 +1,10 @@
 package com.chesire.nekome.kitsu.user
 
-import com.chesire.nekome.core.Resource
 import com.chesire.nekome.core.models.ImageModel
 import com.chesire.nekome.kitsu.user.dto.UserItemDto
 import com.chesire.nekome.kitsu.user.dto.UserResponseDto
+import com.github.michaelbull.result.get
+import com.github.michaelbull.result.getError
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
@@ -11,7 +12,7 @@ import java.net.UnknownHostException
 import kotlinx.coroutines.runBlocking
 import okhttp3.ResponseBody
 import org.junit.Assert.assertEquals
-import org.junit.Assert.assertTrue
+import org.junit.Assert.assertNotNull
 import org.junit.Test
 import retrofit2.Response
 
@@ -20,7 +21,7 @@ class KitsuUserTests {
     private val mapper = UserItemDtoMapper()
 
     @Test
-    fun `getUserDetails failure response returns Resource#Error with errorBody`() = runBlocking {
+    fun `getUserDetails failure response returns Err with errorBody`() = runBlocking {
         val expected = "errorBodyString"
 
         val mockResponseBody = mockk<ResponseBody> {
@@ -40,16 +41,13 @@ class KitsuUserTests {
         }
 
         val classUnderTest = KitsuUser(mockService, mapper)
-        val actual = classUnderTest.getUserDetails()
+        val actual = classUnderTest.getUserDetails().getError()
 
-        when (actual) {
-            is Resource.Success -> error("Test has failed")
-            is Resource.Error -> assertEquals(expected, actual.msg)
-        }
+        assertEquals(expected, actual?.message)
     }
 
     @Test
-    fun `getUserDetails failure response returns Resource#Error with message if no error`() =
+    fun `getUserDetails failure response returns Err with message if no error`() =
         runBlocking {
             val expected = "responseBodyString"
 
@@ -68,16 +66,13 @@ class KitsuUserTests {
             }
 
             val classUnderTest = KitsuUser(mockService, mapper)
-            val actual = classUnderTest.getUserDetails()
+            val actual = classUnderTest.getUserDetails().getError()
 
-            when (actual) {
-                is Resource.Success -> error("Test has failed")
-                is Resource.Error -> assertEquals(expected, actual.msg)
-            }
+            assertEquals(expected, actual?.message)
         }
 
     @Test
-    fun `getUserDetails successful response with no body returns Resource#Error`() = runBlocking {
+    fun `getUserDetails successful response with no body returns Err`() = runBlocking {
         val expected = "Response body is null"
 
         val mockResponse = mockk<Response<UserResponseDto>> {
@@ -94,16 +89,13 @@ class KitsuUserTests {
         }
 
         val classUnderTest = KitsuUser(mockService, mapper)
-        val actual = classUnderTest.getUserDetails()
+        val actual = classUnderTest.getUserDetails().getError()
 
-        when (actual) {
-            is Resource.Success -> error("Test has failed")
-            is Resource.Error -> assertEquals(expected, actual.msg)
-        }
+        assertEquals(expected, actual?.message)
     }
 
     @Test
-    fun `getUserDetails successful response with body returns Resource#Success`() = runBlocking {
+    fun `getUserDetails successful response with body returns Ok`() = runBlocking {
         val expected = UserResponseDto(
             listOf(
                 UserItemDto(
@@ -130,28 +122,20 @@ class KitsuUserTests {
         }
 
         val classUnderTest = KitsuUser(mockService, mapper)
-        val actual = classUnderTest.getUserDetails()
+        val actual = classUnderTest.getUserDetails().get()
 
-        when (actual) {
-            is Resource.Success -> {
-                /* Pass */
-            }
-            is Resource.Error -> error("Test has failed")
-        }
+        assertNotNull(actual)
     }
 
     @Test
-    fun `on thrown exception return Resource#Error`() = runBlocking {
+    fun `on thrown exception return Err`() = runBlocking {
         val mockService = mockk<KitsuUserService> {
             coEvery { getUserDetailsAsync() } throws UnknownHostException()
         }
 
         val classUnderTest = KitsuUser(mockService, mapper)
-        val result = classUnderTest.getUserDetails()
+        val result = classUnderTest.getUserDetails().getError()
 
-        when (result) {
-            is Resource.Success -> error("Test has failed")
-            is Resource.Error -> assertTrue(true)
-        }
+        assertNotNull(result)
     }
 }

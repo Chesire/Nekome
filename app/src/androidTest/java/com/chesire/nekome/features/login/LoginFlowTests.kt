@@ -2,9 +2,8 @@ package com.chesire.nekome.features.login
 
 import androidx.compose.ui.test.junit4.createComposeRule
 import com.chesire.nekome.UITest
-import com.chesire.nekome.core.Resource
 import com.chesire.nekome.datasource.auth.remote.AuthApi
-import com.chesire.nekome.datasource.auth.remote.AuthResult
+import com.chesire.nekome.datasource.auth.remote.AuthDomain
 import com.chesire.nekome.datasource.series.remote.SeriesApi
 import com.chesire.nekome.datasource.user.remote.UserApi
 import com.chesire.nekome.helpers.creation.createSeriesDomain
@@ -15,6 +14,7 @@ import com.chesire.nekome.injection.UserModule
 import com.chesire.nekome.robots.activity
 import com.chesire.nekome.robots.login.loginCredentials
 import com.chesire.nekome.robots.login.loginSyncing
+import com.github.michaelbull.result.Ok
 import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.UninstallModules
@@ -38,7 +38,7 @@ class LoginFlowTests : UITest() {
         coEvery {
             login("Username", "Password")
         } coAnswers {
-            AuthResult.Success("accessToken", "refreshToken")
+            Ok(AuthDomain("accessToken", "refreshToken"))
         }
     }
 
@@ -47,12 +47,12 @@ class LoginFlowTests : UITest() {
         coEvery {
             retrieveAnime(any())
         } coAnswers {
-            Resource.Success(listOf(createSeriesDomain()))
+            Ok(listOf(createSeriesDomain()))
         }
         coEvery {
             retrieveManga(any())
         } coAnswers {
-            Resource.Success(listOf(createSeriesDomain()))
+            Ok(listOf(createSeriesDomain()))
         }
     }
 
@@ -61,7 +61,7 @@ class LoginFlowTests : UITest() {
         coEvery {
             getUserDetails()
         } coAnswers {
-            Resource.Success(createUserDomain())
+            Ok(createUserDomain())
         }
     }
 

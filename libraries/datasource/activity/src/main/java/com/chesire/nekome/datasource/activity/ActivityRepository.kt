@@ -1,8 +1,9 @@
 package com.chesire.nekome.datasource.activity
 
-import com.chesire.nekome.core.Resource
 import com.chesire.nekome.datasource.activity.local.ActivityLocalDataStorage
 import com.chesire.nekome.datasource.activity.remote.ActivityApi
+import com.github.michaelbull.result.onFailure
+import com.github.michaelbull.result.onSuccess
 import javax.inject.Inject
 import kotlinx.coroutines.flow.flow
 
@@ -20,13 +21,14 @@ class ActivityRepository @Inject constructor(
             emit(UserActivityResult.RetrievedValues(localData.cachedActivityItems))
         }
 
-        val newItems = remoteData.retrieveActivity()
-        if (newItems is Resource.Success) {
-            localData.setNewCache(newItems.data)
-            emit(UserActivityResult.RetrievedValues(newItems.data))
-        } else {
-            emit(UserActivityResult.Failure)
-        }
+        remoteData.retrieveActivity()
+            .onSuccess {
+                localData.setNewCache(it)
+                emit(UserActivityResult.RetrievedValues(it))
+            }
+            .onFailure {
+                emit(UserActivityResult.Failure)
+            }
     }
 }
 

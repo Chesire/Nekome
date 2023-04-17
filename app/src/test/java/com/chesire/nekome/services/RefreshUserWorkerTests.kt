@@ -3,8 +3,9 @@ package com.chesire.nekome.services
 import android.content.Context
 import androidx.work.ListenableWorker
 import androidx.work.WorkerParameters
-import com.chesire.nekome.core.Resource
 import com.chesire.nekome.datasource.user.UserRepository
+import com.github.michaelbull.result.Err
+import com.github.michaelbull.result.Ok
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
@@ -44,7 +45,7 @@ class RefreshUserWorkerTests {
         }
         val mockUserRepo = mockk<UserRepository> {
             coEvery { retrieveUserId() } coAnswers { 1 }
-            coEvery { refreshUser() } coAnswers { Resource.Success(mockk()) }
+            coEvery { refreshUser() } coAnswers { Ok(mockk()) }
         }
         val testObject = RefreshUserWorker(mockContext, mockParams, mockUserRepo)
 
@@ -64,7 +65,7 @@ class RefreshUserWorkerTests {
         }
         val mockUserRepo = mockk<UserRepository> {
             coEvery { retrieveUserId() } coAnswers { 1 }
-            coEvery { refreshUser() } coAnswers { Resource.Error("") }
+            coEvery { refreshUser() } coAnswers { Err(Unit) }
         }
         val testObject = RefreshUserWorker(mockContext, mockParams, mockUserRepo)
 

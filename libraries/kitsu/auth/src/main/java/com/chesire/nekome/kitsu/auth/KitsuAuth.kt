@@ -1,13 +1,17 @@
 package com.chesire.nekome.kitsu.auth
 
-import com.chesire.nekome.core.Resource
 import com.chesire.nekome.datasource.auth.AuthException
 import com.chesire.nekome.datasource.auth.remote.AuthApi
-import com.chesire.nekome.datasource.auth.remote.AuthResult
+import com.chesire.nekome.datasource.auth.remote.AuthDomain
+import com.chesire.nekome.datasource.auth.remote.AuthFailure
+import com.chesire.nekome.kitsu.asError
 import com.chesire.nekome.kitsu.auth.dto.AuthResponseDto
 import com.chesire.nekome.kitsu.auth.dto.LoginRequestDto
 import com.chesire.nekome.kitsu.auth.dto.RefreshTokenRequestDto
-import com.chesire.nekome.kitsu.parse
+import com.github.michaelbull.result.Err
+import com.github.michaelbull.result.Ok
+import com.github.michaelbull.result.Result
+import java.net.HttpURLConnection
 import java.net.UnknownHostException
 import javax.inject.Inject
 import retrofit2.Response
@@ -21,46 +25,53 @@ class KitsuAuth @Inject constructor(
     private val authService: KitsuAuthService
 ) : AuthApi {
 
-    override suspend fun login(username: String, password: String): AuthResult {
+    override suspend fun login(
+        username: String,
+        password: String
+    ): Result<AuthDomain, AuthFailure> {
         return try {
             val dto = LoginRequestDto(username, password)
             parseResponse(authService.loginAsync(dto))
         } catch (ex: Exception) {
-            ex.parse()
+            Err(ex.parse())
         }
     }
 
-    override suspend fun refresh(refreshToken: String): AuthResult {
+    override suspend fun refresh(refreshToken: String): Result<AuthDomain, AuthFailure> {
         return try {
             val dto = RefreshTokenRequestDto(refreshToken)
             parseResponse(authService.refreshAccessTokenAsync(dto))
         } catch (ex: Exception) {
-            ex.parse()
+            Err(ex.parse())
         }
     }
 
-    private fun parseResponse(response: Response<AuthResponseDto>): AuthResult {
-        return when (val parsed = response.parse()) {
-            is Resource.Success -> AuthResult.Success(
-                parsed.data.accessToken,
-                parsed.data.refreshToken
-            )
-            is Resource.Error -> {
-                Timber.e("Error performing request - [${parsed.code}]: ${parsed.msg}")
-                if (parsed.code == Resource.Error.InvalidCredentials) {
-                    AuthResult.InvalidCredentials
-                } else {
-                    AuthResult.BadRequest
-                }
+    private fun parseResponse(response: Response<AuthResponseDto>): Result<AuthDomain, AuthFailure> {
+        return if (response.isSuccessful) {
+            response.body()?.let {
+                Ok(
+                    AuthDomain(
+                        accessToken = it.accessToken,
+                        refreshToken = it.refreshToken
+                    )
+                )
+            } ?: Err(AuthFailure.BadRequest)
+        } else {
+            val err = response.asError()
+            Timber.e("Error performing request - [${err.code}]: ${err.message}")
+            if (err.code == HttpURLConnection.HTTP_UNAUTHORIZED) {
+                Err(AuthFailure.InvalidCredentials)
+            } else {
+                Err(AuthFailure.BadRequest)
             }
         }
     }
 
-    private fun Exception.parse(): AuthResult {
+    private fun Exception.parse(): AuthFailure {
         return when (this) {
-            is UnknownHostException -> AuthResult.CouldNotReachServer
-            is AuthException -> AuthResult.CouldNotRefresh
-            else -> AuthResult.BadRequest
+            is UnknownHostException -> AuthFailure.CouldNotReachServer
+            is AuthException -> AuthFailure.CouldNotRefresh
+            else -> AuthFailure.BadRequest
         }
     }
 }

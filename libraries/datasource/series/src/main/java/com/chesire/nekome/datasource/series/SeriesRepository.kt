@@ -1,9 +1,13 @@
 package com.chesire.nekome.datasource.series
 
-import com.chesire.nekome.core.Resource
 import com.chesire.nekome.core.flags.UserSeriesStatus
+import com.chesire.nekome.core.models.ErrorDomain
 import com.chesire.nekome.database.dao.SeriesDao
 import com.chesire.nekome.datasource.series.remote.SeriesApi
+import com.github.michaelbull.result.Err
+import com.github.michaelbull.result.Result
+import com.github.michaelbull.result.onFailure
+import com.github.michaelbull.result.onSuccess
 import kotlinx.coroutines.flow.map
 import timber.log.Timber
 
@@ -31,114 +35,100 @@ class SeriesRepository(
     /**
      * Adds the anime series with id [seriesId] to the users tracked list.
      */
-    suspend fun addAnime(seriesId: Int, startingStatus: UserSeriesStatus): Resource<SeriesDomain> {
+    suspend fun addAnime(
+        seriesId: Int,
+        startingStatus: UserSeriesStatus
+    ): Result<SeriesDomain, ErrorDomain> {
         val idResult = userProvider.provideUserId()
         if (idResult !is UserProvider.UserIdResult.Success) {
-            return Resource.Error.couldNotRefresh()
+            return Err(ErrorDomain.couldNotRefresh)
         }
 
-        val response = seriesApi.addAnime(
-            idResult.id,
-            seriesId,
-            startingStatus
-        )
-        return when (response) {
-            is Resource.Success -> {
-                val entity = map.toSeriesEntity(response.data)
-                seriesDao.insert(entity)
-                response
-            }
-            is Resource.Error -> {
-                Timber.e("Error adding anime [$seriesId], ${response.msg}")
-                response.mutate()
-            }
+        return seriesApi.addAnime(
+            userId = idResult.id,
+            seriesId = seriesId,
+            startingStatus = startingStatus
+        ).onSuccess {
+            val entity = map.toSeriesEntity(it)
+            seriesDao.insert(entity)
+        }.onFailure {
+            Timber.e("Error adding anime [$seriesId], ${it.message}")
         }
     }
 
     /**
      * Adds the manga series with id [seriesId] to the users tracked list.
      */
-    suspend fun addManga(seriesId: Int, startingStatus: UserSeriesStatus): Resource<SeriesDomain> {
+    suspend fun addManga(
+        seriesId: Int,
+        startingStatus: UserSeriesStatus
+    ): Result<SeriesDomain, ErrorDomain> {
         val idResult = userProvider.provideUserId()
         if (idResult !is UserProvider.UserIdResult.Success) {
-            return Resource.Error.couldNotRefresh()
+            return Err(ErrorDomain.couldNotRefresh)
         }
 
-        val response = seriesApi.addManga(
-            idResult.id,
-            seriesId,
-            startingStatus
-        )
-        return when (response) {
-            is Resource.Success -> {
-                val entity = map.toSeriesEntity(response.data)
-                seriesDao.insert(entity)
-                response
-            }
-            is Resource.Error -> {
-                Timber.e("Error adding manga [$seriesId], ${response.msg}")
-                response.mutate()
-            }
+        return seriesApi.addManga(
+            userId = idResult.id,
+            seriesId = seriesId,
+            startingStatus = startingStatus
+        ).onSuccess {
+            val entity = map.toSeriesEntity(it)
+            seriesDao.insert(entity)
+        }.onFailure {
+            Timber.e("Error adding anime [$seriesId], ${it.message}")
         }
     }
 
     /**
      * Removes the series [seriesToRemove] from being tracked.
      */
-    suspend fun deleteSeries(seriesToRemove: SeriesDomain): Resource<Any> {
-        val response = seriesApi.delete(seriesToRemove.userId)
-        when (response) {
-            is Resource.Success -> seriesDao.delete(map.toSeriesEntity(seriesToRemove))
-            is Resource.Error -> Timber.e(
-                "Error deleting series [$seriesToRemove], ${response.msg}"
-            )
-        }
-
-        return response
+    suspend fun deleteSeries(seriesToRemove: SeriesDomain): Result<Unit, ErrorDomain> {
+        return seriesApi.delete(seriesToRemove.userId)
+            .onSuccess {
+                seriesDao.delete(map.toSeriesEntity(seriesToRemove))
+            }
+            .onFailure {
+                Timber.e("Error deleting series [$seriesToRemove], ${it.message}")
+            }
     }
 
     /**
      * Pulls and stores all of the users anime list.
      */
-    suspend fun refreshAnime(): Resource<List<SeriesDomain>> {
+    suspend fun refreshAnime(): Result<List<SeriesDomain>, ErrorDomain> {
         val idResult = userProvider.provideUserId()
         if (idResult !is UserProvider.UserIdResult.Success) {
-            return Resource.Error.couldNotRefresh()
+            return Err(ErrorDomain.couldNotRefresh)
         }
 
-        return when (val response = seriesApi.retrieveAnime(idResult.id)) {
-            is Resource.Success -> {
-                val entities = response.data.map { map.toSeriesEntity(it) }
+        return seriesApi.retrieveAnime(idResult.id)
+            .onSuccess {
+                val entities = it.map { map.toSeriesEntity(it) }
                 seriesDao.insert(entities)
-                response
             }
-            is Resource.Error -> {
-                Timber.e("Error refreshing anime, ${response.msg}")
-                response.mutate()
+            .onFailure {
+                Timber.e("Error refreshing anime, ${it.message}")
             }
-        }
     }
 
     /**
      * Pulls and stores all of the users manga list.
      */
-    suspend fun refreshManga(): Resource<List<SeriesDomain>> {
+    suspend fun refreshManga(): Result<List<SeriesDomain>, ErrorDomain> {
         val idResult = userProvider.provideUserId()
         if (idResult !is UserProvider.UserIdResult.Success) {
-            return Resource.Error.couldNotRefresh()
+            return Err(ErrorDomain.couldNotRefresh)
         }
 
-        return when (val response = seriesApi.retrieveManga(idResult.id)) {
-            is Resource.Success -> {
-                val entities = response.data.map { map.toSeriesEntity(it) }
+        return seriesApi.retrieveManga(idResult.id)
+            .onSuccess {
+                val entities = it.map { map.toSeriesEntity(it) }
                 seriesDao.insert(entities)
-                response
             }
-            is Resource.Error -> {
-                Timber.e("Error refreshing manga, ${response.msg}")
-                response.mutate()
+            .onFailure {
+                Timber.e("Error refreshing manga, ${it.message}")
             }
-        }
     }
 
     /**
@@ -150,17 +140,17 @@ class SeriesRepository(
         progress: Int,
         status: UserSeriesStatus,
         rating: Int
-    ): Resource<SeriesDomain> {
-        return when (val response = seriesApi.update(userSeriesId, progress, status, rating)) {
-            is Resource.Success -> {
-                val entity = map.toSeriesEntity(response.data)
-                seriesDao.update(entity)
-                response
-            }
-            is Resource.Error -> {
-                Timber.e("Error updating series [$userSeriesId], ${response.msg}")
-                response.mutate()
-            }
+    ): Result<SeriesDomain, ErrorDomain> {
+        return seriesApi.update(
+            userSeriesId = userSeriesId,
+            progress = progress,
+            newStatus = status,
+            rating = rating
+        ).onSuccess {
+            val entity = map.toSeriesEntity(it)
+            seriesDao.update(entity)
+        }.onFailure {
+            Timber.e("Error updating series [$userSeriesId], ${it.message}")
         }
     }
 }

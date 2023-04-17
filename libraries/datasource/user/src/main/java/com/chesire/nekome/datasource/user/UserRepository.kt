@@ -1,9 +1,12 @@
 package com.chesire.nekome.datasource.user
 
-import com.chesire.nekome.core.Resource
 import com.chesire.nekome.core.flags.Service
 import com.chesire.nekome.database.dao.UserDao
 import com.chesire.nekome.datasource.user.remote.UserApi
+import com.github.michaelbull.result.Result
+import com.github.michaelbull.result.mapEither
+import com.github.michaelbull.result.onFailure
+import com.github.michaelbull.result.onSuccess
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
@@ -30,18 +33,19 @@ class UserRepository @Inject constructor(
     /**
      * Updates the stored user in the database, data will be funneled to the [user].
      */
-    suspend fun refreshUser(): Resource<Unit> {
-        return when (val response = userApi.getUserDetails()) {
-            is Resource.Success -> {
-                val model = map.toUserEntity(response.data)
+    suspend fun refreshUser(): Result<Unit, Unit> {
+        return userApi.getUserDetails()
+            .onSuccess {
+                val model = map.toUserEntity(it)
                 userDao.insert(model)
-                Resource.Success(Unit)
             }
-            is Resource.Error -> {
+            .onFailure {
                 Timber.e("Error refreshing user")
-                Resource.Error(response.msg)
             }
-        }
+            .mapEither(
+                success = { },
+                failure = { }
+            )
     }
 
     /**
