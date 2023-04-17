@@ -8,7 +8,6 @@ import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.mikepenz.aboutlibraries.ui.compose.LibrariesContainer
-import com.mikepenz.aboutlibraries.ui.compose.LibraryColors
 import com.mikepenz.aboutlibraries.ui.compose.LibraryDefaults
 
 @Composable
@@ -20,7 +19,9 @@ fun OssScreen() {
                 .fillMaxSize(),
             colors = LibraryDefaults.libraryColors(
                 backgroundColor = MaterialTheme.colorScheme.background,
-                contentColor = MaterialTheme.colorScheme.contentColorFor(MaterialTheme.colorScheme.background),
+                contentColor = MaterialTheme.colorScheme.contentColorFor(
+                    MaterialTheme.colorScheme.background
+                ),
                 badgeBackgroundColor = MaterialTheme.colorScheme.primary,
                 badgeContentColor = MaterialTheme.colorScheme.onPrimary
             )

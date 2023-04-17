@@ -38,7 +38,6 @@ import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SelectableChipColors
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
@@ -163,7 +162,7 @@ private fun SearchGroup(
         FilterChip(
             selected = selectedGroup == SearchGroup.Anime,
             onClick = { onSearchGroupSelected(SearchGroup.Anime) },
-            label = { Text(text = stringResource(id = R.string.search_anime))  },
+            label = { Text(text = stringResource(id = R.string.search_anime)) },
             modifier = Modifier
                 .padding(8.dp, 0.dp, 8.dp, 8.dp)
                 .semantics { testTag = HostTags.Anime },
