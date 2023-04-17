@@ -20,6 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTag
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -52,7 +53,7 @@ fun MainActivityScreen(viewModel: MainActivityViewModel = viewModel()) {
             bottomBar = {
                 val navBackStackEntry by navController.currentBackStackEntryAsState()
                 if (Screen.showsBottomNav(navBackStackEntry?.destination?.route)) {
-                    NavigationBar() {
+                    NavigationBar(tonalElevation = 0.dp) {
                         val currentDestination = navBackStackEntry?.destination
                         bottomNavRoutes.forEach { screen ->
                             check(screen is Screen)
