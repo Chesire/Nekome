@@ -6,6 +6,7 @@ import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.chesire.nekome.datasource.series.SeriesRepository
 import com.chesire.nekome.datasource.user.UserRepository
+import com.github.michaelbull.result.Err
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import timber.log.Timber
@@ -37,7 +38,7 @@ class RefreshSeriesWorker @AssistedInject constructor(
             listOf(
                 seriesRepo.refreshAnime(),
                 seriesRepo.refreshManga()
-            ).any { it is Resource.Error }
+            ).any { it is Err }
         ) {
             Result.retry()
         } else {

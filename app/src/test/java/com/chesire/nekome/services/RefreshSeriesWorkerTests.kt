@@ -3,8 +3,11 @@ package com.chesire.nekome.services
 import android.content.Context
 import androidx.work.ListenableWorker
 import androidx.work.WorkerParameters
+import com.chesire.nekome.core.models.ErrorDomain
 import com.chesire.nekome.datasource.series.SeriesRepository
 import com.chesire.nekome.datasource.user.UserRepository
+import com.github.michaelbull.result.Err
+import com.github.michaelbull.result.Ok
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
@@ -24,8 +27,8 @@ class RefreshSeriesWorkerTests {
             }
         }
         val mockSeriesRepo = mockk<SeriesRepository> {
-            coEvery { refreshAnime() } coAnswers { Resource.Success(mockk()) }
-            coEvery { refreshManga() } coAnswers { Resource.Success(mockk()) }
+            coEvery { refreshAnime() } coAnswers { Ok(mockk()) }
+            coEvery { refreshManga() } coAnswers { Ok(mockk()) }
         }
         val mockUserRepo = mockk<UserRepository> {
             coEvery { retrieveUserId() } coAnswers { null }
@@ -48,8 +51,8 @@ class RefreshSeriesWorkerTests {
             }
         }
         val mockSeriesRepo = mockk<SeriesRepository> {
-            coEvery { refreshAnime() } coAnswers { Resource.Success(mockk()) }
-            coEvery { refreshManga() } coAnswers { Resource.Success(mockk()) }
+            coEvery { refreshAnime() } coAnswers { Ok(mockk()) }
+            coEvery { refreshManga() } coAnswers { Ok(mockk()) }
         }
         val mockUserRepo = mockk<UserRepository> {
             coEvery { retrieveUserId() } coAnswers { 1 }
@@ -70,8 +73,8 @@ class RefreshSeriesWorkerTests {
             }
         }
         val mockSeriesRepo = mockk<SeriesRepository> {
-            coEvery { refreshAnime() } coAnswers { Resource.Error("test error") }
-            coEvery { refreshManga() } coAnswers { Resource.Success(mockk()) }
+            coEvery { refreshAnime() } coAnswers { Err(ErrorDomain.badRequest) }
+            coEvery { refreshManga() } coAnswers { Ok(mockk()) }
         }
         val mockUserRepo = mockk<UserRepository> {
             coEvery { retrieveUserId() } coAnswers { 1 }
@@ -92,8 +95,8 @@ class RefreshSeriesWorkerTests {
             }
         }
         val mockSeriesRepo = mockk<SeriesRepository> {
-            coEvery { refreshAnime() } coAnswers { Resource.Success(mockk()) }
-            coEvery { refreshManga() } coAnswers { Resource.Error("test error") }
+            coEvery { refreshAnime() } coAnswers { Ok(mockk()) }
+            coEvery { refreshManga() } coAnswers { Err(ErrorDomain.badRequest) }
         }
         val mockUserRepo = mockk<UserRepository> {
             coEvery { retrieveUserId() } coAnswers { 1 }
@@ -114,8 +117,8 @@ class RefreshSeriesWorkerTests {
             }
         }
         val mockSeriesRepo = mockk<SeriesRepository> {
-            coEvery { refreshAnime() } coAnswers { Resource.Error("test error") }
-            coEvery { refreshManga() } coAnswers { Resource.Error("test error") }
+            coEvery { refreshAnime() } coAnswers { Err(ErrorDomain.badRequest) }
+            coEvery { refreshManga() } coAnswers { Err(ErrorDomain.badRequest) }
         }
         val mockUserRepo = mockk<UserRepository> {
             coEvery { retrieveUserId() } coAnswers { 1 }
