@@ -33,7 +33,7 @@ fun NekomeTheme(
         setStatusBarColor(color = colorScheme.background)
     }
 
-    Log.d("Nekome", "Is system in dark theme? [$isDarkTheme]")
+    Log.d("Nekome", "Is system in dark theme? [$isDarkTheme], is using dynamic color? [$isDynamicColor]")
 
     MaterialTheme(
         colorScheme = colorScheme,
