@@ -3,6 +3,7 @@
 package com.chesire.nekome.app.login.syncing.core
 
 import com.chesire.nekome.datasource.series.SeriesRepository
+import com.github.michaelbull.result.Ok
 import io.mockk.clearAllMocks
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -26,8 +27,8 @@ class SyncSeriesUseCaseTest {
 
     @Test
     fun `When invoking, Then anime and manga is refreshed`() = runTest {
-        coEvery { seriesRepo.refreshAnime() } returns Resource.Success(listOf())
-        coEvery { seriesRepo.refreshManga() } returns Resource.Success(listOf())
+        coEvery { seriesRepo.refreshAnime() } returns Ok(listOf())
+        coEvery { seriesRepo.refreshManga() } returns Ok(listOf())
 
         syncSeries()
 
