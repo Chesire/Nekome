@@ -33,8 +33,6 @@ import kotlinx.coroutines.launch
 // Note this value is pulled from the nav_graph.xml
 private const val SERIES_TYPE = "seriesType"
 
-// TODO: Show a "loading" screen, which should be a list of shimmering items
-
 @HiltViewModel
 class CollectionViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
@@ -74,7 +72,10 @@ class CollectionViewModel @Inject constructor(
                 .flatMapLatest { sortSeries(it) }
                 .map(domainMapper::toSeries)
                 .collect { newModels ->
-                    state = state.copy(models = newModels)
+                    state = state.copy(
+                        isInitializing = false,
+                        models = newModels
+                    )
                 }
         }
     }
@@ -89,6 +90,7 @@ class CollectionViewModel @Inject constructor(
                 action.series,
                 action.rating
             )
+
             ViewAction.SortPressed -> handleSortPressed()
             is ViewAction.PerformSort -> handlePerformSort(action.option)
             ViewAction.FilterPressed -> handleFilterPressed()

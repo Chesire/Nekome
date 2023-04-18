@@ -28,6 +28,7 @@ import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.material3.Card
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -155,14 +156,18 @@ private fun Render(
         },
         modifier = Modifier.semantics { testTag = SeriesCollectionTags.Root }
     ) { paddingValues ->
-        SeriesCollection(
-            models = state.value.models,
-            isRefreshing = state.value.isRefreshing,
-            modifier = Modifier.padding(paddingValues),
-            onRefresh = onRefresh,
-            onSelectSeries = onSelectSeries,
-            onIncrementSeries = onIncrementSeries
-        )
+        if (state.value.isInitializing) {
+            CircularProgressIndicator()
+        } else {
+            SeriesCollection(
+                models = state.value.models,
+                isRefreshing = state.value.isRefreshing,
+                modifier = Modifier.padding(paddingValues),
+                onRefresh = onRefresh,
+                onSelectSeries = onSelectSeries,
+                onIncrementSeries = onIncrementSeries
+            )
+        }
     }
 
     SortDialog(
@@ -395,6 +400,7 @@ private fun RenderSnackbar(
 private fun Preview() {
     val initialState = UIState(
         screenTitle = R.string.nav_anime,
+        isInitializing = true,
         models = listOf(
             Series(
                 userId = 0,
