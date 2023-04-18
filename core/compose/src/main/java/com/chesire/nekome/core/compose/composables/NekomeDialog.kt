@@ -7,11 +7,11 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.selection.selectable
-import androidx.compose.material.Card
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.RadioButton
-import androidx.compose.material.Text
-import androidx.compose.material.TextButton
+import androidx.compose.material3.Card
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.RadioButton
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -30,10 +30,10 @@ import androidx.compose.ui.window.Dialog
  */
 @Composable
 fun NekomeDialog(
-    @StringRes title: Int,
-    @StringRes summary: Int?,
-    @StringRes confirmButton: Int,
-    @StringRes cancelButton: Int,
+    title: String,
+    summary: String?,
+    confirmButton: String,
+    cancelButton: String,
     onConfirmButtonClicked: () -> Unit,
     onCancelButtonClicked: () -> Unit
 ) {
@@ -41,15 +41,15 @@ fun NekomeDialog(
         Card(modifier = Modifier.semantics { testTag = DialogTags.Root }) {
             Column(modifier = Modifier.padding(16.dp)) {
                 Text(
-                    text = stringResource(id = title),
-                    style = MaterialTheme.typography.h6,
+                    text = title,
+                    style = MaterialTheme.typography.titleLarge,
                     modifier = Modifier.padding(bottom = 8.dp)
                 )
 
                 summary?.let {
                     Text(
-                        text = stringResource(id = summary),
-                        style = MaterialTheme.typography.body1,
+                        text = summary,
+                        style = MaterialTheme.typography.bodyLarge,
                         modifier = Modifier.padding(bottom = 8.dp)
                     )
                 }
@@ -64,13 +64,13 @@ fun NekomeDialog(
                             .semantics { testTag = DialogTags.CancelButton },
                         onClick = { onCancelButtonClicked() }
                     ) {
-                        Text(text = stringResource(id = cancelButton))
+                        Text(text = cancelButton)
                     }
                     TextButton(
                         onClick = { onConfirmButtonClicked() },
                         modifier = Modifier.semantics { testTag = DialogTags.OkButton }
                     ) {
-                        Text(text = stringResource(id = confirmButton))
+                        Text(text = confirmButton)
                     }
                 }
             }
@@ -97,7 +97,7 @@ fun <T> NekomeDialog(
             Column(modifier = Modifier.padding(16.dp)) {
                 Text(
                     text = stringResource(id = title),
-                    style = MaterialTheme.typography.h6,
+                    style = MaterialTheme.typography.titleLarge,
                     modifier = Modifier.padding(bottom = 8.dp)
                 )
 
@@ -122,7 +122,7 @@ fun <T> NekomeDialog(
                         )
                         Text(
                             text = displayValue,
-                            style = MaterialTheme.typography.body1,
+                            style = MaterialTheme.typography.bodyLarge,
                             modifier = Modifier
                                 .padding(start = 16.dp)
                                 .semantics { testTag = DialogTags.OptionText }

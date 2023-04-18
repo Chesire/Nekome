@@ -24,6 +24,7 @@ androidx-browser = { module = "androidx.browser:browser", version = "1.5.0" }
 androidx-compose-bom = { module = "androidx.compose:compose-bom", version = "2023.04.00" }
 androidx-compose-material = { module = "androidx.compose.material:material" }
 androidx-compose-material-icons-extended = { module = "androidx.compose.material:material-icons-extended" }
+androidx-compose-material3 = { module = "androidx.compose.material3:material3", version = "1.1.0-beta02" }
 androidx-compose-ui = { module = "androidx.compose.ui:ui" }
 androidx-compose-ui-test-junit4 = { module = "androidx.compose.ui:ui-test-junit4", version = "1.4.1" }
 androidx-compose-ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest" }
@@ -87,14 +88,15 @@ android-library = { id = "com.android.library", version.ref = "android-gradle-pl
 androidx-navigation-safeargs = { id = "androidx.navigation.safeargs.kotlin", version.ref = "androidx-navigation" }
 detekt = { id = "io.gitlab.arturbosch.detekt", version = "1.21.0" }
 google-dagger-hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
+google-devtools-ksp = { id = "com.google.devtools.ksp", version = "1.8.10-1.0.9" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kover = { id = "org.jetbrains.kotlinx.kover", version = "0.6.1" }
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version = "11.3.1" }
 
 [bundles]
 compose = [
-    "androidx-compose-material",
     "androidx-compose-material-icons-extended",
+    "androidx-compose-material3",
     "androidx-compose-ui-tooling-preview",
     "androidx-hilt-navigation-compose",
     "androidx-navigation-compose",

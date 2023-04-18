@@ -2,23 +2,25 @@ package com.chesire.nekome.ui
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.BottomNavigation
-import androidx.compose.material.BottomNavigationItem
-import androidx.compose.material.Icon
-import androidx.compose.material.Scaffold
-import androidx.compose.material.SnackbarHost
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
-import androidx.compose.material.rememberScaffoldState
+import androidx.compose.material3.Icon
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTag
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -37,26 +39,25 @@ fun MainActivityScreen(viewModel: MainActivityViewModel = viewModel()) {
     ) {
         val state = viewModel.uiState.collectAsState()
         val navController = rememberNavController()
-        val scaffoldState = rememberScaffoldState()
+        val snackbarHostState = remember { SnackbarHostState() }
         val coroutineScope = rememberCoroutineScope()
 
         Scaffold(
             modifier = Modifier.fillMaxSize(),
-            scaffoldState = scaffoldState,
             snackbarHost = {
                 SnackbarHost(
-                    hostState = scaffoldState.snackbarHostState,
+                    hostState = snackbarHostState,
                     modifier = Modifier.semantics { testTag = MainActivityTags.Snackbar }
                 )
             },
             bottomBar = {
                 val navBackStackEntry by navController.currentBackStackEntryAsState()
                 if (Screen.showsBottomNav(navBackStackEntry?.destination?.route)) {
-                    BottomNavigation {
+                    NavigationBar(tonalElevation = 0.dp) {
                         val currentDestination = navBackStackEntry?.destination
                         bottomNavRoutes.forEach { screen ->
                             check(screen is Screen)
-                            BottomNavigationItem(
+                            NavigationBarItem(
                                 icon = {
                                     Icon(
                                         imageVector = screen.icon,
@@ -103,7 +104,7 @@ fun MainActivityScreen(viewModel: MainActivityViewModel = viewModel()) {
         LaunchedEffect(state.value.kickUserToLogin) {
             if (state.value.kickUserToLogin != null) {
                 coroutineScope.launch {
-                    scaffoldState.snackbarHostState.showSnackbar(snackbarString)
+                    snackbarHostState.showSnackbar(snackbarString)
                 }
 
                 navController.navigate(Screen.Credentials.route)

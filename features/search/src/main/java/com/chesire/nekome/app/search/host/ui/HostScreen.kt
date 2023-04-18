@@ -1,4 +1,4 @@
-@file:OptIn(ExperimentalComposeUiApi::class, ExperimentalMaterialApi::class)
+@file:OptIn(ExperimentalComposeUiApi::class, ExperimentalMaterial3Api::class)
 
 package com.chesire.nekome.app.search.host.ui
 
@@ -19,29 +19,29 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.Button
-import androidx.compose.material.Card
-import androidx.compose.material.ChipDefaults
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.Divider
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.FilterChip
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.LinearProgressIndicator
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.OutlinedTextField
-import androidx.compose.material.Scaffold
-import androidx.compose.material.SnackbarDuration
-import androidx.compose.material.SnackbarHost
-import androidx.compose.material.SnackbarHostState
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.BrokenImage
 import androidx.compose.material.icons.filled.CollectionsBookmark
 import androidx.compose.material.icons.filled.InsertPhoto
 import androidx.compose.material.icons.filled.VideoLibrary
+import androidx.compose.material3.Button
+import androidx.compose.material3.Card
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Divider
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FilterChip
+import androidx.compose.material3.FilterChipDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.LinearProgressIndicator
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
@@ -162,11 +162,12 @@ private fun SearchGroup(
         FilterChip(
             selected = selectedGroup == SearchGroup.Anime,
             onClick = { onSearchGroupSelected(SearchGroup.Anime) },
+            label = { Text(text = stringResource(id = R.string.search_anime)) },
             modifier = Modifier
                 .padding(8.dp, 0.dp, 8.dp, 8.dp)
                 .semantics { testTag = HostTags.Anime },
-            colors = ChipDefaults.filterChipColors(
-                selectedContentColor = MaterialTheme.colors.primary
+            colors = FilterChipDefaults.filterChipColors(
+                selectedLabelColor = MaterialTheme.colorScheme.primary
             ),
             leadingIcon = {
                 Icon(
@@ -174,17 +175,16 @@ private fun SearchGroup(
                     contentDescription = null
                 )
             }
-        ) {
-            Text(text = stringResource(id = R.string.search_anime))
-        }
+        )
         FilterChip(
             selected = selectedGroup == SearchGroup.Manga,
             onClick = { onSearchGroupSelected(SearchGroup.Manga) },
+            label = { Text(text = stringResource(id = R.string.search_manga)) },
             modifier = Modifier
                 .padding(8.dp, 0.dp, 8.dp, 8.dp)
                 .semantics { testTag = HostTags.Manga },
-            colors = ChipDefaults.filterChipColors(
-                selectedContentColor = MaterialTheme.colors.primary
+            colors = FilterChipDefaults.filterChipColors(
+                selectedLabelColor = MaterialTheme.colorScheme.primary
             ),
             leadingIcon = {
                 Icon(
@@ -192,9 +192,7 @@ private fun SearchGroup(
                     contentDescription = null
                 )
             }
-        ) {
-            Text(text = stringResource(id = R.string.search_manga))
-        }
+        )
     }
 }
 
@@ -274,20 +272,20 @@ private fun ResultItem(model: ResultModel, onSeriesTrack: (ResultModel) -> Unit)
                         text = model.canonicalTitle,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
-                        style = MaterialTheme.typography.body1,
+                        style = MaterialTheme.typography.bodyLarge,
                         modifier = Modifier.fillMaxWidth()
                     )
                     Text(
                         text = model.synopsis,
                         maxLines = 3,
                         overflow = TextOverflow.Ellipsis,
-                        style = MaterialTheme.typography.caption,
+                        style = MaterialTheme.typography.bodySmall,
                         modifier = Modifier.fillMaxWidth()
                     )
                     Spacer(modifier = Modifier.weight(1f))
                     Text(
                         text = model.subtype,
-                        style = MaterialTheme.typography.caption
+                        style = MaterialTheme.typography.bodySmall
                     )
                 }
             }
@@ -299,8 +297,12 @@ private fun ResultItem(model: ResultModel, onSeriesTrack: (ResultModel) -> Unit)
                     Icon(
                         imageVector = Icons.Default.Add,
                         contentDescription = stringResource(id = R.string.results_track_series),
-                        tint = MaterialTheme.colors.primary,
-                        modifier = Modifier.border(1.dp, MaterialTheme.colors.primary, CircleShape)
+                        tint = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier.border(
+                            1.dp,
+                            MaterialTheme.colorScheme.primary,
+                            CircleShape
+                        )
                     )
                 }
             }
@@ -319,7 +321,7 @@ private fun Preview() {
         resultModels = emptyList(),
         errorSnackbar = null
     )
-    NekomeTheme(darkTheme = true) {
+    NekomeTheme(isDarkTheme = true) {
         Render(
             state = produceState(initialValue = initialState, producer = { value = initialState }),
             onInputTextChanged = { /**/ },
@@ -405,7 +407,7 @@ private fun PopulatedPreview() {
         ),
         errorSnackbar = null
     )
-    NekomeTheme(darkTheme = true) {
+    NekomeTheme(isDarkTheme = true) {
         Render(
             state = produceState(initialValue = initialState, producer = { value = initialState }),
             onInputTextChanged = { /**/ },
