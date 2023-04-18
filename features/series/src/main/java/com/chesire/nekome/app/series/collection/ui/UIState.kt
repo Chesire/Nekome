@@ -6,6 +6,7 @@ import com.chesire.nekome.core.preferences.flags.SortOption
 
 data class UIState(
     @StringRes val screenTitle: Int,
+    val isInitializing: Boolean,
     val models: List<Series>,
     val isRefreshing: Boolean,
     val ratingDialog: Rating?,
@@ -17,6 +18,7 @@ data class UIState(
     companion object {
         val default = UIState(
             screenTitle = R.string.nav_anime,
+            isInitializing = true,
             models = emptyList(),
             isRefreshing = false,
             ratingDialog = null,
