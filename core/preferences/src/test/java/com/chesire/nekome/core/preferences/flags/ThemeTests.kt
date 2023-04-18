@@ -8,18 +8,23 @@ import org.junit.Assert.assertEquals
 import org.junit.Test
 
 class ThemeTests {
+
     @Test
     fun `getValueMap returns expected map`() {
         val mockContext = mockk<Context> {
             every { getString(R.string.settings_theme_system) } returns "system"
             every { getString(R.string.settings_theme_dark) } returns "dark"
             every { getString(R.string.settings_theme_light) } returns "light"
+            every { getString(R.string.settings_theme_dynamic_dark) } returns "dynamicDark"
+            every { getString(R.string.settings_theme_dynamic_light) } returns "dynamicLight"
         }
         val map = Theme.getValueMap(mockContext)
 
         assertEquals("system", map.getValue(-1))
         assertEquals("dark", map.getValue(2))
         assertEquals("light", map.getValue(1))
+        assertEquals("dynamicDark", map.getValue(3))
+        assertEquals("dynamicLight", map.getValue(4))
     }
 
     @Test
@@ -43,6 +48,22 @@ class ThemeTests {
         assertEquals(
             Theme.Light,
             Theme.fromValue("1")
+        )
+    }
+
+    @Test
+    fun `fromValue with Theme#DynamicDark returns expected value`() {
+        assertEquals(
+            Theme.DynamicDark,
+            Theme.fromValue("3")
+        )
+    }
+
+    @Test
+    fun `fromValue with Theme#DynamicLight returns expected value`() {
+        assertEquals(
+            Theme.DynamicLight,
+            Theme.fromValue("4")
         )
     }
 

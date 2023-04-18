@@ -117,6 +117,8 @@
     <string name="settings_theme_system">システムのデフォルト</string>
     <string name="settings_theme_dark">ダークテーマ</string>
     <string name="settings_theme_light">ライトテーマ</string>
+    <string name="settings_theme_dynamic_dark">ダイナミックダークテーマ</string>
+    <string name="settings_theme_dynamic_light">ダイナミックライトテーマ</string>
 
     <string name="discover_trending_anime">流行中のアニメ</string>
     <string name="discover_trending_manga">流行中の漫画</string>

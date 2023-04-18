@@ -117,6 +117,8 @@
     <string name="settings_theme_system">Use system default</string>
     <string name="settings_theme_dark">Dark</string>
     <string name="settings_theme_light">Light</string>
+    <string name="settings_theme_dynamic_dark">Dynamic Dark</string>
+    <string name="settings_theme_dynamic_light">Dynamic Light</string>
 
     <string name="discover_trending_anime">Trending Anime</string>
     <string name="discover_trending_manga">Trending Manga</string>
