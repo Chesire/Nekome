@@ -2,6 +2,10 @@ package com.chesire.nekome.app.settings.config.ui
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.draggable
+import androidx.compose.foundation.gestures.rememberDraggableState
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -11,6 +15,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.BrokenImage
 import androidx.compose.material.icons.filled.InsertPhoto
@@ -90,13 +96,15 @@ private fun Render(
     onRateSeriesClicked: (Boolean) -> Unit,
     onLicensesLinkClicked: () -> Unit
 ) {
+    val scrollableState = rememberScrollState()
     Scaffold(
         modifier = Modifier.semantics { testTag = ConfigTags.Root }
     ) { paddingValues ->
         Column(
             modifier = Modifier
                 .padding(paddingValues)
-                .padding(16.dp)
+                .verticalScroll(state = scrollableState)
+                .padding(start = 16.dp, top = 16.dp, end = 16.dp)
                 .fillMaxSize()
         ) {
             ProfileSection(state.value.userModel, onLogoutClicked)

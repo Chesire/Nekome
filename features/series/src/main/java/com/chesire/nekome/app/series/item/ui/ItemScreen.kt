@@ -10,7 +10,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -84,6 +86,7 @@ private fun Render(
     onFinishedScreen: () -> Unit
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
+    val scrollableState = rememberScrollState()
 
     Scaffold(
         snackbarHost = {
@@ -93,6 +96,7 @@ private fun Render(
         Column(
             modifier = Modifier
                 .padding(paddingValues)
+                .verticalScroll(state = scrollableState)
                 .padding(16.dp)
                 .fillMaxSize()
         ) {
