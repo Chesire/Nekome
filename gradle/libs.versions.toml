@@ -24,7 +24,7 @@ androidx-browser = { module = "androidx.browser:browser", version = "1.5.0" }
 androidx-compose-bom = { module = "androidx.compose:compose-bom", version = "2023.04.00" }
 androidx-compose-material = { module = "androidx.compose.material:material" }
 androidx-compose-material-icons-extended = { module = "androidx.compose.material:material-icons-extended" }
-androidx-compose-material3 = { module = "androidx.compose.material3:material3", version = "1.1.0-beta02" }
+androidx-compose-material3 = { module = "androidx.compose.material3:material3", version = "1.1.0-rc01" }
 androidx-compose-ui = { module = "androidx.compose.ui:ui" }
 androidx-compose-ui-test-junit4 = { module = "androidx.compose.ui:ui-test-junit4", version = "1.4.2" }
 androidx-compose-ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest" }
