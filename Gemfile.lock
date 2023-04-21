@@ -50,7 +50,7 @@ GEM
       no_proxy_fix
       octokit (~> 5.0)
       terminal-table (>= 1, < 4)
-    danger-android_lint (0.0.11)
+    danger-android_lint (0.0.12)
       danger-plugin-api (~> 1.0)
       oga
     danger-checkstyle_format (0.1.1)
@@ -137,7 +137,7 @@ GEM
       xcpretty (~> 0.3.0)
       xcpretty-travis-formatter (>= 0.0.3)
     gh_inspector (1.1.3)
-    git (1.13.1)
+    git (1.13.2)
       addressable (~> 2.8)
       rchardet (~> 1.8)
     google-apis-androidpublisher_v3 (0.34.0)
