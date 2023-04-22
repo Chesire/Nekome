@@ -339,9 +339,9 @@ private fun PreferenceSection(
 ) {
     Column(
         modifier = Modifier
-            .padding(vertical = 8.dp)
             .fillMaxWidth()
-            .clickable(enabled = onClick != null) { onClick?.invoke() },
+            .clickable(enabled = onClick != null) { onClick?.invoke() }
+            .padding(vertical = 8.dp),
         verticalArrangement = Arrangement.Center
     ) {
         Text(
