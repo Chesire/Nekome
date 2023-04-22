@@ -41,8 +41,16 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.autofill.AutofillNode
+import androidx.compose.ui.autofill.AutofillType
+import androidx.compose.ui.composed
 import androidx.compose.ui.focus.FocusDirection
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.layout.boundsInWindow
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.platform.LocalAutofill
+import androidx.compose.ui.platform.LocalAutofillTree
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.platform.LocalUriHandler
@@ -58,6 +66,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.chesire.nekome.app.login.R
+import com.chesire.nekome.core.compose.autofill
 import com.chesire.nekome.core.compose.theme.NekomeTheme
 
 @Composable
@@ -193,9 +202,12 @@ private fun UsernameInput(
         isError = isUsernameError,
         singleLine = true,
         label = { Text(text = stringResource(id = R.string.login_username)) },
-        modifier = Modifier.semantics {
-            testTag = CredentialsTags.Username
-        }
+        modifier = Modifier
+            .semantics { testTag = CredentialsTags.Username }
+            .autofill(
+                autofillTypes = listOf(AutofillType.EmailAddress, AutofillType.Username),
+                onFill = { onUsernameChanged(it) }
+            )
     )
 }
 
@@ -248,9 +260,14 @@ private fun PasswordInput(
         isError = isPasswordError,
         singleLine = true,
         label = { Text(text = stringResource(id = R.string.login_password)) },
-        modifier = Modifier.semantics {
-            testTag = CredentialsTags.Password
-        }
+        modifier = Modifier
+            .semantics {
+                testTag = CredentialsTags.Password
+            }
+            .autofill(
+                autofillTypes = listOf(AutofillType.Password),
+                onFill = { onPasswordChanged(it) }
+            )
     )
 }
 
