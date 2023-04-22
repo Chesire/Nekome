@@ -5,6 +5,7 @@ import com.chesire.nekome.datasource.auth.AccessTokenRepository
 import com.chesire.nekome.datasource.auth.AccessTokenResult
 import com.chesire.nekome.datasource.auth.AuthException
 import io.mockk.Runs
+import io.mockk.clearAllMocks
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
@@ -17,23 +18,33 @@ import okhttp3.Response
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Assert.fail
+import org.junit.Before
 import org.junit.Test
 
 @Suppress("SwallowedException")
 class AuthRefreshInterceptorTests {
 
+    private val mockRepo = mockk<AccessTokenRepository>()
+    private val mockAuthCaster = mockk<AuthCaster>()
+    private lateinit var testObject: AuthRefreshInterceptor
+
+    @Before
+    fun setup() {
+        clearAllMocks()
+
+        testObject = AuthRefreshInterceptor(mockRepo, mockAuthCaster)
+    }
+
     @Test
     fun `successful response just returns response`() = runBlocking {
-        val mockRepo = mockk<AccessTokenRepository>()
-        val mockAuthCaster = mockk<AuthCaster>()
         val response = mockk<Response> {
             every { isSuccessful } returns true
+            every { code() } returns 200
         }
         val mockChain = mockk<Interceptor.Chain> {
             every { request() } returns mockk()
             every { proceed(any()) } returns response
         }
-        val testObject = AuthRefreshInterceptor(mockRepo, mockAuthCaster)
 
         val result = testObject.intercept(mockChain)
 
@@ -43,8 +54,6 @@ class AuthRefreshInterceptorTests {
 
     @Test
     fun `failure response with code !403 just returns response`() = runBlocking {
-        val mockRepo = mockk<AccessTokenRepository>()
-        val mockAuthCaster = mockk<AuthCaster>()
         val response = mockk<Response> {
             every { isSuccessful } returns false
             every { code() } returns 404
@@ -53,7 +62,6 @@ class AuthRefreshInterceptorTests {
             every { request() } returns mockk()
             every { proceed(any()) } returns response
         }
-        val testObject = AuthRefreshInterceptor(mockRepo, mockAuthCaster)
 
         val result = testObject.intercept(mockChain)
 
@@ -62,13 +70,9 @@ class AuthRefreshInterceptorTests {
     }
 
     @Test
-    fun `getting new auth failure, notifies authCaster issue refreshing`() = runBlocking {
-        val mockRepo = mockk<AccessTokenRepository> {
-            coEvery { refresh() } returns AccessTokenResult.CommunicationError
-        }
-        val mockAuthCaster = mockk<AuthCaster> {
-            every { issueRefreshingToken() } just Runs
-        }
+    fun `getting 401 failure, attempts to refresh token`() = runBlocking {
+        coEvery { mockRepo.refresh() } returns AccessTokenResult.CommunicationError
+        every { mockAuthCaster.issueRefreshingToken() } just Runs
         val response = mockk<Response> {
             every { isSuccessful } returns false
             every { code() } returns 403
@@ -80,7 +84,56 @@ class AuthRefreshInterceptorTests {
             every { request() } returns mockk()
             every { proceed(any()) } returns response
         }
-        val testObject = AuthRefreshInterceptor(mockRepo, mockAuthCaster)
+
+        try {
+            testObject.intercept(mockChain)
+        } catch (ex: AuthException) {
+            // Ignore the crash
+        }
+
+        coVerify(exactly = 1) { mockRepo.refresh() }
+    }
+
+    @Test
+    fun `getting 403 failure, attempts to refresh token`() = runBlocking {
+        coEvery { mockRepo.refresh() } returns AccessTokenResult.CommunicationError
+        every { mockAuthCaster.issueRefreshingToken() } just Runs
+        val response = mockk<Response> {
+            every { isSuccessful } returns false
+            every { code() } returns 403
+            every { request() } returns mockk()
+            every { protocol() } returns mockk()
+            every { message() } returns "message"
+        }
+        val mockChain = mockk<Interceptor.Chain> {
+            every { request() } returns mockk()
+            every { proceed(any()) } returns response
+        }
+
+        try {
+            testObject.intercept(mockChain)
+        } catch (ex: AuthException) {
+            // Ignore the crash
+        }
+
+        coVerify(exactly = 1) { mockRepo.refresh() }
+    }
+
+    @Test
+    fun `getting new auth failure, notifies authCaster issue refreshing`() = runBlocking {
+        coEvery { mockRepo.refresh() } returns AccessTokenResult.CommunicationError
+        every { mockAuthCaster.issueRefreshingToken() } just Runs
+        val response = mockk<Response> {
+            every { isSuccessful } returns false
+            every { code() } returns 401
+            every { request() } returns mockk()
+            every { protocol() } returns mockk()
+            every { message() } returns "message"
+        }
+        val mockChain = mockk<Interceptor.Chain> {
+            every { request() } returns mockk()
+            every { proceed(any()) } returns response
+        }
 
         try {
             testObject.intercept(mockChain)
@@ -94,12 +147,8 @@ class AuthRefreshInterceptorTests {
 
     @Test(expected = AuthException::class)
     fun `getting new auth failure, throws AuthException`() = runBlocking {
-        val mockRepo = mockk<AccessTokenRepository> {
-            coEvery { refresh() } returns AccessTokenResult.CommunicationError
-        }
-        val mockAuthCaster = mockk<AuthCaster> {
-            every { issueRefreshingToken() } just Runs
-        }
+        coEvery { mockRepo.refresh() } returns AccessTokenResult.CommunicationError
+        every { mockAuthCaster.issueRefreshingToken() } just Runs
         val response = mockk<Response> {
             every { isSuccessful } returns false
             every { code() } returns 403
@@ -111,7 +160,6 @@ class AuthRefreshInterceptorTests {
             every { request() } returns mockk()
             every { proceed(any()) } returns response
         }
-        val testObject = AuthRefreshInterceptor(mockRepo, mockAuthCaster)
 
         testObject.intercept(mockChain)
 
@@ -120,11 +168,10 @@ class AuthRefreshInterceptorTests {
 
     @Test
     fun `getting new auth retries previous request`() = runBlocking {
-        val mockRepo = mockk<AccessTokenRepository> {
+        mockRepo.apply {
             every { accessToken } returns "accessToken"
             coEvery { refresh() } returns AccessTokenResult.Success
         }
-        val mockAuthCaster = mockk<AuthCaster>()
         val response = mockk<Response> {
             every { isSuccessful } returns false
             every { code() } returns 403
@@ -136,7 +183,6 @@ class AuthRefreshInterceptorTests {
             every { request() } returns mockk(relaxed = true)
             every { proceed(any()) } returns response
         }
-        val testObject = AuthRefreshInterceptor(mockRepo, mockAuthCaster)
 
         testObject.intercept(mockChain)
 

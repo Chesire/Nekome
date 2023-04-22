@@ -9,6 +9,7 @@ import javax.inject.Inject
 import kotlinx.coroutines.runBlocking
 import okhttp3.Interceptor
 import okhttp3.Response
+import timber.log.Timber
 
 /**
  * Interceptor to handle refreshing access tokens if required.
@@ -29,7 +30,8 @@ class AuthRefreshInterceptor @Inject constructor(
         val originRequest = chain.request()
         val response = chain.proceed(originRequest)
 
-        return if (!response.isSuccessful && response.code() == HttpURLConnection.HTTP_FORBIDDEN) {
+        return if (response.isAuthError) {
+            Timber.w("Response threw an auth error (${response.code()}), attempting to refresh")
             val refreshResponse = runBlocking { repo.refresh() }
             if (refreshResponse is AccessTokenResult.Success) {
                 chain.proceed(
@@ -39,6 +41,7 @@ class AuthRefreshInterceptor @Inject constructor(
                         .build()
                 )
             } else {
+                Timber.w("Could not refresh the token, logging user out")
                 authCaster.issueRefreshingToken()
                 throw AuthException()
             }
@@ -46,4 +49,9 @@ class AuthRefreshInterceptor @Inject constructor(
             response
         }
     }
+
+    private val Response.isAuthError: Boolean
+        get() = !isSuccessful &&
+            code() == HttpURLConnection.HTTP_FORBIDDEN ||
+            code() == HttpURLConnection.HTTP_UNAUTHORIZED
 }
