@@ -259,11 +259,9 @@ private fun RateSeriesPreference(
 ) {
     Row(
         modifier = Modifier
-            .padding(vertical = 8.dp)
             .fillMaxWidth()
-            .clickable {
-                onRateSeriesClicked(!shouldRateSeries)
-            },
+            .clickable { onRateSeriesClicked(!shouldRateSeries) }
+            .padding(vertical = 8.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
