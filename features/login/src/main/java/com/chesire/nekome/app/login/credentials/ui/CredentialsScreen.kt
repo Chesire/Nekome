@@ -254,9 +254,7 @@ private fun PasswordInput(
         singleLine = true,
         label = { Text(text = stringResource(id = R.string.login_password)) },
         modifier = Modifier
-            .semantics {
-                testTag = CredentialsTags.Password
-            }
+            .semantics { testTag = CredentialsTags.Password }
             .autofill(
                 autofillTypes = listOf(AutofillType.Password),
                 onFill = { onPasswordChanged(it) }
