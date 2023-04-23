@@ -100,7 +100,7 @@ private fun Render(
             modifier = Modifier
                 .padding(paddingValues)
                 .verticalScroll(state = scrollableState)
-                .padding(start = 16.dp, top = 16.dp, end = 16.dp)
+                .padding(top = 16.dp)
                 .fillMaxSize()
         ) {
             ProfileSection(state.value.userModel, onLogoutClicked)
@@ -179,6 +179,7 @@ private fun ProfileSection(
     if (userModel != null) {
         Card(
             modifier = Modifier
+                .padding(horizontal = 16.dp)
                 .fillMaxWidth()
                 .wrapContentHeight()
         ) {
@@ -261,7 +262,7 @@ private fun RateSeriesPreference(
         modifier = Modifier
             .fillMaxWidth()
             .clickable { onRateSeriesClicked(!shouldRateSeries) }
-            .padding(vertical = 8.dp),
+            .padding(horizontal = 16.dp, vertical = 8.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -323,7 +324,7 @@ private fun PreferenceHeading(title: String) {
         text = title,
         style = MaterialTheme.typography.titleLarge,
         modifier = Modifier
-            .padding(top = 16.dp)
+            .padding(start = 16.dp, top = 16.dp, end = 16.dp)
             .fillMaxWidth(),
         color = MaterialTheme.colorScheme.primary
     )
@@ -339,7 +340,7 @@ private fun PreferenceSection(
         modifier = Modifier
             .fillMaxWidth()
             .clickable(enabled = onClick != null) { onClick?.invoke() }
-            .padding(vertical = 8.dp),
+            .padding(horizontal = 16.dp, vertical = 8.dp),
         verticalArrangement = Arrangement.Center
     ) {
         Text(
