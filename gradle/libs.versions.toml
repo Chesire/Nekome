@@ -12,7 +12,7 @@ hilt = "2.45"
 kotlin = "1.8.20"
 kotlin-coroutines = "1.6.4"
 moshi = "1.14.0"
-okhttp3 = "4.10.0"
+okhttp3 = "4.11.0"
 retrofit = "2.9.0"
 
 [libraries]
