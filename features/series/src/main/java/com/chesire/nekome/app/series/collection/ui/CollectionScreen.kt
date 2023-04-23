@@ -322,21 +322,23 @@ private fun SeriesItem(
                             style = MaterialTheme.typography.bodyMedium,
                             modifier = Modifier.align(Alignment.CenterVertically)
                         )
-                        IconButton(
-                            modifier = Modifier
-                                .alpha(if (model.isUpdating) 0.3f else 1f)
-                                .align(Alignment.CenterVertically)
-                                .semantics { testTag = SeriesCollectionTags.PlusOne },
-                            enabled = !model.isUpdating,
-                            onClick = { onIncrementSeries(model) }
-                        ) {
-                            Icon(
-                                imageVector = Icons.Default.PlusOne,
-                                contentDescription = stringResource(
-                                    id = R.string.series_list_plus_one
-                                ),
-                                tint = MaterialTheme.colorScheme.primary
-                            )
+                        if (model.showPlusOne) {
+                            IconButton(
+                                modifier = Modifier
+                                    .alpha(if (model.isUpdating) 0.3f else 1f)
+                                    .align(Alignment.CenterVertically)
+                                    .semantics { testTag = SeriesCollectionTags.PlusOne },
+                                enabled = !model.isUpdating,
+                                onClick = { onIncrementSeries(model) }
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.PlusOne,
+                                    contentDescription = stringResource(
+                                        id = R.string.series_list_plus_one
+                                    ),
+                                    tint = MaterialTheme.colorScheme.primary
+                                )
+                            }
                         }
                     }
                 }

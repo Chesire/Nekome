@@ -5,10 +5,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Card
-import androidx.compose.material.Slider
-import androidx.compose.material.Text
-import androidx.compose.material.TextButton
+import androidx.compose.material3.Card
+import androidx.compose.material3.Slider
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -79,9 +79,12 @@ private fun Render(
 
                 Row(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceEvenly
+                    horizontalArrangement = Arrangement.End
                 ) {
-                    TextButton(onClick = { onRatingResult(null) }) {
+                    TextButton(
+                        modifier = Modifier.padding(horizontal = 8.dp),
+                        onClick = { onRatingResult(null) }
+                    ) {
                         Text(text = stringResource(id = R.string.series_list_rate_cancel))
                     }
                     TextButton(onClick = { onRatingResult(sliderValue.roundToInt()) }) {

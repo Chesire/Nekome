@@ -40,6 +40,7 @@ captures/
 *.iml
 .idea/assetWizardSettings.xml
 .idea/androidTestResultsUserPreferences.xml
+.idea/deploymentTargetDropDown.xml
 .idea/workspace.xml
 .idea/tasks.xml
 .idea/gradle.xml
