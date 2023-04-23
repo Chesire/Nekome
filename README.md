@@ -44,7 +44,7 @@ For contributing to the project, please feel free to [create an issue](https://g
 
 ## License
 
-    Copyright (C) 2020 Troy Rijkaard
+    Copyright (C) 2023 Troy Rijkaard
 
     Licensed under the Apache License, Version 2.0 (the "License"); you may not
     use this file except in compliance with the License. You may obtain a copy of
