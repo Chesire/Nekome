@@ -86,7 +86,7 @@ aboutlibraries = { id = "com.mikepenz.aboutlibraries.plugin", version.ref = "abo
 android-application = { id = "com.android.application", version.ref = "android-gradle-plugin" }
 android-library = { id = "com.android.library", version.ref = "android-gradle-plugin" }
 androidx-navigation-safeargs = { id = "androidx.navigation.safeargs.kotlin", version.ref = "androidx-navigation" }
-detekt = { id = "io.gitlab.arturbosch.detekt", version = "1.21.0" }
+detekt = { id = "io.gitlab.arturbosch.detekt", version = "1.22.0" }
 google-dagger-hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 google-devtools-ksp = { id = "com.google.devtools.ksp", version = "1.8.20-1.0.11" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
