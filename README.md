@@ -7,13 +7,14 @@
 Nekome is an Android application that helps with tracking your anime and manga watch lists. Watch list data is handled by [Kitsu](https://kitsu.io/).
 
 [<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png"
-     alt="Download from F-Droid"
-     height="80">](https://f-droid.org/packages/com.chesire.nekome/)
+      alt="Download from F-Droid"
+      height="80">](https://f-droid.org/packages/com.chesire.nekome/)
 [<img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png"
       alt="Download from Google Play"
       height="80">](https://play.google.com/store/apps/details?id=com.chesire.nekome)
 
-![List](screenshots/list.png) ![detail](screenshots/detail.png)
+![List](fastlane/metadata/android/en-GB/images/phoneScreenshots/1_en-GB.png)
+![detail](fastlane/metadata/android/en-GB/images/phoneScreenshots/3_en-GB.png)
 
 ## Features
 
@@ -27,7 +28,9 @@ Nekome is an Android application that helps with tracking your anime and manga w
 * Support for Android 21+
 * Fully Kotlin
 * Uses [Kitsu](https://kitsu.io/) to store information, all accessed through [their API](https://kitsu.docs.apiary.io/)
-* [Architecture components](https://developer.android.com/topic/libraries/architecture) (LiveData, ViewModels, Room)
+* [MVVM](https://developer.android.com/topic/libraries/architecture) for the architecture
+* [Compose](https://developer.android.com/jetpack/compose) for the UI layer
+* [Material3](https://developer.android.com/jetpack/compose/designsystems/material3) support for dynamic themes using Material 3
 * [Hilt](https://dagger.dev/hilt/) for dependency injection
 * [Retrofit](https://github.com/square/retrofit) to aid with API communicaton
 * [Moshi](https://github.com/square/moshi) for parsing JSON
@@ -41,16 +44,16 @@ For contributing to the project, please feel free to [create an issue](https://g
 
 ## License
 
-	Copyright (C) 2020 Troy Rijkaard
-	
-	Licensed under the Apache License, Version 2.0 (the "License"); you may not
-	use this file except in compliance with the License. You may obtain a copy of
-	the License at
-	
-	http://www.apache.org/licenses/LICENSE-2.0
-	
-	Unless required by applicable law or agreed to in writing, software
-	distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
-	WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
-	License for the specific language governing permissions and limitations under
-	the License.
+    Copyright (C) 2020 Troy Rijkaard
+
+    Licensed under the Apache License, Version 2.0 (the "License"); you may not
+    use this file except in compliance with the License. You may obtain a copy of
+    the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+    WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+    License for the specific language governing permissions and limitations under
+    the License.
