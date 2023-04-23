@@ -79,9 +79,12 @@ private fun Render(
 
                 Row(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceEvenly
+                    horizontalArrangement = Arrangement.End
                 ) {
-                    TextButton(onClick = { onRatingResult(null) }) {
+                    TextButton(
+                        modifier = Modifier.padding(horizontal = 8.dp),
+                        onClick = { onRatingResult(null) }
+                    ) {
                         Text(text = stringResource(id = R.string.series_list_rate_cancel))
                     }
                     TextButton(onClick = { onRatingResult(sliderValue.roundToInt()) }) {
