@@ -132,9 +132,9 @@ private fun Render(
 
     if (state.value.showThemeDialog) {
         NekomeDialog(
-            title = R.string.settings_theme,
-            confirmButton = R.string.ok,
-            cancelButton = R.string.cancel,
+            title = stringResource(id = R.string.settings_theme),
+            confirmButton = stringResource(id = R.string.ok),
+            cancelButton = stringResource(id = R.string.cancel),
             currentValue = state.value.themeValue,
             allValues = Theme.values().associateWith { stringResource(id = it.stringId) }.toList(),
             onResult = onThemeResult
@@ -143,9 +143,9 @@ private fun Render(
 
     if (state.value.showDefaultHomeDialog) {
         NekomeDialog(
-            title = R.string.settings_default_home_title,
-            confirmButton = R.string.ok,
-            cancelButton = R.string.cancel,
+            title = stringResource(id = R.string.settings_default_home_title),
+            confirmButton = stringResource(id = R.string.ok),
+            cancelButton = stringResource(id = R.string.cancel),
             currentValue = state.value.defaultHomeValue,
             allValues = HomeScreenOptions
                 .values()
@@ -157,9 +157,9 @@ private fun Render(
 
     if (state.value.showDefaultSeriesStatusDialog) {
         NekomeDialog(
-            title = R.string.settings_default_series_status_title,
-            confirmButton = R.string.ok,
-            cancelButton = R.string.cancel,
+            title = stringResource(id = R.string.settings_default_series_status_title),
+            confirmButton = stringResource(id = R.string.ok),
+            cancelButton = stringResource(id = R.string.cancel),
             currentValue = state.value.defaultSeriesStatusValue,
             allValues = UserSeriesStatus
                 .values()

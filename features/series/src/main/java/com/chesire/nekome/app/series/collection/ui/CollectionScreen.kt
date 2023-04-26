@@ -369,9 +369,9 @@ private fun buildDateString(context: Context, startDate: String, endDate: String
 private fun SortDialog(sortOptions: Sort, onSortResult: (SortOption?) -> Unit) {
     if (sortOptions.show) {
         NekomeDialog(
-            title = R.string.sort_dialog_title,
-            confirmButton = R.string.ok,
-            cancelButton = R.string.cancel,
+            title = stringResource(id = R.string.sort_dialog_title),
+            confirmButton = stringResource(id = R.string.ok),
+            cancelButton = stringResource(id = R.string.cancel),
             currentValue = sortOptions.currentSort,
             allValues = sortOptions
                 .sortOptions
