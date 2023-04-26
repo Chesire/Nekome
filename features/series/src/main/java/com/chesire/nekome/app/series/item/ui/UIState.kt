@@ -8,6 +8,7 @@ data class UIState(
     val title: String,
     val subtitle: String,
     val imageUrl: String,
+    val links: List<Link>,
     val possibleSeriesStatus: List<UserSeriesStatus>,
     val seriesStatus: UserSeriesStatus,
     val progress: String,
@@ -24,6 +25,7 @@ data class UIState(
             title = "",
             subtitle = "",
             imageUrl = "",
+            links = listOf(Link.AddLink),
             possibleSeriesStatus = listOf(
                 UserSeriesStatus.Current,
                 UserSeriesStatus.Completed,
@@ -55,3 +57,8 @@ data class SnackbarData(
     @StringRes val stringRes: Int,
     val formatText: Any = ""
 )
+
+sealed interface Link {
+    data class PopulatedLink(val title: String, val linkText: String) : Link
+    object AddLink : Link
+}

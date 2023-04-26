@@ -7,16 +7,23 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.BrokenImage
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.InsertPhoto
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -24,7 +31,9 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FilterChipDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Slider
@@ -44,9 +53,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -111,7 +125,7 @@ private fun Render(
             Subtitle(subtitle = state.value.subtitle)
             Row(modifier = Modifier.fillMaxWidth()) {
                 SeriesImage(imageUrl = state.value.imageUrl)
-                SeriesLinks()
+                SeriesLinks(links = state.value.links)
             }
             SeriesStatus(
                 possibleSeriesStatus = state.value.possibleSeriesStatus,
@@ -194,8 +208,88 @@ private fun SeriesImage(imageUrl: String) {
 }
 
 @Composable
-private fun SeriesLinks() {
+private fun SeriesLinks(links: List<Link>) {
+    LazyColumn(
+        modifier = Modifier
+            .padding(16.dp)
+            .fillMaxWidth()
+            .heightIn(min = 48.dp, max = 168.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        items(items = links) {
+            when (it) {
+                Link.AddLink -> SeriesAddLink()
+                is Link.PopulatedLink -> SeriesPopulatedLink(it)
+            }
+        }
+    }
+}
 
+@Composable
+private fun SeriesAddLink() {
+    OutlinedCard {
+        Row(
+            modifier = Modifier.padding(4.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Icon(
+                painter = rememberVectorPainter(image = Icons.Default.Add),
+                contentDescription = null
+            )
+            Text(
+                text = "Add link",
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .padding(start = 4.dp),
+                style = MaterialTheme.typography.labelMedium
+            )
+        }
+    }
+}
+
+@Composable
+private fun SeriesPopulatedLink(populatedLink: Link.PopulatedLink) {
+    val uriHandler = LocalUriHandler.current
+    val linkTag = "link"
+    val annotatedString = buildAnnotatedString {
+        pushStringAnnotation(tag = linkTag, annotation = populatedLink.linkText)
+        withStyle(style = SpanStyle(color = MaterialTheme.colorScheme.primary)) {
+            append(populatedLink.title)
+        }
+        pop()
+    }
+
+    OutlinedCard {
+        Row(
+            modifier = Modifier.padding(4.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Icon(
+                painter = rememberVectorPainter(image = Icons.Default.Edit),
+                contentDescription = null
+            ) // TODO: Unless have an edit button elsewhere which shows a pencil?
+            ClickableText(
+                text = annotatedString,
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .padding(start = 4.dp),
+                style = MaterialTheme.typography.labelMedium,
+                overflow = TextOverflow.Ellipsis,
+                maxLines = 1
+            ) { offset ->
+                annotatedString
+                    .getStringAnnotations(
+                        tag = linkTag,
+                        start = offset,
+                        end = offset
+                    )
+                    .firstOrNull()
+                    ?.let {
+                        uriHandler.openUri(it.item)
+                    }
+            }
+        }
+    }
 }
 
 @Composable
@@ -359,7 +453,12 @@ private fun Preview() {
         id = 0,
         title = "Title",
         subtitle = "Anime - TV - Finished",
-        imageUrl = "https://c8.alamy.com/comp/K86JWC/anime-poster-K86JWC.jpg",
+        imageUrl = "",
+        links = listOf(
+            Link.PopulatedLink("Kitsu page", "http://kitsu.io"),
+            Link.PopulatedLink("MAL page", "http://myanimelist.net"),
+            Link.AddLink
+        ),
         possibleSeriesStatus = listOf(
             UserSeriesStatus.Current,
             UserSeriesStatus.Completed,
