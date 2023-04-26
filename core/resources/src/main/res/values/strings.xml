@@ -71,6 +71,12 @@
     <string name="series_detail_confirm">Confirm</string>
     <string name="series_detail_failure">Failed to update series %s, please try again</string>
     <string name="series_detail_delete">Delete</string>
+    <string name="series_detail_add_link_title">Add link</string>
+    <string name="series_detail_edit_link_title">Edit link</string>
+    <string name="series_detail_link_title_label">Display text</string>
+    <string name="series_detail_link_link_label">Link text</string>
+    <string name="series_detail_link_title_placeholder">Kitsu</string>
+    <string name="series_detail_link_link_placeholder">www.kitsu.io</string>
 
     <string name="rating_none">No rating</string>
 

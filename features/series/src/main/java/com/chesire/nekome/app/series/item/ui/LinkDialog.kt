@@ -13,9 +13,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.chesire.nekome.app.series.R
 import com.chesire.nekome.core.compose.composables.NekomeDialog
+import com.chesire.nekome.core.compose.theme.NekomeTheme
 
 @Composable
 fun LinkDialog(
@@ -40,7 +42,12 @@ fun LinkDialog(
             )
         }
         NekomeDialog(
-            title = if (linkDialogData.link is Link.AddLink) "Add Link" else "Edit Link",
+            title = stringResource(
+                id = if (linkDialogData.link is Link.AddLink)
+                    R.string.series_detail_add_link_title
+                else
+                    R.string.series_detail_edit_link_title
+            ),
             confirmButton = stringResource(id = R.string.series_detail_confirm),
             cancelButton = stringResource(id = R.string.cancel),
             onConfirmButtonClicked = {
@@ -58,17 +65,25 @@ fun LinkDialog(
                 value = titleText,
                 onValueChange = { titleText = it },
                 modifier = Modifier.padding(horizontal = 8.dp),
-                label = { Text(text = "Title text") },
-                placeholder = { Text(text = "Kitsu URL") },
+                label = {
+                    Text(text = stringResource(id = R.string.series_detail_link_title_label))
+                },
+                placeholder = {
+                    Text(text = stringResource(id = R.string.series_detail_link_title_placeholder))
+                },
                 keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next),
                 singleLine = true
             )
             OutlinedTextField(
                 value = linkText,
                 onValueChange = { linkText = it },
-                modifier = Modifier.padding(horizontal = 8.dp, vertical = 8.dp),
-                label = { Text(text = "Link text") },
-                placeholder = { Text(text = "www.kitsu.io") },
+                modifier = Modifier.padding(8.dp),
+                label = {
+                    Text(text = stringResource(id = R.string.series_detail_link_link_label))
+                },
+                placeholder = {
+                    Text(text = stringResource(id = R.string.series_detail_link_link_placeholder))
+                },
                 keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Done),
                 keyboardActions = KeyboardActions(
                     onDone = {
@@ -84,5 +99,19 @@ fun LinkDialog(
                 singleLine = true
             )
         }
+    }
+}
+
+@Composable
+@Preview
+private fun Preview() {
+    NekomeTheme(isDarkTheme = true) {
+        LinkDialog(
+            linkDialogData = LinkDialogData(
+                show = true,
+                link = Link.AddLink
+            ),
+            onLinkDialogResult = { /**/ }
+        )
     }
 }

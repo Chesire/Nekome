@@ -250,7 +250,7 @@ private fun SeriesAddLink(onLinkPressed: (Link) -> Unit) {
                 contentDescription = null
             )
             Text(
-                text = "Add link",
+                text = stringResource(id = R.string.series_detail_add_link_title),
                 modifier = Modifier
                     .fillMaxHeight()
                     .padding(start = 4.dp),
