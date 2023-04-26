@@ -9,6 +9,7 @@ data class UIState(
     val subtitle: String,
     val imageUrl: String,
     val links: List<Link>,
+    val linkDialogData: LinkDialogData,
     val possibleSeriesStatus: List<UserSeriesStatus>,
     val seriesStatus: UserSeriesStatus,
     val progress: String,
@@ -26,6 +27,10 @@ data class UIState(
             subtitle = "",
             imageUrl = "",
             links = listOf(Link.AddLink),
+            linkDialogData = LinkDialogData(
+                show = false,
+                link = Link.AddLink
+            ),
             possibleSeriesStatus = listOf(
                 UserSeriesStatus.Current,
                 UserSeriesStatus.Completed,
@@ -56,6 +61,11 @@ data class Delete(
 data class SnackbarData(
     @StringRes val stringRes: Int,
     val formatText: Any = ""
+)
+
+data class LinkDialogData(
+    val show: Boolean,
+    val link: Link
 )
 
 sealed interface Link {

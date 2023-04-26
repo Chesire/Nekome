@@ -66,6 +66,8 @@ class ItemViewModel @Inject constructor(
             ViewAction.DeletePressed -> handleDeletePressed()
             ViewAction.SnackbarObserved -> handleSnackbarObserved()
             ViewAction.FinishScreenObserved -> handleFinishScreenObserved()
+            is ViewAction.LinkPressed -> handleLinkPressed(action.link)
+            is ViewAction.OnLinkResult -> handleLinkResult(action.linkDialogResult)
             is ViewAction.OnDeleteResult -> handleDeleteResult(action.result)
             is ViewAction.ProgressChanged -> handleProgressChanged(action.newProgress)
             is ViewAction.RatingChanged -> handleRatingChanged(action.newRating)
@@ -114,6 +116,29 @@ class ItemViewModel @Inject constructor(
 
     private fun handleFinishScreenObserved() {
         state = state.copy(finishScreen = false)
+    }
+
+    private fun handleLinkPressed(link: Link) {
+        state = state.copy(
+            linkDialogData = LinkDialogData(
+                show = true,
+                link = link
+            )
+        )
+    }
+
+    private fun handleLinkResult(linkResult: LinkDialogResult?) {
+        if (linkResult == null) {
+            state = state.copy(linkDialogData = LinkDialogData(show = false, link = Link.AddLink))
+            return
+        }
+
+        viewModelScope.launch {
+            // compare in the DB for similar items
+            // update the DB
+            // include a flow to update the ui as the item updates in the db
+            state = state.copy(linkDialogData = LinkDialogData(show = false, link = Link.AddLink))
+        }
     }
 
     private fun handleDeleteResult(result: Boolean) {

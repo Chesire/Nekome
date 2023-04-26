@@ -32,6 +32,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.OutlinedTextField
@@ -81,6 +82,8 @@ fun ItemScreen(
     val state = viewModel.uiState.collectAsState()
     Render(
         state = state,
+        onLinkPressed = { viewModel.execute(ViewAction.LinkPressed(it)) },
+        onLinkDialogResult = { viewModel.execute(ViewAction.OnLinkResult(it)) },
         onSeriesStatusChanged = { viewModel.execute(ViewAction.SeriesStatusChanged(it)) },
         onProgressChanged = { viewModel.execute(ViewAction.ProgressChanged(it)) },
         onRatingChanged = { viewModel.execute(ViewAction.RatingChanged(it)) },
@@ -96,6 +99,8 @@ fun ItemScreen(
 @Composable
 private fun Render(
     state: State<UIState>,
+    onLinkPressed: (Link) -> Unit,
+    onLinkDialogResult: (LinkDialogResult?) -> Unit,
     onSeriesStatusChanged: (UserSeriesStatus) -> Unit,
     onProgressChanged: (String) -> Unit,
     onRatingChanged: (Float) -> Unit,
@@ -125,7 +130,7 @@ private fun Render(
             Subtitle(subtitle = state.value.subtitle)
             Row(modifier = Modifier.fillMaxWidth()) {
                 SeriesImage(imageUrl = state.value.imageUrl)
-                SeriesLinks(links = state.value.links)
+                SeriesLinks(links = state.value.links, onLinkPressed = onLinkPressed)
             }
             SeriesStatus(
                 possibleSeriesStatus = state.value.possibleSeriesStatus,
@@ -161,6 +166,11 @@ private fun Render(
         }
     }
 
+    // TODO: Get/Set teh links in the DB.
+    LinkDialog(
+        linkDialogData = state.value.linkDialogData,
+        onLinkDialogResult = onLinkDialogResult
+    )
     DeleteDialog(
         deleteDialog = state.value.deleteDialog,
         onDeleteResult = onDeleteResult
@@ -208,7 +218,10 @@ private fun SeriesImage(imageUrl: String) {
 }
 
 @Composable
-private fun SeriesLinks(links: List<Link>) {
+private fun SeriesLinks(
+    links: List<Link>,
+    onLinkPressed: (Link) -> Unit
+) {
     LazyColumn(
         modifier = Modifier
             .padding(16.dp)
@@ -218,16 +231,16 @@ private fun SeriesLinks(links: List<Link>) {
     ) {
         items(items = links) {
             when (it) {
-                Link.AddLink -> SeriesAddLink()
-                is Link.PopulatedLink -> SeriesPopulatedLink(it)
+                Link.AddLink -> SeriesAddLink(onLinkPressed)
+                is Link.PopulatedLink -> SeriesPopulatedLink(it, onLinkPressed)
             }
         }
     }
 }
 
 @Composable
-private fun SeriesAddLink() {
-    OutlinedCard {
+private fun SeriesAddLink(onLinkPressed: (Link) -> Unit) {
+    OutlinedCard(onClick = { onLinkPressed(Link.AddLink) }) {
         Row(
             modifier = Modifier.padding(4.dp),
             verticalAlignment = Alignment.CenterVertically
@@ -248,7 +261,10 @@ private fun SeriesAddLink() {
 }
 
 @Composable
-private fun SeriesPopulatedLink(populatedLink: Link.PopulatedLink) {
+private fun SeriesPopulatedLink(
+    populatedLink: Link.PopulatedLink,
+    onLinkPressed: (Link) -> Unit
+) {
     val uriHandler = LocalUriHandler.current
     val linkTag = "link"
     val annotatedString = buildAnnotatedString {
@@ -264,10 +280,13 @@ private fun SeriesPopulatedLink(populatedLink: Link.PopulatedLink) {
             modifier = Modifier.padding(4.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Icon(
-                painter = rememberVectorPainter(image = Icons.Default.Edit),
-                contentDescription = null
-            ) // TODO: Unless have an edit button elsewhere which shows a pencil?
+            IconButton(onClick = { onLinkPressed(populatedLink) }) {
+                // TODO: Unless have an edit button elsewhere which shows a pencil?
+                Icon(
+                    painter = rememberVectorPainter(image = Icons.Default.Edit),
+                    contentDescription = null
+                )
+            }
             ClickableText(
                 text = annotatedString,
                 modifier = Modifier
@@ -423,7 +442,7 @@ private fun DeleteDialog(
         NekomeDialog(
             title = stringResource(id = R.string.series_list_delete_title, deleteDialog.title),
             summary = stringResource(R.string.series_list_delete_body),
-            confirmButton = stringResource(id = R.string.series_list_delete_confirm),
+            confirmButton = stringResource(id = R.string.series_detail_confirm),
             cancelButton = stringResource(id = R.string.cancel),
             onConfirmButtonClicked = { onDeleteResult(true) },
             onCancelButtonClicked = { onDeleteResult(false) }
@@ -459,6 +478,10 @@ private fun Preview() {
             Link.PopulatedLink("MAL page", "http://myanimelist.net"),
             Link.AddLink
         ),
+        linkDialogData = LinkDialogData(
+            show = false,
+            link = Link.AddLink
+        ),
         possibleSeriesStatus = listOf(
             UserSeriesStatus.Current,
             UserSeriesStatus.Completed,
@@ -484,6 +507,8 @@ private fun Preview() {
                 initialValue = initialState,
                 producer = { value = initialState }
             ),
+            onLinkPressed = { /**/ },
+            onLinkDialogResult = { /**/ },
             onSeriesStatusChanged = { /**/ },
             onProgressChanged = { /**/ },
             onRatingChanged = { /**/ },
