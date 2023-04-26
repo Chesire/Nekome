@@ -7,6 +7,7 @@ data class UIState(
     val id: Int,
     val title: String,
     val subtitle: String,
+    val imageUrl: String,
     val possibleSeriesStatus: List<UserSeriesStatus>,
     val seriesStatus: UserSeriesStatus,
     val progress: String,
@@ -22,6 +23,7 @@ data class UIState(
             id = 0,
             title = "",
             subtitle = "",
+            imageUrl = "",
             possibleSeriesStatus = listOf(
                 UserSeriesStatus.Current,
                 UserSeriesStatus.Completed,

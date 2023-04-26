@@ -48,6 +48,7 @@ class ItemViewModel @Inject constructor(
                 id = series.userId,
                 title = series.title,
                 subtitle = "${series.type.name}  -  ${series.subtype.name}  -  ${series.seriesStatus.name}",
+                imageUrl = series.posterImage.smallest?.url ?: "",
                 possibleSeriesStatus = UserSeriesStatus
                     .values()
                     .filterNot { it == UserSeriesStatus.Unknown },

@@ -6,13 +6,18 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.BrokenImage
+import androidx.compose.material.icons.filled.InsertPhoto
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -37,6 +42,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
@@ -44,6 +50,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import coil.compose.AsyncImage
 import com.chesire.nekome.app.series.R
 import com.chesire.nekome.core.compose.composables.NekomeDialog
 import com.chesire.nekome.core.compose.theme.NekomeTheme
@@ -102,6 +109,10 @@ private fun Render(
         ) {
             Title(title = state.value.title)
             Subtitle(subtitle = state.value.subtitle)
+            Row(modifier = Modifier.fillMaxWidth()) {
+                SeriesImage(imageUrl = state.value.imageUrl)
+                SeriesLinks()
+            }
             SeriesStatus(
                 possibleSeriesStatus = state.value.possibleSeriesStatus,
                 seriesStatus = state.value.seriesStatus,
@@ -166,6 +177,25 @@ private fun Subtitle(subtitle: String) {
         text = subtitle,
         style = MaterialTheme.typography.bodySmall
     )
+}
+
+@Composable
+private fun SeriesImage(imageUrl: String) {
+    AsyncImage(
+        model = imageUrl,
+        placeholder = rememberVectorPainter(image = Icons.Default.InsertPhoto),
+        error = rememberVectorPainter(image = Icons.Default.BrokenImage),
+        contentDescription = null,
+        modifier = Modifier
+            .padding(top = 16.dp)
+            .sizeIn(minWidth = 48.dp, minHeight = 48.dp, maxWidth = 168.dp, maxHeight = 168.dp)
+            .aspectRatio(0.7f)
+    )
+}
+
+@Composable
+private fun SeriesLinks() {
+
 }
 
 @Composable
@@ -329,6 +359,7 @@ private fun Preview() {
         id = 0,
         title = "Title",
         subtitle = "Anime - TV - Finished",
+        imageUrl = "https://c8.alamy.com/comp/K86JWC/anime-poster-K86JWC.jpg",
         possibleSeriesStatus = listOf(
             UserSeriesStatus.Current,
             UserSeriesStatus.Completed,
