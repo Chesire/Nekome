@@ -104,3 +104,15 @@ internal val MIGRATION_3_4 = object : Migration(3, 4) {
         database.execSQL("ALTER TABLE SeriesEntity ADD COLUMN rating INTEGER NOT NULL DEFAULT 0")
     }
 }
+
+/**
+ * Provides a migration from version 4 to version 5 of the database.
+ *
+ * Changes:
+ * * links were added to the SeriesEntity table
+ */
+internal val MIGRATION_4_5 = object : Migration(4, 5) {
+    override fun migrate(database: SupportSQLiteDatabase) {
+        database.execSQL("ALTER TABLE SeriesEntity ADD COLUMN links TEXT NOT NULL DEFAULT ''")
+    }
+}

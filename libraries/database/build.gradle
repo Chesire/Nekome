@@ -44,6 +44,8 @@ dependencies {
     implementation libs.kotlin.coroutines.android
     implementation libs.kotlin.coroutines.core
     implementation libs.squareup.moshi
+    // TODO: We shouldn't pull in gson for this one thing...
+    implementation 'com.google.code.gson:gson:2.10.1'
     ksp libs.androidx.room.compiler
 
     testImplementation project(":testing")

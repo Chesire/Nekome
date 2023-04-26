@@ -304,6 +304,7 @@ private fun SeriesPopulatedLink(
                     )
                     .firstOrNull()
                     ?.let {
+                        // TODO: This must be prepended with "http://" or "https://", update in usecase
                         uriHandler.openUri(it.item)
                     }
             }
@@ -474,8 +475,8 @@ private fun Preview() {
         subtitle = "Anime - TV - Finished",
         imageUrl = "",
         links = listOf(
-            Link.PopulatedLink("Kitsu page", "http://kitsu.io"),
-            Link.PopulatedLink("MAL page", "http://myanimelist.net"),
+            Link.PopulatedLink("0", "Kitsu page", "http://kitsu.io"),
+            Link.PopulatedLink("1", "MAL page", "http://myanimelist.net"),
             Link.AddLink
         ),
         linkDialogData = LinkDialogData(

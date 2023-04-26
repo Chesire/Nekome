@@ -26,7 +26,8 @@ class SeriesMapper @Inject constructor() {
             input.rating,
             input.posterImage,
             input.startDate,
-            input.endDate
+            input.endDate,
+            input.links
         )
 
     /**
@@ -47,6 +48,7 @@ class SeriesMapper @Inject constructor() {
             input.rating,
             input.posterImage,
             input.startDate,
-            input.endDate
+            input.endDate,
+            input.links
         )
 }

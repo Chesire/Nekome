@@ -2,12 +2,16 @@ package com.chesire.nekome.datasource.series
 
 import com.chesire.nekome.core.flags.UserSeriesStatus
 import com.chesire.nekome.core.models.ErrorDomain
+import com.chesire.nekome.core.models.LinkModel
 import com.chesire.nekome.database.dao.SeriesDao
 import com.chesire.nekome.datasource.series.remote.SeriesApi
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Result
 import com.github.michaelbull.result.onFailure
 import com.github.michaelbull.result.onSuccess
+import java.util.UUID
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import timber.log.Timber
 
@@ -29,8 +33,8 @@ class SeriesRepository(
     /**
      * Gets a single [SeriesDomain] which has a matching [userSeriesId].
      */
-    suspend fun getSeries(userSeriesId: Int): SeriesDomain =
-        map.toSeriesDomain(seriesDao.getSeries(userSeriesId))
+    suspend fun getSeries(userSeriesId: Int): Flow<SeriesDomain> =
+        seriesDao.getSeries(userSeriesId).map { map.toSeriesDomain(it) }
 
     /**
      * Adds the anime series with id [seriesId] to the users tracked list.
@@ -152,5 +156,37 @@ class SeriesRepository(
         }.onFailure {
             Timber.e("Error updating series [$userSeriesId], ${it.message}")
         }
+    }
+
+    suspend fun updateSeriesLinks(
+        userSeriesId: Int,
+        id: String?,
+        displayText: String,
+        linkText: String
+    ) {
+        val series = seriesDao.getSeries(userSeriesId).first()
+        val seriesLinks = series.links.toMutableList()
+
+        if (id == null || seriesLinks.none { it.id == id }) {
+            seriesLinks.add(
+                LinkModel(
+                    id = UUID.randomUUID().toString(),
+                    displayText = displayText,
+                    linkText = linkText
+                )
+            )
+        } else {
+            val oldLink = requireNotNull(seriesLinks.find { it.id == id })
+            seriesLinks.remove(oldLink)
+            seriesLinks.add(
+                LinkModel(
+                    id = oldLink.id,
+                    displayText = displayText,
+                    linkText = linkText
+                )
+            )
+        }
+
+        seriesDao.update(series.copy(links = seriesLinks))
     }
 }

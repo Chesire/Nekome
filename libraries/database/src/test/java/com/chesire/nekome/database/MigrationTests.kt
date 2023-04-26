@@ -33,7 +33,8 @@ class MigrationTests {
     private val allMigrations = arrayOf(
         MIGRATION_1_2,
         MIGRATION_2_3,
-        MIGRATION_3_4
+        MIGRATION_3_4,
+        MIGRATION_4_5
     )
 
     @Test
@@ -250,6 +251,12 @@ class MigrationTests {
             assertEquals(0, getInt(13))
             assertEquals("rating", getColumnName(13))
         }
+    }
+
+    @Test
+    @Throws(IOException::class)
+    fun migrate4to5() {
+        // No need as using auto migration
     }
 
     @Test

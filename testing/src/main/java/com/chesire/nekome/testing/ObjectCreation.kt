@@ -6,6 +6,7 @@ import com.chesire.nekome.core.flags.Service
 import com.chesire.nekome.core.flags.Subtype
 import com.chesire.nekome.core.flags.UserSeriesStatus
 import com.chesire.nekome.core.models.ImageModel
+import com.chesire.nekome.core.models.LinkModel
 import com.chesire.nekome.database.entity.SeriesEntity
 import com.chesire.nekome.database.entity.UserEntity
 import com.chesire.nekome.datasource.series.SeriesDomain
@@ -29,7 +30,8 @@ fun createSeriesDomain(
     rating: Int = 0,
     posterImage: ImageModel = ImageModel.empty,
     startDate: String = "",
-    endDate: String = ""
+    endDate: String = "",
+    links: List<LinkModel> = emptyList()
 ) = SeriesDomain(
     id,
     userId,
@@ -44,7 +46,8 @@ fun createSeriesDomain(
     rating,
     posterImage,
     startDate,
-    endDate
+    endDate,
+    links
 )
 
 /**
@@ -65,7 +68,8 @@ fun createSeriesEntity(
     rating: Int = 0,
     posterImage: ImageModel = ImageModel.empty,
     startDate: String = "",
-    endDate: String = ""
+    endDate: String = "",
+    links: List<LinkModel> = emptyList()
 ) = SeriesEntity(
     id,
     userId,
@@ -80,7 +84,8 @@ fun createSeriesEntity(
     rating,
     posterImage,
     startDate,
-    endDate
+    endDate,
+    links
 )
 
 /**

@@ -14,7 +14,7 @@ class ShouldRateSeriesUseCase @Inject constructor(
 
     suspend operator fun invoke(userSeriesId: Int): Boolean {
         return withContext(Dispatchers.IO) {
-            val domain = repo.getSeries(userSeriesId)
+            val domain = repo.getSeries(userSeriesId).first()
             pref.rateSeriesOnCompletion.first() && domain.progress + 1 == domain.totalLength
         }
     }

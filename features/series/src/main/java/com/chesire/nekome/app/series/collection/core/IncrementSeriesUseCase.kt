@@ -6,13 +6,14 @@ import com.github.michaelbull.result.Result
 import com.github.michaelbull.result.mapEither
 import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.withContext
 
 class IncrementSeriesUseCase @Inject constructor(private val repo: SeriesRepository) {
 
     suspend operator fun invoke(userSeriesId: Int, rating: Int?): Result<SeriesDomain, Unit> {
         return withContext(Dispatchers.IO) {
-            val domain = repo.getSeries(userSeriesId)
+            val domain = repo.getSeries(userSeriesId).first()
             val newRating = rating ?: domain.rating
             repo.updateSeries(
                 userSeriesId = domain.userId,

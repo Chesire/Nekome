@@ -69,6 +69,6 @@ data class LinkDialogData(
 )
 
 sealed interface Link {
-    data class PopulatedLink(val title: String, val linkText: String) : Link
+    data class PopulatedLink(val id: String, val title: String, val linkText: String) : Link
     object AddLink : Link
 }

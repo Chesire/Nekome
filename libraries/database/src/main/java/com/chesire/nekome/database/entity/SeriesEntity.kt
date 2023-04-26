@@ -7,6 +7,7 @@ import com.chesire.nekome.core.flags.SeriesType
 import com.chesire.nekome.core.flags.Subtype
 import com.chesire.nekome.core.flags.UserSeriesStatus
 import com.chesire.nekome.core.models.ImageModel
+import com.chesire.nekome.core.models.LinkModel
 
 /**
  * Data for a singular series entity.
@@ -27,5 +28,6 @@ data class SeriesEntity(
     val rating: Int,
     val posterImage: ImageModel,
     val startDate: String,
-    val endDate: String
+    val endDate: String,
+    val links: List<LinkModel>
 )

@@ -6,9 +6,11 @@ import androidx.lifecycle.viewModelScope
 import com.chesire.nekome.app.series.R
 import com.chesire.nekome.app.series.item.core.DeleteItemUseCase
 import com.chesire.nekome.app.series.item.core.RetrieveItemUseCase
+import com.chesire.nekome.app.series.item.core.UpdateItemLinksUseCase
 import com.chesire.nekome.app.series.item.core.UpdateItemModel
 import com.chesire.nekome.app.series.item.core.UpdateItemUseCase
 import com.chesire.nekome.core.flags.UserSeriesStatus
+import com.chesire.nekome.core.models.LinkModel
 import com.github.michaelbull.result.onFailure
 import com.github.michaelbull.result.onSuccess
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -28,7 +30,8 @@ class ItemViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val retrieveItem: RetrieveItemUseCase,
     private val updateItem: UpdateItemUseCase,
-    private val deleteItem: DeleteItemUseCase
+    private val deleteItem: DeleteItemUseCase,
+    private val updateItemLinks: UpdateItemLinksUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(UIState.default)
@@ -42,22 +45,35 @@ class ItemViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             val seriesId = requireNotNull(savedStateHandle.get<Int>(SERIES_ID))
-            val series = retrieveItem(seriesId)
-
-            state = state.copy(
-                id = series.userId,
-                title = series.title,
-                subtitle = "${series.type.name}  -  ${series.subtype.name}  -  ${series.seriesStatus.name}",
-                imageUrl = series.posterImage.smallest?.url ?: "",
-                possibleSeriesStatus = UserSeriesStatus
-                    .values()
-                    .filterNot { it == UserSeriesStatus.Unknown },
-                seriesStatus = series.userSeriesStatus,
-                progress = series.progress.toString(),
-                length = series.totalLength.takeUnless { it == 0 }?.toString() ?: "-",
-                rating = series.rating.toFloat()
-            )
+            retrieveItem(seriesId).collect { series ->
+                state = state.copy(
+                    id = series.userId,
+                    title = series.title,
+                    subtitle = "${series.type.name}  -  ${series.subtype.name}  -  ${series.seriesStatus.name}",
+                    imageUrl = series.posterImage.smallest?.url ?: "",
+                    links = buildLinks(series.links),
+                    possibleSeriesStatus = UserSeriesStatus
+                        .values()
+                        .filterNot { it == UserSeriesStatus.Unknown },
+                    seriesStatus = series.userSeriesStatus,
+                    progress = series.progress.toString(),
+                    length = series.totalLength.takeUnless { it == 0 }?.toString() ?: "-",
+                    rating = series.rating.toFloat()
+                )
+            }
         }
+    }
+
+    private fun buildLinks(links: List<LinkModel>): List<Link> {
+        return links
+            .map {
+                Link.PopulatedLink(
+                    id = it.id,
+                    title = it.displayText,
+                    linkText = it.linkText
+                )
+            }
+            .plus(Link.AddLink)
     }
 
     fun execute(action: ViewAction) {
@@ -128,15 +144,18 @@ class ItemViewModel @Inject constructor(
     }
 
     private fun handleLinkResult(linkResult: LinkDialogResult?) {
-        if (linkResult == null) {
+        if (linkResult == null || linkResult.link != Link.AddLink) {
             state = state.copy(linkDialogData = LinkDialogData(show = false, link = Link.AddLink))
             return
         }
 
         viewModelScope.launch {
-            // compare in the DB for similar items
-            // update the DB
-            // include a flow to update the ui as the item updates in the db
+            updateItemLinks(
+                state.id,
+                linkId = if (linkResult.link is Link.PopulatedLink) linkResult.link.id else null,
+                displayText = linkResult.titleText,
+                linkText = linkResult.linkText,
+            )
             state = state.copy(linkDialogData = LinkDialogData(show = false, link = Link.AddLink))
         }
     }

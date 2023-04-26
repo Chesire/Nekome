@@ -44,7 +44,7 @@ interface SeriesDao {
      * Gets a single [SeriesEntity].
      */
     @Query("SELECT * FROM SeriesEntity WHERE userId = :userSeriesId LIMIT 1")
-    suspend fun getSeries(userSeriesId: Int): SeriesEntity
+    fun getSeries(userSeriesId: Int): Flow<SeriesEntity>
 
     /**
      * Updates the [series].

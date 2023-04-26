@@ -42,6 +42,7 @@ class ResponseDtoMapper @Inject constructor() {
             data.attributes.rating ?: 0,
             included.attributes.posterImage ?: ImageModel.empty,
             included.attributes.startDate ?: "",
-            included.attributes.endDate ?: ""
+            included.attributes.endDate ?: "",
+            emptyList()
         )
 }
