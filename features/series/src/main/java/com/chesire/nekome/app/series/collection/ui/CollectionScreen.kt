@@ -309,7 +309,9 @@ private fun SeriesItem(
                             .fillMaxWidth()
                             .padding(0.dp, 0.dp, 0.dp, 16.dp)
                     )
-                    Divider()
+                    Divider(
+                        color = MaterialTheme.colorScheme.onSurface
+                    )
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -402,7 +404,7 @@ private fun RenderSnackbar(
 private fun Preview() {
     val initialState = UIState(
         screenTitle = R.string.nav_anime,
-        isInitializing = true,
+        isInitializing = false,
         models = listOf(
             Series(
                 userId = 0,
