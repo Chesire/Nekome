@@ -2,6 +2,8 @@ package com.chesire.nekome.app.series.item.core
 
 import com.chesire.nekome.datasource.series.SeriesRepository
 import javax.inject.Inject
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 class UpdateItemLinksUseCase @Inject constructor(private val seriesRepo: SeriesRepository) {
 
@@ -11,11 +13,15 @@ class UpdateItemLinksUseCase @Inject constructor(private val seriesRepo: SeriesR
         displayText: String,
         linkText: String
     ) {
-        seriesRepo.updateSeriesLinks(
-            userSeriesId = userSeriesId,
-            id = linkId,
-            displayText = displayText,
-            linkText = linkText
-        )
+        // TODO: Validate the displayText?
+        // TODO: Validate the linkText?
+        withContext(Dispatchers.IO) {
+            seriesRepo.updateSeriesLinks(
+                userSeriesId = userSeriesId,
+                id = linkId,
+                displayText = displayText,
+                linkText = linkText
+            )
+        }
     }
 }

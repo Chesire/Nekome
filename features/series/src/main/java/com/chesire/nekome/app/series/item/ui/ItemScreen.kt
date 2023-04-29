@@ -304,7 +304,7 @@ private fun SeriesPopulatedLink(
                     )
                     .firstOrNull()
                     ?.let {
-                        // TODO: This must be prepended with "http://" or "https://", update in usecase
+                        // TODO: Add error handling on this?
                         uriHandler.openUri(it.item)
                     }
             }
