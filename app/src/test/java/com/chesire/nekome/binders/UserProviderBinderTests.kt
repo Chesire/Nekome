@@ -5,7 +5,6 @@ package com.chesire.nekome.binders
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.chesire.nekome.datasource.series.UserProvider
 import com.chesire.nekome.datasource.user.UserRepository
-import com.chesire.nekome.testing.CoroutinesMainDispatcherRule
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -19,9 +18,6 @@ class UserProviderBinderTests {
 
     @get:Rule
     val taskExecutorRule = InstantTaskExecutorRule()
-
-    @get:Rule
-    val coroutineRule = CoroutinesMainDispatcherRule()
 
     @Test
     fun `provideUserId returns UserIdResult#Failure if no id available`() = runTest {
