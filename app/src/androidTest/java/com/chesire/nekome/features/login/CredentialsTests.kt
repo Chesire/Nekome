@@ -1,31 +1,22 @@
 package com.chesire.nekome.features.login
 
-import androidx.compose.ui.test.junit4.createComposeRule
 import com.chesire.nekome.UITest
 import com.chesire.nekome.datasource.auth.remote.AuthApi
 import com.chesire.nekome.datasource.auth.remote.AuthFailure
-import com.chesire.nekome.injection.AuthModule
 import com.chesire.nekome.robots.login.loginCredentials
 import com.github.michaelbull.result.Err
-import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidTest
-import dagger.hilt.android.testing.UninstallModules
 import io.mockk.coEvery
-import io.mockk.mockk
-import org.junit.Rule
+import javax.inject.Inject
 import org.junit.Test
 
 @HiltAndroidTest
-@UninstallModules(AuthModule::class)
 class CredentialsTests : UITest() {
 
     override val startLoggedIn = false
 
-    @BindValue
-    val authApi = mockk<AuthApi>()
-
-    @get:Rule
-    val composeTestRule = createComposeRule()
+    @Inject
+    lateinit var authApi: AuthApi
 
     @Test
     fun emptyUsernameShowsError() {

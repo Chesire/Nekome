@@ -1,6 +1,5 @@
 package com.chesire.nekome.features.series
 
-import androidx.compose.ui.test.junit4.createComposeRule
 import com.chesire.nekome.UITest
 import com.chesire.nekome.core.flags.SeriesType
 import com.chesire.nekome.core.flags.UserSeriesStatus
@@ -9,16 +8,12 @@ import com.chesire.nekome.robots.series.seriesList
 import com.chesire.nekome.testing.createSeriesEntity
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.runBlocking
-import org.junit.Rule
 import org.junit.Test
 
 @HiltAndroidTest
 class FilterTests : UITest() {
 
     private val seriesData = InitialFilterSeriesData()
-
-    @get:Rule
-    val composeTestRule = createComposeRule()
 
     override fun setUp() {
         super.setUp()

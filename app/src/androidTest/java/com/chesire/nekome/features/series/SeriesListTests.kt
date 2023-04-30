@@ -1,6 +1,5 @@
 package com.chesire.nekome.features.series
 
-import androidx.compose.ui.test.junit4.createComposeRule
 import com.chesire.nekome.UITest
 import com.chesire.nekome.core.flags.SeriesType
 import com.chesire.nekome.core.flags.UserSeriesStatus
@@ -18,7 +17,6 @@ import dagger.hilt.android.testing.UninstallModules
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.runBlocking
-import org.junit.Rule
 import org.junit.Test
 
 @HiltAndroidTest
@@ -27,9 +25,6 @@ class SeriesListTests : UITest() {
 
     @BindValue
     val seriesApi = mockk<SeriesApi>()
-
-    @get:Rule
-    val composeTestRule = createComposeRule()
 
     @Test
     fun canReachSeriesList() {

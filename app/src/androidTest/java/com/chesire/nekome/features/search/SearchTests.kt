@@ -1,6 +1,5 @@
 package com.chesire.nekome.features.search
 
-import androidx.compose.ui.test.junit4.createComposeRule
 import com.chesire.nekome.UITest
 import com.chesire.nekome.core.models.ErrorDomain
 import com.chesire.nekome.datasource.search.remote.SearchApi
@@ -14,7 +13,6 @@ import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.UninstallModules
 import io.mockk.coEvery
 import io.mockk.mockk
-import org.junit.Rule
 import org.junit.Test
 
 private const val GENERIC_ERROR = "GENERIC_ERROR"
@@ -37,9 +35,6 @@ class SearchTests : UITest() {
             Ok(listOf())
         }
     }
-
-    @get:Rule
-    val composeTestRule = createComposeRule()
 
     @Test
     fun canReachSearch() {

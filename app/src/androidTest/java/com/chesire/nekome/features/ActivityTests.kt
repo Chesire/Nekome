@@ -1,19 +1,14 @@
 package com.chesire.nekome.features
 
-import androidx.compose.ui.test.junit4.createComposeRule
 import com.chesire.nekome.UITest
 import com.chesire.nekome.core.preferences.flags.HomeScreenOptions
 import com.chesire.nekome.robots.activity
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.runBlocking
-import org.junit.Rule
 import org.junit.Test
 
 @HiltAndroidTest
 class ActivityTests : UITest() {
-
-    @get:Rule
-    val composeTestRule = createComposeRule()
 
     @Test
     fun overviewCanStartInAnimeView() {

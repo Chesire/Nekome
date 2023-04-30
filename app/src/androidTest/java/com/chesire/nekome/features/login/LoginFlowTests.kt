@@ -1,6 +1,5 @@
 package com.chesire.nekome.features.login
 
-import androidx.compose.ui.test.junit4.createComposeRule
 import com.chesire.nekome.UITest
 import com.chesire.nekome.datasource.auth.remote.AuthApi
 import com.chesire.nekome.datasource.auth.remote.AuthDomain
@@ -8,7 +7,6 @@ import com.chesire.nekome.datasource.series.remote.SeriesApi
 import com.chesire.nekome.datasource.user.remote.UserApi
 import com.chesire.nekome.helpers.creation.createSeriesDomain
 import com.chesire.nekome.helpers.creation.createUserDomain
-import com.chesire.nekome.injection.AuthModule
 import com.chesire.nekome.injection.LibraryModule
 import com.chesire.nekome.injection.UserModule
 import com.chesire.nekome.robots.activity
@@ -20,12 +18,12 @@ import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.UninstallModules
 import io.mockk.coEvery
 import io.mockk.mockk
-import org.junit.Rule
+import javax.inject.Inject
+import org.junit.Before
 import org.junit.Test
 
 @HiltAndroidTest
 @UninstallModules(
-    AuthModule::class,
     LibraryModule::class,
     UserModule::class
 )
@@ -33,14 +31,8 @@ class LoginFlowTests : UITest() {
 
     override val startLoggedIn = false
 
-    @BindValue
-    val authApi = mockk<AuthApi> {
-        coEvery {
-            login("Username", "Password")
-        } coAnswers {
-            Ok(AuthDomain("accessToken", "refreshToken"))
-        }
-    }
+    @Inject
+    lateinit var authApi: AuthApi
 
     @BindValue
     val seriesApi = mockk<SeriesApi> {
@@ -65,8 +57,14 @@ class LoginFlowTests : UITest() {
         }
     }
 
-    @get:Rule
-    val composeTestRule = createComposeRule()
+    @Before
+    fun setup() {
+        coEvery {
+            authApi.login("Username", "Password")
+        } coAnswers {
+            Ok(AuthDomain("accessToken", "refreshToken"))
+        }
+    }
 
     @Test
     fun navigateThroughLoginFlow() {
