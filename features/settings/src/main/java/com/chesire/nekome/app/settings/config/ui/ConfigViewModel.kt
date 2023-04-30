@@ -43,20 +43,24 @@ class ConfigViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             val user = retrieveUser().first()
-            check(user is User.Found)
-            state = state.copy(
-                userModel = UserModel(
-                    avatarUrl = user.domain.avatar.largest?.url ?: "",
-                    userName = user.domain.name
-                )
-            )
-            retrievePreferences().collect { prefModel ->
+            if (user !is User.Found) {
+                // If no user is found, we should log the user out of the app.
+                handleOnLogoutResult(true)
+            } else {
                 state = state.copy(
-                    themeValue = prefModel.theme,
-                    defaultHomeValue = prefModel.defaultHomeScreen,
-                    defaultSeriesStatusValue = prefModel.defaultSeriesStatus,
-                    rateSeriesValue = prefModel.shouldRateSeries
+                    userModel = UserModel(
+                        avatarUrl = user.domain.avatar.largest?.url ?: "",
+                        userName = user.domain.name
+                    )
                 )
+                retrievePreferences().collect { prefModel ->
+                    state = state.copy(
+                        themeValue = prefModel.theme,
+                        defaultHomeValue = prefModel.defaultHomeScreen,
+                        defaultSeriesStatusValue = prefModel.defaultSeriesStatus,
+                        rateSeriesValue = prefModel.shouldRateSeries
+                    )
+                }
             }
         }
     }
@@ -71,9 +75,11 @@ class ConfigViewModel @Inject constructor(
             ViewAction.OnDefaultHomeScreenClicked -> handleOnDefaultHomeScreenClicked()
             is ViewAction.OnDefaultHomeScreenChanged ->
                 handleOnDefaultHomeScreenChanged(action.newHomeScreen)
+
             ViewAction.OnDefaultSeriesStatusClicked -> handleOnDefaultSeriesStatusClicked()
             is ViewAction.OnDefaultSeriesStatusChanged ->
                 handleOnDefaultSeriesStatusChanged(action.newDefaultSeriesStatus)
+
             is ViewAction.OnRateSeriesChanged -> handleOnRateSeriesChanged(action.newValue)
         }
     }
