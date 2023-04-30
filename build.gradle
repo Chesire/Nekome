@@ -103,6 +103,7 @@ koverMerged {
 dependencies {
     detektPlugins(libs.detekt.compose)
     detektPlugins(libs.detekt.formatting)
+    detektPlugins(libs.detekt.kotlin.compiler)
 }
 
 ext {
