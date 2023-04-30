@@ -12,6 +12,7 @@ detekt = "1.23.0-RC3"
 hilt = "2.45"
 kotlin = "1.8.20"
 kotlin-coroutines = "1.6.4"
+mockk = "1.13.3"
 moshi = "1.14.0"
 okhttp3 = "4.11.0"
 retrofit = "2.9.0"
@@ -73,8 +74,8 @@ kotlin-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-co
 kotlin-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlin-coroutines" }
 kotlin-result = { module = "com.michael-bull.kotlin-result:kotlin-result", version = "1.1.17" }
 lifecyklelog = { module = "com.github.chesire:lifecyklelog", version = "3.1.1" }
-mockk = { module = "io.mockk:mockk", version = "1.13.5" }
-mockk-android = { module = "io.mockk:mockk-android", version = "1.13.5" }
+mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
+mockk-android = { module = "io.mockk:mockk-android", version.ref = "mockk" }
 robolectric = { module = "org.robolectric:robolectric", version = "4.10" }
 squareup-leakcanary = { module = "com.squareup.leakcanary:leakcanary-android", version = "2.10" }
 squareup-moshi = { module = "com.squareup.moshi:moshi", version.ref = "moshi" }
