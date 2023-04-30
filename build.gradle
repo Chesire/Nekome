@@ -54,7 +54,7 @@ task detektCheck(type: Detekt) {
     include "**/*.kts"
     exclude "**/resources/**"
     exclude "**/build/**"
-    config.setFrom(files("$rootDir/detekt.yml"))
+    config.setFrom(files("$rootDir/config/detekt/detekt.yml"))
     buildUponDefaultConfig = false
 }
 
