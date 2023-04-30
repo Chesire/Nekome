@@ -7,26 +7,17 @@ import com.chesire.nekome.datasource.series.remote.SeriesApi
 import com.chesire.nekome.datasource.user.remote.UserApi
 import com.chesire.nekome.helpers.creation.createSeriesDomain
 import com.chesire.nekome.helpers.creation.createUserDomain
-import com.chesire.nekome.injection.LibraryModule
-import com.chesire.nekome.injection.UserModule
 import com.chesire.nekome.robots.activity
 import com.chesire.nekome.robots.login.loginCredentials
 import com.chesire.nekome.robots.login.loginSyncing
 import com.github.michaelbull.result.Ok
-import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidTest
-import dagger.hilt.android.testing.UninstallModules
 import io.mockk.coEvery
-import io.mockk.mockk
 import javax.inject.Inject
 import org.junit.Before
 import org.junit.Test
 
 @HiltAndroidTest
-@UninstallModules(
-    LibraryModule::class,
-    UserModule::class
-)
 class LoginFlowTests : UITest() {
 
     override val startLoggedIn = false
@@ -34,28 +25,11 @@ class LoginFlowTests : UITest() {
     @Inject
     lateinit var authApi: AuthApi
 
-    @BindValue
-    val seriesApi = mockk<SeriesApi> {
-        coEvery {
-            retrieveAnime(any())
-        } coAnswers {
-            Ok(listOf(createSeriesDomain()))
-        }
-        coEvery {
-            retrieveManga(any())
-        } coAnswers {
-            Ok(listOf(createSeriesDomain()))
-        }
-    }
+    @Inject
+    lateinit var seriesApi: SeriesApi
 
-    @BindValue
-    val userApi = mockk<UserApi> {
-        coEvery {
-            getUserDetails()
-        } coAnswers {
-            Ok(createUserDomain())
-        }
-    }
+    @Inject
+    lateinit var userApi: UserApi
 
     @Before
     fun setup() {
@@ -63,6 +37,23 @@ class LoginFlowTests : UITest() {
             authApi.login("Username", "Password")
         } coAnswers {
             Ok(AuthDomain("accessToken", "refreshToken"))
+        }
+
+        coEvery {
+            seriesApi.retrieveAnime(any())
+        } coAnswers {
+            Ok(listOf(createSeriesDomain()))
+        }
+        coEvery {
+            seriesApi.retrieveManga(any())
+        } coAnswers {
+            Ok(listOf(createSeriesDomain()))
+        }
+
+        coEvery {
+            userApi.getUserDetails()
+        } coAnswers {
+            Ok(createUserDomain())
         }
     }
 

@@ -17,6 +17,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 @Module
 @InstallIn(SingletonComponent::class)
 object ServerModule {
+
     /**
      * Provides an instance of [OkHttpClient] with the authentication injectors pre-setup, so that
      * authentication is already handled.

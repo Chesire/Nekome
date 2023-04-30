@@ -14,6 +14,7 @@ import dagger.hilt.components.SingletonComponent
 @Module
 @InstallIn(SingletonComponent::class)
 object WorkerModule {
+
     /**
      * Provides a [WorkManager] instance to the dependency graph.
      */

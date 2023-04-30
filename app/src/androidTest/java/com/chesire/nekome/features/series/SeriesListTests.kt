@@ -6,25 +6,21 @@ import com.chesire.nekome.core.flags.UserSeriesStatus
 import com.chesire.nekome.core.models.ErrorDomain
 import com.chesire.nekome.datasource.series.remote.SeriesApi
 import com.chesire.nekome.helpers.creation.createSeriesDomain
-import com.chesire.nekome.injection.LibraryModule
 import com.chesire.nekome.robots.series.seriesList
 import com.chesire.nekome.testing.createSeriesEntity
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
-import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidTest
-import dagger.hilt.android.testing.UninstallModules
 import io.mockk.coEvery
-import io.mockk.mockk
+import javax.inject.Inject
 import kotlinx.coroutines.runBlocking
 import org.junit.Test
 
 @HiltAndroidTest
-@UninstallModules(LibraryModule::class)
 class SeriesListTests : UITest() {
 
-    @BindValue
-    val seriesApi = mockk<SeriesApi>()
+    @Inject
+    lateinit var seriesApi: SeriesApi
 
     @Test
     fun canReachSeriesList() {

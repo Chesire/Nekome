@@ -1,6 +1,6 @@
 package com.chesire.nekome.injection
 
-import com.chesire.nekome.datasource.auth.remote.AuthApi
+import com.chesire.nekome.datasource.user.remote.UserApi
 import dagger.Module
 import dagger.Provides
 import dagger.Reusable
@@ -11,11 +11,11 @@ import io.mockk.mockk
 @Module
 @TestInstallIn(
     components = [SingletonComponent::class],
-    replaces = [AuthModule::class]
+    replaces = [UserModule::class]
 )
-class MockAuthModule {
+class MockUserModule {
 
     @Provides
     @Reusable
-    fun provideApi() = mockk<AuthApi>()
+    fun provideApi() = mockk<UserApi>()
 }

@@ -27,6 +27,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 abstract class TrendingModule {
 
     companion object {
+
         /**
          * Builds and provides the instance of [KitsuTrendingService].
          */
