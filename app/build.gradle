@@ -18,7 +18,7 @@ android {
         versionCode 23042320 // Date of build formatted as 'yyMMddHH'
         versionName "2.0.0"
         testInstrumentationRunner "com.chesire.nekome.TestRunner"
-        resConfigs 'en', 'ja'
+        resourceConfigurations += ['en', 'ja']
     }
     buildTypes {
         release {
@@ -36,6 +36,7 @@ android {
         }
     }
     buildFeatures {
+        buildConfig true
         compose true
     }
     composeOptions {
