@@ -8,6 +8,7 @@ androidx-navigation = "2.5.3"
 androidx-room = "2.5.1"
 coil = "2.3.0"
 compose-compiler = "1.4.5"
+detekt = "1.23.0-RC3"
 hilt = "2.45"
 kotlin = "1.8.20"
 kotlin-coroutines = "1.6.4"
@@ -57,6 +58,8 @@ androidx-test-rules = { module = "androidx.test:rules", version = "1.5.0" }
 androidx-work-runtime = { module = "androidx.work:work-runtime-ktx", version = "2.8.1" }
 coil = { module = "io.coil-kt:coil", version.ref = "coil" }
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
+detekt-compose = { module = "io.nlopez.compose.rules:detekt", version = "0.1.5" }
+detekt-formatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }
 google-accompanist-flowlayout = { module = "com.google.accompanist:accompanist-flowlayout", version.ref = "accompanist" }
 google-accompanist-systemuicontroller = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanist" }
 google-hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
@@ -86,7 +89,7 @@ aboutlibraries = { id = "com.mikepenz.aboutlibraries.plugin", version.ref = "abo
 android-application = { id = "com.android.application", version.ref = "android-gradle-plugin" }
 android-library = { id = "com.android.library", version.ref = "android-gradle-plugin" }
 androidx-navigation-safeargs = { id = "androidx.navigation.safeargs.kotlin", version.ref = "androidx-navigation" }
-detekt = { id = "io.gitlab.arturbosch.detekt", version = "1.23.0-RC3" }
+detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 google-dagger-hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 google-devtools-ksp = { id = "com.google.devtools.ksp", version = "1.8.20-1.0.11" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }

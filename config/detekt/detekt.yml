@@ -177,6 +177,55 @@ complexity:
     ignorePrivate: false
     ignoreOverridden: false
 
+Compose:
+  CompositionLocalAllowlist:
+    active: true
+    # You can optionally define a list of CompositionLocals that are allowed here
+    # allowedCompositionLocals: LocalSomething,LocalSomethingElse
+  ContentEmitterReturningValues:
+    active: true
+    # You can optionally add your own composables here
+    # contentEmitters: MyComposable,MyOtherComposable
+  ModifierComposable:
+    active: true
+  ModifierMissing:
+    active: false
+    # You can optionally control the visibility of which composables to check for here
+    # Possible values are: `only_public`, `public_and_internal` and `all` (default is `only_public`)
+    # checkModifiersForVisibility: only_public
+  ModifierReused:
+    active: true
+  ModifierWithoutDefault:
+    active: true
+  MultipleEmitters:
+    active: true
+    # You can optionally add your own composables here
+    # contentEmitters: MyComposable,MyOtherComposable
+  MutableParams:
+    active: true
+  ComposableNaming:
+    active: true
+    # You can optionally disable the checks in this rule for regex matches against the composable name (e.g. molecule presenters)
+    # allowedComposableFunctionNames: .*Presenter,.*MoleculePresenter
+  ComposableParamOrder:
+    active: true
+  PreviewNaming:
+    active: true
+  PreviewPublic:
+    active: true
+    # You can optionally disable that only previews with @PreviewParameter are flagged
+    # previewPublicOnlyIfParams: false
+  RememberMissing:
+    active: true
+  UnstableCollections:
+    active: true
+  ViewModelForwarding:
+    active: true
+  ViewModelInjection:
+    active: true
+    # You can optionally add your own ViewModel factories here
+    # viewModelFactories: hiltViewModel,potatoViewModel
+
 coroutines:
   active: true
   GlobalCoroutineUsage:

@@ -100,6 +100,11 @@ koverMerged {
     }
 }
 
+dependencies {
+    detektPlugins(libs.detekt.compose)
+    detektPlugins(libs.detekt.formatting)
+}
+
 ext {
     sdk_version = 33
     java_version = JavaVersion.VERSION_11
