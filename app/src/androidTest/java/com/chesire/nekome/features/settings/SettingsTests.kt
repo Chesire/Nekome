@@ -1,18 +1,13 @@
 package com.chesire.nekome.features.settings
 
-import androidx.compose.ui.test.junit4.createComposeRule
 import com.chesire.nekome.UITest
 import com.chesire.nekome.robots.activity
 import com.chesire.nekome.robots.settings.config
 import dagger.hilt.android.testing.HiltAndroidTest
-import org.junit.Rule
 import org.junit.Test
 
 @HiltAndroidTest
 class SettingsTests : UITest() {
-
-    @get:Rule
-    val composeTestRule = createComposeRule()
 
     @Test
     fun canReachSettings() {

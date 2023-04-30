@@ -25,6 +25,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 abstract class UserModule {
 
     companion object {
+
         /**
          * Builds and provides the instance of [KitsuUserService].
          */

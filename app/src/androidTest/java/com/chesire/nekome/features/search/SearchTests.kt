@@ -1,45 +1,40 @@
 package com.chesire.nekome.features.search
 
-import androidx.compose.ui.test.junit4.createComposeRule
 import com.chesire.nekome.UITest
 import com.chesire.nekome.core.models.ErrorDomain
 import com.chesire.nekome.datasource.search.remote.SearchApi
-import com.chesire.nekome.injection.SearchModule
 import com.chesire.nekome.robots.activity
 import com.chesire.nekome.robots.search.host
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
-import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidTest
-import dagger.hilt.android.testing.UninstallModules
 import io.mockk.coEvery
-import io.mockk.mockk
-import org.junit.Rule
+import javax.inject.Inject
+import org.junit.Before
 import org.junit.Test
 
 private const val GENERIC_ERROR = "GENERIC_ERROR"
 private const val NO_RESULTS_ERROR = "NO_RESULTS_ERROR"
 
 @HiltAndroidTest
-@UninstallModules(SearchModule::class)
 class SearchTests : UITest() {
 
-    @BindValue
-    val searchApi = mockk<SearchApi> {
+    @Inject
+    lateinit var searchApi: SearchApi
+
+    @Before
+    fun setup() {
         coEvery {
-            searchForAnime(GENERIC_ERROR)
+            searchApi.searchForAnime(GENERIC_ERROR)
         } coAnswers {
             Err(ErrorDomain.badRequest)
         }
         coEvery {
-            searchForAnime(NO_RESULTS_ERROR)
+            searchApi.searchForAnime(NO_RESULTS_ERROR)
         } coAnswers {
             Ok(listOf())
         }
     }
-
-    @get:Rule
-    val composeTestRule = createComposeRule()
 
     @Test
     fun canReachSearch() {
