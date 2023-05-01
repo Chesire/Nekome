@@ -1,0 +1,1 @@
+* Fix potential crash when loading the settings screen.
