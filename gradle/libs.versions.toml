@@ -76,7 +76,7 @@ kotlin-result = { module = "com.michael-bull.kotlin-result:kotlin-result", versi
 lifecyklelog = { module = "com.github.chesire:lifecyklelog", version = "3.1.1" }
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 mockk-android = { module = "io.mockk:mockk-android", version.ref = "mockk" }
-robolectric = { module = "org.robolectric:robolectric", version = "4.10" }
+robolectric = { module = "org.robolectric:robolectric", version = "4.10.1" }
 squareup-leakcanary = { module = "com.squareup.leakcanary:leakcanary-android", version = "2.10" }
 squareup-moshi = { module = "com.squareup.moshi:moshi", version.ref = "moshi" }
 squareup-moshi-codegen = { module = "com.squareup.moshi:moshi-kotlin-codegen", version.ref = "moshi" }
