@@ -13,7 +13,7 @@ hilt = "2.46.1"
 kotlin = "1.8.20"
 kotlin-coroutines = "1.7.1"
 mockk = "1.13.3"
-moshi = "1.14.0"
+moshi = "1.15.0"
 okhttp3 = "4.11.0"
 retrofit = "2.9.0"
 
