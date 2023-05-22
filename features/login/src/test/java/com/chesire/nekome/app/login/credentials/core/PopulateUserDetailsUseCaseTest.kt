@@ -1,5 +1,3 @@
-@file:OptIn(ExperimentalCoroutinesApi::class)
-
 package com.chesire.nekome.app.login.credentials.core
 
 import com.chesire.nekome.datasource.user.UserRepository
@@ -8,7 +6,6 @@ import com.github.michaelbull.result.Ok
 import io.mockk.clearAllMocks
 import io.mockk.coEvery
 import io.mockk.mockk
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertTrue
 import org.junit.Before

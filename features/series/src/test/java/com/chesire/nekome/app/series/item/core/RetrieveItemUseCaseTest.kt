@@ -1,5 +1,3 @@
-@file:OptIn(ExperimentalCoroutinesApi::class)
-
 package com.chesire.nekome.app.series.item.core
 
 import com.chesire.nekome.datasource.series.SeriesRepository
@@ -7,7 +5,6 @@ import com.chesire.nekome.testing.createSeriesDomain
 import io.mockk.clearAllMocks
 import io.mockk.coEvery
 import io.mockk.mockk
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Before

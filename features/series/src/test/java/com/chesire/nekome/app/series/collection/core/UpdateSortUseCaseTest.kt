@@ -1,5 +1,3 @@
-@file:OptIn(ExperimentalCoroutinesApi::class)
-
 package com.chesire.nekome.app.series.collection.core
 
 import com.chesire.nekome.core.preferences.SeriesPreferences
@@ -9,7 +7,6 @@ import io.mockk.coEvery
 import io.mockk.just
 import io.mockk.mockk
 import io.mockk.runs
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
