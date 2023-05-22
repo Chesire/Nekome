@@ -1,7 +1,7 @@
 plugins {
     id "com.android.library"
+    id "com.google.devtools.ksp"
     id "kotlin-android"
-    id "kotlin-kapt"
 }
 
 android {
@@ -34,7 +34,7 @@ dependencies {
     implementation libs.squareup.retrofit2
     implementation libs.squareup.retrofit2.converter.moshi
     implementation libs.timber
-    kapt libs.squareup.moshi.codegen
+    ksp libs.squareup.moshi.codegen
 
     testImplementation project(":testing")
     testImplementation libs.junit
