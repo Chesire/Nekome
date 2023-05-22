@@ -1,5 +1,3 @@
-@file:OptIn(ExperimentalCoroutinesApi::class)
-
 package com.chesire.nekome
 
 import com.chesire.nekome.database.RoomDB
@@ -7,7 +5,6 @@ import com.chesire.nekome.datasource.auth.AccessTokenRepository
 import io.mockk.clearAllMocks
 import io.mockk.coVerify
 import io.mockk.mockk
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test

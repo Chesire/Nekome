@@ -1,5 +1,3 @@
-@file:OptIn(ExperimentalCoroutinesApi::class)
-
 package com.chesire.nekome.binders
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
@@ -7,7 +5,6 @@ import com.chesire.nekome.datasource.series.UserProvider
 import com.chesire.nekome.datasource.user.UserRepository
 import io.mockk.coEvery
 import io.mockk.mockk
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
