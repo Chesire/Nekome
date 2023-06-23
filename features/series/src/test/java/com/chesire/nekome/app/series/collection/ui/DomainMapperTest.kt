@@ -5,13 +5,21 @@ import com.chesire.nekome.core.flags.SeriesType
 import com.chesire.nekome.core.flags.Subtype
 import com.chesire.nekome.core.flags.UserSeriesStatus
 import com.chesire.nekome.core.models.ImageModel
+import com.chesire.nekome.core.preferences.SeriesPreferences
+import com.chesire.nekome.core.preferences.flags.ImageQuality
 import com.chesire.nekome.datasource.series.SeriesDomain
+import io.mockk.clearAllMocks
+import io.mockk.every
+import io.mockk.mockk
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 
 class DomainMapperTest {
 
+    private val seriesPreferences = mockk<SeriesPreferences>()
     private lateinit var mapper: DomainMapper
     private val initialDomain = SeriesDomain(
         id = 0,
@@ -53,17 +61,20 @@ class DomainMapperTest {
 
     @Before
     fun setup() {
-        mapper = DomainMapper()
+        clearAllMocks()
+
+        every { seriesPreferences.imageQuality } returns flowOf(ImageQuality.Medium)
+        mapper = DomainMapper(seriesPreferences)
     }
 
     @Test
-    fun `When toSeries, Then list of Series item is returned`() {
+    fun `When toSeries, Then list of Series item is returned`() = runTest {
         val input = listOf(initialDomain)
         val expected = listOf(
             Series(
                 userId = 1,
                 title = "Anime series",
-                posterImageUrl = "tiny",
+                posterImageUrl = "medium",
                 subtype = Subtype.Movie.name,
                 progress = "1 / 1",
                 startDate = "abc",
@@ -80,13 +91,13 @@ class DomainMapperTest {
     }
 
     @Test
-    fun `Given no known series length, When toSeries, Then max length is set to -`() {
+    fun `Given no known series length, When toSeries, Then max length is set to -`() = runTest {
         val input = listOf(initialDomain.copy(totalLength = 0))
         val expected = listOf(
             Series(
                 userId = 1,
                 title = "Anime series",
-                posterImageUrl = "tiny",
+                posterImageUrl = "medium",
                 subtype = Subtype.Movie.name,
                 progress = "1 / -",
                 startDate = "abc",
@@ -103,13 +114,13 @@ class DomainMapperTest {
     }
 
     @Test
-    fun `Given user can +1 progress, When toSeries, Then shouldPlusOne is true`() {
+    fun `Given user can +1 progress, When toSeries, Then shouldPlusOne is true`() = runTest {
         val input = listOf(initialDomain.copy(totalLength = 15))
         val expected = listOf(
             Series(
                 userId = 1,
                 title = "Anime series",
-                posterImageUrl = "tiny",
+                posterImageUrl = "medium",
                 subtype = Subtype.Movie.name,
                 progress = "1 / 15",
                 startDate = "abc",

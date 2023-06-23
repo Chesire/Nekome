@@ -44,6 +44,10 @@
     <string name="filter_by_dropped">Dropped</string>
     <string name="filter_by_planned">Planned</string>
 
+    <string name="image_quality_low">Low</string>
+    <string name="image_quality_medium">Medium</string>
+    <string name="image_quality_high">High</string>
+
     <string name="series_list_length">%s / %s</string>
     <string name="series_list_plus_one">+1</string>
     <string name="series_list_date_range">%s - %s</string>
@@ -109,6 +113,8 @@
     <string name="settings_github_url">https://github.com/Chesire/Nekome</string>
     <string name="settings_default_series_status_title">Default Series Status</string>
     <string name="settings_default_series_status_summary">Status a newly tracked series will start in</string>
+    <string name="settings_image_quality_title">Image Quality</string>
+    <string name="settings_image_quality_summary">Quality of images to display in the app</string>
     <string name="settings_default_home_title">Default Home Screen</string>
     <string name="settings_default_home_summary">Choose between Anime/Manga</string>
     <string name="settings_rate_on_completion_title">Rate series when completing</string>

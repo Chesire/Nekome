@@ -44,6 +44,10 @@
     <string name="filter_by_dropped">ドロップ</string>
     <string name="filter_by_planned">予定</string>
 
+    <string name="image_quality_low">低い</string>
+    <string name="image_quality_medium">中くらい</string>
+    <string name="image_quality_high">高い</string>
+
     <string name="series_list_length">%s / %s</string>
     <string name="series_list_plus_one">+1</string>
     <string name="series_list_date_range">%s - %s</string>
@@ -109,6 +113,8 @@
     <string name="settings_github_url">https://github.com/Chesire/Nekome</string>
     <string name="settings_default_series_status_title">デフォルトのシリーズ状況</string>
     <string name="settings_default_series_status_summary">新しく追跡されたシリーズが開始されるステータス</string>
+    <string name="settings_image_quality_title">画質</string>
+    <string name="settings_image_quality_summary">アプリで表示する画像の品質</string>
     <string name="settings_default_home_title">デフォルトのホーム画面</string>
     <string name="settings_default_home_summary">アニメ／マンガから選択</string>
     <string name="settings_rate_on_completion_title">完了時にシリーズを評価</string>

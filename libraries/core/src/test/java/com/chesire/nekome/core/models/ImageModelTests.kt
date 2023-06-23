@@ -34,6 +34,11 @@ class ImageModelTests {
     }
 
     @Test
+    fun `middlest returns middle value for inputs`() {
+        assertEquals(expected, ImageModel(other, other, expected, other).middlest)
+    }
+
+    @Test
     fun `smallest returns tiny when smallest available model`() {
         assertEquals(expected, ImageModel(expected, other, other, other).smallest)
     }

@@ -119,6 +119,44 @@ class SettingsTests : UITest() {
     }
 
     @Test
+    fun changeImageQuality() {
+        launchActivity()
+
+        activity(composeTestRule) {
+            goToSettings()
+        }
+        config(composeTestRule) {
+            clickImageQuality()
+
+            imageQuality {
+                validate {
+                    isLoadedCorrectly()
+                }
+            }
+
+            imageQuality {
+                chooseHigh()
+                validate {
+                    highIsSelected()
+                }
+                confirm()
+            }
+
+            clickImageQuality()
+            imageQuality {
+                validate {
+                    highIsSelected()
+                }
+                chooseMedium()
+                validate {
+                    mediumIsSelected()
+                }
+                confirm()
+            }
+        }
+    }
+
+    @Test
     fun changeThemeSetting() {
         launchActivity()
 

@@ -8,12 +8,14 @@ import com.chesire.nekome.app.settings.config.core.RetrievePreferencesUseCase
 import com.chesire.nekome.app.settings.config.core.RetrieveUserUseCase
 import com.chesire.nekome.app.settings.config.core.UpdateDefaultHomeScreenUseCase
 import com.chesire.nekome.app.settings.config.core.UpdateDefaultSeriesStateUseCase
+import com.chesire.nekome.app.settings.config.core.UpdateImageQualityUseCase
 import com.chesire.nekome.app.settings.config.core.UpdateRateSeriesUseCase
 import com.chesire.nekome.app.settings.config.core.UpdateThemeUseCase
 import com.chesire.nekome.core.flags.Service
 import com.chesire.nekome.core.flags.UserSeriesStatus
 import com.chesire.nekome.core.models.ImageModel
 import com.chesire.nekome.core.preferences.flags.HomeScreenOptions
+import com.chesire.nekome.core.preferences.flags.ImageQuality
 import com.chesire.nekome.core.preferences.flags.Theme
 import com.chesire.nekome.datasource.user.User
 import com.chesire.nekome.datasource.user.UserDomain
@@ -41,6 +43,7 @@ class ConfigViewModelTest {
     private val updateTheme = mockk<UpdateThemeUseCase>(relaxed = true)
     private val updateDefaultHomeScreen = mockk<UpdateDefaultHomeScreenUseCase>(relaxed = true)
     private val updateDefaultSeriesState = mockk<UpdateDefaultSeriesStateUseCase>(relaxed = true)
+    private val updateImageQualityUseCase = mockk<UpdateImageQualityUseCase>(relaxed = true)
     private val logoutExecutor = mockk<LogoutExecutor>(relaxed = true)
     private lateinit var viewModel: ConfigViewModel
 
@@ -56,7 +59,8 @@ class ConfigViewModelTest {
                 theme = Theme.Dark,
                 defaultHomeScreen = HomeScreenOptions.Anime,
                 defaultSeriesStatus = UserSeriesStatus.Current,
-                shouldRateSeries = false
+                shouldRateSeries = false,
+                imageQuality = ImageQuality.Low
             )
         )
         every {
@@ -80,6 +84,7 @@ class ConfigViewModelTest {
             updateTheme,
             updateDefaultHomeScreen,
             updateDefaultSeriesState,
+            updateImageQualityUseCase,
             logoutExecutor
         )
     }
@@ -99,6 +104,8 @@ class ConfigViewModelTest {
             showDefaultHomeDialog = false,
             defaultSeriesStatusValue = UserSeriesStatus.Current,
             showDefaultSeriesStatusDialog = false,
+            imageQualityValue = ImageQuality.Low,
+            showImageQualityDialog = false,
             rateSeriesValue = false
         )
 
@@ -168,5 +175,26 @@ class ConfigViewModelTest {
         viewModel.execute(ViewAction.OnDefaultSeriesStatusChanged(UserSeriesStatus.Dropped))
 
         coVerify { updateDefaultSeriesState(UserSeriesStatus.Dropped) }
+    }
+
+    @Test
+    fun `When execute#OnImageQualityClicked, Then dialog is shown`() = runTest {
+        viewModel.execute(ViewAction.OnImageQualityClicked)
+
+        assertTrue(viewModel.uiState.value.showImageQualityDialog)
+    }
+
+    @Test
+    fun `When execute#OnImageQualityChanged, Then dialog is hidden`() = runTest {
+        viewModel.execute(ViewAction.OnImageQualityChanged(ImageQuality.Medium))
+
+        assertFalse(viewModel.uiState.value.showImageQualityDialog)
+    }
+
+    @Test
+    fun `When execute#OnImageQualityChanged, Then value is updated in use case`() = runTest {
+        viewModel.execute(ViewAction.OnImageQualityChanged(ImageQuality.High))
+
+        coVerify { updateImageQualityUseCase(ImageQuality.High) }
     }
 }

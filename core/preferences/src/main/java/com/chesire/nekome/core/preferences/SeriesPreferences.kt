@@ -10,6 +10,7 @@ import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.chesire.nekome.core.flags.UserSeriesStatus
+import com.chesire.nekome.core.preferences.flags.ImageQuality
 import com.chesire.nekome.core.preferences.flags.SortOption
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
@@ -30,6 +31,7 @@ class SeriesPreferences @Inject constructor(
     private val rateOnCompletionKey = booleanPreferencesKey("preference.rateOnCompletion")
     private val sortPreferenceKey = intPreferencesKey("preference.sort")
     private val filterPreferenceKey = stringPreferencesKey("preference.filter")
+    private val imageQualityKey = intPreferencesKey("preference.imageQuality")
     private val filterAdapter by lazy {
         Moshi.Builder()
             .build()
@@ -74,6 +76,13 @@ class SeriesPreferences @Inject constructor(
     }
 
     /**
+     * Returns a [Flow] of the image quality value.
+     */
+    val imageQuality: Flow<ImageQuality> = context.dataStore.data.map { preferences ->
+        ImageQuality.forIndex(preferences[imageQualityKey] ?: ImageQuality.Low.index)
+    }
+
+    /**
      * Update the [sort] value with a new [SortOption].
      */
     suspend fun updateSort(value: SortOption) {
@@ -97,6 +106,15 @@ class SeriesPreferences @Inject constructor(
     suspend fun updateRateSeriesOnCompletion(value: Boolean) {
         context.dataStore.edit { preferences ->
             preferences[rateOnCompletionKey] = value
+        }
+    }
+
+    /**
+     * Update the [imageQuality] value with new data.
+     */
+    suspend fun updateImageQuality(value: ImageQuality) {
+        context.dataStore.edit { preferences ->
+            preferences[imageQualityKey] = value.index
         }
     }
 }

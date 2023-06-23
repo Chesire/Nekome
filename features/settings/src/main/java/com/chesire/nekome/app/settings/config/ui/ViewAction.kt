@@ -2,6 +2,7 @@ package com.chesire.nekome.app.settings.config.ui
 
 import com.chesire.nekome.core.flags.UserSeriesStatus
 import com.chesire.nekome.core.preferences.flags.HomeScreenOptions
+import com.chesire.nekome.core.preferences.flags.ImageQuality
 import com.chesire.nekome.core.preferences.flags.Theme
 
 sealed interface ViewAction {
@@ -23,6 +24,9 @@ sealed interface ViewAction {
     data class OnDefaultSeriesStatusChanged(
         val newDefaultSeriesStatus: UserSeriesStatus?
     ) : ViewAction
+
+    object OnImageQualityClicked : ViewAction
+    data class OnImageQualityChanged(val newImageQuality: ImageQuality?) : ViewAction
 
     data class OnRateSeriesChanged(val newValue: Boolean) : ViewAction
 }

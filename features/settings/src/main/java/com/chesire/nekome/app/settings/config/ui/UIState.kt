@@ -2,6 +2,7 @@ package com.chesire.nekome.app.settings.config.ui
 
 import com.chesire.nekome.core.flags.UserSeriesStatus
 import com.chesire.nekome.core.preferences.flags.HomeScreenOptions
+import com.chesire.nekome.core.preferences.flags.ImageQuality
 import com.chesire.nekome.core.preferences.flags.Theme
 
 data class UIState(
@@ -14,6 +15,8 @@ data class UIState(
     val showDefaultHomeDialog: Boolean,
     val defaultSeriesStatusValue: UserSeriesStatus,
     val showDefaultSeriesStatusDialog: Boolean,
+    val imageQualityValue: ImageQuality,
+    val showImageQualityDialog: Boolean,
     val rateSeriesValue: Boolean
 ) {
     companion object {
@@ -27,6 +30,8 @@ data class UIState(
             showDefaultHomeDialog = false,
             defaultSeriesStatusValue = UserSeriesStatus.Current,
             showDefaultSeriesStatusDialog = false,
+            imageQualityValue = ImageQuality.Low,
+            showImageQualityDialog = false,
             rateSeriesValue = false
         )
     }
