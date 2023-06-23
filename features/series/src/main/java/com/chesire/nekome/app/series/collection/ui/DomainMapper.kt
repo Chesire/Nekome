@@ -1,10 +1,16 @@
 package com.chesire.nekome.app.series.collection.ui
 
 import com.chesire.nekome.core.models.ImageModel
+import com.chesire.nekome.core.preferences.SeriesPreferences
+import com.chesire.nekome.core.preferences.flags.ImageQuality
 import com.chesire.nekome.datasource.series.SeriesDomain
 import javax.inject.Inject
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
 
-class DomainMapper @Inject constructor() {
+class DomainMapper @Inject constructor(
+    private val seriesPreferences: SeriesPreferences
+) {
 
     fun toSeries(models: List<SeriesDomain>): List<Series> {
         return models.map { series ->
@@ -23,8 +29,18 @@ class DomainMapper @Inject constructor() {
         }
     }
 
-    private fun choosePosterImageUrl(imageModel: ImageModel): String =
-        imageModel.smallest?.url ?: ""
+    private fun choosePosterImageUrl(imageModel: ImageModel): String {
+        val imageQuality = runBlocking {
+            // Not sure this is the best, but not sure how to get the value otherwise
+            seriesPreferences.imageQuality.first()
+        }
+
+        return when (imageQuality) {
+            ImageQuality.Low -> imageModel.smallest?.url
+            ImageQuality.Medium -> imageModel.middlest?.url
+            ImageQuality.High -> imageModel.largest?.url
+        } ?: ""
+    }
 
     private fun buildProgress(progress: Int, totalLength: Int): String {
         val maxLengthString = if (totalLength == 0) "-" else totalLength
