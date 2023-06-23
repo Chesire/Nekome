@@ -50,7 +50,6 @@ class ConfigRobot(private val composeContentTestRule: ComposeContentTestRule) {
     fun defaultHomeScreen(func: DefaultHomeScreenRobot.() -> Unit) =
         DefaultHomeScreenRobot(composeContentTestRule).apply(func)
 
-
     /**
      * Opens the image quality dialog.
      */

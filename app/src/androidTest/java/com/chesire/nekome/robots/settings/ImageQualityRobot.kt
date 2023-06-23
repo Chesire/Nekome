@@ -12,7 +12,6 @@ import com.chesire.nekome.helpers.getResource
 import com.chesire.nekome.robots.DialogResultsRobot
 import com.chesire.nekome.robots.DialogRobot
 
-
 class ImageQualityRobot(
     private val composeContentTestRule: ComposeContentTestRule
 ) : DialogRobot(composeContentTestRule) {
