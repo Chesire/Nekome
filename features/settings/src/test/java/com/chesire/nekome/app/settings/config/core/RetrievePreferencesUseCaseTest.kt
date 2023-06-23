@@ -4,6 +4,7 @@ import com.chesire.nekome.core.flags.UserSeriesStatus
 import com.chesire.nekome.core.preferences.ApplicationPreferences
 import com.chesire.nekome.core.preferences.SeriesPreferences
 import com.chesire.nekome.core.preferences.flags.HomeScreenOptions
+import com.chesire.nekome.core.preferences.flags.ImageQuality
 import com.chesire.nekome.core.preferences.flags.Theme
 import io.mockk.clearAllMocks
 import io.mockk.coEvery
@@ -34,10 +35,11 @@ class RetrievePreferencesUseCaseTest {
             theme = Theme.Light,
             defaultHomeScreen = HomeScreenOptions.Manga,
             defaultSeriesStatus = UserSeriesStatus.Dropped,
-            shouldRateSeries = true
-
+            shouldRateSeries = true,
+            imageQuality = ImageQuality.High
         )
         coEvery { seriesPref.rateSeriesOnCompletion } returns flowOf(expected.shouldRateSeries)
+        coEvery { seriesPref.imageQuality } returns flowOf(expected.imageQuality)
         coEvery { applicationPref.theme } returns flowOf(expected.theme)
         coEvery { applicationPref.defaultHomeScreen } returns flowOf(expected.defaultHomeScreen)
         coEvery { applicationPref.defaultSeriesState } returns flowOf(expected.defaultSeriesStatus)
