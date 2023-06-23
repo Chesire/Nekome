@@ -50,6 +50,22 @@ class ConfigRobot(private val composeContentTestRule: ComposeContentTestRule) {
     fun defaultHomeScreen(func: DefaultHomeScreenRobot.() -> Unit) =
         DefaultHomeScreenRobot(composeContentTestRule).apply(func)
 
+
+    /**
+     * Opens the image quality dialog.
+     */
+    fun clickImageQuality() {
+        composeContentTestRule
+            .onNodeWithText(R.string.settings_image_quality_title.getResource())
+            .performClick()
+    }
+
+    /**
+     * Options for selecting the image quality.
+     */
+    fun imageQuality(func: ImageQualityRobot.() -> Unit) =
+        ImageQualityRobot(composeContentTestRule).apply(func)
+
     /**
      * Opens the theme dialog.
      */
