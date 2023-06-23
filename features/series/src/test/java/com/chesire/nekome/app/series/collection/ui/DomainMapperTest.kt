@@ -19,9 +19,7 @@ import org.junit.Test
 
 class DomainMapperTest {
 
-    private val seriesPreferences = mockk<SeriesPreferences> {
-        every { imageQuality } returns flowOf(ImageQuality.Medium)
-    }
+    private val seriesPreferences = mockk<SeriesPreferences>()
     private lateinit var mapper: DomainMapper
     private val initialDomain = SeriesDomain(
         id = 0,
@@ -65,6 +63,7 @@ class DomainMapperTest {
     fun setup() {
         clearAllMocks()
 
+        every { seriesPreferences.imageQuality } returns flowOf(ImageQuality.Medium)
         mapper = DomainMapper(seriesPreferences)
     }
 
