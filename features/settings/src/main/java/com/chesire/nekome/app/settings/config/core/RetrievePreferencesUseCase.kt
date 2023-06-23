@@ -4,6 +4,7 @@ import com.chesire.nekome.core.flags.UserSeriesStatus
 import com.chesire.nekome.core.preferences.ApplicationPreferences
 import com.chesire.nekome.core.preferences.SeriesPreferences
 import com.chesire.nekome.core.preferences.flags.HomeScreenOptions
+import com.chesire.nekome.core.preferences.flags.ImageQuality
 import com.chesire.nekome.core.preferences.flags.Theme
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
@@ -23,10 +24,13 @@ class RetrievePreferencesUseCase @Inject constructor(
                 theme = Theme.System,
                 defaultHomeScreen = HomeScreenOptions.Anime,
                 defaultSeriesStatus = UserSeriesStatus.Current,
-                shouldRateSeries = false
+                shouldRateSeries = false,
+                imageQuality = ImageQuality.Low
             )
         ).combine(seriesPref.rateSeriesOnCompletion) { model, rateSeriesOnCompletion ->
             model.copy(shouldRateSeries = rateSeriesOnCompletion)
+        }.combine(seriesPref.imageQuality) { model, imageQuality ->
+            model.copy(imageQuality = imageQuality)
         }.combine(applicationPref.theme) { model, theme ->
             model.copy(theme = theme)
         }.combine(applicationPref.defaultHomeScreen) { model, homeScreen ->
@@ -41,5 +45,6 @@ data class PreferenceModel(
     val theme: Theme,
     val defaultHomeScreen: HomeScreenOptions,
     val defaultSeriesStatus: UserSeriesStatus,
-    val shouldRateSeries: Boolean
+    val shouldRateSeries: Boolean,
+    val imageQuality: ImageQuality
 )

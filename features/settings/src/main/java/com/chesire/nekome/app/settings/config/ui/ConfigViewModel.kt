@@ -7,10 +7,12 @@ import com.chesire.nekome.app.settings.config.core.RetrievePreferencesUseCase
 import com.chesire.nekome.app.settings.config.core.RetrieveUserUseCase
 import com.chesire.nekome.app.settings.config.core.UpdateDefaultHomeScreenUseCase
 import com.chesire.nekome.app.settings.config.core.UpdateDefaultSeriesStateUseCase
+import com.chesire.nekome.app.settings.config.core.UpdateImageQualityUseCase
 import com.chesire.nekome.app.settings.config.core.UpdateRateSeriesUseCase
 import com.chesire.nekome.app.settings.config.core.UpdateThemeUseCase
 import com.chesire.nekome.core.flags.UserSeriesStatus
 import com.chesire.nekome.core.preferences.flags.HomeScreenOptions
+import com.chesire.nekome.core.preferences.flags.ImageQuality
 import com.chesire.nekome.core.preferences.flags.Theme
 import com.chesire.nekome.datasource.user.User
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -29,6 +31,7 @@ class ConfigViewModel @Inject constructor(
     private val updateTheme: UpdateThemeUseCase,
     private val updateDefaultHomeScreen: UpdateDefaultHomeScreenUseCase,
     private val updateDefaultSeriesState: UpdateDefaultSeriesStateUseCase,
+    private val updateImageQuality: UpdateImageQualityUseCase,
     private val logoutExecutor: LogoutExecutor
 ) : ViewModel() {
 
@@ -58,7 +61,8 @@ class ConfigViewModel @Inject constructor(
                         themeValue = prefModel.theme,
                         defaultHomeValue = prefModel.defaultHomeScreen,
                         defaultSeriesStatusValue = prefModel.defaultSeriesStatus,
-                        rateSeriesValue = prefModel.shouldRateSeries
+                        rateSeriesValue = prefModel.shouldRateSeries,
+                        imageQualityValue = prefModel.imageQuality
                     )
                 }
             }
@@ -70,8 +74,10 @@ class ConfigViewModel @Inject constructor(
             ViewAction.OnLogoutClicked -> handleOnLogoutClicked()
             is ViewAction.OnLogoutResult -> handleOnLogoutResult(action.logout)
             ViewAction.ConsumeExecuteLogout -> handleConsumeExecuteLogout()
+
             ViewAction.OnThemeClicked -> handleOnThemeClicked()
             is ViewAction.OnThemeChanged -> handleOnThemeChanged(action.newTheme)
+
             ViewAction.OnDefaultHomeScreenClicked -> handleOnDefaultHomeScreenClicked()
             is ViewAction.OnDefaultHomeScreenChanged ->
                 handleOnDefaultHomeScreenChanged(action.newHomeScreen)
@@ -79,6 +85,10 @@ class ConfigViewModel @Inject constructor(
             ViewAction.OnDefaultSeriesStatusClicked -> handleOnDefaultSeriesStatusClicked()
             is ViewAction.OnDefaultSeriesStatusChanged ->
                 handleOnDefaultSeriesStatusChanged(action.newDefaultSeriesStatus)
+
+            ViewAction.OnImageQualityClicked -> handleOnImageQualityClicked()
+            is ViewAction.OnImageQualityChanged ->
+                handleOnImageQualityChanged(action.newImageQuality)
 
             is ViewAction.OnRateSeriesChanged -> handleOnRateSeriesChanged(action.newValue)
         }
@@ -137,6 +147,19 @@ class ConfigViewModel @Inject constructor(
         if (newSeriesStatus != null) {
             viewModelScope.launch {
                 updateDefaultSeriesState(newSeriesStatus)
+            }
+        }
+    }
+
+    private fun handleOnImageQualityClicked() {
+        state = state.copy(showImageQualityDialog = true)
+    }
+
+    private fun handleOnImageQualityChanged(newImageQuality: ImageQuality?) {
+        state = state.copy(showImageQualityDialog = false)
+        if (newImageQuality != null) {
+            viewModelScope.launch {
+                updateImageQuality(newImageQuality)
             }
         }
     }

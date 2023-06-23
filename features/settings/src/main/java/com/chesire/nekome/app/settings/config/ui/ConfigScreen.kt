@@ -47,6 +47,7 @@ import com.chesire.nekome.core.compose.composables.NekomeDialog
 import com.chesire.nekome.core.compose.theme.NekomeTheme
 import com.chesire.nekome.core.flags.UserSeriesStatus
 import com.chesire.nekome.core.preferences.flags.HomeScreenOptions
+import com.chesire.nekome.core.preferences.flags.ImageQuality
 import com.chesire.nekome.core.preferences.flags.Theme
 
 @Composable
@@ -68,6 +69,8 @@ fun ConfigScreen(
         onDefaultSeriesStatusResult = {
             viewModel.execute(ViewAction.OnDefaultSeriesStatusChanged(it))
         },
+        onImageQualityClicked = { viewModel.execute(ViewAction.OnImageQualityClicked) },
+        onImageQualityResult = { viewModel.execute(ViewAction.OnImageQualityChanged(it)) },
         onRateSeriesClicked = { viewModel.execute(ViewAction.OnRateSeriesChanged(it)) },
         onLicensesLinkClicked = { navigateToOssScreen() }
     )
@@ -89,6 +92,8 @@ private fun Render(
     onDefaultHomeScreenResult: (HomeScreenOptions?) -> Unit,
     onDefaultSeriesStatusClicked: () -> Unit,
     onDefaultSeriesStatusResult: (UserSeriesStatus?) -> Unit,
+    onImageQualityClicked: () -> Unit,
+    onImageQualityResult: (ImageQuality?) -> Unit,
     onRateSeriesClicked: (Boolean) -> Unit,
     onLicensesLinkClicked: () -> Unit
 ) {
@@ -110,6 +115,7 @@ private fun Render(
 
             SeriesHeading()
             DefaultSeriesStatusPreference(onDefaultSeriesStatusClicked)
+            ImageQualityPreference(onImageQualityClicked)
             RateSeriesPreference(state.value.rateSeriesValue, onRateSeriesClicked)
 
             AboutHeading()
@@ -167,6 +173,20 @@ private fun Render(
                 .associateWith { stringResource(id = it.stringId) }
                 .toList(),
             onResult = onDefaultSeriesStatusResult
+        )
+    }
+
+    if (state.value.showImageQualityDialog) {
+        NekomeDialog(
+            title = R.string.settings_image_quality_title,
+            confirmButton = R.string.ok,
+            cancelButton = R.string.cancel,
+            currentValue = state.value.imageQualityValue,
+            allValues = ImageQuality
+                .values()
+                .associateWith { stringResource(id = it.stringId) }
+                .toList(),
+            onResult = onImageQualityResult
         )
     }
 }
@@ -250,6 +270,15 @@ private fun DefaultSeriesStatusPreference(onDefaultSeriesStatusClicked: () -> Un
         title = stringResource(id = R.string.settings_default_series_status_title),
         summary = stringResource(id = R.string.settings_default_series_status_summary),
         onClick = onDefaultSeriesStatusClicked
+    )
+}
+
+@Composable
+private fun ImageQualityPreference(onImageQualityClicked: () -> Unit) {
+    PreferenceSection(
+        title = stringResource(id = R.string.settings_image_quality_title),
+        summary = stringResource(id = R.string.settings_image_quality_summary),
+        onClick = onImageQualityClicked
     )
 }
 
@@ -370,6 +399,8 @@ private fun Preview() {
         showDefaultHomeDialog = false,
         defaultSeriesStatusValue = UserSeriesStatus.Current,
         showDefaultSeriesStatusDialog = false,
+        imageQualityValue = ImageQuality.Low,
+        showImageQualityDialog = false,
         rateSeriesValue = false
     )
     NekomeTheme(isDarkTheme = true) {
@@ -386,6 +417,8 @@ private fun Preview() {
             onDefaultHomeScreenResult = { /**/ },
             onDefaultSeriesStatusClicked = { /**/ },
             onDefaultSeriesStatusResult = { /**/ },
+            onImageQualityClicked = { /**/ },
+            onImageQualityResult = { /**/ },
             onRateSeriesClicked = { /**/ },
             onLicensesLinkClicked = { /**/ }
         )
