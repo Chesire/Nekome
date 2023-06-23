@@ -27,15 +27,19 @@ class AuthRefreshInterceptor @Inject constructor(
 ) : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {
-        val originRequest = chain.request()
-        val response = chain.proceed(originRequest)
+        val response = chain.proceed(chain.request())
 
         return if (response.isAuthError) {
             Timber.w("Response threw an auth error (${response.code()}), attempting to refresh")
+            try {
+                response.close()
+            } catch (ex: Exception) {
+                Timber.w(ex, "Unable to close response, carrying on")
+            }
             val refreshResponse = runBlocking { repo.refresh() }
             if (refreshResponse is AccessTokenResult.Success) {
                 chain.proceed(
-                    originRequest
+                    chain.request()
                         .newBuilder()
                         .header("Authorization", "Bearer ${repo.accessToken}")
                         .build()
