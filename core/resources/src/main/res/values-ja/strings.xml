@@ -44,6 +44,10 @@
     <string name="filter_by_dropped">ドロップ</string>
     <string name="filter_by_planned">予定</string>
 
+    <string name="image_quality_low">低い</string>
+    <string name="image_quality_medium">中くらい</string>
+    <string name="image_quality_high">高い</string>
+
     <string name="series_list_length">%s / %s</string>
     <string name="series_list_plus_one">+1</string>
     <string name="series_list_date_range">%s - %s</string>

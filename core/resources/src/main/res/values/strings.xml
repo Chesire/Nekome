@@ -44,6 +44,10 @@
     <string name="filter_by_dropped">Dropped</string>
     <string name="filter_by_planned">Planned</string>
 
+    <string name="image_quality_low">Low</string>
+    <string name="image_quality_medium">Medium</string>
+    <string name="image_quality_high">High</string>
+
     <string name="series_list_length">%s / %s</string>
     <string name="series_list_plus_one">+1</string>
     <string name="series_list_date_range">%s - %s</string>
