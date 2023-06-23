@@ -1,1 +1,2 @@
-* Fix issue with api calls to Kitsu not working
+* Add option to change displayed image quality
+* Fix potential crash occurring while app is in background
