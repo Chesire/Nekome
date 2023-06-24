@@ -61,7 +61,7 @@ class TitleLanguageRobot(
 }
 
 /**
- * Robot to check the results for the default series state dialog.
+ * Robot to check the results for the title language dialog.
  */
 class TitleLanguageResultRobot(
     private val composeContentTestRule: ComposeContentTestRule

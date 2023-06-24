@@ -52,7 +52,7 @@ class ImageQualityRobot(
 }
 
 /**
- * Robot to check the results for the default series state dialog.
+ * Robot to check the results for the image quality dialog.
  */
 class ImageQualityResultRobot(
     private val composeContentTestRule: ComposeContentTestRule
