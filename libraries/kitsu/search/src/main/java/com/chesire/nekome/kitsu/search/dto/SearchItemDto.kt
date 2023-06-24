@@ -25,6 +25,8 @@ data class SearchItemDto(
     data class Attributes(
         @Json(name = "synopsis")
         val synopsis: String,
+        @Json(name = "titles")
+        val titles: Map<String, String>,
         @Json(name = "canonicalTitle")
         val canonicalTitle: String,
         @Json(name = "subtype")

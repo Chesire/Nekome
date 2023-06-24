@@ -10,7 +10,6 @@ import com.chesire.nekome.app.search.host.core.SearchFailureReason
 import com.chesire.nekome.app.search.host.core.SearchSeriesUseCase
 import com.chesire.nekome.app.search.host.core.TrackSeriesUseCase
 import com.chesire.nekome.app.search.host.core.model.SearchGroup
-import com.chesire.nekome.datasource.search.SearchDomain
 import com.github.michaelbull.result.onFailure
 import com.github.michaelbull.result.onSuccess
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -28,7 +27,8 @@ class HostViewModel @Inject constructor(
     private val retrieveUserSeriesIds: RetrieveUserSeriesIdsUseCase,
     private val rememberSearchGroup: RememberSearchGroupUseCase,
     private val searchSeries: SearchSeriesUseCase,
-    private val trackSeries: TrackSeriesUseCase
+    private val trackSeries: TrackSeriesUseCase,
+    private val mapper: DomainMapper
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(UIState.Default)
@@ -86,7 +86,7 @@ class HostViewModel @Inject constructor(
                 .onSuccess {
                     state = state.copy(
                         isSearching = false,
-                        resultModels = it.toResultModels(retrieveUserSeriesIds().first())
+                        resultModels = mapper.toResultDomain(it, retrieveUserSeriesIds().first())
                     )
                 }
                 .onFailure(::handleSearchFailure)
@@ -100,10 +100,12 @@ class HostViewModel @Inject constructor(
                 isSearchTextError = true,
                 errorSnackbar = SnackbarData(R.string.search_error_no_text)
             )
+
             SearchFailureReason.NetworkError -> state.copy(
                 isSearching = false,
                 errorSnackbar = SnackbarData(R.string.error_generic)
             )
+
             SearchFailureReason.NoSeriesFound -> state.copy(
                 isSearching = false,
                 errorSnackbar = SnackbarData(R.string.search_error_no_series_found)
@@ -164,20 +166,5 @@ class HostViewModel @Inject constructor(
 
     private fun handleErrorSnackbarObserved() {
         state = state.copy(errorSnackbar = null)
-    }
-
-    private fun List<SearchDomain>.toResultModels(currentSeriesIds: List<Int>): List<ResultModel> {
-        return map {
-            ResultModel(
-                id = it.id,
-                type = it.type,
-                synopsis = it.synopsis,
-                canonicalTitle = it.canonicalTitle,
-                subtype = it.subtype.name,
-                posterImage = it.posterImage,
-                canTrack = !currentSeriesIds.contains(it.id),
-                isTracking = false
-            )
-        }
     }
 }

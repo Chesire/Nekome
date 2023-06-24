@@ -254,7 +254,7 @@ private fun ResultItem(model: ResultModel, onSeriesTrack: (ResultModel) -> Unit)
             }
             Row(modifier = Modifier.fillMaxSize()) {
                 AsyncImage(
-                    model = model.posterImage.smallest?.url,
+                    model = model.posterImage,
                     placeholder = rememberVectorPainter(image = Icons.Default.InsertPhoto),
                     error = rememberVectorPainter(image = Icons.Default.BrokenImage),
                     contentDescription = null,
@@ -348,28 +348,7 @@ private fun PopulatedPreview() {
                 synopsis = "This is a synopsis",
                 canonicalTitle = "This is the title",
                 subtype = "Oneshot",
-                posterImage = ImageModel(
-                    tiny = ImageModel.ImageData(
-                        url = "",
-                        width = 0,
-                        height = 0
-                    ),
-                    small = ImageModel.ImageData(
-                        url = "",
-                        width = 0,
-                        height = 0
-                    ),
-                    medium = ImageModel.ImageData(
-                        url = "",
-                        width = 0,
-                        height = 0
-                    ),
-                    large = ImageModel.ImageData(
-                        url = "",
-                        width = 0,
-                        height = 0
-                    )
-                ),
+                posterImage = "",
                 canTrack = true,
                 isTracking = false
             ),
@@ -379,28 +358,7 @@ private fun PopulatedPreview() {
                 synopsis = "This is another synopsis",
                 canonicalTitle = "This is the title again",
                 subtype = "Oneshot",
-                posterImage = ImageModel(
-                    tiny = ImageModel.ImageData(
-                        url = "",
-                        width = 0,
-                        height = 0
-                    ),
-                    small = ImageModel.ImageData(
-                        url = "",
-                        width = 0,
-                        height = 0
-                    ),
-                    medium = ImageModel.ImageData(
-                        url = "",
-                        width = 0,
-                        height = 0
-                    ),
-                    large = ImageModel.ImageData(
-                        url = "",
-                        width = 0,
-                        height = 0
-                    )
-                ),
+                posterImage = "",
                 canTrack = false,
                 isTracking = true
             )

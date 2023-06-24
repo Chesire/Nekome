@@ -3,7 +3,6 @@ package com.chesire.nekome.app.search.host.ui
 import androidx.annotation.StringRes
 import com.chesire.nekome.app.search.host.core.model.SearchGroup
 import com.chesire.nekome.core.flags.SeriesType
-import com.chesire.nekome.core.models.ImageModel
 
 data class UIState(
     val searchText: String,
@@ -32,7 +31,7 @@ data class ResultModel(
     val synopsis: String,
     val canonicalTitle: String,
     val subtype: String,
-    val posterImage: ImageModel,
+    val posterImage: String,
     val canTrack: Boolean,
     val isTracking: Boolean
 )

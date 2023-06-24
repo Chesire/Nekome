@@ -5,8 +5,8 @@ import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-private const val ANIME_FIELDS = "synopsis,canonicalTitle,subtype,posterImage"
-private const val MANGA_FIELDS = "synopsis,canonicalTitle,subtype,posterImage"
+private const val ANIME_FIELDS = "synopsis,titles,canonicalTitle,subtype,posterImage"
+private const val MANGA_FIELDS = "synopsis,titles,canonicalTitle,subtype,posterImage"
 
 /**
  * Constructed using Retrofit to interface with the Kitsu API for queries related searching series.
