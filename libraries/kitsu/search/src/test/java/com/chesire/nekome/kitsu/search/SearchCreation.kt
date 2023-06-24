@@ -14,6 +14,7 @@ fun createSearchItemDto(type: SeriesType) =
         type,
         SearchItemDto.Attributes(
             "synopsis",
+            mapOf("en" to "en"),
             "canonicalTitle",
             Subtype.Unknown,
             ImageModel.empty
