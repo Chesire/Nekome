@@ -48,6 +48,11 @@
     <string name="image_quality_medium">中くらい</string>
     <string name="image_quality_high">高い</string>
 
+    <string name="title_language_canonical">キヤノン</string>
+    <string name="title_language_english">英語</string>
+    <string name="title_language_romaji">ローマ字</string>
+    <string name="title_language_japanese">日本語</string>
+
     <string name="series_list_length">%s / %s</string>
     <string name="series_list_plus_one">+1</string>
     <string name="series_list_date_range">%s - %s</string>
