@@ -28,6 +28,8 @@ data class IncludedDto(
         val slug: String,
         @Json(name = "canonicalTitle")
         val canonicalTitle: String,
+        @Json(name = "titles")
+        val titles: Map<String, String>,
         @Json(name = "startDate")
         val startDate: String?,
         @Json(name = "endDate")

@@ -35,6 +35,7 @@ class ResponseDtoMapper @Inject constructor() {
             included.attributes.subtype,
             included.attributes.slug,
             included.attributes.canonicalTitle,
+            included.attributes.titles,
             included.attributes.status,
             data.attributes.status,
             data.attributes.progress,
