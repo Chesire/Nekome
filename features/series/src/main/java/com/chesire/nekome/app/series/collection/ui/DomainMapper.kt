@@ -37,7 +37,9 @@ class DomainMapper @Inject constructor(
 
         return when (titleLanguage) {
             TitleLanguage.Canonical -> series.title
-            else -> series.otherTitles[titleLanguage.key] ?: series.title
+            else -> series.otherTitles[titleLanguage.key]
+                .takeIf { !it.isNullOrBlank() }
+                ?: series.title
         }
     }
 

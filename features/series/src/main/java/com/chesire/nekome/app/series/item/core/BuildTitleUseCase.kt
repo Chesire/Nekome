@@ -11,7 +11,9 @@ class BuildTitleUseCase @Inject constructor(private val pref: SeriesPreferences)
     suspend operator fun invoke(series: SeriesDomain): String {
         return when (val titleLanguage = pref.titleLanguage.first()) {
             TitleLanguage.Canonical -> series.title
-            else -> series.otherTitles[titleLanguage.key] ?: series.title
+            else -> series.otherTitles[titleLanguage.key]
+                .takeIf { !it.isNullOrBlank() }
+                ?: series.title
         }
     }
 }
