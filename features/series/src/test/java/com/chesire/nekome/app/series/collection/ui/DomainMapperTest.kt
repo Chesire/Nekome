@@ -30,8 +30,8 @@ class DomainMapperTest {
         slug = "anime-series",
         title = "Anime series",
         otherTitles = mapOf(
-            "en" to "EN Title",
-            "jp" to "JP Title"
+            TitleLanguage.English.key to "EN Title",
+            TitleLanguage.Japanese.key to "JP Title"
         ),
         seriesStatus = SeriesStatus.Unreleased,
         userSeriesStatus = UserSeriesStatus.Planned,

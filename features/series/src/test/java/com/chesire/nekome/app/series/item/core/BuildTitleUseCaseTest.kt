@@ -31,7 +31,7 @@ class BuildTitleUseCaseTest {
             every { pref.titleLanguage } returns flowOf(TitleLanguage.Canonical)
             val domain = createSeriesDomain(
                 title = expected,
-                otherTitles = mapOf("en" to "en")
+                otherTitles = mapOf(TitleLanguage.English.key to "en")
             )
 
             val result = buildTitle(domain)
@@ -46,7 +46,7 @@ class BuildTitleUseCaseTest {
             every { pref.titleLanguage } returns flowOf(TitleLanguage.Japanese)
             val domain = createSeriesDomain(
                 title = "incorrect",
-                otherTitles = mapOf("jp" to expected)
+                otherTitles = mapOf(TitleLanguage.Japanese.key to expected)
             )
 
             val result = buildTitle(domain)
@@ -61,7 +61,7 @@ class BuildTitleUseCaseTest {
             every { pref.titleLanguage } returns flowOf(TitleLanguage.Japanese)
             val domain = createSeriesDomain(
                 title = expected,
-                otherTitles = mapOf("jp" to "")
+                otherTitles = mapOf(TitleLanguage.Japanese.key to "")
             )
 
             val result = buildTitle(domain)
