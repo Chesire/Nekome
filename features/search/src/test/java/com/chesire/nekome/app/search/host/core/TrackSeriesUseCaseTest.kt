@@ -92,6 +92,7 @@ class TrackSeriesUseCaseTest {
                 subtype = Subtype.Movie,
                 slug = "",
                 title = "",
+                otherTitles = emptyMap(),
                 seriesStatus = SeriesStatus.Current,
                 userSeriesStatus = UserSeriesStatus.Current,
                 progress = 0,
