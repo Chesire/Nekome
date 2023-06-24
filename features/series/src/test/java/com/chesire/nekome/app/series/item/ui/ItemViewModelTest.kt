@@ -3,6 +3,7 @@
 package com.chesire.nekome.app.series.item.ui
 
 import androidx.lifecycle.SavedStateHandle
+import com.chesire.nekome.app.series.item.core.BuildTitleUseCase
 import com.chesire.nekome.app.series.item.core.DeleteItemUseCase
 import com.chesire.nekome.app.series.item.core.RetrieveItemUseCase
 import com.chesire.nekome.app.series.item.core.UpdateItemUseCase
@@ -32,6 +33,7 @@ class ItemViewModelTest {
     private val retrieveItem = mockk<RetrieveItemUseCase>()
     private val updateItem = mockk<UpdateItemUseCase>()
     private val deleteItem = mockk<DeleteItemUseCase>()
+    private val buildTitle = mockk<BuildTitleUseCase>()
     private lateinit var viewModel: ItemViewModel
 
     private val seriesDomain = createSeriesDomain()
@@ -42,8 +44,15 @@ class ItemViewModelTest {
         Dispatchers.setMain(UnconfinedTestDispatcher())
 
         every { savedStateHandle.get<Int>("seriesId") } returns 123
+        coEvery { buildTitle.invoke(any()) } returns seriesDomain.title
         coEvery { retrieveItem(123) } returns seriesDomain
-        viewModel = ItemViewModel(savedStateHandle, retrieveItem, updateItem, deleteItem)
+        viewModel = ItemViewModel(
+            savedStateHandle,
+            retrieveItem,
+            updateItem,
+            deleteItem,
+            buildTitle
+        )
     }
 
     @Test
