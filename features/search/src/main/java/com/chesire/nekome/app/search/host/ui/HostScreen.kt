@@ -67,7 +67,6 @@ import com.chesire.nekome.app.search.R
 import com.chesire.nekome.app.search.host.core.model.SearchGroup
 import com.chesire.nekome.core.compose.theme.NekomeTheme
 import com.chesire.nekome.core.flags.SeriesType
-import com.chesire.nekome.core.models.ImageModel
 
 @Composable
 fun HostScreen(viewModel: HostViewModel = hiltViewModel()) {
@@ -254,7 +253,7 @@ private fun ResultItem(model: ResultModel, onSeriesTrack: (ResultModel) -> Unit)
             }
             Row(modifier = Modifier.fillMaxSize()) {
                 AsyncImage(
-                    model = model.posterImage.smallest?.url,
+                    model = model.posterImage,
                     placeholder = rememberVectorPainter(image = Icons.Default.InsertPhoto),
                     error = rememberVectorPainter(image = Icons.Default.BrokenImage),
                     contentDescription = null,
@@ -269,7 +268,7 @@ private fun ResultItem(model: ResultModel, onSeriesTrack: (ResultModel) -> Unit)
                         .fillMaxHeight()
                 ) {
                     Text(
-                        text = model.canonicalTitle,
+                        text = model.title,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                         style = MaterialTheme.typography.bodyLarge,
@@ -346,30 +345,9 @@ private fun PopulatedPreview() {
                 id = 0,
                 type = SeriesType.Anime,
                 synopsis = "This is a synopsis",
-                canonicalTitle = "This is the title",
+                title = "This is the title",
                 subtype = "Oneshot",
-                posterImage = ImageModel(
-                    tiny = ImageModel.ImageData(
-                        url = "",
-                        width = 0,
-                        height = 0
-                    ),
-                    small = ImageModel.ImageData(
-                        url = "",
-                        width = 0,
-                        height = 0
-                    ),
-                    medium = ImageModel.ImageData(
-                        url = "",
-                        width = 0,
-                        height = 0
-                    ),
-                    large = ImageModel.ImageData(
-                        url = "",
-                        width = 0,
-                        height = 0
-                    )
-                ),
+                posterImage = "",
                 canTrack = true,
                 isTracking = false
             ),
@@ -377,30 +355,9 @@ private fun PopulatedPreview() {
                 id = 1,
                 type = SeriesType.Anime,
                 synopsis = "This is another synopsis",
-                canonicalTitle = "This is the title again",
+                title = "This is the title again",
                 subtype = "Oneshot",
-                posterImage = ImageModel(
-                    tiny = ImageModel.ImageData(
-                        url = "",
-                        width = 0,
-                        height = 0
-                    ),
-                    small = ImageModel.ImageData(
-                        url = "",
-                        width = 0,
-                        height = 0
-                    ),
-                    medium = ImageModel.ImageData(
-                        url = "",
-                        width = 0,
-                        height = 0
-                    ),
-                    large = ImageModel.ImageData(
-                        url = "",
-                        width = 0,
-                        height = 0
-                    )
-                ),
+                posterImage = "",
                 canTrack = false,
                 isTracking = true
             )

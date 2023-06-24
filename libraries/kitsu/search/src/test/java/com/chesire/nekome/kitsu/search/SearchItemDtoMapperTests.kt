@@ -31,6 +31,7 @@ class SearchItemDtoMapperTests {
             SeriesType.Anime,
             SearchItemDto.Attributes(
                 "synopsis",
+                mapOf("en" to "en"),
                 "canonicalTitle",
                 Subtype.Movie,
                 posterImageInput
@@ -42,6 +43,7 @@ class SearchItemDtoMapperTests {
         assertEquals(input.id, output.id)
         assertEquals(input.type, output.type)
         assertEquals(input.attributes.synopsis, output.synopsis)
+        assertEquals(input.attributes.titles, output.otherTitles)
         assertEquals(input.attributes.canonicalTitle, output.canonicalTitle)
         assertEquals(input.attributes.subtype, output.subtype)
         assertEquals(input.attributes.posterImage, output.posterImage)

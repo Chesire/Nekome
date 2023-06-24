@@ -45,7 +45,6 @@ class DomainMapper @Inject constructor(
 
     private fun choosePosterImageUrl(imageModel: ImageModel): String {
         val imageQuality = runBlocking {
-            // Not sure this is the best, but not sure how to get the value otherwise
             seriesPreferences.imageQuality.first()
         }
 

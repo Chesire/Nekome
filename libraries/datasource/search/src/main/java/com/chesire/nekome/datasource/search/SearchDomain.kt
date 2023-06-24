@@ -12,6 +12,7 @@ data class SearchDomain(
     val type: SeriesType,
     val synopsis: String,
     val canonicalTitle: String,
+    val otherTitles: Map<String, String>,
     val subtype: Subtype,
     val posterImage: ImageModel
 )

@@ -43,6 +43,7 @@ class HostViewModelTest {
     private val rememberSearchGroup = mockk<RememberSearchGroupUseCase>()
     private val searchSeries = mockk<SearchSeriesUseCase>()
     private val trackSeries = mockk<TrackSeriesUseCase>()
+    private val mapper = mockk<DomainMapper>()
     private lateinit var viewModel: HostViewModel
 
     @Before
@@ -59,7 +60,8 @@ class HostViewModelTest {
             retrieveUserSeriesIds,
             rememberSearchGroup,
             searchSeries,
-            trackSeries
+            trackSeries,
+            mapper
         )
     }
 
@@ -99,6 +101,7 @@ class HostViewModelTest {
                     type = SeriesType.Anime,
                     synopsis = "Synopsis",
                     canonicalTitle = "canonicalTitle",
+                    otherTitles = emptyMap(),
                     subtype = Subtype.Movie,
                     posterImage = ImageModel(
                         tiny = ImageModel.ImageData(
@@ -129,35 +132,15 @@ class HostViewModelTest {
                     id = 1,
                     type = SeriesType.Anime,
                     synopsis = "Synopsis",
-                    canonicalTitle = "canonicalTitle",
+                    title = "canonicalTitle",
                     subtype = "Movie",
-                    posterImage = ImageModel(
-                        tiny = ImageModel.ImageData(
-                            url = "",
-                            width = 0,
-                            height = 0
-                        ),
-                        small = ImageModel.ImageData(
-                            url = "",
-                            width = 0,
-                            height = 0
-                        ),
-                        medium = ImageModel.ImageData(
-                            url = "",
-                            width = 0,
-                            height = 0
-                        ),
-                        large = ImageModel.ImageData(
-                            url = "",
-                            width = 0,
-                            height = 0
-                        )
-                    ),
+                    posterImage = "posterImage",
                     canTrack = true,
                     isTracking = false
                 )
             )
             coEvery { searchSeries(any(), SearchGroup.Anime) } returns Ok(domains)
+            every { mapper.toResultModels(domains, any()) } returns expected
 
             viewModel.execute(ViewAction.SearchTextUpdated("Search text"))
             viewModel.execute(ViewAction.ExecuteSearch)

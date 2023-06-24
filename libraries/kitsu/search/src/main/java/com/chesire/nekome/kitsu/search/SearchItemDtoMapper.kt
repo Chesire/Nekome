@@ -19,6 +19,7 @@ class SearchItemDtoMapper @Inject constructor() {
             input.type,
             input.attributes.synopsis,
             input.attributes.canonicalTitle,
+            input.attributes.titles,
             input.attributes.subtype,
             input.attributes.posterImage ?: ImageModel.empty
         )

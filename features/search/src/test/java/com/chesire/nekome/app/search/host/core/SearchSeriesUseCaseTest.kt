@@ -89,6 +89,7 @@ class SearchSeriesUseCaseTest {
                     type = SeriesType.Manga,
                     synopsis = "",
                     canonicalTitle = "",
+                    otherTitles = mapOf("en" to "en"),
                     subtype = Subtype.Manga,
                     posterImage = ImageModel(
                         tiny = ImageModel.ImageData(
@@ -122,6 +123,7 @@ class SearchSeriesUseCaseTest {
                     type = SeriesType.Manga,
                     synopsis = "",
                     canonicalTitle = "",
+                    otherTitles = mapOf("en" to "en"),
                     subtype = Subtype.Manga,
                     posterImage = ImageModel(
                         tiny = ImageModel.ImageData(
