@@ -13,13 +13,13 @@ class DomainMapper @Inject constructor(
     private val seriesPreferences: SeriesPreferences
 ) {
 
-    fun toResultDomain(models: List<SearchDomain>, currentSeriesIds: List<Int>): List<ResultModel> {
+    fun toResultModels(models: List<SearchDomain>, currentSeriesIds: List<Int>): List<ResultModel> {
         return models.map { model ->
             ResultModel(
                 id = model.id,
                 type = model.type,
                 synopsis = model.synopsis,
-                canonicalTitle = chooseTitle(model),
+                title = chooseTitle(model),
                 subtype = model.subtype.name,
                 posterImage = choosePosterImageUrl(model.posterImage),
                 canTrack = !currentSeriesIds.contains(model.id),

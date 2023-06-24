@@ -86,7 +86,7 @@ class HostViewModel @Inject constructor(
                 .onSuccess {
                     state = state.copy(
                         isSearching = false,
-                        resultModels = mapper.toResultDomain(it, retrieveUserSeriesIds().first())
+                        resultModels = mapper.toResultModels(it, retrieveUserSeriesIds().first())
                     )
                 }
                 .onFailure(::handleSearchFailure)
@@ -140,7 +140,7 @@ class HostViewModel @Inject constructor(
                         ),
                         errorSnackbar = SnackbarData(
                             R.string.results_failure,
-                            model.canonicalTitle
+                            model.title
                         )
                     )
                 }

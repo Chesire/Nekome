@@ -29,7 +29,7 @@ data class ResultModel(
     val id: Int,
     val type: SeriesType,
     val synopsis: String,
-    val canonicalTitle: String,
+    val title: String,
     val subtype: String,
     val posterImage: String,
     val canTrack: Boolean,
