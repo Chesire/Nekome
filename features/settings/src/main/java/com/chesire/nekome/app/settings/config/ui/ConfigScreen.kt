@@ -184,7 +184,7 @@ private fun Render(
 
     if (state.value.showImageQualityDialog) {
         NekomeDialog(
-            title = R.string.settings_title_language_title,
+            title = R.string.settings_image_quality_title,
             confirmButton = R.string.ok,
             cancelButton = R.string.cancel,
             currentValue = state.value.imageQualityValue,
