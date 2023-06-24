@@ -120,6 +120,8 @@
     <string name="settings_default_series_status_summary">新しく追跡されたシリーズが開始されるステータス</string>
     <string name="settings_image_quality_title">画質</string>
     <string name="settings_image_quality_summary">アプリで表示する画像の品質</string>
+    <string name="settings_title_language_title">タイトルの言語</string>
+    <string name="settings_title_language_summary">タイトルをどの言語で表示するか</string>
     <string name="settings_default_home_title">デフォルトのホーム画面</string>
     <string name="settings_default_home_summary">アニメ／マンガから選択</string>
     <string name="settings_rate_on_completion_title">完了時にシリーズを評価</string>

@@ -49,6 +49,7 @@ import com.chesire.nekome.core.flags.UserSeriesStatus
 import com.chesire.nekome.core.preferences.flags.HomeScreenOptions
 import com.chesire.nekome.core.preferences.flags.ImageQuality
 import com.chesire.nekome.core.preferences.flags.Theme
+import com.chesire.nekome.core.preferences.flags.TitleLanguage
 
 @Composable
 fun ConfigScreen(
@@ -71,6 +72,8 @@ fun ConfigScreen(
         },
         onImageQualityClicked = { viewModel.execute(ViewAction.OnImageQualityClicked) },
         onImageQualityResult = { viewModel.execute(ViewAction.OnImageQualityChanged(it)) },
+        onTitleLanguageClicked = { viewModel.execute(ViewAction.OnTitleLanguageClicked) },
+        onTitleLanguageResult = { viewModel.execute(ViewAction.OnTitleLanguageChanged(it)) },
         onRateSeriesClicked = { viewModel.execute(ViewAction.OnRateSeriesChanged(it)) },
         onLicensesLinkClicked = { navigateToOssScreen() }
     )
@@ -94,6 +97,8 @@ private fun Render(
     onDefaultSeriesStatusResult: (UserSeriesStatus?) -> Unit,
     onImageQualityClicked: () -> Unit,
     onImageQualityResult: (ImageQuality?) -> Unit,
+    onTitleLanguageClicked: () -> Unit,
+    onTitleLanguageResult: (TitleLanguage?) -> Unit,
     onRateSeriesClicked: (Boolean) -> Unit,
     onLicensesLinkClicked: () -> Unit
 ) {
@@ -116,6 +121,7 @@ private fun Render(
             SeriesHeading()
             DefaultSeriesStatusPreference(onDefaultSeriesStatusClicked)
             ImageQualityPreference(onImageQualityClicked)
+            TitleLanguagePreference(onTitleLanguageClicked)
             RateSeriesPreference(state.value.rateSeriesValue, onRateSeriesClicked)
 
             AboutHeading()
@@ -178,7 +184,7 @@ private fun Render(
 
     if (state.value.showImageQualityDialog) {
         NekomeDialog(
-            title = R.string.settings_image_quality_title,
+            title = R.string.settings_title_language_title,
             confirmButton = R.string.ok,
             cancelButton = R.string.cancel,
             currentValue = state.value.imageQualityValue,
@@ -187,6 +193,20 @@ private fun Render(
                 .associateWith { stringResource(id = it.stringId) }
                 .toList(),
             onResult = onImageQualityResult
+        )
+    }
+
+    if (state.value.showTitleLanguageDialog) {
+        NekomeDialog(
+            title = R.string.settings_title_language_title,
+            confirmButton = R.string.ok,
+            cancelButton = R.string.cancel,
+            currentValue = state.value.titleLanguageValue,
+            allValues = TitleLanguage
+                .values()
+                .associateWith { stringResource(id = it.stringId) }
+                .toList(),
+            onResult = onTitleLanguageResult
         )
     }
 }
@@ -279,6 +299,15 @@ private fun ImageQualityPreference(onImageQualityClicked: () -> Unit) {
         title = stringResource(id = R.string.settings_image_quality_title),
         summary = stringResource(id = R.string.settings_image_quality_summary),
         onClick = onImageQualityClicked
+    )
+}
+
+@Composable
+private fun TitleLanguagePreference(onTitleLanguageClicked: () -> Unit) {
+    PreferenceSection(
+        title = stringResource(id = R.string.settings_title_language_title),
+        summary = stringResource(id = R.string.settings_title_language_summary),
+        onClick = onTitleLanguageClicked
     )
 }
 
@@ -401,6 +430,8 @@ private fun Preview() {
         showDefaultSeriesStatusDialog = false,
         imageQualityValue = ImageQuality.Low,
         showImageQualityDialog = false,
+        titleLanguageValue = TitleLanguage.Canonical,
+        showTitleLanguageDialog = false,
         rateSeriesValue = false
     )
     NekomeTheme(isDarkTheme = true) {
@@ -419,6 +450,8 @@ private fun Preview() {
             onDefaultSeriesStatusResult = { /**/ },
             onImageQualityClicked = { /**/ },
             onImageQualityResult = { /**/ },
+            onTitleLanguageClicked = { /**/ },
+            onTitleLanguageResult = { /**/ },
             onRateSeriesClicked = { /**/ },
             onLicensesLinkClicked = { /**/ }
         )

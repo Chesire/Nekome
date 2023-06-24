@@ -88,7 +88,7 @@ class SeriesPreferences @Inject constructor(
      * Returns a [Flow] of the title language value.
      */
     val titleLanguage: Flow<TitleLanguage> = context.dataStore.data.map { preferences ->
-        TitleLanguage.forIndex(preferences[imageQualityKey] ?: TitleLanguage.Canonical.index)
+        TitleLanguage.forIndex(preferences[titleLanguageKey] ?: TitleLanguage.Canonical.index)
     }
 
     /**
