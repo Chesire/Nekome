@@ -1,0 +1,1 @@
+* Add option to set the title display language
