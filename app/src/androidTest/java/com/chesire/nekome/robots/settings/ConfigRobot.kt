@@ -66,6 +66,21 @@ class ConfigRobot(private val composeContentTestRule: ComposeContentTestRule) {
         ImageQualityRobot(composeContentTestRule).apply(func)
 
     /**
+     * Opens the title language dialog.
+     */
+    fun clickTitleLanguage() {
+        composeContentTestRule
+            .onNodeWithText(R.string.settings_title_language_title.getResource())
+            .performClick()
+    }
+
+    /**
+     * Options for selecting the title language.
+     */
+    fun titleLanguage(func: TitleLanguageRobot.() -> Unit) =
+        TitleLanguageRobot(composeContentTestRule).apply(func)
+
+    /**
      * Opens the theme dialog.
      */
     fun clickTheme() {
