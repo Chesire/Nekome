@@ -13,9 +13,9 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 private const val ANIME_FIELDS =
-    "slug,canonicalTitle,startDate,endDate,subtype,status,posterImage,episodeCount"
+    "slug,titles,canonicalTitle,startDate,endDate,subtype,status,posterImage,episodeCount"
 private const val MANGA_FIELDS =
-    "slug,canonicalTitle,startDate,endDate,subtype,status,posterImage,chapterCount"
+    "slug,titles,canonicalTitle,startDate,endDate,subtype,status,posterImage,chapterCount"
 
 /**
  * Constructed using Retrofit to interface with the Kitsu API for queries related to users library.

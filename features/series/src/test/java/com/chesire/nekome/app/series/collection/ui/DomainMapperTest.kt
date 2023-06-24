@@ -7,6 +7,7 @@ import com.chesire.nekome.core.flags.UserSeriesStatus
 import com.chesire.nekome.core.models.ImageModel
 import com.chesire.nekome.core.preferences.SeriesPreferences
 import com.chesire.nekome.core.preferences.flags.ImageQuality
+import com.chesire.nekome.core.preferences.flags.TitleLanguage
 import com.chesire.nekome.datasource.series.SeriesDomain
 import io.mockk.clearAllMocks
 import io.mockk.every
@@ -28,6 +29,10 @@ class DomainMapperTest {
         subtype = Subtype.Movie,
         slug = "anime-series",
         title = "Anime series",
+        otherTitles = mapOf(
+            TitleLanguage.English.key to "EN Title",
+            TitleLanguage.Japanese.key to "JP Title"
+        ),
         seriesStatus = SeriesStatus.Unreleased,
         userSeriesStatus = UserSeriesStatus.Planned,
         progress = 1,
@@ -64,6 +69,7 @@ class DomainMapperTest {
         clearAllMocks()
 
         every { seriesPreferences.imageQuality } returns flowOf(ImageQuality.Medium)
+        every { seriesPreferences.titleLanguage } returns flowOf(TitleLanguage.Canonical)
         mapper = DomainMapper(seriesPreferences)
     }
 
@@ -120,6 +126,30 @@ class DomainMapperTest {
             Series(
                 userId = 1,
                 title = "Anime series",
+                posterImageUrl = "medium",
+                subtype = Subtype.Movie.name,
+                progress = "1 / 15",
+                startDate = "abc",
+                endDate = "def",
+                rating = 3,
+                showPlusOne = true,
+                isUpdating = false
+            )
+        )
+
+        val result = mapper.toSeries(input)
+
+        assertEquals(expected, result)
+    }
+
+    @Test
+    fun `Given title language is JP, When toSeries, Then title will be JP title`() = runTest {
+        every { seriesPreferences.titleLanguage } returns flowOf(TitleLanguage.Japanese)
+        val input = listOf(initialDomain.copy(totalLength = 15))
+        val expected = listOf(
+            Series(
+                userId = 1,
+                title = "JP Title",
                 posterImageUrl = "medium",
                 subtype = Subtype.Movie.name,
                 progress = "1 / 15",

@@ -28,6 +28,7 @@ class SeriesMapperTests {
             Subtype.Manhwa,
             "slug",
             "title",
+            mapOf("en" to "en"),
             SeriesStatus.Upcoming,
             UserSeriesStatus.Planned,
             0,
@@ -46,6 +47,7 @@ class SeriesMapperTests {
         assertEquals(input.subtype, output.subtype)
         assertEquals(input.slug, output.slug)
         assertEquals(input.title, output.title)
+        assertEquals(input.otherTitles, output.otherTitles)
         assertEquals(input.seriesStatus, output.seriesStatus)
         assertEquals(input.userSeriesStatus, output.userSeriesStatus)
         assertEquals(input.progress, output.progress)
@@ -65,6 +67,7 @@ class SeriesMapperTests {
             Subtype.Manhwa,
             "slug",
             "title",
+            mapOf("en" to "en"),
             SeriesStatus.Upcoming,
             UserSeriesStatus.Planned,
             0,
@@ -83,6 +86,7 @@ class SeriesMapperTests {
         assertEquals(input.subtype, output.subtype)
         assertEquals(input.slug, output.slug)
         assertEquals(input.title, output.title)
+        assertEquals(input.otherTitles, output.otherTitles)
         assertEquals(input.seriesStatus, output.seriesStatus)
         assertEquals(input.userSeriesStatus, output.userSeriesStatus)
         assertEquals(input.progress, output.progress)

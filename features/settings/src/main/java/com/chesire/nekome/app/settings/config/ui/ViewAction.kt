@@ -4,6 +4,7 @@ import com.chesire.nekome.core.flags.UserSeriesStatus
 import com.chesire.nekome.core.preferences.flags.HomeScreenOptions
 import com.chesire.nekome.core.preferences.flags.ImageQuality
 import com.chesire.nekome.core.preferences.flags.Theme
+import com.chesire.nekome.core.preferences.flags.TitleLanguage
 
 sealed interface ViewAction {
     object OnLogoutClicked : ViewAction
@@ -27,6 +28,9 @@ sealed interface ViewAction {
 
     object OnImageQualityClicked : ViewAction
     data class OnImageQualityChanged(val newImageQuality: ImageQuality?) : ViewAction
+
+    object OnTitleLanguageClicked : ViewAction
+    data class OnTitleLanguageChanged(val newTitleLanguage: TitleLanguage?) : ViewAction
 
     data class OnRateSeriesChanged(val newValue: Boolean) : ViewAction
 }

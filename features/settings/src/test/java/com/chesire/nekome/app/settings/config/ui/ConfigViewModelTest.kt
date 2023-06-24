@@ -11,12 +11,14 @@ import com.chesire.nekome.app.settings.config.core.UpdateDefaultSeriesStateUseCa
 import com.chesire.nekome.app.settings.config.core.UpdateImageQualityUseCase
 import com.chesire.nekome.app.settings.config.core.UpdateRateSeriesUseCase
 import com.chesire.nekome.app.settings.config.core.UpdateThemeUseCase
+import com.chesire.nekome.app.settings.config.core.UpdateTitleLanguageUseCase
 import com.chesire.nekome.core.flags.Service
 import com.chesire.nekome.core.flags.UserSeriesStatus
 import com.chesire.nekome.core.models.ImageModel
 import com.chesire.nekome.core.preferences.flags.HomeScreenOptions
 import com.chesire.nekome.core.preferences.flags.ImageQuality
 import com.chesire.nekome.core.preferences.flags.Theme
+import com.chesire.nekome.core.preferences.flags.TitleLanguage
 import com.chesire.nekome.datasource.user.User
 import com.chesire.nekome.datasource.user.UserDomain
 import io.mockk.clearAllMocks
@@ -44,6 +46,7 @@ class ConfigViewModelTest {
     private val updateDefaultHomeScreen = mockk<UpdateDefaultHomeScreenUseCase>(relaxed = true)
     private val updateDefaultSeriesState = mockk<UpdateDefaultSeriesStateUseCase>(relaxed = true)
     private val updateImageQualityUseCase = mockk<UpdateImageQualityUseCase>(relaxed = true)
+    private val updateTitleLanguage = mockk<UpdateTitleLanguageUseCase>(relaxed = true)
     private val logoutExecutor = mockk<LogoutExecutor>(relaxed = true)
     private lateinit var viewModel: ConfigViewModel
 
@@ -60,7 +63,8 @@ class ConfigViewModelTest {
                 defaultHomeScreen = HomeScreenOptions.Anime,
                 defaultSeriesStatus = UserSeriesStatus.Current,
                 shouldRateSeries = false,
-                imageQuality = ImageQuality.Low
+                imageQuality = ImageQuality.Low,
+                titleLanguage = TitleLanguage.Canonical
             )
         )
         every {
@@ -85,6 +89,7 @@ class ConfigViewModelTest {
             updateDefaultHomeScreen,
             updateDefaultSeriesState,
             updateImageQualityUseCase,
+            updateTitleLanguage,
             logoutExecutor
         )
     }
@@ -106,6 +111,8 @@ class ConfigViewModelTest {
             showDefaultSeriesStatusDialog = false,
             imageQualityValue = ImageQuality.Low,
             showImageQualityDialog = false,
+            titleLanguageValue = TitleLanguage.Canonical,
+            showTitleLanguageDialog = false,
             rateSeriesValue = false
         )
 
@@ -196,5 +203,26 @@ class ConfigViewModelTest {
         viewModel.execute(ViewAction.OnImageQualityChanged(ImageQuality.High))
 
         coVerify { updateImageQualityUseCase(ImageQuality.High) }
+    }
+
+    @Test
+    fun `When execute#OnTitleLanguageClicked, Then dialog is shown`() = runTest {
+        viewModel.execute(ViewAction.OnTitleLanguageClicked)
+
+        assertTrue(viewModel.uiState.value.showTitleLanguageDialog)
+    }
+
+    @Test
+    fun `When execute#OnTitleLanguageChanged, Then dialog is hidden`() = runTest {
+        viewModel.execute(ViewAction.OnTitleLanguageChanged(TitleLanguage.Romaji))
+
+        assertFalse(viewModel.uiState.value.showTitleLanguageDialog)
+    }
+
+    @Test
+    fun `When execute#OnTitleLanguageChanged, Then value is updated in use case`() = runTest {
+        viewModel.execute(ViewAction.OnTitleLanguageChanged(TitleLanguage.Romaji))
+
+        coVerify { updateTitleLanguage(TitleLanguage.Romaji) }
     }
 }

@@ -6,6 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.chesire.nekome.database.converters.ImageModelConverter
+import com.chesire.nekome.database.converters.MapConverter
 import com.chesire.nekome.database.converters.SeriesStatusConverter
 import com.chesire.nekome.database.converters.SeriesTypeConverter
 import com.chesire.nekome.database.converters.ServiceConverter
@@ -21,10 +22,11 @@ import com.chesire.nekome.database.entity.UserEntity
  */
 @Database(
     entities = [SeriesEntity::class, UserEntity::class],
-    version = 4
+    version = 5
 )
 @TypeConverters(
     ImageModelConverter::class,
+    MapConverter::class,
     SeriesStatusConverter::class,
     SeriesTypeConverter::class,
     ServiceConverter::class,
@@ -49,7 +51,7 @@ abstract class RoomDB : RoomDatabase() {
         fun build(context: Context, databaseName: String = "nekome_database.db"): RoomDB {
             return Room
                 .databaseBuilder(context, RoomDB::class.java, databaseName)
-                .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4)
+                .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5)
                 .fallbackToDestructiveMigration()
                 .build()
         }

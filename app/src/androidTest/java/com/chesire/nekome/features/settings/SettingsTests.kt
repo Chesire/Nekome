@@ -157,6 +157,44 @@ class SettingsTests : UITest() {
     }
 
     @Test
+    fun changeTitleLanguage() {
+        launchActivity()
+
+        activity(composeTestRule) {
+            goToSettings()
+        }
+        config(composeTestRule) {
+            clickTitleLanguage()
+
+            titleLanguage {
+                validate {
+                    isLoadedCorrectly()
+                }
+            }
+
+            titleLanguage {
+                chooseRomaji()
+                validate {
+                    romajiIsSelected()
+                }
+                confirm()
+            }
+
+            clickTitleLanguage()
+            titleLanguage {
+                validate {
+                    romajiIsSelected()
+                }
+                chooseJapanese()
+                validate {
+                    japaneseIsSelected()
+                }
+                confirm()
+            }
+        }
+    }
+
+    @Test
     fun changeThemeSetting() {
         launchActivity()
 

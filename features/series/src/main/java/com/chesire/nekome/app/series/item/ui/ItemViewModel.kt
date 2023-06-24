@@ -4,6 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chesire.nekome.app.series.R
+import com.chesire.nekome.app.series.item.core.BuildTitleUseCase
 import com.chesire.nekome.app.series.item.core.DeleteItemUseCase
 import com.chesire.nekome.app.series.item.core.RetrieveItemUseCase
 import com.chesire.nekome.app.series.item.core.UpdateItemModel
@@ -28,7 +29,8 @@ class ItemViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val retrieveItem: RetrieveItemUseCase,
     private val updateItem: UpdateItemUseCase,
-    private val deleteItem: DeleteItemUseCase
+    private val deleteItem: DeleteItemUseCase,
+    private val buildTitle: BuildTitleUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(UIState.default)
@@ -46,7 +48,7 @@ class ItemViewModel @Inject constructor(
 
             state = state.copy(
                 id = series.userId,
-                title = series.title,
+                title = buildTitle(series),
                 subtitle = "${series.type.name}  -  ${series.subtype.name}  -  ${series.seriesStatus.name}",
                 possibleSeriesStatus = UserSeriesStatus
                     .values()

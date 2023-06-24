@@ -3,6 +3,7 @@ package com.chesire.nekome.app.series.collection.ui
 import com.chesire.nekome.core.models.ImageModel
 import com.chesire.nekome.core.preferences.SeriesPreferences
 import com.chesire.nekome.core.preferences.flags.ImageQuality
+import com.chesire.nekome.core.preferences.flags.TitleLanguage
 import com.chesire.nekome.datasource.series.SeriesDomain
 import javax.inject.Inject
 import kotlinx.coroutines.flow.first
@@ -16,7 +17,7 @@ class DomainMapper @Inject constructor(
         return models.map { series ->
             Series(
                 userId = series.userId,
-                title = series.title,
+                title = chooseTitle(series),
                 posterImageUrl = choosePosterImageUrl(series.posterImage),
                 subtype = series.subtype.name,
                 progress = buildProgress(series.progress, series.totalLength),
@@ -26,6 +27,19 @@ class DomainMapper @Inject constructor(
                 showPlusOne = shouldShowPlusOne(series.progress, series.totalLength),
                 isUpdating = false
             )
+        }
+    }
+
+    private fun chooseTitle(series: SeriesDomain): String {
+        val titleLanguage = runBlocking {
+            seriesPreferences.titleLanguage.first()
+        }
+
+        return when (titleLanguage) {
+            TitleLanguage.Canonical -> series.title
+            else -> series.otherTitles[titleLanguage.key]
+                .takeIf { !it.isNullOrBlank() }
+                ?: series.title
         }
     }
 

@@ -10,10 +10,12 @@ import com.chesire.nekome.app.settings.config.core.UpdateDefaultSeriesStateUseCa
 import com.chesire.nekome.app.settings.config.core.UpdateImageQualityUseCase
 import com.chesire.nekome.app.settings.config.core.UpdateRateSeriesUseCase
 import com.chesire.nekome.app.settings.config.core.UpdateThemeUseCase
+import com.chesire.nekome.app.settings.config.core.UpdateTitleLanguageUseCase
 import com.chesire.nekome.core.flags.UserSeriesStatus
 import com.chesire.nekome.core.preferences.flags.HomeScreenOptions
 import com.chesire.nekome.core.preferences.flags.ImageQuality
 import com.chesire.nekome.core.preferences.flags.Theme
+import com.chesire.nekome.core.preferences.flags.TitleLanguage
 import com.chesire.nekome.datasource.user.User
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -32,6 +34,7 @@ class ConfigViewModel @Inject constructor(
     private val updateDefaultHomeScreen: UpdateDefaultHomeScreenUseCase,
     private val updateDefaultSeriesState: UpdateDefaultSeriesStateUseCase,
     private val updateImageQuality: UpdateImageQualityUseCase,
+    private val updateTitleLanguage: UpdateTitleLanguageUseCase,
     private val logoutExecutor: LogoutExecutor
 ) : ViewModel() {
 
@@ -62,7 +65,8 @@ class ConfigViewModel @Inject constructor(
                         defaultHomeValue = prefModel.defaultHomeScreen,
                         defaultSeriesStatusValue = prefModel.defaultSeriesStatus,
                         rateSeriesValue = prefModel.shouldRateSeries,
-                        imageQualityValue = prefModel.imageQuality
+                        imageQualityValue = prefModel.imageQuality,
+                        titleLanguageValue = prefModel.titleLanguage
                     )
                 }
             }
@@ -89,6 +93,10 @@ class ConfigViewModel @Inject constructor(
             ViewAction.OnImageQualityClicked -> handleOnImageQualityClicked()
             is ViewAction.OnImageQualityChanged ->
                 handleOnImageQualityChanged(action.newImageQuality)
+
+            ViewAction.OnTitleLanguageClicked -> handleOnTitleLanguageClicked()
+            is ViewAction.OnTitleLanguageChanged ->
+                handleOnTitleLanguageChanged(action.newTitleLanguage)
 
             is ViewAction.OnRateSeriesChanged -> handleOnRateSeriesChanged(action.newValue)
         }
@@ -160,6 +168,19 @@ class ConfigViewModel @Inject constructor(
         if (newImageQuality != null) {
             viewModelScope.launch {
                 updateImageQuality(newImageQuality)
+            }
+        }
+    }
+
+    private fun handleOnTitleLanguageClicked() {
+        state = state.copy(showTitleLanguageDialog = true)
+    }
+
+    private fun handleOnTitleLanguageChanged(newTitleLanguage: TitleLanguage?) {
+        state = state.copy(showTitleLanguageDialog = false)
+        if (newTitleLanguage != null) {
+            viewModelScope.launch {
+                updateTitleLanguage(newTitleLanguage)
             }
         }
     }

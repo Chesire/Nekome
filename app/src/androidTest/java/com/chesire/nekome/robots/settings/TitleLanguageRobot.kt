@@ -7,39 +7,48 @@ import androidx.compose.ui.test.onAllNodesWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import com.chesire.nekome.core.compose.composables.DialogTags
-import com.chesire.nekome.core.preferences.flags.ImageQuality
+import com.chesire.nekome.core.preferences.flags.TitleLanguage
 import com.chesire.nekome.helpers.getResource
 import com.chesire.nekome.robots.DialogResultsRobot
 import com.chesire.nekome.robots.DialogRobot
 
-class ImageQualityRobot(
+class TitleLanguageRobot(
     private val composeContentTestRule: ComposeContentTestRule
 ) : DialogRobot(composeContentTestRule) {
 
     /**
-     * Picks the "Low" option.
+     * Picks the "Canonical" option.
      */
-    fun chooseLow() {
+    fun chooseCanonical() {
         composeContentTestRule
-            .onNodeWithText(ImageQuality.Low.stringId.getResource())
+            .onNodeWithText(TitleLanguage.Canonical.stringId.getResource())
             .performClick()
     }
 
     /**
-     * Picks the "Medium" option.
+     * Picks the "English" option.
      */
-    fun chooseMedium() {
+    fun chooseEnglish() {
         composeContentTestRule
-            .onNodeWithText(ImageQuality.Medium.stringId.getResource())
+            .onNodeWithText(TitleLanguage.English.stringId.getResource())
             .performClick()
     }
 
     /**
-     * Picks the "High" option.
+     * Picks the "Romaji" option.
      */
-    fun chooseHigh() {
+    fun chooseRomaji() {
         composeContentTestRule
-            .onNodeWithText(ImageQuality.High.stringId.getResource())
+            .onNodeWithText(TitleLanguage.Romaji.stringId.getResource())
+            .performClick()
+    }
+
+    /**
+     * Picks the "Japanese" option.
+     */
+    fun chooseJapanese() {
+        composeContentTestRule
+            .onNodeWithText(TitleLanguage.Japanese.stringId.getResource())
             .performClick()
     }
 
@@ -47,14 +56,14 @@ class ImageQualityRobot(
      * Executes validation steps.
      * Requires opening the dialog, performing the check, then closing the dialog again.
      */
-    infix fun validate(func: ImageQualityResultRobot.() -> Unit) =
-        ImageQualityResultRobot(composeContentTestRule).apply(func)
+    infix fun validate(func: TitleLanguageResultRobot.() -> Unit) =
+        TitleLanguageResultRobot(composeContentTestRule).apply(func)
 }
 
 /**
- * Robot to check the results for the image quality dialog.
+ * Robot to check the results for the title language dialog.
  */
-class ImageQualityResultRobot(
+class TitleLanguageResultRobot(
     private val composeContentTestRule: ComposeContentTestRule
 ) : DialogResultsRobot(composeContentTestRule) {
 
@@ -63,15 +72,16 @@ class ImageQualityResultRobot(
      */
     fun isLoadedCorrectly() {
         val collection = composeContentTestRule.onAllNodesWithTag(DialogTags.OptionText, true)
-        collection[0].assertTextContains(ImageQuality.Low.stringId.getResource())
-        collection[1].assertTextContains(ImageQuality.Medium.stringId.getResource())
-        collection[2].assertTextContains(ImageQuality.High.stringId.getResource())
+        collection[0].assertTextContains(TitleLanguage.Canonical.stringId.getResource())
+        collection[1].assertTextContains(TitleLanguage.English.stringId.getResource())
+        collection[2].assertTextContains(TitleLanguage.Romaji.stringId.getResource())
+        collection[3].assertTextContains(TitleLanguage.Japanese.stringId.getResource())
     }
 
     /**
-     * Checks if the "Low" option is checked.
+     * Checks if the "Canonical" option is checked.
      */
-    fun lowIsSelected() {
+    fun canonicalIsSelected() {
         composeContentTestRule
             .onAllNodesWithTag(DialogTags.OptionRadio, true)
             .get(0)
@@ -79,9 +89,9 @@ class ImageQualityResultRobot(
     }
 
     /**
-     * Checks if the "Medium" option is checked.
+     * Checks if the "English" option is checked.
      */
-    fun mediumIsSelected() {
+    fun englishIsSelected() {
         composeContentTestRule
             .onAllNodesWithTag(DialogTags.OptionRadio, true)
             .get(1)
@@ -89,12 +99,22 @@ class ImageQualityResultRobot(
     }
 
     /**
-     * Checks if the "High" option is checked.
+     * Checks if the "Romaji" option is checked.
      */
-    fun highIsSelected() {
+    fun romajiIsSelected() {
         composeContentTestRule
             .onAllNodesWithTag(DialogTags.OptionRadio, true)
             .get(2)
+            .assertIsSelected()
+    }
+
+    /**
+     * Checks if the "Japanese" option is checked.
+     */
+    fun japaneseIsSelected() {
+        composeContentTestRule
+            .onAllNodesWithTag(DialogTags.OptionRadio, true)
+            .get(3)
             .assertIsSelected()
     }
 }

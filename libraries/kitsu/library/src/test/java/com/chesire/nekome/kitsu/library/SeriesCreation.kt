@@ -23,6 +23,7 @@ fun createSeriesDomain() =
         Subtype.Unknown,
         "slug",
         "title",
+        emptyMap(),
         SeriesStatus.Unknown,
         UserSeriesStatus.Unknown,
         0,
@@ -92,6 +93,7 @@ fun createIncludedDto(
     id: Int = 0,
     slug: String = "slug",
     canonicalTitle: String = "canonicalTitle",
+    titles: Map<String, String> = emptyMap(),
     startDate: String = "startDate",
     endDate: String = "endDate",
     subtype: Subtype = Subtype.Unknown,
@@ -105,6 +107,7 @@ fun createIncludedDto(
     IncludedDto.Attributes(
         slug,
         canonicalTitle,
+        titles,
         startDate,
         endDate,
         subtype,

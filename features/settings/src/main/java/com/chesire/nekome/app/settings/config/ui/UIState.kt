@@ -4,6 +4,7 @@ import com.chesire.nekome.core.flags.UserSeriesStatus
 import com.chesire.nekome.core.preferences.flags.HomeScreenOptions
 import com.chesire.nekome.core.preferences.flags.ImageQuality
 import com.chesire.nekome.core.preferences.flags.Theme
+import com.chesire.nekome.core.preferences.flags.TitleLanguage
 
 data class UIState(
     val userModel: UserModel?,
@@ -17,6 +18,8 @@ data class UIState(
     val showDefaultSeriesStatusDialog: Boolean,
     val imageQualityValue: ImageQuality,
     val showImageQualityDialog: Boolean,
+    val titleLanguageValue: TitleLanguage,
+    val showTitleLanguageDialog: Boolean,
     val rateSeriesValue: Boolean
 ) {
     companion object {
@@ -32,6 +35,8 @@ data class UIState(
             showDefaultSeriesStatusDialog = false,
             imageQualityValue = ImageQuality.Low,
             showImageQualityDialog = false,
+            titleLanguageValue = TitleLanguage.Canonical,
+            showTitleLanguageDialog = false,
             rateSeriesValue = false
         )
     }
