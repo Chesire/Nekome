@@ -17,7 +17,7 @@ fun createSearchDomain(
     canonicalTitle: String = "canonicalTitle",
     titles: Map<String, String> = mapOf(
         TitleLanguage.English.key to "enTitle",
-        TitleLanguage.Japanese.key to "japaneseTitle",
+        TitleLanguage.Japanese.key to "japaneseTitle"
     ),
     subtype: Subtype = Subtype.TV,
     posterImage: ImageModel = ImageModel.empty
