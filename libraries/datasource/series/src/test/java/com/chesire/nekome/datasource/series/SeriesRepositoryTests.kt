@@ -356,6 +356,7 @@ class SeriesRepositoryTests {
             Subtype.Unknown,
             "slug",
             "title",
+            emptyMap(),
             SeriesStatus.Unknown,
             UserSeriesStatus.Unknown,
             0,
