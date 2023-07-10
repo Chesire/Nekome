@@ -63,6 +63,7 @@ import coil.compose.AsyncImage
 import com.chesire.nekome.app.series.R
 import com.chesire.nekome.core.compose.composables.NekomeDialog
 import com.chesire.nekome.core.compose.theme.NekomeTheme
+import com.chesire.nekome.core.compose.verticalFadingEdge
 import com.chesire.nekome.core.flags.UserSeriesStatus
 import com.google.accompanist.flowlayout.FlowMainAxisAlignment
 import com.google.accompanist.flowlayout.FlowRow
@@ -221,6 +222,7 @@ private fun HeaderArea(
             modifier = Modifier
                 .padding(start = 8.dp)
                 .height(componentHeight)
+                .verticalFadingEdge(scrollState, 32.dp)
                 .verticalScroll(scrollState)
         ) {
             Title(title = title)
