@@ -150,5 +150,6 @@
     <string name="results_track_series">Track this series</string>
     <string name="results_failure">Failed to begin tracking series %s, please try again…</string>
 
+    <string name="back">Back</string>
     <string name="error_generic">An unknown error has occurred…</string>
 </resources>
