@@ -50,6 +50,7 @@ class ItemViewModel @Inject constructor(
                 id = series.userId,
                 title = buildTitle(series),
                 subtitle = "${series.type.name}  -  ${series.subtype.name}  -  ${series.seriesStatus.name}",
+                imageUrl = series.posterImage.medium.url, // TODO: Get quality
                 possibleSeriesStatus = UserSeriesStatus
                     .values()
                     .filterNot { it == UserSeriesStatus.Unknown },

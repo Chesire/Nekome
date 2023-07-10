@@ -135,11 +135,17 @@ private fun Render(
             modifier = Modifier
                 .padding(paddingValues)
                 .verticalScroll(state = scrollableState)
-                .padding(16.dp)
+                .padding(horizontal = 16.dp)
                 .fillMaxSize()
         ) {
-            Title(title = state.value.title)
-            Subtitle(subtitle = state.value.subtitle)
+            Row {
+                SeriesImage(image = state.value.imageUrl)
+                Column(modifier = Modifier.padding(start = 8.dp)) {
+                    Title(title = state.value.title)
+                    Subtitle(subtitle = state.value.subtitle)
+                }
+            }
+            Spacer(modifier = Modifier.height(4.dp))
             SeriesStatus(
                 possibleSeriesStatus = state.value.possibleSeriesStatus,
                 seriesStatus = state.value.seriesStatus,
@@ -193,7 +199,8 @@ private fun Render(
 private fun Title(title: String) {
     Text(
         text = title,
-        style = MaterialTheme.typography.headlineSmall
+        style = MaterialTheme.typography.headlineSmall,
+        modifier = Modifier.fillMaxWidth()
     )
 }
 
@@ -201,7 +208,21 @@ private fun Title(title: String) {
 private fun Subtitle(subtitle: String) {
     Text(
         text = subtitle,
-        style = MaterialTheme.typography.bodySmall
+        style = MaterialTheme.typography.bodySmall,
+        modifier = Modifier.fillMaxWidth()
+    )
+}
+
+@Composable
+private fun SeriesImage(image: String) {
+    AsyncImage(
+        model = image,
+        placeholder = rememberVectorPainter(image = Icons.Default.InsertPhoto),
+        error = rememberVectorPainter(image = Icons.Default.BrokenImage),
+        contentDescription = null,
+        modifier = Modifier
+            .fillMaxWidth(0.4f)
+            .aspectRatio(0.7f)
     )
 }
 
@@ -355,6 +376,7 @@ private fun Preview() {
         id = 0,
         title = "Title",
         subtitle = "Anime - TV - Finished",
+        imageUrl = "",
         possibleSeriesStatus = listOf(
             UserSeriesStatus.Current,
             UserSeriesStatus.Completed,
