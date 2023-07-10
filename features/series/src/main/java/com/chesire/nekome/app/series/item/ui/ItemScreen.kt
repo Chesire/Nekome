@@ -31,7 +31,6 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.ShapeDefaults
 import androidx.compose.material3.Slider
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
@@ -42,12 +41,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
@@ -138,13 +142,11 @@ private fun Render(
                 .padding(horizontal = 16.dp)
                 .fillMaxSize()
         ) {
-            Row {
-                SeriesImage(image = state.value.imageUrl)
-                Column(modifier = Modifier.padding(start = 8.dp)) {
-                    Title(title = state.value.title)
-                    Subtitle(subtitle = state.value.subtitle)
-                }
-            }
+            HeaderArea(
+                title = state.value.title,
+                subtitle = state.value.subtitle,
+                imageUrl = state.value.imageUrl
+            )
             Spacer(modifier = Modifier.height(4.dp))
             SeriesStatus(
                 possibleSeriesStatus = state.value.possibleSeriesStatus,
@@ -196,6 +198,38 @@ private fun Render(
 }
 
 @Composable
+private fun HeaderArea(
+    title: String,
+    subtitle: String,
+    imageUrl: String
+) {
+    val scrollState = rememberScrollState()
+    var componentHeight by remember { mutableStateOf(0.dp) }
+    val density = LocalDensity.current
+
+    Row {
+        SeriesImage(
+            image = imageUrl,
+            modifier = Modifier
+                .onGloballyPositioned {
+                    componentHeight = with(density) {
+                        it.size.height.toDp()
+                    }
+                }
+        )
+        Column(
+            modifier = Modifier
+                .padding(start = 8.dp)
+                .height(componentHeight)
+                .verticalScroll(scrollState)
+        ) {
+            Title(title = title)
+            Subtitle(subtitle = subtitle)
+        }
+    }
+}
+
+@Composable
 private fun Title(title: String) {
     Text(
         text = title,
@@ -214,13 +248,16 @@ private fun Subtitle(subtitle: String) {
 }
 
 @Composable
-private fun SeriesImage(image: String) {
+private fun SeriesImage(
+    image: String,
+    modifier: Modifier = Modifier
+) {
     AsyncImage(
         model = image,
         placeholder = rememberVectorPainter(image = Icons.Default.InsertPhoto),
         error = rememberVectorPainter(image = Icons.Default.BrokenImage),
         contentDescription = null,
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth(0.4f)
             .aspectRatio(0.7f)
     )
