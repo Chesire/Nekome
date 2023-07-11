@@ -209,7 +209,7 @@ GEM
     os (1.1.4)
     ox (2.14.4)
     plist (3.7.0)
-    public_suffix (5.0.1)
+    public_suffix (5.0.3)
     rake (13.0.6)
     rchardet (1.8.0)
     representable (3.2.0)
