@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.chesire.nekome.app.series.R
 import com.chesire.nekome.app.series.item.core.BuildTitleUseCase
 import com.chesire.nekome.app.series.item.core.DeleteItemUseCase
+import com.chesire.nekome.app.series.item.core.GetImageUseCase
 import com.chesire.nekome.app.series.item.core.RetrieveItemUseCase
 import com.chesire.nekome.app.series.item.core.UpdateItemModel
 import com.chesire.nekome.app.series.item.core.UpdateItemUseCase
@@ -30,7 +31,8 @@ class ItemViewModel @Inject constructor(
     private val retrieveItem: RetrieveItemUseCase,
     private val updateItem: UpdateItemUseCase,
     private val deleteItem: DeleteItemUseCase,
-    private val buildTitle: BuildTitleUseCase
+    private val buildTitle: BuildTitleUseCase,
+    private val getImage: GetImageUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(UIState.default)
@@ -50,6 +52,7 @@ class ItemViewModel @Inject constructor(
                 id = series.userId,
                 title = buildTitle(series),
                 subtitle = "${series.type.name}  -  ${series.subtype.name}  -  ${series.seriesStatus.name}",
+                imageUrl = getImage(series.posterImage),
                 possibleSeriesStatus = UserSeriesStatus
                     .values()
                     .filterNot { it == UserSeriesStatus.Unknown },

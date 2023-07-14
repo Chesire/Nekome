@@ -150,5 +150,6 @@
     <string name="results_track_series">このシリーズを追跡する</string>
     <string name="results_failure">シリーズ%sの追跡を開始できませんでした。もう一度お試しください…</string>
 
+    <string name="back">バック</string>
     <string name="error_generic">不明なエラーが発生しました…</string>
 </resources>

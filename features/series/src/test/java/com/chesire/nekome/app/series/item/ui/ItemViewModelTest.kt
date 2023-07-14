@@ -5,6 +5,7 @@ package com.chesire.nekome.app.series.item.ui
 import androidx.lifecycle.SavedStateHandle
 import com.chesire.nekome.app.series.item.core.BuildTitleUseCase
 import com.chesire.nekome.app.series.item.core.DeleteItemUseCase
+import com.chesire.nekome.app.series.item.core.GetImageUseCase
 import com.chesire.nekome.app.series.item.core.RetrieveItemUseCase
 import com.chesire.nekome.app.series.item.core.UpdateItemUseCase
 import com.chesire.nekome.core.flags.UserSeriesStatus
@@ -34,6 +35,7 @@ class ItemViewModelTest {
     private val updateItem = mockk<UpdateItemUseCase>()
     private val deleteItem = mockk<DeleteItemUseCase>()
     private val buildTitle = mockk<BuildTitleUseCase>()
+    private val getImage = mockk<GetImageUseCase>()
     private lateinit var viewModel: ItemViewModel
 
     private val seriesDomain = createSeriesDomain()
@@ -46,12 +48,14 @@ class ItemViewModelTest {
         every { savedStateHandle.get<Int>("seriesId") } returns 123
         coEvery { buildTitle.invoke(any()) } returns seriesDomain.title
         coEvery { retrieveItem(123) } returns seriesDomain
+        coEvery { getImage(any()) } returns "imageUrl"
         viewModel = ItemViewModel(
             savedStateHandle,
             retrieveItem,
             updateItem,
             deleteItem,
-            buildTitle
+            buildTitle,
+            getImage
         )
     }
 
@@ -62,6 +66,7 @@ class ItemViewModelTest {
         assertEquals(seriesDomain.userId, state.id)
         assertEquals(seriesDomain.title, state.title)
         assertEquals("Anime  -  TV  -  Current", state.subtitle)
+        assertEquals("imageUrl", state.imageUrl)
         assertEquals(
             listOf(
                 UserSeriesStatus.Current,

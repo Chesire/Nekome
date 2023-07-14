@@ -4,21 +4,30 @@ package com.chesire.nekome.app.series.item.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.BrokenImage
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.InsertPhoto
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FilterChipDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
@@ -27,16 +36,22 @@ import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
@@ -44,9 +59,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import coil.compose.AsyncImage
 import com.chesire.nekome.app.series.R
 import com.chesire.nekome.core.compose.composables.NekomeDialog
 import com.chesire.nekome.core.compose.theme.NekomeTheme
+import com.chesire.nekome.core.compose.verticalFadingEdge
 import com.chesire.nekome.core.flags.UserSeriesStatus
 import com.google.accompanist.flowlayout.FlowMainAxisAlignment
 import com.google.accompanist.flowlayout.FlowRow
@@ -89,6 +106,32 @@ private fun Render(
     val scrollableState = rememberScrollState()
 
     Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { },
+                navigationIcon = {
+                    IconButton(
+                        onClick = {
+                            finishScreen()
+                            onFinishedScreen()
+                        }
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.ArrowBack,
+                            contentDescription = stringResource(id = R.string.back)
+                        )
+                    }
+                },
+                actions = {
+                    IconButton(onClick = onDeletePressed) {
+                        Icon(
+                            imageVector = Icons.Default.Delete,
+                            contentDescription = stringResource(id = R.string.series_detail_delete)
+                        )
+                    }
+                }
+            )
+        },
         snackbarHost = {
             SnackbarHost(hostState = snackbarHostState)
         }
@@ -97,11 +140,15 @@ private fun Render(
             modifier = Modifier
                 .padding(paddingValues)
                 .verticalScroll(state = scrollableState)
-                .padding(16.dp)
+                .padding(horizontal = 16.dp)
                 .fillMaxSize()
         ) {
-            Title(title = state.value.title)
-            Subtitle(subtitle = state.value.subtitle)
+            HeaderArea(
+                title = state.value.title,
+                subtitle = state.value.subtitle,
+                imageUrl = state.value.imageUrl
+            )
+            Spacer(modifier = Modifier.height(4.dp))
             SeriesStatus(
                 possibleSeriesStatus = state.value.possibleSeriesStatus,
                 seriesStatus = state.value.seriesStatus,
@@ -126,7 +173,6 @@ private fun Render(
                     modifier = Modifier.align(Alignment.CenterHorizontally),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    DeleteButton(onDeletePressed = onDeletePressed)
                     ConfirmButton(
                         isSendingData = state.value.isSendingData,
                         onConfirmPressed = onConfirmPressed
@@ -153,10 +199,44 @@ private fun Render(
 }
 
 @Composable
+private fun HeaderArea(
+    title: String,
+    subtitle: String,
+    imageUrl: String
+) {
+    val scrollState = rememberScrollState()
+    var componentHeight by remember { mutableStateOf(0.dp) }
+    val density = LocalDensity.current
+
+    Row {
+        SeriesImage(
+            image = imageUrl,
+            modifier = Modifier
+                .onGloballyPositioned {
+                    componentHeight = with(density) {
+                        it.size.height.toDp()
+                    }
+                }
+        )
+        Column(
+            modifier = Modifier
+                .padding(start = 8.dp)
+                .height(componentHeight)
+                .verticalFadingEdge(scrollState, 32.dp)
+                .verticalScroll(scrollState)
+        ) {
+            Title(title = title)
+            Subtitle(subtitle = subtitle)
+        }
+    }
+}
+
+@Composable
 private fun Title(title: String) {
     Text(
         text = title,
-        style = MaterialTheme.typography.headlineSmall
+        style = MaterialTheme.typography.headlineSmall,
+        modifier = Modifier.fillMaxWidth()
     )
 }
 
@@ -164,7 +244,24 @@ private fun Title(title: String) {
 private fun Subtitle(subtitle: String) {
     Text(
         text = subtitle,
-        style = MaterialTheme.typography.bodySmall
+        style = MaterialTheme.typography.bodySmall,
+        modifier = Modifier.fillMaxWidth()
+    )
+}
+
+@Composable
+private fun SeriesImage(
+    image: String,
+    modifier: Modifier = Modifier
+) {
+    AsyncImage(
+        model = image,
+        placeholder = rememberVectorPainter(image = Icons.Default.InsertPhoto),
+        error = rememberVectorPainter(image = Icons.Default.BrokenImage),
+        contentDescription = null,
+        modifier = modifier
+            .fillMaxWidth(0.4f)
+            .aspectRatio(0.7f)
     )
 }
 
@@ -260,17 +357,6 @@ private fun Rating(
 }
 
 @Composable
-private fun DeleteButton(onDeletePressed: () -> Unit) {
-    Button(
-        onClick = { onDeletePressed() },
-        colors = ButtonDefaults.buttonColors(containerColor = Color.Red),
-        modifier = Modifier.padding(start = 16.dp, top = 16.dp, end = 16.dp, bottom = 0.dp)
-    ) {
-        Text(text = stringResource(id = R.string.series_detail_delete))
-    }
-}
-
-@Composable
 private fun ConfirmButton(
     isSendingData: Boolean,
     onConfirmPressed: () -> Unit
@@ -284,7 +370,8 @@ private fun ConfirmButton(
                 keyboardController?.hide()
             }
         },
-        modifier = Modifier.padding(start = 16.dp, top = 16.dp, end = 16.dp, bottom = 0.dp)
+        modifier = Modifier.padding(start = 16.dp, top = 32.dp, end = 16.dp, bottom = 0.dp),
+        contentPadding = PaddingValues(horizontal = 48.dp, vertical = 16.dp)
     ) {
         Text(text = stringResource(id = R.string.series_detail_confirm))
     }
@@ -329,6 +416,7 @@ private fun Preview() {
         id = 0,
         title = "Title",
         subtitle = "Anime - TV - Finished",
+        imageUrl = "",
         possibleSeriesStatus = listOf(
             UserSeriesStatus.Current,
             UserSeriesStatus.Completed,
