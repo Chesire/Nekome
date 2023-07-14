@@ -74,4 +74,13 @@ class GetImageUseCaseTest {
 
         assertEquals(model.large.url, result)
     }
+
+    @Test
+    fun `Given no image available, When invoking, Then empty string is returned`() = runTest {
+        coEvery { pref.imageQuality } returns flowOf(ImageQuality.High)
+
+        val result = getImage(ImageModel.empty)
+
+        assertEquals("", result)
+    }
 }
