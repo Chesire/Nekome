@@ -1,0 +1,1 @@
+* Update the series detail view
