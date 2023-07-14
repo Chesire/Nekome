@@ -60,10 +60,10 @@ fun Modifier.verticalFadingEdge(
         val scrollFromTop = scrollState.value
         val scrollFromBottom = scrollState.maxValue - scrollState.value
 
-        val topFadingEdgeStrength = lengthValue * (scrollFromTop / lengthValue).coerceAtMost(1f)
-
-        val bottomFadingEdgeStrength =
-            lengthValue * (scrollFromBottom / lengthValue).coerceAtMost(1f)
+        val topFadingEdgeStrength = lengthValue * (scrollFromTop / lengthValue)
+            .coerceAtMost(1f)
+        val bottomFadingEdgeStrength = lengthValue * (scrollFromBottom / lengthValue)
+            .coerceAtMost(1f)
 
         drawContent()
 

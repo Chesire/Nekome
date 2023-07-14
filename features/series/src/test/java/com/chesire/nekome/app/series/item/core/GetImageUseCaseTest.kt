@@ -64,7 +64,6 @@ class GetImageUseCaseTest {
         val result = getImage(model)
 
         assertEquals(model.medium.url, result)
-
     }
 
     @Test

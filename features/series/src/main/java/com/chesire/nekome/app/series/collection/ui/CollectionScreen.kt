@@ -330,7 +330,6 @@ private fun SeriesItem(
                                 style = MaterialTheme.typography.bodyMedium.copy(),
                                 textAlign = TextAlign.Center
                             )
-
                         }
                         if (model.showPlusOne) {
                             IconButton(
