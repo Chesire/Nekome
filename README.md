@@ -25,7 +25,7 @@ Nekome is an Android application that helps with tracking your anime and manga w
 
 ## Tech Stack
 
-* Support for Android 21+
+* Support for Android 5.0+ (SDK 21+)
 * Fully Kotlin
 * Uses [Kitsu](https://kitsu.io/) to store information, all accessed through [their API](https://kitsu.docs.apiary.io/)
 * [MVVM](https://developer.android.com/topic/libraries/architecture) for the architecture
