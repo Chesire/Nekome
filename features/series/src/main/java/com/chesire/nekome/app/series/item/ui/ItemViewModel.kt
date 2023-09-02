@@ -3,7 +3,6 @@ package com.chesire.nekome.app.series.item.ui
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.chesire.nekome.app.series.R
 import com.chesire.nekome.app.series.item.core.BuildTitleUseCase
 import com.chesire.nekome.app.series.item.core.DeleteItemUseCase
 import com.chesire.nekome.app.series.item.core.GetImageUseCase
@@ -20,6 +19,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import com.chesire.nekome.core.resources.R as Res
 
 // Note this value is pulled from the nav_graph.xml
 private const val SERIES_ID = "seriesId"
@@ -96,7 +96,7 @@ class ItemViewModel @Inject constructor(
             state = state.copy(
                 isSendingData = false,
                 errorSnackbar = SnackbarData(
-                    stringRes = R.string.series_detail_failure,
+                    stringRes = Res.string.series_detail_failure,
                     formatText = state.title
                 )
             )
@@ -142,7 +142,7 @@ class ItemViewModel @Inject constructor(
                     state = state.copy(
                         isSendingData = false,
                         errorSnackbar = SnackbarData(
-                            stringRes = R.string.series_list_delete_failure
+                            stringRes = Res.string.series_list_delete_failure
                         )
                     )
                 }

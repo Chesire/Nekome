@@ -1,7 +1,7 @@
 package com.chesire.nekome.core.preferences.flags
 
 import android.content.Context
-import com.chesire.nekome.core.R
+import com.chesire.nekome.resources.StringResource
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.Assert.assertEquals
@@ -12,11 +12,11 @@ class ThemeTests {
     @Test
     fun `getValueMap returns expected map`() {
         val mockContext = mockk<Context> {
-            every { getString(R.string.settings_theme_system) } returns "system"
-            every { getString(R.string.settings_theme_dark) } returns "dark"
-            every { getString(R.string.settings_theme_light) } returns "light"
-            every { getString(R.string.settings_theme_dynamic_dark) } returns "dynamicDark"
-            every { getString(R.string.settings_theme_dynamic_light) } returns "dynamicLight"
+            every { getString(StringResource.settings_theme_system) } returns "system"
+            every { getString(StringResource.settings_theme_dark) } returns "dark"
+            every { getString(StringResource.settings_theme_light) } returns "light"
+            every { getString(StringResource.settings_theme_dynamic_dark) } returns "dynamicDark"
+            every { getString(StringResource.settings_theme_dynamic_light) } returns "dynamicLight"
         }
         val map = Theme.getValueMap(mockContext)
 

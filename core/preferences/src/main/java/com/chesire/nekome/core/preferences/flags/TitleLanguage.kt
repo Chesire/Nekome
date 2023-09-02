@@ -1,16 +1,16 @@
 package com.chesire.nekome.core.preferences.flags
 
 import androidx.annotation.StringRes
-import com.chesire.nekome.core.preferences.R
+import com.chesire.nekome.core.resources.R as Resource
 
 /**
  * Options available for the language used to display the titles.
  */
 enum class TitleLanguage(val index: Int, @StringRes val stringId: Int, val key: String) {
-    Canonical(0, R.string.title_language_canonical, ""),
-    English(1, R.string.title_language_english, "en"),
-    Romaji(2, R.string.title_language_romaji, "en_jp"),
-    Japanese(3, R.string.title_language_japanese, "ja_jp");
+    Canonical(0, Resource.string.title_language_canonical, ""),
+    English(1, Resource.string.title_language_english, "en"),
+    Romaji(2, Resource.string.title_language_romaji, "en_jp"),
+    Japanese(3, Resource.string.title_language_japanese, "ja_jp");
 
     companion object {
 

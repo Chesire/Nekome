@@ -2,17 +2,17 @@ package com.chesire.nekome.core.preferences.flags
 
 import android.content.Context
 import androidx.annotation.StringRes
-import com.chesire.nekome.core.R
+import com.chesire.nekome.resources.StringResource
 
 /**
  * Themes that the application can be to set to use.
  */
 enum class Theme(val value: Int, @StringRes val stringId: Int) {
-    System(-1, R.string.settings_theme_system),
-    Dark(2, R.string.settings_theme_dark),
-    Light(1, R.string.settings_theme_light),
-    DynamicDark(3, R.string.settings_theme_dynamic_dark),
-    DynamicLight(4, R.string.settings_theme_dynamic_light);
+    System(-1, StringResource.settings_theme_system),
+    Dark(2, StringResource.settings_theme_dark),
+    Light(1, StringResource.settings_theme_light),
+    DynamicDark(3, StringResource.settings_theme_dynamic_dark),
+    DynamicLight(4, StringResource.settings_theme_dynamic_light);
 
     companion object {
         /**

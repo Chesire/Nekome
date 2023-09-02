@@ -2,11 +2,11 @@
 
 package com.chesire.nekome.app.login.credentials.ui
 
-import com.chesire.nekome.app.login.R
 import com.chesire.nekome.app.login.credentials.core.ClearCredentialsUseCase
 import com.chesire.nekome.app.login.credentials.core.PopulateUserDetailsUseCase
 import com.chesire.nekome.app.login.credentials.core.VerifyCredentialsFailure
 import com.chesire.nekome.app.login.credentials.core.VerifyCredentialsUseCase
+import com.chesire.nekome.resources.StringResource
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import io.mockk.clearAllMocks
@@ -71,7 +71,7 @@ class CredentialsViewModelTest {
             }
 
             assertEquals(
-                R.string.login_error_credentials,
+                StringResource.login_error_credentials,
                 viewModel.uiState.value.errorSnackbarMessage
             )
         }
@@ -111,7 +111,10 @@ class CredentialsViewModelTest {
                 execute(ViewAction.LoginPressed)
             }
 
-            assertEquals(R.string.login_error_generic, viewModel.uiState.value.errorSnackbarMessage)
+            assertEquals(
+                StringResource.login_error_generic,
+                viewModel.uiState.value.errorSnackbarMessage
+            )
         }
 
     @Test
@@ -128,7 +131,10 @@ class CredentialsViewModelTest {
             execute(ViewAction.PasswordChanged("New Password"))
             execute(ViewAction.LoginPressed)
         }
-        assertEquals(R.string.login_error_generic, viewModel.uiState.value.errorSnackbarMessage)
+        assertEquals(
+            StringResource.login_error_generic,
+            viewModel.uiState.value.errorSnackbarMessage
+        )
         viewModel.execute(ViewAction.ErrorSnackbarObserved)
 
         assertNull(viewModel.uiState.value.errorSnackbarMessage)

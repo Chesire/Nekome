@@ -63,10 +63,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
-import com.chesire.nekome.app.search.R
 import com.chesire.nekome.app.search.host.core.model.SearchGroup
 import com.chesire.nekome.core.compose.theme.NekomeTheme
 import com.chesire.nekome.core.flags.SeriesType
+import com.chesire.nekome.resources.StringResource
 
 @Composable
 fun HostScreen(viewModel: HostViewModel = hiltViewModel()) {
@@ -140,7 +140,7 @@ private fun InputText(text: String, isError: Boolean, onInputTextChanged: (Strin
             autoCorrect = false
         ),
         singleLine = true,
-        label = { Text(text = stringResource(id = R.string.search_series_title)) },
+        label = { Text(text = stringResource(id = StringResource.search_series_title)) },
         isError = isError,
         modifier = Modifier
             .fillMaxWidth()
@@ -161,7 +161,7 @@ private fun SearchGroup(
         FilterChip(
             selected = selectedGroup == SearchGroup.Anime,
             onClick = { onSearchGroupSelected(SearchGroup.Anime) },
-            label = { Text(text = stringResource(id = R.string.search_anime)) },
+            label = { Text(text = stringResource(id = StringResource.search_anime)) },
             modifier = Modifier
                 .padding(8.dp, 0.dp, 8.dp, 8.dp)
                 .semantics { testTag = HostTags.Anime },
@@ -178,7 +178,7 @@ private fun SearchGroup(
         FilterChip(
             selected = selectedGroup == SearchGroup.Manga,
             onClick = { onSearchGroupSelected(SearchGroup.Manga) },
-            label = { Text(text = stringResource(id = R.string.search_manga)) },
+            label = { Text(text = stringResource(id = StringResource.search_manga)) },
             modifier = Modifier
                 .padding(8.dp, 0.dp, 8.dp, 8.dp)
                 .semantics { testTag = HostTags.Manga },
@@ -210,7 +210,7 @@ private fun SearchButton(isSearching: Boolean, onSearchPressed: () -> Unit) {
             .padding(16.dp)
             .semantics { testTag = HostTags.Search }
     ) {
-        Text(text = stringResource(id = R.string.search_search))
+        Text(text = stringResource(id = StringResource.search_search))
     }
 }
 
@@ -295,7 +295,7 @@ private fun ResultItem(model: ResultModel, onSeriesTrack: (ResultModel) -> Unit)
                 ) {
                     Icon(
                         imageVector = Icons.Default.Add,
-                        contentDescription = stringResource(id = R.string.results_track_series),
+                        contentDescription = stringResource(id = StringResource.results_track_series),
                         tint = MaterialTheme.colorScheme.primary,
                         modifier = Modifier.border(
                             1.dp,

@@ -10,8 +10,8 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NamedNavArgument
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
-import com.chesire.nekome.R
 import com.chesire.nekome.core.flags.SeriesType
+import com.chesire.nekome.resources.StringResource
 
 sealed class Screen {
 
@@ -46,7 +46,7 @@ sealed class Screen {
 
     object Host : Screen(), BottomNavTarget {
         override val route = "host"
-        override val title = R.string.nav_search
+        override val title = StringResource.nav_search
         override val icon = Icons.Default.Search
         override val tag = MainActivityTags.Search
     }
@@ -61,7 +61,7 @@ sealed class Screen {
             }
         )
 
-        override val title = R.string.nav_anime
+        override val title = StringResource.nav_anime
         override val icon = Icons.Default.VideoLibrary
         override val tag = MainActivityTags.Anime
     }
@@ -76,7 +76,7 @@ sealed class Screen {
             }
         )
 
-        override val title = R.string.nav_manga
+        override val title = StringResource.nav_manga
         override val icon = Icons.Default.CollectionsBookmark
         override val tag = MainActivityTags.Manga
     }
@@ -93,7 +93,7 @@ sealed class Screen {
 
     object Config : Screen(), BottomNavTarget {
         override val route = "config"
-        override val title = R.string.nav_settings
+        override val title = StringResource.nav_settings
         override val icon = Icons.Default.Settings
         override val tag = MainActivityTags.Settings
     }

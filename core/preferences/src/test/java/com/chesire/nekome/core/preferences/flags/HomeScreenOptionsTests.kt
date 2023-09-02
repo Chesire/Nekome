@@ -1,7 +1,7 @@
 package com.chesire.nekome.core.preferences.flags
 
 import android.content.Context
-import com.chesire.nekome.core.R
+import com.chesire.nekome.resources.StringResource
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.Assert.assertEquals
@@ -11,8 +11,8 @@ class HomeScreenOptionsTests {
     @Test
     fun `getValueMap returns expected map`() {
         val mockContext = mockk<Context> {
-            every { getString(R.string.nav_anime) } returns "Anime"
-            every { getString(R.string.nav_manga) } returns "Manga"
+            every { getString(StringResource.nav_anime) } returns "Anime"
+            every { getString(StringResource.nav_manga) } returns "Manga"
         }
         val map = HomeScreenOptions.getValueMap(mockContext)
 

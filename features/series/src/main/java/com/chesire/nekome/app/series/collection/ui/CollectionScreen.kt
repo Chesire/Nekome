@@ -62,12 +62,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
-import com.chesire.nekome.app.series.R
 import com.chesire.nekome.core.compose.composables.NekomeDialog
 import com.chesire.nekome.core.compose.theme.NekomeTheme
 import com.chesire.nekome.core.flags.Subtype
 import com.chesire.nekome.core.flags.UserSeriesStatus
 import com.chesire.nekome.core.preferences.flags.SortOption
+import com.chesire.nekome.resources.StringResource
 
 @Composable
 fun CollectionScreen(
@@ -126,7 +126,7 @@ private fun Render(
                     ) {
                         Icon(
                             imageVector = Icons.Default.FilterAlt,
-                            contentDescription = stringResource(id = R.string.menu_filter)
+                            contentDescription = stringResource(id = StringResource.menu_filter)
                         )
                     }
                     IconButton(
@@ -135,7 +135,7 @@ private fun Render(
                     ) {
                         Icon(
                             imageVector = Icons.Default.SortByAlpha,
-                            contentDescription = stringResource(id = R.string.menu_sort)
+                            contentDescription = stringResource(id = StringResource.menu_sort)
                         )
                     }
                     IconButton(
@@ -144,7 +144,7 @@ private fun Render(
                     ) {
                         Icon(
                             imageVector = Icons.Default.Refresh,
-                            contentDescription = stringResource(id = R.string.series_list_refresh)
+                            contentDescription = stringResource(id = StringResource.series_list_refresh)
                         )
                     }
                 }
@@ -240,7 +240,7 @@ private fun SeriesCollection(
                 .semantics { testTag = SeriesCollectionTags.EmptyView }
         ) {
             Text(
-                text = stringResource(id = R.string.series_list_empty),
+                text = stringResource(id = StringResource.series_list_empty),
                 style = MaterialTheme.typography.titleMedium,
                 modifier = Modifier.align(Alignment.Center)
             )
@@ -343,7 +343,7 @@ private fun SeriesItem(
                                 Icon(
                                     imageVector = Icons.Default.PlusOne,
                                     contentDescription = stringResource(
-                                        id = R.string.series_list_plus_one
+                                        id = StringResource.series_list_plus_one
                                     ),
                                     tint = MaterialTheme.colorScheme.primary
                                 )
@@ -358,16 +358,16 @@ private fun SeriesItem(
 
 private fun buildDateString(context: Context, startDate: String, endDate: String): String {
     return when {
-        startDate.isEmpty() && endDate.isEmpty() -> context.getString(R.string.series_list_unknown)
+        startDate.isEmpty() && endDate.isEmpty() -> context.getString(StringResource.series_list_unknown)
         startDate == endDate -> startDate
         endDate.isEmpty() -> context.getString(
-            R.string.series_list_date_range,
+            StringResource.series_list_date_range,
             startDate,
-            context.getString(R.string.series_list_ongoing)
+            context.getString(StringResource.series_list_ongoing)
         )
 
         else -> context.getString(
-            R.string.series_list_date_range,
+            StringResource.series_list_date_range,
             startDate,
             endDate
         )
@@ -378,9 +378,9 @@ private fun buildDateString(context: Context, startDate: String, endDate: String
 private fun SortDialog(sortOptions: Sort, onSortResult: (SortOption?) -> Unit) {
     if (sortOptions.show) {
         NekomeDialog(
-            title = R.string.sort_dialog_title,
-            confirmButton = R.string.ok,
-            cancelButton = R.string.cancel,
+            title = StringResource.sort_dialog_title,
+            confirmButton = StringResource.ok,
+            cancelButton = StringResource.cancel,
             currentValue = sortOptions.currentSort,
             allValues = sortOptions
                 .sortOptions
@@ -410,7 +410,7 @@ private fun RenderSnackbar(
 @Preview
 private fun Preview() {
     val initialState = UIState(
-        screenTitle = R.string.nav_anime,
+        screenTitle = StringResource.nav_anime,
         isInitializing = false,
         models = listOf(
             Series(

@@ -58,9 +58,9 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.chesire.nekome.app.login.R
 import com.chesire.nekome.core.compose.autofill
 import com.chesire.nekome.core.compose.theme.NekomeTheme
+import com.chesire.nekome.resources.StringResource
 
 @Composable
 fun CredentialsScreen(
@@ -160,7 +160,7 @@ private fun Render(
 @Composable
 private fun HeaderImage() {
     Image(
-        painter = painterResource(id = R.drawable.blackcat),
+        painter = painterResource(id = com.chesire.nekome.core.R.drawable.blackcat),
         contentDescription = null,
         contentScale = ContentScale.Inside,
         modifier = Modifier
@@ -194,7 +194,7 @@ private fun UsernameInput(
         ),
         isError = isUsernameError,
         singleLine = true,
-        label = { Text(text = stringResource(id = R.string.login_username)) },
+        label = { Text(text = stringResource(id = StringResource.login_username)) },
         modifier = Modifier
             .semantics { testTag = CredentialsTags.Username }
             .autofill(
@@ -229,9 +229,9 @@ private fun PasswordInput(
                     imageVector = if (passwordVisible) Icons.Default.Visibility else Icons.Default.VisibilityOff,
                     contentDescription = stringResource(
                         id = if (passwordVisible) {
-                            R.string.login_hide_password
+                            StringResource.login_hide_password
                         } else {
-                            R.string.login_show_password
+                            StringResource.login_show_password
                         }
                     )
                 )
@@ -252,7 +252,7 @@ private fun PasswordInput(
         ),
         isError = isPasswordError,
         singleLine = true,
-        label = { Text(text = stringResource(id = R.string.login_password)) },
+        label = { Text(text = stringResource(id = StringResource.login_password)) },
         modifier = Modifier
             .semantics { testTag = CredentialsTags.Password }
             .autofill(
@@ -271,7 +271,7 @@ private fun ForgotPasswordButton(modifier: Modifier = Modifier) {
         modifier = modifier,
         onClick = { uriHandler.openUri(forgotPasswordUrl) }
     ) {
-        Text(text = stringResource(id = R.string.login_forgot_password))
+        Text(text = stringResource(id = StringResource.login_forgot_password))
     }
 }
 
@@ -288,7 +288,7 @@ private fun LoginButton(isEnabled: Boolean, isLoggingIn: Boolean, onLoginPressed
             }
         }
     ) {
-        Text(text = stringResource(id = R.string.login_login))
+        Text(text = stringResource(id = StringResource.login_login))
     }
 }
 
@@ -304,7 +304,7 @@ private fun SignupButton() {
             keyboardController?.hide()
         }
     ) {
-        Text(text = stringResource(id = R.string.login_sign_up_kitsu))
+        Text(text = stringResource(id = StringResource.login_sign_up_kitsu))
     }
 }
 

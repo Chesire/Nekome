@@ -3,7 +3,6 @@
 package com.chesire.nekome.app.series.collection.ui
 
 import androidx.lifecycle.SavedStateHandle
-import com.chesire.nekome.app.series.R
 import com.chesire.nekome.app.series.collection.core.CollectSeriesUseCase
 import com.chesire.nekome.app.series.collection.core.CurrentFiltersUseCase
 import com.chesire.nekome.app.series.collection.core.CurrentSortUseCase
@@ -105,7 +104,10 @@ class CollectionViewModelTest {
 
     @Test
     fun `on init, uiState is emitted`() = runTest {
-        assertEquals(R.string.nav_anime, viewModel.uiState.value.screenTitle)
+        assertEquals(
+            StringResource.nav_anime,
+            viewModel.uiState.value.screenTitle
+        )
         assertEquals(models, viewModel.uiState.value.models)
     }
 
@@ -126,7 +128,7 @@ class CollectionViewModelTest {
 
         assertFalse(viewModel.uiState.value.isRefreshing)
         assertEquals(
-            R.string.series_list_refresh_error,
+            StringResource.series_list_refresh_error,
             viewModel.uiState.value.errorSnackbar?.stringRes
         )
     }
@@ -207,7 +209,7 @@ class CollectionViewModelTest {
             coVerify { incrementSeries(model.userId, null) }
             assertEquals(
                 SnackbarData(
-                    stringRes = R.string.series_list_try_again,
+                    stringRes = StringResource.series_list_try_again,
                     formatText = model.title
                 ),
                 viewModel.uiState.value.errorSnackbar

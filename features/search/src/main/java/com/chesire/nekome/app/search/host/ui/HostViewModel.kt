@@ -2,7 +2,6 @@ package com.chesire.nekome.app.search.host.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.chesire.nekome.app.search.R
 import com.chesire.nekome.app.search.host.core.HostInitializeUseCase
 import com.chesire.nekome.app.search.host.core.RememberSearchGroupUseCase
 import com.chesire.nekome.app.search.host.core.RetrieveUserSeriesIdsUseCase
@@ -10,6 +9,7 @@ import com.chesire.nekome.app.search.host.core.SearchFailureReason
 import com.chesire.nekome.app.search.host.core.SearchSeriesUseCase
 import com.chesire.nekome.app.search.host.core.TrackSeriesUseCase
 import com.chesire.nekome.app.search.host.core.model.SearchGroup
+import com.chesire.nekome.resources.StringResource
 import com.github.michaelbull.result.onFailure
 import com.github.michaelbull.result.onSuccess
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -98,17 +98,17 @@ class HostViewModel @Inject constructor(
             SearchFailureReason.InvalidTitle -> state.copy(
                 isSearching = false,
                 isSearchTextError = true,
-                errorSnackbar = SnackbarData(R.string.search_error_no_text)
+                errorSnackbar = SnackbarData(StringResource.search_error_no_text)
             )
 
             SearchFailureReason.NetworkError -> state.copy(
                 isSearching = false,
-                errorSnackbar = SnackbarData(R.string.error_generic)
+                errorSnackbar = SnackbarData(StringResource.error_generic)
             )
 
             SearchFailureReason.NoSeriesFound -> state.copy(
                 isSearching = false,
-                errorSnackbar = SnackbarData(R.string.search_error_no_series_found)
+                errorSnackbar = SnackbarData(StringResource.search_error_no_series_found)
             )
         }
     }
@@ -139,7 +139,7 @@ class HostViewModel @Inject constructor(
                             isTracking = false
                         ),
                         errorSnackbar = SnackbarData(
-                            R.string.results_failure,
+                            StringResource.results_failure,
                             model.title
                         )
                     )

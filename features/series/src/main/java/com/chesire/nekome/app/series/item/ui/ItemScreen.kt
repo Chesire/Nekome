@@ -60,11 +60,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
-import com.chesire.nekome.app.series.R
 import com.chesire.nekome.core.compose.composables.NekomeDialog
 import com.chesire.nekome.core.compose.theme.NekomeTheme
 import com.chesire.nekome.core.compose.verticalFadingEdge
 import com.chesire.nekome.core.flags.UserSeriesStatus
+import com.chesire.nekome.resources.StringResource
 import com.google.accompanist.flowlayout.FlowMainAxisAlignment
 import com.google.accompanist.flowlayout.FlowRow
 import kotlin.math.round
@@ -118,7 +118,7 @@ private fun Render(
                     ) {
                         Icon(
                             imageVector = Icons.Default.ArrowBack,
-                            contentDescription = stringResource(id = R.string.back)
+                            contentDescription = stringResource(id = StringResource.back)
                         )
                     }
                 },
@@ -126,7 +126,7 @@ private fun Render(
                     IconButton(onClick = onDeletePressed) {
                         Icon(
                             imageVector = Icons.Default.Delete,
-                            contentDescription = stringResource(id = R.string.series_detail_delete)
+                            contentDescription = stringResource(id = StringResource.series_detail_delete)
                         )
                     }
                 }
@@ -272,7 +272,7 @@ private fun SeriesStatus(
     onSeriesStatusChanged: (UserSeriesStatus) -> Unit
 ) {
     Text(
-        text = stringResource(id = R.string.series_detail_status_title),
+        text = stringResource(id = StringResource.series_detail_status_title),
         modifier = Modifier.padding(top = 16.dp),
         style = MaterialTheme.typography.bodyLarge
     )
@@ -303,7 +303,7 @@ private fun Progress(
     onProgressChanged: (String) -> Unit
 ) {
     Text(
-        text = stringResource(id = R.string.series_detail_progress_title),
+        text = stringResource(id = StringResource.series_detail_progress_title),
         modifier = Modifier.padding(top = 16.dp, bottom = 8.dp),
         style = MaterialTheme.typography.bodyLarge
     )
@@ -312,7 +312,12 @@ private fun Progress(
         onValueChange = onProgressChanged,
         modifier = Modifier.fillMaxWidth(),
         trailingIcon = {
-            Text(text = stringResource(id = R.string.series_detail_progress_out_of, length))
+            Text(
+                text = stringResource(
+                    id = StringResource.series_detail_progress_out_of,
+                    length
+                )
+            )
         },
         singleLine = true,
         keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number)
@@ -325,7 +330,7 @@ private fun Rating(
     onRatingChanged: (Float) -> Unit
 ) {
     Text(
-        text = stringResource(id = R.string.series_detail_rating),
+        text = stringResource(id = StringResource.series_detail_rating),
         modifier = Modifier.padding(top = 16.dp),
         style = MaterialTheme.typography.bodyLarge
     )
@@ -347,7 +352,7 @@ private fun Rating(
 
     Text(
         text = if (rating < 2f) {
-            stringResource(id = R.string.rating_none)
+            stringResource(id = StringResource.rating_none)
         } else {
             (round(rating) / 2.0).toString()
         },
@@ -373,7 +378,7 @@ private fun ConfirmButton(
         modifier = Modifier.padding(start = 16.dp, top = 32.dp, end = 16.dp, bottom = 0.dp),
         contentPadding = PaddingValues(horizontal = 48.dp, vertical = 16.dp)
     ) {
-        Text(text = stringResource(id = R.string.series_detail_confirm))
+        Text(text = stringResource(id = StringResource.series_detail_confirm))
     }
 }
 
@@ -384,10 +389,13 @@ private fun DeleteDialog(
 ) {
     if (deleteDialog.show) {
         NekomeDialog(
-            title = stringResource(id = R.string.series_list_delete_title, deleteDialog.title),
-            summary = stringResource(R.string.series_list_delete_body),
-            confirmButton = stringResource(id = R.string.series_list_delete_confirm),
-            cancelButton = stringResource(id = R.string.cancel),
+            title = stringResource(
+                id = StringResource.series_list_delete_title,
+                deleteDialog.title
+            ),
+            summary = stringResource(StringResource.series_list_delete_body),
+            confirmButton = stringResource(id = StringResource.series_list_delete_confirm),
+            cancelButton = stringResource(id = StringResource.cancel),
             onConfirmButtonClicked = { onDeleteResult(true) },
             onCancelButtonClicked = { onDeleteResult(false) }
         )
