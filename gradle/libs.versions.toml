@@ -7,10 +7,10 @@ androidx-hilt = "1.0.0"
 androidx-navigation = "2.6.0"
 androidx-room = "2.5.2"
 coil = "2.4.0"
-compose-compiler = "1.4.7"
+compose-compiler = "1.5.3"
 detekt = "1.23.1"
 hilt = "2.47"
-kotlin = "1.8.21"
+kotlin = "1.9.10"
 kotlin-coroutines = "1.7.3"
 mockk = "1.13.3"
 moshi = "1.15.0"
@@ -25,7 +25,7 @@ adevinta-barista = { module = "com.adevinta.android:barista", version = "4.3.0" 
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version = "1.6.1" }
 androidx-arch-core-testing = { module = "androidx.arch.core:core-testing", version = "2.2.0" }
 androidx-browser = { module = "androidx.browser:browser", version = "1.5.0" }
-androidx-compose-bom = { module = "androidx.compose:compose-bom", version = "2023.06.01" }
+androidx-compose-bom = { module = "androidx.compose:compose-bom", version = "2023.08.00" }
 androidx-compose-material = { module = "androidx.compose.material:material" }
 androidx-compose-material-icons-extended = { module = "androidx.compose.material:material-icons-extended" }
 androidx-compose-material3 = { module = "androidx.compose.material3:material3", version = "1.1.1" }
@@ -95,7 +95,7 @@ android-library = { id = "com.android.library", version.ref = "android-gradle-pl
 androidx-navigation-safeargs = { id = "androidx.navigation.safeargs.kotlin", version.ref = "androidx-navigation" }
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 google-dagger-hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
-google-devtools-ksp = { id = "com.google.devtools.ksp", version = "1.8.21-1.0.11" }
+google-devtools-ksp = { id = "com.google.devtools.ksp", version = "1.9.10-1.0.13" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kover = { id = "org.jetbrains.kotlinx.kover", version = "0.6.1" }
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version = "11.5.1" }
