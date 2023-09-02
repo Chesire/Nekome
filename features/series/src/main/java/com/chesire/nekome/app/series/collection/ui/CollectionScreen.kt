@@ -144,7 +144,9 @@ private fun Render(
                     ) {
                         Icon(
                             imageVector = Icons.Default.Refresh,
-                            contentDescription = stringResource(id = StringResource.series_list_refresh)
+                            contentDescription = stringResource(
+                                id = StringResource.series_list_refresh
+                            )
                         )
                     }
                 }
@@ -358,7 +360,9 @@ private fun SeriesItem(
 
 private fun buildDateString(context: Context, startDate: String, endDate: String): String {
     return when {
-        startDate.isEmpty() && endDate.isEmpty() -> context.getString(StringResource.series_list_unknown)
+        startDate.isEmpty() && endDate.isEmpty() -> context.getString(
+            StringResource.series_list_unknown
+        )
         startDate == endDate -> startDate
         endDate.isEmpty() -> context.getString(
             StringResource.series_list_date_range,

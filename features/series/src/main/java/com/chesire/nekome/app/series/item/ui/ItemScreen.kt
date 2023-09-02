@@ -126,7 +126,9 @@ private fun Render(
                     IconButton(onClick = onDeletePressed) {
                         Icon(
                             imageVector = Icons.Default.Delete,
-                            contentDescription = stringResource(id = StringResource.series_detail_delete)
+                            contentDescription = stringResource(
+                                id = StringResource.series_detail_delete
+                            )
                         )
                     }
                 }

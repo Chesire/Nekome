@@ -295,7 +295,9 @@ private fun ResultItem(model: ResultModel, onSeriesTrack: (ResultModel) -> Unit)
                 ) {
                     Icon(
                         imageVector = Icons.Default.Add,
-                        contentDescription = stringResource(id = StringResource.results_track_series),
+                        contentDescription = stringResource(
+                            id = StringResource.results_track_series
+                        ),
                         tint = MaterialTheme.colorScheme.primary,
                         modifier = Modifier.border(
                             1.dp,
