@@ -5,7 +5,6 @@ package com.chesire.nekome.app.series.collection.ui
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.chesire.nekome.app.series.R
 import com.chesire.nekome.app.series.collection.core.CollectSeriesUseCase
 import com.chesire.nekome.app.series.collection.core.CurrentFiltersUseCase
 import com.chesire.nekome.app.series.collection.core.CurrentSortUseCase
@@ -18,6 +17,7 @@ import com.chesire.nekome.app.series.collection.core.UpdateFiltersUseCase
 import com.chesire.nekome.app.series.collection.core.UpdateSortUseCase
 import com.chesire.nekome.core.flags.SeriesType
 import com.chesire.nekome.core.preferences.flags.SortOption
+import com.chesire.nekome.resources.StringResource
 import com.github.michaelbull.result.onFailure
 import com.github.michaelbull.result.onSuccess
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -60,8 +60,8 @@ class CollectionViewModel @Inject constructor(
     init {
         val seriesType = requireNotNull(savedStateHandle.get<SeriesType>(SERIES_TYPE))
         val screenTitle = when (seriesType) {
-            SeriesType.Anime -> R.string.nav_anime
-            SeriesType.Manga -> R.string.nav_manga
+            SeriesType.Anime -> StringResource.nav_anime
+            SeriesType.Manga -> StringResource.nav_manga
             SeriesType.Unknown -> error("Unknown series type")
         }
         state = state.copy(screenTitle = screenTitle)
@@ -108,7 +108,7 @@ class CollectionViewModel @Inject constructor(
             .onFailure {
                 state = state.copy(
                     isRefreshing = false,
-                    errorSnackbar = SnackbarData(R.string.series_list_refresh_error)
+                    errorSnackbar = SnackbarData(StringResource.series_list_refresh_error)
                 )
             }
     }
@@ -156,7 +156,7 @@ class CollectionViewModel @Inject constructor(
                     state = state.copy(
                         models = updateIsUpdating(series.userId, false),
                         errorSnackbar = SnackbarData(
-                            stringRes = R.string.series_list_try_again,
+                            stringRes = StringResource.series_list_try_again,
                             formatText = series.title
                         )
                     )

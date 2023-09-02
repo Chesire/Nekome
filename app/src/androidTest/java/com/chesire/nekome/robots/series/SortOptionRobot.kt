@@ -6,10 +6,10 @@ import androidx.compose.ui.test.onAllNodesWithTag
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
-import com.chesire.nekome.R
 import com.chesire.nekome.app.series.collection.ui.SeriesCollectionTags
 import com.chesire.nekome.core.compose.composables.DialogTags
 import com.chesire.nekome.helpers.getResource
+import com.chesire.nekome.resources.StringResource
 import com.chesire.nekome.robots.DialogResultsRobot
 import com.chesire.nekome.robots.DialogRobot
 
@@ -34,7 +34,7 @@ class SortOptionRobot(
      */
     fun selectByDefault() {
         composeContentTestRule
-            .onNodeWithText(R.string.sort_by_default.getResource())
+            .onNodeWithText(StringResource.sort_by_default.getResource())
             .performClick()
     }
 
@@ -43,7 +43,7 @@ class SortOptionRobot(
      */
     fun selectByTitle() {
         composeContentTestRule
-            .onNodeWithText(R.string.sort_by_title.getResource())
+            .onNodeWithText(StringResource.sort_by_title.getResource())
             .performClick()
     }
 
@@ -52,7 +52,7 @@ class SortOptionRobot(
      */
     fun selectByStartDate() {
         composeContentTestRule
-            .onNodeWithText(R.string.sort_by_start_date.getResource())
+            .onNodeWithText(StringResource.sort_by_start_date.getResource())
             .performClick()
     }
 
@@ -61,7 +61,7 @@ class SortOptionRobot(
      */
     fun selectByEndDate() {
         composeContentTestRule
-            .onNodeWithText(R.string.sort_by_end_date.getResource())
+            .onNodeWithText(StringResource.sort_by_end_date.getResource())
             .performClick()
     }
 
@@ -70,7 +70,7 @@ class SortOptionRobot(
      */
     fun selectByRating() {
         composeContentTestRule
-            .onNodeWithText(R.string.sort_by_rating.getResource())
+            .onNodeWithText(StringResource.sort_by_rating.getResource())
             .performClick()
     }
 
@@ -94,10 +94,10 @@ class SortOptionResultsRobot(
      */
     fun isLoadedCorrectly() {
         val collection = composeContentTestRule.onAllNodesWithTag(DialogTags.OptionText, true)
-        collection[0].assertTextContains(R.string.sort_by_default.getResource())
-        collection[1].assertTextContains(R.string.sort_by_title.getResource())
-        collection[2].assertTextContains(R.string.sort_by_start_date.getResource())
-        collection[3].assertTextContains(R.string.sort_by_end_date.getResource())
-        collection[4].assertTextContains(R.string.sort_by_rating.getResource())
+        collection[0].assertTextContains(StringResource.sort_by_default.getResource())
+        collection[1].assertTextContains(StringResource.sort_by_title.getResource())
+        collection[2].assertTextContains(StringResource.sort_by_start_date.getResource())
+        collection[3].assertTextContains(StringResource.sort_by_end_date.getResource())
+        collection[4].assertTextContains(StringResource.sort_by_rating.getResource())
     }
 }

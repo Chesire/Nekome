@@ -2,11 +2,11 @@ package com.chesire.nekome.app.login.credentials.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.chesire.nekome.app.login.R
 import com.chesire.nekome.app.login.credentials.core.ClearCredentialsUseCase
 import com.chesire.nekome.app.login.credentials.core.PopulateUserDetailsUseCase
 import com.chesire.nekome.app.login.credentials.core.VerifyCredentialsFailure
 import com.chesire.nekome.app.login.credentials.core.VerifyCredentialsUseCase
+import com.chesire.nekome.resources.StringResource
 import com.github.michaelbull.result.onFailure
 import com.github.michaelbull.result.onSuccess
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -38,11 +38,13 @@ class CredentialsViewModel @Inject constructor(
                 hasUsernameError = false,
                 loginButtonEnabled = viewAction.newUsername.isNotBlank() && state.password.isNotBlank()
             )
+
             is ViewAction.PasswordChanged -> state = state.copy(
                 password = viewAction.newPassword,
                 hasPasswordError = false,
                 loginButtonEnabled = state.username.isNotBlank() && viewAction.newPassword.isNotBlank()
             )
+
             ViewAction.LoginPressed -> performLogin()
             ViewAction.ErrorSnackbarObserved -> state = state.copy(errorSnackbarMessage = null)
             ViewAction.NavigationObserved -> state = state.copy(navigateScreenEvent = null)
@@ -75,16 +77,19 @@ class CredentialsViewModel @Inject constructor(
         val newState = when (failure) {
             VerifyCredentialsFailure.InvalidCredentials -> state.copy(
                 isPerformingLogin = false,
-                errorSnackbarMessage = R.string.login_error_credentials
+                errorSnackbarMessage = StringResource.login_error_credentials
             )
+
             VerifyCredentialsFailure.NetworkError -> state.copy(
                 isPerformingLogin = false,
-                errorSnackbarMessage = R.string.login_error_generic
+                errorSnackbarMessage = StringResource.login_error_generic
             )
+
             VerifyCredentialsFailure.PasswordInvalid -> state.copy(
                 hasPasswordError = true,
                 isPerformingLogin = false
             )
+
             VerifyCredentialsFailure.UsernameInvalid -> state.copy(
                 hasUsernameError = true,
                 isPerformingLogin = false

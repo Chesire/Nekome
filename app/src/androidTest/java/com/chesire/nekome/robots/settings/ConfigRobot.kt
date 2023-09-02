@@ -5,9 +5,9 @@ import androidx.compose.ui.test.junit4.ComposeContentTestRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
-import com.chesire.nekome.R
 import com.chesire.nekome.app.settings.config.ui.ConfigTags
 import com.chesire.nekome.helpers.getResource
+import com.chesire.nekome.resources.StringResource
 
 /**
  * Method to interact with the [ConfigRobot].
@@ -25,7 +25,7 @@ class ConfigRobot(private val composeContentTestRule: ComposeContentTestRule) {
      */
     fun clickDefaultSeriesState() {
         composeContentTestRule
-            .onNodeWithText(R.string.settings_default_series_status_title.getResource())
+            .onNodeWithText(StringResource.settings_default_series_status_title.getResource())
             .performClick()
     }
 
@@ -40,7 +40,7 @@ class ConfigRobot(private val composeContentTestRule: ComposeContentTestRule) {
      */
     fun clickDefaultHomeScreen() {
         composeContentTestRule
-            .onNodeWithText(R.string.settings_default_home_title.getResource())
+            .onNodeWithText(StringResource.settings_default_home_title.getResource())
             .performClick()
     }
 
@@ -55,7 +55,7 @@ class ConfigRobot(private val composeContentTestRule: ComposeContentTestRule) {
      */
     fun clickImageQuality() {
         composeContentTestRule
-            .onNodeWithText(R.string.settings_image_quality_title.getResource())
+            .onNodeWithText(StringResource.settings_image_quality_title.getResource())
             .performClick()
     }
 
@@ -70,7 +70,7 @@ class ConfigRobot(private val composeContentTestRule: ComposeContentTestRule) {
      */
     fun clickTitleLanguage() {
         composeContentTestRule
-            .onNodeWithText(R.string.settings_title_language_title.getResource())
+            .onNodeWithText(StringResource.settings_title_language_title.getResource())
             .performClick()
     }
 
@@ -85,7 +85,7 @@ class ConfigRobot(private val composeContentTestRule: ComposeContentTestRule) {
      */
     fun clickTheme() {
         composeContentTestRule
-            .onNodeWithText(R.string.settings_theme.getResource())
+            .onNodeWithText(StringResource.settings_theme.getResource())
             .performClick()
     }
 
@@ -99,7 +99,7 @@ class ConfigRobot(private val composeContentTestRule: ComposeContentTestRule) {
      */
     fun changeRateOnComplete() {
         composeContentTestRule
-            .onNodeWithText(R.string.settings_rate_on_completion_summary.getResource())
+            .onNodeWithText(StringResource.settings_rate_on_completion_summary.getResource())
             .performClick()
     }
 
@@ -108,7 +108,7 @@ class ConfigRobot(private val composeContentTestRule: ComposeContentTestRule) {
      */
     fun goToLicenses() {
         composeContentTestRule
-            .onNodeWithText(R.string.settings_licenses.getResource())
+            .onNodeWithText(StringResource.settings_licenses.getResource())
             .performClick()
     }
 

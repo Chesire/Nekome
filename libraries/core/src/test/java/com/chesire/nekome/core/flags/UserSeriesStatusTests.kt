@@ -1,7 +1,7 @@
 package com.chesire.nekome.core.flags
 
 import android.content.Context
-import com.chesire.nekome.core.R
+import com.chesire.nekome.resources.StringResource
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.Assert.assertEquals
@@ -12,11 +12,11 @@ class UserSeriesStatusTests {
     @Test
     fun `getValueMap returns expected map`() {
         val mockContext = mockk<Context> {
-            every { getString(R.string.filter_by_current) } returns "current"
-            every { getString(R.string.filter_by_completed) } returns "completed"
-            every { getString(R.string.filter_by_on_hold) } returns "onhold"
-            every { getString(R.string.filter_by_dropped) } returns "dropped"
-            every { getString(R.string.filter_by_planned) } returns "planned"
+            every { getString(StringResource.filter_by_current) } returns "current"
+            every { getString(StringResource.filter_by_completed) } returns "completed"
+            every { getString(StringResource.filter_by_on_hold) } returns "onhold"
+            every { getString(StringResource.filter_by_dropped) } returns "dropped"
+            every { getString(StringResource.filter_by_planned) } returns "planned"
         }
         val map = UserSeriesStatus.getValueMap(mockContext)
 
@@ -30,11 +30,11 @@ class UserSeriesStatusTests {
     @Test
     fun `getValueMap ignores the Unknown value`() {
         val mockContext = mockk<Context> {
-            every { getString(R.string.filter_by_current) } returns "current"
-            every { getString(R.string.filter_by_completed) } returns "completed"
-            every { getString(R.string.filter_by_on_hold) } returns "onhold"
-            every { getString(R.string.filter_by_dropped) } returns "dropped"
-            every { getString(R.string.filter_by_planned) } returns "planned"
+            every { getString(StringResource.filter_by_current) } returns "current"
+            every { getString(StringResource.filter_by_completed) } returns "completed"
+            every { getString(StringResource.filter_by_on_hold) } returns "onhold"
+            every { getString(StringResource.filter_by_dropped) } returns "dropped"
+            every { getString(StringResource.filter_by_planned) } returns "planned"
         }
         val map = UserSeriesStatus.getValueMap(mockContext)
 

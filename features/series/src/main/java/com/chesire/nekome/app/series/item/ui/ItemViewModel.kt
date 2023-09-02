@@ -3,7 +3,6 @@ package com.chesire.nekome.app.series.item.ui
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.chesire.nekome.app.series.R
 import com.chesire.nekome.app.series.item.core.BuildTitleUseCase
 import com.chesire.nekome.app.series.item.core.DeleteItemUseCase
 import com.chesire.nekome.app.series.item.core.GetImageUseCase
@@ -11,6 +10,7 @@ import com.chesire.nekome.app.series.item.core.RetrieveItemUseCase
 import com.chesire.nekome.app.series.item.core.UpdateItemModel
 import com.chesire.nekome.app.series.item.core.UpdateItemUseCase
 import com.chesire.nekome.core.flags.UserSeriesStatus
+import com.chesire.nekome.resources.StringResource
 import com.github.michaelbull.result.onFailure
 import com.github.michaelbull.result.onSuccess
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -96,7 +96,7 @@ class ItemViewModel @Inject constructor(
             state = state.copy(
                 isSendingData = false,
                 errorSnackbar = SnackbarData(
-                    stringRes = R.string.series_detail_failure,
+                    stringRes = StringResource.series_detail_failure,
                     formatText = state.title
                 )
             )
@@ -142,7 +142,7 @@ class ItemViewModel @Inject constructor(
                     state = state.copy(
                         isSendingData = false,
                         errorSnackbar = SnackbarData(
-                            stringRes = R.string.series_list_delete_failure
+                            stringRes = StringResource.series_list_delete_failure
                         )
                     )
                 }

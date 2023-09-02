@@ -2,14 +2,14 @@ package com.chesire.nekome.core.preferences.flags
 
 import android.content.Context
 import androidx.annotation.StringRes
-import com.chesire.nekome.core.R
+import com.chesire.nekome.resources.StringResource
 
 /**
  * Options for default home screen.
  */
 enum class HomeScreenOptions(val index: Int, @StringRes val stringId: Int) {
-    Anime(0, R.string.nav_anime),
-    Manga(1, R.string.nav_manga);
+    Anime(0, StringResource.nav_anime),
+    Manga(1, StringResource.nav_manga);
 
     companion object {
         /**

@@ -42,7 +42,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import coil.transform.CircleCropTransformation
-import com.chesire.nekome.app.settings.R
 import com.chesire.nekome.core.compose.composables.NekomeDialog
 import com.chesire.nekome.core.compose.theme.NekomeTheme
 import com.chesire.nekome.core.flags.UserSeriesStatus
@@ -50,6 +49,7 @@ import com.chesire.nekome.core.preferences.flags.HomeScreenOptions
 import com.chesire.nekome.core.preferences.flags.ImageQuality
 import com.chesire.nekome.core.preferences.flags.Theme
 import com.chesire.nekome.core.preferences.flags.TitleLanguage
+import com.chesire.nekome.resources.StringResource
 
 @Composable
 fun ConfigScreen(
@@ -133,10 +133,10 @@ private fun Render(
 
     if (state.value.showLogoutDialog) {
         NekomeDialog(
-            title = stringResource(id = R.string.menu_logout_summary),
-            summary = stringResource(id = R.string.menu_logout_prompt_message),
-            confirmButton = stringResource(id = R.string.menu_logout_prompt_confirm),
-            cancelButton = stringResource(id = R.string.menu_logout_prompt_cancel),
+            title = stringResource(id = StringResource.menu_logout_summary),
+            summary = stringResource(id = StringResource.menu_logout_prompt_message),
+            confirmButton = stringResource(id = StringResource.menu_logout_prompt_confirm),
+            cancelButton = stringResource(id = StringResource.menu_logout_prompt_cancel),
             onConfirmButtonClicked = { onLogoutResult(true) },
             onCancelButtonClicked = { onLogoutResult(false) }
         )
@@ -144,9 +144,9 @@ private fun Render(
 
     if (state.value.showThemeDialog) {
         NekomeDialog(
-            title = R.string.settings_theme,
-            confirmButton = R.string.ok,
-            cancelButton = R.string.cancel,
+            title = StringResource.settings_theme,
+            confirmButton = StringResource.ok,
+            cancelButton = StringResource.cancel,
             currentValue = state.value.themeValue,
             allValues = Theme.values().associateWith { stringResource(id = it.stringId) }.toList(),
             onResult = onThemeResult
@@ -155,9 +155,9 @@ private fun Render(
 
     if (state.value.showDefaultHomeDialog) {
         NekomeDialog(
-            title = R.string.settings_default_home_title,
-            confirmButton = R.string.ok,
-            cancelButton = R.string.cancel,
+            title = StringResource.settings_default_home_title,
+            confirmButton = StringResource.ok,
+            cancelButton = StringResource.cancel,
             currentValue = state.value.defaultHomeValue,
             allValues = HomeScreenOptions
                 .values()
@@ -169,9 +169,9 @@ private fun Render(
 
     if (state.value.showDefaultSeriesStatusDialog) {
         NekomeDialog(
-            title = R.string.settings_default_series_status_title,
-            confirmButton = R.string.ok,
-            cancelButton = R.string.cancel,
+            title = StringResource.settings_default_series_status_title,
+            confirmButton = StringResource.ok,
+            cancelButton = StringResource.cancel,
             currentValue = state.value.defaultSeriesStatusValue,
             allValues = UserSeriesStatus
                 .values()
@@ -184,9 +184,9 @@ private fun Render(
 
     if (state.value.showImageQualityDialog) {
         NekomeDialog(
-            title = R.string.settings_image_quality_title,
-            confirmButton = R.string.ok,
-            cancelButton = R.string.cancel,
+            title = StringResource.settings_image_quality_title,
+            confirmButton = StringResource.ok,
+            cancelButton = StringResource.cancel,
             currentValue = state.value.imageQualityValue,
             allValues = ImageQuality
                 .values()
@@ -198,9 +198,9 @@ private fun Render(
 
     if (state.value.showTitleLanguageDialog) {
         NekomeDialog(
-            title = R.string.settings_title_language_title,
-            confirmButton = R.string.ok,
-            cancelButton = R.string.cancel,
+            title = StringResource.settings_title_language_title,
+            confirmButton = StringResource.ok,
+            cancelButton = StringResource.cancel,
             currentValue = state.value.titleLanguageValue,
             allValues = TitleLanguage
                 .values()
@@ -248,7 +248,7 @@ private fun ProfileSection(
                 IconButton(onClick = onLogoutClicked) {
                     Icon(
                         imageVector = Icons.Default.Logout,
-                        contentDescription = stringResource(id = R.string.menu_logout)
+                        contentDescription = stringResource(id = StringResource.menu_logout)
                     )
                 }
             }
@@ -258,13 +258,13 @@ private fun ProfileSection(
 
 @Composable
 private fun ApplicationHeading() {
-    PreferenceHeading(title = stringResource(id = R.string.settings_category_application))
+    PreferenceHeading(title = stringResource(id = StringResource.settings_category_application))
 }
 
 @Composable
 private fun ThemePreference(@StringRes themeValue: Int, onThemeClicked: () -> Unit) {
     PreferenceSection(
-        title = stringResource(id = R.string.settings_theme),
+        title = stringResource(id = StringResource.settings_theme),
         summary = stringResource(id = themeValue),
         onClick = onThemeClicked
     )
@@ -273,22 +273,22 @@ private fun ThemePreference(@StringRes themeValue: Int, onThemeClicked: () -> Un
 @Composable
 private fun DefaultHomeScreenPreference(onDefaultHomeScreenClicked: () -> Unit) {
     PreferenceSection(
-        title = stringResource(id = R.string.settings_default_home_title),
-        summary = stringResource(id = R.string.settings_default_home_summary),
+        title = stringResource(id = StringResource.settings_default_home_title),
+        summary = stringResource(id = StringResource.settings_default_home_summary),
         onClick = onDefaultHomeScreenClicked
     )
 }
 
 @Composable
 private fun SeriesHeading() {
-    PreferenceHeading(title = stringResource(id = R.string.settings_category_series))
+    PreferenceHeading(title = stringResource(id = StringResource.settings_category_series))
 }
 
 @Composable
 private fun DefaultSeriesStatusPreference(onDefaultSeriesStatusClicked: () -> Unit) {
     PreferenceSection(
-        title = stringResource(id = R.string.settings_default_series_status_title),
-        summary = stringResource(id = R.string.settings_default_series_status_summary),
+        title = stringResource(id = StringResource.settings_default_series_status_title),
+        summary = stringResource(id = StringResource.settings_default_series_status_summary),
         onClick = onDefaultSeriesStatusClicked
     )
 }
@@ -296,8 +296,8 @@ private fun DefaultSeriesStatusPreference(onDefaultSeriesStatusClicked: () -> Un
 @Composable
 private fun ImageQualityPreference(onImageQualityClicked: () -> Unit) {
     PreferenceSection(
-        title = stringResource(id = R.string.settings_image_quality_title),
-        summary = stringResource(id = R.string.settings_image_quality_summary),
+        title = stringResource(id = StringResource.settings_image_quality_title),
+        summary = stringResource(id = StringResource.settings_image_quality_summary),
         onClick = onImageQualityClicked
     )
 }
@@ -305,8 +305,8 @@ private fun ImageQualityPreference(onImageQualityClicked: () -> Unit) {
 @Composable
 private fun TitleLanguagePreference(onTitleLanguageClicked: () -> Unit) {
     PreferenceSection(
-        title = stringResource(id = R.string.settings_title_language_title),
-        summary = stringResource(id = R.string.settings_title_language_summary),
+        title = stringResource(id = StringResource.settings_title_language_title),
+        summary = stringResource(id = StringResource.settings_title_language_summary),
         onClick = onTitleLanguageClicked
     )
 }
@@ -326,12 +326,12 @@ private fun RateSeriesPreference(
     ) {
         Column(verticalArrangement = Arrangement.Center) {
             Text(
-                text = stringResource(id = R.string.settings_rate_on_completion_title),
+                text = stringResource(id = StringResource.settings_rate_on_completion_title),
                 style = MaterialTheme.typography.titleMedium
             )
 
             Text(
-                text = stringResource(id = R.string.settings_rate_on_completion_summary),
+                text = stringResource(id = StringResource.settings_rate_on_completion_summary),
                 style = MaterialTheme.typography.bodySmall
             )
         }
@@ -344,14 +344,14 @@ private fun RateSeriesPreference(
 
 @Composable
 private fun AboutHeading() {
-    PreferenceHeading(title = stringResource(id = R.string.settings_category_about))
+    PreferenceHeading(title = stringResource(id = StringResource.settings_category_about))
 }
 
 @Composable
 private fun VersionLink() {
     PreferenceSection(
-        title = stringResource(id = R.string.settings_version),
-        summary = stringResource(id = R.string.version),
+        title = stringResource(id = StringResource.settings_version),
+        summary = stringResource(id = StringResource.version),
         onClick = null
     )
 }
@@ -361,7 +361,7 @@ private fun GitHubLink() {
     val uriHandler = LocalUriHandler.current
     val uri = "https://github.com/Chesire/Nekome"
     PreferenceSection(
-        title = stringResource(id = R.string.settings_github),
+        title = stringResource(id = StringResource.settings_github),
         summary = uri,
         onClick = { uriHandler.openUri(uri) }
     )
@@ -370,7 +370,7 @@ private fun GitHubLink() {
 @Composable
 private fun LicensesLink(onLicensesLinkClicked: () -> Unit) {
     PreferenceSection(
-        title = stringResource(id = R.string.settings_licenses),
+        title = stringResource(id = StringResource.settings_licenses),
         summary = null,
         onClick = onLicensesLinkClicked
     )

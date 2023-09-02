@@ -22,9 +22,9 @@ import androidx.compose.ui.semantics.testTag
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import com.chesire.nekome.app.series.R
 import com.chesire.nekome.core.compose.theme.NekomeTheme
 import com.chesire.nekome.core.flags.UserSeriesStatus
+import com.chesire.nekome.resources.StringResource
 
 @Composable
 fun FilterDialog(
@@ -53,7 +53,7 @@ private fun Render(
                 modifier = Modifier.padding(16.dp)
             ) {
                 Text(
-                    text = stringResource(id = R.string.filter_dialog_title),
+                    text = stringResource(id = StringResource.filter_dialog_title),
                     style = MaterialTheme.typography.titleLarge,
                     modifier = Modifier.padding(bottom = 8.dp)
                 )
@@ -99,7 +99,7 @@ private fun Render(
                             .semantics { testTag = FilterTags.CancelButton },
                         onClick = { onFilterResult(null) }
                     ) {
-                        Text(text = stringResource(id = R.string.cancel))
+                        Text(text = stringResource(id = StringResource.cancel))
                     }
                     TextButton(
                         modifier = Modifier.semantics { testTag = FilterTags.OkButton },
@@ -112,7 +112,7 @@ private fun Render(
                         },
                         enabled = selectedFilters.any { it.value }
                     ) {
-                        Text(text = stringResource(id = R.string.ok))
+                        Text(text = stringResource(id = StringResource.ok))
                     }
                 }
             }

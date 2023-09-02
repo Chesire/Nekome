@@ -2,7 +2,6 @@
 
 package com.chesire.nekome.app.search.host.ui
 
-import com.chesire.nekome.app.search.R
 import com.chesire.nekome.app.search.host.core.HostInitializeUseCase
 import com.chesire.nekome.app.search.host.core.InitializeArgs
 import com.chesire.nekome.app.search.host.core.RememberSearchGroupUseCase
@@ -15,6 +14,7 @@ import com.chesire.nekome.core.flags.SeriesType
 import com.chesire.nekome.core.flags.Subtype
 import com.chesire.nekome.core.models.ImageModel
 import com.chesire.nekome.datasource.search.SearchDomain
+import com.chesire.nekome.resources.StringResource
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import io.mockk.clearAllMocks
@@ -154,7 +154,7 @@ class HostViewModelTest {
     @Test
     fun `Given api call fails, When ExecuteSearch, Then error snackbar state is emitted`() =
         runTest {
-            val expected = SnackbarData(R.string.error_generic)
+            val expected = SnackbarData(StringResource.error_generic)
             coEvery {
                 searchSeries(any(), SearchGroup.Anime)
             } returns Err(SearchFailureReason.NetworkError)

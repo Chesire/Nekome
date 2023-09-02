@@ -28,6 +28,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.chesire.nekome.app.login.R
 import com.chesire.nekome.core.compose.theme.NekomeTheme
+import com.chesire.nekome.resources.StringResource
 
 @Composable
 fun SyncingScreen(
@@ -82,7 +83,7 @@ private fun Avatar(imageUrl: String, modifier: Modifier = Modifier) {
 @Composable
 private fun SyncingText(modifier: Modifier = Modifier) {
     Text(
-        text = stringResource(id = R.string.syncing_syncing),
+        text = stringResource(id = StringResource.syncing_syncing),
         fontSize = 24.sp,
         modifier = modifier
     )

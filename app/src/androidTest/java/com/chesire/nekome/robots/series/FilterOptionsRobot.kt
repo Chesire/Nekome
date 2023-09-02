@@ -13,10 +13,10 @@ import androidx.compose.ui.test.onAllNodesWithTag
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
-import com.chesire.nekome.R
 import com.chesire.nekome.app.series.collection.ui.FilterTags
 import com.chesire.nekome.app.series.collection.ui.SeriesCollectionTags
 import com.chesire.nekome.helpers.getResource
+import com.chesire.nekome.resources.StringResource
 
 /**
  * Robot to interact with the filter dialog.
@@ -37,7 +37,7 @@ class FilterOptionsRobot(private val composeContentTestRule: ComposeContentTestR
      */
     fun clickCurrent() {
         composeContentTestRule
-            .onNodeWithText(R.string.filter_by_current.getResource())
+            .onNodeWithText(StringResource.filter_by_current.getResource())
             .performClick()
     }
 
@@ -46,7 +46,7 @@ class FilterOptionsRobot(private val composeContentTestRule: ComposeContentTestR
      */
     fun clickCompleted() {
         composeContentTestRule
-            .onNodeWithText(R.string.filter_by_completed.getResource())
+            .onNodeWithText(StringResource.filter_by_completed.getResource())
             .performClick()
     }
 
@@ -55,7 +55,7 @@ class FilterOptionsRobot(private val composeContentTestRule: ComposeContentTestR
      */
     fun clickOnHold() {
         composeContentTestRule
-            .onNodeWithText(R.string.filter_by_on_hold.getResource())
+            .onNodeWithText(StringResource.filter_by_on_hold.getResource())
             .performClick()
     }
 
@@ -64,7 +64,7 @@ class FilterOptionsRobot(private val composeContentTestRule: ComposeContentTestR
      */
     fun clickDropped() {
         composeContentTestRule
-            .onNodeWithText(R.string.filter_by_dropped.getResource())
+            .onNodeWithText(StringResource.filter_by_dropped.getResource())
             .performClick()
     }
 
@@ -73,7 +73,7 @@ class FilterOptionsRobot(private val composeContentTestRule: ComposeContentTestR
      */
     fun clickPlanned() {
         composeContentTestRule
-            .onNodeWithText(R.string.filter_by_planned.getResource())
+            .onNodeWithText(StringResource.filter_by_planned.getResource())
             .performClick()
     }
 
@@ -135,11 +135,11 @@ class FilterOptionsResultsRobot(private val composeContentTestRule: ComposeConte
      */
     fun isLoadedCorrectly() {
         val collection = composeContentTestRule.onAllNodesWithTag(FilterTags.OptionText, true)
-        collection[0].assertTextContains(R.string.filter_by_current.getResource())
-        collection[1].assertTextContains(R.string.filter_by_completed.getResource())
-        collection[2].assertTextContains(R.string.filter_by_on_hold.getResource())
-        collection[3].assertTextContains(R.string.filter_by_dropped.getResource())
-        collection[4].assertTextContains(R.string.filter_by_planned.getResource())
+        collection[0].assertTextContains(StringResource.filter_by_current.getResource())
+        collection[1].assertTextContains(StringResource.filter_by_completed.getResource())
+        collection[2].assertTextContains(StringResource.filter_by_on_hold.getResource())
+        collection[3].assertTextContains(StringResource.filter_by_dropped.getResource())
+        collection[4].assertTextContains(StringResource.filter_by_planned.getResource())
     }
 
     /**

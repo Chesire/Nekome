@@ -22,8 +22,8 @@ import androidx.compose.ui.semantics.testTag
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import com.chesire.nekome.app.series.R
 import com.chesire.nekome.core.compose.theme.NekomeTheme
+import com.chesire.nekome.resources.StringResource
 import kotlin.math.round
 import kotlin.math.roundToInt
 
@@ -54,7 +54,7 @@ private fun Render(
                 modifier = Modifier.padding(16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Text(text = stringResource(id = R.string.rate_dialog_title))
+                Text(text = stringResource(id = StringResource.rate_dialog_title))
                 Slider(
                     value = sliderValue,
                     onValueChange = {
@@ -71,7 +71,7 @@ private fun Render(
                 Text(
                     modifier = Modifier.padding(8.dp),
                     text = if (sliderValue < 2f) {
-                        stringResource(id = R.string.rating_none)
+                        stringResource(id = StringResource.rating_none)
                     } else {
                         (round(sliderValue) / 2.0).toString()
                     }
@@ -85,10 +85,10 @@ private fun Render(
                         modifier = Modifier.padding(horizontal = 8.dp),
                         onClick = { onRatingResult(null) }
                     ) {
-                        Text(text = stringResource(id = R.string.series_list_rate_cancel))
+                        Text(text = stringResource(id = StringResource.series_list_rate_cancel))
                     }
                     TextButton(onClick = { onRatingResult(sliderValue.roundToInt()) }) {
-                        Text(text = stringResource(id = R.string.series_list_rate_confirm))
+                        Text(text = stringResource(id = StringResource.series_list_rate_confirm))
                     }
                 }
             }

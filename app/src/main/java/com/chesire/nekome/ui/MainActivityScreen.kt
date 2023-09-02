@@ -27,7 +27,7 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.chesire.nekome.R
+import com.chesire.nekome.resources.StringResource
 import kotlinx.coroutines.launch
 
 @Composable
@@ -100,7 +100,7 @@ fun MainActivityScreen(viewModel: MainActivityViewModel = viewModel()) {
             }
         }
 
-        val snackbarString = stringResource(id = R.string.logout_forced)
+        val snackbarString = stringResource(id = StringResource.logout_forced)
         LaunchedEffect(state.value.kickUserToLogin) {
             if (state.value.kickUserToLogin != null) {
                 coroutineScope.launch {
