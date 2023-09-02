@@ -17,6 +17,7 @@ import com.chesire.nekome.core.flags.SeriesType
 import com.chesire.nekome.core.flags.Subtype
 import com.chesire.nekome.core.flags.UserSeriesStatus
 import com.chesire.nekome.core.preferences.flags.SortOption
+import com.chesire.nekome.resources.StringResource
 import com.chesire.nekome.testing.createSeriesDomain
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
