@@ -9,12 +9,12 @@ plugins {
 
 android {
     namespace 'com.chesire.nekome'
-    compileSdk sdk_version
+    compileSdk libs.versions.sdk.get().toInteger()
 
     defaultConfig {
         applicationId "com.chesire.nekome"
         minSdk 21
-        targetSdk sdk_version
+        targetSdk libs.versions.sdk.get().toInteger()
         versionCode 23071421 // Date of build formatted as 'yyMMddHH'
         versionName "2.0.5"
         testInstrumentationRunner "com.chesire.nekome.TestRunner"

@@ -7,11 +7,11 @@ plugins {
 
 android {
     namespace 'com.chesire.nekome.core.preferences'
-    compileSdk sdk_version
+    compileSdk libs.versions.sdk.get().toInteger()
 
     defaultConfig {
         minSdk 21
-        targetSdk sdk_version
+        targetSdk libs.versions.sdk.get().toInteger()
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"

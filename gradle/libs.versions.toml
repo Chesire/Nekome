@@ -17,6 +17,8 @@ moshi = "1.15.0"
 okhttp3 = "4.11.0"
 retrofit = "2.9.0"
 
+sdk = "34"
+
 [libraries]
 aboutlibraries-compose = { module = "com.mikepenz:aboutlibraries-compose", version.ref = "aboutlibraries" }
 adevinta-barista = { module = "com.adevinta.android:barista", version = "4.3.0" }
