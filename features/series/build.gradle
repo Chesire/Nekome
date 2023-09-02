@@ -1,10 +1,10 @@
 plugins {
     id "com.android.library"
+    id "com.google.devtools.ksp"
     id "kotlin-android"
     id "kotlin-parcelize"
     id "dagger.hilt.android.plugin"
     id "androidx.navigation.safeargs.kotlin"
-    id "kotlin-kapt"
 }
 
 android {
@@ -57,7 +57,7 @@ dependencies {
     implementation libs.squareup.moshi
     implementation libs.timber
     debugImplementation libs.androidx.compose.ui.tooling
-    kapt libs.google.hilt.android.compiler
+    ksp libs.google.hilt.android.compiler
 
     testImplementation project(":testing")
     testImplementation libs.androidx.arch.core.testing

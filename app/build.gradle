@@ -1,7 +1,7 @@
 plugins {
     id "com.android.application"
+    id "com.google.devtools.ksp"
     id "kotlin-android"
-    id "kotlin-kapt"
     id "dagger.hilt.android.plugin"
     id "androidx.navigation.safeargs.kotlin"
     id "com.mikepenz.aboutlibraries.plugin"
@@ -109,8 +109,8 @@ dependencies {
     implementation libs.timber
     debugImplementation libs.androidx.compose.ui.tooling
     debugImplementation libs.squareup.leakcanary
-    kapt libs.androidx.hilt.compiler
-    kapt libs.google.hilt.android.compiler
+    ksp libs.androidx.hilt.compiler
+    ksp libs.google.hilt.android.compiler
 
     testImplementation project(":testing")
     testImplementation libs.androidx.arch.core.testing
@@ -128,9 +128,5 @@ dependencies {
     androidTestImplementation libs.androidx.test.rules
     androidTestImplementation libs.google.hilt.android.testing
     androidTestImplementation libs.mockk.android
-    kaptAndroidTest libs.google.hilt.android.compiler
-}
-
-kapt {
-    correctErrorTypes true
+    kspAndroidTest libs.google.hilt.android.compiler
 }

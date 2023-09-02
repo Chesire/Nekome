@@ -1,7 +1,7 @@
 plugins {
     id "com.android.library"
+    id "com.google.devtools.ksp"
     id "kotlin-android"
-    id "kotlin-kapt"
     id "dagger.hilt.android.plugin"
     id "androidx.navigation.safeargs.kotlin"
 }
@@ -50,7 +50,7 @@ dependencies {
     implementation libs.kotlin.result
     implementation libs.timber
     debugImplementation libs.androidx.compose.ui.tooling
-    kapt libs.google.hilt.android.compiler
+    ksp libs.google.hilt.android.compiler
 
     testImplementation project(":testing")
     testImplementation libs.androidx.arch.core.testing

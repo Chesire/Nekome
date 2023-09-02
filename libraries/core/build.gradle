@@ -2,7 +2,6 @@ plugins {
     id "com.android.library"
     id "com.google.devtools.ksp"
     id "kotlin-android"
-    id "kotlin-kapt"
     id "kotlin-parcelize"
 }
 
@@ -35,7 +34,7 @@ dependencies {
     implementation libs.google.hilt.android
     implementation libs.google.material
     implementation libs.squareup.moshi
-    kapt libs.google.hilt.android.compiler
+    ksp libs.google.hilt.android.compiler
     ksp libs.squareup.moshi.codegen
 
     testImplementation project(":testing")
