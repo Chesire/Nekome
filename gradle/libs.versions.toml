@@ -24,7 +24,7 @@ aboutlibraries-compose = { module = "com.mikepenz:aboutlibraries-compose", versi
 adevinta-barista = { module = "com.adevinta.android:barista", version = "4.3.0" }
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version = "1.6.1" }
 androidx-arch-core-testing = { module = "androidx.arch.core:core-testing", version = "2.2.0" }
-androidx-browser = { module = "androidx.browser:browser", version = "1.5.0" }
+androidx-browser = { module = "androidx.browser:browser", version = "1.6.0" }
 androidx-compose-bom = { module = "androidx.compose:compose-bom", version = "2023.08.00" }
 androidx-compose-material = { module = "androidx.compose.material:material" }
 androidx-compose-material-icons-extended = { module = "androidx.compose.material:material-icons-extended" }
