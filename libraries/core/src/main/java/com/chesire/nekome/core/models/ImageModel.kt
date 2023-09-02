@@ -1,22 +1,19 @@
 package com.chesire.nekome.core.models
 
-import android.os.Parcelable
 import com.squareup.moshi.JsonClass
-import kotlinx.parcelize.Parcelize
 
 /**
  * Data for images.
  *
  * Images are stored as a model with smaller models for each of the sizes.
  */
-@Parcelize
 @JsonClass(generateAdapter = true)
 data class ImageModel(
     val tiny: ImageData,
     val small: ImageData,
     val medium: ImageData,
     val large: ImageData
-) : Parcelable {
+) {
 
     /**
      * The largest [ImageData] that contains a URL, returns null if no URL is valid.
@@ -71,13 +68,12 @@ data class ImageModel(
      * Data for a single image type, containing the [url] it can be accessed at, also the [width]
      * and [height] it should be.
      */
-    @Parcelize
     @JsonClass(generateAdapter = true)
     data class ImageData(
         val url: String,
         val width: Int,
         val height: Int
-    ) : Parcelable {
+    ) {
         companion object {
             /**
              * Provides an empty implementation of [ImageData].
