@@ -28,7 +28,7 @@ jobs:
           java-version: 17
       - name: run kover
         run: ./gradlew koverMergedXmlReport
-      - uses: codecov/codecov-action@v3
+      - uses: codecov/codecov-action@v4
 
   analyze:
     runs-on: ubuntu-latest
