@@ -61,7 +61,7 @@ androidx-test-rules = { module = "androidx.test:rules", version = "1.5.0" }
 androidx-work-runtime = { module = "androidx.work:work-runtime-ktx", version = "2.8.1" }
 coil = { module = "io.coil-kt:coil", version.ref = "coil" }
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
-detekt-compose = { module = "io.nlopez.compose.rules:detekt", version = "0.2.3" }
+detekt-compose = { module = "io.nlopez.compose.rules:detekt", version = "0.3.0" }
 detekt-formatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }
 detekt-kotlin-compiler = { module = "com.braisgabin.detekt:kotlin-compiler-wrapper", version = "0.0.4" }
 google-accompanist-flowlayout = { module = "com.google.accompanist:accompanist-flowlayout", version.ref = "accompanist" }
