@@ -140,7 +140,7 @@ GEM
     git (1.13.2)
       addressable (~> 2.8)
       rchardet (~> 1.8)
-    google-apis-androidpublisher_v3 (0.49.0)
+    google-apis-androidpublisher_v3 (0.50.0)
       google-apis-core (>= 0.11.0, < 2.a)
     google-apis-core (0.11.1)
       addressable (~> 2.5, >= 2.5.1)
