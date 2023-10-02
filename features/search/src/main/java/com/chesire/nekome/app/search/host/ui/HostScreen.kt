@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -109,7 +110,12 @@ private fun Render(
                 .padding(paddingValues),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            InputText(state.value.searchText, state.value.isSearchTextError, onInputTextChanged)
+            InputText(
+                state.value.searchText,
+                state.value.isSearchTextError,
+                onInputTextChanged,
+                onSearchPressed
+            )
             SearchGroup(state.value.searchGroup, onSearchGroupSelected)
             if (state.value.isSearching) {
                 CircularProgressIndicator()
@@ -132,13 +138,26 @@ private fun Render(
 }
 
 @Composable
-private fun InputText(text: String, isError: Boolean, onInputTextChanged: (String) -> Unit) {
+private fun InputText(
+    text: String,
+    isError: Boolean,
+    onInputTextChanged: (String) -> Unit,
+    onDonePressed: () -> Unit
+) {
+    val keyboardController = LocalSoftwareKeyboardController.current
+
     OutlinedTextField(
         value = text,
         onValueChange = onInputTextChanged,
         keyboardOptions = KeyboardOptions.Default.copy(
             keyboardType = KeyboardType.Text,
             autoCorrect = false
+        ),
+        keyboardActions = KeyboardActions(
+            onDone = {
+                onDonePressed()
+                keyboardController?.hide()
+            }
         ),
         singleLine = true,
         label = { Text(text = stringResource(id = StringResource.search_series_title)) },
