@@ -53,6 +53,7 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.semantics
@@ -258,9 +259,10 @@ private fun ResultItem(model: ResultModel, onSeriesTrack: (ResultModel) -> Unit)
                     error = rememberVectorPainter(image = Icons.Default.BrokenImage),
                     contentDescription = null,
                     modifier = Modifier
-                        .fillMaxWidth(0.25f)
+                        .fillMaxHeight()
                         .aspectRatio(0.7f)
-                        .align(Alignment.CenterVertically)
+                        .align(Alignment.CenterVertically),
+                    contentScale = ContentScale.FillBounds
                 )
                 Column(
                     modifier = Modifier

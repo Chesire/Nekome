@@ -3,6 +3,7 @@
 package com.chesire.nekome.app.series.collection.ui
 
 import android.content.Context
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -51,7 +52,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.semantics
@@ -286,9 +289,10 @@ private fun SeriesItem(
                     error = rememberVectorPainter(image = Icons.Default.BrokenImage),
                     contentDescription = null,
                     modifier = Modifier
-                        .fillMaxWidth(0.25f)
+                        .fillMaxHeight()
                         .aspectRatio(0.7f)
-                        .align(Alignment.CenterVertically)
+                        .align(Alignment.CenterVertically),
+                    contentScale = ContentScale.FillBounds
                 )
                 Column(
                     modifier = Modifier
