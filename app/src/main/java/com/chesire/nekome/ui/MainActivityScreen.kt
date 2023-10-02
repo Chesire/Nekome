@@ -1,7 +1,14 @@
 package com.chesire.nekome.ui
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.EaseInOutSine
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -13,6 +20,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -27,6 +35,7 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.chesire.nekome.core.compose.isScrollingUp
 import com.chesire.nekome.resources.StringResource
 import kotlinx.coroutines.launch
 
@@ -40,6 +49,7 @@ fun MainActivityScreen(viewModel: MainActivityViewModel = viewModel()) {
         val state = viewModel.uiState.collectAsState()
         val navController = rememberNavController()
         val snackbarHostState = remember { SnackbarHostState() }
+        val lazyListState = rememberLazyListState()
         val coroutineScope = rememberCoroutineScope()
 
         Scaffold(
@@ -53,30 +63,46 @@ fun MainActivityScreen(viewModel: MainActivityViewModel = viewModel()) {
             bottomBar = {
                 val navBackStackEntry by navController.currentBackStackEntryAsState()
                 if (Screen.showsBottomNav(navBackStackEntry?.destination?.route)) {
-                    NavigationBar(tonalElevation = 0.dp) {
-                        val currentDestination = navBackStackEntry?.destination
-                        bottomNavRoutes.forEach { screen ->
-                            check(screen is Screen)
-                            NavigationBarItem(
-                                icon = {
-                                    Icon(
-                                        imageVector = screen.icon,
-                                        contentDescription = stringResource(id = screen.title)
-                                    )
-                                },
-                                modifier = Modifier.semantics { testTag = screen.tag },
-                                label = { Text(stringResource(screen.title)) },
-                                selected = currentDestination?.hierarchy?.any { it.route == screen.route } == true,
-                                onClick = {
-                                    navController.navigate(screen.route) {
-                                        popUpTo(navController.graph.findStartDestination().id) {
-                                            saveState = true
+                    AnimatedVisibility(
+                        visible = lazyListState.isScrollingUp(),
+                        enter = slideInVertically(
+                            animationSpec = tween(200, easing = EaseInOutSine),
+                            initialOffsetY = {
+                                it
+                            }
+                        ),
+                        exit = slideOutVertically(
+                            animationSpec = tween(200, easing = EaseInOutSine),
+                            targetOffsetY = {
+                                it
+                            }
+                        )
+                    ) {
+                        NavigationBar(tonalElevation = 0.dp) {
+                            val currentDestination = navBackStackEntry?.destination
+                            bottomNavRoutes.forEach { screen ->
+                                check(screen is Screen)
+                                NavigationBarItem(
+                                    icon = {
+                                        Icon(
+                                            imageVector = screen.icon,
+                                            contentDescription = stringResource(id = screen.title)
+                                        )
+                                    },
+                                    modifier = Modifier.semantics { testTag = screen.tag },
+                                    label = { Text(stringResource(screen.title)) },
+                                    selected = currentDestination?.hierarchy?.any { it.route == screen.route } == true,
+                                    onClick = {
+                                        navController.navigate(screen.route) {
+                                            popUpTo(navController.graph.findStartDestination().id) {
+                                                saveState = true
+                                            }
+                                            launchSingleTop = true
+                                            restoreState = false
                                         }
-                                        launchSingleTop = true
-                                        restoreState = false
                                     }
-                                }
-                            )
+                                )
+                            }
                         }
                     }
                 }
@@ -93,7 +119,7 @@ fun MainActivityScreen(viewModel: MainActivityViewModel = viewModel()) {
                     modifier = Modifier.padding(paddingValues)
                 ) {
                     addLoginRoutes(navController, state.value.defaultHomeScreen)
-                    addSeriesRoutes(navController)
+                    addSeriesRoutes(navController, lazyListState)
                     addSearchRoutes()
                     addSettingsRoutes(navController)
                 }

@@ -3,6 +3,7 @@
 package com.chesire.nekome.app.series.collection.ui
 
 import android.content.Context
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -17,7 +18,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.BrokenImage
@@ -75,7 +78,8 @@ import com.chesire.nekome.resources.StringResource
 @Composable
 fun CollectionScreen(
     viewModel: CollectionViewModel = hiltViewModel(),
-    navigateToItem: (Int, String) -> Unit
+    lazyListState: LazyListState,
+    navigateToItem: (Int, String) -> Unit,
 ) {
     val state = viewModel.uiState.collectAsState()
 
@@ -87,6 +91,7 @@ fun CollectionScreen(
     }
     Render(
         state = state,
+        lazyListState = lazyListState,
         onRefresh = { viewModel.execute(ViewAction.PerformSeriesRefresh) },
         onSelectSeries = { viewModel.execute(ViewAction.SeriesPressed(it)) },
         onIncrementSeries = { viewModel.execute(ViewAction.IncrementSeriesPressed(it)) },
@@ -104,6 +109,7 @@ fun CollectionScreen(
 @Composable
 private fun Render(
     state: State<UIState>,
+    lazyListState: LazyListState,
     onRefresh: () -> Unit,
     onSelectSeries: (Series) -> Unit,
     onIncrementSeries: (Series) -> Unit,
@@ -169,6 +175,7 @@ private fun Render(
             SeriesCollection(
                 models = state.value.models,
                 isRefreshing = state.value.isRefreshing,
+                lazyListState = lazyListState,
                 modifier = Modifier.padding(paddingValues),
                 onRefresh = onRefresh,
                 onSelectSeries = onSelectSeries,
@@ -200,6 +207,7 @@ private fun Render(
 private fun SeriesCollection(
     models: List<Series>,
     isRefreshing: Boolean,
+    lazyListState: LazyListState,
     modifier: Modifier = Modifier,
     onRefresh: () -> Unit,
     onSelectSeries: (Series) -> Unit,
@@ -218,7 +226,8 @@ private fun SeriesCollection(
             LazyColumn(
                 modifier = Modifier.fillMaxSize(),
                 contentPadding = PaddingValues(8.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp)
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+                state = lazyListState
             ) {
                 items(
                     items = models,
@@ -478,6 +487,7 @@ private fun Preview() {
                 initialValue = initialState,
                 producer = { value = initialState }
             ),
+            lazyListState = rememberLazyListState(),
             onRefresh = { /**/ },
             onSelectSeries = { /**/ },
             onIncrementSeries = { /**/ },

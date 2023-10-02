@@ -1,5 +1,6 @@
 package com.chesire.nekome.ui
 
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
@@ -38,12 +39,12 @@ fun NavGraphBuilder.addLoginRoutes(
     }
 }
 
-fun NavGraphBuilder.addSeriesRoutes(navController: NavHostController) {
+fun NavGraphBuilder.addSeriesRoutes(navController: NavHostController, lazyListState: LazyListState) {
     composable(
         route = Screen.Anime.route,
         arguments = Screen.Anime.args
     ) {
-        CollectionScreen { seriesId, seriesTitle ->
+        CollectionScreen(lazyListState = lazyListState) { seriesId, seriesTitle ->
             navController.navigate("${Screen.Item.destination}/$seriesId/$seriesTitle")
         }
     }
@@ -52,7 +53,7 @@ fun NavGraphBuilder.addSeriesRoutes(navController: NavHostController) {
         route = Screen.Manga.route,
         arguments = Screen.Manga.args
     ) {
-        CollectionScreen { seriesId, seriesTitle ->
+        CollectionScreen(lazyListState = lazyListState) { seriesId, seriesTitle ->
             navController.navigate("${Screen.Item.destination}/$seriesId/$seriesTitle")
         }
     }
