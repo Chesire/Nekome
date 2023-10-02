@@ -32,12 +32,12 @@ subprojects {
         if (plugins.hasPlugin("android") || plugins.hasPlugin("android-library")) {
             configure<com.android.build.gradle.BaseExtension> {
                 compileOptions {
-                    sourceCompatibility = JavaVersion.VERSION_11
-                    targetCompatibility = JavaVersion.VERSION_11
+                    sourceCompatibility = JavaVersion.VERSION_17
+                    targetCompatibility = JavaVersion.VERSION_17
                 }
-                configure<org.jetbrains.kotlin.gradle.dsl.KotlinAndroidProjectExtension> {
-                    jvmToolchain(JavaVersion.VERSION_11.majorVersion.toInt())
-                }
+            }
+            configure<org.jetbrains.kotlin.gradle.dsl.KotlinAndroidProjectExtension> {
+                jvmToolchain(17)
             }
         }
     }
