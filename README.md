@@ -13,8 +13,10 @@ Nekome is an Android application that helps with tracking your anime and manga w
       alt="Download from Google Play"
       height="80">](https://play.google.com/store/apps/details?id=com.chesire.nekome)
 
-![List](fastlane/metadata/android/en-GB/images/phoneScreenshots/1_en-GB.png)
-![detail](fastlane/metadata/android/en-GB/images/phoneScreenshots/3_en-GB.png)
+<p>
+<img src="fastlane/metadata/android/en-GB/images/phoneScreenshots/1_en-GB.png" alt="list" width="300px">
+<img src="fastlane/metadata/android/en-GB/images/phoneScreenshots/3_en-GB.png" alt="detail" width="300px">
+</p>
 
 ## Features
 
