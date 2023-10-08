@@ -9,11 +9,11 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import timber.log.Timber
 
 class SeriesWidgetViewModel @Inject constructor(
     private val retrieveSeries: RetrieveSeriesUseCase,
-    private val updateSeries: UpdateSeriesUseCase
+    private val updateSeries: UpdateSeriesUseCase,
+    private val mapper: DomainMapper
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(UIState())
@@ -23,17 +23,7 @@ class SeriesWidgetViewModel @Inject constructor(
         viewModelScope.launch {
             retrieveSeries().collect { series ->
                 _uiState.update {
-                    Timber.i("Updating")
-                    it.copy(
-                        series = series.map {
-                            Series(
-                                userId = it.userId,
-                                title = it.title,
-                                progress = it.progress.toString(),
-                                isUpdating = false
-                            )
-                        }
-                    )
+                    it.copy(series = series.map(mapper::toSeries))
                 }
             }
         }
