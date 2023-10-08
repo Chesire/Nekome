@@ -3,7 +3,6 @@
 package com.chesire.nekome.app.series.collection.ui
 
 import android.content.Context
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -52,7 +51,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -367,6 +365,7 @@ private fun buildDateString(context: Context, startDate: String, endDate: String
         startDate.isEmpty() && endDate.isEmpty() -> context.getString(
             StringResource.series_list_unknown
         )
+
         startDate == endDate -> startDate
         endDate.isEmpty() -> context.getString(
             StringResource.series_list_date_range,
