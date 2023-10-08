@@ -31,6 +31,7 @@ import androidx.glance.text.TextStyle
 import com.chesire.nekome.core.compose.theme.DarkColorPalette
 import com.chesire.nekome.core.compose.theme.LightColorPalette
 import com.chesire.nekome.feature.serieswidget.SeriesWidgetEntryPoint
+import com.chesire.nekome.resources.StringResource
 import dagger.hilt.EntryPoints
 
 class SeriesWidget : GlanceAppWidget() {
@@ -45,6 +46,7 @@ class SeriesWidget : GlanceAppWidget() {
             val state by viewModel.uiState.collectAsState()
             Render(
                 state = state,
+                incrementText = context.getString(StringResource.series_widget_increment),
                 updateSeries = { viewModel.execute(ViewAction.UpdateSeries(it)) }
             )
         }
@@ -53,6 +55,7 @@ class SeriesWidget : GlanceAppWidget() {
     @Composable
     private fun Render(
         state: UIState,
+        incrementText: String,
         updateSeries: (Int) -> Unit
     ) {
         LazyColumn(
@@ -75,6 +78,7 @@ class SeriesWidget : GlanceAppWidget() {
                         title = item.title,
                         progress = item.progress,
                         isUpdating = item.isUpdating,
+                        incrementText = incrementText,
                         updateSeries = updateSeries
                     )
                     Spacer(modifier = GlanceModifier.height(8.dp).fillMaxWidth())
@@ -89,6 +93,7 @@ class SeriesWidget : GlanceAppWidget() {
         title: String,
         progress: String,
         isUpdating: Boolean,
+        incrementText: String,
         updateSeries: (Int) -> Unit
     ) {
         Row(
@@ -138,7 +143,7 @@ class SeriesWidget : GlanceAppWidget() {
                 )
             } else {
                 Button(
-                    text = "+1",
+                    text = incrementText,
                     onClick = { updateSeries(id) }
                 )
             }

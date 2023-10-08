@@ -81,6 +81,9 @@
     <string name="series_detail_failure">Failed to update series %s, please try again</string>
     <string name="series_detail_delete">Delete</string>
 
+    <string name="series_widget_description">Anime list</string>
+    <string name="series_widget_increment">+1</string>
+
     <string name="rating_none">No rating</string>
 
     <string name="login_username">Kitsu email</string>
