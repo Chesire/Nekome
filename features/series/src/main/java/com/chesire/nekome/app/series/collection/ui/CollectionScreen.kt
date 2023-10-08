@@ -52,6 +52,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.semantics
@@ -286,9 +287,10 @@ private fun SeriesItem(
                     error = rememberVectorPainter(image = Icons.Default.BrokenImage),
                     contentDescription = null,
                     modifier = Modifier
-                        .fillMaxWidth(0.25f)
+                        .fillMaxHeight()
                         .aspectRatio(0.7f)
-                        .align(Alignment.CenterVertically)
+                        .align(Alignment.CenterVertically),
+                    contentScale = ContentScale.FillBounds
                 )
                 Column(
                     modifier = Modifier
@@ -363,6 +365,7 @@ private fun buildDateString(context: Context, startDate: String, endDate: String
         startDate.isEmpty() && endDate.isEmpty() -> context.getString(
             StringResource.series_list_unknown
         )
+
         startDate == endDate -> startDate
         endDate.isEmpty() -> context.getString(
             StringResource.series_list_date_range,
