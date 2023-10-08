@@ -1,0 +1,2 @@
+* Add a widget that allows user to update their anime series
+* UI improvements
