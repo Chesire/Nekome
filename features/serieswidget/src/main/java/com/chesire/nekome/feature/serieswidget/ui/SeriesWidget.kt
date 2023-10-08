@@ -87,6 +87,7 @@ class SeriesWidget : GlanceAppWidget() {
         }
     }
 
+    @Suppress("LongParameterList")
     @Composable
     private fun SeriesCard(
         id: Int,
