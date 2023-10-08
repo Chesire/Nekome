@@ -24,6 +24,7 @@ android {
 
 dependencies {
     implementation(project(":core:compose"))
+    implementation(project(":core:preferences"))
     implementation(project(":core:resources"))
     implementation(project(":libraries:core"))
     implementation(project(":libraries:datasource:series"))
