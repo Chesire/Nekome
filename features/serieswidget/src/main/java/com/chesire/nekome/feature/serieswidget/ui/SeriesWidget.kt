@@ -25,6 +25,7 @@ import androidx.glance.layout.fillMaxSize
 import androidx.glance.layout.fillMaxWidth
 import androidx.glance.layout.height
 import androidx.glance.layout.padding
+import androidx.glance.text.FontWeight
 import androidx.glance.text.Text
 import androidx.glance.text.TextStyle
 import com.chesire.nekome.core.compose.theme.DarkColorPalette
@@ -111,7 +112,8 @@ class SeriesWidget : GlanceAppWidget() {
                         color = ColorProvider(
                             day = LightColorPalette.onPrimaryContainer,
                             night = DarkColorPalette.onPrimaryContainer
-                        )
+                        ),
+                        fontWeight = FontWeight.Medium
                     ),
                     maxLines = 3
                 )
