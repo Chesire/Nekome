@@ -7,9 +7,13 @@ import androidx.work.Configuration
 import com.chesire.lifecyklelog.LifecykleLog
 import com.chesire.lifecyklelog.LogHandler
 import com.chesire.nekome.core.preferences.ApplicationPreferences
+import com.chesire.nekome.services.DataRefreshNotifier
 import com.chesire.nekome.services.WorkerQueue
 import dagger.hilt.android.HiltAndroidApp
 import javax.inject.Inject
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import timber.log.Timber
 
 /**
@@ -27,6 +31,10 @@ class App : Application(), Configuration.Provider {
     @Inject
     lateinit var workerQueue: WorkerQueue
 
+    @Inject
+    lateinit var dataRefreshNotifier: DataRefreshNotifier
+
+    @OptIn(DelicateCoroutinesApi::class)
     override fun onCreate() {
         super.onCreate()
 
@@ -46,6 +54,9 @@ class App : Application(), Configuration.Provider {
         workerQueue.enqueueAuthRefresh()
         workerQueue.enqueueSeriesRefresh()
         workerQueue.enqueueUserRefresh()
+        GlobalScope.launch {
+            dataRefreshNotifier.initialize()
+        }
     }
 
     override fun getWorkManagerConfiguration() =

@@ -81,6 +81,9 @@
     <string name="series_detail_failure">シリーズ%sの更新に失敗しました。再試行してください</string>
     <string name="series_detail_delete">デリート</string>
 
+    <string name="series_widget_description">アニメ一覧</string>
+    <string name="series_widget_increment">+1</string>
+
     <string name="rating_none">評価なし</string>
 
     <string name="login_username">Kitsu eメール</string>

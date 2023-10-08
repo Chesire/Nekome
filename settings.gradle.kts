@@ -23,6 +23,7 @@ include(
     ":features:login",
     ":features:search",
     ":features:series",
+    ":features:serieswidget",
     ":features:settings",
     ":libraries:core",
     ":libraries:database",
