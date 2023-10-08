@@ -10,17 +10,25 @@ import androidx.glance.GlanceId
 import androidx.glance.GlanceModifier
 import androidx.glance.LocalContext
 import androidx.glance.appwidget.GlanceAppWidget
+import androidx.glance.appwidget.appWidgetBackground
+import androidx.glance.appwidget.background
+import androidx.glance.appwidget.cornerRadius
 import androidx.glance.appwidget.lazy.LazyColumn
 import androidx.glance.appwidget.lazy.items
 import androidx.glance.appwidget.provideContent
+import androidx.glance.color.ColorProvider
 import androidx.glance.layout.Alignment
 import androidx.glance.layout.Column
 import androidx.glance.layout.Row
 import androidx.glance.layout.Spacer
 import androidx.glance.layout.fillMaxSize
 import androidx.glance.layout.fillMaxWidth
+import androidx.glance.layout.height
 import androidx.glance.layout.padding
 import androidx.glance.text.Text
+import androidx.glance.text.TextStyle
+import com.chesire.nekome.core.compose.theme.DarkColorPalette
+import com.chesire.nekome.core.compose.theme.LightColorPalette
 import com.chesire.nekome.feature.serieswidget.SeriesWidgetEntryPoint
 import dagger.hilt.EntryPoints
 
@@ -35,11 +43,11 @@ class SeriesWidget : GlanceAppWidget() {
 
     @Composable
     private fun ProvideContent() {
-        val ctx = LocalContext.current.applicationContext
+        val context = LocalContext.current.applicationContext
 
         // TODO: Use remember for this?
         val viewModel = EntryPoints.get(
-            ctx,
+            context,
             SeriesWidgetEntryPoint::class.java
         ).seriesWidgetViewModel()
 
@@ -57,6 +65,11 @@ class SeriesWidget : GlanceAppWidget() {
     ) {
         LazyColumn(
             modifier = GlanceModifier
+                .appWidgetBackground()
+                .background(
+                    day = LightColorPalette.surface,
+                    night = DarkColorPalette.surface
+                )
                 .fillMaxSize()
                 .padding(8.dp)
         ) {
@@ -64,13 +77,16 @@ class SeriesWidget : GlanceAppWidget() {
                 items = state.series,
                 itemId = { it.userId.toLong() }
             ) { item ->
-                SeriesCard(
-                    id = item.userId,
-                    title = item.title,
-                    progress = item.progress,
-                    isUpdating = item.isUpdating,
-                    updateSeries = updateSeries
-                )
+                Column {
+                    SeriesCard(
+                        id = item.userId,
+                        title = item.title,
+                        progress = item.progress,
+                        isUpdating = item.isUpdating,
+                        updateSeries = updateSeries
+                    )
+                    Spacer(modifier = GlanceModifier.height(8.dp).fillMaxWidth())
+                }
             }
         }
     }
@@ -81,18 +97,47 @@ class SeriesWidget : GlanceAppWidget() {
         title: String,
         progress: String,
         isUpdating: Boolean,
-        updateSeries: (Int) -> Unit
+        updateSeries: (Int) -> Unit,
+        modifier: GlanceModifier = GlanceModifier
     ) {
         Row(
-            modifier = GlanceModifier.fillMaxWidth(),
+            modifier = modifier.fillMaxWidth()
+                .background(
+                    day = LightColorPalette.primaryContainer,
+                    night = DarkColorPalette.primaryContainer
+                )
+                .cornerRadius(8.dp)
+                .padding(16.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Column {
-                Text(text = title)
-                Text(text = progress)
+            Column(
+                modifier = GlanceModifier
+                    .defaultWeight()
+                    .padding(end = 8.dp)
+            ) {
+                Text(
+                    text = title,
+                    style = TextStyle(
+                        color = ColorProvider(
+                            day = LightColorPalette.onPrimaryContainer,
+                            night = DarkColorPalette.onPrimaryContainer
+                        )
+                    )
+                )
+                Text(
+                    text = progress,
+                    style = TextStyle(
+                        color = ColorProvider(
+                            day = LightColorPalette.onPrimaryContainer,
+                            night = DarkColorPalette.onPrimaryContainer
+                        )
+                    )
+                )
             }
-            Spacer(modifier = GlanceModifier.defaultWeight())
-            Button(text = "+1", onClick = { updateSeries(id) })
+            Button(
+                text = "+1",
+                onClick = { updateSeries(id) }
+            )
         }
     }
 }
