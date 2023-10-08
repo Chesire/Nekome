@@ -67,6 +67,7 @@ dependencies {
     implementation(project(":features:login"))
     implementation(project(":features:search"))
     implementation(project(":features:series"))
+    implementation(project(":features:serieswidget"))
     implementation(project(":features:settings"))
     implementation(project(":libraries:core"))
     implementation(project(":libraries:database"))

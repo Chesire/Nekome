@@ -24,6 +24,7 @@ android {
 
 dependencies {
     implementation(project(":core:compose"))
+    implementation(project(":core:resources"))
 
     implementation(libs.androidx.glance.appwidget)
     implementation(libs.androidx.glance.material3)
