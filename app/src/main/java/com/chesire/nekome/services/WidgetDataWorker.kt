@@ -8,7 +8,7 @@ import com.chesire.nekome.feature.serieswidget.ui.SeriesWidget
 
 class WidgetDataWorker(
     private val context: Context,
-    params: WorkerParameters,
+    params: WorkerParameters
 ) : CoroutineWorker(context, params) {
 
     override suspend fun doWork(): Result {
