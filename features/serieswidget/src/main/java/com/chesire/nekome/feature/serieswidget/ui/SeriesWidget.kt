@@ -82,7 +82,6 @@ class SeriesWidget : GlanceAppWidget() {
                         id = item.userId,
                         title = item.title,
                         progress = item.progress,
-                        isUpdating = item.isUpdating,
                         updateSeries = updateSeries
                     )
                     Spacer(modifier = GlanceModifier.height(8.dp).fillMaxWidth())
@@ -96,7 +95,6 @@ class SeriesWidget : GlanceAppWidget() {
         id: Int,
         title: String,
         progress: String,
-        isUpdating: Boolean,
         updateSeries: (Int) -> Unit,
         modifier: GlanceModifier = GlanceModifier
     ) {
@@ -122,7 +120,8 @@ class SeriesWidget : GlanceAppWidget() {
                             day = LightColorPalette.onPrimaryContainer,
                             night = DarkColorPalette.onPrimaryContainer
                         )
-                    )
+                    ),
+                    maxLines = 3
                 )
                 Text(
                     text = progress,
@@ -134,6 +133,7 @@ class SeriesWidget : GlanceAppWidget() {
                     )
                 )
             }
+
             Button(
                 text = "+1",
                 onClick = { updateSeries(id) }

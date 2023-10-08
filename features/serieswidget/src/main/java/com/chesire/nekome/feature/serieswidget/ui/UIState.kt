@@ -7,6 +7,5 @@ data class UIState(
 data class Series(
     val userId: Int,
     val title: String,
-    val progress: String,
-    val isUpdating: Boolean
+    val progress: String
 )

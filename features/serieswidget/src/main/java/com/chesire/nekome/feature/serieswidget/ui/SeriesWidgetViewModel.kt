@@ -35,7 +35,9 @@ class SeriesWidgetViewModel @Inject constructor(
         }
     }
 
-    private fun handleUpdateSeries(id: Int) = viewModelScope.launch {
-        updateSeries(id)
+    private fun handleUpdateSeries(id: Int) {
+        viewModelScope.launch {
+            updateSeries(id)
+        }
     }
 }
