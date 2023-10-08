@@ -3,6 +3,7 @@ aboutlibraries = "10.9.1"
 accompanist = "0.32.0"
 android-gradle-plugin = "8.1.2"
 androidx-espresso = "3.5.1"
+androidx-glance = "1.0.0"
 androidx-hilt = "1.0.0"
 androidx-navigation = "2.7.4"
 androidx-room = "2.5.2"
@@ -38,6 +39,8 @@ androidx-constraintlayout = { module = "androidx.constraintlayout:constraintlayo
 androidx-core = { module = "androidx.core:core-ktx", version = "1.12.0" }
 androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version = "1.0.0" }
 androidx-fragment = { module = "androidx.fragment:fragment-ktx", version = "1.6.1" }
+androidx-glance-appwidget = { module = "androidx.glance:glance-appwidget", version.ref = "androidx-glance" }
+androidx-glance-material3 = { module = "androidx.glance:glance-material3", version.ref = "androidx-glance" }
 androidx-hilt-compiler = { module = "androidx.hilt:hilt-compiler", version.ref = "androidx-hilt" }
 androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version = "1.0.0" }
 androidx-hilt-work = { module = "androidx.hilt:hilt-work", version.ref = "androidx-hilt" }
