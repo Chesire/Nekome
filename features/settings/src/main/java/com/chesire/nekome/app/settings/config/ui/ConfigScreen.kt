@@ -14,9 +14,8 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.BrokenImage
-import androidx.compose.material.icons.filled.InsertPhoto
 import androidx.compose.material.icons.filled.Logout
+import androidx.compose.material.icons.filled.PersonOutline
 import androidx.compose.material3.Card
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Icon
@@ -232,8 +231,8 @@ private fun ProfileSection(
                         .data(userModel.avatarUrl)
                         .transformations(CircleCropTransformation())
                         .build(),
-                    placeholder = rememberVectorPainter(image = Icons.Default.InsertPhoto),
-                    error = rememberVectorPainter(image = Icons.Default.BrokenImage),
+                    placeholder = rememberVectorPainter(image = Icons.Default.PersonOutline),
+                    error = rememberVectorPainter(image = Icons.Default.PersonOutline),
                     contentDescription = null,
                     modifier = Modifier
                         .sizeIn(48.dp, 48.dp, 74.dp, 74.dp)
