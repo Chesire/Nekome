@@ -8,6 +8,7 @@ import androidx.compose.ui.unit.dp
 import androidx.glance.Button
 import androidx.glance.GlanceId
 import androidx.glance.GlanceModifier
+import androidx.glance.appwidget.CircularProgressIndicator
 import androidx.glance.appwidget.GlanceAppWidget
 import androidx.glance.appwidget.appWidgetBackground
 import androidx.glance.appwidget.background
@@ -72,6 +73,7 @@ class SeriesWidget : GlanceAppWidget() {
                         id = item.userId,
                         title = item.title,
                         progress = item.progress,
+                        isUpdating = item.isUpdating,
                         updateSeries = updateSeries
                     )
                     Spacer(modifier = GlanceModifier.height(8.dp).fillMaxWidth())
@@ -85,11 +87,11 @@ class SeriesWidget : GlanceAppWidget() {
         id: Int,
         title: String,
         progress: String,
-        updateSeries: (Int) -> Unit,
-        modifier: GlanceModifier = GlanceModifier
+        isUpdating: Boolean,
+        updateSeries: (Int) -> Unit
     ) {
         Row(
-            modifier = modifier.fillMaxWidth()
+            modifier = GlanceModifier.fillMaxWidth()
                 .background(
                     day = LightColorPalette.primaryContainer,
                     night = DarkColorPalette.primaryContainer
@@ -124,10 +126,20 @@ class SeriesWidget : GlanceAppWidget() {
                 )
             }
 
-            Button(
-                text = "+1",
-                onClick = { updateSeries(id) }
-            )
+            if (isUpdating) {
+                CircularProgressIndicator(
+                    color = ColorProvider(
+                        day = LightColorPalette.onPrimaryContainer,
+                        night = DarkColorPalette.onPrimaryContainer
+                    ),
+                    modifier = GlanceModifier.height(36.dp)
+                )
+            } else {
+                Button(
+                    text = "+1",
+                    onClick = { updateSeries(id) }
+                )
+            }
         }
     }
 }
