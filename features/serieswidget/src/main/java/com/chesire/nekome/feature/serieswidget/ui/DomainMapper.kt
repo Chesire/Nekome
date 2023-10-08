@@ -9,8 +9,7 @@ class DomainMapper @Inject constructor() {
         return Series(
             userId = domain.userId,
             title = domain.title,
-            progress = buildProgress(domain.progress, domain.totalLength),
-            isUpdating = false
+            progress = buildProgress(domain.progress, domain.totalLength)
         )
     }
 

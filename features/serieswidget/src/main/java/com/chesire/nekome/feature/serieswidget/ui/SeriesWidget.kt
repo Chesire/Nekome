@@ -8,7 +8,6 @@ import androidx.compose.ui.unit.dp
 import androidx.glance.Button
 import androidx.glance.GlanceId
 import androidx.glance.GlanceModifier
-import androidx.glance.LocalContext
 import androidx.glance.appwidget.GlanceAppWidget
 import androidx.glance.appwidget.appWidgetBackground
 import androidx.glance.appwidget.background
@@ -35,27 +34,18 @@ import dagger.hilt.EntryPoints
 class SeriesWidget : GlanceAppWidget() {
 
     override suspend fun provideGlance(context: Context, id: GlanceId) {
-
-        provideContent {
-            ProvideContent()
-        }
-    }
-
-    @Composable
-    private fun ProvideContent() {
-        val context = LocalContext.current.applicationContext
-
-        // TODO: Use remember for this?
         val viewModel = EntryPoints.get(
             context,
             SeriesWidgetEntryPoint::class.java
         ).seriesWidgetViewModel()
 
-        val state by viewModel.uiState.collectAsState()
-        Render(
-            state = state,
-            updateSeries = { viewModel.execute(ViewAction.UpdateSeries(it)) }
-        )
+        provideContent {
+            val state by viewModel.uiState.collectAsState()
+            Render(
+                state = state,
+                updateSeries = { viewModel.execute(ViewAction.UpdateSeries(it)) }
+            )
+        }
     }
 
     @Composable
