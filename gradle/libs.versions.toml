@@ -1,5 +1,5 @@
 [versions]
-aboutlibraries = "10.9.1"
+aboutlibraries = "10.9.2"
 accompanist = "0.32.0"
 android-gradle-plugin = "8.1.2"
 androidx-espresso = "3.5.1"
