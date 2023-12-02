@@ -17,7 +17,6 @@ import com.chesire.nekome.app.settings.oss.ui.OssScreen
 val bottomNavRoutes = listOf<BottomNavTarget>(
     Screen.Anime,
     Screen.Manga,
-    Screen.Host,
     Screen.Config
 )
 
