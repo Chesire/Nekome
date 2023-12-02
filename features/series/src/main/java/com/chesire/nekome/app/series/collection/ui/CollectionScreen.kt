@@ -174,7 +174,9 @@ private fun Render(
             ) {
                 Icon(
                     imageVector = Icons.Default.Add,
-                    contentDescription = "Add new series"
+                    contentDescription = stringResource(
+                        id = StringResource.series_list_search_content_description
+                    )
                 )
             }
         },
