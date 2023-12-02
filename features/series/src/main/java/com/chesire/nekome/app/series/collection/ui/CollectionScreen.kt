@@ -3,6 +3,9 @@
 package com.chesire.nekome.app.series.collection.ui
 
 import android.content.Context
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.scaleIn
+import androidx.compose.animation.scaleOut
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -16,7 +19,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.icons.Icons
@@ -68,6 +73,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.chesire.nekome.app.series.collection.ui.SeriesCollectionTags.SearchFab
 import com.chesire.nekome.core.compose.composables.NekomeDialog
+import com.chesire.nekome.core.compose.isScrollingUp
 import com.chesire.nekome.core.compose.theme.NekomeTheme
 import com.chesire.nekome.core.flags.Subtype
 import com.chesire.nekome.core.flags.UserSeriesStatus
@@ -120,6 +126,7 @@ private fun Render(
     onFilterResult: (List<FilterOption>?) -> Unit
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
+    val listState = rememberLazyListState()
 
     Scaffold(
         topBar = {
@@ -167,17 +174,23 @@ private fun Render(
             )
         },
         floatingActionButton = {
-            FloatingActionButton(
-                onClick = onSearchPressed,
-                modifier = Modifier.semantics { testTag = SearchFab },
-                shape = CircleShape
+            AnimatedVisibility(
+                visible = listState.isScrollingUp(),
+                enter = scaleIn(),
+                exit = scaleOut(),
             ) {
-                Icon(
-                    imageVector = Icons.Default.Add,
-                    contentDescription = stringResource(
-                        id = StringResource.series_list_search_content_description
+                FloatingActionButton(
+                    onClick = onSearchPressed,
+                    modifier = Modifier.semantics { testTag = SearchFab },
+                    shape = CircleShape
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Add,
+                        contentDescription = stringResource(
+                            id = StringResource.series_list_search_content_description
+                        )
                     )
-                )
+                }
             }
         },
         modifier = Modifier.semantics { testTag = SeriesCollectionTags.Root }
@@ -186,6 +199,7 @@ private fun Render(
             CircularProgressIndicator()
         } else {
             SeriesCollection(
+                listState = listState,
                 models = state.value.models,
                 isRefreshing = state.value.isRefreshing,
                 modifier = Modifier.padding(paddingValues),
@@ -217,6 +231,7 @@ private fun Render(
 
 @Composable
 private fun SeriesCollection(
+    listState: LazyListState,
     models: List<Series>,
     isRefreshing: Boolean,
     modifier: Modifier = Modifier,
@@ -236,6 +251,7 @@ private fun SeriesCollection(
         ) {
             LazyColumn(
                 modifier = Modifier.fillMaxSize(),
+                state = listState,
                 contentPadding = PaddingValues(8.dp),
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
