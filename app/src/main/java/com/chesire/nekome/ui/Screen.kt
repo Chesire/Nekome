@@ -22,12 +22,12 @@ sealed class Screen {
             return when (route) {
                 Anime.route,
                 Manga.route,
-                Search.route,
                 Config.route -> true
 
                 Credentials.route,
                 Item.route,
                 OSS.route,
+                Search.route,
                 Syncing.route -> false
 
                 else -> false
