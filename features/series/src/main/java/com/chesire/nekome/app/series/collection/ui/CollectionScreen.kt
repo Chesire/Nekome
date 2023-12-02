@@ -17,8 +17,10 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.BrokenImage
 import androidx.compose.material.icons.filled.FilterAlt
 import androidx.compose.material.icons.filled.InsertPhoto
@@ -32,6 +34,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
@@ -73,7 +76,8 @@ import com.chesire.nekome.resources.StringResource
 @Composable
 fun CollectionScreen(
     viewModel: CollectionViewModel = hiltViewModel(),
-    navigateToItem: (Int, String) -> Unit
+    navigateToItem: (Int, String) -> Unit,
+    navigateToSearch: () -> Unit
 ) {
     val state = viewModel.uiState.collectAsState()
 
@@ -85,6 +89,7 @@ fun CollectionScreen(
     }
     Render(
         state = state,
+        onSearchPressed = navigateToSearch,
         onRefresh = { viewModel.execute(ViewAction.PerformSeriesRefresh) },
         onSelectSeries = { viewModel.execute(ViewAction.SeriesPressed(it)) },
         onIncrementSeries = { viewModel.execute(ViewAction.IncrementSeriesPressed(it)) },
@@ -102,6 +107,7 @@ fun CollectionScreen(
 @Composable
 private fun Render(
     state: State<UIState>,
+    onSearchPressed: () -> Unit,
     onRefresh: () -> Unit,
     onSelectSeries: (Series) -> Unit,
     onIncrementSeries: (Series) -> Unit,
@@ -158,6 +164,17 @@ private fun Render(
                 hostState = snackbarHostState,
                 modifier = Modifier.semantics { testTag = SeriesCollectionTags.Snackbar }
             )
+        },
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = onSearchPressed,
+                shape = CircleShape
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Add,
+                    contentDescription = "Add new series"
+                )
+            }
         },
         modifier = Modifier.semantics { testTag = SeriesCollectionTags.Root }
     ) { paddingValues ->
@@ -477,6 +494,7 @@ private fun Preview() {
                 initialValue = initialState,
                 producer = { value = initialState }
             ),
+            onSearchPressed = { /**/ },
             onRefresh = { /**/ },
             onSelectSeries = { /**/ },
             onIncrementSeries = { /**/ },

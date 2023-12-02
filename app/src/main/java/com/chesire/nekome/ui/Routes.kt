@@ -43,18 +43,28 @@ fun NavGraphBuilder.addSeriesRoutes(navController: NavHostController) {
         route = Screen.Anime.route,
         arguments = Screen.Anime.args
     ) {
-        CollectionScreen { seriesId, seriesTitle ->
-            navController.navigate("${Screen.Item.destination}/$seriesId/$seriesTitle")
-        }
+        CollectionScreen(
+            navigateToItem = { seriesId, seriesTitle ->
+                navController.navigate("${Screen.Item.destination}/$seriesId/$seriesTitle")
+            },
+            navigateToSearch = {
+                navController.navigate(Screen.Host.route)
+            }
+        )
     }
 
     composable(
         route = Screen.Manga.route,
         arguments = Screen.Manga.args
     ) {
-        CollectionScreen { seriesId, seriesTitle ->
-            navController.navigate("${Screen.Item.destination}/$seriesId/$seriesTitle")
-        }
+        CollectionScreen(
+            navigateToItem = { seriesId, seriesTitle ->
+                navController.navigate("${Screen.Item.destination}/$seriesId/$seriesTitle")
+            },
+            navigateToSearch = {
+                navController.navigate(Screen.Host.route)
+            }
+        )
     }
 
     composable(
