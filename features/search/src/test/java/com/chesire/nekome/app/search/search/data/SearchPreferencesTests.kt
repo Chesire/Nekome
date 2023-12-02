@@ -1,4 +1,4 @@
-package com.chesire.nekome.app.search.host.data
+package com.chesire.nekome.app.search.search.data
 
 import android.content.SharedPreferences
 import io.mockk.Runs
@@ -9,7 +9,7 @@ import io.mockk.verify
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
-class HostPreferencesTests {
+class SearchPreferencesTests {
 
     @Test
     fun `lastSearchGroup returns expected value`() {
@@ -17,7 +17,7 @@ class HostPreferencesTests {
         val mockPreferences = mockk<SharedPreferences> {
             every { getString("preference.last_search_group", "") } returns expected
         }
-        val testObject = HostPreferences(mockPreferences)
+        val testObject = SearchPreferences(mockPreferences)
 
         assertEquals(expected, testObject.lastSearchGroup)
     }
@@ -32,7 +32,7 @@ class HostPreferencesTests {
         val mockPreferences = mockk<SharedPreferences> {
             every { edit() } returns mockEditor
         }
-        val testObject = HostPreferences(mockPreferences)
+        val testObject = SearchPreferences(mockPreferences)
 
         testObject.lastSearchGroup = expected
 

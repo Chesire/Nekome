@@ -1,6 +1,6 @@
 @file:OptIn(ExperimentalComposeUiApi::class, ExperimentalMaterial3Api::class)
 
-package com.chesire.nekome.app.search.host.ui
+package com.chesire.nekome.app.search.search.ui
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -65,13 +65,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
-import com.chesire.nekome.app.search.host.core.model.SearchGroup
+import com.chesire.nekome.app.search.search.core.model.SearchGroup
 import com.chesire.nekome.core.compose.theme.NekomeTheme
 import com.chesire.nekome.core.flags.SeriesType
 import com.chesire.nekome.resources.StringResource
 
 @Composable
-fun HostScreen(viewModel: HostViewModel = hiltViewModel()) {
+fun SearchScreen(viewModel: SearchViewModel = hiltViewModel()) {
     val state = viewModel.uiState.collectAsState()
 
     Render(
@@ -99,10 +99,10 @@ private fun Render(
         snackbarHost = {
             SnackbarHost(
                 hostState = snackbarHostState,
-                modifier = Modifier.semantics { testTag = HostTags.Snackbar }
+                modifier = Modifier.semantics { testTag = SearchTags.Snackbar }
             )
         },
-        modifier = Modifier.semantics { testTag = HostTags.Root }
+        modifier = Modifier.semantics { testTag = SearchTags.Root }
     ) { paddingValues ->
         Column(
             modifier = Modifier
@@ -165,7 +165,7 @@ private fun InputText(
         modifier = Modifier
             .fillMaxWidth()
             .padding(16.dp)
-            .semantics { testTag = HostTags.Input }
+            .semantics { testTag = SearchTags.Input }
     )
 }
 
@@ -184,7 +184,7 @@ private fun SearchGroup(
             label = { Text(text = stringResource(id = StringResource.search_anime)) },
             modifier = Modifier
                 .padding(8.dp, 0.dp, 8.dp, 8.dp)
-                .semantics { testTag = HostTags.Anime },
+                .semantics { testTag = SearchTags.Anime },
             colors = FilterChipDefaults.filterChipColors(
                 selectedLabelColor = MaterialTheme.colorScheme.primary
             ),
@@ -201,7 +201,7 @@ private fun SearchGroup(
             label = { Text(text = stringResource(id = StringResource.search_manga)) },
             modifier = Modifier
                 .padding(8.dp, 0.dp, 8.dp, 8.dp)
-                .semantics { testTag = HostTags.Manga },
+                .semantics { testTag = SearchTags.Manga },
             colors = FilterChipDefaults.filterChipColors(
                 selectedLabelColor = MaterialTheme.colorScheme.primary
             ),
@@ -228,7 +228,7 @@ private fun SearchButton(isSearching: Boolean, onSearchPressed: () -> Unit) {
         },
         modifier = Modifier
             .padding(16.dp)
-            .semantics { testTag = HostTags.Search }
+            .semantics { testTag = SearchTags.Search }
     ) {
         Text(text = stringResource(id = StringResource.search_search))
     }
@@ -399,11 +399,11 @@ private fun PopulatedPreview() {
     }
 }
 
-object HostTags {
-    const val Root = "HostRoot"
-    const val Input = "HostInput"
-    const val Anime = "HostAnime"
-    const val Manga = "HostManga"
-    const val Search = "HostSearch"
-    const val Snackbar = "HostSnackbar"
+object SearchTags {
+    const val Root = "SearchRoot"
+    const val Input = "SearchInput"
+    const val Anime = "SearchAnime"
+    const val Manga = "SearchManga"
+    const val Search = "SearchSearch"
+    const val Snackbar = "SearchSnackbar"
 }

@@ -1,4 +1,4 @@
-package com.chesire.nekome.app.search.host.ui
+package com.chesire.nekome.app.search.search.ui
 
 import com.chesire.nekome.core.models.ImageModel
 import com.chesire.nekome.core.preferences.SeriesPreferences

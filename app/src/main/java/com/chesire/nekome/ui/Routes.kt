@@ -5,7 +5,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import com.chesire.nekome.app.login.credentials.ui.CredentialsScreen
 import com.chesire.nekome.app.login.syncing.ui.SyncingScreen
-import com.chesire.nekome.app.search.host.ui.HostScreen
+import com.chesire.nekome.app.search.search.ui.SearchScreen
 import com.chesire.nekome.app.series.collection.ui.CollectionScreen
 import com.chesire.nekome.app.series.item.ui.ItemScreen
 import com.chesire.nekome.app.settings.config.ui.ConfigScreen
@@ -17,7 +17,6 @@ import com.chesire.nekome.app.settings.oss.ui.OssScreen
 val bottomNavRoutes = listOf<BottomNavTarget>(
     Screen.Anime,
     Screen.Manga,
-    Screen.Host,
     Screen.Config
 )
 
@@ -43,18 +42,28 @@ fun NavGraphBuilder.addSeriesRoutes(navController: NavHostController) {
         route = Screen.Anime.route,
         arguments = Screen.Anime.args
     ) {
-        CollectionScreen { seriesId, seriesTitle ->
-            navController.navigate("${Screen.Item.destination}/$seriesId/$seriesTitle")
-        }
+        CollectionScreen(
+            navigateToItem = { seriesId, seriesTitle ->
+                navController.navigate("${Screen.Item.destination}/$seriesId/$seriesTitle")
+            },
+            navigateToSearch = {
+                navController.navigate(Screen.Search.route)
+            }
+        )
     }
 
     composable(
         route = Screen.Manga.route,
         arguments = Screen.Manga.args
     ) {
-        CollectionScreen { seriesId, seriesTitle ->
-            navController.navigate("${Screen.Item.destination}/$seriesId/$seriesTitle")
-        }
+        CollectionScreen(
+            navigateToItem = { seriesId, seriesTitle ->
+                navController.navigate("${Screen.Item.destination}/$seriesId/$seriesTitle")
+            },
+            navigateToSearch = {
+                navController.navigate(Screen.Search.route)
+            }
+        )
     }
 
     composable(
@@ -66,8 +75,8 @@ fun NavGraphBuilder.addSeriesRoutes(navController: NavHostController) {
 }
 
 fun NavGraphBuilder.addSearchRoutes() {
-    composable(Screen.Host.route) {
-        HostScreen()
+    composable(Screen.Search.route) {
+        SearchScreen()
     }
 }
 

@@ -1,4 +1,4 @@
-package com.chesire.nekome.app.search.host.core
+package com.chesire.nekome.app.search.search.core
 
 import com.chesire.nekome.core.flags.SeriesType
 import com.chesire.nekome.core.preferences.ApplicationPreferences

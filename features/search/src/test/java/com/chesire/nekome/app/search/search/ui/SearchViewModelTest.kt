@@ -1,15 +1,15 @@
 @file:OptIn(ExperimentalCoroutinesApi::class)
 
-package com.chesire.nekome.app.search.host.ui
+package com.chesire.nekome.app.search.search.ui
 
-import com.chesire.nekome.app.search.host.core.HostInitializeUseCase
-import com.chesire.nekome.app.search.host.core.InitializeArgs
-import com.chesire.nekome.app.search.host.core.RememberSearchGroupUseCase
-import com.chesire.nekome.app.search.host.core.RetrieveUserSeriesIdsUseCase
-import com.chesire.nekome.app.search.host.core.SearchFailureReason
-import com.chesire.nekome.app.search.host.core.SearchSeriesUseCase
-import com.chesire.nekome.app.search.host.core.TrackSeriesUseCase
-import com.chesire.nekome.app.search.host.core.model.SearchGroup
+import com.chesire.nekome.app.search.search.core.InitializeArgs
+import com.chesire.nekome.app.search.search.core.RememberSearchGroupUseCase
+import com.chesire.nekome.app.search.search.core.RetrieveUserSeriesIdsUseCase
+import com.chesire.nekome.app.search.search.core.SearchFailureReason
+import com.chesire.nekome.app.search.search.core.SearchInitializeUseCase
+import com.chesire.nekome.app.search.search.core.SearchSeriesUseCase
+import com.chesire.nekome.app.search.search.core.TrackSeriesUseCase
+import com.chesire.nekome.app.search.search.core.model.SearchGroup
 import com.chesire.nekome.core.flags.SeriesType
 import com.chesire.nekome.core.flags.Subtype
 import com.chesire.nekome.core.models.ImageModel
@@ -36,27 +36,27 @@ import org.junit.Assert.assertNull
 import org.junit.Before
 import org.junit.Test
 
-class HostViewModelTest {
+class SearchViewModelTest {
 
-    private val hostInitialize = mockk<HostInitializeUseCase>()
+    private val searchInitialize = mockk<SearchInitializeUseCase>()
     private val retrieveUserSeriesIds = mockk<RetrieveUserSeriesIdsUseCase>()
     private val rememberSearchGroup = mockk<RememberSearchGroupUseCase>()
     private val searchSeries = mockk<SearchSeriesUseCase>()
     private val trackSeries = mockk<TrackSeriesUseCase>()
     private val mapper = mockk<DomainMapper>()
-    private lateinit var viewModel: HostViewModel
+    private lateinit var viewModel: SearchViewModel
 
     @Before
     fun setup() {
         clearAllMocks()
         Dispatchers.setMain(UnconfinedTestDispatcher())
 
-        every { hostInitialize() } returns InitializeArgs(initialGroup = SearchGroup.Anime)
+        every { searchInitialize() } returns InitializeArgs(initialGroup = SearchGroup.Anime)
         every { rememberSearchGroup(any()) } just runs
         coEvery { retrieveUserSeriesIds() } returns flowOf(listOf(5))
 
-        viewModel = HostViewModel(
-            hostInitialize,
+        viewModel = SearchViewModel(
+            searchInitialize,
             retrieveUserSeriesIds,
             rememberSearchGroup,
             searchSeries,

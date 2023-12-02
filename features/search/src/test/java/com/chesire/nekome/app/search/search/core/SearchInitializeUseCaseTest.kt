@@ -1,7 +1,7 @@
-package com.chesire.nekome.app.search.host.core
+package com.chesire.nekome.app.search.search.core
 
-import com.chesire.nekome.app.search.host.core.model.SearchGroup
-import com.chesire.nekome.app.search.host.data.HostPreferences
+import com.chesire.nekome.app.search.search.core.model.SearchGroup
+import com.chesire.nekome.app.search.search.data.SearchPreferences
 import io.mockk.clearAllMocks
 import io.mockk.every
 import io.mockk.mockk
@@ -9,21 +9,21 @@ import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 
-class HostInitializeUseCaseTest {
+class SearchInitializeUseCaseTest {
 
-    private val hostPreferences = mockk<HostPreferences>()
-    private lateinit var hostInitialize: HostInitializeUseCase
+    private val searchPreferences = mockk<SearchPreferences>()
+    private lateinit var hostInitialize: SearchInitializeUseCase
 
     @Before
     fun setup() {
         clearAllMocks()
 
-        hostInitialize = HostInitializeUseCase(hostPreferences)
+        hostInitialize = SearchInitializeUseCase(searchPreferences)
     }
 
     @Test
     fun `Given no previous search group, When invoke, Then initialGroup is Anime`() {
-        every { hostPreferences.lastSearchGroup } returns ""
+        every { searchPreferences.lastSearchGroup } returns ""
 
         val result = hostInitialize.invoke()
 
@@ -32,7 +32,7 @@ class HostInitializeUseCaseTest {
 
     @Test
     fun `Given previous search group of Manga, When invoke, Then initialGroup is Manga`() {
-        every { hostPreferences.lastSearchGroup } returns "Manga"
+        every { searchPreferences.lastSearchGroup } returns "Manga"
 
         val result = hostInitialize.invoke()
 
@@ -41,7 +41,7 @@ class HostInitializeUseCaseTest {
 
     @Test
     fun `Given previous search group is invalid, When invoke, Then initialGroup is Anime`() {
-        every { hostPreferences.lastSearchGroup } returns "invalid"
+        every { searchPreferences.lastSearchGroup } returns "invalid"
 
         val result = hostInitialize.invoke()
 

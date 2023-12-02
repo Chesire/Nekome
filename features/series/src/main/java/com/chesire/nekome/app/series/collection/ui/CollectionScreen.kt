@@ -3,6 +3,9 @@
 package com.chesire.nekome.app.series.collection.ui
 
 import android.content.Context
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.scaleIn
+import androidx.compose.animation.scaleOut
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -16,9 +19,13 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.BrokenImage
 import androidx.compose.material.icons.filled.FilterAlt
 import androidx.compose.material.icons.filled.InsertPhoto
@@ -32,6 +39,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
@@ -64,6 +72,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.chesire.nekome.core.compose.composables.NekomeDialog
+import com.chesire.nekome.core.compose.isScrollingUp
 import com.chesire.nekome.core.compose.theme.NekomeTheme
 import com.chesire.nekome.core.flags.Subtype
 import com.chesire.nekome.core.flags.UserSeriesStatus
@@ -73,7 +82,8 @@ import com.chesire.nekome.resources.StringResource
 @Composable
 fun CollectionScreen(
     viewModel: CollectionViewModel = hiltViewModel(),
-    navigateToItem: (Int, String) -> Unit
+    navigateToItem: (Int, String) -> Unit,
+    navigateToSearch: () -> Unit
 ) {
     val state = viewModel.uiState.collectAsState()
 
@@ -85,6 +95,7 @@ fun CollectionScreen(
     }
     Render(
         state = state,
+        onSearchPressed = navigateToSearch,
         onRefresh = { viewModel.execute(ViewAction.PerformSeriesRefresh) },
         onSelectSeries = { viewModel.execute(ViewAction.SeriesPressed(it)) },
         onIncrementSeries = { viewModel.execute(ViewAction.IncrementSeriesPressed(it)) },
@@ -102,6 +113,7 @@ fun CollectionScreen(
 @Composable
 private fun Render(
     state: State<UIState>,
+    onSearchPressed: () -> Unit,
     onRefresh: () -> Unit,
     onSelectSeries: (Series) -> Unit,
     onIncrementSeries: (Series) -> Unit,
@@ -113,6 +125,7 @@ private fun Render(
     onFilterResult: (List<FilterOption>?) -> Unit
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
+    val listState = rememberLazyListState()
 
     Scaffold(
         topBar = {
@@ -159,12 +172,37 @@ private fun Render(
                 modifier = Modifier.semantics { testTag = SeriesCollectionTags.Snackbar }
             )
         },
+        floatingActionButton = {
+            AnimatedVisibility(
+                visible = listState.isScrollingUp(),
+                enter = scaleIn(),
+                exit = scaleOut()
+            ) {
+                ExtendedFloatingActionButton(
+                    text = {
+                        Text(text = stringResource(id = StringResource.series_list_search_fab_text))
+                    },
+                    icon = {
+                        Icon(
+                            imageVector = Icons.Default.Add,
+                            contentDescription = stringResource(
+                                id = StringResource.series_list_search_content_description
+                            )
+                        )
+                    },
+                    onClick = onSearchPressed,
+                    modifier = Modifier.semantics { testTag = SeriesCollectionTags.SearchFab },
+                    shape = RoundedCornerShape(8.dp)
+                )
+            }
+        },
         modifier = Modifier.semantics { testTag = SeriesCollectionTags.Root }
     ) { paddingValues ->
         if (state.value.isInitializing) {
             CircularProgressIndicator()
         } else {
             SeriesCollection(
+                listState = listState,
                 models = state.value.models,
                 isRefreshing = state.value.isRefreshing,
                 modifier = Modifier.padding(paddingValues),
@@ -196,6 +234,7 @@ private fun Render(
 
 @Composable
 private fun SeriesCollection(
+    listState: LazyListState,
     models: List<Series>,
     isRefreshing: Boolean,
     modifier: Modifier = Modifier,
@@ -215,7 +254,13 @@ private fun SeriesCollection(
         ) {
             LazyColumn(
                 modifier = Modifier.fillMaxSize(),
-                contentPadding = PaddingValues(8.dp),
+                state = listState,
+                contentPadding = PaddingValues(
+                    start = 8.dp,
+                    top = 8.dp,
+                    end = 8.dp,
+                    bottom = 64.dp
+                ),
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 items(
@@ -477,6 +522,7 @@ private fun Preview() {
                 initialValue = initialState,
                 producer = { value = initialState }
             ),
+            onSearchPressed = { /**/ },
             onRefresh = { /**/ },
             onSelectSeries = { /**/ },
             onIncrementSeries = { /**/ },
@@ -494,6 +540,7 @@ object SeriesCollectionTags {
     const val Root = "SeriesCollectionRoot"
     const val EmptyView = "SeriesCollectionEmptyView"
     const val RefreshContainer = "SeriesCollectionRefreshContainer"
+    const val SearchFab = "SeriesCollectionSearchFab"
     const val SeriesItem = "SeriesCollectionSeriesItem"
     const val PlusOne = "SeriesCollectionPlusOne"
     const val Snackbar = "SeriesCollectionSnackbar"

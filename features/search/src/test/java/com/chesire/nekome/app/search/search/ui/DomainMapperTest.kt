@@ -1,4 +1,4 @@
-package com.chesire.nekome.app.search.host.ui
+package com.chesire.nekome.app.search.search.ui
 
 import com.chesire.nekome.core.flags.SeriesType
 import com.chesire.nekome.core.flags.Subtype

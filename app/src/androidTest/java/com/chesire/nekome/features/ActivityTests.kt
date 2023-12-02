@@ -61,18 +61,6 @@ class ActivityTests : UITest() {
     }
 
     @Test
-    fun overviewCanNavigateToSearchView() {
-        launchActivity()
-
-        activity(composeTestRule) {
-            goToSearch()
-            validate {
-                isOnSearchScreen()
-            }
-        }
-    }
-
-    @Test
     fun overviewCanNavigateToSettingsView() {
         launchActivity()
 

@@ -1,14 +1,14 @@
-package com.chesire.nekome.app.search.host.ui
+package com.chesire.nekome.app.search.search.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.chesire.nekome.app.search.host.core.HostInitializeUseCase
-import com.chesire.nekome.app.search.host.core.RememberSearchGroupUseCase
-import com.chesire.nekome.app.search.host.core.RetrieveUserSeriesIdsUseCase
-import com.chesire.nekome.app.search.host.core.SearchFailureReason
-import com.chesire.nekome.app.search.host.core.SearchSeriesUseCase
-import com.chesire.nekome.app.search.host.core.TrackSeriesUseCase
-import com.chesire.nekome.app.search.host.core.model.SearchGroup
+import com.chesire.nekome.app.search.search.core.RememberSearchGroupUseCase
+import com.chesire.nekome.app.search.search.core.RetrieveUserSeriesIdsUseCase
+import com.chesire.nekome.app.search.search.core.SearchFailureReason
+import com.chesire.nekome.app.search.search.core.SearchInitializeUseCase
+import com.chesire.nekome.app.search.search.core.SearchSeriesUseCase
+import com.chesire.nekome.app.search.search.core.TrackSeriesUseCase
+import com.chesire.nekome.app.search.search.core.model.SearchGroup
 import com.chesire.nekome.resources.StringResource
 import com.github.michaelbull.result.onFailure
 import com.github.michaelbull.result.onSuccess
@@ -22,8 +22,8 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 @HiltViewModel
-class HostViewModel @Inject constructor(
-    hostInitialize: HostInitializeUseCase,
+class SearchViewModel @Inject constructor(
+    searchInitialize: SearchInitializeUseCase,
     private val retrieveUserSeriesIds: RetrieveUserSeriesIdsUseCase,
     private val rememberSearchGroup: RememberSearchGroupUseCase,
     private val searchSeries: SearchSeriesUseCase,
@@ -40,7 +40,7 @@ class HostViewModel @Inject constructor(
         }
 
     init {
-        val initializeResult = hostInitialize()
+        val initializeResult = searchInitialize()
         state = state.copy(
             searchGroup = initializeResult.initialGroup
         )

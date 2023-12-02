@@ -1,6 +1,6 @@
-package com.chesire.nekome.app.search.host.core
+package com.chesire.nekome.app.search.search.core
 
-import com.chesire.nekome.app.search.host.core.model.SearchGroup
+import com.chesire.nekome.app.search.search.core.model.SearchGroup
 import com.chesire.nekome.core.flags.SeriesType
 import com.chesire.nekome.core.flags.Subtype
 import com.chesire.nekome.core.models.ErrorDomain
