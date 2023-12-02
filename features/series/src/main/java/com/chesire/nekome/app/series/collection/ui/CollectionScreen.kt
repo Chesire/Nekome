@@ -176,7 +176,7 @@ private fun Render(
             AnimatedVisibility(
                 visible = listState.isScrollingUp(),
                 enter = scaleIn(),
-                exit = scaleOut(),
+                exit = scaleOut()
             ) {
                 ExtendedFloatingActionButton(
                     text = {
