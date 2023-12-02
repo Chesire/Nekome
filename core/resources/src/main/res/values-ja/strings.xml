@@ -68,6 +68,7 @@
     <string name="series_list_empty">現在のフィルターで見つかったシリーズはありません</string>
     <string name="series_list_refresh">リフレッシュシリーズ</string>
     <string name="series_list_refresh_error">シリーズ一覧を更新する際にエラーが発生しました。もう一度やり直してください…</string>
+    <string name="series_list_search_fab_text">新しく追加する</string>
     <string name="series_list_search_content_description">追加する新しいシリーズを検索します</string>
     <string name="rate_dialog_title">レートシリーズ</string>
     <string name="series_list_rate_cancel">キャンセル</string>

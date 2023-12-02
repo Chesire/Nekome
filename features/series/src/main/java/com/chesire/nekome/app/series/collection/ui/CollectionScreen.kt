@@ -22,7 +22,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -39,7 +39,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
@@ -71,7 +71,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
-import com.chesire.nekome.app.series.collection.ui.SeriesCollectionTags.SearchFab
 import com.chesire.nekome.core.compose.composables.NekomeDialog
 import com.chesire.nekome.core.compose.isScrollingUp
 import com.chesire.nekome.core.compose.theme.NekomeTheme
@@ -179,18 +178,22 @@ private fun Render(
                 enter = scaleIn(),
                 exit = scaleOut(),
             ) {
-                FloatingActionButton(
-                    onClick = onSearchPressed,
-                    modifier = Modifier.semantics { testTag = SearchFab },
-                    shape = CircleShape
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Add,
-                        contentDescription = stringResource(
-                            id = StringResource.series_list_search_content_description
+                ExtendedFloatingActionButton(
+                    text = {
+                        Text(text = stringResource(id = StringResource.series_list_search_fab_text))
+                    },
+                    icon = {
+                        Icon(
+                            imageVector = Icons.Default.Add,
+                            contentDescription = stringResource(
+                                id = StringResource.series_list_search_content_description
+                            )
                         )
-                    )
-                }
+                    },
+                    onClick = onSearchPressed,
+                    modifier = Modifier.semantics { testTag = SeriesCollectionTags.SearchFab },
+                    shape = RoundedCornerShape(8.dp)
+                )
             }
         },
         modifier = Modifier.semantics { testTag = SeriesCollectionTags.Root }
