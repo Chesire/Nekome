@@ -5,7 +5,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import com.chesire.nekome.app.login.credentials.ui.CredentialsScreen
 import com.chesire.nekome.app.login.syncing.ui.SyncingScreen
-import com.chesire.nekome.app.search.host.ui.HostScreen
+import com.chesire.nekome.app.search.search.ui.SearchScreen
 import com.chesire.nekome.app.series.collection.ui.CollectionScreen
 import com.chesire.nekome.app.series.item.ui.ItemScreen
 import com.chesire.nekome.app.settings.config.ui.ConfigScreen
@@ -47,7 +47,7 @@ fun NavGraphBuilder.addSeriesRoutes(navController: NavHostController) {
                 navController.navigate("${Screen.Item.destination}/$seriesId/$seriesTitle")
             },
             navigateToSearch = {
-                navController.navigate(Screen.Host.route)
+                navController.navigate(Screen.Search.route)
             }
         )
     }
@@ -61,7 +61,7 @@ fun NavGraphBuilder.addSeriesRoutes(navController: NavHostController) {
                 navController.navigate("${Screen.Item.destination}/$seriesId/$seriesTitle")
             },
             navigateToSearch = {
-                navController.navigate(Screen.Host.route)
+                navController.navigate(Screen.Search.route)
             }
         )
     }
@@ -75,8 +75,8 @@ fun NavGraphBuilder.addSeriesRoutes(navController: NavHostController) {
 }
 
 fun NavGraphBuilder.addSearchRoutes() {
-    composable(Screen.Host.route) {
-        HostScreen()
+    composable(Screen.Search.route) {
+        SearchScreen()
     }
 }
 

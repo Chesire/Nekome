@@ -7,7 +7,7 @@ import androidx.compose.ui.test.onChild
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextInput
-import com.chesire.nekome.app.search.host.ui.HostTags
+import com.chesire.nekome.app.search.search.ui.SearchTags
 
 /**
  * Method to interact with the [HostRobot].
@@ -27,7 +27,7 @@ class HostRobot(private val composeContentTestRule: ComposeContentTestRule) {
      */
     fun searchTerm(term: String) {
         composeContentTestRule
-            .onNodeWithTag(HostTags.Input)
+            .onNodeWithTag(SearchTags.Input)
             .performTextInput(term)
     }
 
@@ -36,7 +36,7 @@ class HostRobot(private val composeContentTestRule: ComposeContentTestRule) {
      */
     fun selectAnime() {
         composeContentTestRule
-            .onNodeWithTag(HostTags.Anime)
+            .onNodeWithTag(SearchTags.Anime)
             .performClick()
     }
 
@@ -45,7 +45,7 @@ class HostRobot(private val composeContentTestRule: ComposeContentTestRule) {
      */
     fun selectManga() {
         composeContentTestRule
-            .onNodeWithTag(HostTags.Manga)
+            .onNodeWithTag(SearchTags.Manga)
             .performClick()
     }
 
@@ -54,7 +54,7 @@ class HostRobot(private val composeContentTestRule: ComposeContentTestRule) {
      */
     fun clickSearch() {
         composeContentTestRule
-            .onNodeWithTag(HostTags.Search)
+            .onNodeWithTag(SearchTags.Search)
             .performClick()
     }
 
@@ -75,7 +75,7 @@ class HostResultRobot(private val composeContentTestRule: ComposeContentTestRule
      */
     fun isVisible() {
         composeContentTestRule
-            .onNodeWithTag(HostTags.Root)
+            .onNodeWithTag(SearchTags.Root)
             .assertIsDisplayed()
     }
 
@@ -84,7 +84,7 @@ class HostResultRobot(private val composeContentTestRule: ComposeContentTestRule
      */
     fun isEmptySearchError() {
         composeContentTestRule
-            .onNodeWithTag(HostTags.Snackbar)
+            .onNodeWithTag(SearchTags.Snackbar)
             .assertIsDisplayed()
             .onChild()
             .onChild()
@@ -101,7 +101,7 @@ class HostResultRobot(private val composeContentTestRule: ComposeContentTestRule
      */
     fun isGenericError() {
         composeContentTestRule
-            .onNodeWithTag(HostTags.Snackbar)
+            .onNodeWithTag(SearchTags.Snackbar)
             .assertIsDisplayed()
             .onChild()
             .onChild()
@@ -118,7 +118,7 @@ class HostResultRobot(private val composeContentTestRule: ComposeContentTestRule
      */
     fun isNoSeriesFoundError() {
         composeContentTestRule
-            .onNodeWithTag(HostTags.Snackbar)
+            .onNodeWithTag(SearchTags.Snackbar)
             .assertIsDisplayed()
             .onChild()
             .onChild()

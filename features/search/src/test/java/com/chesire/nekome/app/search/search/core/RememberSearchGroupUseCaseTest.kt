@@ -1,7 +1,7 @@
-package com.chesire.nekome.app.search.host.core
+package com.chesire.nekome.app.search.search.core
 
-import com.chesire.nekome.app.search.host.core.model.SearchGroup
-import com.chesire.nekome.app.search.host.data.HostPreferences
+import com.chesire.nekome.app.search.search.core.model.SearchGroup
+import com.chesire.nekome.app.search.search.data.SearchPreferences
 import io.mockk.clearAllMocks
 import io.mockk.every
 import io.mockk.just
@@ -13,22 +13,22 @@ import org.junit.Test
 
 class RememberSearchGroupUseCaseTest {
 
-    private val hostPreferences = mockk<HostPreferences>()
+    private val searchPreferences = mockk<SearchPreferences>()
     private lateinit var rememberSearchGroup: RememberSearchGroupUseCase
 
     @Before
     fun setup() {
         clearAllMocks()
 
-        rememberSearchGroup = RememberSearchGroupUseCase(hostPreferences)
+        rememberSearchGroup = RememberSearchGroupUseCase(searchPreferences)
     }
 
     @Test
     fun `When invoke, Then search group is saved to preferences`() {
-        every { hostPreferences.lastSearchGroup = any() } just runs
+        every { searchPreferences.lastSearchGroup = any() } just runs
 
         rememberSearchGroup.invoke(SearchGroup.Manga)
 
-        verify { hostPreferences.lastSearchGroup = "Manga" }
+        verify { searchPreferences.lastSearchGroup = "Manga" }
     }
 }

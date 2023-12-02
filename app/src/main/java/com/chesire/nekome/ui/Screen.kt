@@ -3,7 +3,6 @@ package com.chesire.nekome.ui
 import androidx.annotation.StringRes
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CollectionsBookmark
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.VideoLibrary
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -23,7 +22,7 @@ sealed class Screen {
             return when (route) {
                 Anime.route,
                 Manga.route,
-                Host.route,
+                Search.route,
                 Config.route -> true
 
                 Credentials.route,
@@ -36,19 +35,16 @@ sealed class Screen {
         }
     }
 
-    object Credentials : Screen() {
+    data object Credentials : Screen() {
         override val route = "credentials"
     }
 
-    object Syncing : Screen() {
+    data object Syncing : Screen() {
         override val route = "syncing"
     }
 
-    object Host : Screen(), BottomNavTarget {
-        override val route = "host"
-        override val title = StringResource.nav_search
-        override val icon = Icons.Default.Search
-        override val tag = MainActivityTags.Search
+    data object Search : Screen() {
+        override val route = "search"
     }
 
     object Anime : Screen(), BottomNavTarget {
@@ -81,7 +77,7 @@ sealed class Screen {
         override val tag = MainActivityTags.Manga
     }
 
-    object Item : Screen() {
+    data object Item : Screen() {
         override val route = "item/{seriesId}/{seriesTitle}"
         const val destination = "item"
 
@@ -98,7 +94,7 @@ sealed class Screen {
         override val tag = MainActivityTags.Settings
     }
 
-    object OSS : Screen() {
+    data object OSS : Screen() {
         override val route = "oss"
     }
 }

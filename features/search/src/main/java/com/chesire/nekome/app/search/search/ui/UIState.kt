@@ -1,7 +1,7 @@
-package com.chesire.nekome.app.search.host.ui
+package com.chesire.nekome.app.search.search.ui
 
 import androidx.annotation.StringRes
-import com.chesire.nekome.app.search.host.core.model.SearchGroup
+import com.chesire.nekome.app.search.search.core.model.SearchGroup
 import com.chesire.nekome.core.flags.SeriesType
 
 data class UIState(
