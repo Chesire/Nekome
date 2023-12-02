@@ -39,6 +39,15 @@ class SeriesListRobot(private val composeContentTestRule: ComposeContentTestRule
     }
 
     /**
+     * Presses the search button.
+     */
+    fun goToSearch() {
+        composeContentTestRule
+            .onNodeWithTag(SeriesCollectionTags.SearchFab)
+            .performClick()
+    }
+
+    /**
      * Presses the increment watched button on the series at position [itemPosition].
      */
     fun incrementSeriesByOne(itemPosition: Int) {

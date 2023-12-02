@@ -66,6 +66,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
+import com.chesire.nekome.app.series.collection.ui.SeriesCollectionTags.SearchFab
 import com.chesire.nekome.core.compose.composables.NekomeDialog
 import com.chesire.nekome.core.compose.theme.NekomeTheme
 import com.chesire.nekome.core.flags.Subtype
@@ -168,6 +169,7 @@ private fun Render(
         floatingActionButton = {
             FloatingActionButton(
                 onClick = onSearchPressed,
+                modifier = Modifier.semantics { testTag = SearchFab },
                 shape = CircleShape
             ) {
                 Icon(
@@ -512,6 +514,7 @@ object SeriesCollectionTags {
     const val Root = "SeriesCollectionRoot"
     const val EmptyView = "SeriesCollectionEmptyView"
     const val RefreshContainer = "SeriesCollectionRefreshContainer"
+    const val SearchFab = "SeriesCollectionSearchFab"
     const val SeriesItem = "SeriesCollectionSeriesItem"
     const val PlusOne = "SeriesCollectionPlusOne"
     const val Snackbar = "SeriesCollectionSnackbar"

@@ -4,7 +4,8 @@ import com.chesire.nekome.UITest
 import com.chesire.nekome.core.models.ErrorDomain
 import com.chesire.nekome.datasource.search.remote.SearchApi
 import com.chesire.nekome.robots.activity
-import com.chesire.nekome.robots.search.host
+import com.chesire.nekome.robots.search.search
+import com.chesire.nekome.robots.series.seriesList
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -41,9 +42,12 @@ class SearchTests : UITest() {
         launchActivity()
 
         activity(composeTestRule) {
+            goToAnime()
+        }
+        seriesList(composeTestRule) {
             goToSearch()
         }
-        host(composeTestRule) {
+        search(composeTestRule) {
             validate { isVisible() }
         }
     }
@@ -53,9 +57,12 @@ class SearchTests : UITest() {
         launchActivity()
 
         activity(composeTestRule) {
+            goToAnime()
+        }
+        seriesList(composeTestRule) {
             goToSearch()
         }
-        host(composeTestRule) {
+        search(composeTestRule) {
             searchTerm("")
             selectAnime()
             clickSearch()
@@ -69,9 +76,12 @@ class SearchTests : UITest() {
         launchActivity()
 
         activity(composeTestRule) {
+            goToAnime()
+        }
+        seriesList(composeTestRule) {
             goToSearch()
         }
-        host(composeTestRule) {
+        search(composeTestRule) {
             searchTerm(GENERIC_ERROR)
             selectAnime()
             clickSearch()
@@ -85,9 +95,12 @@ class SearchTests : UITest() {
         launchActivity()
 
         activity(composeTestRule) {
+            goToAnime()
+        }
+        seriesList(composeTestRule) {
             goToSearch()
         }
-        host(composeTestRule) {
+        search(composeTestRule) {
             searchTerm(NO_RESULTS_ERROR)
             selectAnime()
             clickSearch()

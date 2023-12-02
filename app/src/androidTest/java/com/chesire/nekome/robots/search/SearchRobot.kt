@@ -10,17 +10,17 @@ import androidx.compose.ui.test.performTextInput
 import com.chesire.nekome.app.search.search.ui.SearchTags
 
 /**
- * Method to interact with the [HostRobot].
+ * Method to interact with the [SearchRobot].
  */
-fun host(
+fun search(
     composeContentTestRule: ComposeContentTestRule,
-    func: HostRobot.() -> Unit
-) = HostRobot(composeContentTestRule).apply(func)
+    func: SearchRobot.() -> Unit
+) = SearchRobot(composeContentTestRule).apply(func)
 
 /**
  * Robot to interact with the search host screen.
  */
-class HostRobot(private val composeContentTestRule: ComposeContentTestRule) {
+class SearchRobot(private val composeContentTestRule: ComposeContentTestRule) {
 
     /**
      * Enters the term to search for.
@@ -61,14 +61,14 @@ class HostRobot(private val composeContentTestRule: ComposeContentTestRule) {
     /**
      * Executes validation steps.
      */
-    infix fun validate(func: HostResultRobot.() -> Unit) =
-        HostResultRobot(composeContentTestRule).apply(func)
+    infix fun validate(func: SearchResultRobot.() -> Unit) =
+        SearchResultRobot(composeContentTestRule).apply(func)
 }
 
 /**
  * Robot to check the results for the search screen.
  */
-class HostResultRobot(private val composeContentTestRule: ComposeContentTestRule) {
+class SearchResultRobot(private val composeContentTestRule: ComposeContentTestRule) {
 
     /**
      * Asserts the search screen is shown.
