@@ -1,0 +1,2 @@
+* Add monochrome icon
+* Move search from bottom navigation to the series list as a FAB

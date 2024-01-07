@@ -15,8 +15,8 @@ android {
         applicationId = "com.chesire.nekome"
         minSdk = 21
         targetSdk = libs.versions.sdk.get().toInt()
-        versionCode = 23101020 // Date of build formatted as 'yyMMddHH'
-        versionName = "2.1.1"
+        versionCode = 24010710 // Date of build formatted as 'yyMMddHH'
+        versionName = "2.2.0"
         testInstrumentationRunner = "com.chesire.nekome.TestRunner"
         resourceConfigurations += listOf("en", "ja")
     }
