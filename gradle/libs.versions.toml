@@ -98,7 +98,7 @@ android-library = { id = "com.android.library", version.ref = "android-gradle-pl
 androidx-navigation-safeargs = { id = "androidx.navigation.safeargs.kotlin", version.ref = "androidx-navigation" }
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 google-dagger-hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
-google-devtools-ksp = { id = "com.google.devtools.ksp", version = "1.9.20-1.0.14" }
+google-devtools-ksp = { id = "com.google.devtools.ksp", version = "1.9.22-1.0.17" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kover = { id = "org.jetbrains.kotlinx.kover", version = "0.6.1" }
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version = "11.6.1" }
