@@ -93,7 +93,6 @@ dependencies {
     implementation(libs.androidx.glance.appwidget)
     implementation(libs.androidx.hilt.work)
     implementation(libs.androidx.lifecycle.extensions)
-    implementation(libs.androidx.lifecycle.livedata)
     implementation(libs.androidx.lifecycle.viewmodel)
     implementation(libs.androidx.navigation.fragment)
     implementation(libs.androidx.navigation.ui)
