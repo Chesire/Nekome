@@ -43,8 +43,8 @@ fun NavGraphBuilder.addSeriesRoutes(navController: NavHostController) {
         arguments = Screen.Anime.args
     ) {
         CollectionScreen(
-            navigateToItem = { seriesId, seriesTitle ->
-                navController.navigate("${Screen.Item.destination}/$seriesId/$seriesTitle")
+            navigateToItem = { seriesId ->
+                navController.navigate("${Screen.Item.destination}/$seriesId")
             },
             navigateToSearch = {
                 navController.navigate(Screen.Search.route)
@@ -57,8 +57,8 @@ fun NavGraphBuilder.addSeriesRoutes(navController: NavHostController) {
         arguments = Screen.Manga.args
     ) {
         CollectionScreen(
-            navigateToItem = { seriesId, seriesTitle ->
-                navController.navigate("${Screen.Item.destination}/$seriesId/$seriesTitle")
+            navigateToItem = { seriesId ->
+                navController.navigate("${Screen.Item.destination}/$seriesId")
             },
             navigateToSearch = {
                 navController.navigate(Screen.Search.route)

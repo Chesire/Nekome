@@ -78,12 +78,11 @@ sealed class Screen {
     }
 
     data object Item : Screen() {
-        override val route = "item/{seriesId}/{seriesTitle}"
+        override val route = "item/{seriesId}"
         const val destination = "item"
 
         override val args = listOf(
             navArgument("seriesId") { type = NavType.IntType },
-            navArgument("seriesTitle") { type = NavType.StringType }
         )
     }
 

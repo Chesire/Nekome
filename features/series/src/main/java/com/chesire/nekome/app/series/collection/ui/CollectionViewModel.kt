@@ -117,8 +117,7 @@ class CollectionViewModel @Inject constructor(
         state = state.copy(
             seriesDetails = SeriesDetails(
                 show = true,
-                seriesId = series.userId,
-                seriesTitle = series.title
+                seriesId = series.userId
             )
         )
     }
