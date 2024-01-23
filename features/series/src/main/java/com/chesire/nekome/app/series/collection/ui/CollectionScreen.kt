@@ -82,14 +82,14 @@ import com.chesire.nekome.resources.StringResource
 @Composable
 fun CollectionScreen(
     viewModel: CollectionViewModel = hiltViewModel(),
-    navigateToItem: (Int, String) -> Unit,
+    navigateToItem: (Int) -> Unit,
     navigateToSearch: () -> Unit
 ) {
     val state = viewModel.uiState.collectAsState()
 
     state.value.seriesDetails?.let {
         LaunchedEffect(it.show) {
-            navigateToItem(it.seriesId, it.seriesTitle)
+            navigateToItem(it.seriesId)
             viewModel.execute(ViewAction.SeriesNavigationObserved)
         }
     }

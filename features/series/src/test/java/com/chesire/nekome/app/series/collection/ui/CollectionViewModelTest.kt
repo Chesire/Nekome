@@ -143,8 +143,7 @@ class CollectionViewModelTest {
         assertEquals(
             SeriesDetails(
                 show = true,
-                seriesId = model.userId,
-                seriesTitle = model.title
+                seriesId = model.userId
             ),
             viewModel.uiState.value.seriesDetails
         )
@@ -158,8 +157,7 @@ class CollectionViewModelTest {
         assertEquals(
             SeriesDetails(
                 show = true,
-                seriesId = model.userId,
-                seriesTitle = model.title
+                seriesId = model.userId
             ),
             viewModel.uiState.value.seriesDetails
         )
