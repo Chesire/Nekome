@@ -82,7 +82,7 @@ sealed class Screen {
         const val destination = "item"
 
         override val args = listOf(
-            navArgument("seriesId") { type = NavType.IntType },
+            navArgument("seriesId") { type = NavType.IntType }
         )
     }
 
