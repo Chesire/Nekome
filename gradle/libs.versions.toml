@@ -29,7 +29,7 @@ androidx-browser = { module = "androidx.browser:browser", version = "1.7.0" }
 androidx-compose-bom = { module = "androidx.compose:compose-bom", version = "2023.10.01" }
 androidx-compose-material = { module = "androidx.compose.material:material" }
 androidx-compose-material-icons-extended = { module = "androidx.compose.material:material-icons-extended" }
-androidx-compose-material3 = { module = "androidx.compose.material3:material3", version = "1.1.2" }
+androidx-compose-material3 = { module = "androidx.compose.material3:material3", version = "1.2.0" }
 androidx-compose-ui = { module = "androidx.compose.ui:ui" }
 androidx-compose-ui-test-junit4 = { module = "androidx.compose.ui:ui-test-junit4", version = "1.5.4" }
 androidx-compose-ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest" }
