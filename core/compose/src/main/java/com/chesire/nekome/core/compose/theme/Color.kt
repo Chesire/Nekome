@@ -55,3 +55,8 @@ val LightColorPalette = lightColorScheme(
     surfaceVariant = Color(0xFFdce4e9),
     onSurfaceVariant = Color(0xFF40484c)
 )
+
+val BlackColorPalette = DarkColorPalette.copy(
+    background = Color(0xFF000000),
+    surface = Color(0xFF000000)
+)

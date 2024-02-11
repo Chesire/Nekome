@@ -138,6 +138,7 @@
     <string name="settings_theme_dynamic_dark">ダイナミックダークテーマ</string>
     <string name="settings_theme_dynamic_light">ダイナミックライトテーマ</string>
 
+    <string name="settings_theme_black">ブラックテーマ</string>
     <string name="discover_trending_anime">流行中のアニメ</string>
     <string name="discover_trending_manga">流行中の漫画</string>
     <string name="discover_trending_track">トラック</string>

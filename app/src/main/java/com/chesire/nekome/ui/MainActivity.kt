@@ -24,12 +24,12 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             val themeState = appSettings.theme.collectAsState(initial = Theme.System)
-            val (isDarkMode, isDynamicColor) = generateTheme(
+            val (theme, isDynamicColor) = generateTheme(
                 theme = themeState.value,
                 isSystemDarkMode = isSystemInDarkTheme()
             )
             NekomeTheme(
-                isDarkTheme = isDarkMode,
+                theme = theme.value,
                 isDynamicColor = isDynamicColor
             ) {
                 MainActivityScreen()
@@ -40,13 +40,15 @@ class MainActivity : ComponentActivity() {
     /**
      * Returns a [Pair] of (dark mode enabled) to (dynamic color enabled).
      */
-    private fun generateTheme(theme: Theme, isSystemDarkMode: Boolean): Pair<Boolean, Boolean> {
+    private fun generateTheme(theme: Theme, isSystemDarkMode: Boolean): Pair<Theme, Boolean> {
+        val systemTheme = if(isSystemDarkMode) Theme.Dark else Theme.Light
         return when (theme) {
-            Theme.System -> isSystemDarkMode to true
-            Theme.Dark -> true to false
-            Theme.Light -> false to false
-            Theme.DynamicDark -> true to true
-            Theme.DynamicLight -> false to true
+            Theme.System -> systemTheme to true
+            Theme.Dark -> Theme.Dark to false
+            Theme.Light -> Theme.Light to false
+            Theme.Black -> Theme.Black to false
+            Theme.DynamicDark -> Theme.DynamicDark to true
+            Theme.DynamicLight -> Theme.DynamicLight to true
         }
     }
 }

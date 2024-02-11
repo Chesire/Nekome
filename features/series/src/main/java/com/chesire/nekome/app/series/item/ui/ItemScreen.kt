@@ -446,7 +446,7 @@ private fun Preview() {
         ),
         errorSnackbar = null
     )
-    NekomeTheme(isDarkTheme = true) {
+    NekomeTheme(theme = 2) {
         Render(
             state = produceState(
                 initialValue = initialState,

@@ -104,7 +104,7 @@ private fun Preview() {
         avatar = "https://media.kitsu.io/users/avatars/294558/large.jpeg",
         finishedSyncing = null
     )
-    NekomeTheme(isDarkTheme = true) {
+    NekomeTheme(theme = 2) {
         Render(
             state = produceState(initialValue = initialState, producer = { value = initialState })
         )
