@@ -34,6 +34,11 @@ class App : Application(), Configuration.Provider {
     @Inject
     lateinit var dataRefreshNotifier: DataRefreshNotifier
 
+    override val workManagerConfiguration: Configuration
+        get() = Configuration.Builder()
+            .setWorkerFactory(workerFactory)
+            .build()
+
     @OptIn(DelicateCoroutinesApi::class)
     override fun onCreate() {
         super.onCreate()
@@ -58,11 +63,6 @@ class App : Application(), Configuration.Provider {
             dataRefreshNotifier.initialize()
         }
     }
-
-    override fun getWorkManagerConfiguration() =
-        Configuration.Builder()
-            .setWorkerFactory(workerFactory)
-            .build()
 
     private fun startStrictMode() {
         StrictMode.setThreadPolicy(
