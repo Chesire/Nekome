@@ -21,7 +21,7 @@ jobs:
       - name: run assemble
         run: ./gradlew assemble
       - name: run kover
-        run: ./gradlew koverMergedXmlReport
+        run: ./gradlew koverXmlReport
       - uses: codecov/codecov-action@v4
       - name: run lint
         run: ./gradlew :app:lint

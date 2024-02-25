@@ -1,4 +1,9 @@
+import com.android.build.gradle.BaseExtension
 import io.gitlab.arturbosch.detekt.Detekt
+import kotlinx.kover.gradle.plugin.dsl.KoverReportExtension
+import org.jetbrains.kotlin.gradle.dsl.KotlinAndroidProjectExtension
+import org.jlleitschuh.gradle.ktlint.KtlintExtension
+import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
 
 plugins {
     alias(libs.plugins.detekt)
@@ -14,22 +19,12 @@ plugins {
 }
 
 subprojects {
-    apply(plugin = "org.jetbrains.kotlinx.kover")
-    apply(plugin = "org.jlleitschuh.gradle.ktlint")
-
-    configure<org.jlleitschuh.gradle.ktlint.KtlintExtension> {
-        verbose = true
-        android = true
-        outputToConsole = true
-        disabledRules = listOf("max-line-length")
-
-        reporters {
-            reporter(org.jlleitschuh.gradle.ktlint.reporter.ReporterType.PLAIN)
-        }
-    }
     afterEvaluate {
         if (plugins.hasPlugin("android") || plugins.hasPlugin("android-library")) {
-            configure<com.android.build.gradle.BaseExtension> {
+            apply(plugin = "org.jetbrains.kotlinx.kover")
+            apply(plugin = "org.jlleitschuh.gradle.ktlint")
+
+            configure<BaseExtension> {
                 compileOptions {
                     sourceCompatibility = JavaVersion.VERSION_17
                     targetCompatibility = JavaVersion.VERSION_17
@@ -42,8 +37,23 @@ subprojects {
                     }
                 }
             }
-            configure<org.jetbrains.kotlin.gradle.dsl.KotlinAndroidProjectExtension> {
+            configure<KotlinAndroidProjectExtension> {
                 jvmToolchain(17)
+            }
+            configure<KoverReportExtension> {
+                defaults {
+                    mergeWith("debug")
+                }
+            }
+            configure<KtlintExtension> {
+                verbose = true
+                android = true
+                outputToConsole = true
+                disabledRules = listOf("max-line-length")
+
+                reporters {
+                    reporter(ReporterType.PLAIN)
+                }
             }
         }
     }
@@ -64,12 +74,29 @@ tasks.register<Detekt>("detektCheck") {
     buildUponDefaultConfig = false
 }
 
-koverMerged {
-    enable()
+private val excludeProjects = setOf(
+    ":core", // Container project
+    ":core:compose", // UI Logic
+    ":features", // Container project
+    ":libraries", // Container project
+    ":libraries:datasource", // Container project
+    ":testing" // Test code
+)
+dependencies {
+    detektPlugins(libs.detekt.compose)
+    detektPlugins(libs.detekt.formatting)
+    detektPlugins(libs.detekt.kotlin.compiler)
+    subprojects.forEach { subproject ->
+        if (!excludeProjects.contains(subproject.path)) {
+            kover(subproject)
+        }
+    }
+}
 
+koverReport {
     filters {
-        classes {
-            excludes.addAll(
+        excludes {
+            classes(
                 listOf(
                     "*.databinding.*", // Autogen ViewBinding
                     "dagger.*", // Autogen Dagger code
@@ -93,27 +120,7 @@ koverMerged {
                     "com.chesire.nekome.injection.*" // Dagger injection code
                 )
             )
-        }
-        annotations {
-            excludes.addAll(
-                listOf(
-                    "androidx.compose.runtime.Composable" // Compose components
-                )
-            )
-        }
-        projects {
-            excludes.addAll(
-                listOf(
-                    ":core:compose", // View code
-                    ":testing" // Testing code
-                )
-            )
+            annotatedBy("androidx.compose.runtime.Composable")
         }
     }
-}
-
-dependencies {
-    detektPlugins(libs.detekt.compose)
-    detektPlugins(libs.detekt.formatting)
-    detektPlugins(libs.detekt.kotlin.compiler)
 }
