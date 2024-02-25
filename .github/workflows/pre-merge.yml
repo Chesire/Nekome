@@ -32,6 +32,13 @@ jobs:
       - name: run kover
         run: ./gradlew koverMergedXmlReport
       - uses: codecov/codecov-action@v4
+      - name: publish results
+        uses: EnricoMi/publish-unit-test-result-action@v2
+        if: always()
+        with:
+          files: /**/build/test-results/**/*.xml
+          action_fail: true
+          action_fail_on_inconclusive: true
 
   ktlint:
     runs-on: ubuntu-latest
