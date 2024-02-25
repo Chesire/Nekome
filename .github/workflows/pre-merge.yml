@@ -13,6 +13,8 @@ jobs:
         with:
           distribution: 'adopt'
           java-version: 17
+      - name: setup gradle cache
+        uses: gradle/actions/setup-gradle@v3
       - name: run assemble
         run: ./gradlew assemble
 
@@ -25,6 +27,8 @@ jobs:
         with:
           distribution: 'adopt'
           java-version: 17
+      - name: setup gradle cache
+        uses: gradle/actions/setup-gradle@v3
       - name: run kover
         run: ./gradlew koverMergedXmlReport
       - uses: codecov/codecov-action@v4
@@ -38,6 +42,8 @@ jobs:
         with:
           distribution: 'adopt'
           java-version: 17
+      - name: setup gradle cache
+        uses: gradle/actions/setup-gradle@v3
       - name: run ktlintCheck
         run: ./gradlew ktlintCheck
 
@@ -52,6 +58,8 @@ jobs:
         with:
           distribution: 'adopt'
           java-version: 17
+      - name: setup gradle cache
+        uses: gradle/actions/setup-gradle@v3
       - name: run lint
         run: ./gradlew :app:lint
       - name: run detektCheck
