@@ -36,7 +36,7 @@ jobs:
         uses: EnricoMi/publish-unit-test-result-action@v2
         if: always()
         with:
-          files: /**/build/test-results/**/*.xml
+          files: ./**/build/test-results/**/*.xml
           action_fail: true
           action_fail_on_inconclusive: true
 
