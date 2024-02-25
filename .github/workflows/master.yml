@@ -23,7 +23,7 @@ jobs:
       - name: run kover
         run: ./gradlew koverMergedXmlReport
       - uses: codecov/codecov-action@v4
-      - name: run lintDebug
+      - name: run lint
         run: ./gradlew :app:lint
       - name: run detektCheck
         run: ./gradlew detektCheck
