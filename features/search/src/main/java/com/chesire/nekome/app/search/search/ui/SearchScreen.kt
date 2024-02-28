@@ -343,7 +343,7 @@ private fun Preview() {
         resultModels = emptyList(),
         errorSnackbar = null
     )
-    NekomeTheme(theme = 2) {
+    NekomeTheme() {
         Render(
             state = produceState(initialValue = initialState, producer = { value = initialState }),
             onInputTextChanged = { /**/ },
@@ -387,7 +387,7 @@ private fun PopulatedPreview() {
         ),
         errorSnackbar = null
     )
-    NekomeTheme(theme = 2) {
+    NekomeTheme() {
         Render(
             state = produceState(initialValue = initialState, producer = { value = initialState }),
             onInputTextChanged = { /**/ },

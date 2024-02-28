@@ -433,7 +433,7 @@ private fun Preview() {
         showTitleLanguageDialog = false,
         rateSeriesValue = false
     )
-    NekomeTheme(theme = 2) {
+    NekomeTheme() {
         Render(
             state = produceState(
                 initialValue = initialState,

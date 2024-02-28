@@ -99,7 +99,7 @@ private fun Render(
 @Composable
 @Preview
 private fun Preview() {
-    NekomeTheme(theme = 2) {
+    NekomeTheme() {
         Render(
             series = Series(
                 userId = 0,

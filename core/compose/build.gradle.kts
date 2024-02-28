@@ -35,5 +35,6 @@ dependencies {
     implementation(libs.androidx.compose.ui.test.manifest)
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.google.accompanist.systemuicontroller)
+    implementation(project(":core:preferences"))
     debugImplementation(libs.androidx.compose.ui.tooling)
 }

@@ -516,7 +516,7 @@ private fun Preview() {
             )
         )
     )
-    NekomeTheme(theme = 2) {
+    NekomeTheme() {
         Render(
             state = produceState(
                 initialValue = initialState,

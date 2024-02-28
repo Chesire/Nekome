@@ -19,7 +19,7 @@ enum class Theme(val value: Int, @StringRes val stringId: Int) {
         /**
          * Gets a map of [value] to the string acquired from the [stringId].
          */
-        fun getValueMap(context: Context) = values()
+        fun getValueMap(context: Context) = entries
             .associate { it.value to context.getString(it.stringId) }
 
         /**
@@ -29,8 +29,9 @@ enum class Theme(val value: Int, @StringRes val stringId: Int) {
          */
         fun fromValue(value: String): Theme {
             return value.toIntOrNull()?.let { intValue ->
-                values().find { it.value == intValue } ?: System
+                entries.find { it.value == intValue } ?: System
             } ?: System
         }
+
     }
 }
