@@ -12,13 +12,14 @@ enum class Theme(val value: Int, @StringRes val stringId: Int) {
     Dark(2, StringResource.settings_theme_dark),
     Light(1, StringResource.settings_theme_light),
     DynamicDark(3, StringResource.settings_theme_dynamic_dark),
-    DynamicLight(4, StringResource.settings_theme_dynamic_light);
+    DynamicLight(4, StringResource.settings_theme_dynamic_light),
+    Black(5, StringResource.settings_theme_black);
 
     companion object {
         /**
          * Gets a map of [value] to the string acquired from the [stringId].
          */
-        fun getValueMap(context: Context) = values()
+        fun getValueMap(context: Context) = entries
             .associate { it.value to context.getString(it.stringId) }
 
         /**
@@ -28,8 +29,9 @@ enum class Theme(val value: Int, @StringRes val stringId: Int) {
          */
         fun fromValue(value: String): Theme {
             return value.toIntOrNull()?.let { intValue ->
-                values().find { it.value == intValue } ?: System
+                entries.find { it.value == intValue } ?: System
             } ?: System
         }
+
     }
 }
