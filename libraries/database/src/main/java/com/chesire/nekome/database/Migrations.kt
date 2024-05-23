@@ -116,3 +116,20 @@ internal val MIGRATION_4_5 = object : Migration(4, 5) {
         database.execSQL("ALTER TABLE SeriesEntity ADD COLUMN otherTitles TEXT NOT NULL DEFAULT ''")
     }
 }
+
+/**
+ * Provides a migration from version 5 to version 6 of the database.
+ *
+ * Changes:
+ * * volumesOwend and volumeCount were added to the SeriesEntity table
+ */
+internal val MIGRATION_5_6 = object : Migration(5, 6) {
+    override fun migrate(database: SupportSQLiteDatabase) {
+        database.beginTransaction()
+        database.execSQL("ALTER TABLE SeriesEntity ADD COLUMN volumesOwned INTEGER DEFAULT NULL")
+        database.execSQL("ALTER TABLE SeriesEntity ADD COLUMN volumeCount INTEGER DEFAULT NULL")
+        database.execSQL("Update SeriesEntity SET volumesOwned = 0, volumeCount = 0 WHERE type = Manga")
+        database.execSQL("Update SeriesEntity SET volumeCount = 0, volumeCount = 0 WHERE type = Manga")
+        database.endTransaction()
+    }
+}
