@@ -138,12 +138,14 @@ class SeriesRepository(
     suspend fun updateSeries(
         userSeriesId: Int,
         progress: Int,
+        volumesOwned: Int?,
         status: UserSeriesStatus,
         rating: Int
     ): Result<SeriesDomain, ErrorDomain> {
         return seriesApi.update(
             userSeriesId = userSeriesId,
             progress = progress,
+            volumesOwned = volumesOwned,
             newStatus = status,
             rating = rating
         ).onSuccess {
