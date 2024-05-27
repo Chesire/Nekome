@@ -24,6 +24,7 @@ import kotlinx.coroutines.launch
 // Note this value is pulled from the nav_graph.xml
 private const val SERIES_ID = "seriesId"
 private const val MAX_PROGRESS_NUMBERS = 4
+private const val MAX_VOLUMES_OWNED_NUMBERS = 4
 
 @HiltViewModel
 class ItemViewModel @Inject constructor(
@@ -59,6 +60,8 @@ class ItemViewModel @Inject constructor(
                 seriesStatus = series.userSeriesStatus,
                 progress = series.progress.toString(),
                 length = series.totalLength.takeUnless { it == 0 }?.toString() ?: "-",
+                volumesOwned = series.volumesOwned?.toString(),
+                volumeCount = series.volumeCount?.takeUnless { it == 0 }?.toString() ?: "-",
                 rating = series.rating.toFloat()
             )
         }
@@ -72,6 +75,7 @@ class ItemViewModel @Inject constructor(
             ViewAction.FinishScreenObserved -> handleFinishScreenObserved()
             is ViewAction.OnDeleteResult -> handleDeleteResult(action.result)
             is ViewAction.ProgressChanged -> handleProgressChanged(action.newProgress)
+            is ViewAction.VolumesOwnedChanged -> handleVolumesOwnedChanged(action.newVolumesOwned)
             is ViewAction.RatingChanged -> handleRatingChanged(action.newRating)
             is ViewAction.SeriesStatusChanged -> handleSeriesStatusChanged(action.newSeriesStatus)
         }
@@ -84,6 +88,7 @@ class ItemViewModel @Inject constructor(
             UpdateItemModel(
                 userSeriesId = state.id,
                 progress = state.progress.toIntOrNull() ?: 0,
+                volumesOwned = state.volumesOwned?.toInt(),
                 newStatus = state.seriesStatus,
                 rating = state.rating.roundToInt()
             )
@@ -152,6 +157,12 @@ class ItemViewModel @Inject constructor(
     private fun handleProgressChanged(newProgress: String) {
         if (newProgress.count() <= MAX_PROGRESS_NUMBERS) {
             state = state.copy(progress = newProgress)
+        }
+    }
+
+    private fun handleVolumesOwnedChanged(newVolumesOwned: String) {
+        if (newVolumesOwned.count() <= MAX_VOLUMES_OWNED_NUMBERS) {
+            state = state.copy(volumesOwned = newVolumesOwned)
         }
     }
 
