@@ -17,12 +17,12 @@ class DtoFactory @Inject constructor() {
         startingStatus: String,
         seriesType: String
     ): String {
-        // adds the volumesOwend paramater only if the serie is a manga
+        // adds the volumesOwend paramater only if the series is a manga
         val volumesOwned =
             if (seriesType == "manga")
-                """"
-                    volumesOwned": 0,""".trimIndent()
-            else ""
+                "\n\"volumesOwned\": 0,"
+            else
+                ""
         return """
 {
   "data": {
