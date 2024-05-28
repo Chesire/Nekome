@@ -25,6 +25,8 @@ data class DataDto(
         val status: UserSeriesStatus,
         @Json(name = "progress")
         val progress: Int,
+        @Json(name = "volumesOwned")
+        val volumesOwned: Int?,
         @Json(name = "ratingTwenty")
         val rating: Int?,
         @Json(name = "startedAt")

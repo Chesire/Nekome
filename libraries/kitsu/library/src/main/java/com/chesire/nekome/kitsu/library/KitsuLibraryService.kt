@@ -15,7 +15,7 @@ import retrofit2.http.Query
 private const val ANIME_FIELDS =
     "slug,titles,canonicalTitle,startDate,endDate,subtype,status,posterImage,episodeCount"
 private const val MANGA_FIELDS =
-    "slug,titles,canonicalTitle,startDate,endDate,subtype,status,posterImage,chapterCount"
+    "slug,titles,canonicalTitle,startDate,endDate,subtype,status,posterImage,chapterCount,volumeCount"
 
 /**
  * Constructed using Retrofit to interface with the Kitsu API for queries related to users library.
@@ -45,7 +45,7 @@ interface KitsuLibraryService {
     @GET(
         "api/edge/users/{userId}/library-entries" +
             "?include=manga" +
-            "&fields[libraryEntries]=status,progress,manga,startedAt,finishedAt,ratingTwenty" +
+            "&fields[libraryEntries]=status,progress,volumesOwned,manga,startedAt,finishedAt,ratingTwenty" +
             "&fields[manga]=$MANGA_FIELDS" +
             "&filter[kind]=manga" +
             "&sort=manga.titles.canonical"

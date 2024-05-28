@@ -2,6 +2,7 @@
 
 package com.chesire.nekome.app.series.item.ui
 
+import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -79,6 +80,7 @@ fun ItemScreen(
         state = state,
         onSeriesStatusChanged = { viewModel.execute(ViewAction.SeriesStatusChanged(it)) },
         onProgressChanged = { viewModel.execute(ViewAction.ProgressChanged(it)) },
+        onVolumesOwnedChanged = { viewModel.execute(ViewAction.VolumesOwnedChanged(it)) },
         onRatingChanged = { viewModel.execute(ViewAction.RatingChanged(it)) },
         onConfirmPressed = { viewModel.execute(ViewAction.ConfirmPressed) },
         onDeletePressed = { viewModel.execute(ViewAction.DeletePressed) },
@@ -94,6 +96,7 @@ private fun Render(
     state: State<UIState>,
     onSeriesStatusChanged: (UserSeriesStatus) -> Unit,
     onProgressChanged: (String) -> Unit,
+    onVolumesOwnedChanged: (String) -> Unit,
     onRatingChanged: (Float) -> Unit,
     onConfirmPressed: () -> Unit,
     onDeletePressed: () -> Unit,
@@ -161,6 +164,15 @@ private fun Render(
                 length = state.value.length,
                 onProgressChanged = onProgressChanged
             )
+
+            if(state.value.volumesOwned != null) {
+                VolumeProgress(
+                    volumesOwned = state.value.volumesOwned ?: "0",
+                    volumeCount = state.value.volumeCount ?: "-",
+                    onVolumesOwnedChanged = onVolumesOwnedChanged
+                )
+            }
+
             Rating(
                 rating = state.value.rating,
                 onRatingChanged = onRatingChanged
@@ -326,6 +338,35 @@ private fun Progress(
     )
 }
 
+//TODO use a genic method for Volume and progress?
+@Composable
+private fun VolumeProgress(
+    volumesOwned: String,
+    volumeCount: String,
+    onVolumesOwnedChanged: (String) -> Unit
+) {
+    Text(
+        text = stringResource(id =StringResource.series_detail_volumes_owned_title),
+        modifier = Modifier.padding(top = 16.dp, bottom = 8.dp),
+        style = MaterialTheme.typography.bodyLarge
+    )
+    OutlinedTextField(
+        value = volumesOwned,
+        onValueChange = onVolumesOwnedChanged,
+        modifier = Modifier.fillMaxWidth(),
+        trailingIcon = {
+            Text(
+                text = stringResource(
+                    id = StringResource.series_detail_progress_out_of,
+                    volumeCount
+                )
+            )
+        },
+        singleLine = true,
+        keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number)
+    )
+}
+
 @Composable
 private fun Rating(
     rating: Float,
@@ -421,7 +462,7 @@ private fun RenderSnackbar(
 
 @Composable
 @Preview
-private fun Preview() {
+private fun PreviewAnime() {
     val initialState = UIState(
         id = 0,
         title = "Title",
@@ -437,6 +478,8 @@ private fun Preview() {
         seriesStatus = UserSeriesStatus.Planned,
         progress = "0",
         length = "12",
+        volumesOwned = null,
+        volumeCount = null,
         rating = 0f,
         isSendingData = false,
         finishScreen = false,
@@ -454,6 +497,57 @@ private fun Preview() {
             ),
             onSeriesStatusChanged = { /**/ },
             onProgressChanged = { /**/ },
+            onVolumesOwnedChanged = { /**/ },
+            onRatingChanged = { /**/ },
+            onConfirmPressed = { /**/ },
+            onDeletePressed = { /**/ },
+            onDeleteResult = { /**/ },
+            onSnackbarShown = { /**/ },
+            finishScreen = { /**/ },
+            onFinishedScreen = { /**/ }
+        )
+    }
+}
+
+
+@Composable
+@Preview
+private fun PreviewManga() {
+    val initialState = UIState(
+        id = 0,
+        title = "Title",
+        subtitle = "Manga - Manga - Finished",
+        imageUrl = "",
+        possibleSeriesStatus = listOf(
+            UserSeriesStatus.Current,
+            UserSeriesStatus.Completed,
+            UserSeriesStatus.Dropped,
+            UserSeriesStatus.OnHold,
+            UserSeriesStatus.Planned
+        ),
+        seriesStatus = UserSeriesStatus.Planned,
+        progress = "0",
+        length = "141",
+        volumesOwned = "0",
+        volumeCount = "34",
+        rating = 0f,
+        isSendingData = false,
+        finishScreen = false,
+        deleteDialog = Delete(
+            show = false,
+            title = "Title"
+        ),
+        errorSnackbar = null
+    )
+    NekomeTheme(isDarkTheme = true) {
+        Render(
+            state = produceState(
+                initialValue = initialState,
+                producer = { value = initialState }
+            ),
+            onSeriesStatusChanged = { /**/ },
+            onProgressChanged = { /**/ },
+            onVolumesOwnedChanged = { /**/ },
             onRatingChanged = { /**/ },
             onConfirmPressed = { /**/ },
             onDeletePressed = { /**/ },

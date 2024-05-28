@@ -21,6 +21,8 @@ data class SeriesDomain(
     val userSeriesStatus: UserSeriesStatus,
     val progress: Int,
     val totalLength: Int,
+    val volumesOwned: Int?,
+    val volumeCount: Int?,
     val rating: Int,
     val posterImage: ImageModel,
     val startDate: String,

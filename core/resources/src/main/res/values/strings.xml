@@ -76,6 +76,7 @@
 
     <string name="series_detail_dash">-</string>
     <string name="series_detail_progress_title">Progress</string>
+    <string name="series_detail_volumes_owned_title">Volumes owned</string>
     <string name="series_detail_progress_out_of">/ %s</string>
     <string name="series_detail_status_title">Users series status</string>
     <string name="series_detail_rating">Rating</string>

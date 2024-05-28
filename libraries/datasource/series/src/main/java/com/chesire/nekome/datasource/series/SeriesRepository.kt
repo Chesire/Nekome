@@ -1,5 +1,6 @@
 package com.chesire.nekome.datasource.series
 
+import com.chesire.nekome.core.flags.SeriesType
 import com.chesire.nekome.core.flags.UserSeriesStatus
 import com.chesire.nekome.core.models.ErrorDomain
 import com.chesire.nekome.database.dao.SeriesDao
@@ -49,7 +50,8 @@ class SeriesRepository(
             seriesId = seriesId,
             startingStatus = startingStatus
         ).onSuccess {
-            val entity = map.toSeriesEntity(it)
+            // The api always returns any anime with volumesOwned = 0
+            val entity = map.toSeriesEntity(it.copy(volumesOwned = null))
             seriesDao.insert(entity)
         }.onFailure {
             Timber.e("Error adding anime [$seriesId], ${it.message}")
@@ -138,12 +140,14 @@ class SeriesRepository(
     suspend fun updateSeries(
         userSeriesId: Int,
         progress: Int,
+        volumesOwned: Int?,
         status: UserSeriesStatus,
         rating: Int
     ): Result<SeriesDomain, ErrorDomain> {
         return seriesApi.update(
             userSeriesId = userSeriesId,
             progress = progress,
+            volumesOwned = volumesOwned,
             newStatus = status,
             rating = rating
         ).onSuccess {

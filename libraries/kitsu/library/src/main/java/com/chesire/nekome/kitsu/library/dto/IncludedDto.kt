@@ -42,6 +42,8 @@ data class IncludedDto(
         val posterImage: ImageModel?,
         @Json(name = "chapterCount")
         val chapterCount: Int?,
+        @Json(name = "volumeCount")
+        val volumeCount: Int?,
         @Json(name = "episodeCount")
         val episodeCount: Int?
     )

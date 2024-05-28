@@ -15,6 +15,7 @@ class UpdateItemUseCase @Inject constructor(private val seriesRepo: SeriesReposi
             seriesRepo.updateSeries(
                 userSeriesId = updateItemModel.userSeriesId,
                 progress = updateItemModel.progress,
+                volumesOwned = updateItemModel.volumesOwned,
                 status = updateItemModel.newStatus,
                 rating = updateItemModel.rating
             ).mapEither(
@@ -28,6 +29,7 @@ class UpdateItemUseCase @Inject constructor(private val seriesRepo: SeriesReposi
 data class UpdateItemModel(
     val userSeriesId: Int,
     val progress: Int,
+    val volumesOwned: Int?,
     val newStatus: UserSeriesStatus,
     val rating: Int
 )

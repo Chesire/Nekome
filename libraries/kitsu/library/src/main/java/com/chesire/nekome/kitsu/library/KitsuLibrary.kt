@@ -85,12 +85,14 @@ class KitsuLibrary @Inject constructor(
     override suspend fun update(
         userSeriesId: Int,
         progress: Int,
+        volumesOwned: Int?,
         newStatus: UserSeriesStatus,
         rating: Int
     ): Result<SeriesDomain, ErrorDomain> {
         val updateJson = entityFactory.createUpdateDto(
             userSeriesId,
             progress,
+            volumesOwned,
             userSeriesStatusAdapter.userSeriesStatusToString(newStatus),
             rating
         )

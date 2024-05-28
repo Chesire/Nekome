@@ -16,13 +16,19 @@ class DtoFactory @Inject constructor() {
         seriesId: Int,
         startingStatus: String,
         seriesType: String
-    ) =
-        """
+    ): String {
+        // adds the volumesOwend paramater only if the series is a manga
+        val volumesOwned =
+            if (seriesType == "manga")
+                "\n\"volumesOwned\": 0,"
+            else
+                ""
+        return """
 {
   "data": {
     "type": "libraryEntries",
     "attributes": {
-      "progress": 0,
+      "progress": 0,$volumesOwned
       "status": "$startingStatus"
     },
     "relationships": {
@@ -42,6 +48,8 @@ class DtoFactory @Inject constructor() {
   }
 }
         """.trimIndent()
+    }
+
 
     /**
      * Creates a new JSON DTO for updating a series.
@@ -49,6 +57,7 @@ class DtoFactory @Inject constructor() {
     fun createUpdateDto(
         userSeriesId: Int,
         newProgress: Int,
+        newVolumesOwned: Int?,
         newStatus: String,
         rating: Int
     ): String {
@@ -56,6 +65,7 @@ class DtoFactory @Inject constructor() {
             .apply {
                 put("progress", newProgress)
                 put("status", newStatus)
+                if (newVolumesOwned != null) put("volumesOwned", newVolumesOwned)
                 if (rating > 1) put("ratingTwenty", rating)
             }
         val dataObject = JSONObject()
