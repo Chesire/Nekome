@@ -157,4 +157,5 @@
 
     <string name="back">バック</string>
     <string name="error_generic">不明なエラーが発生しました…</string>
+    <string name="series_detail_volumes_owned_title">所有ボリューム</string>
 </resources>

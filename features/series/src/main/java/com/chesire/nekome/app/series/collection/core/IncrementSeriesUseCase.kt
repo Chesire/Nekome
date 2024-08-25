@@ -17,6 +17,7 @@ class IncrementSeriesUseCase @Inject constructor(private val repo: SeriesReposit
             repo.updateSeries(
                 userSeriesId = domain.userId,
                 progress = domain.progress + 1,
+                volumesOwned = domain.volumesOwned,
                 status = domain.userSeriesStatus,
                 rating = newRating
             ).mapEither(

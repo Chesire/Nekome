@@ -44,6 +44,7 @@ interface SeriesApi {
     suspend fun update(
         userSeriesId: Int,
         progress: Int,
+        volumesOwned: Int?,
         newStatus: UserSeriesStatus,
         rating: Int
     ): Result<SeriesDomain, ErrorDomain>

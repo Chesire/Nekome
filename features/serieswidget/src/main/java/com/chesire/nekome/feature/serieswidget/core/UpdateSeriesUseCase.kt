@@ -18,6 +18,7 @@ class UpdateSeriesUseCase @Inject constructor(
                 .updateSeries(
                     currentSeries.userId,
                     currentSeries.progress + 1,
+                    currentSeries.volumesOwned,
                     currentSeries.userSeriesStatus,
                     currentSeries.rating
                 )
