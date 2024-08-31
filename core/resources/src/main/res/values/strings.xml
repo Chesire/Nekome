@@ -137,6 +137,7 @@
     <string name="settings_theme_light">Light</string>
     <string name="settings_theme_dynamic_dark">Dynamic Dark</string>
     <string name="settings_theme_dynamic_light">Dynamic Light</string>
+    <string name="settings_theme_black">AMOLED Black</string>
 
     <string name="discover_trending_anime">Trending Anime</string>
     <string name="discover_trending_manga">Trending Manga</string>

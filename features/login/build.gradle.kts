@@ -29,6 +29,7 @@ dependencies {
     implementation(project(":libraries:datasource:auth"))
     implementation(project(":libraries:datasource:series"))
     implementation(project(":libraries:datasource:user"))
+    implementation(project(":core:preferences"))
 
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.appcompat)
