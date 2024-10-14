@@ -1,7 +1,7 @@
 [versions]
 aboutlibraries = "11.1.4"
 accompanist = "0.34.0"
-android-gradle-plugin = "8.2.2"
+android-gradle-plugin = "8.7.1"
 androidx-espresso = "3.5.1"
 androidx-glance = "1.0.0"
 androidx-hilt = "1.2.0"
